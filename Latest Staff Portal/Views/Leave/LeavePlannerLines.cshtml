@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.LeavePlannerLines>
+<div class="pre-scrollable">
+    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead style="background-color:black;color:white">
+            <tr>
+                <th>Leave Type</th>
+                <th>Days Applied</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Return Date</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null && Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LeaveType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DaysApplied)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReturnDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Comments)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div style="text-align:right">
+    <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="LeavePlannerLineForm();" />
+</div>
+
+
+

@@ -1,0 +1,78 @@
+﻿@model Latest_Staff_Portal.ViewModel.SectionDetails
+<style>
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div class="pre-scrollable">
+    <table id="tableScoreCard" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th width="19%">Agreed Performance Indicator</th>
+                <th width="19%">Key Performance Indicator</th>
+                @*<th width="19%">Key Results Areas(Output)</th>*@
+                <th width="19%">Appraisee Comments</th>
+                <th width="19%">Supervisor Comments</th>
+                @if (Model.Level == "A")
+                {
+                    <th style="text-align:right" width="5%">Action</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.KPIList != null)
+                {
+                    {
+                        if (Model.KPIList.Count() > 0)
+                        {
+                            foreach (var item in Model.KPIList)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Agreed_Performance_Targets)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Key_Performance_Indicator)
+                                    </td>
+                                    @*<td>
+                                            @Html.DisplayFor(modelItem => item.Key_Result_Areas_Output)
+                                        </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Appraisee_Comments)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Supervisor_Comments)
+                                    </td>
+                                    @if (Model.Level == "A")
+                                    {
+                                        <td style="text-align:right">
+                                            <a href="javascript:void(0);" class="text-danger" onclick="DropKPIRecord('@item.Appraisal_No','@item.Line_No');">Remove</a>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" style="color:red">
+                                    No Records Found
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@if (Model.Level == "A")
+{
+    <div align="right">
+        <input type="button" value="Add KPIs" class="btn btn-danger BtnPadding" onclick="AddAKPI();" />
+    </div>
+}
+
+

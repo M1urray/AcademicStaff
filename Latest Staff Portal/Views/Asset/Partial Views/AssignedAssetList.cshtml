@@ -1,0 +1,52 @@
+﻿@model  IEnumerable<Latest_Staff_Portal.ViewModel.FixedAsset>
+<div class="table-responsive">
+    <table class="table table-centered table-nowrap" id="PassengerLines">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Asset Number</th>
+                <th>Description</th>
+                @*<th style="text-align:right">Actions</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null && Model.Count() > 0)
+                {
+                    int i = 1;
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @i
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AssetNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            @*<td align="right">
+                                <button class="btn btn-danger BtnPadding" onclick="AssignedAssetTransfer('@item.AssetNo')">Transfer Asset</button>
+                            </td>*@
+                        </tr>
+                        i++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+

@@ -1,0 +1,138 @@
+﻿@model Latest_Staff_Portal.ViewModel.PayslipDetails
+@{
+    ViewBag.Title = "DocumentViewPayslip";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="card pre-scrollable">
+    <div class="card-title">Payslip Document View</div>
+    <div class="card-body">
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.Label("Year :", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.YList, Model.ListOfYears, "--select Year--", new { @class = "form-control", @id = "ddlYears", @onchange = "GetMonths()" })
+                        @Html.ValidationMessageFor(model => model.YList, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.Label("Month :", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <select class="form-control" id="ddlMonth" name="ddlMonth">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"> </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-8" align="center">
+                <input type="button" class="btn btn-primary" value="View Payslip" onclick="GetPayslipReport();" />
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <div id="divViewDoc"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModalUnits" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Payslip Report</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody" style="width:100%;height:450px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ddlMonth').empty().append('<option selected="selected" value="">--Select Month--</option>');
+    });
+    var GetPayslipReport = function () {
+        var Year = $("#ddlYears").children("option:selected").val();
+        var Month = $("#ddlMonth").children("option:selected").val();
+        if (Year == "") {
+            Swal.fire('Warning', 'Select Year', 'warning');
+            return;
+        }
+        else if (Month == "") {
+            Swal.fire('Warning', 'Select Month', 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                url: '/ViewDocument/GetPayslipReport',
+                datatype: "json",
+                type: "POST",
+                data: JSON.stringify({ Year: Year, Month: Month }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        var viewer = $("#modalBody");
+                        PDFObject.embed(data.message, viewer);
+                        $("#myModalUnits").modal("show");
+                        HideProgress();
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('Warning', data.message, 'warning');
+                    }
+
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    }
+    var GetMonths = function () {
+        var Year = $("#ddlYears").children("option:selected").val();
+        if (Year == "") {
+            $("#ddlMonth option").remove();
+            $('#ddlMonth').empty().append('<option selected="selected" value="">--Select Month--</option>');
+        }
+        else {
+            ShowProgress();
+            $("#ddlMonth option").remove();
+            $('#ddlMonth').empty().append('<option selected="selected" value="">--Select Month--</option>');
+
+            $.getJSON("/ViewDocument/GetMonths", { Year: parseInt(Year) },
+                function (data) {
+                    $('#ddlMonth').empty().append('<option selected="selected" value="0">--Select Month--</option>');
+                    $.each(data.ListOfMonths, function () {
+                        $("#ddlMonth").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    HideProgress();
+                });
+        }
+    }
+</script>
+
+
+

@@ -1,0 +1,108 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewStoreRequisition
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+
+    .NoRecords {
+        background-color: #dedbdb
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="card-body">
+    <b>Store Header</b>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Directorate", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(m => m.Directorate, new SelectList(Model.ListOfDirectorate, "Value", "Text", Model.Directorate), "--Select Directorate--", new { @id = "ddlDirectorate", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                    @Html.ValidationMessageFor(model => model.Directorate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(m => m.Department, new SelectList(Model.ListOfDepartment, "Value", "Text", Model.Department), "--Select Department--", new { @id = "ddlDepartment", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                    @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Date required:", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    <input type="datetime" class="form-control" placeholder="dd/mm/yyyy" id="dtPicker" onkeydown="return false;" autocomplete="off" />
+                    <div class='a'></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Purpose:(100 characters)", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    <textarea id="txtRemarks" class="form-control" rows="4" maxlength="100"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr style="border:1px solid black" />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Create Document" onclick="SubmitStoreRequisition(`@Model.DisDir`);" />
+    </div>
+</div>
+
+@*//////////////////////Modal////////////////////////////*@
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" ke aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">New Store Line</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dtPicker').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-0:+2',
+            showOtherMonths: true,
+            dateFormat: 'dd/mm/yy',
+            minDate: 0
+        });
+        $(window).resize(function () {
+            $('#dtPicker').datepicker('hide');
+            $('#dtPicker').blur();
+        });
+    });
+    document.getElementById("ddlDirectorate").disabled = true;
+    document.getElementById("ddlDepartment").disabled = true;
+</script>
+

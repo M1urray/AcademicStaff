@@ -1,0 +1,73 @@
+﻿@model  Latest_Staff_Portal.ViewModel.GateDetailList
+<div class="table-responsive">
+    <table class="table table-centered table-nowrap" id="PassengerLines">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th align="center">Actions</th>
+                <th>No</th>
+                <th>Date Out</th>
+                <th>Time Out</th>
+                <th>Asset Transfer No</th>
+                <th>Date Created</th>
+                <th>Asset Description</th>
+                <th>Asset From</th>
+                <th>Asset To</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.GatePassDetails != null && Model.GatePassDetails.Count() > 0)
+                {
+                    int i = 1;
+                    foreach (var item in Model.GatePassDetails)
+                    {
+                        <tr>
+                            <td>
+                                @i
+                            </td>
+                            <td><a href="#" class="btn btn-primary BtnPadding" onclick="SelectedRow('@item.No');">Select</a></td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.No)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateOut)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TimeOut)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AssetTransferNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateCreated)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AssetDescription)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AssetFromLocation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AssetToLocation)
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+

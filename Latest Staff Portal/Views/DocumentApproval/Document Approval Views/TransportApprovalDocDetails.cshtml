@@ -1,0 +1,138 @@
+﻿@model Latest_Staff_Portal.ViewModel.TransDocument
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Document No</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning" id="DocNo">@Model.DocHeader.No</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Commencement</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning">@Model.DocHeader.Commencement</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Destination</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning">@Model.DocHeader.Destination</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Date Requested</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning">@Model.DocHeader.DateRequested</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Date of Trip</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning">@Model.DocHeader.DateOfTrip</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">No of Days</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning">@Model.DocHeader.NoOfDays</span>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Vehicle Allocated</label>
+            </div>
+            <div class="col-md-8">
+                @Html.DropDownListFor(m => m.DocHeader.Vehicle, new SelectList(Model.ListOfVehicles, "Value", "Text", Model.DocHeader.Vehicle), "--Select vehicle--", new { @id = "ddlVehicle", @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Driver Allocated</label>
+            </div>
+            <div class="col-md-8">
+                @Html.DropDownListFor(m => m.DocHeader.Driver, new SelectList(Model.ListOfDrivers, "Value", "Text", Model.DocHeader.Driver), "--Select Driver--", new { @id = "ddlDriver", @class = "form-control" })
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<hr style="border:1px solid black" />
+<b>Passenger List</b>
+<hr />
+<div class="pre-scrollable">
+    <table class="table table-hover" id="PRVLines">
+        <thead>
+            <tr>
+                <th>Passenger Type</th>
+                <th>No</th>
+                <th>Name</th>
+                <th>Position</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.ListOfPassengers != null && Model.ListOfPassengers.Count() > 0)
+                {
+                    foreach (var item in Model.ListOfPassengers)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.No)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

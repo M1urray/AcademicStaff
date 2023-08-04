@@ -1,0 +1,419 @@
+﻿@model Latest_Staff_Portal.ViewModel.IndividualWorkPlan
+@{
+    ViewBag.Title = "IndividualWorkPlanCard";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div style="background-color: black;">
+    <a href="#" onclick="WorkplanListLink();" style="color:yellow"><<< Back To Workplan List</a>
+</div>
+<hr />
+<div class="card">
+    <div class="card-title">Document(Document No : @Request.QueryString["AppDoc"])</div>
+    <div class="card-body">
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingOne" aria-controls="collapseOne" aria-expanded="true" data-toggle="collapse" href="#collapseOne">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-up"></span>Section 1 : General
+                    </h6>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Document No</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning" id="DocNo">@Model.DocNo</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Appraisal Period</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.ApprisalPeriod</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Staff Number</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.StaffNo</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Staff Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.StaffName</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Directorate</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.Dim1</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Department</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.Dim2</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingThree" aria-expanded="false" aria-controls="collapseThree" data-toggle="collapse" href="#collapseThree">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span> Section 2 : Objective Setting
+                    </h6>
+                </div>
+                <div id="collapseThree" class="collapse"
+                     aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        <p style="color:red">To be completed by the Appraisee in consultation with the Supervisor at the beginning of the appraisal period</p>
+                        <hr />
+                        <button class="btn btn-primary" onclick="NewObjectiveForm();">New Objective</button>
+                        <hr />
+                        <div id="divObjective"></div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            @if (Model.Open_To == "Appraisee")
+            {
+                <div align="right">
+                    <input type="button" value="Send To Supervisor >>>" class="btn btn-primary" id="btnApp" onclick="SendDocTo();" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@*//////////////////////New Objective Modal////////////////////////////*@
+<div class="modal fade" id="myModalNewObj" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">New Objective</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyNewObj">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal Actions////////////////////////////*@
+<div class="modal fade" id="myModalAction" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Action Links</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyAction">
+                <div id="divActions"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.shadow-none').on('shown.bs.collapse', function () {
+            $(this).find('.fa-arrow-down').removeClass('fa-arrow-down').addClass('fa-arrow-up');
+        }).on('hidden.bs.collapse', function () {
+            $(this).find('.fa-arrow-up').removeClass('fa-arrow-up').addClass('fa-arrow-down');
+        });
+        var DocNo = $("#DocNo").html();
+        LoadObjectives(DocNo);
+    });
+    var LoadObjectives = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: "/IndividualWorkPlan/LoadObjectives",
+            success: function (data) {
+                $("#divObjective").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var NewObjectiveForm = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ Objective: "", EntryNo: "" }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/IndividualWorkPlan/NewWkObjectiveForm',
+            success: function (data) {
+                $("#modalBodyNewObj").html(data);
+                HideProgress();
+                $("#myModalNewObj").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    };
+    var UpdateObjectiveForm = function (Obj,EntryNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ Objective: Obj, EntryNo: EntryNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/IndividualWorkPlan/NewWkObjectiveForm',
+            success: function (data) {
+                $("#modalBodyNewObj").html(data);
+                HideProgress();
+                $("#myModalAction").modal("hide");
+                $("#myModalNewObj").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+
+    };
+    var ObjectiveTarget = function (entryNo) {
+        var AppDoc = $("#DocNo").html();
+        window.location = "/IndividualWorkPlan/ObjectiveTargetList?AppDoc=" + AppDoc + "&ObjEntryNo=" + entryNo;
+    };
+    var WorkplanListLink = function () {
+        window.location = "/IndividualWorkPlan/IndividualWorkPlanList";
+    };
+    var SelectAction = function (DocNo,Obj, EntryNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, Obj: Obj, EntryNo: EntryNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/WorkPlanActionLinks',
+            success: function (data) {
+                $("#modalBodyAction").html(data);
+                HideProgress();
+                $("#myModalAction").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SubmitObjective = function () {
+        var DocNo = '@Model.DocNo';
+        var Obj = $("#txtNewObj").val();
+
+        if (Obj == "") {
+            Swal.fire('error', 'Enter Objective', 'error');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: "/IndividualWorkPlan/SubmitObjective",
+                data: JSON.stringify({ AppNo: DocNo, Objective: Obj }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        HideProgress();
+                        LoadObjectives(DocNo);
+                        $("#txtNewObj").val("");
+                        $("#myModalNewObj").modal("hide");
+                        Swal.fire('Success', data.message, 'success');
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    var UpdateObjective = function (EntryNo) {
+        var DocNo = '@Model.DocNo';
+        var Obj = $("#txtNewObj").val();
+
+        if (Obj == "") {
+            Swal.fire('error', 'Enter Objective', 'error');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: "/IndividualWorkPlan/UpdateObjective",
+                data: JSON.stringify({ AppNo: DocNo, EntryNo: EntryNo, Objective: Obj }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        HideProgress();
+                        LoadObjectives(DocNo);
+                        $("#myModalNewObj").modal("hide");
+                        Swal.fire('Success', data.message, 'success');
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    var DeleteObjective = function (entryNo) {
+        var DocNo = '@Model.DocNo';
+        $.ajaxSetup({ cache: false });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                ShowProgress();
+                $.ajax({
+                    type: "post",
+                    url: "/IndividualWorkPlan/DeleteObjective",
+                    data: JSON.stringify({ AppNo: DocNo, EntryNo: entryNo }),
+                    contentType: "application/json; charset = utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                            HideProgress();
+                            LoadObjectives(DocNo);
+                            $("#myModalAction").modal("hide");
+                            Swal.fire('Success', data.message, 'success');
+                        }
+                        else {
+                            HideProgress();
+                            Swal.fire('error', data.message, 'error');
+                        }
+                    },
+                    error: function () {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                });
+            }
+            else {
+                Swal.fire('Cancelled', 'Record has not been deleted', 'error');
+            }
+        });
+    };
+    var SendDocTo = function () {
+        var DocNo = $("#DocNo").html();
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, SendTo: "1" }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/IndividualWorkPlan/SendDocumentTo',
+            success: function (data) {
+                if (data.success == true) {
+                    window.location = "/IndividualWorkPlan/IndividualWorkPlanList";
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'eModeloDocNodelror');
+                }
+            },
+            error: function (err) {
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+</script>
+

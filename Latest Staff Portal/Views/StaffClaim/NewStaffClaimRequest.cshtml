@@ -1,0 +1,165 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewStaffClaimRequisition
+
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+
+    .NoRecords {
+        background-color: #dedbdb
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="card pre-scrollable">
+    <div class="card-body">
+        <b>Staff Claim Header</b>
+        <hr />
+        <div>
+            <div class="row">
+                <div class="col-md-6">
+                    Raise From
+                    <select class="form-control" id="ddlFrom" onchange="ShowFrom();">
+                        <option value="">----</option>
+                        <option value="1">Imprest</option>
+                        <option value="2">Normal</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div id="diVImprestDocs">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            Choose Imprest Document Number
+                            <select class="form-control" id="ddlImprest">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Label("Purpose(100 Characters):", htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    <textarea id="txtImpRemarks" class="form-control" maxlength="50"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="divClaimForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Directorate", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.Directorate, Model.ListOfDirectorate, "--select Directorate--", new { @class = "form-control", @id = "ddlDirectorate", @readonly = "readonly", @style = "background-color:#dedebd" })
+                            @Html.ValidationMessageFor(model => model.Directorate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.Department, Model.ListOfDepartment, "--select Department--", new { @class = "form-control", @id = "ddlDepartment", @readonly = "readonly", @style = "background-color:#dedebd" })
+                            @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.Label("Purpose(100 Characters):", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            <textarea id="txtRemarks" class="form-control" maxlength="50"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="divButtonSave">
+            <hr style="border:1px solid black" />
+            <div align="center">
+                <input type="button" class="btn btn-primary waves-effect waves-light" value="Create Document" onclick="SubmitStaffClaimRequisition(`@Model.DisDir`);" />
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" ke aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">New Staff Claim Line</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#divClaimForm,#diVImprestDocs,#divButtonSave").hide();
+        document.getElementById("ddlDirectorate").disabled = true;
+        document.getElementById("ddlDepartment").disabled = true;
+    });
+    var ShowFrom = function () {
+        var from = $("#ddlFrom").children("option:selected").val();
+        if (from == "") {
+            $("#divClaimForm,#diVImprestDocs,#divButtonSave").hide();
+            Swal.fire('Warning', "Select Imprest from", 'warning');
+            return;
+        }
+        else if (from == "1") {
+            $("#divClaimForm").hide();
+            $("#diVImprestDocs,#divButtonSave").show();
+
+            ShowProgress();
+            $("#ddlImprest option").remove();
+            $('#ddlImprest').empty().append('<option selected="selected" value="">--Select Imprest--</option>');
+
+            $.getJSON("/StaffClaim/GetImprestList", {},
+                function (data) {
+                    $('#ddlImprest').empty().append('<option selected="selected" value="">--Select Imprest--</option>');
+                    $.each(data.ListOfImprest, function () {
+                        $("#ddlImprest").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    $("#ddlImprest").select2({
+                        width: '100%'
+                    });
+                    HideProgress();
+                });
+        }
+        else {
+            $("#divClaimForm,#divButtonSave").show();
+            $("#diVImprestDocs").hide();
+        }
+    };
+</script>
+

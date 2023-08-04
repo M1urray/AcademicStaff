@@ -1,0 +1,166 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewTrainingDocument
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Directorate", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.DropDownListFor(m => m.Directorate, new SelectList(Model.ListOfDirectorate, "Value", "Text", Model.Directorate), "--Select Directorate--", new { @id = "ddlDirectorate", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                @Html.ValidationMessageFor(model => model.Directorate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="form-group">
+                @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(m => m.Department, new SelectList(Model.ListOfDepartment, "Value", "Text", Model.Department), "--Select Department--", new { @id = "ddlDepartment", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                    @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Course", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.DropDownListFor(m => m.Course, new SelectList(Model.ListOfCourses, "Value", "Text", Model.Course), "--Select Course--", new { @id = "ddlCourse", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Course, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Training Category", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                <select id="ddlCategory" name="ddlCategory" class="form-control">
+                    <option value="">----</option>
+                    <option value="0">Individual</option>
+                    <option value="1">Group</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Sponsor", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                <select id="ddlSpnsor" name="ddlSponsor" class="form-control">
+                    <option value="">----</option>
+                    <option value="0">Self</option>
+                    <option value="2">Donor</option>
+                    <option value="3">Other</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Trainer", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.DropDownListFor(m => m.Trainer, new SelectList(Model.ListOfTrainers, "Value", "Text", Model.Trainer), "--Select Trainer--", new { @id = "ddlTrainer", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Trainer, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("From Date", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="dtFrom" onkeydown="return false;" autocomplete="off" />
+                <div class='a'></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("To Date", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="dtTo" onkeydown="return false;" autocomplete="off" />
+                <div class='a'></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Cost of Training", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="txtCost" onkeypress="return functionDecimal(event,this.value)" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Purpose of the Training", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                <textarea id="txtRemarks" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div align="center">
+    <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitTrainingRequest();" />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dtFrom,#dtTo').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-0:+2',
+            showOtherMonths: true,
+            dateFormat: 'dd/mm/yy',
+            minDate: 0
+        });
+        $("#dtFrom,#dtTo").focus(function () {
+            $("#ui-datepicker-div").position({
+                my: "left top",
+                at: "left bottom",
+                of: $(this)
+            });
+        });
+        $("#ddlDirectorate,#ddlDepartment,#ddlCourse,#ddlTrainer").select2({
+            width: '100%'
+        });
+        document.getElementById("ddlDirectorate").disabled = true;
+        document.getElementById("ddlDepartment").disabled = true;
+    });
+    function functionDecimal(evt, val) {
+        try {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+
+            if (charCode == 46) {
+                if (!(val.indexOf(".") > -1)) {
+                    return true;
+                }
+                else {
+                    Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                }
+            }
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                return false;
+            }
+            return true;
+        } catch (w) {
+            Swal.fire(w);
+        }
+    }
+    function functionx(evt) {
+        if (evt.charCode > 31 && (evt.charCode < 48 || evt.charCode > 57)) {
+            Swal.fire("Error", "Please enter only numeric characters in the text box", "error");
+            return false;
+        }
+    }
+</script>
+
+

@@ -1,0 +1,131 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.ObjTarget>
+<style>
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div class="pre-scrollable">
+    <table id="tableScoreCard" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead class="tb1">
+            <tr>
+                <th width="5%">#</th>
+                <th width="90%">Target</th>
+                <th width="10%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    if (Model.Count() > 0)
+                    {
+                        int i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr style="background-color:#a7c1aa">
+                                <td>@i</td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Target)
+                                </td>
+                                <td style="text-align:right" class="tdAction">
+                                    <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" onclick="EditTargetForm('@item.Target', '@item.EntryNo');"><i class="mdi mdi-pencil font-size-16"></i></a>
+                                    <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="RemoveTargetItem('@item.EntryNo');"><i class="mdi mdi-close font-size-16"></i></a>
+                                </td>
+                            </tr>
+                            <tr style="border:2px solid">
+                                <td colspan="3">
+                                    <table id="tableObjTarget" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead class="tb2">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Activity</th>
+                                                <th>Resourse Required</th>
+                                                <th>Expected Results</th>
+                                                <th>Time Frame</th>
+                                                <th>Performance Indicator</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                if (item.ListOfActivities != null)
+                                                {
+                                                    if (item.ListOfActivities.Count() > 0)
+                                                    {
+                                                        int j = 1;
+                                                        foreach (var item1 in item.ListOfActivities)
+                                                        {
+                                                            <tr>
+                                                                <td>@j</td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item1.Activity)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item1.Resources_Required)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item1.Expected_Results)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item1.Time_Frame)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item1.Performance_Indicator)
+                                                                </td>
+                                                                <td style="text-align:right" class="tdAction">
+                                                                    <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" onclick="UpdateTargetActivityForm('@item1.Entry_No');"><i class="mdi mdi-pencil font-size-16"></i></a>
+                                                                    <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="RemoveTargetActivityItem('@item1.Entry_No');"><i class="mdi mdi-close font-size-16"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                            j++;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="7" style="color:red">
+                                                                No Activities Found
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
+                                        </tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="7" align="right">
+                                                    <button class="btn BtnPadding btn-danger" onclick="AddTargetActivity('@item.EntryNo');">Add New Activity</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="2" style="color:red">
+                                No Objectives Found
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.header').click(function () {
+            $(this).toggleClass('expand').nextUntil('tr.header').slideToggle(100);
+        });
+    });
+</script>
+
+
+
+

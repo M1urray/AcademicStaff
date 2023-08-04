@@ -1,0 +1,263 @@
+﻿@model Latest_Staff_Portal.ViewModel.LeavePlanner
+@{
+    ViewBag.Title = "LeavePlannerDoument";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    hr {
+        margin: 4px;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div style="background-color: black;">
+    <a href="#" onclick="LeavePlanLink();" style="color:yellow"><<< Back To Leave Plan List</a>
+</div>
+<div class="card">
+    <div class="card-title">Leave Planner Document Details(@Model.DocNo)</div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <b>Document No</b>
+                @Html.TextBoxFor(m => m.DocNo, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+            </div>
+            <div class="col-md-6">
+                <b>Date Applied</b>
+                @Html.TextBoxFor(m => m.DateApplied, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "dtPicker", @onkeydown = "return false;", @autocomplete = "off" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>@Model.ListOfDimcaption.Dim1_Caption</b>
+                @Html.DropDownListFor(m => m.Dim1, new SelectList(Model.ListOfDirectorate, "Value", "Text", Model.Dim1), "--Select Directorate--", new { @id = "ddlDirectorate", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+            </div>
+            <div class="col-md-6">
+                <b>@Model.ListOfDimcaption.Dim2_Caption</b>
+                @Html.DropDownListFor(m => m.Dim2, new SelectList(Model.ListOfDepartment, "Value", "Text", Model.Dim2), "--Select Department--", new { @id = "ddlDepartment", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>HR Calender</b>
+                @Html.TextBoxFor(m => m.HRCalender, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtStatus" })
+            </div>
+            <div class="col-md-6">
+                <b>Status</b>
+                @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtStatus" })
+            </div>
+        </div>
+        <hr />
+        <div id="DivImpLines">
+            <hr style="border:1px solid black" />
+            <b>Leave Planner Lines</b>
+            <hr />
+            <div id="divLvPlannerLines"></div>
+            <hr style="border:1px solid black" />
+            @*<div align="right" id="DivSendForApproval">
+                    <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval();" />
+                </div>
+                <hr />*@
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" ke aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">New Line</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadLeavePlannerDocumentLines(`@Model.DocNo`, `@Model.Status`);
+        var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
+        if (Successmsg != "") {
+            Swal.fire('Success', Successmsg, 'success',true);
+            $.ajax({
+                type: "POST",
+                url: "/Common/NullibySessions"
+            });
+        }
+        document.getElementById("ddlDirectorate").disabled = true;
+        document.getElementById("ddlDepartment").disabled = true;
+    });
+    var LoadLeavePlannerDocumentLines = function (DocNo,Status) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo }),
+            url: "/Leave/LoadLeavePlannerLinesList",
+            success: function (data) {
+                $("#divLvPlannerLines").html(data);
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var LeavePlanLink = function () {
+        ShowProgress();
+        window.location = "/Leave/LeavePlannerList";
+    }
+    var LeavePlannerLineForm = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Leave/NewLeavePlanLine',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    };
+    var AddLeavePlanLineItem = function () {
+        var LvType = $("#ddlLeaveType").children("option:selected").val();
+        var days = $("#txtNoOfDays").val();
+        var StartDate = $('#txtStartDate').val();
+        var EndDate = $('#EndDate').html();
+        var ReturntDate = $('#ReturnDate').html();
+        var Remarks = $("#txtRemarks").val();
+
+        if (LvType == "") {
+            Swal.fire('error', 'Select Leave Type', 'error');
+            return;
+        }
+        else if (days == "") {
+            Swal.fire('error', 'Select Number of days you want to apply for leave', 'error');
+            return;
+        }
+        else if (StartDate == "") {
+            Swal.fire('error', 'Select Start Date', 'error');
+            return;
+        }
+        else if (EndDate == "dd/mm/yyyy") {
+            Swal.fire('error', 'End Date cannot be empty', 'error');
+            return;
+        }
+        else if (ReturntDate == "dd/mm/yyyy") {
+            Swal.fire('error', 'Return Date cannot be empty', 'error');
+            return;
+        }
+        else {
+            var DocNo = `@Model.DocNo`;
+            var LeavePlannerLines = {};
+            LeavePlannerLines.LeaveType = LvType;
+            LeavePlannerLines.DaysApplied = days;
+            LeavePlannerLines.StartDate = StartDate;
+            LeavePlannerLines.EndDate = EndDate;
+            LeavePlannerLines.ReturnDate = ReturntDate;
+            LeavePlannerLines.Comments = Remarks;
+            ShowProgress();
+            $.ajax({
+                type: "POST",
+                url: "/Leave/SubmitLeavePlannerApplication",
+                data: JSON.stringify({ DocNo: DocNo, NewApp: LeavePlannerLines }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        HideProgress();
+                        LoadLeavePlannerDocumentLines(DocNo,"Open");
+                        Swal.fire('Success', data.message, 'success');
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+            //Clear the TextBoxes.
+            txtNoOfDays.val("");
+            txtStartDate.val("");
+            txtRemarks.val("");
+        }
+    }
+    var RemoveItem = function (DocNo, LnNo) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                ShowProgress();
+                $.ajax({
+                    type: "POST",
+                    url: "/Imprest/RemoveImprestLine",
+                    data: JSON.stringify({ DocNo: DocNo, LnNo: LnNo }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            HideProgress();
+                            LoadImprestDocumentLines(DocNo, 'Pending');
+                            $("#txtNetAmount").val(data.NetAmout);
+                            Swal.fire('Success', data.message, 'success');
+                        }
+                        else {
+                            Swal.fire('Warning', data.message, 'warning');
+                            HideProgress();
+                        }
+                    },
+                    error: function (err) {
+                        HideProgress();
+                        Swal.fire('Warning', err, 'warning');
+                    }
+                });
+            }
+            else {
+                Swal.fire('Cancelled', 'Imprest line has not been deleted', 'error');
+            }
+        });
+    };
+</script>
+

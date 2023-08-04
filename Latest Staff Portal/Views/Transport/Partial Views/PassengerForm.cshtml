@@ -1,0 +1,38 @@
+﻿@model Latest_Staff_Portal.ViewModel.Passengers
+<style>
+    .ui-front {
+        z-index: 2000 !important;
+    }
+
+    .ui-autocomplete {
+        /* these sets the height and width */
+        max-height: 200px;
+        max-width: 236px;
+        /* these make it scroll for anything outside */
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
+</style>
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-6" runat="server">
+            <span style="font-weight: bold">Passenger Name</span>
+            @Html.DropDownListFor(m => m.No, new SelectList(Model.ListOfEmployee, "Value", "Text", Model.No), "--Select Employee--", new { @id = "ddlPassenger", @class = "form-control" })
+        </div>
+        <div class="col-md-6" runat="server">            
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Add Passenger" onclick="SubmitPassengerLine();" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ddlPassenger").select2({
+            width: '100%'
+        });
+    });
+</script>
+
+

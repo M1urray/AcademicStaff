@@ -1,0 +1,115 @@
+﻿@model Latest_Staff_Portal.ViewModel.DocTarget
+@{
+    ViewBag.Title = "ObjectiveTargetReviewList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    .tb1 {
+        background-color: black;
+        color: white;
+    }
+
+    .tb2 {
+        background-color: #808080;
+        color: white;
+    }
+
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="WorkplancardLink();" style="color:yellow"><<< Back To Workplan Card</a>
+</div>
+<hr />
+<div>
+    <b>Objective :</b>(@Model.Objective)
+</div>
+<div class="card pre-scrollable">
+    <div class="card-title">Objective Target Review List</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="divTargetList"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <b>Remarks</b>
+                @Html.TextAreaFor(m => m.Remarks, new { @class="form-control", @rows="3",@id="txtmarks" })
+            </div>
+            <div class="col-md-12" align="center">
+                <hr />               
+                <input type="button" value="Save Remarks" class="btn btn-primary" onclick="SaveObjectiveRemarks(`@Model.ObjEntryNo`);" />
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoaTargetListList();
+    });
+    var LoaTargetListList = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: '@Model.DocNo', ObjEntryNo: '@Model.ObjEntryNo' }),
+            url: "/IndividualWorkPlan/LoadObjectiveReviewTarget",
+            success: function (data) {
+                HideProgress();
+                $("#divTargetList").html(data);
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var WorkplancardLink = function () {
+        var AppDoc = '@Model.DocNo';
+        window.location = "/IndividualWorkPlan/IndividualWorkPlanReviewCard?AppDoc=" + AppDoc;
+    };
+    var SaveObjectiveRemarks = function (Obj_EntryNo) {
+        var DocNo = `@Model.DocNo`;
+        var Remarks = $("#txtmarks").val();
+        if (Remarks == "") {
+            Swal.fire('Warning', "Enter Remarks", 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                async: true,
+                type: "POST",
+                datatype: "json",
+                data: JSON.stringify({ AppNo: DocNo, EntryNo: Obj_EntryNo, Remarks: Remarks }),
+                contentType: "application/json; charset = utf-8",
+                processData: false,
+                url: '/IndividualWorkPlan/SaveWorkplanObjectiveRemarks',
+                success: function (data) {
+                    if (data.success == true) {
+                        HideProgress();
+                        Swal.fire('Success', data.message, 'success');
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                },
+                error: function (err) {
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    }
+</script>
+

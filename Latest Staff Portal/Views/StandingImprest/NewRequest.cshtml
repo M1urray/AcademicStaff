@@ -1,0 +1,200 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewStandingImprest
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+
+    .NoRecords {
+        background-color: #dedbdb
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="card pre-scrollable">
+    <div class="title"><b>Standing Imprest Header</b></div>
+    <hr />
+    <div style="border:2px solid">
+        <div class="card-body">
+            <b>Receiving Details</b>
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Recieving Region", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.Dim1, Model.ListOfDim1, "--select Receiving Station--", new { @class = "form-control", @id = "ddlDim1" })
+                            @Html.ValidationMessageFor(model => model.Dim1, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Receiving Unit/Station", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.Dim2, Model.ListOfDim2, "--select Receiving Station--", new { @class = "form-control", @id = "ddlDim2" })
+                            @Html.ValidationMessageFor(model => model.Dim2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Reciept Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Reciept Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
+                            @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Receiving Account", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.Receiving_BnkAccount, Model.ListOfBankAccounts, "--select Receiving Account--", new { @class = "form-control", @id = "ddlBankAccount" })
+                            @Html.ValidationMessageFor(model => model.Receiving_BnkAccount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Receiving Amount", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(model => model.Receiving_Amount, new { @class = "form-control", @id = "txtReceivingAmount", @onkeypress = "return functionDecimal(event,this.value)" })
+                            @Html.ValidationMessageFor(model => model.Receiving_Amount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.Label("Remarks", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control", @id = "txtRemarks" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr style="border:1px solid black" />
+        <div class="card-body">
+            <b>Sending Details</b>
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Sending Region", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.Dim11, Model.ListOfDim1, "--select sending Station--", new { @class = "form-control", @id = "ddlDim11" })
+                            @Html.ValidationMessageFor(model => model.Dim11, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Sending Unit/Station", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.Dim21, Model.ListOfDim2, "--select sending Station--", new { @class = "form-control", @id = "ddlDim21" })
+                            @Html.ValidationMessageFor(model => model.Dim21, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Sending Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.RespC1, Model.ListOfResponsibility, "--select Sending Responsibility Center--", new { @class = "form-control", @id = "ddlRespC1" })
+                            @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Sending Account", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.Sending_Amount, Model.ListOfBankAccounts1, "--select sending Account--", new { @class = "form-control", @id = "ddlSendingBank" })
+                            @Html.ValidationMessageFor(model => model.Receiving_BnkAccount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>                    
+            <hr style="border:1px solid black" />
+            <div align="center">
+                <input type="button" class="btn btn-primary waves-effect waves-light" value="Create Document" onclick="SubmitImprestRequisition();" />
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" ke aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">New Imprest Line</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {        
+        $("#ddlDim1,#ddlDim2,#ddlDim11,#ddlDim21,#ddlRespC,#ddlSendingBank,#ddlRespC1,#ddlBankAccount").select2({
+            width: '100%'
+        });
+        //document.getElementById("ddlDim11").disabled = true;
+        //document.getElementById("ddlDim21").disabled = true;
+    });
+    function functionDecimal(evt, val) {
+        try {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+
+            if (charCode == 46) {
+                if (!(val.indexOf(".") > -1)) {
+                    return true;
+                }
+                else {
+                    Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                }
+            }
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                return false;
+            }
+            return true;
+        } catch (w) {
+            Swal.fire(w);
+        }
+    }
+    function functionx(evt) {
+        if (evt.charCode > 31 && (evt.charCode < 48 || evt.charCode > 57)) {
+            Swal.fire("Error", "Please enter only numeric characters in the text box", "error");
+            return false;
+        }
+    }
+</script>
+
+

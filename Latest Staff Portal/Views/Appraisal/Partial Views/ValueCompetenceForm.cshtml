@@ -1,0 +1,24 @@
+﻿@model Latest_Staff_Portal.ViewModel.CompetenceValues
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-6">
+            <span style="font-weight: bold">Appraisal Assessment</span>
+            @Html.TextAreaFor(model => model.Appraisal_Assesment, new { @class = "form-control", @id = "txtApprAssessment" })
+        </div>
+        <div class="col-md-6">
+            <span style="font-weight: bold">Score</span>
+            @if (ViewBag.Assessment != null && ViewBag.Assessment.Count > 0)
+            {
+                @Html.DropDownListFor(m => m.Score, new SelectList(ViewBag.Assessment, "Value", "Text", Model.Score), "----", new { @id = "ddlScore", @class = "form-control" })
+            }
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary" value="Save Record" onclick="SaveCompValueReviewRecord('@Model.Appraisal_No', '@Model.Line_No', '@Model.Level');" />
+    </div>
+</div>
+
+
+
+

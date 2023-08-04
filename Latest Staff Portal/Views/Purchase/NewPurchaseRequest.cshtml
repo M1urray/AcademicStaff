@@ -1,0 +1,70 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewPurchaseRequisition
+
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+
+    .NoRecords {
+        background-color: #dedbdb
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="card-body">
+    <b>Purchase Header</b>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Directorate", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(m => m.Directorate, new SelectList(Model.ListOfDirectorate, "Value", "Text", Model.Department), "--Select Directorate--", new { @id = "ddlDirectorate", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                    @Html.ValidationMessageFor(model => model.Directorate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="form-group">
+                    @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(m => m.Department, new SelectList(Model.ListOfDepartment, "Value", "Text", Model.Division), "--Select Department--", new { @id = "ddlDepartment", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                        @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.Label("Reason:(100 characters)", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    <textarea id="txtRemarks" class="form-control" maxlength="50"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr style="border:1px solid black" />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Create Document" onclick="SubmitPurchaseRequisition(`@Model.DisDir`);" />
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById("ddlDirectorate").disabled = true;
+        document.getElementById("ddlDepartment").disabled = true;
+    });    
+</script>
+
