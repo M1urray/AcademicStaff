@@ -1,0 +1,14 @@
+﻿@model Latest_Staff_Portal.ViewModel.ValueText
+<div class="row">
+    <div class="col-md-12">
+        <select class="form-control" id="ddlType" name="ddlType">
+            <option value="1">PDF</option>
+            <option value="2">Excel</option>
+            <option value="3">Word</option>
+        </select>
+    </div>
+</div>
+<hr />
+<div align="center">
+    <button class="btn btn-primary" onclick="PrintUnitReports('@Model.value');">Get Report</button>
+</div>

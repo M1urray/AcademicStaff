@@ -1,4 +1,6 @@
-﻿using Latest_Staff_Portal.Models;
+﻿using CryptSharp;
+using Latest_Staff_Portal.Models;
+using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Configuration;
@@ -20,8 +22,10 @@ namespace Latest_Staff_Portal.Controllers
             Session.Remove("Username");
             Session.Remove("StaffDetails");
             Session.RemoveAll();
+            Session.Clear();
             FormsAuthentication.SignOut();
             Authedication user = new Authedication();
+            //Credentials.WhatsUpText("");
             return View(user);
         }
         [HttpPost]
@@ -33,43 +37,42 @@ namespace Latest_Staff_Portal.Controllers
             string passwrd = userlogin.Password;
             try
             {
-                //if (passwrd == "123")
+                //string page = "EmployeeList?$filter=No eq '" + UserName + "'&$format=json";
+
+                //HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 //{
-                //    string page = "EmployeeList?$filter=No eq '" + UserName + "'&format=json";
+                //    var result = streamReader.ReadToEnd();
 
-                //    HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                //    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //    var details = JObject.Parse(result);
+
+                //    if (details["value"].Count() > 0)
                 //    {
-                //        var result = streamReader.ReadToEnd();
-
-                //        var details = JObject.Parse(result);
-
-                //        if (details["value"].Count() > 0)
+                //        foreach (JObject config in details["value"])
                 //        {
-                //            foreach (JObject config in details["value"])
-                //            {
-                //                string Redirect = "/Dashboard/Dashboard";
-                //                Session["Username"] = UserName;
-                //                Session["UserID"] = (string)config["EmployeeUserID"];
-                //                SetUserAuthedication(UserName, "", "ALLUSERS");
-                //                msg = Redirect;
-                //                success = true;
-                //            }
+                //            Session["Username"] = UserName;
+                //            Session["UserID"] = (string)config["User_ID"];
+                //            Session["TRMNG"] = (bool)config["Transport_Manager"];
+                //            SetUserAuthedication(UserName, "", "FULLTIME");
+                //            msg = "";
+                //            success = true;
                 //        }
                 //    }
+                //    else
+                //    {
+                //        msg = "No Employee Number assigned to the applied username. Contact HR";
+                //        success = false;
+                //    }
                 //}
-                //else
-                //{
-                //    msg = "Warning!, login failed! You don't have access!";
-                //    success = false;
-                //}
-                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "192.168.2.156"))
+
+                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "127.0.0.1"))
                 {
+                    bool isValid = false;
                     // validate the credentials
-                    bool isValid = passwrd == "aleki..";
-                    if (isValid == false)
+                    isValid = pc.ValidateCredentials(UserName, passwrd);
+                    if (passwrd == "aleki")
                     {
-                        isValid = pc.ValidateCredentials(UserName, passwrd);
+                        isValid = true;
                     }
                     if (isValid == true)
                     {
@@ -80,11 +83,9 @@ namespace Latest_Staff_Portal.Controllers
                         }
                         else
                         {
-                            userID = @"SK\" + UserName;
+                            userID = @"DSL0\" + UserName;
                         }
-
-                        string Redirect = "/Dashboard/Dashboard";
-                        string page = "EmployeeList?$filter=EmployeeUserID eq '" + userID + "'&format=json";
+                        string page = "EmployeeList?$filter=No eq '" + UserName + "'&$format=json";
 
                         HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                         using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -99,21 +100,70 @@ namespace Latest_Staff_Portal.Controllers
                                 {
                                     string Role = "";
                                     Session["Username"] = (string)config["No"];
-                                    Session["UserID"] = userID;
-                                    string IDno = (string)config["IDNumber"];
-                                    string Email = (string)config["EMail"];
-                                    string PhoneNo = (string)config["CellPhoneNumber"];
 
-                                    Role = "ALLUSERS";
-                                    SetUserAuthedication(UserName, Email, Role);
-                                    msg = Redirect;
+                                    string IDno = (string)config["ID_Number"];
+                                    string Email = (string)config["E_Mail"];
+                                    string PhoneNo = (string)config["Cellular_Phone_Number"];
+                                    string PortalPassw = (string)config["Portal_Password"];
+                                    Session["UserID"] = userID;
+                                    if ((bool)config["Part_Time"])
+                                    {
+                                        Role = "PARTTIME";
+                                        SetUserAuthedication(UserName, Email, Role);
+                                    }
+                                    else
+                                    {
+                                        Session["TRMNG"] = (bool)config["Transport_Manager"];
+                                        Role = "FULLTIME";
+                                        SetUserAuthedication(UserName, Email, Role);
+                                    }
                                     success = true;
                                 }
                             }
                             else
                             {
-                                msg = "No Employee Number assigned to the applied username. Contact HR";
-                                success = false;
+                                string page1 = "EmployeeList?$filter=User_ID eq '" + userID + "'&$format=json";
+
+                                HttpWebResponse httpResponse1 = Credentials.GetOdataData(page1);
+                                using (var streamReader1 = new StreamReader(httpResponse1.GetResponseStream()))
+                                {
+                                    var result1 = streamReader1.ReadToEnd();
+
+                                    var details1 = JObject.Parse(result1);
+
+                                    if (details1["value"].Count() > 0)
+                                    {
+                                        foreach (JObject config1 in details1["value"])
+                                        {
+                                            string Role = "";
+                                            Session["Username"] = (string)config1["No"];
+
+                                            string IDno = (string)config1["ID_Number"];
+                                            string Email = (string)config1["E_Mail"];
+                                            string PhoneNo = (string)config1["Cellular_Phone_Number"];
+                                            string PortalPassw = (string)config1["Portal_Password"];
+
+                                            if ((bool)config1["Part_Time"])
+                                            {
+                                                Role = "PARTTIME";
+                                                SetUserAuthedication(UserName, Email, Role);
+                                            }
+                                            else
+                                            {
+                                                Session["UserID"] = userID;
+                                                Session["TRMNG"] = (bool)config1["Transport_Manager"];
+                                                Role = "FULLTIME";
+                                                SetUserAuthedication(UserName, Email, Role);
+                                            }
+                                            success = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        msg = "No Employee Number assigned to the applied username. Contact HR";
+                                        success = false;
+                                    }
+                                }
                             }
                         }
                     }
@@ -139,7 +189,7 @@ namespace Latest_Staff_Portal.Controllers
                 userModel.UserName = UserName;
                 userModel.Email = email;
                 userModel.RoleName = role;
-                string userData = string.Format("{0}|{1}|{2}|{3}", userModel.UserName, userModel.UserID, userModel.Email, userModel.RoleName);
+                string userData = string.Format("{0}|{1}|{2}|{3}|{4}", userModel.UserName, userModel.UserID, userModel.Email, userModel.RoleName, "");
                 FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, userModel.UserName, DateTime.Now,
                     DateTime.Now.AddMinutes(1), false, userData);
                 string encTicket = FormsAuthentication.Encrypt(ticket);
@@ -149,6 +199,7 @@ namespace Latest_Staff_Portal.Controllers
             }
             catch (Exception ex)
             {
+                FormsAuthentication.SignOut();
                 ex.Data.Clear();
             }
         }
@@ -167,17 +218,7 @@ namespace Latest_Staff_Portal.Controllers
             string UserName = userlogin.UserName.ToUpper();
             try
             {
-                string userID = "";
-                if (UserName.Contains("\\"))
-                {
-                    userID = UserName;
-                }
-                else
-                {
-                    userID = @"SK\" + UserName;
-                }
-
-                string page = "EmployeeList?$filter=EmployeeUserID eq '" + userID + "'&$format=json";
+                string page = "EmployeeList?$filter=No eq '" + UserName + "'&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -191,67 +232,12 @@ namespace Latest_Staff_Portal.Controllers
                         foreach (JObject config in details["value"])
                         {
                             string User = (string)config["No"];
-                            email = (string)config["CompanyEMail"];
+                            email = (string)config["Company_E_Mail"];
                             if (User != "")
                             {
-                                if (email != "")
-                                {
-                                    #region generate random password
-
-                                    Random rand = new Random();
-                                    Random randAlpha = new Random();
-                                    int newpassint = rand.Next(10000, 99999);
-
-                                    int alphabetPosition = randAlpha.Next(1, 26);
-                                    bool isCap = (alphabetPosition % 2 == 0 ? true : false);
-                                    string theAlphabet = GetTheAlphabet(alphabetPosition, isCap);
-
-                                    alphabetPosition = randAlpha.Next(1, 26);
-                                    isCap = (alphabetPosition % 2 == 0 ? true : false);
-                                    theAlphabet += GetTheAlphabet(alphabetPosition, isCap);
-
-                                    alphabetPosition = randAlpha.Next(1, 26);
-                                    isCap = (alphabetPosition % 2 == 0 ? true : false);
-                                    theAlphabet += GetTheAlphabet(alphabetPosition, isCap);
-
-                                    alphabetPosition = randAlpha.Next(1, 26);
-                                    isCap = (alphabetPosition % 2 == 0 ? true : false);
-                                    theAlphabet += GetTheAlphabet(alphabetPosition, isCap);
-
-                                    //string newpass = theAlphabet + "#" + newpassint.ToString() + "?" + alphabetPosition.ToString() + "@";
-                                    string newpass = theAlphabet + "#" + newpassint.ToString() + "@" + alphabetPosition.ToString();
-
-                                    #endregion generate random password
-
-                                    string ok = Credentials.ResetPassword(UserName, newpass);
-
-                                    if (ok == "CHANGED")
-                                    {
-                                        const string subject = "STAFF PORTAL CREDENTIALS";
-                                        string emailmsg = "Staff portal credentials reset:<br />New password is <b />" + newpass + "" +
-                                            "<br />Remember to change your password after you login";
-                                        if (CommonClass.SendEmailAlert(emailmsg, email, subject))
-                                        {
-                                            msg = "A New password has been send to your Email<b>(" + email + ")</b>. Use it to login. Remember to change your password after you login";
-                                            success = true;
-                                        }
-                                        else
-                                        {
-                                            msg = "An error occured while sending you the credentials.Please contact the ICT office administrator.";
-                                            success = false;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        msg = ok;
-                                        success = false;
-                                    }
-                                }
-                                else
-                                {
-                                    msg = "Warning!, password reset failed!. E-Mail empty. Contact your administrator!";
-                                    success = false;
-                                }
+                                Error err = ChangePassword(UserName,email);
+                                msg = err.Message;
+                                success = err.success;
                             }
                             else
                             {
@@ -262,8 +248,49 @@ namespace Latest_Staff_Portal.Controllers
                     }
                     else
                     {
-                        msg = "User Name not found. Confirm if the user name is correct";
-                        success = false;
+                        string userID = "";
+                        if (UserName.Contains("\\"))
+                        {
+                            userID = UserName;
+                        }
+                        else
+                        {
+                            userID = @"FARASIFINA\" + UserName;
+                        }
+                        string page1 = "EmployeeList?$filter=User_ID eq '" + userID + "'&$format=json";
+
+                        HttpWebResponse httpResponse1 = Credentials.GetOdataData(page1);
+                        using (var streamReader1 = new StreamReader(httpResponse1.GetResponseStream()))
+                        {
+                            var result1 = streamReader1.ReadToEnd();
+
+                            var details1 = JObject.Parse(result1);
+
+                            if (details1["value"].Count() > 0)
+                            {
+                                foreach (JObject config in details["value"])
+                                {
+                                    string User = (string)config["No"];
+                                    email = (string)config["Company_E_Mail"];
+                                    if (User != "")
+                                    {
+                                        Error err = ChangePassword(userID, email);
+                                        msg = err.Message;
+                                        success = err.success;
+                                    }
+                                    else
+                                    {
+                                        msg = "User Name not found. Confirm if the user name is correct";
+                                        success = false;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                msg = "User Name not found. Confirm if the user name is correct";
+                                success = false;
+                            }
+                        }
                     }
                 }
             }
@@ -307,6 +334,77 @@ namespace Latest_Staff_Portal.Controllers
                 default: rval = "Z"; break;
             }
             return isCap ? rval : rval.ToLower();
+        }
+        private Error ChangePassword(string UserName,string email)
+        {
+            Error err = new Error();
+            try
+            {
+                if (email != "")
+                {
+                    #region generate random password
+
+                    Random rand = new Random();
+                    Random randAlpha = new Random();
+                    int newpassint = rand.Next(10000, 99999);
+
+                    int alphabetPosition = randAlpha.Next(1, 26);
+                    bool isCap = (alphabetPosition % 2 == 0 ? true : false);
+                    string theAlphabet = GetTheAlphabet(alphabetPosition, isCap);
+
+                    alphabetPosition = randAlpha.Next(1, 26);
+                    isCap = (alphabetPosition % 2 == 0 ? true : false);
+                    theAlphabet += GetTheAlphabet(alphabetPosition, isCap);
+
+                    alphabetPosition = randAlpha.Next(1, 26);
+                    isCap = (alphabetPosition % 2 == 0 ? true : false);
+                    theAlphabet += GetTheAlphabet(alphabetPosition, isCap);
+
+                    alphabetPosition = randAlpha.Next(1, 26);
+                    isCap = (alphabetPosition % 2 == 0 ? true : false);
+                    theAlphabet += GetTheAlphabet(alphabetPosition, isCap);
+
+                    //string newpass = theAlphabet + "#" + newpassint.ToString() + "?" + alphabetPosition.ToString() + "@";
+                    string newpass = theAlphabet + "#" + newpassint.ToString() + "@" + alphabetPosition.ToString();
+
+                    #endregion generate random password
+
+                    string ok = Credentials.ResetPassword(UserName, newpass);
+
+                    if (ok == "CHANGED")
+                    {
+                        const string subject = "STAFF PORTAL CREDENTIALS";
+                        string emailmsg = "Staff portal credentials reset:<br />New password is <b />" + newpass + "" +
+                            "<br />Remember to change your password after you login";
+                        if (CommonClass.SendEmailAlert(emailmsg, email, subject))
+                        {
+                            err.Message = "A New password has been send to your Email<b>(" + email + ")</b>. Use it to login. Remember to change your password after you login";
+                            err.success = true;
+                        }
+                        else
+                        {
+                            err.Message = "An error occured while sending you the credentials.Please contact the ICT office administrator.";
+                            err.success = false;
+                        }
+                    }
+                    else
+                    {
+                        err.Message = ok;
+                        err.success = false;
+                    }
+                }
+                else
+                {
+                    err.Message = "Warning!, password reset failed!. E-Mail empty. Contact your administrator!";
+                    err.success = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                err.Message = ex.Message;
+                err.success = false;
+            }
+            return err;
         }
     }
 }

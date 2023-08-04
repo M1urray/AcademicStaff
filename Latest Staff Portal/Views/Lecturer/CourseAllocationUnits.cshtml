@@ -1,0 +1,269 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.LecturerAssignedUnits>
+@{
+    ViewBag.Title = "CourseAllocationUnits";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+    }
+</style>
+<hr />
+<div class="card pre-scrollable">
+    <div class="card-title">Course Allocation List</div>
+    <div class="card-body">
+        <table id="datatable-buttons" class="table table-responsive-sm table-bordered" style="border-collapse: collapse; border-spacing: 0; width: 100%; font-size:12px">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Code</th>
+                    <th>Stage</th>
+                    <th>Semester</th>
+                    <th>Unit</th>
+                    <th>Unit Name</th>
+                    <th>Campus</th>
+                    @*<th>Settlement Type</th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        {
+                            if (Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <button onclick="SelectedRow('@item.Code','@item.Stage','@item.Semester', '@item.Unit', '@item.Unit_Name', '@item.Campus_Code','@item.Student_Type');" class="btn btn-sm btn-danger">Select</button>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Code)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Stage)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Semester)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Unit)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Unit_Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Campus_Code)
+                                        </td>
+                                        @*<td>
+                                                @Html.DisplayFor(modelItem => item.Student_Type)
+                                            </td>*@
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7" style="color:red">
+                                        No lecturer Records Found
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@*//////////////////////Modal Links////////////////////////////*@
+<div class="modal fade" id="myModalLinks" data-toggle="modal" tabindex="-1" data-dismiss="modal" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelLnks"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyLinks">
+                <div>
+                    <b>Unit =></b> <label id="lblUnit"></label>-<label id="lblUnitName"></label>
+                </div>
+                <hr />
+                <ol class="list-group">
+                    <li class="list-group-item"><a href="#" onclick="EnterClassAttendance('L');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Class Attendance</a></li>
+                    <li class="list-group-item"><a href="#" onclick="PrintUnitReports('CLATT');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Class List</a></li>
+                </ol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModalUnits" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelT"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody" style="width:100%;height:450px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#datatable").DataTable(), $("#datatable-buttons").DataTable({
+            lengthChange: !1,
+            buttons: [
+                "copy",
+                {
+                    extend: 'excel',
+                    title: 'Allocated Unit List',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    title: 'Allocated Unit List',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7]
+                    }
+                }
+            ]
+        }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)")
+    });
+    var SelectedRow = function (Prog,Stage,Sem, Unit, UnitName, Campus) {
+        var UnitStudentListFilters = {};
+        UnitStudentListFilters.Prog = Prog;
+        UnitStudentListFilters.Stage = Stage;
+        UnitStudentListFilters.Sem = Sem;
+        UnitStudentListFilters.Unit = Unit;
+        UnitStudentListFilters.UnitName = UnitName;
+        UnitStudentListFilters.Campus = Campus;
+        //UnitStudentListFilters.SettlementT = StudentType;
+        ShowProgress();
+        $.ajax({
+            url: '@Url.Action("AssignAssignedUnitSessions", "lecturer")',
+            datatype: "json",
+            type: "POST",
+            data: JSON.stringify({ StudentUnitFilters: UnitStudentListFilters }),
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    $("#lblUnit").text(Unit);
+                    $("#lblUnitName").text(UnitName);
+                    $("#labelLnks").text("Unit Links");
+                    HideProgress();
+                    $("#myModalLinks").modal("show");
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+            },
+            error: function (err) {
+                Swal.fire('Error', err, 'error');
+            }
+        });
+    }
+    @*var AssignSessions = function () {
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var Prog = row.find("td").eq(1).html();
+        var Stage = row.find("td").eq(2).html();
+        var Sem = row.find("td").eq(3).html();
+        var Unit = row.find("td").eq(4).html();
+        var UnitName = row.find("td").eq(5).html();
+        var Campus = row.find("td").eq(6).html();
+        var StudyMode = row.find("td").eq(7).html();
+
+        var UnitStudentListFilters = {};
+        UnitStudentListFilters.Prog = Prog;
+        UnitStudentListFilters.Stage = Stage;
+        UnitStudentListFilters.Sem = Sem;
+        UnitStudentListFilters.Unit = Unit;
+        UnitStudentListFilters.UnitName = UnitName;
+        UnitStudentListFilters.Campus = Campus;
+        UnitStudentListFilters.SettlementT = StudyMode;
+        $.ajax({
+            url: '@Url.Action("AssignAssignedUnitSessions", "lecturer")',
+            datatype: "json",
+            type: "POST",
+            data: JSON.stringify({ StudentUnitFilters: UnitStudentListFilters }),
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+
+                }
+                else {
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+            },
+            error: function (err) {
+                Swal.fire('Error', err, 'error');
+
+            Student_TypeStudent_Type
+        });
+    }*@
+    var AssignMarks = function () {
+        ShowProgress();
+        window.location = '@Url.Action("StudentUnitList", "lecturer")?Prog=' + Prog + '&Descr=' + Descr;
+    }
+    var StudentUnitList = function () {
+        ShowProgress();
+        window.location = '@Url.Action("StudentUnitList", "lecturer")';
+    }
+    var EnterClassAttendance = function () {
+        ShowProgress();
+        window.location ='@Url.Action("ClassAttendanceList", "lecturer")';
+    }
+    var PrintUnitReports = function (ReportType) {
+        ShowProgress();
+        $.ajax({
+            url: '@Url.Action("GetUnitReports", "lecturer")',
+            datatype: "json",
+            type: "POST",
+            data: JSON.stringify({ ReportType: ReportType }),
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    var viewer = $("#modalBody");
+                    PDFObject.embed(data.message, viewer);
+                    $("#myModalUnits").modal("show");
+                    HideProgress();
+                }
+                else {
+                    Swal.fire('Warning', data.message, 'warning');
+                    HideProgress();
+                }
+            },
+            error: function (err) {
+                Swal.fire('Warning', err, 'warning');
+                HideProgress();
+            }
+        });
+    }
+</script>

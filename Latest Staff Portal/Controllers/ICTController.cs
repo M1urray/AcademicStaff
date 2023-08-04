@@ -103,7 +103,7 @@ namespace Latest_Staff_Portal.Controllers
                 NewICTRequisition NewICTReq = new NewICTRequisition();
                 #region Directorate List
                 List<DimensionValues> DirectorateList = new List<DimensionValues>();
-                string pageDir = "DimensionValues?$filter=Dimension_Code eq 'BRANCH'&$format=json";
+                string pageDir = "DimensionValues?$filter=Dimension_Code eq 'DIRECTORATES'&$format=json";
 
                 HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
                 using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
@@ -556,7 +556,7 @@ namespace Latest_Staff_Portal.Controllers
                 NewICTRequisition NewICTReq = new NewICTRequisition();
                 #region Directorate List
                 List<DimensionValues> DirectorateList = new List<DimensionValues>();
-                string pageDir = "DimensionValues?$filter=Dimension_Code eq 'BRANCH'&$format=json";
+                string pageDir = "DimensionValues?$filter=Dimension_Code eq 'DIRECTORATES'&$format=json";
 
                 HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
                 using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))

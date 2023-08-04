@@ -4,17 +4,15 @@
         <thead>
             <tr>
                 <th>Type</th>
-                <th>No</th>
+                <th>Item</th>
                 <th>Description</th>
-                <th>Receiving Location</th>
+                <th>Description 2</th>
+                <th>Store</th>
                 <th class="text-center">Quantity</th>
                 <th>Unit Measure</th>
                 <th class="text-left">Unit Amount</th>
                 <th class="text-left">Amount</th>
-                @if (Model.Status == "Open")
-                {
-                    <th style="text-align:center" class="tdAction">Action</th>
-                }
+                <th style="text-align:center" class="tdAction">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +30,9 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ItemDesc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description2)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Location)
@@ -70,10 +71,10 @@
         </tbody>
     </table>
 </div>
-<hr />
 @if (Model.Status == "Open")
 {
-    <div style="text-align:right">
+    <div align="right">
         <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddPRVLines();" />
     </div>
 }
+

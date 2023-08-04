@@ -26,6 +26,8 @@ namespace Latest_Staff_Portal.ViewModel
         public string Campus_Code { get; set; }
         public string Name { get; set; }
         public string Student_Type { get; set; }
+        public string CourseClass { get; set; }
+        public string LnNo { get; set; }
     }
     public class LecCategory
     {

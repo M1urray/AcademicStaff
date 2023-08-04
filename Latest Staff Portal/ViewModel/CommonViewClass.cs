@@ -72,4 +72,13 @@ namespace Latest_Staff_Portal.ViewModel
     {
         public List<SelectListItem> ListOfddlData { get; set; }
     }
+    public class ValueText
+    {
+        public string value { get; set; }
+    }
+    public class CourseEval
+    {
+        public string Code { get; set; }
+        public List<SelectListItem> ListOfSemester { get; set; }
+    }
 }

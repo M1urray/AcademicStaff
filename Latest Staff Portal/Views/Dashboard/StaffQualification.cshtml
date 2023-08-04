@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.Qualification>
+<div class="pre-scrollable">
+    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead style="background-color:black;color:white">
+            <tr>
+                <th>Qualification</th>
+                <th>Description</th>
+                <th>Institution</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null && Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Qual)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Desc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Institution)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

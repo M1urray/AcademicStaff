@@ -14,11 +14,6 @@
         font-size: 12px;
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div class="card pre-scrollable">
     <div class="card-title">Staff Claim Requisition List</div>
     <hr />
@@ -73,7 +68,7 @@
             Swal.fire('Success', Successmsg, 'success', true);
             $.ajax({
                 type: "POST",
-                url: "/Common/NullibySessions"
+                url: '@Url.Action("NullibySessions", "Common")'
             });
         }
     });
@@ -85,7 +80,7 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: "/StaffClaim/StaffClaimRequisitionListPartialView",
+            url: '@Url.Action("StaffClaimRequisitionListPartialView", "StaffClaim")',
             success: function (data) {
                 $("#divRegList").html(data);
                 HideProgress();
@@ -104,7 +99,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: "/StaffClaim/NewStaffClaimRequest",
+            url: '@Url.Action("NewStaffClaimRequest", "StaffClaim")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -116,21 +111,49 @@
             }
         });
     }
-    var SubmitStaffClaimRequisition = function (DiReg) {
-        var ClaimFrom = $("#ddlFrom").children("option:selected").val();
-        if (ClaimFrom == "") {
-            Swal.fire('Warning', "Select Claim from", 'warning');
+    var SubmitStaffClaimRequisition = function () {
+        var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var School = $("#ddlSchool").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+        var RespoC = $("#ddlRespC").children("option:selected").val();
+        if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
             return;
         }
-        else if (ClaimFrom == "1") {
-            var RemarksImp = $("#txtImpRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
-            var ImpNo = $("#ddlImprest").children("option:selected").val();
+        else if (Department == "") {
+            Swal.fire('Warning', "Select Department", 'warning');
+            return;
+        }
+        else if (RespoC == "") {
+            Swal.fire('Warning', "Select Responsibility center", 'warning');
+            return;
+        }
+        else if (Remarks == "") {
+            Swal.fire('Warning', "Enter Reason for the purchase", 'warning');
+            return;
+        }
+        else if (Remarks.length > 50) {
+            Swal.fire('Warning', "Your Purpose should have a maximum of 50 characters", 'warning');
+            return;
+        }
+        else {
+            if (School == "") {
+                School = "";
+            }
+            var StaffClaimHeader = {};
+            StaffClaimHeader.Remarks = Remarks;
+            StaffClaimHeader.school = School;
+            StaffClaimHeader.Campus = Campus;
+            StaffClaimHeader.Department = Department;
+            StaffClaimHeader.RespC = RespoC;
+
             ShowProgress();
             //Send the JSON array to Controller using AJAX.
             $.ajax({
                 type: "POST",
-                url: "/StaffClaim/SubmitStaffClaimFromImprest",
-                data: JSON.stringify({ ImprestNo: ImpNo, Remarks: RemarksImp }),
+                url: '@Url.Action("SubmitStaffClaimRequisition", "StaffClaim")',
+                data: JSON.stringify({ staffClaimHeader: StaffClaimHeader }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -148,62 +171,6 @@
                 }
             });
         }
-        else {
-            var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
-            var Directorate = $("#ddlDirectorate").children("option:selected").val();
-            var Department = $("#ddlDepartment").children("option:selected").val();
-            //var Section = $("#ddlSection").children("option:selected").val();
-            if (Directorate == "" && DiReg == false) {
-                Swal.fire('Warning', "Select Directorate", 'warning');
-                return;
-            }
-            else if (Department == "") {
-                Swal.fire('Warning', "Select Department", 'warning');
-                return;
-            }
-            //else if (Division == "") {
-            //    Swal.fire('Warning', "Select Division", 'warning');
-            //    return;
-            //}
-            else if (Remarks == "") {
-                Swal.fire('Warning', "Enter Reason for the purchase", 'warning');
-                return;
-            }
-            else if (Remarks.length > 250) {
-                Swal.fire('Warning', "Your Purpose should have a maximum of 250 characters", 'warning');
-                return;
-            }
-            else {
-                var StaffClaimHeader = {};
-                StaffClaimHeader.Remarks = Remarks;
-                StaffClaimHeader.Directorate = Directorate;
-                StaffClaimHeader.Department = Department;
-               // StaffClaimHeader.Section = Section;
-                ShowProgress();
-
-                //Send the JSON array to Controller using AJAX.
-                $.ajax({
-                    type: "POST",
-                    url: "/StaffClaim/SubmitStaffClaimRequisition",
-                    data: JSON.stringify({ staffClaimHeader: StaffClaimHeader }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.success) {
-                            window.location = data.message;
-                        }
-                        else {
-                            Swal.fire('Warning', data.message, 'warning');
-                            HideProgress();
-                        }
-                    },
-                    error: function (err) {
-                        HideProgress();
-                        Swal.fire('Warning', err, 'warning');
-                    }
-                });
-            }
-        }
     };
     var SelectedRow = function (DocNo, Status) {
         ShowProgress();
@@ -211,10 +178,10 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType:'CLM' }),
+            data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'IMP' }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/CommonActions',
+            url: '@Url.Action("CommonActions", "Common")',
             success: function (data) {
                 $("#modalBodyLinks").html(data);
                 HideProgress();
@@ -228,7 +195,7 @@
     }
     var ViewDoc = function (DocNo) {
         ShowProgress();
-        window.location = "/StaffClaim/StaffClaimDocumentView?DocNo=" + DocNo;
+        window.location = '@Url.Action("StaffClaimDocumentView", "StaffClaim")?DocNo=" + DocNo;
     }
     var SendDocForApproval = function (DocNo) {
         ShowProgress();
@@ -239,7 +206,7 @@
             data: JSON.stringify({ DocNo: DocNo, Redirect: "N" }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/StaffClaim/SendStaffClaimAppForApproval',
+            url: '@Url.Action("SendStaffClaimAppForApproval", "StaffClaim")',
             success: function (data) {
                 if (data.success == true) {
                     HideProgress();
@@ -267,15 +234,15 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/StaffClaim/CancelStaffClaimAppForApproval',
+            url: '@Url.Action("CancelStaffClaimAppForApproval", "StaffClaim")',
             success: function (data) {
-                HideProgress();
-                LoadStaffClaimReqList();
                 if (data.success == true) {
-                    $("#myModalLinks").modal("hide");
+                    HideProgress();
+                    LoadStaffClaimReqList();
                     Swal.fire('Success', data.message, 'success');
                 }
                 else {
+                    HideProgress();
                     Swal.fire('Error', data.message, 'error');
                 }
             },
@@ -293,10 +260,10 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, RecID: "Staff Claims Header: " + DocNo }),
+            data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/DocumentApprovalTrail',
+            url: '@Url.Action("DocumentApprovalTrail", "Common")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -312,7 +279,7 @@
     var ViewDocComments = function (DocNo) {
         $("#labelF").text("Document Comments");
         ShowProgress();
-        var RecordID = "Staff Claims Header: " + DocNo;
+        var RecordID = "Staff Claim: " + DocNo;
         $.ajax({
             async: true,
             type: "POST",
@@ -320,7 +287,7 @@
             data: JSON.stringify({ RecID: RecordID }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/DocumentApprovalComments',
+            url: '@Url.Action("DocumentApprovalComments", "Common")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();

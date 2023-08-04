@@ -15,10 +15,10 @@
     <div class="row" id="DivService">
         <div class="col-md-6">
             <label id="labelSearch"></label>
-            <textarea id="IdSearchItem" rows="3" class="form-control" style="background-color:#dedebd"></textarea>
+            <textarea id="IdSearchItem" rows="2" class="form-control" style="background-color:#dedebd"></textarea>
         </div>
         <div class="col-md-6">
-            Unit Amount
+            Amount
             <input type="text" class="form-control" id="txtAmount" onkeypress="return functionDecimal(event,this.value)" />
         </div>
     </div>
@@ -27,15 +27,15 @@
             Quantity
             <input type="text" class="form-control" id="txtQuantity" onkeypress="return functionx(event)" />
         </div>
-        <div class="col-md-6" id="divStore">
-            Receiving Location
+        <div class="col-md-6">
+            Where Needed
             @Html.DropDownListFor(model => model.ItemDetails.Location, Model.ListOfLocations, "--select Location--", new { @class = "form-control", @id = "ddlLocation" })
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             Description(50 Characters)
-            <textarea id="txtDescription" class="form-control" maxlength="50" rows="3"></textarea>
+            <textarea id="txtDescription" class="form-control" maxlength="50"></textarea>
         </div>
     </div>
     <hr />
@@ -49,7 +49,6 @@
         document.getElementById("IdSearchItem").disabled = true;
         if (`@Model.ItemDetails.LineType` == "Service") {
             $('#PRVType').val("1");
-            $("#divStore").hide();
             $('#labelSearch').text("Service");
         }
         else if (`@Model.ItemDetails.LineType` == "Item") {

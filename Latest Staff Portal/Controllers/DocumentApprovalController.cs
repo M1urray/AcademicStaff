@@ -13,11 +13,11 @@ using System.Web.Mvc;
 
 namespace Latest_Staff_Portal.Controllers
 {
-    [CustomeAuthentication]
-    [CustomAuthorization(Role = "ALLUSERS")]
     public class DocumentApprovalController : Controller
     {
-        // GET: DocumentApproval
+        [CustomeAuthentication]
+        [CustomAuthorization(Role = "FULLTIME")]
+        // GET: DocumentApproval       
         public ActionResult DocumentForApprovalSummery(string rn)
         {
             try
@@ -35,6 +35,8 @@ namespace Latest_Staff_Portal.Controllers
                     else
                     {
                         string userID = Session["UserID"].ToString();
+
+                        #region Other Documents
                         DocumentCount DocCount = new DocumentCount();
 
                         DocCount.LeaveCount = 0;
@@ -44,11 +46,11 @@ namespace Latest_Staff_Portal.Controllers
                         DocCount.ImpCount = 0;
                         DocCount.SurrCount = 0;
                         DocCount.ClaimCount = 0;
-                        DocCount.Transport = 0;
-                        DocCount.Training = 0;
+                        DocCount.TransportCount = 0;
+                        DocCount.Clearance = 0;
+                        DocCount.TransferOrder = 0;
+                        DocCount.CafCount = 0;
                         DocCount.PVCount = 0;
-                        DocCount.PayrollCount = 0;
-                        //DocCount.TransferOrder = 0;
 
                         string page = "ApprovalEntries?$filter=Approver_ID eq '" + userID + "' and Status eq '" + rn + "'&$format=json";
                         HttpWebResponse httpResponse = Credentials.GetOdataData(page);
@@ -59,7 +61,7 @@ namespace Latest_Staff_Portal.Controllers
                             var details = JObject.Parse(result);
                             foreach (JObject config in details["value"])
                             {
-                                if ((string)config["Table_ID"] == "70134864")
+                                if ((string)config["Table_ID"] == "70135114")
                                 {
                                     DocCount.LeaveCount = DocCount.LeaveCount + 1;
                                 }
@@ -71,46 +73,122 @@ namespace Latest_Staff_Portal.Controllers
                                 {
                                     DocCount.LPOCount = DocCount.LPOCount + 1;
                                 }
-                                if ((string)config["Table_ID"] == "70134954")
+                                if ((string)config["Table_ID"] == "70135010")
                                 {
                                     DocCount.SRNCount = DocCount.SRNCount + 1;
                                 }
-                                if ((string)config["Table_ID"] == "70135176")
+                                if ((string)config["Table_ID"] == "70135469")
                                 {
                                     DocCount.ImpCount = DocCount.ImpCount + 1;
                                 }
-                                if ((string)config["Table_ID"] == "70135168")
+                                if ((string)config["Table_ID"] == "70135450")
                                 {
                                     DocCount.SurrCount = DocCount.SurrCount + 1;
                                 }
-                                if ((string)config["Table_ID"] == "70135169")
+                                if ((string)config["Table_ID"] == "70135454")
                                 {
                                     DocCount.ClaimCount = DocCount.ClaimCount + 1;
                                 }
-                                if ((string)config["Table_ID"] == "70135138")
+                                if ((string)config["Table_ID"] == "70135362")
                                 {
-                                    DocCount.Transport = DocCount.Transport + 1;
+                                    DocCount.TransportCount = DocCount.TransportCount + 1;
                                 }
-                                if ((string)config["Table_ID"] == "70135040")
+                                if ((string)config["Table_ID"] == "70134894")
                                 {
-                                    DocCount.Training = DocCount.Training + 1;
+                                    DocCount.Clearance = DocCount.Clearance + 1;
                                 }
                                 if ((string)config["Table_ID"] == "5740")
                                 {
                                     DocCount.TransferOrder = DocCount.TransferOrder + 1;
                                 }
-                                if ((string)config["Table_ID"] == "70135171")
+                                if ((string)config["Table_ID"] == "70135460")
                                 {
                                     DocCount.PVCount = DocCount.PVCount + 1;
                                 }
-                                if ((string)config["Table_ID"] == "232")
+                                if ((string)config["Table_ID"] == "70134904")
                                 {
-                                    DocCount.PayrollCount = DocCount.PayrollCount + 1;
+                                    DocCount.CafCount = DocCount.CafCount + 1;
                                 }
                             }
                             DocCount.Status = rn;
-                            return View(DocCount);
                         }
+                        #endregion
+
+                        #region Student requisitions
+                        StdDocumentCount StdCount = new StdDocumentCount();
+
+                        StdCount.CampusTraCount = 0;
+                        StdCount.ClearanceCount = 0;
+                        StdCount.DoubleConcCount = 0;
+                        StdCount.DropCorsesCount = 0;
+                        StdCount.MajorCount = 0;
+                        StdCount.MinorCount = 0;
+                        StdCount.ProgTransCount = 0;
+                        StdCount.SExamCount = 0;
+                        StdCount.ExamChlngConcCount = 0;
+                        StdCount.ExemptionConcCount = 0;
+
+                        string stdpage = "StudentReqApprovalList?$filter=Approver_ID eq '" + userID + "' and Status eq '" + rn + "'&$format=json";
+                        HttpWebResponse httpResponsestd = Credentials.GetOdataData(stdpage);
+                        using (var streamReader = new StreamReader(httpResponsestd.GetResponseStream()))
+                        {
+                            var result = streamReader.ReadToEnd();
+
+                            var details = JObject.Parse(result);
+                            foreach (JObject config in details["value"])
+                            {
+                                if ((string)config["Requisition_Type"] == "Campus Transfer")
+                                {
+                                    StdCount.CampusTraCount = StdCount.CampusTraCount + 1;
+                                }
+                                if ((string)config["Requisition_Type"] == "Clearance")
+                                {
+                                    StdCount.ClearanceCount = StdCount.ClearanceCount + 1;
+                                }
+                                if ((string)config["Requisition_Type"] == "Double Concentration")
+                                {
+                                    StdCount.DoubleConcCount = StdCount.DoubleConcCount + 1;
+                                }
+                                if ((string)config["Requisition_Type"] == "Drop Courses")
+                                {
+                                    StdCount.DropCorsesCount = StdCount.DropCorsesCount + 1;
+                                }
+                                if ((string)config["Requisition_Type"] == "Double Major")
+                                {
+                                    StdCount.MajorCount = StdCount.MajorCount + 1;
+                                }
+                                if ((string)config["Requisition_Type"] == "Programme Minor")
+                                {
+                                    StdCount.MinorCount = StdCount.MinorCount + 1;
+                                }
+                                if ((string)config["Requisition_Type"] == "Programme Transfer")
+                                {
+                                    StdCount.ProgTransCount = StdCount.ProgTransCount + 1;
+                                }
+                                if ((string)config["Requisition_Type"] == "Special Exams")
+                                {
+                                    StdCount.SExamCount = StdCount.SExamCount + 1;
+                                }
+                                if ((string)config["Requisition_Type"] == "Exam Challenge")
+                                {
+                                    StdCount.ExamChlngConcCount = StdCount.ExamChlngConcCount + 1;
+                                }
+                                if ((string)config["Requisition_Type"] == "Exemption")
+                                {
+                                    StdCount.ExemptionConcCount = StdCount.ExemptionConcCount + 1;
+                                }
+                            }
+                            StdCount.Status = rn;
+                        }
+
+                        #endregion
+
+                        DocumentApprovalCount newC = new DocumentApprovalCount
+                        {
+                            DocCount = DocCount,
+                            StdCount = StdCount
+                        };
+                        return View(newC);
                     }
                 }
             }
@@ -152,19 +230,55 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
+                DocumentsForApprovalList newD = new DocumentsForApprovalList();
+                newD.TableID = TbID;
+                newD.Status = Status;
+                newD.Status = Status;
+                newD.DocType = DocType;
+                if (TbID == "70134894")
+                {
+                    return PartialView("~/Views/DocumentApproval/Document Approval Views/StudentReqApprovalList.cshtml", newD);
+                }
+                else
+                {
+                    return PartialView("~/Views/DocumentApproval/Document Approval Views/DocumentForApprovalList.cshtml", newD);
+                }
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+            }
+        }
+        [HttpPost]
+        public ActionResult GetDataForApprovalList(string TbID, string Status, string DocType)
+        {
+            try
+            {
+                int start = Convert.ToInt32(Request["start"]);
+                int length = Convert.ToInt32(Request["length"]);
+
+                string searchValue = Request["search[value]"];
+                string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                string sortDirection = Request["order[0][dir]"];
+                int TotalRows = 0;
+                List<DocumentsForApproval> approvalDocList = new List<DocumentsForApproval>();
                 if (TbID != "")
                 {
                     string userID = Session["UserID"].ToString();
-                    List<DocumentsForApproval> approvalDocList = new List<DocumentsForApproval>();
                     string page = "";
+                    TotalRows = GetTotalsApprovalEntries(TbID, Status, DocType);
                     if (DocType != "N")
                     {
-                        page = "ApprovalEntries?$select=Entry_No,Table_ID,Document_No,Document_Type,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Comment,Record_ID_to_Approve&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "' and Document_Type eq '" + DocType + "'&$format=json";
+                        page = "ApprovalEntries?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Document_Type,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Comment,Record_ID_to_Approve,SenderNames&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "' and Document_Type eq '" + DocType + "'&$format=json";
                     }
                     else
                     {
-                        page = "ApprovalEntries?$select=Entry_No,Table_ID,Document_No,Document_Type,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Comment,Record_ID_to_Approve&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "'&$format=json";
+                        page = "ApprovalEntries?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Document_Type,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Comment,Record_ID_to_Approve,SenderNames&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "'&$format=json";
                     }
+                    //page = "ApprovalEntries?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,RecordIDText,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Comment&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "'&$format=json";
+
                     HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
@@ -178,9 +292,10 @@ namespace Latest_Staff_Portal.Controllers
                                 DocumentsForApproval DocList = new DocumentsForApproval();
                                 DocList.TabelID = (string)config["Table_ID"];
                                 DocList.Entry_No = (string)config["Entry_No"];
+
                                 if ((string)config["Document_No"] == "")
                                 {
-                                    string s = (string)config["Record_ID_to_Approve"];
+                                    string s = (string)config["RecordIDText"];
                                     string[] t = s.Split(':');
                                     DocList.Document_No = t[1].Trim();
                                 }
@@ -188,166 +303,239 @@ namespace Latest_Staff_Portal.Controllers
                                 {
                                     DocList.Document_No = (string)config["Document_No"];
                                 }
-                                if (TbID == "70134864")
-                                {
-                                    string pageLv = "HRLeaveRequisition?$select=EmpoyeeName&$filter=ApplicationNo eq '" + DocList.Document_No + "'&$format=json";
-
-                                    HttpWebResponse httpResponseLV = Credentials.GetOdataData(pageLv);
-                                    using (var streamReaderLV = new StreamReader(httpResponseLV.GetResponseStream()))
-                                    {
-                                        var resultLV = streamReaderLV.ReadToEnd();
-
-                                        var detailsLV = JObject.Parse(resultLV);
-                                        foreach (JObject configLV in detailsLV["value"])
-                                        {
-                                            DocList.Sender_Name = (string)configLV["EmpoyeeName"];
-                                        }
-                                    }
-                                }
-                                else if (TbID == "38" && DocType== "Quote")
-                                {
-                                    DocList.Document_Type = DocType;
-                                    string pagePRV = "PurchaseRequisition?$select=Employee_No_&$filter=No_ eq '" + DocList.Document_No + "'&$format=json";
-
-                                    HttpWebResponse httpResponseP = Credentials.GetOdataData(pagePRV);
-                                    using (var streamReaderP = new StreamReader(httpResponseP.GetResponseStream()))
-                                    {
-                                        var resultP = streamReaderP.ReadToEnd();
-
-                                        var detailsP = JObject.Parse(resultP);
-                                        foreach (JObject configP in detailsP["value"])
-                                        {
-                                            DocList.Sender_Name = CommonClass.GetEmployeeName((string)configP["Employee_No_"]);
-                                        }
-                                    }
-                                }
-                                else if (TbID == "38" && DocType== "Order")
-                                {
-                                    DocList.Document_Type = DocType;
-                                    DocList.Sender_Name = (string)config["Sender_ID"];
-                                }
-                                else if (TbID == "70134954")
-                                {
-                                    string pageStore = "StoreReqList?$select=Employee_No&$filter=No eq '" + DocList.Document_No + "'&$format=json";
-                                    HttpWebResponse httpResponseStore = Credentials.GetOdataData(pageStore);
-                                    using (var streamReaderStore = new StreamReader(httpResponseStore.GetResponseStream()))
-                                    {
-                                        var resultP = streamReaderStore.ReadToEnd();
-
-                                        var detailsP = JObject.Parse(resultP);
-                                        foreach (JObject configP in detailsP["value"])
-                                        {
-                                            DocList.Sender_Name = CommonClass.GetEmployeeName((string)configP["Employee_No"]);
-                                        }
-                                    }
-                                }
-                                else if (TbID == "70135176")
-                                {
-                                    string pageImp = "ImprestReq?$select=AccountNo&$filter=No eq '" + DocList.Document_No + "'&$format=json";
-                                    HttpWebResponse httpResponseStore = Credentials.GetOdataData(pageImp);
-                                    using (var streamReaderStore = new StreamReader(httpResponseStore.GetResponseStream()))
-                                    {
-                                        var resultP = streamReaderStore.ReadToEnd();
-
-                                        var detailsP = JObject.Parse(resultP);
-                                        foreach (JObject configP in detailsP["value"])
-                                        {
-                                            DocList.Sender_Name = CommonClass.GetEmployeeName((string)configP["AccountNo"]);
-                                        }
-                                    }
-                                }
-                                else if (TbID == "70135168")
-                                {
-                                    string pageImp = "ImprestSurrenderList?$select=Account_No&$filter=No eq '" + DocList.Document_No + "'&$format=json";
-                                    HttpWebResponse httpResponseStore = Credentials.GetOdataData(pageImp);
-                                    using (var streamReaderStore = new StreamReader(httpResponseStore.GetResponseStream()))
-                                    {
-                                        var resultP = streamReaderStore.ReadToEnd();
-
-                                        var detailsP = JObject.Parse(resultP);
-                                        foreach (JObject configP in detailsP["value"])
-                                        {
-                                            DocList.Sender_Name = CommonClass.GetEmployeeName((string)configP["Account_No"]);
-                                        }
-                                    }
-                                }
-                                else if (TbID == "70135138")
-                                {
-                                    string pageTransport = "TransportReqList?$select=Empoyee_No&$filter=Transport_Requisition_No eq '" + DocList.Document_No + "'&$format=json";
-                                    HttpWebResponse httpResponseStore = Credentials.GetOdataData(pageTransport);
-                                    using (var streamReaderStore = new StreamReader(httpResponseStore.GetResponseStream()))
-                                    {
-                                        var resultP = streamReaderStore.ReadToEnd();
-
-                                        var detailsP = JObject.Parse(resultP);
-                                        foreach (JObject configP in detailsP["value"])
-                                        {
-                                            DocList.Sender_Name = CommonClass.GetEmployeeName((string)configP["Employee_No"]);
-                                        }
-                                    }
-                                }
-                                else if (TbID == "70135169")
-                                {
-                                    string pageStaffC = "StaffClaimList?$select=Employee_No&$filter=No eq '" + DocList.Document_No + "'&$format=json";
-                                    HttpWebResponse httpResponseStore = Credentials.GetOdataData(pageStaffC);
-                                    using (var streamReaderStore = new StreamReader(httpResponseStore.GetResponseStream()))
-                                    {
-                                        var resultP = streamReaderStore.ReadToEnd();
-
-                                        var detailsP = JObject.Parse(resultP);
-                                        foreach (JObject configP in detailsP["value"])
-                                        {
-                                            DocList.Sender_Name = CommonClass.GetEmployeeName((string)configP["Employee_No"]);
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    string Names = CommonClass.GetEmployeeNameByUserID((string)config["Sender_ID"]);
-                                    if (Names != "")
-                                    {
-                                        DocList.Sender_Name = Names;
-                                    }
-                                    else
-                                    {
-                                        DocList.Sender_Name = (string)config["Sender_ID"];
-                                    }
-                                }
-                                DocList.DateSend = ((DateTime)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
-                                if (Status == "Open")
-                                {
-                                    DocList.Status = "Pending Approval";
-                                }
-                                else
-                                {
-                                    DocList.Status = Status;
-                                }
+                                DocList.Sender_Name = (string)config["SenderNames"];
+                                DocList.DateSend = Convert.ToDateTime((string)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
+                                DocList.Status = (string)config["Status"];
                                 DocList.Sequence = (string)config["Sequence_No"];
+                                if ((string)config["Table_ID"] == "70134894")
+                                {
+                                    string[] s = StudentDetails(DocList.Document_No);
+                                    DocList.Sender_Name = s[0];
+                                    DocList.Status = s[1];
+
+                                    string comment = CommonClass.GetDocRejectionComment(DocList.Document_No, (int)config["Sequence_No"]);
+                                    if (comment != "")
+                                    {
+                                        DocList.CommentFound = true;
+                                    }
+                                }
                                 approvalDocList.Add(DocList);
                             }
                         }
                     }
-                    return PartialView("~/Views/DocumentApproval/Document Approval Views/DocumentForApprovalList.cshtml", approvalDocList);
+                    return Json(new { data = approvalDocList, draw = Request["draw"], recordsTotal = TotalRows, recordsFiltered = TotalRows }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    return PartialView("~/Views/DocumentApproval/Document Approval Views/DocumentForApprovalList.cshtml");
+                    return Json(new { data = approvalDocList }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
                 Error erroMsg = new Error();
                 erroMsg.Message = ex.Message;
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
             }
         }
-        public PartialViewResult LeaveReqDocApprovalDetails(string DocNo)
+        [HttpPost]
+        public ActionResult GetStudentClearanceDataForApprovalList(string TbID, string Status, string Type, string RegType)
+        {
+            try
+            {
+                int start = Convert.ToInt32(Request["start"]);
+                int length = Convert.ToInt32(Request["length"]);
+
+                string searchValue = Request["search[value]"];
+                string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                string sortDirection = Request["order[0][dir]"];
+                int TotalRows = 0;
+                List<DocumentsForApproval> approvalDocList = new List<DocumentsForApproval>();
+                if (TbID != "")
+                {
+                    string userID = Session["UserID"].ToString();
+                    TotalRows = GetTotalsApprovalEntries(TbID, Status, searchValue, Type, RegType);
+                    string page = "";
+                    if (!string.IsNullOrEmpty(searchValue))
+                    {
+                        if (Status == "Rejected")
+                        {
+                            page = "StudentReqApprovalList?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Sender_Code,SenderNames,Sender_Status,Commented_On,ReqType&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "'" +
+                                " and Requisition_Type eq '" + RegType + "' and Status eq '" + Status + "' and contains('" + searchValue.ToLower() + "',tolower(Sender_Code))&$format=json";
+                        }
+                        else
+                        {
+                            if (Type == "2")
+                            {
+                                page = "StudentReqApprovalList?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Sender_Code,SenderNames,Sender_Status,Commented_On,ReqType&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "'" +
+                                    " and Requisition_Type eq '" + RegType + "' and Status eq '" + Status + "' and Commented_On eq true and contains('" + searchValue.ToLower() + "',tolower(Sender_Code))&$format=json";
+                            }
+                            else
+                            {
+                                page = "StudentReqApprovalList?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Sender_Code,SenderNames,Sender_Status,Commented_On,ReqType&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "'" +
+                                    " and Requisition_Type eq '" + RegType + "' and Status eq '" + Status + "' and Commented_On eq false and contains('" + searchValue.ToLower() + "',tolower(Sender_Code))&$format=json";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (Status == "Rejected")
+                        {
+                            page = "StudentReqApprovalList?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Sender_Code,SenderNames,Sender_Status,Commented_On,ReqType&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status
+                                     + "' and Requisition_Type eq '" + RegType + "'&$format=json";
+                        }
+                        else
+                        {
+                            if (Type == "2")
+                            {
+                                page = "StudentReqApprovalList?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Sender_Code,SenderNames,Sender_Status,Commented_On,ReqType&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status
+                                    + "' and Requisition_Type eq '" + RegType + "' and Commented_On eq true&$format=json";
+                            }
+                            else
+                            {
+                                page = "StudentReqApprovalList?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Sender_Code,SenderNames,Sender_Status,Commented_On,ReqType&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status
+                                    + "' and Requisition_Type eq '" + RegType + "' and Commented_On eq false&$format=json";
+                            }
+                        }
+                    }
+                    HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+
+                        var details = JObject.Parse(result);
+                        if (details["value"].Count() > 0)
+                        {
+                            foreach (JObject config in details["value"])
+                            {
+                                //if ((string)config["Requisition_Type"] == RegType)
+                                //{
+                                DocumentsForApproval DocList = new DocumentsForApproval();
+                                DocList.TabelID = (string)config["Table_ID"];
+                                DocList.Entry_No = (string)config["Entry_No"];
+                                DocList.Document_No = (string)config["Document_No"];
+                                DocList.Sender = (string)config["Sender_Code"];
+                                DocList.Sender_Name = (string)config["SenderNames"];
+                                DocList.DateSend = Convert.ToDateTime((string)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
+                                DocList.Status = (string)config["Sender_Status"];
+                                DocList.Sequence = (string)config["Sequence_No"];
+                                DocList.CommentFound = (bool)config["Commented_On"];
+                                DocList.ReqType = (string)config["ReqType"];
+                                approvalDocList.Add(DocList);
+                                //}
+                            }
+                        }
+                    }
+                    return Json(new { data = approvalDocList, draw = Request["draw"], recordsTotal = TotalRows, recordsFiltered = TotalRows }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { data = approvalDocList }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        protected int GetTotalsApprovalEntries(string TbID, string Status, string DocType)
+        {
+            int count = 0;
+            try
+            {
+                string userID = Session["UserID"].ToString();
+                string page = "";
+                if (DocType != "N")
+                {
+                    page = "ApprovalEntries?$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "' and Document_Type eq '" + DocType + "'&$format=json";
+                }
+                else
+                {
+                    page = "ApprovalEntries?$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "'&$format=json";
+                }
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    if (details["value"].Count() > 0)
+                    {
+                        count = details["value"].Count();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Clear();
+            }
+            return count;
+        }
+        protected int GetTotalsApprovalEntries(string TbID, string Status, string searchValue, string Type, string RegType)
+        {
+            int count = 0;
+            try
+            {
+                string userID = Session["UserID"].ToString();
+                string page = "";
+                if (!string.IsNullOrEmpty(searchValue))
+                {
+                    if (Type == "2")
+                    {
+                        page = "StudentReqApprovalList?$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "'" +
+                            " and Requisition_Type eq '" + RegType + "' and Commented_On eq true and contains('" + searchValue.ToLower() + "',tolower(Sender_Code))&$format=json";
+                    }
+                    else
+                    {
+                        page = "StudentReqApprovalList?$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "'" +
+                            " and Requisition_Type eq '" + RegType + "' and Commented_On eq false and contains('" + searchValue.ToLower() + "',tolower(Sender_Code))&$format=json";
+                    }
+                }
+                else
+                {
+                    if (Type == "2")
+                    {
+                        page = "StudentReqApprovalList?$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" +
+                            Status + "' and Requisition_Type eq '" + RegType + "' and Commented_On eq true&$format=json";
+                    }
+                    else
+                    {
+                        page = "StudentReqApprovalList?$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" +
+                            Status + "' and Requisition_Type eq '" + RegType + "' and Commented_On eq false&$format=json";
+                    }
+                }
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    if (details["value"].Count() > 0)
+                    {
+                        count = details["value"].Count();
+                        //foreach (JObject config in details["value"])
+                        //{
+                        //    if ((string)config["ReqType"] == RegType)
+                        //    {
+                        //        count = count + 1;
+                        //    }
+                        //}
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Clear();
+            }
+            return count;
+        }
+        public PartialViewResult LeaveReqDocApprovalDetails(string DocNo, string Sequence)
         {
             try
             {
                 LeaveReqList LeaveDoc = new LeaveReqList();
-
-                string page = "HRLeaveRequisition?$filter=ApplicationNo eq '" + DocNo + "'&format=json";
+                string page = "HRLeaveRequisition?$filter=No eq '" + DocNo + "'&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -357,22 +545,22 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        LeaveDoc.No = (string)config["ApplicationNo"];
-                        LeaveDoc.EmpNo = (string)config["EmployeeNo"];
-                        LeaveDoc.EmpName = (string)config["EmpoyeeName"];
-                        LeaveDoc.Leave_Type = (string)config["LeaveType"];
-                        LeaveDoc.Applied_Days = (string)config["DaysApplied"];
-                        LeaveDoc.Date = Convert.ToDateTime((string)config["ApplicationDate"]).ToString("dd/MM/yyyy");
-                        LeaveDoc.Starting_Date = Convert.ToDateTime((string)config["StartDate"]).ToString("dd/MM/yyyy");
-                        LeaveDoc.End_Date = Convert.ToDateTime((string)config["EndDate"]).ToString("dd/MM/yyyy");
-                        LeaveDoc.Return_Date = Convert.ToDateTime((string)config["ReturnDate"]).ToString("dd/MM/yyyy");
+                        LeaveDoc.No = (string)config["No"];
+                        LeaveDoc.EmpNo = (string)config["Employee_No"];
+                        LeaveDoc.EmpName = (string)config["Employee_Name"];
+                        LeaveDoc.Leave_Type = (string)config["Leave_Type"];
+                        LeaveDoc.Applied_Days = (string)config["Applied_Days"];
+                        LeaveDoc.Date = ((DateTime)config["Date"]).ToString("dd/MM/yyyy");
+                        LeaveDoc.Starting_Date = ((DateTime)config["Starting_Date"]).ToString("dd/MM/yyyy");
+                        LeaveDoc.End_Date = ((DateTime)config["End_Date"]).ToString("dd/MM/yyyy");
+                        LeaveDoc.Return_Date = ((DateTime)config["Return_Date"]).ToString("dd/MM/yyyy");
                         LeaveDoc.Reliever = (string)config["Reliever_Name"];
-                        LeaveDoc.Department = (string)config["Department_Name"];
-                        LeaveDoc.Remarks = (string)config["Reason_for_leave"];
+                        LeaveDoc.Responsibility = (string)config["Responsibility_Center"];
+                        LeaveDoc.Remarks = (string)config["Purpose"];
                         LeaveDoc.Status = (string)config["Status"];
                     }
                 }
-                return PartialView("~/Views/DocumentApproval/Document Approval Views/LeaveDocumentView.cshtml", LeaveDoc);
+                return PartialView("~/Views/DocumentApproval/Document Approval Views/LeaveApprovalDocDetails.cshtml", LeaveDoc);
             }
             catch (Exception ex)
             {
@@ -389,7 +577,7 @@ namespace Latest_Staff_Portal.Controllers
                 #region Purchase Header
                 PRVHeader PurchaseDoc = new PRVHeader();
 
-                string page = "PurchaseRequisition?$filter=No_ eq '" + DocNo + "'&format=json";
+                string page = "PurchaseRegDocument?$filter=No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -398,22 +586,37 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        PurchaseDoc.No = (string)config["No_"];
+                        PurchaseDoc.No = (string)config["No"];
                         PurchaseDoc.Date = Convert.ToDateTime((string)config["Order_Date"]).ToString("dd/MM/yyyy");
                         PurchaseDoc.Remarks = (string)config["Posting_Description"];
-                        PurchaseDoc.Directorate = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_1_Code"]);
-                        PurchaseDoc.Department = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_2_Code"]);
-                        //PurchaseDoc.Section = (string)config["Shortcut_Dimension_3_Code"];
+                        PurchaseDoc.Campus = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_1_Code"]);
+                        PurchaseDoc.Department = (string)config["Department_Name"];
                         PurchaseDoc.RespC = (string)config["Responsibility_Center"];
+                        PurchaseDoc.VendorName = (string)config["Buy_from_Vendor_Name"];
                         PurchaseDoc.Status = (string)config["Status"];
-                        PurchaseDoc.RequestorNo = (string)config["Employee_No_"];
-                        PurchaseDoc.RequestorName = CommonClass.GetEmployeeName((string)config["Employee_No_"]);
+                        if ((string)config["Employee_No"] != "")
+                        {
+                            PurchaseDoc.RequestorNo = (string)config["Employee_No"];
+                            PurchaseDoc.RequestorName = CommonClass.GetEmployeeName((string)config["Employee_No"]);
+                        }
+                        else
+                        {
+                            if ((string)config["User_ID"] != "")
+                            {
+                                string[] s = CommonClass.GetEmployeeByUserID((string)config["User_ID"]);
+                                if (s[0] != null && s[1] != null)
+                                {
+                                    PurchaseDoc.RequestorNo = s[0];
+                                    PurchaseDoc.RequestorName = s[1];
+                                }
+                            }
+                        }
                     }
                 }
                 #endregion
                 #region Purchase Lines
                 List<PRVLines> PurchaseLines = new List<PRVLines>();
-                string pageLine = "PurchaseLines?$filter=Document_No_ eq '" + DocNo + "'&$format=json";
+                string pageLine = "PurchaseLines?$filter=Document_No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -431,15 +634,21 @@ namespace Latest_Staff_Portal.Controllers
                         {
                             PurchaseLine.LineType = (string)config["Type"];
                         }
-                        PurchaseLine.Item = (string)config["No_"];
+                        PurchaseLine.Item = (string)config["No"];
                         PurchaseLine.ItemDesc = (string)config["Description"];
-                        PurchaseLine.Description2 = (string)config["Description_2"];
+                        if ((string)config["Remarks"] != "")
+                        {
+                            PurchaseLine.Description2 = (string)config["Remarks"];
+                        }
+                        else
+                        {
+                            PurchaseLine.Description2 = (string)config["Description_2"];
+                        }
                         PurchaseLine.Qnty = (string)config["Quantity"];
                         PurchaseLine.UnitM = (string)config["Unit_of_Measure"];
-                        PurchaseLine.Amount = ((decimal)config["Direct_Unit_Cost"]).ToString("#,##0.00");
-                        PurchaseLine.LineAmount = ((decimal)config["Line_Amount"]).ToString("#,##0.00");
+                        PurchaseLine.Amount = Convert.ToDecimal((string)config["Direct_Unit_Cost"]).ToString("#,##0.00");
+                        PurchaseLine.LineAmount = Convert.ToDecimal((string)config["Line_Amount"]).ToString("#,##0.00");
                         PurchaseLine.Location = (string)config["Location_Code"];
-                        PurchaseLine.LnNo = (string)config["Line_No_"];
                         PurchaseLines.Add(PurchaseLine);
                         TotalAmount = TotalAmount + (decimal)config["Line_Amount"];
                     }
@@ -463,110 +672,6 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        public PartialViewResult PurchaseOrderDocApprovalDetails(string DocNo, string SenderName)
-        {
-            try
-            {
-                decimal TotalAmount = 0;
-
-                #region Purchase Req Header
-
-                PRVHeader purchaseDoc1 = new PRVHeader();
-                string purchaseReqPage = "PurchaseRequisition?$filter=No_ eq '" + DocNo + "'&format=json";
-                HttpWebResponse httpResponse1 = Credentials.GetOdataData(purchaseReqPage);
-
-                using (var streamReader = new StreamReader(httpResponse1.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-                    foreach (JObject config in details["value"])
-                    {
-                        purchaseDoc1.No = (string)config["No_"];
-                        purchaseDoc1.Date = Convert.ToDateTime((string)config["Order_Date"]).ToString("dd/MM/yyyy");
-                        purchaseDoc1.Remarks = (string)config["Posting_Description"];
-                        purchaseDoc1.Directorate = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_1_Code"]);
-                        purchaseDoc1.Department = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_2_Code"]);
-                        //PurchaseDoc.Section = (string)config["Shortcut_Dimension_3_Code"];
-                        purchaseDoc1.RespC = (string)config["Responsibility_Center"];
-                        purchaseDoc1.Status = (string)config["Status"];
-                    }
-                }
-                #endregion
-
-                #region Purchase Order
-                
-                string purchaseOrderPage = "PurchaseOrders?$filter=No eq '" + DocNo + "'&format=json";
-                HttpWebResponse httpResponse2 = Credentials.GetOdataData(purchaseOrderPage);
-
-                using (var streamReader = new StreamReader(httpResponse2.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-                    foreach (JObject config in details["value"])
-                    {
-                        purchaseDoc1.SenderName = SenderName;
-                        purchaseDoc1.VendorName = (string)config["Buy_from_Vendor_Name"];
-                        purchaseDoc1.DocumentDate = Convert.ToDateTime((string)config["Document_Date"]).ToString("dd/MM/yyyy");
-                    }
-                }
-                #endregion
-                
-                #region Purchase Lines
-                List<PRVLines> PurchaseLines = new List<PRVLines>();
-                string pageLine = "PurchaseLines?$filter=Document_No_ eq '" + DocNo + "'&$format=json";
-                HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
-                using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-                    foreach (JObject config in details["value"])
-                    {
-                        PRVLines PurchaseLine = new PRVLines();
-                        if ((string)config["Type"] == "G/L Account")
-                        {
-                            PurchaseLine.LineType = "Service";
-                        }
-                        else
-                        {
-                            PurchaseLine.LineType = (string)config["Type"];
-                        }
-                        PurchaseLine.Item = (string)config["No_"];
-                        PurchaseLine.ItemDesc = (string)config["Description"];
-                        PurchaseLine.Description2 = (string)config["Description_2"];
-                        PurchaseLine.Qnty = (string)config["Quantity"];
-                        PurchaseLine.UnitM = (string)config["Unit_of_Measure"];
-                        PurchaseLine.Amount = ((decimal)config["Direct_Unit_Cost"]).ToString("#,##0.00");
-                        PurchaseLine.LineAmount = ((decimal)config["Line_Amount"]).ToString("#,##0.00");
-                        PurchaseLine.Location = (string)config["Location_Code"];
-                        PurchaseLine.LnNo = (string)config["Line_No_"];
-                        PurchaseLines.Add(PurchaseLine);
-                        TotalAmount = TotalAmount + (decimal)config["Line_Amount"];
-                    }
-                }
-                #endregion
-
-                Session["Location"] = "2";
-                string amountInWords = Credentials.ObjNav.ReturnAmountInWords(TotalAmount);
-
-                PurchaseDocument docDetails = new PurchaseDocument
-                {
-                    DocHeader = purchaseDoc1,
-                    ListOfPurchaseLines = PurchaseLines,
-                    TotalAmount = TotalAmount.ToString("#,##0.00"),
-                    AmountInWords = amountInWords
-                };
-                return PartialView("~/Views/DocumentApproval/Document Approval Views/PurchaseApprovalDocDetails.cshtml", docDetails);
-            }
-            catch (Exception ex)
-            {
-                Error erroMsg = new Error();
-                erroMsg.Message = ex.Message;
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
-            }
-        }
         public PartialViewResult StoreReqDocApprovalDetails(string DocNo, string Sequence)
         {
             try
@@ -574,7 +679,7 @@ namespace Latest_Staff_Portal.Controllers
                 #region Store Header
                 StoretHeader StoreDoc = new StoretHeader();
 
-                string page = "StoreReqList?$filter=No eq '" + DocNo + "'&format=json";
+                string page = "StoreReqList?$filter=No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -587,7 +692,7 @@ namespace Latest_Staff_Portal.Controllers
                         StoreDoc.DateRequested = Convert.ToDateTime((string)config["Request_date"]).ToString("dd/MM/yyyy");
                         StoreDoc.DateNeeded = Convert.ToDateTime((string)config["Required_Date"]).ToString("dd/MM/yyyy");
                         StoreDoc.Remarks = (string)config["Request_Description"];
-                        StoreDoc.Directorate = (string)config["Function_Name"];
+                        StoreDoc.Campus = (string)config["Function_Name"];
                         StoreDoc.Department = (string)config["Budget_Center_Name"];
                         StoreDoc.RespC = (string)config["Responsibility_Center"];
                         StoreDoc.IssuingStore = (string)config["Issuing_Store"];
@@ -599,7 +704,7 @@ namespace Latest_Staff_Portal.Controllers
                 #endregion
                 #region Store Lines
                 List<StoreLines> StoreLines = new List<StoreLines>();
-                string pageLine = "StoreReqLines?$filter=Requistion_No eq '" + DocNo + "'&format=json";
+                string pageLine = "StoreReqLines?$filter=Requistion_No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -617,7 +722,6 @@ namespace Latest_Staff_Portal.Controllers
                     }
                 }
                 #endregion
-                Session["Location"] = "3";
                 StoreDocument docDetails = new StoreDocument
                 {
                     DocHeader = StoreDoc,
@@ -651,19 +755,20 @@ namespace Latest_Staff_Portal.Controllers
                         ImpDoc.No = (string)config["No"];
                         ImpDoc.DateNeeded = Convert.ToDateTime((string)config["Date"]).ToString("dd/MM/yyyy");
                         ImpDoc.Remarks = (string)config["Purpose"];
-                        ImpDoc.RequestorNo = (string)config["AccountNo"];
-                        ImpDoc.RequestorName = CommonClass.GetEmployeeName((string)config["AccountNo"]);
-                        ImpDoc.Directorate = CommonClass.GetDimensionValue((string)config["GlobalDimension1Code"]);
-                        ImpDoc.Department = CommonClass.GetDimensionValue((string)config["ShortcutDimension2Code"]);
-                        //ImpDoc.Section = "";
+                        ImpDoc.school = (string)config["Function_Name"];
+                        ImpDoc.Campus = (string)config["FunctionName"];
+                        ImpDoc.Department = (string)config["Department_Name"];
+                        ImpDoc.RespC = (string)config["ResponsibilityCenter"];
                         ImpDoc.TotalAmount = Convert.ToDecimal((string)config["TotalNetAmount"]).ToString("#,##0.00");
                         ImpDoc.Status = (string)config["Status"];
+                        ImpDoc.RequestorNo = (string)config["Employee_No"];
+                        ImpDoc.RequestorName = CommonClass.GetEmployeeName((string)config["Employee_No"]);
                     }
                 }
                 #endregion
                 #region Imp Lines
                 List<ImprestLines> ImpLines = new List<ImprestLines>();
-                string pageLine = "ImprestLines?$filter=No eq '" + DocNo + "'&format=json";
+                string pageLine = "ImprestLines?$filter=No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -677,14 +782,11 @@ namespace Latest_Staff_Portal.Controllers
                         ImLine.Item = (string)config["Account_No"];
                         ImLine.ItemDesc = (string)config["Account_Name"];
                         ImLine.ItemDesc2 = (string)config["Purpose"];
-                        ImLine.Quantity = (string)config["Quantity"];
-                        ImLine.UnitAmount = ((decimal)config["Daily_Rate_Amount"]).ToString("#,##0.00"); ;
-                        ImLine.Amount = ((decimal)config["Amount"]).ToString("#,##0.00");
+                        ImLine.Amount = Convert.ToDecimal((string)config["Amount"]).ToString("#,##0.00");
                         ImpLines.Add(ImLine);
                     }
                 }
                 #endregion
-                Session["Location"] = "4";
                 ImprestDocument docDetails = new ImprestDocument
                 {
                     DocHeader = ImpDoc,
@@ -706,7 +808,7 @@ namespace Latest_Staff_Portal.Controllers
                 #region Imp Surrender Header
                 ImprestSurrenderHeader ImpDoc = new ImprestSurrenderHeader();
 
-                string page = "ImprestSurrenderCard?$filter=No eq '" + DocNo + "'&format=json";
+                string page = "ImprestSurrenderCard?$filter=No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -721,8 +823,8 @@ namespace Latest_Staff_Portal.Controllers
                         ImpDoc.AccountName = (string)config["Received_From"];
                         ImpDoc.ImprestNo = (string)config["Imprest_Issue_Doc_No"];
                         ImpDoc.ImpIssueDate = (string)config["Imprest_Issue_Date"];
-                        ImpDoc.Directorate = CommonClass.GetDimensionValue((string)config["Global_Dimension_1_Code"]);
-                        ImpDoc.Department = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_2_Code"]);
+                        ImpDoc.CampusName = (string)config["Global_Dimension_1_Code"];
+                        ImpDoc.DepartmentName = (string)config["Shortcut_Dimension_2_Code"];
                         ImpDoc.RespC = (string)config["Responsibility_Center"];
                         ImpDoc.TotalAmount = Convert.ToDecimal((string)config["Amount"]).ToString("#,##0.00");
                         ImpDoc.Status = (string)config["Status"];
@@ -732,7 +834,7 @@ namespace Latest_Staff_Portal.Controllers
                 #endregion
                 #region Imp surrender Lines
                 List<ImprestSurrenderLines> ImpLines = new List<ImprestSurrenderLines>();
-                string pageLine = "ImpSurrenderLines?$filter=SurrenderDocNo eq '" + DocNo + "'&format=json";
+                string pageLine = "ImpSurrenderLines?$filter=SurrenderDocNo eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -753,7 +855,6 @@ namespace Latest_Staff_Portal.Controllers
                     }
                 }
                 #endregion
-                Session["Location"] = "7";
                 ImprestSurrenderDocument docDetails = new ImprestSurrenderDocument
                 {
                     DocHeader = ImpDoc,
@@ -787,18 +888,20 @@ namespace Latest_Staff_Portal.Controllers
                         ClaimDoc.No = (string)config["No"];
                         ClaimDoc.DateRequested = Convert.ToDateTime((string)config["Date"]).ToString("dd/MM/yyyy");
                         ClaimDoc.Remarks = (string)config["Purpose"];
-                        ClaimDoc.Directorate = CommonClass.GetDimensionValue((string)config["GlobalDimension1Code"]);
-                        ClaimDoc.Department = CommonClass.GetDimensionValue((string)config["ShortcutDimension2Code"]);
-                        ClaimDoc.TotalAmount = Convert.ToDecimal((string)config["TotalNetAmount"]).ToString("#,##0.00");
+                        ClaimDoc.school = (string)config["Dim3"];
+                        ClaimDoc.Campus = (string)config["Function_Name"];
+                        ClaimDoc.Department = (string)config["Budget_Center_Name"];
+                        ClaimDoc.RespC = (string)config["Responsibility_Center"];
+                        ClaimDoc.TotalAmount = Convert.ToDecimal((string)config["Total_Net_Amount"]).ToString("#,##0.00");
                         ClaimDoc.Status = (string)config["Status"];
-                        ClaimDoc.RequestorNo = (string)config["StaffNoName"];
-                        ClaimDoc.RequestorName = CommonClass.GetEmployeeName((string)config["StaffNoName"]);
+                        ClaimDoc.RequestorNo = (string)config["Account_No"];
+                        ClaimDoc.RequestorName = CommonClass.GetEmployeeName((string)config["Account_No"]);
                     }
                 }
                 #endregion
                 #region Staff Claim Lines
                 List<StaffClaimLines> ClaimLines = new List<StaffClaimLines>();
-                string pageLine = "StaffCaimLines?$filter=No eq '" + DocNo + "'&format=json";
+                string pageLine = "StaffCaimLines?$filter=No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -817,7 +920,6 @@ namespace Latest_Staff_Portal.Controllers
                     }
                 }
                 #endregion
-                Session["Location"] = "5";
                 StaffClaimDocument docDetails = new StaffClaimDocument
                 {
                     DocHeader = ClaimDoc,
@@ -836,9 +938,14 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
+                bool transMng = false;
+                if (Session["TRMNG"] != null)
+                {
+                    transMng = (bool)Session["TRMNG"];
+                }
                 #region Header
                 TransportReqList TransDoc = new TransportReqList();
-                string page = "TransportReqList?$filter=Transport_Requisition_No eq '" + DocNo + "'&$format=json";
+                string page = "TransportReqList?$filter=TransportRequisitionNo eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -847,15 +954,38 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        TransDoc.No = (string)config["Transport_Requisition_No"];
-                        TransDoc.Commencement = (string)config["From"];
-                        TransDoc.Destination = (string)config["To"];
-                        TransDoc.Vehicle = (string)config["Vehicle_Allocated"];
-                        TransDoc.Driver = (string)config["Driver_Allocated"];
-                        TransDoc.DateRequested = Convert.ToDateTime((string)config["Date_of_Request"]).ToString("dd/MM/yyyy");
+                        TransDoc.No = (string)config["TransportRequisitionNo"];
+                        TransDoc.Commencement = (string)config["Commencement"];
+                        TransDoc.Destination = (string)config["Destination"];
+                        if ((bool)config["Vehicle_Hired_"])
+                        {
+                            TransDoc.VehicleHired = "Yes";
+                            TransDoc.Vehicle = (string)config["Hired_Vehicle_Description"];
+                        }
+                        else
+                        {
+                            TransDoc.VehicleHired = "No";
+                            TransDoc.Vehicle = (string)config["VehicleAllocated"];
+                        }
+                        if ((bool)config["Driver_Hired_"])
+                        {
+                            TransDoc.DriverHired = "Yes";
+                            TransDoc.Driver = (string)config["Hired_Driver_Name"];
+                        }
+                        else
+                        {
+                            TransDoc.DriverHired = "No";
+                            TransDoc.Driver = (string)config["DriverAllocated"];
+                        }
+                        TransDoc.DateRequested = Convert.ToDateTime((string)config["DateofRequest"]).ToString("dd/MM/yyyy");
                         TransDoc.DateOfTrip = Convert.ToDateTime((string)config["Date_of_Trip"]).ToString("dd/MM/yyyy");
-                        TransDoc.NoOfDays = (string)config["No_of_Days_Requested"];
+                        TransDoc.NoOfDays = (string)config["NoofDaysRequested"];
+                        TransDoc.NoOfPassngers = (string)config["No_of_Passengers"];
+                        TransDoc.Cost = ((Decimal)config["Cost"]).ToString("#,##0.00");
+                        TransDoc.Dep_Time = ((DateTime)config["Time_of_trip"]).ToString("h:mm tt");
+                        TransDoc.Purpose_Of_Trip = (string)config["Purpose_of_Trip"];
                         TransDoc.Status = (string)config["Status"];
+                        TransDoc.TRMgr = transMng;
                     }
                 }
                 #endregion
@@ -909,8 +1039,8 @@ namespace Latest_Staff_Portal.Controllers
                     foreach (JObject config in details["value"])
                     {
                         DropdownList v = new DropdownList();
-                        v.Value = (string)config["No"];
-                        v.Text = (string)config["No"] + "-" + (string)config["Description"];
+                        v.Value = (string)config["Registration_No"];
+                        v.Text = (string)config["Registration_No"] + "-" + (string)config["Description"];
                         vehiclerList.Add(v);
                     }
                 }
@@ -942,14 +1072,14 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        public PartialViewResult TrainingReqDocApprovalDetails(string DocNo, string Sequence)
+        public PartialViewResult CafFoodReqDocApprovalDetails(string DocNo)
         {
             try
             {
-                #region Header
-                TrainingList TranDoc = new TrainingList();
-                string page = "HRTrainingApplication?$filter=Application_No eq '" + DocNo + "'&$format=json";
+                #region Caf Header
+                Cafeteria CafDoc = new Cafeteria();
 
+                string page = "CafeteriaReq?$filter=Document_No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -958,24 +1088,28 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        TranDoc.Application_No = (string)config["Application_No"];
-                        TranDoc.Application_Date = Convert.ToDateTime((string)config["Application_Date"]).ToString("dd/MM/yyyy");
-                        TranDoc.StartDate = Convert.ToDateTime((string)config["From_Date"]).ToString("dd/MM/yyyy");
-                        TranDoc.EndDate = Convert.ToDateTime((string)config["To_Date"]).ToString("dd/MM/yyyy");
-                        TranDoc.Training_Category = (string)config["Training_Category"];
-                        TranDoc.Course_Title = (string)config["Course_Title"];
-                        TranDoc.Course_Desc = (string)config["Description"];
-                        TranDoc.Directorate = CommonClass.GetDimensionValue((string)config["Global_Dimension_1"]);
-                        TranDoc.Department = CommonClass.GetDimensionValue((string)config["Global_Dimension_2"]);
-                        TranDoc.Trainer = (string)config["Trainer"];
-                        TranDoc.Purpose = (string)config["Purpose_of_Training"];
-                        TranDoc.Status = (string)config["Status"];
+                        CafDoc.No = (string)config["Document_No"];
+                        CafDoc.DateRaised = ((DateTime)config["Date_Raised"]).ToString("dd/MM/yyyy");
+                        CafDoc.DateNeeded = ((DateTime)config["Date_Needed"]).ToString("dd/MM/yyyy");
+                        CafDoc.TimeNeeded = ((DateTime)config["Booking_Time"]).ToString("h:mm tt");
+                        CafDoc.Event_Name = (string)config["Meeting_Name"];
+                        CafDoc.Employee = (string)config["Employee_No"];
+                        CafDoc.EmployeeName = (string)config["Employee_Name"];
+                        CafDoc.Venue = (string)config["Venue"];
+                        CafDoc.TotalCost = (string)config["Total_Cost"];
+                        CafDoc.Campus = (string)config["Campus"];
+                        CafDoc.Department = (string)config["Department"];
+                        CafDoc.RespC = (string)config["Responsibility_Center"];
+                        CafDoc.Caf = (string)config["Cafeteria"];
+                        CafDoc.CafName = (string)config["Cafeteria_Name"];
+                        CafDoc.TotalCost = (string)config["Total_Cost"];
+                        CafDoc.Status = (string)config["Status"];
                     }
                 }
                 #endregion
-                #region Training Lines
-                List<Trainees> participantList = new List<Trainees>();
-                string pageLine = "HRTrainingPartcipants?$filter=TrainingCode eq '" + DocNo + "'&$format=json";
+                #region Caf Lines
+                List<CafeteriaLines> CafLines = new List<CafeteriaLines>();
+                string pageLine = "CafeteriaReqLines?$filter=Document_No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -984,39 +1118,148 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        Trainees participants = new Trainees();
-                        participants.No = (string)config["EmployeeCode"];
-                        participants.Name = (string)config["Employeename"];
-                        participantList.Add(participants);
+                        CafeteriaLines cafLn = new CafeteriaLines();
+                        cafLn.No = (string)config["Document_No"];
+                        cafLn.Item = (string)config["Item"];
+                        cafLn.ItemName = (string)config["Description"];
+                        cafLn.Quantity = (string)config["Quantity"];
+                        cafLn.LnNo = (string)config["Line_No"];
+                        cafLn.UnitCost = Convert.ToDecimal((string)config["Unit_Cost"]).ToString("#,##0.00");
+                        cafLn.Amount = Convert.ToDecimal((string)config["Amount"]).ToString("#,##0.00");
+                        CafLines.Add(cafLn);
                     }
                 }
                 #endregion
-                #region Training Lines
-                List<TrainingCost> TrainingCostList = new List<TrainingCost>();
-                string pageTLine = "HRTrainingCost?$filter=TrainingId eq '" + DocNo + "'&$format=json";
-                HttpWebResponse httpResponseTLine = Credentials.GetOdataData(pageTLine);
-                using (var streamReader = new StreamReader(httpResponseTLine.GetResponseStream()))
+                CafDocument docDetails = new CafDocument
+                {
+                    DocHeader = CafDoc,
+                    ListOfCafLines = CafLines
+                };
+                return PartialView("~/Views/DocumentApproval/Document Approval Views/CafApprovalDocDetails.cshtml", docDetails);
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+            }
+        }
+        public PartialViewResult StudentRequisitionDocDetails(string DocNo, string Sequence)
+        {
+            try
+            {
+                #region Requisition Doc
+                StudentRequisition RDoc = new StudentRequisition();
+                string page = "StudentRequisitionCard?$filter=Code eq '" + DocNo + "'&$format=json";
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     var result = streamReader.ReadToEnd();
 
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        TrainingCost TrCost = new TrainingCost();
-                        TrCost.No = (string)config["TrainingId"];
-                        TrCost.Item = (string)config["TrainingCostItem"];
-                        TrCost.Cost = ((decimal)config["Cost"]).ToString("#,##0.00");
-                        TrainingCostList.Add(TrCost);
+                        RDoc.Code = (string)config["Code"];
+                        RDoc.StudentNo = (string)config["StudentNo"];
+                        RDoc.StudentName = (string)config["Name"];
+                        RDoc.RegType = (string)config["RequisitionType"];
+                        RDoc.DateApplied = Convert.ToDateTime((string)config["Date"]).ToString("dd/MM/yyyy");
+                        RDoc.Status = (string)config["Status"];
+                        RDoc.Programme = (string)config["CurrentProgramme"] + "(" + (string)config["CurrntProgDescr"] + ")";
+                        RDoc.Semester = (string)config["Semester"];
+                        if ((string)config["Concentration"] != "")
+                        {
+                            RDoc.ProgrammeTo = (string)config["Concentration"] + "-" + (string)config["Concentration_Name"];
+                        }
+                        else
+                        {
+                            RDoc.ProgrammeTo = (string)config["Programme_To"] + "-" + (string)config["ProgToDescr"];
+                        }
+
+                        RDoc.StudentStatus = CommonClass.StudentStatus((string)config["StudentNo"]);
+                        if (Sequence != "")
+                        {
+                            string comment = CommonClass.GetDocRejectionComment(DocNo, Convert.ToInt32(Sequence));
+                            if (comment != "")
+                            {
+                                RDoc.CommentFound = true;
+                                RDoc.Comment = comment;
+                            }
+                        }
                     }
                 }
                 #endregion
-                TrainingDocument docDetails = new TrainingDocument
+
+                #region Doc Lines
+                List<StudentReqLines> DocLines = new List<StudentReqLines>();
+                string pageLn = "StudentRequisitionLines?$filter=Application_No eq '" + DocNo + "'&$format=json";
+                HttpWebResponse httpResponseLn = Credentials.GetOdataData(pageLn);
+                using (var streamReader = new StreamReader(httpResponseLn.GetResponseStream()))
                 {
-                    DocHeader = TranDoc,
-                    ListOfTrainees = participantList,
-                    ListOfTraininingCost = TrainingCostList
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    if (details["value"].Count() > 0)
+                    {
+                        RDoc.ReqCount = details["value"].Count();
+                    }
+                    else
+                    {
+                        RDoc.ReqCount = 0;
+                    }
+                }
+                #endregion
+
+                StudentReqDoc newDoc = new StudentReqDoc
+                {
+                    Doc = RDoc,
+                    Sequence = Sequence
                 };
-                return PartialView("~/Views/DocumentApproval/Document Approval Views/TrainingApprovalDocDetails.cshtml", docDetails);
+                return PartialView("~/Views/DocumentApproval/Document Approval Views/StudentRequisitionDoc.cshtml", newDoc);
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+            }
+        }
+        public PartialViewResult StudentRequisitionDocLines(string DocNo, string RegT)
+        {
+            try
+            {
+                #region Doc Lines
+                List<StudentReqLines> DocLines = new List<StudentReqLines>();
+                string pageLn = "StudentRequisitionLines?$count=true&$filter=Application_No eq '" + DocNo + "'&$format=json";
+                HttpWebResponse httpResponseLn = Credentials.GetOdataData(pageLn);
+                using (var streamReader = new StreamReader(httpResponseLn.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    foreach (JObject config in details["value"])
+                    {
+                        StudentReqLines ln = new StudentReqLines();
+                        ln.Unit = (string)config["Unit_Code"];
+                        ln.UnitName = (string)config["Unit_Title"];
+                        ln.Equivalent = (string)config["Equivalent_Unit"];
+                        ln.Lecture = (string)config["Lecture_Name"];
+                        ln.Section = (string)config["Section"];
+                        ln.Approved = (bool)config["Approved"];
+                        ln.Charge = (bool)config["Charge_Unit"];
+                        ln.Semester = (string)config["Semester"];
+                        ln.Semester_Unit_Done = (string)config["Semester_Unit_Done"];
+                        ln.LnNo = (string)config["Line_No"];
+                        DocLines.Add(ln);
+                    }
+                }
+                #endregion
+                StudentReqLinesDoc NewDoc = new StudentReqLinesDoc
+                {
+                    RegT = RegT,
+                    DocLines = DocLines
+                };
+                return PartialView("~/Views/DocumentApproval/Document Approval Views/StudentReqUnits.cshtml", NewDoc);
             }
             catch (Exception ex)
             {
@@ -1029,76 +1272,10 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                //#region Purchase Header
-                //TransferOrderHeader TOrderDoc = new TransferOrderHeader();
+                #region Purchase Header
+                TransferOrderHeader TOrderDoc = new TransferOrderHeader();
 
-                //string page = "Transfer_Orders?$filter=No eq '" + DocNo + "'&format=json";
-                //HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                //{
-                //    var result = streamReader.ReadToEnd();
-
-                //    var details = JObject.Parse(result);
-                //    foreach (JObject config in details["value"])
-                //    {
-                //        TOrderDoc.No = (string)config["No"];
-                //        TOrderDoc.TransferFrom = (string)config["Transfer_from_Name"];
-                //        TOrderDoc.TransferTo = (string)config["Transfer_to_Name"];
-                //        TOrderDoc.Posting_Date = Convert.ToDateTime((string)config["Posting_Date"]).ToString("dd/MM/yyyy");
-                //        TOrderDoc.Shipment_Date = Convert.ToDateTime((string)config["Shipment_Date"]).ToString("dd/MM/yyyy");
-                //        TOrderDoc.Receipt_Date = Convert.ToDateTime((string)config["Receipt_Date"]).ToString("dd/MM/yyyy");
-                //        TOrderDoc.CampusName = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_1_Code"]);
-                //        TOrderDoc.Department = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_2_Code"]);
-                //        TOrderDoc.Status = (string)config["Status"];
-                //        TOrderDoc.AssignedUser = (string)config["Assigned_User_ID"];
-                //        TOrderDoc.AssignedUserName = CommonClass.GetEmployeeName((string)config["Assigned_User_ID"]);
-                //    }
-                //}
-                //#endregion
-                //#region Purchase Lines
-                //List<TransferOrderLines> TransferLines = new List<TransferOrderLines>();
-                //string pageLine = "Transfer_Line?$filter=Document_No eq '" + DocNo + "'&format=json";
-                //HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
-                //using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
-                //{
-                //    var result = streamReader.ReadToEnd();
-
-                //    var details = JObject.Parse(result);
-                //    foreach (JObject config in details["value"])
-                //    {
-                //        TransferOrderLines TLine = new TransferOrderLines();
-
-                //        TLine.Item = (string)config["Item_No"];
-                //        TLine.ItemDesc = (string)config["Description"];
-                //        TLine.Qnty = (string)config["Quantity"];
-                //        TLine.UoM = (string)config["Unit_of_Measure"];
-                //        TLine.Qty_to_Ship = (string)config["Qty_to_Ship"];
-                //        TransferLines.Add(TLine);
-                //    }
-                //}
-                //#endregion
-                //TransferOrderDocument docDetails = new TransferOrderDocument
-                //{
-                //    DocHeader = TOrderDoc,
-                //    ListOfTransferOrderLines = TransferLines
-                //};
-                return PartialView("~/Views/DocumentApproval/Document Approval Views/TransferOrder.cshtml");
-            }
-            catch (Exception ex)
-            {
-                Error erroMsg = new Error();
-                erroMsg.Message = ex.Message;
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
-            }
-        }
-        public PartialViewResult PVReqDocApprovalDetails(string DocNo)
-        {
-            try
-            {
-                #region PV Header
-                PaymentHeader PayDoc = new PaymentHeader();
-
-                string page = "PVHeader?$filter=No eq '" + DocNo + "'&$format=json";
+                string page = "Transfer_Orders?$filter=No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -1107,32 +1284,23 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        PayDoc.No = (string)config["No"];
-                        PayDoc.Date = Convert.ToDateTime((string)config["Date"]).ToString("dd/MM/yyyy");
-                        PayDoc.Remarks = (string)config["Payment_Narration"];
-                        PayDoc.Directorate = (string)config["Function_Name"];
-                        PayDoc.Department = (string)config["Budget_Center_Name"];
-                        PayDoc.Pay_Mode = (string)config["Pay_Mode"];
-                        PayDoc.ChequeNo = (string)config["Cheque_No"];
-                        PayDoc.PayingBank = (string)config["Bank_Name"];
-                        PayDoc.Paying_Bank_Account = (string)config["Paying_Bank_Account"];
-                        PayDoc.PaymentTo = (string)config["Payee"];
-                        PayDoc.OnBehalfOf = (string)config["On_Behalf_Of"];
-                        PayDoc.RaisedBy = (string)config["Cashier"];
-                        PayDoc.TotalAmount = Convert.ToDecimal((string)config["Total_Payment_Amount"]).ToString("#,##0.00");
-                        PayDoc.TotalVATAmount = Convert.ToDecimal((string)config["Total_VAT_Amount"]).ToString("#,##0.00");
-                        PayDoc.TotalWithHTAXAmount = Convert.ToDecimal((string)config["Total_Witholding_Tax_Amount"]).ToString("#,##0.00");
-                        PayDoc.TotalRETAmount = Convert.ToDecimal((string)config["Total_Retention_Amount"]).ToString("#,##0.00");
-                        PayDoc.TotalVATWITHHAmount = Convert.ToDecimal((string)config["Total_VAT_Withholding_Amount"]).ToString("#,##0.00");
-                        PayDoc.TotalPAYEAmount = Convert.ToDecimal((string)config["Total_PAYE_Amount"]).ToString("#,##0.00");
-                        PayDoc.TotalNETAmount = Convert.ToDecimal((string)config["Total_Net_Amount"]).ToString("#,##0.00");
-                        PayDoc.Status = (string)config["Status"];
+                        TOrderDoc.No = (string)config["No"];
+                        TOrderDoc.TransferFrom = (string)config["Transfer_from_Name"];
+                        TOrderDoc.TransferTo = (string)config["Transfer_to_Name"];
+                        TOrderDoc.Posting_Date = Convert.ToDateTime((string)config["Posting_Date"]).ToString("dd/MM/yyyy");
+                        TOrderDoc.Shipment_Date = Convert.ToDateTime((string)config["Shipment_Date"]).ToString("dd/MM/yyyy");
+                        TOrderDoc.Receipt_Date = Convert.ToDateTime((string)config["Receipt_Date"]).ToString("dd/MM/yyyy");
+                        TOrderDoc.CampusName = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_1_Code"]);
+                        TOrderDoc.Department = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_2_Code"]);
+                        TOrderDoc.Status = (string)config["Status"];
+                        TOrderDoc.AssignedUser = (string)config["Assigned_User_ID"];
+                        TOrderDoc.AssignedUserName = CommonClass.GetEmployeeName((string)config["Assigned_User_ID"]);
                     }
                 }
                 #endregion
-                #region Payment Lines
-                List<PaymentLines> PLines = new List<PaymentLines>();
-                string pageLine = "PVLines?$filter=No eq '" + DocNo + "'&format=json";
+                #region Purchase Lines
+                List<TransferOrderLines> TransferLines = new List<TransferOrderLines>();
+                string pageLine = "Transfer_Line?$filter=Document_No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -1141,58 +1309,23 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        PaymentLines PLine = new PaymentLines();
-                        PLine.DocNo = (string)config["No"];
-                        PLine.Type = (string)config["Type"];
-                        PLine.AccountType = (string)config["AccountType"];
-                        PLine.AccountNo = (string)config["AccountNo"];
-                        PLine.AccountName = (string)config["AccountName"];
-                        PLine.Amount = ((decimal)config["Amount"]).ToString("#,##0.00");
-                        PLines.Add(PLine);
+                        TransferOrderLines TLine = new TransferOrderLines();
+
+                        TLine.Item = (string)config["Item_No"];
+                        TLine.ItemDesc = (string)config["Description"];
+                        TLine.Qnty = (string)config["Quantity"];
+                        TLine.UoM = (string)config["Unit_of_Measure"];
+                        TLine.Qty_to_Ship = (string)config["Qty_to_Ship"];
+                        TransferLines.Add(TLine);
                     }
                 }
                 #endregion
-                PaymentDocument docDetails = new PaymentDocument
+                TransferOrderDocument docDetails = new TransferOrderDocument
                 {
-                    DocHeader = PayDoc,
-                    ListOfPaymentLines = PLines
+                    DocHeader = TOrderDoc,
+                    ListOfTransferOrderLines = TransferLines
                 };
-                return PartialView("~/Views/DocumentApproval/Document Approval Views/PVDocument.cshtml", docDetails);
-            }
-            catch (Exception ex)
-            {
-                Error erroMsg = new Error();
-                erroMsg.Message = ex.Message;
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
-            }
-        }
-        public PartialViewResult PayrollJouralLines()
-        {
-            try
-            {
-                #region Payroll Journal Lines
-                List<PayrollJournal> PLines = new List<PayrollJournal>();
-                string pageLine = "GenJournalLines?$filter=Journal_Batch_Name eq 'PAYROLL'&$format=json";
-                HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
-                using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-                    foreach (JObject config in details["value"])
-                    {
-                        PayrollJournal ln = new PayrollJournal();
-                        ln.Posting_Date = ((DateTime)config["Posting_Date"]).ToString("dd/MM/yyyy");
-                        ln.DocNo = (string)config["Document_No"];
-                        ln.AccountNo = (string)config["Account_No"];
-                        ln.AccountName = (string)config["AccountName"];
-                        ln.AccountName = (string)config["Description"];
-                        ln.Amount = ((decimal)config["Amount"]).ToString("#,##0.00");
-                        PLines.Add(ln);
-                    }
-                }
-                #endregion                
-                return PartialView("~/Views/DocumentApproval/Document Approval Views/PayrollJournal.cshtml", PLines);
+                return PartialView("~/Views/DocumentApproval/Document Approval Views/TransferOrder.cshtml", docDetails);
             }
             catch (Exception ex)
             {
@@ -1202,26 +1335,22 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         [HttpPost]
-        public JsonResult ApproveDocument(string DocNo, string EntryNo)
+        public JsonResult ApproveDocument(string DocNo, string EntryNo, string TBID, string ChargeApp)
         {
             try
             {
-                bool rtVal = false;
-                string msg = "";
+                string userID = Session["UserID"].ToString();
 
-                if (Session["UserID"] != null)
+                if (TBID == "70134894")
                 {
-                    string userID = Session["UserID"].ToString();
-                    Credentials.ObjNav.DocumentApprovals(Convert.ToInt32(EntryNo), userID);
-                    rtVal = true;
-                    msg = "Request approved Successfully";
+                    if (ChargeApp != null && ChargeApp != "")
+                    {
+                        //Credentials.ObjNav.ChargeStudentRequest(DocNo, Convert.ToInt32(ChargeApp));
+                    }
                 }
-                else
-                {
-                    rtVal = false;
-                    msg = "/Login/Login";
-                }
-                return Json(new { message = msg, success = true, Redirect = rtVal }, JsonRequestBehavior.AllowGet);
+                Credentials.ObjNav.DocumentApprovals(Convert.ToInt32(EntryNo), DocNo, userID);
+                Session["SuccessMsg"] = "Request approved Successfully";
+                return Json(new { message = "Request approved Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -1229,15 +1358,58 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         [HttpPost]
+        public JsonResult ApproveUnits(string DocNo, List<StudentReqLines> ReqUnits, string ChargeApp)
+        {
+            try
+            {
+                if (ChargeApp != null && ChargeApp != "")
+                {
+                    //Credentials.ObjNav.ChargeStudentRequest(DocNo, Convert.ToInt32(ChargeApp));
+                }
+
+                foreach (var c in ReqUnits)
+                {
+                    string unit = c.Unit.Trim();
+                    string Ln = c.LnNo.Trim();
+                    bool App = c.Approved;
+                    bool ChargeUnit = c.Charge;
+                    //Credentials.ObjNav.ApproveStudentRequisitionLines(DocNo, unit, Convert.ToInt32(Ln), App, ChargeUnit);
+                }
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
         public JsonResult RejectDocument(string TBID, string DocNo, string Comments, string SeqNo, string EntryNo)
         {
             try
             {
                 string userID = Session["UserID"].ToString();
+                //Credentials.ObjNav.DocumentRejectionCommentLine(
+                //documentNo: DocNo,
+                //commentLineText: Comments,
+                //webUser: userID,
+                //documentType: 0,
+                //table_ID: Convert.ToInt32(TBID),
+                //seqenceNo: Convert.ToInt32(SeqNo));
+                string msg = "";
+                //if (TBID == "70134894")
+                //{
+                //    msg = "Clearance Approval Request Rejected";
+                //}
+                //else
+                //{
+                //    Credentials.ObjNav.DocumentRejections(Convert.ToInt32(EntryNo), DocNo, userID, Comments,
+                //        Convert.ToInt32(TBID), Convert.ToInt32(SeqNo));
+                //    msg = "Approval Request Rejected";
+                //}
 
                 Credentials.ObjNav.DocumentRejections(Convert.ToInt32(EntryNo), DocNo, userID, Comments,
-                   Convert.ToInt32(TBID), Convert.ToInt32(SeqNo));
-                string msg = "Approval Request Rejected";
+                       Convert.ToInt32(TBID), Convert.ToInt32(SeqNo));
+                msg = "Approval Request Rejected";
+                Session["SuccessMsg"] = msg;
                 return Json(new { message = msg, success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -1245,13 +1417,13 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        public PartialViewResult PreviousApprovalTrail(string TableID, string RecordID)
+        public PartialViewResult PreviousApprovalTrail(string TableID, string DocNo)
         {
             try
             {
                 List<DocumentsForApproval> approvalDocList = new List<DocumentsForApproval>();
 
-                string page = "ApprovalEntries?$select=Sequence_No,Approver_ID&$filter=Record_ID_to_Approve eq '" + RecordID + "' and Table_ID eq " + TableID + " and Status eq 'Approved'&format=json";
+                string page = "ApprovalEntries?$select=Sequence_No,Approver_ID,ApproverNames&$filter=Document_No eq '" + DocNo + "' and Table_ID eq " + TableID + " and Status eq 'Approved'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -1283,8 +1455,46 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
+        internal string[] StudentDetails(string DocNo)
+        {
+            string[] s = new string[3];
+            try
+            {
+                string pageCl = "StudentRequisitionCard?$select=StudentNo&$filter=Code eq '" + DocNo + "'&$format=json";
+                HttpWebResponse httpResponseCl = Credentials.GetOdataData(pageCl);
+                using (var streamReaderCl = new StreamReader(httpResponseCl.GetResponseStream()))
+                {
+                    var resultCl = streamReaderCl.ReadToEnd();
+
+                    var detailsCl = JObject.Parse(resultCl);
+                    foreach (JObject configCl in detailsCl["value"])
+                    {
+                        string page = "StudentCard?$select=Status&$filter=No eq '" + (string)configCl["StudentNo"] + "'&$format=json";
+
+                        HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            var result = streamReader.ReadToEnd();
+
+                            var details = JObject.Parse(result);
+
+                            foreach (JObject config in details["value"])
+                            {
+                                s[0] = (string)configCl["StudentNo"];
+                                s[1] = (string)config["Status"];
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Clear();
+            }
+            return s;
+        }
         [HttpPost]
-        public JsonResult AssignDriverVehicle(string DocNo, string Driver, string Vehicle)
+        public JsonResult AssignDriverVehicle(string DocNo, string HireVehicle, string HireDriver, string Driver, string Vehicle, string HiredVehicle, string HiredDriver, string Cost)
         {
             try
             {
@@ -1293,8 +1503,41 @@ namespace Latest_Staff_Portal.Controllers
 
                 if (Session["Username"] != null)
                 {
+                    bool HireV = false, HireD = false;
+                    string VehicleHiredD = "", DriverHiredD = "";
+                    if (HireVehicle != null)
+                    {
+                        if (HireVehicle == "1")
+                        {
+                            HireV = true;
+                            VehicleHiredD = HiredVehicle;
+                        }
+                        else
+                        {
+                            HireV = false;
+                            VehicleHiredD = "";
+                        }
+                    }
+                    if (HireDriver != null)
+                    {
+                        if (HireDriver == "1")
+                        {
+                            HireD = true;
+                            DriverHiredD = HiredDriver;
+                        }
+                        else
+                        {
+                            HireD = false;
+                            HiredDriver = "";
+                        }
+                    }
+                    if (Cost == null || Cost == "")
+                    {
+                        Cost = "0";
+                    }
                     string userID = Session["Username"].ToString();
-                    Credentials.ObjNav.AssignTransportRequisitionDriver(DocNo, Driver, Vehicle, userID);
+                    //Credentials.ObjNav.AssignTransportRequisitionDriver(DocNo, Driver, Vehicle, userID, HireV, HireD,
+                        //VehicleHiredD, HiredDriver, Convert.ToDecimal(Cost));
                     rtVal = true;
                     msg = "Request approved Successfully";
                 }
@@ -1304,6 +1547,118 @@ namespace Latest_Staff_Portal.Controllers
                     msg = "/Login/Login";
                 }
                 return Json(new { message = msg, success = true, Redirect = rtVal }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult NewLecAssignForm(string DocNo, string Unit, string Sem, string Ln)
+        {
+            try
+            {
+                if (Session["Username"] == null)
+                {
+                    return RedirectToAction("Login", "Login");
+                }
+                else
+                {
+                    //LecAssignUnit LecList = new LecAssignUnit();
+                    //#region Lec List
+                    //List<DimensionValues> ListLec = new List<DimensionValues>();
+                    //string pageCampus = "Timetable?$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem + "'&$format=json";
+
+                    //HttpWebResponse httpResponseCampus = Credentials.GetOdataData(pageCampus);
+                    //using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
+                    //{
+                    //    var result = streamReader.ReadToEnd();
+
+                    //    var details = JObject.Parse(result);
+
+
+                    //    foreach (JObject config in details["value"])
+                    //    {
+                    //        DimensionValues l = new DimensionValues();
+                    //        l.Code = (string)config["Lecturer"];
+                    //        l.Name = (string)config["Lecturer_Name"];
+                    //        ListLec.Add(l);
+                    //    }
+                    //}
+                    //#endregion
+
+                    //LecList = new LecAssignUnit
+                    //{
+                    //    Code = "",
+                    //    ListOfLec = ListLec.Select(x =>
+                    //                         new SelectListItem()
+                    //                         {
+                    //                             Text = x.Name,
+                    //                             Value = x.Code
+                    //                         }).ToList(),
+                    //    DocNo = DocNo,
+                    //    Unit = Unit,
+                    //    Semester = Sem,
+                    //    Ln = Ln
+                    //};
+                    return PartialView("~/Views/DocumentApproval/Document Approval Views/AssignLecForm.cshtml");
+                }
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
+            }
+        }
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetLecturerSections(string Lec, string Unit, string Sem)
+        {
+            try
+            {
+                #region Section
+                List<DropdownList> DropDList = new List<DropdownList>();
+                string page = "Timetable?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '" + Sem + "'&$format=json";
+
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+
+                    foreach (JObject config in details["value"])
+                    {
+                        DropdownList d = new DropdownList();
+                        d.Value = (string)config["Unit_Class"];
+                        d.Text = (string)config["Unit_Class"];
+                        DropDList.Add(d);
+                    }
+                }
+                #endregion
+                DropdownListData newList = new DropdownListData
+                {
+                    ListOfddlData = DropDList.Select(x =>
+                                    new SelectListItem()
+                                    {
+                                        Text = x.Text,
+                                        Value = x.Value
+                                    }).ToList()
+                };
+                return Json(newList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public JsonResult SaveSpecialExamLec(string DocNo, string Unit, string Lec, string Sec, string Ln, string Sem)
+        {
+            try
+            {
+                //Credentials.ObjNav.AssignLecStudentRequisitionLines(DocNo, Unit, Convert.ToInt32(Ln), true, Lec, Sec);
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

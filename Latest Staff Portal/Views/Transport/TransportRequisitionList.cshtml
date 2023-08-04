@@ -76,7 +76,7 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: "/Transport/TransportRequisitionListPartialView",
+            url: '@Url.Action("TransportRequisitionListPartialView", "Transport")',
             success: function (data) {
                 $("#divTransportRegList").html(data);
                 HideProgress();
@@ -86,7 +86,7 @@
                 alert("There is some problem to process your request. Please try after some time");
             }
         });
-    }    
+    }
     var NewTrasnportRequisition = function () {
         $("#labelF").text("New Transport Requisition");
         ShowProgress();
@@ -96,7 +96,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Transport/NewTransportApplication',
+            url: '@Url.Action("NewTransportApplication", "Transport")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -111,10 +111,11 @@
     var SubmitTransportRequisition = function () {
         var Commencement = $("#txtCommence").val();
         var Destination = $("#txtDestination").val();
-        //var ResponC = $("#ddlRespC").children("option:selected").val();
+        var ResponC = $("#ddlRespC").children("option:selected").val();
         var DateTrip = $("#dtPicker").val();
         var TimeTrip = $("#txtTime").val();
         var NoOfDays = $("#txtNoOfDays").val();
+        var NoOfPs = $("#txtNoOfPassengers").val();
         var Purpose = $("#txtRemarks").val();
         if (Commencement == "") {
             Swal.fire('error', 'Enter Place of Commencement', 'error');
@@ -124,10 +125,10 @@
             Swal.fire('error', 'Enter Place of Destination', 'error');
             return;
         }
-        //else if (ResponC == "") {
-        //    Swal.fire('error', 'Select Responsibility Center', 'error');
-        //    return;
-        //}
+        else if (ResponC == "") {
+            Swal.fire('error', 'Select Responsibility Center', 'error');
+            return;
+        }
         else if (DateTrip == "") {
             Swal.fire('error', 'Select Date of Trip', 'error');
             return;
@@ -140,6 +141,10 @@
             Swal.fire('error', 'Enter No of Days', 'error');
             return;
         }
+        else if (NoOfPs == "") {
+            Swal.fire('error', 'Enter No of Passengers travelling', 'error');
+            return;
+        }
         else if (Purpose == "") {
             Swal.fire('error', 'Enter Purpose of the Trip', 'error');
             return;
@@ -148,15 +153,16 @@
             var NewTransportDocument = {};
             NewTransportDocument.Commencement = Commencement;
             NewTransportDocument.Destination = Destination;
-            //NewTransportDocument.RespC = ResponC;
+            NewTransportDocument.RespC = ResponC;
             NewTransportDocument.DateTrip = DateTrip;
             NewTransportDocument.TimeTrip = TimeTrip;
             NewTransportDocument.NoOfDays = NoOfDays;
+            NewTransportDocument.NoOfPassengers = NoOfPs;
             NewTransportDocument.Purpose = Purpose;
             ShowProgress();
             $.ajax({
                 type: "post",
-                url: "/Transport/SubmitTransportDocument",
+                url: '@Url.Action("SubmitTransportDocument", "Transport")',
                 data: JSON.stringify({ NewApp: NewTransportDocument }),
                 contentType: "application/json; charset = utf-8",
                 success: function (data) {
@@ -186,7 +192,7 @@
             data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'TRANSP' }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/CommonActions',
+            url: '@Url.Action("CommonActions", "Common")',
             success: function (data) {
                 $("#modalBodyLinks").html(data);
                 HideProgress();
@@ -200,7 +206,7 @@
     }
     var ViewDoc = function (DocNo) {
         ShowProgress();
-        window.location = "/Transport/TransportDocumentDetails?AppDoc=" + DocNo;
+        window.location = '@Url.Action("TransportDocumentDetails", "Transport")?AppDoc=' + DocNo;
     }
     var SendDocForApproval = function (DocNo) {
         ShowProgress();
@@ -208,10 +214,10 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo }),
+            data: JSON.stringify({ DocNo: DocNo, Redirect:"N" }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Transport/SendDocAppForApproval',
+            url: '@Url.Action("SendDocAppForApproval", "Transport")',
             success: function (data) {
                 if (data.success == true) {
                     HideProgress();
@@ -227,7 +233,7 @@
             error: function (err) {
                 Swal.fire('Warning', err, 'warning');
             }
-        });        
+        });
     }
     var CancelDocForApproval = function (DocNo) {
         ShowProgress();
@@ -238,7 +244,7 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Transport/CancelTransportAppForApproval',
+            url: '@Url.Action("CancelTransportAppForApproval", "Transport")',
             success: function (data) {
                 if (data.success == true) {
                     HideProgress();
@@ -267,7 +273,7 @@
             data: JSON.stringify({ DocNo: DocNo, RecID: "FLT-Transport Requisition: " + DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/DocumentApprovalTrail',
+            url: '@Url.Action("DocumentApprovalTrail", "Common")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -291,7 +297,7 @@
             data: JSON.stringify({ RecID: RecordID }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/DocumentApprovalComments',
+            url: '@Url.Action("DocumentApprovalComments", "Common")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
