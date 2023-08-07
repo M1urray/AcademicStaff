@@ -1,0 +1,80 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewPurchaseRequisition
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+
+    .NoRecords {
+        background-color: #dedbdb
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="PurchaseRequisitionLink();" style="color:yellow"><<< Back To Purchase Requisition List</a>
+</div>
+<div class="card pre-scrollable">
+    <div class="card-body">
+        <b>Purchase Header</b>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Reason:(50 characters)", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <textarea id="txtRemarks" class="form-control" maxlength="50"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                @Html.Label("Campus", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.Campus, Model.ListOfCampus, "--select Campus--", new { @class = "form-control", @id = "ddlCampus" })
+                    @Html.ValidationMessageFor(model => model.Campus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group">
+                        @Html.Label("Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
+                            @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Department, Model.ListOfDepartment, "--select Department--", new { @class = "form-control", @id = "ddlDepartment" })
+                        @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr style="border:1px solid black" />        
+        <div align="center">
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Create Document" onclick="SubmitPurchaseRequisition();" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ddlCampus,#ddlDepartment,#ddlRespC").select2({
+            width: '100%'
+        });
+        document.getElementById("ddlCampus").disabled = true;
+        document.getElementById("ddlDepartment").disabled = true;
+        document.getElementById("ddlRespC").disabled = true;
+    });
+</script>
+
+

@@ -1,0 +1,86 @@
+﻿@model Latest_Staff_Portal.ViewModel.PurchaseLinesList
+<div class="table-responsive">
+    <table class="table table-centered table-nowrap" id="PRVLines">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Item</th>
+                <th>Description</th>
+                <th>Description 2</th>
+                <th>Store</th>
+                <th class="text-center">Quantity</th>
+                <th>Unit Measure</th>
+                <th class="text-left">Unit Amount</th>
+                <th class="text-left">Amount</th>
+                <th style="text-align:center" class="tdAction">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.ListOfPurchaseLines != null && Model.ListOfPurchaseLines.Count() > 0)
+                {
+                    foreach (var item in Model.ListOfPurchaseLines)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LineType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Item)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemDesc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description2)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Location)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Qnty)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UnitM)
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(modelItem => item.LineAmount)
+                            </td>
+                            <td style="text-align:center" class="tdAction">
+                                <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" onclick="EditItem('@item.DocNo','@item.LnNo');"><i class="mdi mdi-pencil font-size-16"></i></a>
+                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="RemoveItem('@item.DocNo','@item.LnNo');"><i class="mdi mdi-close font-size-16"></i></a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="9" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>        
+    </table>
+</div>
+<div align="right">
+    <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddPRVLines();" />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var status = '@Model.Status';
+        if (status == "Open") {
+            $(".tdAction").show();
+            $(".HideLineButton").show();
+        }
+        else {
+            $(".tdAction").hide();
+            $(".HideLineButton").hide();
+        }
+    });
+</script>

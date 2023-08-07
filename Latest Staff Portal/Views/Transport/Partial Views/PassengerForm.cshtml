@@ -1,0 +1,89 @@
+﻿<style>
+    .ui-front {
+        z-index: 2000 !important;
+    }
+
+    .ui-autocomplete {
+        /* these sets the height and width */
+        max-height: 200px;
+        max-width: 236px;
+        /* these make it scroll for anything outside */
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
+</style>
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-12" id="Div2" runat="server">
+            <span style="font-weight: bold">Passenger Type</span>
+            <select class="form-control" id="PassType" name="PassType" onchange="ShowRequiredDiv()">
+                <option value="">--Select Type--</option>
+                <option value="0">Staff</option>
+                <option value="1">Student</option>
+            </select>
+        </div>
+    </div>
+    <hr />
+    <div id="DivItSearchForm">
+        <div class="row">
+            <div class="col-md-6" runat="server" id="divStaff">
+                <span style="font-weight: bold">Passenger Name</span>
+                <select class="form-control" id="ddlPassenger" name="ddlPassenger"></select>
+            </div>
+            <div class="col-md-6" runat="server" id="divStudent">
+                <span style="font-weight: bold">Student Reg. No</span>
+               <input id="txtRegID" class="form-control" />
+            </div>
+            <div class="col-md-6" runat="server">
+            </div>
+        </div>
+        <hr />
+        <div align="center">
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Add Passenger" onclick="SubmitPassengerLine();" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#DivItSearchForm").hide();
+        $("#ddlPassenger,#PassType").select2({
+            width: '100%'
+        });
+    });
+    var ShowRequiredDiv = function () {
+        var PassT = $("#PassType").children("option:selected").val();
+        if (PassT == "") {
+            $("#DivItSearchForm").hide();
+        }
+        else if (PassT == "1")
+        {
+            $("#divStudent").show();
+            $("#divStaff").hide();
+            $("#DivItSearchForm").show();
+        }
+        else {
+            ShowProgress();
+            $("#divStudent").hide();
+            $("#divStaff").show();
+            $("#ddlPassenger option").remove();
+            $('#ddlPassenger').empty().append('<option selected="selected" value="">----</option>');
+            $.getJSON("/Transport/GetPassengerList",
+                function (data) {
+                    if (data.success == true) {
+                        $('#ddlPassenger').empty().append('<option selected="selected" value="">----</option>');
+                        $.each(data.DropDownData.ListOfddlData, function () {
+                            $("#ddlPassenger").append($("<option></option>").val(this['Value']).html(this['Text']));
+                        });
+                        $("#DivItSearchForm").show();
+                        HideProgress();
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                });
+        }
+    }
+</script>
+
+

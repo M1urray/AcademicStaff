@@ -1,0 +1,131 @@
+﻿@model Latest_Staff_Portal.ViewModel.PurchaseDocument
+<div class="row">
+    <div class="col-md-6">
+        <b>Document No</b>
+        @Html.TextBoxFor(m => m.DocHeader.No, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Date Requested</b>
+        @Html.TextBoxFor(m => m.DocHeader.Date, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Requestor No</b>
+        @Html.TextBoxFor(m => m.DocHeader.RequestorNo, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Requestor Name</b>
+        @Html.TextBoxFor(m => m.DocHeader.RequestorName, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Campus</b>
+        @Html.TextBoxFor(m => m.DocHeader.Campus, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Department</b>
+        @Html.TextBoxFor(m => m.DocHeader.Department, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Status</b>
+        @Html.TextBoxFor(m => m.DocHeader.Status, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Responsibility Center</b>
+        @Html.TextBoxFor(m => m.DocHeader.RespC, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <b>Vendor Name</b>
+        @Html.TextBoxFor(m => m.DocHeader.VendorName, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <b>Purpose</b>
+        @Html.TextAreaFor(m => m.DocHeader.Remarks, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Total Amount</b>
+        @Html.TextBoxFor(m => m.TotalAmount, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Amount in words</b>
+        @Html.TextAreaFor(m => m.AmountInWords, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<hr style="border:1px solid black" />
+<b>Purchase Lines</b>
+<hr />
+<div class="pre-scrollable">
+    <table class="table table-hover" id="PRVLines">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Item</th>
+                <th>Description</th>
+                <th>Description 2</th>
+                <th>Store</th>
+                <th class="text-center">Quantity</th>
+                <th>Unit Measure</th>
+                <th class="text-left">Unit Amount</th>
+                <th class="text-left">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.ListOfPurchaseLines != null && Model.ListOfPurchaseLines.Count() > 0)
+                {
+                    foreach (var item in Model.ListOfPurchaseLines)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LineType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Item)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemDesc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description2)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Location)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Qnty)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UnitM)
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td class="text-left">
+                                @Html.DisplayFor(modelItem => item.LineAmount)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

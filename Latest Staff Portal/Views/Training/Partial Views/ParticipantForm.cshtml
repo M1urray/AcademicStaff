@@ -1,0 +1,29 @@
+﻿@model Latest_Staff_Portal.ViewModel.Trainees
+<style>
+    .ui-front {
+        z-index: 2000 !important;
+    }
+</style>
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-12">
+            <span style="font-weight: bold;" >Participant Name</span>
+            @Html.DropDownListFor(m => m.No, new SelectList(Model.ListOfEmployee, "Value", "Text", Model.No), "--Select Employee--", new { @id = "ddlParticipant", @class = "form-control" ,@style = "text-color:black" })
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Add Participant" onclick="SubmitParticipantLine();" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ddlParticipant").select2({
+            width: '100%',
+            color:'black'
+        });
+    });
+</script>
+
+
+

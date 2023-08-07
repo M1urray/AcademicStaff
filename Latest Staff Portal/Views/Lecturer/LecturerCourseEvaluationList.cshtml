@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.LecturerAssignedUnits>
+<div class="pre-scrollable">
+    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead style="background-color:black;color:white">
+            <tr>
+                <th>Unit</th>
+                <th>Unit Name</th>
+                <th>Section</th>
+                <th>Campus</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null && Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Unit)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Unit_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CourseClass)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Campus_Code)
+                            </td>
+                            <td>
+                                <input type="button" onclick="GetCourseEvaluationReport('@item.Unit', '@item.Semester', '@item.CourseClass', '@item.Campus_Code','1');" class="btn btn-sm btn-danger" value="Course Evaluation" />
+                                <input type="button" onclick="GetCourseEvaluationReport('@item.Unit', '@item.Semester', '@item.CourseClass', '@item.Campus_Code','2');" class="btn btn-sm btn-danger" value="Course Comments" />
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+

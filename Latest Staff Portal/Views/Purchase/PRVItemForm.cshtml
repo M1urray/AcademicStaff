@@ -1,0 +1,196 @@
+﻿@model Latest_Staff_Portal.ViewModel.LocationList
+<style>
+    .ui-front {
+        z-index: 2000 !important;
+    }
+
+    .ui-autocomplete {
+        /* these sets the height and width */
+        max-height: 200px;
+        max-width: 236px;
+        /* these make it scroll for anything outside */
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
+</style>
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-12" id="Div2" runat="server">
+            <span style="font-weight: bold">PRV Type</span>
+            <select class="form-control" id="PRVType" name="PRVType" onchange="ShowRequiredDiv()">
+                <option value="">--Select Type--</option>
+                <option value="1">Service</option>
+                <option value="2">Item</option>
+                <option value="4">Asset</option>
+            </select>
+        </div>
+    </div>
+    <hr />
+    <div id="DivItSearchForm">
+        <div id="divFAPG">
+            <div class="row">
+                <div class="col-md-12" id="Div2" runat="server">
+                    <span style="font-weight: bold">Asset Category</span>
+                    <select class="form-control" id="ddlFAPG" name="ddlFAPG" onchange="GetFixedAsset()"></select>
+                    <hr />
+                </div>
+            </div>
+        </div>
+        <div class="row" id="DivService">
+            <div class="col-md-6">
+                <label id="labelSearch"></label>
+                <select class="form-control" id="ddlSearchItem" name="ddlSearchItem"></select>
+            </div>
+            <div class="col-md-6">
+                Unit Amount
+                <input type="text" class="form-control" id="txtAmount" onkeypress="return functionDecimal(event,this.value)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                Quantity
+                <input type="text" class="form-control" id="txtQuantity" onkeypress="return functionx(event)" />
+            </div>
+            <div class="col-md-6">
+                Where Needed
+                @Html.DropDownListFor(model => model.Code, Model.ListOfLocations, "--select Location--", new { @class = "form-control", @id = "ddlLocation" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                Description(50 Characters)
+                <textarea id="txtDescription" class="form-control" maxlength="50"></textarea>
+            </div>
+        </div>
+        <hr />
+        <div align="center">
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Add Line" onclick="AddLineItem();" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#DivItSearchForm").hide();
+        $("#divFAPG").hide();
+        $("#ddlLocation,#ddlFAPG,#ddlSearchItem").select2({
+            width: '100%',
+            placeholder: 'Search...'
+        });
+    });
+    var ShowRequiredDiv = function () {
+        var PRVType = $("#PRVType").children("option:selected").val();
+        if (PRVType == "") {
+            $("#DivItSearchForm").hide();
+        }
+        else {
+            ShowProgress();
+            var url;
+            if (PRVType == "1") {
+                $("#labelSearch").text("Search Service");
+                $("#divFAPG").hide();
+                url = "/Common/GetServiceList";
+            }
+            else if (PRVType == "2") {
+                $("#labelSearch").text("Search Item");
+                $("#divFAPG").hide();
+                url = "/Common/GetItemList";
+            }
+            else if (PRVType == "4") {
+                $("#labelSearch").text("Search Fixed Asset");
+                $("#divFAPG").show();
+                url = "/Common/GetFAPostingGroups";
+            }
+            else {
+                return;
+            }
+            $("#ddlSearchItem option").remove();
+            $("#ddlFAPG option").remove();
+            $('#ddlFAPG').empty().append('<option selected="selected" value="">----</option>');
+            $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
+            $.getJSON(url,
+                function (data) {
+                    if (data.success == true) {
+                        $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
+                        $.each(data.DropDownData.ListOfddlData, function () {
+                            if (PRVType == "4") {
+                                $("#ddlFAPG").append($("<option></option>").val(this['Value']).html(this['Text']));
+                            }
+                            else {
+                                $("#ddlSearchItem").append($("<option></option>").val(this['Value']).html(this['Text']));
+                            }
+                        });
+                        $("#DivItSearchForm").show();
+                        HideProgress();
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                });
+        }
+        $("#IdSearchItem").val('');
+        $("#txtAmount").val('');
+        $("#txtQuantity").val('');
+        $('#ddlLocation').val('');
+        $("#txtDescription").val('');
+    }
+    var GetFixedAsset = function () {
+        var FAPG = $("#ddlFAPG").children("option:selected").val();
+        if (FAPG == "") {
+            $("#ddlSearchItem option").remove();
+            $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
+        }
+        else {
+            ShowProgress();
+            $("#ddlSearchItem option").remove();
+            $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
+            $.getJSON("/Common/GetFixedAssetList", { PostingG: FAPG },
+                function (data) {
+                    if (data.success == true) {
+                        $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
+                        $.each(data.DropDownData.ListOfddlData, function () {
+                            $("#ddlSearchItem").append($("<option></option>").val(this['Value']).html(this['Text']));
+                        });
+                        HideProgress();
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                });
+        }
+        $("#IdSearchItem").val('');
+        $("#txtAmount").val('');
+        $("#txtQuantity").val('');
+        $('#ddlLocation').val('');
+        $("#txtDescription").val('');
+    }
+    function functionDecimal(evt, val) {
+        try {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+
+            if (charCode == 46) {
+                if (!(val.indexOf(".") > -1)) {
+                    return true;
+                }
+                else {
+                    Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                }
+            }
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                return false;
+            }
+            return true;
+        } catch (w) {
+            Swal.fire(w);
+        }
+    }
+    function functionx(evt) {
+        if (evt.charCode > 31 && (evt.charCode < 48 || evt.charCode > 57)) {
+            Swal.fire("Error", "Please enter only numeric characters in the text box", "error");
+            return false;
+        }
+    }
+</script>
+

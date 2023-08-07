@@ -1,0 +1,365 @@
+﻿@model Latest_Staff_Portal.ViewModel.TransDocument
+<style>
+    .checkboxClass {
+        width: 20px;
+        height: 20px;
+        padding: 0px;
+    }
+</style>
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                @Html.HiddenFor(m => Model.DocHeader.TRMgr, new { @id = "TRMgr" })
+                <label style="font-size: 12px; font-weight: bold">Document No</label>
+            </div>
+            <div class="col-md-8">
+                <span class="badge badge-info" id="DocNo">@Model.DocHeader.No</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Depature Time</label>
+            </div>
+            <div class="col-md-8">
+                <span class="badge badge-info" id="DocNo">@Model.DocHeader.Dep_Time</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Commencement</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning">@Model.DocHeader.Commencement</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Destination</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning">@Model.DocHeader.Destination</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Date of Trip</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning">@Model.DocHeader.DateOfTrip</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Status</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning" id="AppPeriod">@Model.DocHeader.Status</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">No of Days</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning">@Model.DocHeader.NoOfDays</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">No of Passengers</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning" id="AppPeriod">@Model.DocHeader.NoOfPassngers</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <label style="font-size: 12px; font-weight: bold">Date Requested</label>
+            </div>
+            <div class="col-md-8">
+                <span class="label label-warning">@Model.DocHeader.DateRequested</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">        
+    </div>
+</div>
+<div class="row" style="padding: 2px">
+    <div class="col-md-12">
+        <label style="font-size: 12px; font-weight: bold">Purpose of Trip</label>
+        @Html.TextAreaFor(m => m.DocHeader.Purpose_Of_Trip, new { @class = "form-control" })       
+    </div>
+</div>
+<hr />
+@if (Model.DocHeader.TRMgr)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row" style="padding: 2px">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label style="font-size: 12px; font-weight: bold">Hire Vehicle?</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select class="form-control" id="ddlHireV" onchange="VehicleHired();">
+                                <option value="">--</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" id="divVehD">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label style="font-size: 12px; font-weight: bold">Vehicle Allocated</label>
+                        </div>
+                        <div class="col-md-8">
+                            <div id="DivHiredV">
+                                <input type="text" id="txtVehicle" class="form-control" />
+                            </div>
+                            <div id="DivVehicle">
+                                @Html.DropDownListFor(m => m.DocHeader.Vehicle, new SelectList(Model.ListOfVehicles, "Value", "Text", Model.DocHeader.Vehicle), "--Select Vehicle--", new { @id = "ddlVehicle", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row" style="padding: 2px">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label style="font-size: 12px; font-weight: bold">Hire Driver?</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select class="form-control" id="ddlHireD" onchange="DriverHired();">
+                                <option value="">--</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" id="divDrivD">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label style="font-size: 12px; font-weight: bold">Driver Allocated</label>
+                        </div>
+                        <div class="col-md-8">
+                            <div id="DivHiredD">
+                                <input type="text" id="txtDriver" class="form-control" />
+                            </div>
+                            <div id="DivDriver">
+                                @Html.DropDownListFor(m => m.DocHeader.Driver, new SelectList(Model.ListOfDrivers, "Value", "Text", Model.DocHeader.Driver), "--Select Driver--", new { @id = "ddlDriver", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row" style="padding: 2px">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    <label style="font-size: 12px; font-weight: bold">Cost of Trip</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" id="txtCost" class="form-control" onkeypress="return functionDecimal(event,this.value)" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+        </div>
+    </div>
+    <hr />
+}
+else
+{
+    <div class="row" style="padding: 2px">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <label style="font-size: 12px; font-weight: bold">Hired Driver?</label>
+                    <span class="badge badge-info">@Model.DocHeader.DriverHired</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label style="font-size: 12px; font-weight: bold">Driver Allocated</label>
+                </div>
+                <div class="col-md-8">
+                    <span class="label label-warning" id="AppPeriod">@Model.DocHeader.Driver</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <label style="font-size: 12px; font-weight: bold">Hired Driver?</label>
+                    <span class="badge badge-info">@Model.DocHeader.DriverHired</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label style="font-size: 12px; font-weight: bold">Vehicle Allocated</label>
+                </div>
+                <div class="col-md-8">
+                    <span class="label label-warning">@Model.DocHeader.Vehicle</span>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <label style="font-size: 12px; font-weight: bold">Cost of Trip</label>
+                    <span style="font-weight:bolder"> : @Model.DocHeader.Cost</span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<hr style="border:1px solid black" />
+<b>Passenger List</b>
+<hr />
+<div class="pre-scrollable">
+    <table class="table table-hover" id="PRVLines">
+        <thead>
+            <tr>
+                <th>Passenger Type</th>
+                <th>No</th>
+                <th>Name</th>
+                <th>Position</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.ListOfPassengers != null && Model.ListOfPassengers.Count() > 0)
+                {
+                    foreach (var item in Model.ListOfPassengers)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.No)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#divDrivD,#divVehD").hide();
+    });
+    var VehicleHired = function () {
+        var HireV = $("#ddlHireV").children("option:selected").val();
+        if (HireV == "") {
+            $("#divVehD").hide();
+        }
+        else {
+            $("#divVehD").show();
+            if (HireV == "0") {
+                $("#DivHiredV").hide();
+                $("#DivVehicle").show();
+            }
+            else if (HireV == "1") {
+                $("#DivHiredV").show();
+                $("#DivVehicle").hide();
+            }
+            else {
+                $("#divVehD").hide();
+            }
+        }
+    }
+    var DriverHired = function () {
+        var HireD = $("#ddlHireD").children("option:selected").val();
+        if (HireD == "") {
+            $("#divDrivD").hide();
+        }
+        else {
+            $("#divDrivD").show();
+            if (HireD == "0") {
+                $("#DivHiredD").hide();
+                $("#DivDriver").show();
+            }
+            else if (HireD == "1") {
+                $("#DivHiredD").show();
+                $("#DivDriver").hide();
+            }
+            else {
+                $("#divDrivD").hide();
+            }
+        }
+    }
+    function functionDecimal(evt, val) {
+        try {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+
+            if (charCode == 46) {
+                if (!(val.indexOf(".") > -1)) {
+                    return true;
+                }
+                else {
+                    Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                }
+            }
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                return false;
+            }
+            return true;
+        } catch (w) {
+            Swal.fire(w);
+        }
+    }
+</script>
+

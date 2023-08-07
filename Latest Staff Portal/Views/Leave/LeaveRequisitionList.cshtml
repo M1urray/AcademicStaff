@@ -1,0 +1,321 @@
+﻿
+@{
+    ViewBag.Title = "LeaveRequisitionList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 7px;
+        font-size: 12px;
+    }
+</style>
+<div class="card pre-scrollable">
+    <div class="card-title">Leave Application List</div>
+    <div class="card-body">
+        <a href="#" onclick="NewLeaveRequisition();" class="btn btn-primary BtnPadding">New Leave</a>
+        <hr />
+        <div id="divLeaveRegList"></div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal Links////////////////////////////*@
+<div class="modal fade" id="myModalLinks" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Actions</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyLinks">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadLeaveReqList();
+    });
+    var LoadLeaveReqList = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/Leave/LeaveRequisitionListPartialView",
+            success: function (data) {
+                $("#divLeaveRegList").html(data);
+                HideProgress();
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+                HideProgress();
+            }
+        });
+    }
+    var NewLeaveRequisition = function () {
+        $("#labelF").text("New Leave Application");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Leave/NewLeaveApplication',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SubmitLeaveRequisition = function () {
+        var StartDate = $('#dtPicker').val();
+        var EndDate = $('#EndDate').html();
+        var ReturntDate = $('#ReturnDate').html();
+        var days = $("#ddlNoDays").children("option:selected").val();
+        var LvType = $("#ddlLeaveType").children("option:selected").val();
+        var Reliever = $("#ddlReliever").children("option:selected").val();
+        var Remarks = $("#txtRemarks").val();
+        if (LvType == "") {
+            Swal.fire('error', 'Select Leave Type', 'error');
+            return;
+        }
+        else if (days == "") {
+            Swal.fire('error', 'Select Number of days you want to apply for leave', 'error');
+            return;
+        }
+        else if (Reliever == "") {
+            Swal.fire('error', 'Select Reliever', 'error');
+            return;
+        }
+        else if (StartDate == "") {
+            Swal.fire('error', 'Select Start Date', 'error');
+            return;
+        }
+        else if (EndDate == "dd/mm/yyyy") {
+            Swal.fire('error', 'End Date cannot be empty', 'error');
+            return;
+        }
+        else if (ReturntDate == "dd/mm/yyyy") {
+            Swal.fire('error', 'Return Date cannot be empty', 'error');
+            return;
+        }
+        else {
+            var LeaveReqList = {};
+            LeaveReqList.Leave_Type = LvType;
+            LeaveReqList.Applied_Days = days;
+            LeaveReqList.Starting_Date = StartDate;
+            LeaveReqList.End_Date = EndDate;
+            LeaveReqList.Return_Date = ReturntDate;
+            LeaveReqList.Remarks = Remarks;
+            LeaveReqList.Reliever = Reliever;
+            LeaveReqList.Responsibility = "";
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: "/Leave/SubmitLeaveApplication",
+                data: JSON.stringify({ NewApp: LeaveReqList }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        HideProgress();
+                        LoadLeaveReqList();
+                        $("#myModal").modal("hide");
+                        Swal.fire('Success', data.message, 'success');
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }                    
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    var SelectedRow = function (DocNo, Status) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'LV' }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/CommonActions',
+            success: function (data) {
+                $("#modalBodyLinks").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewDoc = function (DocNo) {
+        $("#labelF").text("Leave Details Document");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Leave/LeaveDocumentViewView',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SendDocForApproval = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Leave/SendLeaveAppForApproval',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadLeaveReqList();
+                    $("#myModalLinks").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+
+    }
+    var CancelDocForApproval = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Leave/CancelLeaveAppForApproval',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadLeaveReqList();
+                    $("#myModalLinks").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+
+    }
+    var ViewApprovalTrail = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalTrail',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewDocComments = function (DocNo) {
+        $("#labelF").text("Document Comments");
+        ShowProgress();
+        var RecordID = "HR Leave Application: " + DocNo;
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ RecID: RecordID }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalComments',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+</script>

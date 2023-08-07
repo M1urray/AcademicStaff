@@ -1,0 +1,55 @@
+﻿@model Latest_Staff_Portal.ViewModel.ViewProgrammeStageDocFilters
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <b>Academic Year :</b>
+            @Html.DropDownListFor(model => model.AcademicYear, Model.ListOfAcademicYear, "--select Academic Year--", new { @class = "form-control", id = "ddlAcademicYear" })
+        </div>
+    </div>
+    <div class="row" id="DivOption" runat="server">
+        <div class="col-md-12">
+            <b>Programme Option :</b>
+            @Html.DropDownListFor(model => model.ProgrammeOption, Model.ListOfProgrammeOption, "--select Programme Option--", new { @class = "form-control", id = "ddlOption" })
+        </div>
+    </div>
+    <div class="row" id="Div1" runat="server">
+        <div class="col-md-12">
+            <b>Document Type :</b>
+            <select id="ddlDocType" class="form-control">
+                <option value="1">PDF</option>
+                <option value="2">Excel</option>
+                <option value="3">Word</option>
+            </select>
+        </div>
+    </div>
+    <div class="row" id="DivCampus" runat="server" visible="false">
+        <div class="col-md-12">
+            <b>Campus :</b>
+            @Html.DropDownListFor(model => model.Campus, Model.ListOfCampus, "--select Campus--", new { @class = "form-control", id = "ddlCammpus" })
+        </div>
+    </div>
+    <br />
+    <div align="center">
+        @{
+            string ValueText = "";
+            if (Model.ReportType == "CONSLMSHT")
+            {
+                ValueText = "Print Preview Cons. Marksheet";
+            }
+            if (Model.ReportType == "PASSLIST")
+            {
+                ValueText = "Print Preview Pass List";
+            }
+            if (Model.ReportType == "CLASSIFICATION")
+            {
+                ValueText = "Print Preview Classification List";
+            }
+            if (Model.ReportType == "AWARD")
+            {
+                ValueText = "Print Preview Award List";
+            }
+        }
+        <input type="button" class="btn btn-danger" value="@ValueText" onclick="GenerateReport('@Model.Prog','@Model.Stage','@Model.ReportType')" />
+    </div>
+</div>
+

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.ICTRequest>
+<div class="pre-scrollable">
+    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead style="background-color:black;color:white">
+            <tr>
+                <th>Action</th>
+                <th>No</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Campus</th>
+                <th>Department</th>
+                <th>Description</th>
+                <th>Argency</th>
+                <th>Required Date</th>
+                <th>Status</th>
+                <th>Resolution Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null && Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><a href="#" onclick="SelectedRow('@item.No');">Select</a></td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.No)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReqCat)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Campus)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Department)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Urgency)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RequiredDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Resoltion_Remarks)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+

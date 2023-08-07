@@ -1,0 +1,544 @@
+﻿
+@{
+    ViewBag.Title = "AppraisalScoreCard";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .mb-1, .card-header {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .m-0 {
+        color: black
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="card">
+    <div class="card-title">Appraisal Document(Document No : @Request.QueryString["AppDoc"])</div>
+    <div class="card-body">
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingOne" aria-controls="collapseOne" aria-expanded="true" data-toggle="collapse" href="#collapseOne">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-up"></span>General Information
+                    </h6>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Apprisal Code</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning" id="DocNo">@Model.ApprisalCode</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">User ID</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.UserID</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Staff Number</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.StaffNo</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Staff Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.StaffName</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Responsibility Center</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.RespCenter</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Apprisal Type</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.AppraisalType</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Apprisal Period</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning" id="AppPeriod">@Model.ApprisalPeriod</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Department</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.Department</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingTwo" aria-expanded="false" aria-controls="collapseTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span> Target setting & Perfomance Measurements
+                    </h6>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                     data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divScoreCard"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingThree" aria-expanded="false" aria-controls="collapseThree" data-toggle="collapse" href="#collapseThree">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span> Quarter Two Performance Review
+                    </h6>
+                </div>
+                <div id="collapseThree" class="collapse"
+                     aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divQ2Review"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingFour" aria-expanded="false" aria-controls="collapseFour" data-toggle="collapse" href="#collapseFour">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span> Mid Year Performance Review
+                    </h6>
+                </div>
+                <div id="collapseFour" class="collapse"
+                     aria-labelledby="headingFour" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divQ3Review"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingFive" aria-expanded="false" aria-controls="collapseFive" data-toggle="collapse" href="#collapseFive">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span> End Year Performance Review
+                    </h6>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divQ4Review"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingR" aria-expanded="false" aria-controls="collapseR" data-toggle="collapse" href="#collapseR">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span> Apprisal Ratings
+                    </h6>
+                </div>
+                <div id="collapseR" class="collapse" aria-labelledby="headingR" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divAppRatings"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingSix" aria-expanded="false" aria-controls="collapseSix" data-toggle="collapse" href="#collapseSix">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>Core Competencies and Values
+                    </h6>
+                </div>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divCoreCompVal"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingSeven" aria-expanded="false" aria-controls="collapseSeven" data-toggle="collapse" href="#collapseSeven">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>Performance Improvement Plan
+                    </h6>
+                </div>
+                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divPImpPlan"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingEight" aria-expanded="false" aria-controls="collapseEight" data-toggle="collapse" href="#collapseEight">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>Learning and Development
+                    </h6>
+                </div>
+                <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divLearningDev"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingNine" aria-expanded="false" aria-controls="collapseNine" data-toggle="collapse" href="#collapseNine">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>General Comments
+                    </h6>
+                </div>
+                <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>Apprisee Comments</b>
+                                <textarea id="AppraiseeComments" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>Supervisor Comments</b>
+                                <textarea id="SupervisorComments" class="form-control" disabled></textarea>
+                            </div>
+                        </div>
+                        <hr />
+                        <div align="center">
+                            <input type="button" value="Save Comments" class="btn btn-primary" onclick="SaveGeneralComments();" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div align="right">
+                <input type="button" value="Send To Supervisor >>>" class="btn btn-primary" onclick="SaveGeneralComments();" />
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var DocNo = $("#DocNo").html();
+        LoadScoreCard(DocNo);
+
+        LoadAppraisalReview(DocNo, 'divQ2Review', 'Q1');
+        LoadAppraisalReview(DocNo, 'divQ3Review', 'Q2');
+        LoadAppraisalReview(DocNo, 'divQ4Review', 'Q3');
+
+        LoadCoreCompValues(DocNo);
+        LoadPImprPlan(DocNo);
+        LoadLearningDec(DocNo);
+
+
+
+        $('.shadow-none').on('shown.bs.collapse', function () {
+            $(this).find('.fa-arrow-down').removeClass('fa-arrow-down').addClass('fa-arrow-up');
+        }).on('hidden.bs.collapse', function () {
+            $(this).find('.fa-arrow-up').removeClass('fa-arrow-up').addClass('fa-arrow-down');
+        });
+    });
+    var LoadScoreCard = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: "/Appraisal/LoadScoreCardData",
+            success: function (data) {
+                $("#divScoreCard").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadAppraisalReview = function (DocNo, divQRev, QReview) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: "/Appraisal/LoadAppraisalReviews",
+            success: function (data) {
+                $("#" + divQRev).html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadCoreCompValues = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: "/Appraisal/LoadCoreCompetenceValues",
+            success: function (data) {
+                $("#divCoreCompVal").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadPImprPlan = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: "/Appraisal/LoadPImprovementPlan",
+            success: function (data) {
+                $("#divPImpPlan").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadLearningDec = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: "/Appraisal/LoadLearningDevelopments",
+            success: function (data) {
+                $("#divLearningDev").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var NewObjectiveLine = function () {
+        $("#labelF").text("New Objective Line");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Appraisal/NewObjectiveLine',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SaveObjectiveRecord = function () {
+        var DocNo = $("#DocNo").html();
+        var AppPeriod = $("#AppPeriod").html();
+        var Obj = $('#txtObj').val();
+        var KeyP = $('#txtPerIndicator').val();
+        var achvmnt = $('#txtPerIndicator').val();
+        var Target = $('#txtTarget').val();
+        var TimeLines = $("#ddlTimeLine").children("option:selected").val();
+        if (DocNo == "") {
+            Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
+            return;
+        }
+        else if (AppPeriod == "") {
+            Swal.fire('error', 'Appraisal period cannot be empty', 'error');
+            return;
+        }
+        else if (Obj == "") {
+            Swal.fire('error', 'Enter Objective', 'error');
+            return;
+        }
+        else if (KeyP == "") {
+            Swal.fire('error', 'Enter Key Performance Indicator', 'error');
+            return;
+        }
+        else if (Target == "") {
+            Swal.fire('error', 'Enter Target', 'error');
+            return;
+        }
+        else if (TimeLines == "") {
+            Swal.fire('error', 'Select Timelin', 'error');
+            return;
+        }
+        else {
+            var ApprisalObjective = {};
+            ApprisalObjective.DocNo = DocNo;
+            ApprisalObjective.Objective = Obj;
+            ApprisalObjective.KeyPerformance = KeyP;
+            ApprisalObjective.Achievement = "";
+            ApprisalObjective.AppraisalPeriod = AppPeriod;
+            ApprisalObjective.Target = Target;
+            ApprisalObjective.TimeLines = TimeLines;
+            ApprisalObjective.Section = "1";
+
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: "/Appraisal/SubmitAppraisalObjectiveLine",
+                data: JSON.stringify({ AppObjective: ApprisalObjective }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        Swal.fire('Success', data.message, 'success');
+                        LoadScoreCard(DocNo);
+                        $("#myModal").modal("hide");
+                        HideProgress();
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    var AddCoreCompetenceVal = function () {
+        $("#labelF").text("Core Competence and Value");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Appraisal/NewCoreCompetenceValue',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SaveCoreCompetenceValueLine = function () {
+        var DocNo = $("#DocNo").html();
+        var AppPeriod = $("#AppPeriod").html();
+        var Obj = $('#txtObj').val();
+
+        if (DocNo == "") {
+            Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
+            return;
+        }
+        else if (AppPeriod == "") {
+            Swal.fire('error', 'Appraisal period cannot be empty', 'error');
+            return;
+        }
+        else if (Obj == "") {
+            Swal.fire('error', 'Enter Objective', 'error');
+            return;
+        }
+
+        else {
+            var ApprisalObjective = {};
+            ApprisalObjective.DocNo = DocNo;
+            ApprisalObjective.Objective = Obj;
+            ApprisalObjective.KeyPerformance = "";
+            ApprisalObjective.Achievement = "";
+            ApprisalObjective.AppraisalPeriod = AppPeriod;
+            ApprisalObjective.Target = "";
+            ApprisalObjective.TimeLines = "0";
+            ApprisalObjective.Section = "1";
+
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: "/Appraisal/SubmitCoreCompetenceValue",
+                data: JSON.stringify({ AppObjective: ApprisalObjective }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        Swal.fire('Success', data.message, 'success');
+                        LoadCoreCompValues(DocNo);
+                        $("#myModal").modal("hide");
+                        HideProgress();
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+</script>
+

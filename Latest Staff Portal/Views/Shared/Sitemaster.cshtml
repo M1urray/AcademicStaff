@@ -1,0 +1,440 @@
+﻿@using Latest_Staff_Portal.Models;
+@{
+    Layout = null;
+    string imgSrc = "", gender = "", Name = "";
+    bool HOD = false, Dean = false, Director = false, Lecturer = false, PartTimeLec = false;
+    if (Session["Username"] == null)
+    {
+        Html.Action("Login", "Login");
+    }
+    else
+    {
+        if (Session["ImgProfile"] == null)
+        {
+            var base64 = CommonClass.ProfilePicture(Session["Username"].ToString());
+            if (base64 != "")
+            {
+                imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                Session["ImgProfile"] = imgSrc;
+            }
+        }
+        else
+        {
+            imgSrc = Session["ImgProfile"].ToString();
+        }
+
+        if (Session["StaffDetails"] == null)
+        {
+            string[] s = CommonClass.GetStaffDetails(Session["Username"].ToString());
+            gender = s[0];
+            Name = s[1];
+            if (s[2] == "False")
+            {
+                HOD = false;
+            }
+            else
+            {
+                HOD = true;
+            }
+            if (s[3] == "False")
+            {
+                Dean = false;
+            }
+            else
+            {
+                Dean = true;
+            }
+            if (s[4] == "False")
+            {
+                Director = false;
+            }
+            else
+            {
+                Director = true;
+            }
+            if (s[5] == "False")
+            {
+                Lecturer = false;
+            }
+            else
+            {
+                Lecturer = true;
+            }
+            if (s[6] == "False")
+            {
+                PartTimeLec = false;
+            }
+            else
+            {
+                PartTimeLec = true;
+            }
+            Session["StaffDetails"] = s;
+        }
+        else
+        {
+            string[] s = (string[])Session["StaffDetails"];
+            gender = s[0];
+            Name = s[1];
+            if (s[2] == "False")
+            {
+                HOD = false;
+            }
+            else
+            {
+                HOD = true;
+            }
+            if (s[3] == "False")
+            {
+                Dean = false;
+            }
+            else
+            {
+                Dean = true;
+            }
+            if (s[4] == "False")
+            {
+                Director = false;
+            }
+            else
+            {
+                Director = true;
+            }
+            if (s[5] == "False")
+            {
+                Lecturer = false;
+            }
+            else
+            {
+                Lecturer = true;
+            }
+            if (s[6] == "False")
+            {
+                PartTimeLec = false;
+            }
+            else
+            {
+                PartTimeLec = true;
+            }
+        }
+    }
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Demo | Staff Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Demo Staff Portal" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico">
+
+    @*<link href="~/assets/select2/css/select2.min.css" rel="stylesheet" />
+        <link href="~/assets/css/sweetalert2.min.css" rel="stylesheet" />
+
+        <link href="~/assets/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/assets/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/assets/css/responsive.bootstrap4.min.css" rel="stylesheet" />*@
+    <!-- Bootstrap Css -->
+    @*<link href="~/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />*@
+
+    <!-- Icons Css -->
+    @*<link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />*@
+    <!-- App Css-->
+    @*<link href="~/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />*@
+    @Styles.Render("~/asset/css/MySiteCSS");
+
+    <script src="~/assets/js/jquery2.0.3.min.js"></script>
+</head>
+<body data-sidebar="dark">
+    @*<script src="~/assets/js/ObfuscateSite.js"></script>*@
+    <link href="~/assets/css/Loader.css" rel="stylesheet" />
+    <div class="loading" align="center" id="divLoader">
+        <br />
+        <img src="~/assets/images/ajax-loader2.gif" alt="" width="150" height="150" />
+    </div>
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <header id="page-topbar">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box">
+                        <a href="#" onclick="DashBoardLink();" class="logo logo-dark">
+                            <span class="logo-sm">
+                                <img src="~/assets/images/retina_logo3.png" alt="" height="30">
+                            </span>
+                            <span class="logo-lg">
+                                <img src="~/assets/images/retina_logo3.png" alt="" height="50">
+                            </span>
+                        </a>
+                        <a href="#" onclick="DashBoardLink();" class="logo logo-light">
+                            <span class="logo-sm">
+                                <img src="~/assets/images/retina_logo3.png" alt="" height="30">
+                            </span>
+                            <span class="logo-lg">
+                                <img src="~/assets/images/retina_logo3.png" alt="" height="50">
+                            </span>
+                        </a>
+                    </div>
+                    <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
+                        <i class="fa fa-fw fa-bars"></i>
+                    </button>
+                </div>
+                <div class="d-flex">
+                    <div class="dropdown d-inline-block">
+                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @{
+                                if (imgSrc != "")
+                                {
+                                    <img class="rounded-circle header-profile-user" src="@imgSrc" alt="">
+                                }
+                                else
+                                {
+                                    if (gender == "Female")
+                                    {
+                                        <img class="rounded-circle header-profile-user" src="~/assets/images/profile_f.png" alt="">
+                                    }
+                                    else
+                                    {
+                                        <img class="rounded-circle header-profile-user" src="~/assets/images/profile_m.png" alt="">
+                                    }
+                                }
+                            }
+                            <span class="d-none d-xl-inline-block ml-1" style="color:wheat">@Name</span>
+                            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <!-- item-->
+                            <a class="dropdown-item" href="@Url.Action("Dashboard","Dashboard")"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Dashboard</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="@Url.Action("Login", "Login")"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header> <!-- ========== Left Sidebar Start ========== -->
+        <div class="vertical-menu">
+
+            <div data-simplebar class="h-100">
+
+                <!--- Sidemenu -->
+                <div id="sidebar-menu">
+                    <!-- Left Menu Start -->
+                    <ul class="metismenu list-unstyled" id="side-menu">
+                        <li class="menu-title">Home</li>
+                        <li>
+                            <a href="#" onclick="DashBoardLink();" class="waves-effect">
+                                <i class="bx bx-home-circle"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        @if (HOD || Dean || Director)
+                        {
+                            <li class="menu-title">Management</li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-store"></i>
+                                    <span>HOD/DEAN Section</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="#" onclick="ProgrammeListLink();">Programme List</a></li>
+                                    <li><a href="#" onclick="ClassStatusListLink();">Class Status</a></li>
+                                    <li><a href="#" onclick="LecturerListLink();">Lecturer List</a></li>
+                                    @*<li><a href="#" onclick="PartTimeRequisitionLink();">Part-Time Requisition</a></li>*@
+                                    @*<li><a href="#">Upload Lecturer List</a></li>*@
+                                    <li><a href="#" onclick="VoteBookBalanceLink();">Vote Book Balance</a></li>
+                                    <li><a href="#" onclick="TimetableProjectionLink();">Timetable Projections</a></li>
+                                    @*<li><a href="#">Student Results</a></li>*@
+                                    @*<li><a href="#">Management Reports</a></li>*@
+                                </ul>
+                            </li>
+                        }
+                        @if (Lecturer || PartTimeLec)
+                        {
+                            <li class="menu-title">Academics</li>
+                            <li>
+                                <a href="#" onclick="CourseAllocationLink();" class=" waves-effect">
+                                    <i class="bx bx-list-ul"></i>
+                                    <span>Allocated Units</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="MarkEntryLink();" class=" waves-effect">
+                                    <i class="bx bx-question-mark"></i>
+                                    <span>Mark Entry</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="CourseEvalLink();" class=" waves-effect">
+                                    <i class="bx bx-question-mark"></i>
+                                    <span>Course Evaluation</span>
+                                </a>
+                            </li>
+                            @*<li>
+                                    <a href="#" onclick="PartTimeReqLink();" class=" waves-effect">
+                                        <i class="bx bx-receipt"></i>
+                                        <span>Part-Time Claims</span>
+                                    </a>
+                                </li>*@
+
+                        }
+                        @if (!PartTimeLec)
+                        {
+                            <li class="menu-title">Requisitions</li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-link"></i>
+                                    <span>Requisition Links</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="#" onclick="LeaveRequisitionLink();">Leave Requisition</a></li>
+                                    <li><a href="#" onclick="PurchaseRequisitionLink();">Purchase Requisition</a></li>
+                                    <li><a href="#" onclick="StoreRequisitiontLink();">Store Requisition</a></li>
+                                    <li><a href="#" onclick="ImprestRequisitiontLink();">Imprest Requisition</a></li>
+                                    <li><a href="#" onclick="ImprestSurrenderLink();">Imprest Surrender</a></li>
+                                    <li><a href="#" onclick="StaffClaimRequisitiontLink();">Staff Claim Requisition</a></li>
+                                    <li><a href="#" onclick="TransportRequisitiontLink();">Transport Requisition</a></li>
+                                    <li><a href="#" onclick="CafFoodRequisitionLink();">Cafeteria Food Request</a></li>
+                                    <li><a href="#" onclick="ICTRequisitionlink();">ICT Requisition</a></li>
+                                    <li><a href="#" onclick="TrainingRequisitiontLink();">Training Requisition</a></li>
+                                    <li><a href="#" onclick="ExitInterviewlink();">Exit Interview</a></li>
+                                    <li><a href="#" onclick="StaffClearancelink();">Staff Clearance</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="menu-title">Reports</li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bxs-file-pdf"></i>
+                                    <span>Report Links</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="#" onclick="PayslipViewLink();">Payslip</a></li>
+                                    <li><a href="#" onclick="P9ViewLink();">P9</a></li>
+                                </ul>
+                            </li>
+                            @*<li class="menu-title">Reports</li>
+                                <li>
+                                    <a href="#" onclick="PayslipViewLink();" class=" waves-effect">
+                                        <i class="dripicons-briefcase"></i>
+                                        <span>Payslip</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="P9ViewLink();" class=" waves-effect">
+                                        <i class="dripicons-paperclip"></i>
+                                        <span>P9</span>
+                                    </a>
+                                </li>*@
+                            <li class="menu-title">Approvals</li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-check"></i>
+                                    <span>Approval Links</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="#" onclick="DocumentApprovalSummeryLink('Open');">Pending my Approval</a></li>
+                                    <li><a href="#" onclick="ApprovedDocLink('Approved');">My Approved Documents</a></li>
+                                    <li><a href="#" onclick="RejectedDocLink('Rejected');">My Rejected Documents</a></li>
+                                </ul>
+                            </li>
+                            @*<li class="menu-title">Approvals</li>
+                                <li>
+                                    <a href="#" onclick="DocumentApprovalSummeryLink('Open');" class="waves-effect">
+                                        <i class="dripicons-store"></i>
+                                        <span>Pending Approval</span>
+                                    </a>
+                                    <a href="#" onclick="ApprovedDocLink('Approved');" class="waves-effect">
+                                        <i class="fa fa-ticket-alt"></i>
+                                        <span>Approved Documents</span>
+                                    </a>
+                                    <a href="#" onclick="RejectedDocLink('Rejected');" class="waves-effect">
+                                        <i class="fa fa-times-circle"></i>
+                                        <span>Rejected Documents</span>
+                                    </a>
+                                </li>*@
+                        }
+                        <li class="menu-title">settings</li>
+                        <li>
+                            <a href="#" onclick="ChangePasswordLink();" class=" waves-effect">
+                                <i class="dripicons-gear"></i>
+                                <span>Change password</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Sidebar -->
+            </div>
+        </div>
+        <!-- Left Sidebar End -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    @RenderBody()
+                    <!-- End Page-content -->
+                    <footer class="footer" style="color: #051936;background-color: #E9EEF2">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    @DateTime.Now.Year © Demo.
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <img src="~/assets/images/Logo2.png" alt="" height="40" style="vertical-align:middle">
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="text-sm-right d-none d-sm-block">
+                                        Design & Developed by <a href="http://dsl.ke/" target="_blank">DSL Systems</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END layout-wrapper -->
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+    <!-- JAVASCRIPT -->
+    @*<script src="~/assets/js/pages/jquery.min.js"></script>
+        <script src="~/assets/js/pages/bootstrap.bundle.min.js"></script>
+        <script src="~/assets/js/pages/metisMenu.min.js"></script>
+        <script src="~/assets/js/pages/simplebar.min.js"></script>
+        <script src="~/assets/js/pages/waves.min.js"></script>
+
+        <script src="~/assets/select2/js/select2.min.js"></script>
+        <script src="~/assets/js/sweetalert2.min.js"></script>
+
+        <script src="~/assets/js/jquery.dataTables.min.js"></script>
+        <script src="~/assets/js/dataTables.bootstrap4.min.js"></script>
+
+        <script src="~/assets/js/dataTables.buttons.min.js"></script>
+        <script src="~/assets/js/buttons.bootstrap4.min.js"></script>
+
+        <script src="~/assets/js/jszip.min.js"></script>
+        <script src="~/assets/js/pdfmake.min.js"></script>
+        <script src="~/assets/js/vfs_fonts.js"></script>
+
+        <script src="~/assets/js/buttons.html5.min.js"></script>
+        <script src="~/assets/js/buttons.print.min.js"></script>
+        <script src="~/assets/js/buttons.colVis.min.js"></script>
+
+        <script src="~/assets/js/dataTables.responsive.min.js"></script>
+        <script src="~/assets/js/responsive.bootstrap4.min.js"></script>
+
+        <script src="~/DatePicker/jquery-ui.min.js"></script>*@
+    @Scripts.Render("~/asset/js/mySiteScript");
+    <script src="~/DatePicker/jquery-ui.min.js"></script>
+    <link href="~/DatePicker/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/assets/js/pages/app.js"></script>
+
+    <script src="~/assets/js/ShowProgression.js"></script>
+
+    <script src="~/SiteJS/SideBarLink.js"></script>
+</body>
+</html>

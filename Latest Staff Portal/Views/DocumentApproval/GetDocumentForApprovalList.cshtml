@@ -1,0 +1,587 @@
+﻿@model Latest_Staff_Portal.ViewModel.DocumentsForApprovalList
+@{
+    ViewBag.Title = "LoadDocumentForApprovalListTest";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="BackToApprovalSummeryList();" style="color:yellow"><<< Back to Document Approval Summery</a>
+</div>
+<div class="card pre-scrollable">
+    <div class="card-title"> @Model.Status @Model.Title List</div>
+    <div class="card-body">
+        <div id="divApprovalDocList"></div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="HiddenDocNo" />
+                <input type="hidden" id="HiddenSequence" />
+                <input type="hidden" id="HiddenEntryNo" />
+                <div id="divDocButtons">
+                    <a href="#" onclick="ApproveDoc();" class="btn btn-primary BtnPadding">Approve Document</a> |
+                    <a href="#" onclick="rejectComments();" class="btn btn-danger BtnPadding" id="RejectDoc">Reject Document</a>
+                    <hr />
+                </div>
+                <div id="modalBody"></div>
+                <hr style="border:1px solid black" />
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Attachments</b>
+                        <div id="divAttachDocs"></div>
+                    </div>
+                </div>
+                <hr />
+                <b>Previous Approval Trail</b>
+                <div id="divApprovalTrail"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Rejection Modal////////////////////////////*@
+<div class="modal fade" id="myModalRejectComments" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Rejection Comments</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Give reason for rejecting this document</b>
+                        <textarea class="form-control" id="txtComments"></textarea>
+                        <hr />
+                        <div align="center">
+                            <input type="button" class="btn btn-danger" onclick="RejectedDoc();" value="Reject Document" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal View Doc////////////////////////////*@
+<div class="modal fade" id="myModalAttachment" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Attachment</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalAttachmentBody" style="width:100%;height:450px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+       LoadDocumentApprovalList('@Model.TableID','@Model.Status','@Model.DocType');
+    });
+    var LoadDocumentApprovalList = function (TableID, Status, DocType) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ TbID: TableID, Status: Status, DocType: DocType }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: "/DocumentApproval/LoadDocumentForApprovalList",
+            success: function (data) {
+                $("#divApprovalDocList").html(data);
+                HideProgress();
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+                HideProgress();
+            }
+        });
+    }
+    var ViewDoc = function (TableID, DocNo, Sequence, EntryNo) {
+        if (DocNo == "") {
+            Swal.fire('Warning', "Document Number cannot be empty", 'warning');
+            return;
+        }
+        else if (EntryNo == "") {
+            Swal.fire('Warning', "Entry Number cannot be empty", 'warning');
+            return;
+        }
+        else {
+            $("#labelF").text('@Model.Title' + "(" + DocNo+")");
+            $("#HiddenDocNo").val(DocNo);
+            $("#HiddenSequence").val(Sequence);
+            $("#HiddenEntryNo").val(EntryNo);
+            if ('@Model.Status' == "Open") {
+                $("#divDocButtons").show();
+            }
+            else {
+                $("#divDocButtons").hide();
+            }
+            ShowProgress();
+            var url;
+            if (TableID == "70135114") {
+                url = "/DocumentApproval/LeaveReqDocApprovalDetails";
+            }
+            else if (TableID == "38") {
+                url = "/DocumentApproval/PurchaseReqDocApprovalDetails";
+            }
+            else if (TableID == "70135010") {
+                url = "/DocumentApproval/StoreReqDocApprovalDetails";
+            }
+            else if (TableID == "70135469") {
+                url = "/DocumentApproval/ImprestReqDocApprovalDetails";
+            }
+            else if (TableID == "70135450") {
+                url = "/DocumentApproval/ImprestSurrenderDocApprovalDetails";
+            }
+            else if (TableID == "70135454") {
+                url = "/DocumentApproval/StaffClaimReqDocApprovalDetails";
+            }
+            else if (TableID == "70135362") {
+                url = "/DocumentApproval/TransportReqDocApprovalDetails";
+            }
+            else if (TableID == "70134894") {
+                url = "/DocumentApproval/StudentRequisitionDocDetails";
+            }
+            else if (TableID == "70134931") {
+                url = "/DocumentApproval/GraduationDocDetails";
+            }
+            else if (TableID == "5740") {
+                url = "/DocumentApproval/TransferOrderDocApprovalDetails";
+            }
+            else if (TableID == "70134904") {
+                url = "/DocumentApproval/CafFoodReqDocApprovalDetails";
+            }
+            else { }
+            $.ajax({
+                async: true,
+                type: "POST",
+                datatype: "json",
+                data: JSON.stringify({ TableID: TableID, DocNo: DocNo, Sequence: Sequence}),
+                contentType: "application/json; charset = utf-8",
+                processData: false,
+                url: url,
+                success: function (data) {
+                    HideProgress();
+                    LoadApprovalTrail(TableID, DocNo);
+                    GetImportantDownloads(TableID, DocNo);
+                    $("#modalBody").html(data);
+                    $("#myModal").modal("show");
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    }
+    var LoadApprovalTrail = function (TableID, DocNo) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ TableID: TableID, DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: "/DocumentApproval/PreviousApprovalTrail",
+            success: function (data) {
+                $("#divApprovalTrail").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var GetImportantDownloads = function (TableID, DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo, TableID: TableID }),
+            url: "/Common/DocumentAttachmentsToApprove",
+            success: function (data) {
+                HideProgress();
+                $("#divAttachDocs").html(data);
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var ViewAttachment = function (tbl, No, Id, fName, ext) {
+        $.ajaxSetup({ cache: false });
+        ShowProgress();
+        $.ajax({
+            cache: false,
+            url: '/Common/DocumentAttachmentview',
+            type: "POST",
+            datatype: "json",
+            cache: false,
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ tblID: tbl, No: No, ID: Id, fileName: fName, ext: ext }),
+            success: function (data) {
+                if (data.success == true) {
+                    if (data.view == true) {
+                        var viewer = $("#modalAttachmentBody");
+                        if (ext == "pdf") {
+                            PDFObject.embed("data:application/" + ext + ";base64," + data.message + "", viewer);
+                        }
+                        if (ext == "png" || ext == "jpg") {
+                            PDFObject.embed("data:image/" + ext + ";base64," + data.message + "", viewer);
+                        }
+                        $("#myModalAttachment").modal("show");
+                        HideProgress();
+                    }
+                    else {
+                        window.location = '/Common/AttachmentDownload?fileName=' + data.message;
+                        Swal.fire('Success', 'Document Downloaded successfully', 'success');
+                        HideProgress();
+                    }
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    };
+    var ApproveDoc = function () {
+        var DocNo = $("#HiddenDocNo").val();
+        var entryNo = $("#HiddenEntryNo").val();
+        if (DocNo == "") {
+            Swal.fire('Warning', "Document Number cannot be empty", 'warning');
+            return;
+        }
+        else if (entryNo == "") {
+            Swal.fire('Warning', "Document Entry Number cannot be empty", 'warning');
+            return;
+        }
+        else {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to approve this document!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Approve it!'
+            }).then((result) => {
+                if (result.value) {
+                    ShowProgress();
+                    var Charge = "";
+                    var TBID = '@Model.TableID';
+                    if ('@Model.TableID' == "70134894") {
+                        Charge = $("#ddlChargeApp").children("option:selected").val();
+                        var SeqNo = $("#HiddenSequence").val();
+                        if (Charge == "" && SeqNo == "1") {
+                            HideProgress();
+                            Swal.fire('Warning', "Specify whether to charge application Fee", 'warning');
+                            return;
+                        }
+                    }
+
+                    if ('@Model.DocType' == "Special Exams" || '@Model.DocType' == "Exemption") {
+                        var UnitRegCount = new Array();
+                        $("#StdReqLines tbody tr").each(function () {
+                            var row = $(this);
+                            if (row.find('input[type="checkbox"]').is(':checked')) {
+                                var U = {};
+                                U.Unit = row.find("td").eq(0).html();
+                                UnitRegCount.push(U);
+                            }
+                        });
+
+                        if (UnitRegCount.length < 1) {
+                            HideProgress();
+                            Swal.fire('Warning', 'You have not Approved any unit(s)', 'warning');
+                            return;
+                        }
+                        else {
+                            var UnitReg = new Array();
+                            $("#StdReqLines tbody tr").each(function () {
+                                var row = $(this);
+                                var Unit = {};
+                                Unit.Unit = row.find("td").eq(0).html();
+                                if ('@Model.DocType' == "Special Exams") {
+                                    Unit.LnNo = row.find("td").eq(7).html();
+                                }
+                                if ('@Model.DocType' == "Exemption") {
+                                    Unit.LnNo = row.find("td").eq(5).html();
+                                }
+                                Unit.Approved = row.find('input[name="chkApp"]').is(':checked');
+                                Unit.Charge = row.find('input[name="chkCharge"]').is(':checked');
+                                UnitReg.push(Unit);
+                            });
+                            $.ajax({
+                                async: true,
+                                type: "POST",
+                                datatype: "json",
+                                data: JSON.stringify({ DocNo: DocNo, ReqUnits: UnitReg, ChargeApp: Charge }),
+                                contentType: "application/json; charset = utf-8",
+                                processData: false,
+                                url: '/DocumentApproval/ApproveUnits',
+                                success: function (data) {
+                                    if (data.success == true) {
+                                        $.ajax({
+                                            async: true,
+                                            type: "POST",
+                                            datatype: "json",
+                                            data: JSON.stringify({ DocNo: DocNo, EntryNo: entryNo, TBID: TBID, ChargeApp: Charge }),
+                                            contentType: "application/json; charset = utf-8",
+                                            processData: false,
+                                            url: '/DocumentApproval/ApproveDocument',
+                                            success: function (data) {
+                                                if (data.success == true) {
+                                                    HideProgress();
+                                                    $("#myModal").modal("hide");
+                                                    LoadDocumentApprovalList('@Model.TableID', 'Open', '@Model.DocType');
+                                                    swal.fire('Success', data.message, 'success');
+                                                }
+                                                else {
+                                                    HideProgress();
+                                                    swal.fire('error', data.message, 'error');
+                                                }
+                                            },
+                                            error: function (err) {
+                                                HideProgress();
+                                                Swal.fire('Warning', err, 'warning');
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        HideProgress();
+                                        swal.fire('error', data.message, 'error');
+                                    }
+                                },
+                                error: function (err) {
+                                    HideProgress();
+                                    Swal.fire('Warning', err, 'warning');
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        var TRmg = $("#TRMgr").val();
+                        if ('@Model.TableID' == "70135362" && TRmg == "True") {
+                            var HireD = $("#ddlHireD").children("option:selected").val();
+                            var HireV = $("#ddlHireV").children("option:selected").val();
+                            var driver = $("#ddlDriver").children("option:selected").val();
+                            var Vehicle = $("#ddlVehicle").children("option:selected").val();
+                            var HiredVehicle = $("#txtVehicle").val();
+                            var Cost = $("#txtCost").val();
+                            var HiredDriver = $("#txtDriver").val();
+
+                            if (HireV == "") {
+                                HideProgress();
+                                Swal.fire('Warning', "Select whether the vehicle is hired", 'warning');
+                                return;
+                            }
+                            else if (HireD == "") {
+                                HideProgress();
+                                Swal.fire('Warning', "Select whether the driver is hired", 'warning');
+                                return;
+                            }
+                            else if (HireD == "0" && driver == "") {
+                                HideProgress();
+                                Swal.fire('Warning', "Select driver", 'warning');
+                                return;
+                            }
+                            else if (HireD == "1" && HiredDriver == "") {
+                                HideProgress();
+                                Swal.fire('Warning', "Enter Details of Hired Driver", 'warning');
+                                return;
+                            }
+                            else if (HireV == "0" && Vehicle == "") {
+                                HideProgress();
+                                Swal.fire('Warning', "Select Vehicle", 'warning');
+                                return;
+                            }
+                            else if (HireV == "1" && HiredVehicle == "") {
+                                HideProgress();
+                                Swal.fire('Warning', "Enter Details of Hired Vehicle", 'warning');
+                                return;
+                            }
+                            else if (Cost == "") {
+                                HideProgress();
+                                Swal.fire('Warning', "Enter Cost for the Trip", 'warning');
+                                return;
+                            }
+                            else {
+                                $.ajax({
+                                    async: true,
+                                    type: "POST",
+                                    datatype: "json",
+                                    data: JSON.stringify({ DocNo: DocNo, HireVehicle: HireD, HireDriver: HireV, Driver: driver, Vehicle: Vehicle, HiredVehicle: HiredVehicle, HiredDriver: HiredDriver, Cost: Cost }),
+                                    contentType: "application/json; charset = utf-8",
+                                    processData: false,
+                                    url: '/DocumentApproval/AssignDriverVehicle',
+                                    success: function (data) {
+                                        if (data.Redirect == true) {
+                                            if (data.success == false) {
+                                                HideProgress();
+                                                swal.fire('error', data.message, 'error');
+                                                return;
+                                            }
+                                        }
+                                        else {
+                                            window.location = data.message;
+                                        }
+                                    },
+                                    error: function (err) {
+                                        HideProgress();
+                                        Swal.fire('Warning', err, 'warning');
+                                        return;
+                                    }
+                                });
+                            }
+                        }
+                        $.ajax({
+                            async: true,
+                            type: "POST",
+                            datatype: "json",
+                            data: JSON.stringify({ DocNo: DocNo, EntryNo: entryNo, TBID: TBID, ChargeApp: Charge }),
+                            contentType: "application/json; charset = utf-8",
+                            processData: false,
+                            url: '/DocumentApproval/ApproveDocument',
+                            success: function (data) {
+                                if (data.success == true) {
+                                    HideProgress();
+                                    $("#myModal").modal("hide");
+                                    LoadDocumentApprovalList('@Model.TableID', 'Open','@Model.DocType');
+                                    swal.fire('Success', data.message, 'success');
+                                }
+                                else {
+                                    HideProgress();
+                                    swal.fire('error', data.message, 'error');
+                                }
+                            },
+                            error: function (err) {
+                                HideProgress();
+                                Swal.fire('Warning', err, 'warning');
+                            }
+                        });
+                    }
+                }
+                else {
+                    Swal.fire('Cancelled', 'Document not approved', 'error');
+                }
+            });
+        }
+    }
+    var rejectComments = function () {
+        $("#myModal").modal("hide");
+        $("#myModalRejectComments").modal("show");
+    }
+    var RejectedDoc = function () {
+        var comments = $("#txtComments").val();
+        var DocNo = $("#HiddenDocNo").val();
+        var TbID = '@Model.TableID';
+        var SeqNo = $("#HiddenSequence").val();
+        var entryNo = $("#HiddenEntryNo").val();
+        if (DocNo == "") {
+            Swal.fire('Warning', "Document Number cannot be empty", 'warning');
+            return;
+        }
+        else if (entryNo == "") {
+            Swal.fire('Warning', "Document Entry Number cannot be empty", 'warning');
+            return;
+        }
+        else if (comments == "") {
+            Swal.fire('Warning', 'Give reason for rejecting this document', 'warning');
+            return;
+        }
+        else {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to reject approval for this document!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Reject approval!'
+            }).then((result) => {
+                if (result.value) {
+                    ShowProgress();
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        datatype: "json",
+                        data: JSON.stringify({ TBID: TbID, DocNo: DocNo, Comments: comments, SeqNo: SeqNo, EntryNo: entryNo }),
+                        contentType: "application/json; charset = utf-8",
+                        processData: false,
+                        url: '/DocumentApproval/RejectDocument',
+                        success: function (data) {
+                            if (data.success == true) {
+                                HideProgress();
+                                $("#txtComments").val("");
+                                $("#myModalRejectComments").modal("hide");
+                                LoadDocumentApprovalList('@Model.TableID', 'Open','@Model.DocType');
+                                swal.fire('Success', data.message, 'success');
+                            }
+                            else {
+                                HideProgress();
+                                Swal.fire('Error', data.message, 'error');
+                            }
+                        },
+                        error: function (err) {
+                            HideProgress();
+                            Swal.fire('Warning', err, 'warning');
+                        }
+                    });
+                }
+                else {
+                    Swal.fire('Cancelled', 'Document Rejection declined', 'error');
+                }
+            });
+        }
+    }
+    var BackToApprovalSummeryList = function () {
+        ShowProgress();
+        window.location = "/DocumentApproval/DocumentForApprovalSummery?rn="+'@Model.Status';
+    }
+</script>
+

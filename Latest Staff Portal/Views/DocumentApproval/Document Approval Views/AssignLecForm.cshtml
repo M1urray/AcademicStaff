@@ -1,0 +1,52 @@
+﻿@model Latest_Staff_Portal.ViewModel.LecAssignUnit
+<style>
+    .ui-front {
+        z-index: 2000 !important;
+    }
+</style>
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-6">
+            Lecturer
+            @Html.DropDownListFor(model => model.Code, Model.ListOfLec, "--select Lecturer--", new { @class = "form-control", @id = "ddlLecturer", onchange = "GetLecturerUnitSection()" })
+        </div>
+        <div class="col-md-6">
+            Section
+           <select class="form-control" id="ddlSection" name="ddlSection">
+           </select>
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Assign Lecture" onclick="SubmitAssignLec('@Model.DocNo', '@Model.Unit', '@Model.Semester', '@Model.Ln');" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ddlSection').empty().append('<option selected="selected" value="">--</option>');
+        $("#ddlLecturer,#ddlSection").select2({
+            width: '100%'
+        });
+    });
+    var GetLecturerUnitSection = function () {
+        var Unit = '@Model.Unit';
+        var Sem = '@Model.Semester';
+        var Lec = $("#ddlLecturer").children("option:selected").val();
+        if (Lec == "") {
+            $("#ddlSection option").remove();
+            $('#ddlSection').empty().append('<option selected="selected" value="">--</option>');
+        }
+        else {
+            ShowProgress();
+            $("#ddlSection option").remove();
+            $.getJSON("/DocumentApproval/GetLecturerSections", { Lec: Lec, Unit: Unit, Sem: Sem },
+                function (data) {
+                    $('#ddlSection').empty().append('<option selected="selected" value="">--</option>');
+                    $.each(data.ListOfddlData, function () {
+                        $("#ddlSection").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    HideProgress();
+                });
+        }
+    }
+</script>

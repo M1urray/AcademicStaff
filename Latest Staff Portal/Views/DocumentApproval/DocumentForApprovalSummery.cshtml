@@ -1,0 +1,142 @@
+﻿@model Latest_Staff_Portal.ViewModel.DocumentApprovalCount
+@{
+    ViewBag.Title = "DocumentForApprovalSummery";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+    bool hasNoPending = false;
+}
+<div class="card pre-scrollable" style="border: 3px solid #516471">
+    <div class="card-title">@Model.DocCount.Status Documents Approval List</div>
+    <hr />
+    <div class="card-body">
+        @if (Model.DocCount != null)
+        {
+            <ol class="list-group">
+                @if (Model.DocCount.LeaveCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70135114','Leave Requisition','@Model.DocCount.Status','N');">Leave Applications (<span class="badge badge-info badge-pill">@Model.DocCount.LeaveCount</span>)</a></li>
+                }
+                @if (Model.DocCount.PRNCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('38','Purchase Requisition','@Model.DocCount.Status','Quote');">Purchase Requisitions (<span class="badge badge-info badge-pill">@Model.DocCount.PRNCount</span>)</a></li>
+                }
+                @if (Model.DocCount.LPOCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('38','LPO Requisition','@Model.DocCount.Status','Order');">LPO Requisitions (<span class="badge badge-info badge-pill">@Model.DocCount.LPOCount</span>)</a></li>
+                }
+                @if (Model.DocCount.SRNCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70135010','Store Requisition','@Model.DocCount.Status','N');">Store Requisitions (<span class="badge badge-info badge-pill">@Model.DocCount.SRNCount</span>)</a></li>
+                }
+                @if (Model.DocCount.ImpCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70135469','Imprest Requisition','@Model.DocCount.Status','N');">Imprest Requisitions (<span class="badge badge-info badge-pill">@Model.DocCount.ImpCount</span>)</a></li>
+                }
+                @if (Model.DocCount.SurrCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70135450','Imprest Surrender Requisition','@Model.DocCount.Status','N');">Imprest Surrender Requisitions (<span class="badge badge-info badge-pill">@Model.DocCount.SurrCount</span>)</a></li>
+                }
+                @if (Model.DocCount.TransportCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70135362','Transport Requisition','@Model.DocCount.Status','N');">Transport Requisitions (<span class="badge badge-info badge-pill">@Model.DocCount.TransportCount</span>)</a></li>
+                }
+                @if (Model.DocCount.ClaimCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70135454','Staff Claim Requisition','@Model.DocCount.Status','N');">Staff Claim Requisitions (<span class="badge badge-info badge-pill">@Model.DocCount.ClaimCount</span>)</a></li>
+                }
+                @if (Model.DocCount.Clearance > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Student Clearance Requisition','@Model.DocCount.Status','N');">Student Clearance Requests (<span class="badge badge-info badge-pill">@Model.DocCount.Clearance</span>)</a></li>
+                }
+                @if (Model.DocCount.TransferOrder > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('5740','Transfer Order Requisition','@Model.DocCount.Status','N');">Transfer Order Requests (<span class="badge badge-info badge-pill">@Model.DocCount.TransferOrder</span>)</a></li>
+                }
+                @if (Model.DocCount.CafCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134904','Cafeteria Food Request','@Model.DocCount.Status','N');">Cafeteria Food Request (<span class="badge badge-info badge-pill">@Model.DocCount.CafCount</span>)</a></li>
+                }
+            </ol>
+        }
+        @if (!hasNoPending)
+        {
+            <p style="color:red">You have no requisitions awaiting your approval</p>
+        }
+    </div>
+</div>
+<hr />
+<div class="card pre-scrollable" style="border: 3px solid #516471">
+    <div class="card-title">@Model.StdCount.Status Student Requisition Approval List</div>
+    <hr />
+    <div class="card-body">
+        @if (Model.StdCount != null)
+        {
+            hasNoPending = false;
+            <ol class="list-group">
+                @if (Model.StdCount.ProgTransCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Programme Transfer','@Model.StdCount.Status','Programme Transfer');">Programme Major (<span class="badge badge-info badge-pill">@Model.StdCount.ProgTransCount</span>)</a></li>
+                }
+                @if (Model.StdCount.MajorCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Double Major','@Model.StdCount.Status','Double Major');">Double Major (<span class="badge badge-info badge-pill">@Model.StdCount.MajorCount</span>)</a></li>
+                }
+                @if (Model.StdCount.MinorCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Programme Minor','@Model.StdCount.Status','Programme Minor');">Programme Minors (<span class="badge badge-info badge-pill">@Model.StdCount.MinorCount</span>)</a></li>
+                }
+                @if (Model.StdCount.DoubleConcCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Double Concentration','@Model.StdCount.Status','Double Concentration');">Double Concentration (<span class="badge badge-info badge-pill">@Model.StdCount.DoubleConcCount</span>)</a></li>
+                }
+                @if (Model.StdCount.ExemptionConcCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894', 'Exemption', '@Model.StdCount.Status', 'Exemption');">Exemptions (<span class="badge badge-info badge-pill">@Model.StdCount.ExemptionConcCount</span>)</a></li>
+                }
+                @if (Model.StdCount.SExamCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894', 'Special Exams', '@Model.StdCount.Status', 'Special Exams');">Special Exams (<span class="badge badge-info badge-pill">@Model.StdCount.SExamCount</span>)</a></li>
+                }
+                @if (Model.StdCount.ExamChlngConcCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894', 'Exam Challenge', '@Model.StdCount.Status', 'Exam Challenge');">Exam Challenge (<span class="badge badge-info badge-pill">@Model.StdCount.ExamChlngConcCount</span>)</a></li>
+                }
+                @if (Model.StdCount.GraduationCount > 0)
+                {
+                    hasNoPending = true;
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134931', 'Graduation Request', '@Model.StdCount.Status', 'Graduation Request');">Graduation Request (<span class="badge badge-info badge-pill">@Model.StdCount.GraduationCount</span>)</a></li>
+                }
+            </ol>
+        }
+        @if (!hasNoPending)
+        {
+            <p style="color:red">You have no student requisitions awaiting your approval</p>
+        }
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    var GetDocumentApprovalList = function (TbleID, Title, Status, DocType) {
+        window.location = "/DocumentApproval/GetDocumentForApprovalList?TbID=" + TbleID + "&Status=" + Status + "&Title=" + Title + "&DocType=" + DocType + "";
+    }
+</script>
+
+
+
