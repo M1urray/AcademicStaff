@@ -1,9 +1,0 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Latest_Staff_Portal.Properties" GeneratedClassName="Settings">
-  <Profiles />
-  <Settings>
-    <Setting Name="Latest_Staff_Portal_NAVWS_WebService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://sk-erp-server.sk.org:7047/ERP/WS/Sports%20Kenya/Codeunit/WebService</Value>
-    </Setting>
-  </Settings>
-</SettingsFile>
