@@ -540,7 +540,7 @@ namespace Latest_Staff_Portal.Models
                         }
                     }
                 }
-                Uploaded[0] = "Data for " + i.ToString() + " students Uploaded Successfully";
+                Uploaded[0] = "Data for " + i + " students Uploaded Successfully";
                 Uploaded[1] = "T";
                 return Uploaded;
             }

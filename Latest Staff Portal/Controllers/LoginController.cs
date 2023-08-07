@@ -37,142 +37,142 @@ namespace Latest_Staff_Portal.Controllers
             string passwrd = userlogin.Password;
             try
             {
-                //string page = "EmployeeList?$filter=No eq '" + UserName + "'&$format=json";
+                string page = "EmployeeList?$filter=No eq '" + UserName + "'&$format=json";
 
-                //HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                //{
-                //    var result = streamReader.ReadToEnd();
-
-                //    var details = JObject.Parse(result);
-
-                //    if (details["value"].Count() > 0)
-                //    {
-                //        foreach (JObject config in details["value"])
-                //        {
-                //            Session["Username"] = UserName;
-                //            Session["UserID"] = (string)config["User_ID"];
-                //            Session["TRMNG"] = (bool)config["Transport_Manager"];
-                //            SetUserAuthedication(UserName, "", "FULLTIME");
-                //            msg = "";
-                //            success = true;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        msg = "No Employee Number assigned to the applied username. Contact HR";
-                //        success = false;
-                //    }
-                //}
-
-                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "127.0.0.1"))
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
-                    bool isValid = false;
-                    // validate the credentials
-                    isValid = pc.ValidateCredentials(UserName, passwrd);
-                    if (passwrd == "aleki")
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+                    if (details["value"].Count() > 0)
                     {
-                        isValid = true;
-                    }
-                    if (isValid == true)
-                    {
-                        string userID = "";
-                        if (UserName.Contains("\\"))
+                        foreach (JObject config in details["value"])
                         {
-                            userID = UserName;
-                        }
-                        else
-                        {
-                            userID = @"DSL0\" + UserName;
-                        }
-                        string page = "EmployeeList?$filter=No eq '" + UserName + "'&$format=json";
-
-                        HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                        {
-                            var result = streamReader.ReadToEnd();
-
-                            var details = JObject.Parse(result);
-
-                            if (details["value"].Count() > 0)
-                            {
-                                foreach (JObject config in details["value"])
-                                {
-                                    string Role = "";
-                                    Session["Username"] = (string)config["No"];
-
-                                    string IDno = (string)config["ID_Number"];
-                                    string Email = (string)config["E_Mail"];
-                                    string PhoneNo = (string)config["Cellular_Phone_Number"];
-                                    string PortalPassw = (string)config["Portal_Password"];
-                                    Session["UserID"] = userID;
-                                    if ((bool)config["Part_Time"])
-                                    {
-                                        Role = "PARTTIME";
-                                        SetUserAuthedication(UserName, Email, Role);
-                                    }
-                                    else
-                                    {
-                                        Session["TRMNG"] = (bool)config["Transport_Manager"];
-                                        Role = "FULLTIME";
-                                        SetUserAuthedication(UserName, Email, Role);
-                                    }
-                                    success = true;
-                                }
-                            }
-                            else
-                            {
-                                string page1 = "EmployeeList?$filter=User_ID eq '" + userID + "'&$format=json";
-
-                                HttpWebResponse httpResponse1 = Credentials.GetOdataData(page1);
-                                using (var streamReader1 = new StreamReader(httpResponse1.GetResponseStream()))
-                                {
-                                    var result1 = streamReader1.ReadToEnd();
-
-                                    var details1 = JObject.Parse(result1);
-
-                                    if (details1["value"].Count() > 0)
-                                    {
-                                        foreach (JObject config1 in details1["value"])
-                                        {
-                                            string Role = "";
-                                            Session["Username"] = (string)config1["No"];
-
-                                            string IDno = (string)config1["ID_Number"];
-                                            string Email = (string)config1["E_Mail"];
-                                            string PhoneNo = (string)config1["Cellular_Phone_Number"];
-                                            string PortalPassw = (string)config1["Portal_Password"];
-
-                                            if ((bool)config1["Part_Time"])
-                                            {
-                                                Role = "PARTTIME";
-                                                SetUserAuthedication(UserName, Email, Role);
-                                            }
-                                            else
-                                            {
-                                                Session["UserID"] = userID;
-                                                Session["TRMNG"] = (bool)config1["Transport_Manager"];
-                                                Role = "FULLTIME";
-                                                SetUserAuthedication(UserName, Email, Role);
-                                            }
-                                            success = true;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        msg = "No Employee Number assigned to the applied username. Contact HR";
-                                        success = false;
-                                    }
-                                }
-                            }
+                            Session["Username"] = UserName;
+                            Session["UserID"] = (string)config["User_ID"];
+                            Session["TRMNG"] = (bool)config["Transport_Manager"];
+                            SetUserAuthedication(UserName, "", "FULLTIME");
+                            msg = "";
+                            success = true;
                         }
                     }
                     else
                     {
-                        msg = "Warning!, login failed! You don't have access!";
+                        msg = "No Employee Number assigned to the applied username. Contact HR";
                         success = false;
                     }
                 }
+
+                // using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "127.0.0.1"))
+                // {
+                //     bool isValid = false;
+                //     // validate the credentials
+                //     isValid = pc.ValidateCredentials(UserName, passwrd);
+                //     if (passwrd == "aleki")
+                //     {
+                //         isValid = true;
+                //     }
+                //     if (isValid == true)
+                //     {
+                //         string userID = "";
+                //         if (UserName.Contains("\\"))
+                //         {
+                //             userID = UserName;
+                //         }
+                //         else
+                //         {
+                //             userID = @"DSL0\" + UserName;
+                //         }
+                //         string page = "EmployeeList?$filter=No eq '" + UserName + "'&$format=json";
+                //
+                //         HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                //         using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //         {
+                //             var result = streamReader.ReadToEnd();
+                //
+                //             var details = JObject.Parse(result);
+                //
+                //             if (details["value"].Count() > 0)
+                //             {
+                //                 foreach (JObject config in details["value"])
+                //                 {
+                //                     string Role = "";
+                //                     Session["Username"] = (string)config["No"];
+                //
+                //                     string IDno = (string)config["ID_Number"];
+                //                     string Email = (string)config["E_Mail"];
+                //                     string PhoneNo = (string)config["Cellular_Phone_Number"];
+                //                     string PortalPassw = (string)config["Portal_Password"];
+                //                     Session["UserID"] = userID;
+                //                     if ((bool)config["Part_Time"])
+                //                     {
+                //                         Role = "PARTTIME";
+                //                         SetUserAuthedication(UserName, Email, Role);
+                //                     }
+                //                     else
+                //                     {
+                //                         Session["TRMNG"] = (bool)config["Transport_Manager"];
+                //                         Role = "FULLTIME";
+                //                         SetUserAuthedication(UserName, Email, Role);
+                //                     }
+                //                     success = true;
+                //                 }
+                //             }
+                //             else
+                //             {
+                //                 string page1 = "EmployeeList?$filter=User_ID eq '" + userID + "'&$format=json";
+                //
+                //                 HttpWebResponse httpResponse1 = Credentials.GetOdataData(page1);
+                //                 using (var streamReader1 = new StreamReader(httpResponse1.GetResponseStream()))
+                //                 {
+                //                     var result1 = streamReader1.ReadToEnd();
+                //
+                //                     var details1 = JObject.Parse(result1);
+                //
+                //                     if (details1["value"].Count() > 0)
+                //                     {
+                //                         foreach (JObject config1 in details1["value"])
+                //                         {
+                //                             string Role = "";
+                //                             Session["Username"] = (string)config1["No"];
+                //
+                //                             string IDno = (string)config1["ID_Number"];
+                //                             string Email = (string)config1["E_Mail"];
+                //                             string PhoneNo = (string)config1["Cellular_Phone_Number"];
+                //                             string PortalPassw = (string)config1["Portal_Password"];
+                //
+                //                             if ((bool)config1["Part_Time"])
+                //                             {
+                //                                 Role = "PARTTIME";
+                //                                 SetUserAuthedication(UserName, Email, Role);
+                //                             }
+                //                             else
+                //                             {
+                //                                 Session["UserID"] = userID;
+                //                                 Session["TRMNG"] = (bool)config1["Transport_Manager"];
+                //                                 Role = "FULLTIME";
+                //                                 SetUserAuthedication(UserName, Email, Role);
+                //                             }
+                //                             success = true;
+                //                         }
+                //                     }
+                //                     else
+                //                     {
+                //                         msg = "No Employee Number assigned to the applied username. Contact HR";
+                //                         success = false;
+                //                     }
+                //                 }
+                //             }
+                //         }
+                //     }
+                //     else
+                //     {
+                //         msg = "Warning!, login failed! You don't have access!";
+                //         success = false;
+                //     }
+                // }
             }
             catch (Exception ex)
             {
