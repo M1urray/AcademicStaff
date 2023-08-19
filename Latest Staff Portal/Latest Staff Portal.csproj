@@ -292,13 +292,13 @@
     <Content Include="SiteJS\ForgetPasswordJS.js" />
     <Content Include="SiteJS\LoginJS.js" />
     <Content Include="SiteJS\SideBarLink.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
+    <None Include="Web.config" />
+    <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
+    </None>
+    <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
