@@ -57,7 +57,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -511,16 +511,18 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://45.34.8.215:9101/AIU/WS/AIU/Codeunit/WebPortal">
+    <WebReferenceUrl Include="http://maachah.negst.net:7047/AIU/WS/AIU%2520LIVE/Codeunit/WebPortal">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\NAVWS\</RelPath>
-      <UpdateFromURL>http://45.34.8.215:9101/AIU/WS/AIU/Codeunit/WebPortal</UpdateFromURL>
+      <UpdateFromURL>http://maachah.negst.net:7047/AIU/WS/AIU%2520LIVE/Codeunit/WebPortal</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
       </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Latest_Staff_Portal_NAVWS_WebPortal</CachedSettingsPropName>
+      <CachedAppSettingsObjectName>
+      </CachedAppSettingsObjectName>
+      <CachedSettingsPropName>
+      </CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <PropertyGroup>
