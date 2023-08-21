@@ -55,7 +55,6 @@ namespace Latest_Staff_Portal
                     myUser.UserID = userData[1];
                     myUser.Email = userData[2];
                     myUser.RoleName = userData[3];
-
                     HttpContext.Current.User = myUser;
                 }
             }
