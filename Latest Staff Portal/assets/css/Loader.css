@@ -1,14 +1,15 @@
 ﻿.modalLoader {
     position: fixed;
-    top: 0;
-    left: 0;
+    /* top: 0; */
+    /* left: 0; */
     background-color: #f5e2bc;
     z-index: 1000 !important;
-    opacity: 0.8;
+    -ms-opacity: 0.8;
     filter: alpha(opacity=80);
     -moz-opacity: 1.5;
+    opacity: 0.8;
     min-height: 100%;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .loading {

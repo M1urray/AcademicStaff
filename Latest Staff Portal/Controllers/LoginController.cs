@@ -73,25 +73,15 @@ namespace Latest_Staff_Portal.Controllers
                             {
                                 foreach (JObject config in details["value"])
                                 {
-                                    string Role = "";
+                                    
                                     Session["Username"] = (string)config["No"];
                                     Session["UserID"] = userId;
                                     string IDno = (string)config["ID_Number"];
                                     string Email = (string)config["E_Mail"];
                                     string PhoneNo = (string)config["Cellular_Phone_Number"];
 
-                                    if ((bool)config["Part_Time"])
-                                    {
-                                        Role = "PARTTIME";
-                                        SetUserAuthedication(UserName, Email, Role);
-                                    }
-                                    else
-                                    {
-                                        Session["UserID"] = userID;
-                                        Session["TRMNG"] = (bool)config["Transport_Manager"];
-                                        Role = "FULLTIME";
-                                        SetUserAuthedication(UserName, Email, Role);
-                                    }
+                                    string Role = "ALLUSERS";
+                                    SetUserAuthedication(UserName, Email, Role);
                                     msg = Redirect;
                                     success = true;
                                 }
@@ -135,7 +125,7 @@ namespace Latest_Staff_Portal.Controllers
                 userModel.UserName = UserName;
                 userModel.Email = email;
                 userModel.RoleName = role;
-                string userData = string.Format("{0}|{1}|{2}|{3}|{4}", userModel.UserName, userModel.UserID, userModel.Email, userModel.RoleName, "");
+                string userData = string.Format("{0}|{1}|{2}|{3}", userModel.UserName, userModel.UserID, userModel.Email, userModel.RoleName);
                 FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, userModel.UserName, DateTime.Now,
                     DateTime.Now.AddMinutes(1), false, userData);
                 string encTicket = FormsAuthentication.Encrypt(ticket);
@@ -145,7 +135,6 @@ namespace Latest_Staff_Portal.Controllers
             }
             catch (Exception ex)
             {
-                FormsAuthentication.SignOut();
                 ex.Data.Clear();
             }
         }

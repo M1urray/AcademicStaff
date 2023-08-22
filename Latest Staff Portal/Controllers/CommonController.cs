@@ -14,7 +14,7 @@ using System.Web.UI;
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
-    [CustomAuthorization(Role = "FULLTIME,PARTTIME")]
+    [CustomAuthorization(Role = "ALLUSERS")]
     public class CommonController : Controller
     {
         // GET: Common

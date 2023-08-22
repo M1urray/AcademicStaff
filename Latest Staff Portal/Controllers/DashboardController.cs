@@ -13,7 +13,7 @@ using System.Web.Mvc;
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
-    [CustomAuthorization(Role = "FULLTIME,PARTTIME")]
+    [CustomAuthorization(Role = "ALLUSERS")]
     public class DashboardController : Controller
     {
         // GET: Dashboard
