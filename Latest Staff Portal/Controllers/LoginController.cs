@@ -3,7 +3,6 @@ using Latest_Staff_Portal.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Configuration;
-using System.Data;
 using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Linq;
@@ -93,6 +92,8 @@ namespace Latest_Staff_Portal.Controllers
                                         Role = "FULLTIME";
                                         SetUserAuthedication(UserName, Email, Role);
                                     }
+                                    msg = Redirect;
+                                    success = true;
                                 }
                             }
                             else
