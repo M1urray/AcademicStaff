@@ -120,7 +120,7 @@ var RejectedDocLink = function () {
 }
 var ChangePasswordLink = function () {
     ShowProgress();
-    window.location = "/Settings/ChangePassword";
+    window.location = "https://ssp.aiu.ac.ke";
 }
 var TrainingRequisitiontLink = function() {
     ShowProgress();
