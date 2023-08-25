@@ -1,0 +1,41 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewApprisalRequest
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Apprisal Period", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.AppraisalPeriod, Model.ListOfApprisalPeriods, "--select Apprisal Period--", new { @class = "form-control", @id = "ddlApprPeriod" })
+                    @Html.ValidationMessageFor(model => model.AppraisalPeriod, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Appraisal Type", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.AppraisalTypes, Model.ListOfApprisalTypes, "--select Apprisal Type--", new { @class = "form-control", @id = "ddlAppTypes" })
+                    @Html.ValidationMessageFor(model => model.AppraisalTypes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
+                    @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Create Appraisal Document" onclick="SubmitAppraisalRequisition();" />
+    </div>
+</div>
+

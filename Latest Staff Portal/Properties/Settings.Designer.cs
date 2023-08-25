@@ -26,10 +26,10 @@ namespace Latest_Staff_Portal.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://sk-erp-server.sk.org:7047/ERP/WS/Sports%20Kenya/Codeunit/WebService")]
-        public string Latest_Staff_Portal_NAVWS_WebService {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.7.153:7047/ERP/WS/DAYSTAR%20UNI/Codeunit/WebPortal")]
+        public string Latest_Staff_Portal_NAVWS_WebPortal {
             get {
-                return ((string)(this["Latest_Staff_Portal_NAVWS_WebService"]));
+                return ((string)(this["Latest_Staff_Portal_NAVWS_WebPortal"]));
             }
         }
     }

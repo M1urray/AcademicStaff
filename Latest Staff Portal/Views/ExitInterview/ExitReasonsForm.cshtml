@@ -1,0 +1,18 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewExitHeader
+    <style >
+    .ui-front {
+        z-index: 2000 !important;
+    }
+</style>
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-12">
+            Reason
+            <textarea id="txtReasons" class="form-control" maxlength="150"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Reason" onclick="SubmitReasons(@Model.No);" />
+    </div>
+</div>

@@ -14,11 +14,6 @@
         font-size: 12px;
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div class="card pre-scrollable">
     <div class="card-title">Imprest Surrender List</div>
     <hr />
@@ -98,16 +93,8 @@
     $(document).ready(function () {
         LoadImprestSurrenderList();
         var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
-        var Errormsg = '@Request.RequestContext.HttpContext.Session["ErrorMsg"]';
         if (Successmsg != "") {
-            Swal.fire('Success', Successmsg, 'success',true);
-            $.ajax({
-                type: "POST",
-                url: "/Common/NullibySessions"
-            });
-        }
-        if (Errormsg != "") {
-            Swal.fire('Warning', Errormsg, 'warning',true);
+            Swal.fire('Success', Successmsg, 'success', true);
             $.ajax({
                 type: "POST",
                 url: "/Common/NullibySessions"
@@ -153,44 +140,28 @@
             return;
         }
         else {
-            $.ajaxSetup({ cache: false });
-            Swal.fire({
-                title: 'NOTE:',
-                text: "If there is any claim for this imprest,then claim it before surrendering. Do you wish to proceed?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Proceed!'
-            }).then((result) => {
-                if (result.value) {
-                    ShowProgress();
-                    $.ajax({
-                        type: "POST",
-                        url: "/ImprestSurrender/SubmitImprestSurrender",
-                        //data: data,
-                        data: JSON.stringify({ DocNo: DocNo }),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.success) {
-                                window.location = "/ImprestSurrender/ViewSurrenderDocument?DocNo=" + data.DocNo;
-                            }
-                            else {
-                                Swal.fire('Warning', data.message, 'warning');
-                                HideProgress();
-                            }
-                        },
-                        error: function (err) {
-                            HideProgress();
-                            Swal.fire('Warning', err, 'warning');
-                        }
-                    });
+            ShowProgress();
+            $.ajax({
+                type: "POST",
+                url: "/ImprestSurrender/SubmitImprestSurrender",
+                //data: data,
+                data: JSON.stringify({ DocNo: DocNo }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        window.location = "/ImprestSurrender/ViewSurrenderDocument?DocNo=" + data.DocNo;
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
                 }
-                else {
-                    window.location = "/ImprestSurrender/ViewSurrenderDocument?DocNo=" + DocNo;
-                }
-            });            
+            });
         }
     }
     var SelectedRow = function (DocNo, Status) {
@@ -224,7 +195,7 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, Redirect: "N" }),
+            data: JSON.stringify({ DocNo: DocNo, Redirect: "N"}),
             contentType: "application/json; charset = utf-8",
             processData: false,
             url: '/ImprestSurrender/SendImprestSurrenderForApproval',
@@ -283,7 +254,7 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, RecID: "Imprest Surrender Header: " + DocNo }),
+            data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
             url: '/Common/DocumentApprovalTrail',

@@ -1,0 +1,169 @@
+﻿
+@{
+    ViewBag.Title = "Grade_Complaint";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+
+    thead {
+        background-color: black;
+        color: white;
+    }
+</style>
+<div class="card pre-scrollable">
+    <div class="card-title">Grade Complaint List</div>
+    <hr />
+    <div class="card-body">
+        <div id="divGradeCList"></div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadGradeCList();
+        var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
+        if (Successmsg != "") {
+            Swal.fire('Success', Successmsg, 'success', true);
+            $.ajax({
+                type: "POST",
+                url: "/Common/NullibySessions"
+            });
+        }
+    });
+    var LoadGradeCList = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/GradeComplaint/Grade_Complaint_View",
+            success: function (data) {
+                $("#divGradeCList").html(data);
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                alert("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var SelectedRow = function (DocNo) {
+        $("#labelF").text("Grade Complaint Form");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ DocNo: DocNo }),
+            url: '/GradeComplaint/Grade_Complaint_Form',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SubmitRequisition = function (DocNo) {
+        var Marks = $("#txtMarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var Reason = $("#ddlReason").children("option:selected").val();
+        var OtherReason = $("#txtOtherReason").val().replace(/(\r\n|\n|\r)/gm, " ");
+        if (Marks == "") {
+            Swal.fire('Warning', "Enter Marks", 'warning');
+            return;
+        }
+        else if (Reason == "" && OtherReason == "") {
+            Swal.fire('Warning', "Select Reason for Grade Change", 'warning');
+            return;
+        }
+        else {
+            var filename; var base64String; var filetype;
+            var files = document.getElementById('fileGradeC').files;
+            if (files.length) {
+                var file = files[0];
+                var blob = file.slice();
+                filetype = file.type;
+                filename = file.name;
+                var reader = new FileReader();
+                reader.onloadend = function (evt) {
+                    if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+                        var cont = evt.target.result
+                        base64String = getB64Str(cont);
+                        ShowProgress();
+                        //Send the JSON array to Controller using AJAX.
+                        $.ajax({
+                            type: "POST",
+                            url: "/GradeComplaint/SubmitGradeComplain",
+                            //data: data,
+                            data: JSON.stringify({ DocNo: DocNo, Marks: Marks, Reason: Reason, OtherReason: OtherReason, base64Upload: base64String, fileName: filename, Extn: filetype, TableID: 70134929 }),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.success) {
+                                    $("#myModal").modal("hide");
+                                    LoadGradeCList();
+                                    Swal.fire('Success', data.message, 'success');
+                                }
+                                else {
+                                    Swal.fire('Warning', data.message, 'warning');
+                                    HideProgress();
+                                }
+                            },
+                            error: function (err) {
+                                HideProgress();
+                                Swal.fire('Warning', err, 'warning');
+                            }
+                        });
+                    }
+                };
+                reader.readAsArrayBuffer(blob);
+            }
+            else {
+                Swal.fire('Warning', "Attach supporting Documents", 'warning');
+                return;
+            }
+        }
+    };
+    function getB64Str(buffer) {
+        var binary = '';
+        var bytes = new Uint8Array(buffer);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+    }
+</script>
+

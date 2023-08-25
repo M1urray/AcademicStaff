@@ -1,0 +1,262 @@
+﻿@model Latest_Staff_Portal.ViewModel.IsLecAssociate
+@{
+    ViewBag.Title = "ClassAttendanceList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+
+    string Prog = "", Unit = "", UnitName = "", Sem = "";
+    if (Session["Unit"] != null)
+    {
+        //Prog = Session["Prog"].ToString();
+        Unit = Session["Unit"].ToString();
+        Sem = Session["Sem"].ToString();
+        UnitName = Session["UnitName"].ToString();
+        string Lec = Session["Username"].ToString();
+        string classCode = Session["ClassCode"].ToString();
+    }
+    else
+    {
+        Response.Redirect("/CourseAllocationUnits/Lecturer");
+    }
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .textboxWidth {
+        width: 50px;
+    }
+
+    .table td {
+        padding: 0.1rem;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="BackToUnitsAllocation('@Model.Section');" style="color:yellow"><<< Back To Units Allocation</a>
+</div>
+<hr />
+<div>
+    <b>Unit => @Html.Label(Unit, new { @id = "lblUnit" }) (@Html.Label(UnitName))</b>
+</div>
+<hr />
+@if ((Model.IsAssociateLec == false) ||(Model.IsAssociateLec == true && Model.Has_Primary_Role == true))
+{
+    <a href="#" onclick="NewAttendance('');" class="btn btn-primary BtnPadding">New Attendance</a>
+}
+<a href="#" onclick="PercAttendance('');" class="btn btn-danger BtnPadding">Perc(%) Attendance</a>
+<hr />
+<div id="divAttendanceList"></div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal" id="myModalAttendance" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#datatable").DataTable(), $("#datatable-buttons").DataTable({
+            lengthChange: !1,
+            buttons: [
+                "copy",
+                {
+                    extend: 'excel',
+                    title: 'Lecturer List'
+                },
+                {
+                    extend: 'pdf',
+                    title: 'Lecturer List'
+                }
+            ]
+        }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)");
+
+        LoadAttendanceList("");
+    });
+    var LoadAttendanceList = function (message) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/lecturer/LoadClassAttendanceList",
+            success: function (data) {
+                $("#divAttendanceList").html(data);
+                if (message != "") {
+                    Swal.fire('Success', message, 'success');
+                }
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                alert("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var NewAttendance = function (DocNo) {
+        if (DocNo != "") {
+            $("#labelF").text("Update Attendance Form");
+        }
+        else {
+            $("#labelF").text("New Attendance Form");
+        }
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/lecturer/LoadClassAtteanceStudents',
+            success: function (data) {
+                HideProgress();
+                $("#modalBody").html(data);               
+                $("#myModalAttendance").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SaveClassAttendance = function (DocNo) {
+        var week = $("#ddlWeek").children("option:selected").val();
+        if (week == "") {
+            Swal.fire('Warning', "Select Week", 'warning');
+            return;
+        }
+        else {
+            var myTableArray = [];
+            var trs = $('#TbAttendance').dataTable();
+
+            trs.$('tr').each(function () {
+                var arrayOfThisRow = [];
+                var tableData = $(this).find('td');
+                if (tableData.length > 0) {
+                    tableData.each(function () {
+                        if ($(this).find("input[type=text]").length) {
+                            var myText = $(this).find("input[type=text]").val();
+                            arrayOfThisRow.push(myText);
+                        }
+                        else if ($(this).find("select").length) {
+                            var myText = $(this).find("select").val();
+                            arrayOfThisRow.push(myText);
+                        }
+                        else arrayOfThisRow.push($(this).text());
+                    });
+
+                    myTableArray.push(arrayOfThisRow);
+                }
+            });
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: "/lecturer/SaveClassAttendance",
+                data: { DocNo: DocNo, Wk: week, Rows: myTableArray },
+                contenttype: "text/plain; charset=utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        if (data.failed == false) {
+                            HideProgress();
+                            LoadAttendanceList(data.message);
+                            $("#myModalAttendance").modal("hide");
+                        }
+                        else {
+                            if (data.redirect == true) {
+                                window.location = data.message;
+                            }
+                            else {
+                                HideProgress();
+                                Swal.fire('Warning', data.message, 'warning');
+                            }
+                        }
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    if (data.success == false) {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                }
+            });
+        }
+    }
+    var BackToUnitsAllocation = function (Section) {
+        ShowProgress();
+        if (Section == "ME") {
+            window.location = "/Lecturer/MarkEntryAllocationUnits";
+        }
+        else {
+            window.location = "/Lecturer/CourseAllocationUnits";
+        }
+    }
+    var PostAttendanceList = function (DocNo, wk) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, Wk: wk }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/lecturer/PostClassAttendance',
+            success: function (data) {
+                if (data.success) {
+                    HideProgress();
+                    LoadAttendanceList(data.message);
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var PercAttendance = function () {
+        $("#labelF").text("Students Perc.(%) Attendandance");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/lecturer/LoadPercClassAtteanceStudents',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalAttendance").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+</script>
+

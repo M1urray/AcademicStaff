@@ -1,0 +1,260 @@
+﻿@model Latest_Staff_Portal.ViewModel.ProgStages
+@{
+    ViewBag.Title = "ProgrammeStages";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .btnSize {
+        padding: 1px;
+        font-size: 12px;
+    }
+
+    .EmbedClass {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="BackToProgList();" style="color:yellow"><<< Back To Programme List</a>
+</div>
+<div class="card pre-scrollable">
+    <div class="card-title">
+        <div class="row" id="DivStageID">Programme Stages(<span style="">@Html.DisplayFor(m => m.ProgDescr)</span>)</div>
+    </div>
+    <div class="card-body">
+        <table id="datatable-buttons" class="table table-bordered table-hover nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <thead>
+                <tr>
+                    <th width="10%">Action</th>
+                    <th width="10%">Code</th>
+                    <th width="80%">Description</th>
+                    <th>Action 1</th>
+                    <th>Action 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model.ListOfProgrammeStages != null)
+                    {
+                        if (Model.ListOfProgrammeStages.Count() > 0)
+                        {
+                            int stageCount = Model.ListOfProgrammeStages.Count();
+                            int i = 1;
+                            foreach (var item in Model.ListOfProgrammeStages)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="#" onclick="GetProgStageUnits('@Request.QueryString["Prog"]','@item.Code','@Request.QueryString["Descr"]');">View Units</a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Code)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    @{
+                                        if (item.Code.Contains("S2"))
+                                        {
+                                            <td>
+                                                <input type="button" value="View Consol. Marksheet" class="btn btn-danger btnSize" onclick="GetFilters('@Request.QueryString["Prog"].ToString()','@item.Code','CONSLMSHT');" />|<input type="button" value="View Pass List" class="btn btn-danger btnSize" onclick="GetFilters('@Request.QueryString["Prog"].ToString()','@item.Code','PASSLIST');" />
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        if (i == stageCount)
+                                        {
+                                            <td>
+                                                <input type="button" value="View Classification List" class="btn btn-danger btnSize" onclick="GetFilters('@Request.QueryString["Prog"].ToString()','@item.Code','CLASSIFICATION');" />|<input type="button" value="View Award List" class="btn btn-danger btnSize" onclick="GetFilters('@Request.QueryString["Prog"].ToString()','@item.Code','AWARD');" />
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    }
+                                </tr>
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" style="color:red">
+                                    No Programme Records Found
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@*//////////////////////Filters////////////////////////////*@
+<div class="modal fade" id="myModalFilters" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label> Filters</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyFilters">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModalUnits" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelT"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody" style="width:100%;height:450px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var Prog = GetParameterValues('Prog');
+        var ProgDescription = GetParameterValues('Descr');
+        function GetParameterValues(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+        $("#datatable").DataTable(), $("#datatable-buttons").DataTable({
+            lengthChange: !1,
+            buttons: [
+                "copy",
+                {
+                    extend: 'excel',
+                    title: 'Programme Stages\n(' + Prog + ' - ' + ProgDescription + ')',
+                    exportOptions: {
+                        columns: [1, 2]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    title: 'Programme Stages\n(' + Prog + ' - ' + ProgDescription + ')',
+                    exportOptions: {
+                        columns: [1, 2]
+                    }
+                }
+            ]
+        }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)")
+    });
+    var GetFilters = function (Prog, Stage, ReportT) {
+        if (ReportT == "CONSLMSHT") {
+            $("#labelF").text("Cons. Marksheet");
+        }
+        if (ReportT == "PASSLIST") {
+            $("#labelF").text("Pass List");
+        }
+        if (ReportT == "CLASSIFICATION") {
+            $("#labelF").text("Classification");
+        }
+        if (ReportT == "AWARD") {
+            $("#labelF").text("Award List");
+        }
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ Prog: Prog, Stage: Stage, ReportType: ReportT }),
+            url: '/Programme/GetReportFilters',
+            success: function (data) {
+                $("#modalBodyFilters").html(data);
+                HideProgress();
+                $("#myModalFilters").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var GenerateReport = function (Prog, Stage, ReportType) {
+        var AcademicYear = $("#ddlAcademicYear").children("option:selected").val();
+        var ProgOption = $("#ddlOption").children("option:selected").val();
+        var DocType = $("#ddlDocType").children("option:selected").val();
+        var Campus = $("#ddlCammpus").children("option:selected").val();
+        if (AcademicYear == "") {
+            Swal.fire('Warning', 'Select Academic Year', 'warning');
+            return;
+        }
+        else {
+            var DocFilters = {};
+            DocFilters.AcademicYear = AcademicYear;
+            DocFilters.ProgrammeOption = ProgOption;
+            DocFilters.Campus = Campus;
+            DocFilters.DocType = DocType;
+            DocFilters.Prog = Prog;
+            DocFilters.Stage = Stage;
+            DocFilters.ReportType = ReportType;
+            ShowProgress();
+            $.ajax({
+                url: '/Programme/GetProgrammeStageReport',
+                datatype: "json",
+                type: "POST",
+                data: JSON.stringify({ Filters: DocFilters }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        if (data.view == true) {
+                            var viewer = $("#modalBody");
+                            PDFObject.embed(data.message, viewer);
+                            $("#myModalUnits").modal("show");
+                        }
+                        else {
+                            window.location = '/Programme/Download?fileName=' + data.message;
+                            Swal.fire('Success', 'Document Downloaded successfully', 'success');
+                        }
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+
+                    }
+                    HideProgress();
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    }
+    var BackToProgList = function () {
+        ShowProgress();
+        window.location = "/Programme/ProgrammeList";
+    }
+    var GetProgStageUnits = function (Prog, Stage, ProgDesc) {
+        ShowProgress();
+        window.location = "/Programme/ProgStageUnits?Prog=" + Prog + "&Stage=" + Stage + "&ProgDesc=" + ProgDesc + "";
+    }
+</script>

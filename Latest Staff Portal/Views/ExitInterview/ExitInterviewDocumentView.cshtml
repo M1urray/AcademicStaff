@@ -1,0 +1,275 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewExitHeader
+@{
+    ViewBag.Title = "ExitInterviewDocumentView";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    hr {
+        margin: 4px;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="ExitInterviewRequisitionLink();" style="color:yellow"><<< Back To Exit Interview Requisition List</a>
+</div>
+<div class="card">
+    <div class="card-title">Exit Interview Document Details(@Model.No)</div>
+    <hr />
+    <div style="text-align:right" id="HideEditButton">
+        <input type="button" class="btn btn-danger BtnPadding" id="btnEdit" value="Edit Header" onclick="EditDocument();" />
+        <hr />
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <b>Document No</b>
+                @Html.TextBoxFor(m => m.No, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+            </div>
+            <div class="col-md-6">
+                <b>Employee Number</b>
+                @Html.TextBoxFor(m => m.EmployeeNumber, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtEmployeeName", @onkeydown = "return false;", @autocomplete = "off" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Employee Name</b>
+                @Html.TextBoxFor(m => m.EmployeeName, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtEmployeeName" })
+            </div>
+            <div class="col-md-6">
+                <b>Length Of Service</b>
+                @Html.TextBoxFor(m => m.LengthOfService, new { @class = "form-control ", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtLengthOfService" })
+                
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Employee Category</b>
+                @Html.TextBoxFor(m => m.EmployeeCategory, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtEmpCategory" })
+                
+            </div>
+            <div class="col-md-6">
+                <b>Leaving Date</b>
+                @Html.TextBoxFor(m => m.LeavingDate, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtLeavingDate" })
+               
+            </div>
+        </div>
+        <hr />
+        <div align="center" id="DivUpdateButton">
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Update Header" onclick="UpdateExitHeader();" />
+        </div>
+        <div id="DivExitLines">
+            <hr style="border:1px solid black" />
+            <b>Exit Reason Lines</b>
+            <hr />
+            <div id="divExitReasons"></div>
+            <hr style="border:1px solid black" />
+            <b>Exit Question Lines</b>
+            <hr />
+            <div id="divExitQuestions"></div>
+            <hr style="border:1px solid black" />
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Attachments</b>
+                    <div id="divAttachDocs"></div>
+                </div>
+            </div>
+            <hr style="border:1px solid black" />
+            <div align="right" id="DivSendForApproval">
+                <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval();" />
+            </div>
+            <hr />
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" ke aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">New Exit Reason Line</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal View Doc////////////////////////////*@
+<div class="modal fade" id="myModalAttachment" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Attachment</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalAttachmentBody" style="width:100%;height:450px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadExitInterViewReasons(`@Model.No`);
+        LoadExitInterviewQuestions(`@Model.No`);
+    });
+    var LoadExitInterViewReasons = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo }),
+            url: "/ExitInterview/ReasonDocumentLines",
+            success: function (data) {
+                $("#divExitReasons").html(data);
+                HideProgress();
+                GetDocumentAttachments();
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var LoadExitInterviewQuestions = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo }),
+            url: "/ExitInterview/ExitQuestions",
+            success: function (data) {
+                $("#divExitQuestions").html(data);
+                HideProgress();
+                GetDocumentAttachments();
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var AddLeavingReason = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo }),
+            url: "/ExitInterview/NewReasonLine",
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var SubmitReasons = function (DocNo) {
+        ShowProgress();
+        var Reason = $("#txtReasons").val();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo,Reason:Reason }),
+            url: "/ExitInterview/SubmitExitReason",
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var GetDocumentAttachments = function () {
+        ShowProgress();
+        var Status = `Active`;
+        var DocNo = `@Model.No`;
+        var tableId = '70135469';
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo, TableID: tableId, Status: Status }),
+            url: "/Common/DocumentAttachments",
+            success: function (data) {
+                HideProgress();
+                $("#divAttachDocs").html(data);
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var ExitInterviewList = function () {
+        ShowProgress();
+        window.location = "/ExitInterview/ExitInterviewRequisitionLisst";
+    };
+    var AnswerQuestions = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo }),
+            url: "/ExitInterview/NewQuestionLine",
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var ExitInterviewRequisitionLink = function () {
+        ShowProgress();
+        window.location = "/ExitInterview/ExitInterviewRequisitionList";
+    }
+</script>

@@ -111,10 +111,11 @@
     var SubmitTransportRequisition = function () {
         var Commencement = $("#txtCommence").val();
         var Destination = $("#txtDestination").val();
-        //var ResponC = $("#ddlRespC").children("option:selected").val();
+        var ResponC = $("#ddlRespC").children("option:selected").val();
         var DateTrip = $("#dtPicker").val();
         var TimeTrip = $("#txtTime").val();
         var NoOfDays = $("#txtNoOfDays").val();
+        var NoOfPs = $("#txtNoOfPassengers").val();
         var Purpose = $("#txtRemarks").val();
         if (Commencement == "") {
             Swal.fire('error', 'Enter Place of Commencement', 'error');
@@ -124,10 +125,10 @@
             Swal.fire('error', 'Enter Place of Destination', 'error');
             return;
         }
-        //else if (ResponC == "") {
-        //    Swal.fire('error', 'Select Responsibility Center', 'error');
-        //    return;
-        //}
+        else if (ResponC == "") {
+            Swal.fire('error', 'Select Responsibility Center', 'error');
+            return;
+        }
         else if (DateTrip == "") {
             Swal.fire('error', 'Select Date of Trip', 'error');
             return;
@@ -140,6 +141,10 @@
             Swal.fire('error', 'Enter No of Days', 'error');
             return;
         }
+        else if (NoOfPs == "") {
+            Swal.fire('error', 'Enter No of Passengers travelling', 'error');
+            return;
+        }
         else if (Purpose == "") {
             Swal.fire('error', 'Enter Purpose of the Trip', 'error');
             return;
@@ -148,10 +153,11 @@
             var NewTransportDocument = {};
             NewTransportDocument.Commencement = Commencement;
             NewTransportDocument.Destination = Destination;
-            //NewTransportDocument.RespC = ResponC;
+            NewTransportDocument.RespC = ResponC;
             NewTransportDocument.DateTrip = DateTrip;
             NewTransportDocument.TimeTrip = TimeTrip;
             NewTransportDocument.NoOfDays = NoOfDays;
+            NewTransportDocument.NoOfPassengers = NoOfPs;
             NewTransportDocument.Purpose = Purpose;
             ShowProgress();
             $.ajax({
@@ -208,7 +214,7 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo }),
+            data: JSON.stringify({ DocNo: DocNo, Redirect:"N" }),
             contentType: "application/json; charset = utf-8",
             processData: false,
             url: '/Transport/SendDocAppForApproval',

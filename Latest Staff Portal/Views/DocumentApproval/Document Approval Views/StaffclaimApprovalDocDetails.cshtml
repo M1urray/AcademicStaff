@@ -21,20 +21,22 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        <b>Directorate</b>
-        @Html.TextBoxFor(m => m.DocHeader.Directorate, new { @class = "form-control", @readonly = "readonly" })        
+        <b>Status</b>
+        @Html.TextBoxFor(m => m.DocHeader.Status, new { @class = "form-control", @readonly = "readonly" })
     </div>
     <div class="col-md-6">
-        <b>Department</b>
-        @Html.TextBoxFor(m => m.DocHeader.Department, new { @class = "form-control", @readonly = "readonly" })
+        <b>Campus</b>
+        @Html.TextBoxFor(m => m.DocHeader.Campus, new { @class = "form-control", @readonly = "readonly" })
     </div>
 </div>
 <div class="row">
     <div class="col-md-6">
-        <b>Status</b>
-        @Html.TextBoxFor(m => m.DocHeader.Status, new { @class = "form-control", @readonly = "readonly" })
+        <b>Department</b>
+        @Html.TextBoxFor(m => m.DocHeader.Department, new { @class = "form-control", @readonly = "readonly" })
     </div>
-    <div class="col-md-6">        
+    <div class="col-md-6">
+        <b>Responsibility Center</b>
+        @Html.TextBoxFor(m => m.DocHeader.RespC, new { @class = "form-control", @readonly = "readonly" })
     </div>
 </div>
 <div class="row">

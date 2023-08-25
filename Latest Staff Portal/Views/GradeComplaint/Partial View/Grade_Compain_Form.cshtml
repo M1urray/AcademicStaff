@@ -1,0 +1,82 @@
+﻿@model Latest_Staff_Portal.ViewModel.Grade_Compaint
+<style>
+    .ui-front {
+        z-index: 2000 !important;
+    }
+</style>
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-6">
+            Doc No
+            @Html.TextBoxFor(model => model.Doc_No, new { @class = "form-control", @id = "txtDocNo" })
+        </div>
+        <div class="col-md-6">
+            Date Applied
+            @Html.TextBoxFor(model => model.Date_Applied, new { @class = "form-control", @id = "txtDateApplied" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            Student No.
+            @Html.TextBoxFor(model => model.Student_No, new { @class = "form-control", @id = "txtStdNo" })
+        </div>
+        <div class="col-md-6">
+            Student Name
+            @Html.TextBoxFor(model => model.Student_Name, new { @class = "form-control", @id = "txtStdName" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            Unit
+            @Html.TextBoxFor(model => model.Unit, new { @class = "form-control", @id = "txtUnit" })
+        </div>
+        <div class="col-md-6">
+            Unit Name
+            @Html.TextBoxFor(model => model.Unit_Name, new { @class = "form-control", @id = "txtUnitName" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            Semester
+            @Html.TextBoxFor(model => model.Semester, new { @class = "form-control", @id = "txtSemester" })
+        </div>
+        <div class="col-md-6">
+            Current Grade
+            @Html.TextBoxFor(model => model.Current_Grade, new { @class = "form-control", @id = "txtCurrGrade" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            Marks
+            <input type="text" class="form-control" id="txtMarks" />
+        </div>
+        <div class="col-md-6">
+            Reason
+            <select class="form-control" id="ddlReason">
+                <option value="">----</option>
+                <option value="1">The Student Took An Approved Special Exam</option>
+                <option value="2">Practicum Grade was late coming in</option>
+                <option value="3">Incomplete grade Cleared</option>
+                <option value="4">Thesis completed</option>
+                <option value="5">Remarked Exam/Project</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            Other Reason
+            <textarea class="form-control" id="txtOtherReason"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            Attach Proof
+            <input type="file" id="fileGradeC" class="form-control" />
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Marks" onclick="SubmitRequisition('@Model.Doc_No');" />
+    </div>
+</div>

@@ -14,11 +14,6 @@
         font-size: 12px;
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div class="card pre-scrollable">
     <div class="card-title">Purchase Requisition List</div>
     <hr />
@@ -117,25 +112,13 @@
             }
         });
     }
-    var SubmitPurchaseRequisition = function (DiReg) {
-        var Directorate = $("#ddlDirectorate").children("option:selected").val();
-        var Department = $("#ddlDepartment").children("option:selected").val();
-        //var Section = $("#ddlSection").children("option:selected").val();
+    var SubmitPurchaseRequisition = function () {
         var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+        var RespoC = $("#ddlRespC").children("option:selected").val();
 
-        if (Directorate == "" && DiReg == false) {
-            Swal.fire('Warning', "Select Directorate", 'warning');
-            return;
-        }
-        else if (Department == "") {
-            Swal.fire('Warning', "Select Department", 'warning');
-            return;
-        }
-        //else if (Section == "") {
-        //    Swal.fire('Warning', "Select Section", 'warning');
-        //    return;
-        //}
-        else if (Remarks == "") {
+        if (Remarks == "") {
             Swal.fire('Warning', "Enter Reason for the purchase", 'warning');
             return;
         }
@@ -143,12 +126,24 @@
             Swal.fire('Warning', "Your Reason should have a maximum of 50 characters", 'warning');
             return;
         }
+        else if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
+            return;
+        }
+        else if (Department == "") {
+            Swal.fire('Warning', "Select Department", 'warning');
+            return;
+        }
+        else if (RespoC == "") {
+            Swal.fire('Warning', "Select Responsibility center", 'warning');
+            return;
+        }
         else {
             var PRVHeader = {};
-            PRVHeader.Directorate = Directorate;
-            PRVHeader.Department = Department;
-            PRVHeader.Section = "";
             PRVHeader.Remarks = Remarks;
+            PRVHeader.Campus = Campus;
+            PRVHeader.Department = Department;
+            PRVHeader.RespC = RespoC;
             ShowProgress();
 
             //Send the JSON array to Controller using AJAX.
@@ -264,7 +259,7 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, RecID: "Purchase Header: Quote," + DocNo }),
+            data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
             url: '/Common/DocumentApprovalTrail',

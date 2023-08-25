@@ -41,11 +41,33 @@
         <div class="form-group">
             @Html.Label("No of Days", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                <input type="text" class="form-control" id="txtNoOfDays" />
+                <input type="text" class="form-control" id="txtNoOfDays" onkeypress="return functionx(event);" />
             </div>
         </div>
     </div>
     <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("No of Passengers", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="txtNoOfPassengers" onkeypress="return functionx(event);" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">        
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
         <div class="form-group">
             @Html.Label("Purpose of the Trip", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
@@ -73,6 +95,16 @@
             $('#dtPicker').datepicker('hide');
             $('#dtPicker').blur();
         });
+        $("#ddlRespC").select2({
+            width: '100%'
+        });
+        document.getElementById("ddlRespC").disabled = true;
     });
+    function functionx(evt) {
+        if (evt.charCode > 31 && (evt.charCode < 48 || evt.charCode > 57)) {
+            Swal.fire("Error", "Please enter only numeric characters in the text box", "error");
+            return false;
+        }
+    }
 </script>
 

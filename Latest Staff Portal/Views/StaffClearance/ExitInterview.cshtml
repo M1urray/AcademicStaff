@@ -1,0 +1,257 @@
+﻿@model Latest_Staff_Portal.ViewModel.ExitInterview
+@{
+    ViewBag.Title = "ExitInterview";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<div class="card pre-scrollable">
+    <div class="card-body">
+        <b>Exit Interview</b>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("What is your main reason for leaving", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ1" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("What are the other reasons for your leaving", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ2" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Apart from the reason(s) mentioned above, were the other terms and conditions conducive", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ3" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("What has been good/enjoyable/satisfying for you in your time with us", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ4" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("What can you say about the processes and procedures or systems that have contributed to your decision to leave", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ5" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("What specific suggestions would you have for how the institution could manage this situation/these issues better in future", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ6" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("7. What training would you have liked or needed that you did not get, and what effect would this have had", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ7" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("8. What training and development that you had, did you find most helpful and enjoyable", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ8" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("9. How could you have been helped to better know/understand/work with other departments necessary for the institution to perform more effectively", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ9" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("10. How can the institution gather and make better use of the views and experience of its people", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ10" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("11. Would you consider working again for us if the situation were right", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ11" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("12. What are they offering that attracted you that we are not", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ12" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("13. If the above mentioned reasons were to be addressed, would you rescind your decision", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea id="txtQ13" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("14. Date of Clearance", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="text" id="txtQ14" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("15. Date of Leaving", htmlAttributes: new { @class = "control-label col-md-12" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="text" id="txtQ15" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div align="center">
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitExitInterview();" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#txtQ14,#txtQ15').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-5:+5',
+            showOtherMonths: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+    var SubmitExitInterview = function (){
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/StaffClearance/ExitInterview",
+            success: function (data) {
+                $("#divRegList").html(data);
+//                HideProgress();
+            },
+            error: function () {
+//                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+
+    }
+</script>
+

@@ -1,0 +1,288 @@
+﻿
+@{
+    ViewBag.Title = "ExitInterviewRequisitionList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+
+<style>
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 7px;
+        font-size: 12px;
+    }
+</style>
+<div class="card pre-scrollable">
+    <div class="card-title">Exit Interview Request List</div>
+    <hr />
+    <div class="card-body">
+        <a href="#" onclick="NewExitInterviewRequest();" class="btn btn-primary BtnPadding">New Exit Interview Request</a>
+        <hr />
+        <div id="divExitInterview"></div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal Links////////////////////////////*@
+<div class="modal fade" id="myModalLinks" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Actions</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyLinks">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadExitInterviewList();
+        var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
+        if (Successmsg != "") {
+            Swal.fire('Success', Successmsg, 'success', true);
+            $.ajax({
+                type: "POST",
+                url: "/Common/NullibySessions"
+            });
+        }
+    });
+    var LoadExitInterviewList = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/ExitInterview/ExitInterviewListPartialView",
+            success: function (data) {
+                $("#divExitInterview").html(data);
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                alert("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var SubmitExitInterviewRequest = function () {
+        var employeeNumber = $("#txtStaffNo").val();
+        var lastDateOfService = $("#txtLastDateOfService").val();
+        var Designation = $("#txtDesignation").val();
+        var lengthOfService = $("#txtLengthOfService").val();
+        var employeeCategory = $("#txtEmpCat").val();
+        if (lastDateOfService == "") {
+            Swal.fire('error', "Last Date of Service Should Not be Empty and Should be Less than 150 characters", 'warning');
+            return;
+        }
+        else {
+            var newExitInterview = {};
+            newExitInterview.EmployeeNumber = employeeNumber;
+            newExitInterview.LeavingDate = lastDateOfService;
+            newExitInterview.Designation = Designation;
+            newExitInterview.LengthOfService = lengthOfService;
+            newExitInterview.EmployeeCategory = employeeCategory;
+            ShowProgress();
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/ExitInterview/SubmitExitInterview",
+                data: JSON.stringify({ newExitInterview: newExitInterview }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        window.location = data.message;
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    };
+    var NewExitInterviewRequest = function () {
+        $("#labelF").text("New Exit Header Form");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/ExitInterview/NewExitInterviewRequest',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SelectedRow = function (DocNo, Status) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'PRN' }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/CommonActions',
+            success: function (data) {
+                $("#modalBodyLinks").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+        var ViewDoc = function (DocNo) {
+            ShowProgress();
+            window.location = "/ExitInterview/ExitInterviewDocumentView?DocNo=" + DocNo;
+        }
+    //    var SendDocForApproval = function (DocNo) {
+    //        ShowProgress();
+    //        $.ajax({
+    //            async: true,
+    //            type: "POST",
+    //            datatype: "json",
+    //            data: JSON.stringify({ DocNo: DocNo, Redirect: "N" }),
+    //            contentType: "application/json; charset = utf-8",
+    //            processData: false,
+    //            url: '/Purchase/SendPurchaseAppForApproval',
+    //            success: function (data) {
+    //                if (data.success == true) {
+    //                    HideProgress();
+    //                    LoadPurchaseReqList();
+    //                    $("#myModalLinks").modal("hide");
+    //                    Swal.fire('Success', data.message, 'success');
+    //                }
+    //                else {
+    //                    HideProgress();
+    //                    Swal.fire('Error', data.message, 'error');
+    //                }
+    //            },
+    //            error: function (err) {
+    //                HideProgress();
+    //                Swal.fire('Warning', err, 'warning');
+    //            }
+    //        });
+    //    }
+    //    var CancelDocForApproval = function (DocNo) {
+    //        ShowProgress();
+    //        $.ajax({
+    //            async: true,
+    //            type: "POST",
+    //            datatype: "json",
+    //            data: JSON.stringify({ DocNo: DocNo }),
+    //            contentType: "application/json; charset = utf-8",
+    //            processData: false,
+    //            url: '/Purchase/CancelPurchaseAppForApproval',
+    //            success: function (data) {
+    //                if (data.success == true) {
+    //                    HideProgress();
+    //                    LoadPurchaseReqList();
+    //                    $("#myModalLinks").modal("hide");
+    //                    Swal.fire('Success', data.message, 'success');
+    //                }
+    //                else {
+    //                    HideProgress();
+    //                    Swal.fire('Error', data.message, 'error');
+    //                }
+    //            },
+    //            error: function (err) {
+    //                HideProgress();
+    //                Swal.fire('Warning', err, 'warning');
+    //            }
+    //        });
+    //
+    //    }
+    var ViewApprovalTrail = function (DocNo) {
+        $("#labelF").text("Document Approval Trail");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalTrail',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewDocComments = function (DocNo) {
+        $("#labelF").text("Document Comments");
+        ShowProgress();
+        var RecordID = "Purchase Header: Quote," + DocNo;
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ RecID: RecordID }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalComments',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    
+</script>

@@ -1,0 +1,254 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.CustomerList>
+@using Newtonsoft.Json.Linq;
+@using Latest_Staff_Portal.Models;
+@{
+    var details = new JObject();
+    string Prog = "", Unit = "", UnitName = "", Sem = "";
+    bool IsAss = false, HasPrimaryrole = false, BlockCATMark = false, BlockExamMark = false;
+    if (Session["Unit"] != null)
+    {
+        Unit = Session["Unit"].ToString();
+        Sem = Session["Sem"].ToString();
+        UnitName = Session["UnitName"].ToString();
+        string Lec = Session["Username"].ToString();
+        string classCode = Session["ClassCode"].ToString();
+        IsAss = (bool)Session["IsLecAss"];
+        HasPrimaryrole = (bool)Session["HasPrimaryRole"];
+
+
+        string page = "";
+        if (IsAss)
+        {
+            page = "ExamEntrySetup?$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Class_Code eq '" + classCode + "' and Max_Score gt 0 and Contribution gt 0 and Deleted eq false&$format=json";
+        }
+        else
+        {
+            page = "ExamEntrySetup?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Class_Code eq '" + classCode + "' and Max_Score gt 0 and Contribution gt 0 and Deleted eq false&$format=json";
+        }
+        HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+        {
+            var result = streamReader.ReadToEnd();
+            details = JObject.Parse(result);
+        }
+        bool[] b = CommonClass.BlockMarkEntry(Sem);
+        BlockCATMark = b[0];
+        BlockExamMark = b[1];
+    }
+    else
+    {
+        Response.Redirect("/CourseAllocationUnits/Lecturer");
+    }
+}
+<style>
+    .table-hover {
+        background-color: lightgray;
+    }
+
+    .dt-body-left {
+        text-align: left;
+    }
+
+    .dt-body-center {
+        text-align: center;
+    }
+</style>
+<div class="pre-scrollable">
+    @{
+        string s = " | ";
+        string w = " | ";
+        foreach (JObject config in details["value"])
+        {
+            s = s + config["Entry_Code"].ToString() + " = " + config["Max_Score"].ToString() + " | ";
+            w = w + config["Entry_Code"].ToString() + " = " + config["Contribution"].ToString() + " | ";
+        }
+    }
+    <div>
+        Programme => @Html.Label(Prog, new { @id = "lblProg" }) | Unit => @Html.Label(Unit, new { @id = "lblUnit" }) (@Html.Label(UnitName))
+    </div>
+    <hr style="margin:2px" />
+    <div style="color:red">
+        Max Score => @s
+    </div>
+    <hr />
+    <div style="color:red">
+        Weight => @w
+    </div>
+    <hr />
+    <table id="datatable-buttons" class="table table-bordered nowrap table-hover" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th>Student No</th>
+                <th>Name</th>
+                @{
+                    foreach (JObject config in details["value"])
+                    {
+                        <th width="10%" style="text-align:center">@config["Entry_Code"].ToString()</th>
+                    }
+                }
+                @*<th width="5%" style="text-align:center">Total</th>
+                    <th width="5%" style="text-align:center">Grade</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 1;
+                if (Model != null)
+                {
+                    {
+                        if (Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                decimal Total = 0;
+                                string TotalMark = "", grade = "";
+                                bool HasMarks = false;
+                                <tr>
+                                    <td>
+                                        @i
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.No)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    @{
+                                        foreach (JObject config in details["value"])
+                                        {
+                                            string TextValue = "", Contribution = "";
+
+                                            string page = "ExamResults?$filter=Student_No eq '" + item.No + "' and Semester eq '" + Sem + "' and ExamType eq '" + config["Entry_Code"].ToString() + "' and Unit eq '" + Unit + "' and Cancelled eq false&$format=json";
+
+                                            HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                                            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                                            {
+                                                var result1 = streamReader.ReadToEnd();
+                                                var details1 = JObject.Parse(result1);
+                                                foreach (JObject config1 in details1["value"])
+                                                {
+                                                    TextValue = "";
+                                                    Contribution = "";
+                                                    grade = "";
+                                                    TextValue = config1["Score"].ToString();
+                                                    //Contribution = Math.Round(Convert.ToDecimal(config1["Contribution"]),2).ToString();
+                                                    //Total = Total + Convert.ToDecimal(config1["Contribution"].ToString());
+                                                    HasMarks = true;
+                                                }
+                                                if ((string)config["No_of_Times"] == "Once")
+                                                {
+                                                    if (BlockExamMark)
+                                                    {
+                                                        <td align="center" valign="middle">
+                                                            @Html.TextBox(config["Entry_Code"].ToString(), TextValue, new { maxlength = 4, @disabled = "disabled", Style = "text-align:center;background-color:#dedebd", @class = "form-control textboxWidth" })
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td align="center" valign="middle">
+                                                            @Html.TextBox(config["Entry_Code"].ToString(), TextValue, new { maxlength = 4, Style = "text-align:center;", @class = "form-control textboxWidth" })
+                                                        </td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (BlockCATMark)
+                                                    {
+                                                        <td align="center" valign="middle">
+                                                            @Html.TextBox(config["Entry_Code"].ToString(), TextValue, new { maxlength = 4, @disabled = "disabled", Style = "text-align:center;background-color:#dedebd", @class = "form-control textboxWidth" })
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td align="center" valign="middle">
+                                                            @Html.TextBox(config["Entry_Code"].ToString(), TextValue, new { maxlength = 4, Style = "text-align:center;", @class = "form-control textboxWidth" })
+                                                        </td>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if (HasMarks)
+                                        {
+                                            TotalMark = Math.Round(Total, 2).ToString();
+                                        }
+                                    }
+                                    @*<td style="text-align:center;vertical-align:middle">@TotalMark</td>
+                                        <td style="text-align:center;vertical-align:middle">
+                                            @if (TotalMark != "") { grade = Credentials.ObjNav.GetGradeNew(Convert.ToDecimal(TotalMark), Unit, item.No); }
+                                            @grade
+                                        </td>*@
+                                </tr>
+                                i++;
+                            }
+                        }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<hr />
+@if (!IsAss || (IsAss && HasPrimaryrole))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div align="center">
+                <input type="button" class="btn btn-danger" value="Save/Update" onclick="SaveStudentMarks();" />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div align="center">
+                <input type="file" name="UploadedFile" id="UploadedFile" />
+                <input type="button" class="btn btn-danger" value="Upload" onclick="UploadStudentMarks();" />
+            </div>
+        </div>
+    </div>
+    <hr />
+}
+<div class="row">
+    <div class="col-md-12">
+        <div align="center">
+            <input type="button" class="btn btn-primary" value="Process and Print Scoresheet" onclick="PrintScoresheet();" />
+        </div>
+    </div>
+</div>
+<hr />
+<script type="text/javascript">
+    $(document).ready(function () {
+        var Prog = $("#lblProg").text();
+        var Unit = $("#lblUnit").text();
+        @*var ProgName = '@Request.RequestContext.HttpContext.Session["ProgName"]';
+        var UnitName = '@Request.RequestContext.HttpContext.Session["UnitName"]';
+        var LecNo = '@Request.RequestContext.HttpContext.Session["Username"]';
+        var LecName = '@Request.RequestContext.HttpContext.Session["LecName"]';*@
+        var buttonCommon = {
+            exportOptions: {
+                format: {
+                    body: function (inner, rowidx, colidx, node) {
+                        if ($(node).children("input").length > 0) {
+                            return $(node).children("input").first().val().replace(",", "");
+                        } else {
+                            return inner.replace(",","");
+                        }
+                    }
+                }
+            }
+        };
+        $("#datatable").DataTable(), $("#datatable-buttons").DataTable({
+            dom: 'Bfrtip',
+            lengthChange: !1,
+            pageLength: 100,
+            buttons: [
+                $.extend(!0, {}, buttonCommon, {
+                    extend: "csvHtml5",
+                    text: "Export to CSV File",
+                    title: Prog + '-' + Unit
+                })
+            ]
+        }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-12:eq(0)")
+    });
+</script>
