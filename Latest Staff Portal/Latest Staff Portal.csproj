@@ -501,6 +501,7 @@
     <Content Include="Views\StaffClearance\StaffClearanceRequestList.cshtml" />
     <Content Include="Views\ExitInterview\ExitInterviewQuestionLineView.cshtml" />
     <Content Include="Views\ExitInterview\ExitReasonsForm.cshtml" />
+    <Content Include="Views\ExitInterview\FileAttachmentForm.cshtml" />
     <None Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

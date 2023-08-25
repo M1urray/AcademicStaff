@@ -287,7 +287,7 @@ namespace Latest_Staff_Portal.Controllers
                 }
             }
             #endregion
-            return PartialView("~/Views/ExitInterview/ExitInterviewForm.cshtml");
+            return PartialView("~/Views/ExitInterview/ExitInterviewForm.cshtml",newExitHeader);
         }
         public JsonResult SubmitExitReason(string DocNo,string Reason)
         {
@@ -302,12 +302,17 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult SumbitInterviewQuestionnare(ExitQuestions exitQuestions)
+        public JsonResult SumbitInterviewQuestionnare(string DocNo, List<QuestionAnswer> QuestionAnswers)
         {
             try
             {
                 string StaffNo = Session["Username"].ToString();
-                Credentials.ObjNav.ExitInterviewQuestionair(exitQuestions.DocNo,0,exitQuestions.Questionare,exitQuestions.Answer,StaffNo,"");
+        
+                foreach (var questionAnswer in QuestionAnswers)
+                {
+                    Credentials.ObjNav.ExitInterviewQuestionair(DocNo, 3, questionAnswer.Question, questionAnswer.Answer, StaffNo, "");
+                }
+        
                 return Json(new { message = "Questionnaire Submitted successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -315,6 +320,7 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
+
         public PartialViewResult FileUploadForm()
         {
             return PartialView("~/Views/ExitInterview/FileAttachmentForm.cshtml");

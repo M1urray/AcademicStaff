@@ -200,19 +200,20 @@
     };
     var SubmitReasons = function (DocNo) {
         ShowProgress();
-        var Reason = $("#txtReasons").val();
+        var reason = $("#txtReasons").val();
         $.ajax({
             async: true,
             type: "POST",
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            data: JSON.stringify({ DocNo: DocNo,Reason:Reason }),
+            data: JSON.stringify({ DocNo: DocNo,Reason:reason }),
             url: "/ExitInterview/SubmitExitReason",
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
-                $("#myModal").modal("show");
+                $("#myModal").modal("hide");
+                LoadExitInterViewReasons(`@Model.No`);
             },
             error: function () {
                 HideProgress();
@@ -220,6 +221,51 @@
             }
         });
     };
+    var SubmitQuestions = function(docNo) {
+        ShowProgress();
+        var exitNature = $("#exitNatureSelect").children("option:selected").val();
+        var reasons = $("#txtReasons").val();
+        var exitReasons = $("#exitReasonsSelect").children("option:selected").val();
+        var suggest =$("#txtSuggest").val();
+        var liked = $("#txtLike").val();
+        var recommendation = $("#txtRecommendation").val();
+        var questionAnswers = [
+            { Question: "What is the nature of your exit?", Answer: exitNature },
+            { Question: "What reasons have made you leave your current work?", Answer: reasons },
+            { Question: "Could your exit also be linked to any of the following reasons?", Answer: exitReasons },
+            { Question: "What would you suggest to be done to address the problems noted in No. 3", Answer: suggest },
+            { Question: "What did you like about Daystar University for the period you served?", Answer: liked },
+            { Question: "Any recommendation for improvement either for the department or the University in general", Answer: recommendation }
+        ];
+        $.ajax({
+                async: true,
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                processData: false,
+                data: JSON.stringify({
+                    DocNo: docNo,
+                    QuestionAnswers: questionAnswers // Pass the array to the server
+                }),
+                url: "/ExitInterview/SumbitInterviewQuestionnare",
+            success: function (data) {
+                if (data.success) {
+                    HideProgress();
+                    LoadExitInterviewQuestions(`@Model.No`);
+                    $("#myModal").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                } else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+            },
+                error: function () {
+                    // Handle the error response if needed
+                    HideProgress();
+                    Swal.fire("There is some problem to process your request. Please try again later.");
+                }
+            });
+    }
     var GetDocumentAttachments = function () {
         ShowProgress();
         var Status = `Active`;
@@ -272,4 +318,23 @@
         ShowProgress();
         window.location = "/ExitInterview/ExitInterviewRequisitionList";
     }
+    var AddAttachment = function () {
+        $("#lblTitl").text("File Upload");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            datatype: "html",
+            url: '/ExitInterview/FileUploadForm',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    };
 </script>

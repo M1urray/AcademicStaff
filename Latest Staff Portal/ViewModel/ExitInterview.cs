@@ -16,6 +16,11 @@ namespace Latest_Staff_Portal.ViewModel
 
         public string LnNo { get; set; }
     }
+    public class QuestionAnswer
+    {
+        public string Question { get; set; }
+        public string Answer { get; set; }
+    }
     public class NewExitHeader
     {
         public string No { get; set; }
