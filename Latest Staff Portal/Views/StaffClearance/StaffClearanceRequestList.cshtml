@@ -86,7 +86,7 @@
     }
     var SubmitClearanceRequest = function() {
         var lastDateOfService = $("#txtLastDateOfService").val();
-        var remarks = $("#txtReason").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var remarks = $("#txtReason").children("option:selected").val();
         var phoneNumber = $("#txtPhoneNumber").val();
         var email = $("#txtEmail").val();
         var staffNo = $("#txtStaffNo").val();

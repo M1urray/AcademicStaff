@@ -20,6 +20,7 @@ namespace Latest_Staff_Portal.ViewModel
     {
         public string Question { get; set; }
         public string Answer { get; set; }
+        public int QuizNo { get; set; }
     }
     public class NewExitHeader
     {

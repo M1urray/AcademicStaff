@@ -295,7 +295,7 @@ namespace Latest_Staff_Portal.Controllers
             {
                 string StaffNo = Session["Username"].ToString();
                 Credentials.ObjNav.ExitInterviewReasonsForLeaving(DocNo, Reason);
-                return Json(new { message = "Reason Added successfully", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = "Exit Reason Added successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -310,7 +310,7 @@ namespace Latest_Staff_Portal.Controllers
         
                 foreach (var questionAnswer in QuestionAnswers)
                 {
-                    Credentials.ObjNav.ExitInterviewQuestionair(DocNo, 3, questionAnswer.Question, questionAnswer.Answer, StaffNo, "");
+                    Credentials.ObjNav.ExitInterviewQuestionair(DocNo, questionAnswer.QuizNo, questionAnswer.Question, questionAnswer.Answer, StaffNo, "");
                 }
         
                 return Json(new { message = "Questionnaire Submitted successfully", success = true }, JsonRequestBehavior.AllowGet);
