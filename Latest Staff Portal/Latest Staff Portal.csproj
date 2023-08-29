@@ -150,6 +150,7 @@
     <Compile Include="Controllers\ParttimeClaimController.cs" />
     <Compile Include="Controllers\ProgrammeController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\SeparationController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\StaffClaimController.cs" />
     <Compile Include="Controllers\StaffClearanceController.cs" />
@@ -502,6 +503,9 @@
     <Content Include="Views\ExitInterview\ExitInterviewQuestionLineView.cshtml" />
     <Content Include="Views\ExitInterview\ExitReasonsForm.cshtml" />
     <Content Include="Views\ExitInterview\FileAttachmentForm.cshtml" />
+    <Content Include="Views\Separation\SeparationRequestList.cshtml" />
+    <Content Include="Views\Separation\SeparationRequestListPartialView.cshtml" />
+    <Content Include="Views\Separation\NewSeparationRequest.cshtml" />
     <None Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
