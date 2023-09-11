@@ -316,10 +316,10 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     Session["Campus"] = StudentUnitFilters.Campus.Trim();
                 }
-                if (StudentUnitFilters.ClassCode != null)
-                {
-                    Session["ClassCode"] = StudentUnitFilters.ClassCode.Trim();
-                }
+                //if (StudentUnitFilters.ClassCode != null)
+                //{
+                //    Session["ClassCode"] = StudentUnitFilters.ClassCode.Trim();
+                //}
                 Session["IsLecAss"] = StudentUnitFilters.IsLecAssociate;
 
                 return Json(new { message = "", success = true }, JsonRequestBehavior.AllowGet);
@@ -350,7 +350,7 @@ namespace Latest_Staff_Portal.Controllers
 
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
-                string classCode = Session["ClassCode"].ToString();
+                //string classCode = Session["ClassCode"].ToString();
                 bool IsAss = (bool)Session["IsLecAss"];
 
                 bool succV = false;
@@ -361,13 +361,11 @@ namespace Latest_Staff_Portal.Controllers
                 string page = "";
                 if (IsAss)
                 {
-                    page = "ExamEntrySetup?$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Class_Code eq '" +
-                       classCode + "' and Deleted eq false&$format=json";
+                    page = "ExamEntrySetup?$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Deleted eq false&$format=json";
                 }
                 else
                 {
-                    page = "ExamEntrySetup?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Class_Code eq '" +
-                       classCode + "' and Deleted eq false&$format=json";
+                    page = "ExamEntrySetup?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Deleted eq false&$format=json";
                 }
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
@@ -404,7 +402,7 @@ namespace Latest_Staff_Portal.Controllers
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
                 string Campus = Session["Campus"].ToString();
-                string classCode = Session["ClassCode"].ToString();
+                string classCode = "";
                 bool IsAss = (bool)Session["IsLecAss"];
 
                 List<CustomerList> studentlist = new List<CustomerList>();
@@ -454,7 +452,7 @@ namespace Latest_Staff_Portal.Controllers
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
                 string Campus = Session["Campus"].ToString();
-                string classCode = Session["ClassCode"].ToString();
+                //string classCode = Session["ClassCode"].ToString();
 
                 List<CustomerList> studentlist = new List<CustomerList>();
                 string page = "StudentRequisitionLines?$filter=Semester eq '" + Sem + "' and Assigned_Lecture eq '" + StaffNo + "' and Unit_Code eq '" + Unit + "'&$format=json";
@@ -496,7 +494,7 @@ namespace Latest_Staff_Portal.Controllers
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    string classCode = Session["ClassCode"].ToString();
+                    //string classCode = Session["ClassCode"].ToString();
 
                     bool Assigned = false;
 
@@ -531,7 +529,7 @@ namespace Latest_Staff_Portal.Controllers
                                 decimal mxmScore = 0, weight = 0, AssinedScore = 0, Contrb = 0; ;
 
                                 string page = "ExamEntrySetup?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '"
-                                    + Sem + "' and Class_Code eq '" + classCode + "' and Entry_Code eq '" + HeaderText[j].Trim() + "' and Deleted eq false&$format=json";
+                                    + Sem + "'  and Entry_Code eq '" + HeaderText[j].Trim() + "' and Deleted eq false&$format=json";
 
                                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -613,7 +611,7 @@ namespace Latest_Staff_Portal.Controllers
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    string classCode = Session["ClassCode"].ToString();
+                    //string classCode = Session["ClassCode"].ToString();
 
                     int RowCount = Rows.Count();
                     string msg = "";
@@ -670,7 +668,7 @@ namespace Latest_Staff_Portal.Controllers
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    string ClassCode = Session["ClassCode"].ToString();
+                    //string ClassCode = Session["ClassCode"].ToString();
                     string extn = "";
 
                     if (RType == "1")
@@ -685,16 +683,16 @@ namespace Latest_Staff_Portal.Controllers
                     {
                         extn = ".doc";
                     }
-                    string _filename = Unit.Replace(@"/", @"") + "-" + ClassCode.Replace(@"/", @"");
+                    string _filename = Unit.Replace(@"/", @"");
 
                     if (ReportType == "CLATT")
                     {
-                        Credentials.ObjNav.PrintClassList("", Unit, "", Sem, ClassCode, Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
+                        Credentials.ObjNav.PrintClassList("", Unit, "", Sem, "", Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
                         filename = "CLASSLIST-" + _filename + extn;
                     }
                     if (ReportType == "EXAMATT")
                     {
-                        Credentials.ObjNav.GenerateExamAttendanceList("", Unit, "", Sem, ClassCode, Campus, Convert.ToInt32(RType), "EXAMATTENDANCE-" + _filename + extn);
+                        Credentials.ObjNav.GenerateExamAttendanceList("", Unit, "", Sem, "", Campus, Convert.ToInt32(RType), "EXAMATTENDANCE-" + _filename + extn);
                         filename = "EXAMATTENDANCE-" + _filename + extn;
                     }
                     string fileDestinationPath = "";
@@ -1155,7 +1153,7 @@ namespace Latest_Staff_Portal.Controllers
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    string classCode = Session["ClassCode"].ToString();
+                    //string classCode = Session["ClassCode"].ToString();
 
                     string filePath = Server.MapPath(@"/Attachments/" + fileName);
 
@@ -1182,7 +1180,7 @@ namespace Latest_Staff_Portal.Controllers
                         }
                         else
                         {
-                            string[] s = CommonClass.UploadStudentMarks(Unit, Sem, Lec, Campus, classCode, strFilename);
+                            string[] s = CommonClass.UploadStudentMarks(Unit, Sem, Lec, Campus, "", strFilename);
                             if (s[1] == "T")
                             {
                                 msg = s[0];
@@ -1220,21 +1218,21 @@ namespace Latest_Staff_Portal.Controllers
                     string Unit = Session["Unit"].ToString();
                     string UnitName = Session["UnitName"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    string classCode = Session["ClassCode"].ToString();
+                    //string classCode = Session["ClassCode"].ToString();
                     bool IsAss = (bool)Session["IsLecAss"];
 
                     if (IsAss)
                     {
-                        Credentials.ObjNav.ConfirmExamEntrySetup("", Sem, Unit, classCode);
+                        Credentials.ObjNav.ConfirmExamEntrySetup("", Sem, Unit, "");
                     }
                     else
                     {
-                        Credentials.ObjNav.ConfirmExamEntrySetup(Lec, Sem, Unit, classCode);
+                        Credentials.ObjNav.ConfirmExamEntrySetup(Lec, Sem, Unit, "");
                     }
                     string rptpath = Server.MapPath("~/Downloads/");
                     string ImagePath = Server.MapPath("~/assets/images");
 
-                    Error success = CommonClass.StartMarkSheettReport(Lec, "", Sem, Unit, UnitName, Campus, classCode, ImagePath, rptpath);
+                    Error success = CommonClass.StartMarkSheettReport(Lec, "", Sem, Unit, UnitName, Campus, "", ImagePath, rptpath);
                     if (success.success)
                     {
                         string DestinationPath = rptpath + success.Message;
@@ -1396,10 +1394,10 @@ namespace Latest_Staff_Portal.Controllers
                     //string Stage = Session["Stage"].ToString();
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
-                    string classCode = Session["ClassCode"].ToString();
+                    //string classCode = Session["ClassCode"].ToString();
 
                     List<EmpInitial> EmpInitials = new List<EmpInitial>();
-                    string pageEmpInitials = "ExamEntrySetup?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Class_Code eq '" + classCode + "'&$format=json";
+                    string pageEmpInitials = "ExamEntrySetup?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '" + Sem + "'&$format=json";
 
                     HttpWebResponse httpResponseEmpInitials = Credentials.GetOdataData(pageEmpInitials);
                     using (var streamReader = new StreamReader(httpResponseEmpInitials.GetResponseStream()))
@@ -1434,7 +1432,7 @@ namespace Latest_Staff_Portal.Controllers
                     string Lec = Session["Username"].ToString();
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
-                    string classCode = Session["ClassCode"].ToString();
+                    //string classCode = Session["ClassCode"].ToString();
                     bool IsAss = (bool)Session["IsLecAss"];
 
                     List<DropdownList> ddlExamCodeList = new List<DropdownList>();
@@ -1466,12 +1464,12 @@ namespace Latest_Staff_Portal.Controllers
                     if (IsAss)
                     {
                         pageS = "ExamEntrySetup?$filter=Unit eq '" + Unit + "' and Semester eq '"
-                           + Sem + "' and Class_Code eq '" + classCode + "' and Deleted eq false&$format=json";
+                           + Sem + "' and Deleted eq false&$format=json";
                     }
                     else
                     {
                         pageS = "ExamEntrySetup?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '"
-                           + Sem + "' and Class_Code eq '" + classCode + "' and Deleted eq false&$format=json";
+                           + Sem + "' and Deleted eq false&$format=json";
                     }
 
                     HttpWebResponse httpResponseS = Credentials.GetOdataData(pageS);
@@ -1532,7 +1530,7 @@ namespace Latest_Staff_Portal.Controllers
                 //string Prog = Session["Prog"].ToString();
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
-                string ClassCode = Session["ClassCode"].ToString();
+                string ClassCode = "";
 
                 int RowCount = Rows.Count();
                 decimal Totalweight = 0;
@@ -1619,7 +1617,7 @@ namespace Latest_Staff_Portal.Controllers
                 //string Prog = Session["Prog"].ToString();
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
-                string ClassCode = Session["ClassCode"].ToString();
+                string ClassCode = "";
 
                 Credentials.ObjNav.InsertLecExamSetupEntry(ExamType, LecNo, Sem, Unit, ClassCode, Description);
                 successVal = true;
@@ -1643,7 +1641,7 @@ namespace Latest_Staff_Portal.Controllers
                 //string Prog = Session["Prog"].ToString();
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
-                string ClassCode = Session["ClassCode"].ToString();
+                //string ClassCode = Session["ClassCode"].ToString();
 
                 int RowCount = Rows.Count();
                 decimal Totalweight = 0;
@@ -1679,7 +1677,7 @@ namespace Latest_Staff_Portal.Controllers
                         weight = Convert.ToDecimal(RowText[4].Trim());
                         EntryNo = Convert.ToInt32(RowText[5].Trim());
 
-                        Credentials.ObjNav.ModifyExamSetupEntry(ExamT, Type, maxScore, weight, LecNo, Sem, Unit, ClassCode, EntryNo);
+                        Credentials.ObjNav.ModifyExamSetupEntry(ExamT, Type, maxScore, weight, LecNo, Sem, Unit, "", EntryNo);
                         Msg = "Entry SetUp Modified Successfully";
                         count++;
                     }
@@ -1704,9 +1702,9 @@ namespace Latest_Staff_Portal.Controllers
                 //string Prog = Session["Prog"].ToString();
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
-                string ClassCode = Session["ClassCode"].ToString();
+                //string ClassCode = Session["ClassCode"].ToString();
 
-                Credentials.ObjNav.DeleteExamSetupEntry(ExamT, LecNo, Sem, Unit, ClassCode, Convert.ToInt32(EntryNo));
+                Credentials.ObjNav.DeleteExamSetupEntry(ExamT, LecNo, Sem, Unit, "", Convert.ToInt32(EntryNo));
                 Msg = "SetUp Submitted Successfully";
                 successVal = true;
             }
@@ -1726,10 +1724,10 @@ namespace Latest_Staff_Portal.Controllers
             string Lec = Session["Username"].ToString();
             string Sem = Session["Sem"].ToString();
             string Unit = Session["Unit"].ToString();
-            string classCode = Session["ClassCode"].ToString();
+            //string classCode = Session["ClassCode"].ToString();
 
             List<ExamSetupEntry> ExamEntrySetuplist = new List<ExamSetupEntry>();
-            string page = "ExamEntrySetup?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Class_Code eq '" + classCode + "' and Deleted eq false&$format=json";
+            string page = "ExamEntrySetup?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Deleted eq false&$format=json";
 
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -1770,7 +1768,7 @@ namespace Latest_Staff_Portal.Controllers
         }
         public PartialViewResult LoadClassAttendanceList()
         {
-            if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null || Session["ClassCode"] != null)
+            if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null)
             {
                 string Lec = Session["username"].ToString();
                 //string Prog = Session["Prog"].ToString();
@@ -1778,7 +1776,7 @@ namespace Latest_Staff_Portal.Controllers
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
                 string Campus = Session["Campus"].ToString();
-                string classCode = Session["ClassCode"].ToString();
+                //string classCode = Session["ClassCode"].ToString();
                 bool IsAss = (bool)Session["IsLecAss"];
 
                 List<ClassAttendanceEntries> AttendanceList = new List<ClassAttendanceEntries>();
@@ -1786,12 +1784,12 @@ namespace Latest_Staff_Portal.Controllers
                 if (IsAss)
                 {
                     page = "ClassAttendanceHeader?$filter=UnitCode eq '" + Unit + "' and SemesterCode eq '"
-                       + Sem + "' and CampusCode eq '" + Campus + "' and Section eq '" + classCode + "'&$format=json";
+                       + Sem + "' and CampusCode eq '" + Campus + "'&$format=json";
                 }
                 else
                 {
                     page = "ClassAttendanceHeader?$filter=LecturerCode eq '" + Lec + "' and UnitCode eq '" + Unit + "' and SemesterCode eq '"
-                       + Sem + "' and CampusCode eq '" + Campus + "' and Section eq '" + classCode + "'&$format=json";
+                       + Sem + "' and CampusCode eq '" + Campus + "'&$format=json";
                 }
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -1822,18 +1820,18 @@ namespace Latest_Staff_Portal.Controllers
         }
         public PartialViewResult LoadClassAttendanceStudents(string DocNo)
         {
-            if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null || Session["ClassCode"] != null)
+            if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null)
             {
                 string Lec = Session["Username"].ToString();
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
                 string Campus = Session["Campus"].ToString();
-                string classCode = Session["ClassCode"].ToString();
+                //string classCode = Session["ClassCode"].ToString();
 
 
                 List<CustomerList> studentlist = new List<CustomerList>();
 
-                string page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Unit_Class_Code eq '" + classCode + "' and Campus eq '" + Campus + "'&$format=json";
+                string page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Campus eq '" + Campus + "'&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -1889,7 +1887,7 @@ namespace Latest_Staff_Portal.Controllers
                     #endregion
                     #region Weeks List
                     string pageTmTSub = "Timetable?$select=DayofWeek&$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem +
-                    "' and Campus_Code eq '" + Campus + "' and Lecturer eq '" + Lec + "' and Unit_Class eq '" + classCode + "'&$format=json";
+                    "' and Campus_Code eq '" + Campus + "' and Lecturer eq '" + Lec + "' &$format=json";
 
                     HttpWebResponse httpResponseTmTSub = Credentials.GetOdataData(pageTmTSub);
                     using (var streamReaderTmT = new StreamReader(httpResponseTmTSub.GetResponseStream()))
@@ -1913,7 +1911,7 @@ namespace Latest_Staff_Portal.Controllers
 
                                 foreach (JObject config in details["value"])
                                 {
-                                    if (ClassAttendanceWeekTaken(Lec, Sem, Unit, Campus, (string)config["Code"], classCode))
+                                    if (ClassAttendanceWeekTaken(Lec, Sem, Unit, Campus, (string)config["Code"]))
                                     {
                                         DropdownList ddl = new DropdownList();
                                         ddl.Value = (string)config["Code"] + "~" + (string)config1["DayofWeek"];
@@ -1930,7 +1928,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     #region Weeks List                
                     string pageTmT = "Timetable?$select=DayofWeek&$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem +
-                    "' and Campus_Code eq '" + Campus + "' and Lecturer eq '" + Lec + "' and Unit_Class eq '" + classCode + "'&$format=json";
+                    "' and Campus_Code eq '" + Campus + "' and Lecturer eq '" + Lec + "' &$format=json";
 
                     HttpWebResponse httpResponseTmT = Credentials.GetOdataData(pageTmT);
                     using (var streamReaderTmT = new StreamReader(httpResponseTmT.GetResponseStream()))
@@ -1954,7 +1952,7 @@ namespace Latest_Staff_Portal.Controllers
 
                                 foreach (JObject config in details["value"])
                                 {
-                                    if (!ClassAttendanceWeekTaken(Lec, Sem, Unit, Campus, (string)config["Code"], classCode))
+                                    if (!ClassAttendanceWeekTaken(Lec, Sem, Unit, Campus, (string)config["Code"]))
                                     {
                                         DropdownList ddl = new DropdownList();
                                         ddl.Value = (string)config["Code"] + "~" + (string)config1["DayofWeek"];
@@ -1986,13 +1984,13 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView();
             }
         }
-        protected bool ClassAttendanceWeekTaken(string StaffNo, string Semester, string Unit, string Campus, string Wk, string Sec)
+        protected bool ClassAttendanceWeekTaken(string StaffNo, string Semester, string Unit, string Campus, string Wk)
         {
             bool taken = false;
             try
             {
                 string pageAtt = "ClassAttendanceHeader?$select=WeekCode&$filter=LecturerCode eq '" + StaffNo + "' and SemesterCode eq '" + Semester + "' and UnitCode eq '" +
-                    Unit + "' and CampusCode eq '" + Campus + "' and WeekCode eq '" + Wk + "' and Section eq '" + Sec + "'&$format=json";
+                    Unit + "' and CampusCode eq '" + Campus + "' and WeekCode eq '" + Wk + "'&$format=json";
 
                 HttpWebResponse httpResponseAtt = Credentials.GetOdataData(pageAtt);
                 using (var streamReader = new StreamReader(httpResponseAtt.GetResponseStream()))
@@ -2026,7 +2024,7 @@ namespace Latest_Staff_Portal.Controllers
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    string classCode = Session["ClassCode"].ToString();
+                    //string classCode = Session["ClassCode"].ToString();
 
                     string[] s = Wk.Split('~');
                     Wk = s[0].Trim();
@@ -2038,7 +2036,7 @@ namespace Latest_Staff_Portal.Controllers
                     }
                     else
                     {
-                        Code = Credentials.ObjNav.InserClassAtteHeader("", Unit, Sem, Wk, Lec, Campus, s[1].Trim(), classCode);
+                        Code = Credentials.ObjNav.InserClassAtteHeader("", Unit, Sem, Wk, Lec, Campus, s[1].Trim(), "");
                     }
                     int RowCount = Rows.Count();
 
@@ -2090,7 +2088,7 @@ namespace Latest_Staff_Portal.Controllers
         }
         public PartialViewResult LoadPercClassAttendanceStudents()
         {
-            if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null || Session["ClassCode"] != null)
+            if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null )
             {
                 string Lec = Session["username"].ToString();
                 string Sem = Session["Sem"].ToString();
@@ -2143,7 +2141,7 @@ namespace Latest_Staff_Portal.Controllers
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
                 string Campus = Session["Campus"].ToString();
-                string classCode = Session["ClassCode"].ToString();
+                string classCode = "";
 
                 List<StudentAttendance> studentAtte = new List<StudentAttendance>();
 
