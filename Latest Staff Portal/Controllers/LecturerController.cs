@@ -316,10 +316,10 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     Session["Campus"] = StudentUnitFilters.Campus.Trim();
                 }
-                //if (StudentUnitFilters.ClassCode != null)
-                //{
-                //    Session["ClassCode"] = StudentUnitFilters.ClassCode.Trim();
-                //}
+                if (StudentUnitFilters.ClassCode != null)
+                {
+                    Session["ClassCode"] = StudentUnitFilters.ClassCode.Trim();
+                }
                 Session["IsLecAss"] = StudentUnitFilters.IsLecAssociate;
 
                 return Json(new { message = "", success = true }, JsonRequestBehavior.AllowGet);
@@ -350,7 +350,7 @@ namespace Latest_Staff_Portal.Controllers
 
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
-                //string classCode = Session["ClassCode"].ToString();
+                string classCode = Session["ClassCode"].ToString();
                 bool IsAss = (bool)Session["IsLecAss"];
 
                 bool succV = false;
@@ -402,13 +402,22 @@ namespace Latest_Staff_Portal.Controllers
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
                 string Campus = Session["Campus"].ToString();
-                string classCode = "";
+                string classCode = Session["ClassCode"].ToString();
                 bool IsAss = (bool)Session["IsLecAss"];
 
                 List<CustomerList> studentlist = new List<CustomerList>();
                 //string page = "StudentUnits?$filter=Programme eq '" + Prog + "' and Stage eq '" + Stage + "' and Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Global_Dimension_1_Code eq '" + Campus + "'&$format=json";
                 //string page = "StudentUnits?$filter=Programme eq '" + Prog + "' and Stage eq '" + Stage + "' and Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Class_Code eq '" + classCode + "' and Class_Code ne ''&format=json";
-                string page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Unit_Class_Code eq '" + classCode + "' and Campus eq '" + Campus + "'&$format=json";
+                string page = "";//
+                if (classCode != null && classCode != "")
+                {
+                    page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Unit_Class_Code eq '" + classCode + "' and Campus eq '" + Campus + "'&$format=json";
+                }
+                else
+                {
+                    page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Campus eq '" + Campus + "'&$format=json";
+                }
+                               
                 //string page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "'&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
@@ -668,7 +677,7 @@ namespace Latest_Staff_Portal.Controllers
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    //string ClassCode = Session["ClassCode"].ToString();
+                    string ClassCode = Session["ClassCode"].ToString();
                     string extn = "";
 
                     if (RType == "1")
@@ -687,12 +696,12 @@ namespace Latest_Staff_Portal.Controllers
 
                     if (ReportType == "CLATT")
                     {
-                        Credentials.ObjNav.PrintClassList("", Unit, "", Sem, "", Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
+                        Credentials.ObjNav.PrintClassList("", Unit, "", Sem, ClassCode, Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
                         filename = "CLASSLIST-" + _filename + extn;
                     }
                     if (ReportType == "EXAMATT")
                     {
-                        Credentials.ObjNav.GenerateExamAttendanceList("", Unit, "", Sem, "", Campus, Convert.ToInt32(RType), "EXAMATTENDANCE-" + _filename + extn);
+                        Credentials.ObjNav.GenerateExamAttendanceList("", Unit, "", Sem, ClassCode, Campus, Convert.ToInt32(RType), "EXAMATTENDANCE-" + _filename + extn);
                         filename = "EXAMATTENDANCE-" + _filename + extn;
                     }
                     string fileDestinationPath = "";
@@ -1218,7 +1227,7 @@ namespace Latest_Staff_Portal.Controllers
                     string Unit = Session["Unit"].ToString();
                     string UnitName = Session["UnitName"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    //string classCode = Session["ClassCode"].ToString();
+                    string classCode = Session["ClassCode"].ToString();
                     bool IsAss = (bool)Session["IsLecAss"];
 
                     if (IsAss)
@@ -1232,7 +1241,7 @@ namespace Latest_Staff_Portal.Controllers
                     string rptpath = Server.MapPath("~/Downloads/");
                     string ImagePath = Server.MapPath("~/assets/images");
 
-                    Error success = CommonClass.StartMarkSheettReport(Lec, "", Sem, Unit, UnitName, Campus, "", ImagePath, rptpath);
+                    Error success = CommonClass.StartMarkSheettReport(Lec, "", Sem, Unit, UnitName, Campus, classCode, ImagePath, rptpath);
                     if (success.success)
                     {
                         string DestinationPath = rptpath + success.Message;
@@ -1678,7 +1687,7 @@ namespace Latest_Staff_Portal.Controllers
                         EntryNo = Convert.ToInt32(RowText[5].Trim());
 
                         Credentials.ObjNav.ModifyExamSetupEntry(ExamT, Type, maxScore, weight, LecNo, Sem, Unit, "", EntryNo);
-                        Msg = "Entry SetUp Modified Successfully";
+                        Msg = "Entry Setup Modified Successfully";
                         count++;
                     }
                     successVal = true;

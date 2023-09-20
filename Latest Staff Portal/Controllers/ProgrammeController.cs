@@ -82,7 +82,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     ProgStages ProgStages = new ProgStages();
                     List<PStageList> PStages = new List<PStageList>();
-                    string page = "ProgrammeStages?$filter=Programme_Code eq '" + Prog + "'&$format=json";
+                    string page = "ProgrammeStages?$filter=ProgrammeCode eq '" + Prog + "'&$format=json";
 
                     HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))

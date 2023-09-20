@@ -11,18 +11,18 @@
         Sem = Session["Sem"].ToString();
         UnitName = Session["UnitName"].ToString();
         string Lec = Session["Username"].ToString();
-        string classCode = Session["ClassCode"].ToString();
+        //string classCode = Session["ClassCode"].ToString();
         IsAss = (bool)Session["IsLecAss"];
 
 
         string page = "";
         if (IsAss)
         {
-            page = "ExamEntrySetup?$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Class_Code eq '" + classCode + "' and Max_Score gt 0 and Contribution gt 0 and Deleted eq false&$format=json";
+            page = "ExamEntrySetup?$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem + "'  and Max_Score gt 0 and Contribution gt 0 and Deleted eq false&$format=json";
         }
         else
         {
-            page = "ExamEntrySetup?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Class_Code eq '" + classCode + "' and Max_Score gt 0 and Contribution gt 0 and Deleted eq false&$format=json";
+            page = "ExamEntrySetup?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '" + Sem + "' and Max_Score gt 0 and Contribution gt 0 and Deleted eq false&$format=json";
         }
         HttpWebResponse httpResponse = Credentials.GetOdataData(page);
         using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
