@@ -115,23 +115,26 @@ namespace Latest_Staff_Portal.Models
             try
             {
                 string UName = "";
+                string[] s = new string[2];
                 if (username.Contains(@"\\"))
                 {
-                    UName = username.Replace(@"\\", "").Trim();
+                    s = username.Split('\\');
+                    UName = s[1].Replace(@"\", "").Trim();
                 }
                 else if (username.Contains(@"\"))
                 {
-                    UName = username.Replace(@"\", "").Trim();
+                    s = username.Split('\\');
+                    UName = s[1].Replace(@"\", "").Trim();
                 }
                 else
                 {
                     UName = username.Trim();
                 }
-                string AdminAccountName = WebConfigurationManager.AppSettings["AD_USER"];
-                string AdminPassword = WebConfigurationManager.AppSettings["ADW_PWD"];
-                string Domain = WebConfigurationManager.AppSettings["AD_DOMAIN"];
+                string AdminAccountName = WebConfigurationManager.AppSettings["W_USER"];
+                string AdminPassword = WebConfigurationManager.AppSettings["W_PWD"];
+                string Domain = WebConfigurationManager.AppSettings["DOMAIN"];
 
-                using (PrincipalContext pContext = new PrincipalContext(ContextType.Domain, "farasi.kabarak.ac.ke", AdminAccountName, AdminPassword))
+                using (PrincipalContext pContext = new PrincipalContext(ContextType.Domain, ConfigurationManager.AppSettings["ADIPADDRESS"], AdminAccountName, AdminPassword))
                 {
                     UserPrincipal up = UserPrincipal.FindByIdentity(pContext, username);
                     if (up != null)
@@ -141,28 +144,6 @@ namespace Latest_Staff_Portal.Models
                         rval = "CHANGED";
                     }
                 }
-                //string AdminAccountName = WebConfigurationManager.AppSettings["W_USER"];
-                //string AdminPassword = WebConfigurationManager.AppSettings["W_PWD"];
-                //string Domain = WebConfigurationManager.AppSettings["DOMAIN"];
-
-
-
-                //SearchResult rs = null;
-                //rs = SearchUserExist(GetDirectorySearch(AdminAccountName, AdminPassword, Domain), UName);
-                //if (rs != null)
-                //{
-                //    try
-                //    {
-                //        DirectoryEntry user = rs.GetDirectoryEntry();
-                //        user.Invoke("SetPassword", new object[] { "" + newpass + "" });
-                //        user.CommitChanges();
-                //        rval = "CHANGED";
-                //    }
-                //    catch (DirectoryServicesCOMException ex)
-                //    {
-                //        rval = ex.InnerException.Message;
-                //    }
-                //}
             }
             catch (Exception ex)
             {
