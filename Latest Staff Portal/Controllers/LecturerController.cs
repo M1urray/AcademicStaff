@@ -142,6 +142,7 @@ namespace Latest_Staff_Portal.Controllers
                         Lec.Room = (string)config["Lecture_Room"];
                         Lec.CourseClass = (string)config["Unit_Class"];
                         Lec.stdCount = (string)config["Students_Count"];
+                        Session["ClassCode"] = (string)config["Unit_Class"];
                         LectUnitAllocation.Add(Lec);
                     }
                 }
@@ -402,20 +403,21 @@ namespace Latest_Staff_Portal.Controllers
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
                 string Campus = Session["Campus"].ToString();
-                string classCode = Session["ClassCode"].ToString();
+                string classCode = "";
                 bool IsAss = (bool)Session["IsLecAss"];
 
                 List<CustomerList> studentlist = new List<CustomerList>();
                 //string page = "StudentUnits?$filter=Programme eq '" + Prog + "' and Stage eq '" + Stage + "' and Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Global_Dimension_1_Code eq '" + Campus + "'&$format=json";
                 //string page = "StudentUnits?$filter=Programme eq '" + Prog + "' and Stage eq '" + Stage + "' and Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Class_Code eq '" + classCode + "' and Class_Code ne ''&format=json";
                 string page = "";//
-                if (classCode != null && classCode != "")
+                if (Session["ClassCode"].ToString() == "")
                 {
-                    page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Unit_Class_Code eq '" + classCode + "' and Campus eq '" + Campus + "'&$format=json";
+                    page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Campus eq '" + Campus + "'&$format=json";
                 }
                 else
                 {
-                    page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Campus eq '" + Campus + "'&$format=json";
+                    classCode = Session["ClassCode"].ToString();
+                    page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Unit_Class_Code eq '" + classCode + "' and Campus eq '" + Campus + "'&$format=json";
                 }
                                
                 //string page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "'&$format=json";
@@ -677,7 +679,8 @@ namespace Latest_Staff_Portal.Controllers
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    string ClassCode = Session["ClassCode"].ToString();
+                    string ClassCode = "";
+                    
                     string extn = "";
 
                     if (RType == "1")
@@ -693,16 +696,34 @@ namespace Latest_Staff_Portal.Controllers
                         extn = ".doc";
                     }
                     string _filename = Unit.Replace(@"/", @"");
+                    if (Session["ClassCode"].ToString() == "")
+                    {
+                        if (ReportType == "CLATT")
+                        {
+                            Credentials.ObjNav.PrintClassList("", Unit, "", Sem, "", Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
+                            filename = "CLASSLIST-" + _filename + extn;
+                        }
+                        if (ReportType == "EXAMATT")
+                        {
+                            Credentials.ObjNav.GenerateExamAttendanceList("", Unit, "", Sem,"", Campus, Convert.ToInt32(RType), "EXAMATTENDANCE-" + _filename + extn);
+                            filename = "EXAMATTENDANCE-" + _filename + extn;
 
-                    if (ReportType == "CLATT")
-                    {
-                        Credentials.ObjNav.PrintClassList("", Unit, "", Sem, ClassCode, Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
-                        filename = "CLASSLIST-" + _filename + extn;
+                        }
                     }
-                    if (ReportType == "EXAMATT")
+                    else
                     {
-                        Credentials.ObjNav.GenerateExamAttendanceList("", Unit, "", Sem, ClassCode, Campus, Convert.ToInt32(RType), "EXAMATTENDANCE-" + _filename + extn);
-                        filename = "EXAMATTENDANCE-" + _filename + extn;
+                        ClassCode = Session["ClassCode"].ToString();
+                        if (ReportType == "CLATT")
+                        {
+                            Credentials.ObjNav.PrintClassList("", Unit, "", Sem, ClassCode, Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
+                            filename = "CLASSLIST-" + _filename + extn;
+                        }
+                        if (ReportType == "EXAMATT")
+                        {
+                            Credentials.ObjNav.GenerateExamAttendanceList("", Unit, "", Sem, ClassCode, Campus, Convert.ToInt32(RType), "EXAMATTENDANCE-" + _filename + extn);
+                            filename = "EXAMATTENDANCE-" + _filename + extn;
+
+                        }
                     }
                     string fileDestinationPath = "";
                     if (RType != "1")
