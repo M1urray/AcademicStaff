@@ -289,6 +289,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Downloads\" />
     <Folder Include="MarkSheets\" />
+    <Folder Include="Uploads\" />
     <Folder Include="Views\AssociateLecturer\" />
   </ItemGroup>
   <ItemGroup>
@@ -322,7 +323,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Uploads\PROFORMA-ECOSSP99-900221.pdf" />
     <Content Include="Views\Appraisal\AddAppraisalObjectiveLine.cshtml" />
     <Content Include="Views\Appraisal\AddCoreCompetenceValue.cshtml" />
     <Content Include="Views\Appraisal\AppraisalListView.cshtml" />
