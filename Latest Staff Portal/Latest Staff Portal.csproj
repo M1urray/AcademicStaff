@@ -287,6 +287,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Downloads\" />
     <Folder Include="Views\AssociateLecturer\" />
   </ItemGroup>
   <ItemGroup>
@@ -314,7 +315,6 @@
     <Content Include="assets\fonts\materialdesignicons-webfont2f9b.woff" />
     <Content Include="assets\fonts\materialdesignicons-webfontd41d.eot" />
     <Content Include="Attachments\DBM-012-Mark_Sheet_0577.pdf" />
-    <Content Include="Downloads\DBM-012-Mark_Sheet_0577.pdf" />
     <Content Include="MarkSheets\DBM-012-Mark_Sheet_0577.pdf" />
     <Content Include="assets\images\favicon.ico" />
     <None Include="packages.config" />
