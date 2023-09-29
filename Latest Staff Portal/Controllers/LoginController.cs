@@ -75,7 +75,7 @@ namespace Latest_Staff_Portal.Controllers
                                 {
                                     
                                     Session["Username"] = (string)config["No"];
-                                    Session["UserID"] = userId;
+                                    Session["UserID"] = userID;
                                     string IDno = (string)config["ID_Number"];
                                     string Email = (string)config["E_Mail"];
                                     string PhoneNo = (string)config["Cellular_Phone_Number"];

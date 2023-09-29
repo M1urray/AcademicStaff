@@ -321,6 +321,9 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     Session["ClassCode"] = StudentUnitFilters.ClassCode.Trim();
                 }
+                else {
+                    Session["ClassCode"] = ""; 
+                        }
                 Session["IsLecAss"] = StudentUnitFilters.IsLecAssociate;
 
                 return Json(new { message = "", success = true }, JsonRequestBehavior.AllowGet);
@@ -679,7 +682,7 @@ namespace Latest_Staff_Portal.Controllers
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    string ClassCode = "";
+                    string ClassCode = Session["ClassCode"].ToString();
                     
                     string extn = "";
 
@@ -712,7 +715,7 @@ namespace Latest_Staff_Portal.Controllers
                     }
                     else
                     {
-                        ClassCode = Session["ClassCode"].ToString();
+                        
                         if (ReportType == "CLATT")
                         {
                             Credentials.ObjNav.PrintClassList("", Unit, "", Sem, ClassCode, Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
