@@ -91,8 +91,11 @@
         var email = $("#txtEmail").val();
         var staffNo = $("#txtStaffNo").val();
         var address = $("#txtAddress").val();
+        var memberBenefit = $("#memberBenefits").val();
+        var employerBenefit = $("#employerBenefitOption").val();
+        var employerBalance = $("#employerBalanceOptionSelect").val();
         if (remarks == "") {
-            Swal.fire('error', "Remarks Should Not be Empty and Should be Less than 150 characters", 'warning');
+            Swal.fire('error', "Reason Cannot be empty ", 'warning');
             return;
         } 
         else if (lastDateOfService == "") {
@@ -108,6 +111,9 @@
             staffClearance.address = address;
             staffClearance.ReasonForClearing = remarks;
             staffClearance.LastDateOfService = lastDateOfService;
+            staffClearance.MemberBenefit = memberBenefit;
+            staffClearance.EmployerBenefit = employerBenefit;
+            staffClearance.EmployerBalance = employerBalance;
             ShowProgress();
             //Send the JSON array to Controller using AJAX.
             $.ajax({

@@ -2,6 +2,81 @@
 <definitions xmlns:tns="urn:microsoft-dynamics-schemas/codeunit/WebPortal" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal" xmlns="http://schemas.xmlsoap.org/wsdl/">
   <types>
     <schema elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="UpdateRatings">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="appNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="appPeriod" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="objective" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="section" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="rating" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="ratingFrom" type="int" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="UpdateRatings_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="UpdateRegisterdUnits">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="studentNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="semester" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="unit" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="section" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="campus" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="UpdateRegisterdUnits_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="UpdateRegistrationType">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="studentNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="semester" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="UpdateRegistrationType_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="UpdateResidency">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="admissionNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="acceptanceStatus" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="description" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="UpdateResidency_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="boolean" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="UpdateScoreCardPeerReviewer">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="peer" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="UpdateScoreCardPeerReviewer_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
       <element name="UpdateSspPassword">
         <complexType>
           <sequence>
@@ -524,6 +599,62 @@
           <sequence>
             <element minOccurs="1" maxOccurs="1" name="return_value" type="boolean" />
           </sequence>
+        </complexType>
+      </element>
+      <element name="ProcessUloadedMarks">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="prog" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="unit" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="stage" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="sem" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="examType" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="user" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ProcessUloadedMarks_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="ProfessionalBodyReqApprovalRequest">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="reqNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ProfessionalBodyReqApprovalRequest_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="ProfessionalBodyReqcancelRequest">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="appNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ProfessionalBodyReqcancelRequest_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="ProgrammeUnitOnOffer">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="prog" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="stage" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="unit" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="onOffer" type="boolean" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ProgrammeUnitOnOffer_Result">
+        <complexType>
+          <sequence />
         </complexType>
       </element>
       <element name="PurchaseRequisitionApprovalRequest">
@@ -1331,6 +1462,19 @@
           <sequence />
         </complexType>
       </element>
+      <element name="SendSMS">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="phoneNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="sMsMessage" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="SendSMS_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
       <element name="SendStudentRegBacthApproval">
         <complexType>
           <sequence>
@@ -1479,6 +1623,9 @@
             <element minOccurs="1" maxOccurs="1" name="address" type="string" />
             <element minOccurs="1" maxOccurs="1" name="reason" type="string" />
             <element minOccurs="1" maxOccurs="1" name="effectiveDate" type="date" />
+            <element minOccurs="1" maxOccurs="1" name="memberBenefit" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="employerBenefit" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="employerBalance" type="int" />
           </sequence>
         </complexType>
       </element>
@@ -2442,77 +2589,68 @@
           <sequence />
         </complexType>
       </element>
-      <element name="UpdateRatings">
+      <element name="InsertAdmission">
         <complexType>
           <sequence>
-            <element minOccurs="1" maxOccurs="1" name="appNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="appPeriod" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="objective" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="section" type="int" />
-            <element minOccurs="1" maxOccurs="1" name="rating" type="int" />
-            <element minOccurs="1" maxOccurs="1" name="ratingFrom" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="treatmentNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="reason" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="remarks" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="pastMedicalHisto" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="pastSurgicalHisto" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="socialHistory" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="reviewsofsystems" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="investigations" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="assessmentplan" type="string" />
           </sequence>
         </complexType>
       </element>
-      <element name="UpdateRatings_Result">
+      <element name="InsertAdmission_Result">
         <complexType>
           <sequence />
         </complexType>
       </element>
-      <element name="UpdateRegisterdUnits">
+      <element name="InsertApplicantCurrentEmp">
         <complexType>
           <sequence>
-            <element minOccurs="1" maxOccurs="1" name="studentNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="semester" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="unit" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="section" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="campus" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="applicantNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="employer" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="date_Employed" type="date" />
+            <element minOccurs="1" maxOccurs="1" name="position_Held" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="date_Left" type="date" />
+            <element minOccurs="1" maxOccurs="1" name="keyExperience" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="reasonLeaving" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="postaladdress" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="phneNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="current_Salary" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="expected_Salary" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="currentEmp" type="int" />
           </sequence>
         </complexType>
       </element>
-      <element name="UpdateRegisterdUnits_Result">
+      <element name="InsertApplicantCurrentEmp_Result">
         <complexType>
           <sequence />
         </complexType>
       </element>
-      <element name="UpdateRegistrationType">
+      <element name="InsertApplicantEmpHist">
         <complexType>
           <sequence>
-            <element minOccurs="1" maxOccurs="1" name="studentNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="semester" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="applicantNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="employer" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="date_Employed" type="date" />
+            <element minOccurs="1" maxOccurs="1" name="position_Held" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="date_Left" type="date" />
+            <element minOccurs="1" maxOccurs="1" name="keyExperience" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="reasonLeaving" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="postaladdress" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="phneNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="current_Salary" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="expected_Salary" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="currentEmp" type="int" />
           </sequence>
         </complexType>
       </element>
-      <element name="UpdateRegistrationType_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
-      <element name="UpdateResidency">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="admissionNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="acceptanceStatus" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="description" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="UpdateResidency_Result">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="return_value" type="boolean" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="UpdateScoreCardPeerReviewer">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="peer" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="UpdateScoreCardPeerReviewer_Result">
+      <element name="InsertApplicantEmpHist_Result">
         <complexType>
           <sequence />
         </complexType>
@@ -2740,6 +2878,26 @@
           <sequence />
         </complexType>
       </element>
+      <element name="InsertECTZBill">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="clientMSISDN" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="clientName" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="clientIDNumber" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="serviceid" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="clientEmail" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="clientdescription" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="studentno" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="InsertECTZBill_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
       <element name="InsertEmergencyContact">
         <complexType>
           <sequence>
@@ -2827,6 +2985,7 @@
             <element minOccurs="1" maxOccurs="1" name="studentNo" type="string" />
             <element minOccurs="1" maxOccurs="1" name="unit" type="string" />
             <element minOccurs="1" maxOccurs="1" name="sem" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="reason" type="string" />
           </sequence>
         </complexType>
       </element>
@@ -4616,62 +4775,6 @@
           <sequence />
         </complexType>
       </element>
-      <element name="ProcessUloadedMarks">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="prog" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="unit" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="stage" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="sem" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="examType" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="user" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="ProcessUloadedMarks_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
-      <element name="ProfessionalBodyReqApprovalRequest">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="reqNo" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="ProfessionalBodyReqApprovalRequest_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
-      <element name="ProfessionalBodyReqcancelRequest">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="appNo" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="ProfessionalBodyReqcancelRequest_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
-      <element name="ProgrammeUnitOnOffer">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="prog" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="stage" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="unit" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="onOffer" type="boolean" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="ProgrammeUnitOnOffer_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
       <element name="FnUpdateEmployeeInfo">
         <complexType>
           <sequence>
@@ -4927,6 +5030,22 @@
           </sequence>
         </complexType>
       </element>
+      <element name="GenerateEcitizenReceipt">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="filenameFromApp" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="receiptNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="fILESPATH" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GenerateEcitizenReceipt_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
       <element name="GenerateExamAttendanceList">
         <complexType>
           <sequence>
@@ -4977,6 +5096,23 @@
         </complexType>
       </element>
       <element name="GenerateHostelAllocationWithCateringCharge_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="GenerateHostelAllocationWithoutUnitRegistration">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="studentNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="sem" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="hostelNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="roomNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="spaceNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="amt" type="decimal" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GenerateHostelAllocationWithoutUnitRegistration_Result">
         <complexType>
           <sequence />
         </complexType>
@@ -5631,6 +5767,21 @@
           <sequence>
             <element minOccurs="1" maxOccurs="1" name="return_value" type="decimal" />
             <element minOccurs="1" maxOccurs="1" name="progCode" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetBillRef">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="studentNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="service" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetBillRef_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
           </sequence>
         </complexType>
       </element>
@@ -6602,72 +6753,6 @@
         </complexType>
       </element>
       <element name="InsertActualImprestLineAmount_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
-      <element name="InsertAdmission">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="treatmentNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="reason" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="remarks" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="pastMedicalHisto" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="pastSurgicalHisto" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="socialHistory" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="reviewsofsystems" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="investigations" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="assessmentplan" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="InsertAdmission_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
-      <element name="InsertApplicantCurrentEmp">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="applicantNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="employer" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="date_Employed" type="date" />
-            <element minOccurs="1" maxOccurs="1" name="position_Held" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="date_Left" type="date" />
-            <element minOccurs="1" maxOccurs="1" name="keyExperience" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="reasonLeaving" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="postaladdress" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="phneNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="current_Salary" type="decimal" />
-            <element minOccurs="1" maxOccurs="1" name="expected_Salary" type="decimal" />
-            <element minOccurs="1" maxOccurs="1" name="currentEmp" type="int" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="InsertApplicantCurrentEmp_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
-      <element name="InsertApplicantEmpHist">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="applicantNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="employer" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="date_Employed" type="date" />
-            <element minOccurs="1" maxOccurs="1" name="position_Held" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="date_Left" type="date" />
-            <element minOccurs="1" maxOccurs="1" name="keyExperience" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="reasonLeaving" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="postaladdress" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="phneNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="current_Salary" type="decimal" />
-            <element minOccurs="1" maxOccurs="1" name="expected_Salary" type="decimal" />
-            <element minOccurs="1" maxOccurs="1" name="currentEmp" type="int" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="InsertApplicantEmpHist_Result">
         <complexType>
           <sequence />
         </complexType>
@@ -8401,6 +8486,36 @@
       </element>
     </schema>
   </types>
+  <message name="UpdateRatings">
+    <part name="parameters" element="tns:UpdateRatings" />
+  </message>
+  <message name="UpdateRatings_Result">
+    <part name="parameters" element="tns:UpdateRatings_Result" />
+  </message>
+  <message name="UpdateRegisterdUnits">
+    <part name="parameters" element="tns:UpdateRegisterdUnits" />
+  </message>
+  <message name="UpdateRegisterdUnits_Result">
+    <part name="parameters" element="tns:UpdateRegisterdUnits_Result" />
+  </message>
+  <message name="UpdateRegistrationType">
+    <part name="parameters" element="tns:UpdateRegistrationType" />
+  </message>
+  <message name="UpdateRegistrationType_Result">
+    <part name="parameters" element="tns:UpdateRegistrationType_Result" />
+  </message>
+  <message name="UpdateResidency">
+    <part name="parameters" element="tns:UpdateResidency" />
+  </message>
+  <message name="UpdateResidency_Result">
+    <part name="parameters" element="tns:UpdateResidency_Result" />
+  </message>
+  <message name="UpdateScoreCardPeerReviewer">
+    <part name="parameters" element="tns:UpdateScoreCardPeerReviewer" />
+  </message>
+  <message name="UpdateScoreCardPeerReviewer_Result">
+    <part name="parameters" element="tns:UpdateScoreCardPeerReviewer_Result" />
+  </message>
   <message name="UpdateSspPassword">
     <part name="parameters" element="tns:UpdateSspPassword" />
   </message>
@@ -8598,6 +8713,30 @@
   </message>
   <message name="updateDashboardProfile_Result">
     <part name="parameters" element="tns:updateDashboardProfile_Result" />
+  </message>
+  <message name="ProcessUloadedMarks">
+    <part name="parameters" element="tns:ProcessUloadedMarks" />
+  </message>
+  <message name="ProcessUloadedMarks_Result">
+    <part name="parameters" element="tns:ProcessUloadedMarks_Result" />
+  </message>
+  <message name="ProfessionalBodyReqApprovalRequest">
+    <part name="parameters" element="tns:ProfessionalBodyReqApprovalRequest" />
+  </message>
+  <message name="ProfessionalBodyReqApprovalRequest_Result">
+    <part name="parameters" element="tns:ProfessionalBodyReqApprovalRequest_Result" />
+  </message>
+  <message name="ProfessionalBodyReqcancelRequest">
+    <part name="parameters" element="tns:ProfessionalBodyReqcancelRequest" />
+  </message>
+  <message name="ProfessionalBodyReqcancelRequest_Result">
+    <part name="parameters" element="tns:ProfessionalBodyReqcancelRequest_Result" />
+  </message>
+  <message name="ProgrammeUnitOnOffer">
+    <part name="parameters" element="tns:ProgrammeUnitOnOffer" />
+  </message>
+  <message name="ProgrammeUnitOnOffer_Result">
+    <part name="parameters" element="tns:ProgrammeUnitOnOffer_Result" />
   </message>
   <message name="PurchaseRequisitionApprovalRequest">
     <part name="parameters" element="tns:PurchaseRequisitionApprovalRequest" />
@@ -8916,6 +9055,12 @@
   </message>
   <message name="SendRejectionEmailAlert_Result">
     <part name="parameters" element="tns:SendRejectionEmailAlert_Result" />
+  </message>
+  <message name="SendSMS">
+    <part name="parameters" element="tns:SendSMS" />
+  </message>
+  <message name="SendSMS_Result">
+    <part name="parameters" element="tns:SendSMS_Result" />
   </message>
   <message name="SendStudentRegBacthApproval">
     <part name="parameters" element="tns:SendStudentRegBacthApproval" />
@@ -9325,35 +9470,23 @@
   <message name="UpdatePurchaseRequisition_Result">
     <part name="parameters" element="tns:UpdatePurchaseRequisition_Result" />
   </message>
-  <message name="UpdateRatings">
-    <part name="parameters" element="tns:UpdateRatings" />
+  <message name="InsertAdmission">
+    <part name="parameters" element="tns:InsertAdmission" />
   </message>
-  <message name="UpdateRatings_Result">
-    <part name="parameters" element="tns:UpdateRatings_Result" />
+  <message name="InsertAdmission_Result">
+    <part name="parameters" element="tns:InsertAdmission_Result" />
   </message>
-  <message name="UpdateRegisterdUnits">
-    <part name="parameters" element="tns:UpdateRegisterdUnits" />
+  <message name="InsertApplicantCurrentEmp">
+    <part name="parameters" element="tns:InsertApplicantCurrentEmp" />
   </message>
-  <message name="UpdateRegisterdUnits_Result">
-    <part name="parameters" element="tns:UpdateRegisterdUnits_Result" />
+  <message name="InsertApplicantCurrentEmp_Result">
+    <part name="parameters" element="tns:InsertApplicantCurrentEmp_Result" />
   </message>
-  <message name="UpdateRegistrationType">
-    <part name="parameters" element="tns:UpdateRegistrationType" />
+  <message name="InsertApplicantEmpHist">
+    <part name="parameters" element="tns:InsertApplicantEmpHist" />
   </message>
-  <message name="UpdateRegistrationType_Result">
-    <part name="parameters" element="tns:UpdateRegistrationType_Result" />
-  </message>
-  <message name="UpdateResidency">
-    <part name="parameters" element="tns:UpdateResidency" />
-  </message>
-  <message name="UpdateResidency_Result">
-    <part name="parameters" element="tns:UpdateResidency_Result" />
-  </message>
-  <message name="UpdateScoreCardPeerReviewer">
-    <part name="parameters" element="tns:UpdateScoreCardPeerReviewer" />
-  </message>
-  <message name="UpdateScoreCardPeerReviewer_Result">
-    <part name="parameters" element="tns:UpdateScoreCardPeerReviewer_Result" />
+  <message name="InsertApplicantEmpHist_Result">
+    <part name="parameters" element="tns:InsertApplicantEmpHist_Result" />
   </message>
   <message name="InsertApplicantQualification">
     <part name="parameters" element="tns:InsertApplicantQualification" />
@@ -9426,6 +9559,12 @@
   </message>
   <message name="InsertDrugPrescribe_Result">
     <part name="parameters" element="tns:InsertDrugPrescribe_Result" />
+  </message>
+  <message name="InsertECTZBill">
+    <part name="parameters" element="tns:InsertECTZBill" />
+  </message>
+  <message name="InsertECTZBill_Result">
+    <part name="parameters" element="tns:InsertECTZBill_Result" />
   </message>
   <message name="InsertEmergencyContact">
     <part name="parameters" element="tns:InsertEmergencyContact" />
@@ -10087,30 +10226,6 @@
   <message name="PrintVoteBookBalance_Result">
     <part name="parameters" element="tns:PrintVoteBookBalance_Result" />
   </message>
-  <message name="ProcessUloadedMarks">
-    <part name="parameters" element="tns:ProcessUloadedMarks" />
-  </message>
-  <message name="ProcessUloadedMarks_Result">
-    <part name="parameters" element="tns:ProcessUloadedMarks_Result" />
-  </message>
-  <message name="ProfessionalBodyReqApprovalRequest">
-    <part name="parameters" element="tns:ProfessionalBodyReqApprovalRequest" />
-  </message>
-  <message name="ProfessionalBodyReqApprovalRequest_Result">
-    <part name="parameters" element="tns:ProfessionalBodyReqApprovalRequest_Result" />
-  </message>
-  <message name="ProfessionalBodyReqcancelRequest">
-    <part name="parameters" element="tns:ProfessionalBodyReqcancelRequest" />
-  </message>
-  <message name="ProfessionalBodyReqcancelRequest_Result">
-    <part name="parameters" element="tns:ProfessionalBodyReqcancelRequest_Result" />
-  </message>
-  <message name="ProgrammeUnitOnOffer">
-    <part name="parameters" element="tns:ProgrammeUnitOnOffer" />
-  </message>
-  <message name="ProgrammeUnitOnOffer_Result">
-    <part name="parameters" element="tns:ProgrammeUnitOnOffer_Result" />
-  </message>
   <message name="FnUpdateEmployeeInfo">
     <part name="parameters" element="tns:FnUpdateEmployeeInfo" />
   </message>
@@ -10213,6 +10328,12 @@
   <message name="GenerateDischargeSummaryPrintout_Result">
     <part name="parameters" element="tns:GenerateDischargeSummaryPrintout_Result" />
   </message>
+  <message name="GenerateEcitizenReceipt">
+    <part name="parameters" element="tns:GenerateEcitizenReceipt" />
+  </message>
+  <message name="GenerateEcitizenReceipt_Result">
+    <part name="parameters" element="tns:GenerateEcitizenReceipt_Result" />
+  </message>
   <message name="GenerateExamAttendanceList">
     <part name="parameters" element="tns:GenerateExamAttendanceList" />
   </message>
@@ -10230,6 +10351,12 @@
   </message>
   <message name="GenerateHostelAllocationWithCateringCharge_Result">
     <part name="parameters" element="tns:GenerateHostelAllocationWithCateringCharge_Result" />
+  </message>
+  <message name="GenerateHostelAllocationWithoutUnitRegistration">
+    <part name="parameters" element="tns:GenerateHostelAllocationWithoutUnitRegistration" />
+  </message>
+  <message name="GenerateHostelAllocationWithoutUnitRegistration_Result">
+    <part name="parameters" element="tns:GenerateHostelAllocationWithoutUnitRegistration_Result" />
   </message>
   <message name="GenerateHostelAllocation">
     <part name="parameters" element="tns:GenerateHostelAllocation" />
@@ -10494,6 +10621,12 @@
   </message>
   <message name="GetApplicationFeeAmount_Result">
     <part name="parameters" element="tns:GetApplicationFeeAmount_Result" />
+  </message>
+  <message name="GetBillRef">
+    <part name="parameters" element="tns:GetBillRef" />
+  </message>
+  <message name="GetBillRef_Result">
+    <part name="parameters" element="tns:GetBillRef_Result" />
   </message>
   <message name="GetDefaultExamcategoryUnit">
     <part name="parameters" element="tns:GetDefaultExamcategoryUnit" />
@@ -10860,24 +10993,6 @@
   </message>
   <message name="InsertActualImprestLineAmount_Result">
     <part name="parameters" element="tns:InsertActualImprestLineAmount_Result" />
-  </message>
-  <message name="InsertAdmission">
-    <part name="parameters" element="tns:InsertAdmission" />
-  </message>
-  <message name="InsertAdmission_Result">
-    <part name="parameters" element="tns:InsertAdmission_Result" />
-  </message>
-  <message name="InsertApplicantCurrentEmp">
-    <part name="parameters" element="tns:InsertApplicantCurrentEmp" />
-  </message>
-  <message name="InsertApplicantCurrentEmp_Result">
-    <part name="parameters" element="tns:InsertApplicantCurrentEmp_Result" />
-  </message>
-  <message name="InsertApplicantEmpHist">
-    <part name="parameters" element="tns:InsertApplicantEmpHist" />
-  </message>
-  <message name="InsertApplicantEmpHist_Result">
-    <part name="parameters" element="tns:InsertApplicantEmpHist_Result" />
   </message>
   <message name="AcademicReferee">
     <part name="parameters" element="tns:AcademicReferee" />
@@ -11582,6 +11697,26 @@
     <part name="parameters" element="tns:FeesStructure_Result" />
   </message>
   <portType name="WebPortal_Port">
+    <operation name="UpdateRatings">
+      <input name="UpdateRatings" message="tns:UpdateRatings" />
+      <output name="UpdateRatings_Result" message="tns:UpdateRatings_Result" />
+    </operation>
+    <operation name="UpdateRegisterdUnits">
+      <input name="UpdateRegisterdUnits" message="tns:UpdateRegisterdUnits" />
+      <output name="UpdateRegisterdUnits_Result" message="tns:UpdateRegisterdUnits_Result" />
+    </operation>
+    <operation name="UpdateRegistrationType">
+      <input name="UpdateRegistrationType" message="tns:UpdateRegistrationType" />
+      <output name="UpdateRegistrationType_Result" message="tns:UpdateRegistrationType_Result" />
+    </operation>
+    <operation name="UpdateResidency">
+      <input name="UpdateResidency" message="tns:UpdateResidency" />
+      <output name="UpdateResidency_Result" message="tns:UpdateResidency_Result" />
+    </operation>
+    <operation name="UpdateScoreCardPeerReviewer">
+      <input name="UpdateScoreCardPeerReviewer" message="tns:UpdateScoreCardPeerReviewer" />
+      <output name="UpdateScoreCardPeerReviewer_Result" message="tns:UpdateScoreCardPeerReviewer_Result" />
+    </operation>
     <operation name="UpdateSspPassword">
       <input name="UpdateSspPassword" message="tns:UpdateSspPassword" />
       <output name="UpdateSspPassword_Result" message="tns:UpdateSspPassword_Result" />
@@ -11713,6 +11848,22 @@
     <operation name="updateDashboardProfile">
       <input name="updateDashboardProfile" message="tns:updateDashboardProfile" />
       <output name="updateDashboardProfile_Result" message="tns:updateDashboardProfile_Result" />
+    </operation>
+    <operation name="ProcessUloadedMarks">
+      <input name="ProcessUloadedMarks" message="tns:ProcessUloadedMarks" />
+      <output name="ProcessUloadedMarks_Result" message="tns:ProcessUloadedMarks_Result" />
+    </operation>
+    <operation name="ProfessionalBodyReqApprovalRequest">
+      <input name="ProfessionalBodyReqApprovalRequest" message="tns:ProfessionalBodyReqApprovalRequest" />
+      <output name="ProfessionalBodyReqApprovalRequest_Result" message="tns:ProfessionalBodyReqApprovalRequest_Result" />
+    </operation>
+    <operation name="ProfessionalBodyReqcancelRequest">
+      <input name="ProfessionalBodyReqcancelRequest" message="tns:ProfessionalBodyReqcancelRequest" />
+      <output name="ProfessionalBodyReqcancelRequest_Result" message="tns:ProfessionalBodyReqcancelRequest_Result" />
+    </operation>
+    <operation name="ProgrammeUnitOnOffer">
+      <input name="ProgrammeUnitOnOffer" message="tns:ProgrammeUnitOnOffer" />
+      <output name="ProgrammeUnitOnOffer_Result" message="tns:ProgrammeUnitOnOffer_Result" />
     </operation>
     <operation name="PurchaseRequisitionApprovalRequest">
       <input name="PurchaseRequisitionApprovalRequest" message="tns:PurchaseRequisitionApprovalRequest" />
@@ -11925,6 +12076,10 @@
     <operation name="SendRejectionEmailAlert">
       <input name="SendRejectionEmailAlert" message="tns:SendRejectionEmailAlert" />
       <output name="SendRejectionEmailAlert_Result" message="tns:SendRejectionEmailAlert_Result" />
+    </operation>
+    <operation name="SendSMS">
+      <input name="SendSMS" message="tns:SendSMS" />
+      <output name="SendSMS_Result" message="tns:SendSMS_Result" />
     </operation>
     <operation name="SendStudentRegBacthApproval">
       <input name="SendStudentRegBacthApproval" message="tns:SendStudentRegBacthApproval" />
@@ -12198,25 +12353,17 @@
       <input name="UpdatePurchaseRequisition" message="tns:UpdatePurchaseRequisition" />
       <output name="UpdatePurchaseRequisition_Result" message="tns:UpdatePurchaseRequisition_Result" />
     </operation>
-    <operation name="UpdateRatings">
-      <input name="UpdateRatings" message="tns:UpdateRatings" />
-      <output name="UpdateRatings_Result" message="tns:UpdateRatings_Result" />
+    <operation name="InsertAdmission">
+      <input name="InsertAdmission" message="tns:InsertAdmission" />
+      <output name="InsertAdmission_Result" message="tns:InsertAdmission_Result" />
     </operation>
-    <operation name="UpdateRegisterdUnits">
-      <input name="UpdateRegisterdUnits" message="tns:UpdateRegisterdUnits" />
-      <output name="UpdateRegisterdUnits_Result" message="tns:UpdateRegisterdUnits_Result" />
+    <operation name="InsertApplicantCurrentEmp">
+      <input name="InsertApplicantCurrentEmp" message="tns:InsertApplicantCurrentEmp" />
+      <output name="InsertApplicantCurrentEmp_Result" message="tns:InsertApplicantCurrentEmp_Result" />
     </operation>
-    <operation name="UpdateRegistrationType">
-      <input name="UpdateRegistrationType" message="tns:UpdateRegistrationType" />
-      <output name="UpdateRegistrationType_Result" message="tns:UpdateRegistrationType_Result" />
-    </operation>
-    <operation name="UpdateResidency">
-      <input name="UpdateResidency" message="tns:UpdateResidency" />
-      <output name="UpdateResidency_Result" message="tns:UpdateResidency_Result" />
-    </operation>
-    <operation name="UpdateScoreCardPeerReviewer">
-      <input name="UpdateScoreCardPeerReviewer" message="tns:UpdateScoreCardPeerReviewer" />
-      <output name="UpdateScoreCardPeerReviewer_Result" message="tns:UpdateScoreCardPeerReviewer_Result" />
+    <operation name="InsertApplicantEmpHist">
+      <input name="InsertApplicantEmpHist" message="tns:InsertApplicantEmpHist" />
+      <output name="InsertApplicantEmpHist_Result" message="tns:InsertApplicantEmpHist_Result" />
     </operation>
     <operation name="InsertApplicantQualification">
       <input name="InsertApplicantQualification" message="tns:InsertApplicantQualification" />
@@ -12265,6 +12412,10 @@
     <operation name="InsertDrugPrescribe">
       <input name="InsertDrugPrescribe" message="tns:InsertDrugPrescribe" />
       <output name="InsertDrugPrescribe_Result" message="tns:InsertDrugPrescribe_Result" />
+    </operation>
+    <operation name="InsertECTZBill">
+      <input name="InsertECTZBill" message="tns:InsertECTZBill" />
+      <output name="InsertECTZBill_Result" message="tns:InsertECTZBill_Result" />
     </operation>
     <operation name="InsertEmergencyContact">
       <input name="InsertEmergencyContact" message="tns:InsertEmergencyContact" />
@@ -12706,22 +12857,6 @@
       <input name="PrintVoteBookBalance" message="tns:PrintVoteBookBalance" />
       <output name="PrintVoteBookBalance_Result" message="tns:PrintVoteBookBalance_Result" />
     </operation>
-    <operation name="ProcessUloadedMarks">
-      <input name="ProcessUloadedMarks" message="tns:ProcessUloadedMarks" />
-      <output name="ProcessUloadedMarks_Result" message="tns:ProcessUloadedMarks_Result" />
-    </operation>
-    <operation name="ProfessionalBodyReqApprovalRequest">
-      <input name="ProfessionalBodyReqApprovalRequest" message="tns:ProfessionalBodyReqApprovalRequest" />
-      <output name="ProfessionalBodyReqApprovalRequest_Result" message="tns:ProfessionalBodyReqApprovalRequest_Result" />
-    </operation>
-    <operation name="ProfessionalBodyReqcancelRequest">
-      <input name="ProfessionalBodyReqcancelRequest" message="tns:ProfessionalBodyReqcancelRequest" />
-      <output name="ProfessionalBodyReqcancelRequest_Result" message="tns:ProfessionalBodyReqcancelRequest_Result" />
-    </operation>
-    <operation name="ProgrammeUnitOnOffer">
-      <input name="ProgrammeUnitOnOffer" message="tns:ProgrammeUnitOnOffer" />
-      <output name="ProgrammeUnitOnOffer_Result" message="tns:ProgrammeUnitOnOffer_Result" />
-    </operation>
     <operation name="FnUpdateEmployeeInfo">
       <input name="FnUpdateEmployeeInfo" message="tns:FnUpdateEmployeeInfo" />
       <output name="FnUpdateEmployeeInfo_Result" message="tns:FnUpdateEmployeeInfo_Result" />
@@ -12790,6 +12925,10 @@
       <input name="GenerateDischargeSummaryPrintout" message="tns:GenerateDischargeSummaryPrintout" />
       <output name="GenerateDischargeSummaryPrintout_Result" message="tns:GenerateDischargeSummaryPrintout_Result" />
     </operation>
+    <operation name="GenerateEcitizenReceipt">
+      <input name="GenerateEcitizenReceipt" message="tns:GenerateEcitizenReceipt" />
+      <output name="GenerateEcitizenReceipt_Result" message="tns:GenerateEcitizenReceipt_Result" />
+    </operation>
     <operation name="GenerateExamAttendanceList">
       <input name="GenerateExamAttendanceList" message="tns:GenerateExamAttendanceList" />
       <output name="GenerateExamAttendanceList_Result" message="tns:GenerateExamAttendanceList_Result" />
@@ -12801,6 +12940,10 @@
     <operation name="GenerateHostelAllocationWithCateringCharge">
       <input name="GenerateHostelAllocationWithCateringCharge" message="tns:GenerateHostelAllocationWithCateringCharge" />
       <output name="GenerateHostelAllocationWithCateringCharge_Result" message="tns:GenerateHostelAllocationWithCateringCharge_Result" />
+    </operation>
+    <operation name="GenerateHostelAllocationWithoutUnitRegistration">
+      <input name="GenerateHostelAllocationWithoutUnitRegistration" message="tns:GenerateHostelAllocationWithoutUnitRegistration" />
+      <output name="GenerateHostelAllocationWithoutUnitRegistration_Result" message="tns:GenerateHostelAllocationWithoutUnitRegistration_Result" />
     </operation>
     <operation name="GenerateHostelAllocation">
       <input name="GenerateHostelAllocation" message="tns:GenerateHostelAllocation" />
@@ -12977,6 +13120,10 @@
     <operation name="GetApplicationFeeAmount">
       <input name="GetApplicationFeeAmount" message="tns:GetApplicationFeeAmount" />
       <output name="GetApplicationFeeAmount_Result" message="tns:GetApplicationFeeAmount_Result" />
+    </operation>
+    <operation name="GetBillRef">
+      <input name="GetBillRef" message="tns:GetBillRef" />
+      <output name="GetBillRef_Result" message="tns:GetBillRef_Result" />
     </operation>
     <operation name="GetDefaultExamcategoryUnit">
       <input name="GetDefaultExamcategoryUnit" message="tns:GetDefaultExamcategoryUnit" />
@@ -13221,18 +13368,6 @@
     <operation name="InsertActualImprestLineAmount">
       <input name="InsertActualImprestLineAmount" message="tns:InsertActualImprestLineAmount" />
       <output name="InsertActualImprestLineAmount_Result" message="tns:InsertActualImprestLineAmount_Result" />
-    </operation>
-    <operation name="InsertAdmission">
-      <input name="InsertAdmission" message="tns:InsertAdmission" />
-      <output name="InsertAdmission_Result" message="tns:InsertAdmission_Result" />
-    </operation>
-    <operation name="InsertApplicantCurrentEmp">
-      <input name="InsertApplicantCurrentEmp" message="tns:InsertApplicantCurrentEmp" />
-      <output name="InsertApplicantCurrentEmp_Result" message="tns:InsertApplicantCurrentEmp_Result" />
-    </operation>
-    <operation name="InsertApplicantEmpHist">
-      <input name="InsertApplicantEmpHist" message="tns:InsertApplicantEmpHist" />
-      <output name="InsertApplicantEmpHist_Result" message="tns:InsertApplicantEmpHist_Result" />
     </operation>
     <operation name="AcademicReferee">
       <input name="AcademicReferee" message="tns:AcademicReferee" />
@@ -13705,6 +13840,51 @@
   </portType>
   <binding name="WebPortal_Binding" type="tns:WebPortal_Port">
     <binding transport="http://schemas.xmlsoap.org/soap/http" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    <operation name="UpdateRatings">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateRatings" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="UpdateRatings">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="UpdateRatings_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="UpdateRegisterdUnits">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateRegisterdUnits" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="UpdateRegisterdUnits">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="UpdateRegisterdUnits_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="UpdateRegistrationType">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateRegistrationType" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="UpdateRegistrationType">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="UpdateRegistrationType_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="UpdateResidency">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateResidency" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="UpdateResidency">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="UpdateResidency_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="UpdateScoreCardPeerReviewer">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateScoreCardPeerReviewer" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="UpdateScoreCardPeerReviewer">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="UpdateScoreCardPeerReviewer_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
     <operation name="UpdateSspPassword">
       <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateSspPassword" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       <input name="UpdateSspPassword">
@@ -13999,6 +14179,42 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="updateDashboardProfile_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="ProcessUloadedMarks">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ProcessUloadedMarks" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="ProcessUloadedMarks">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="ProcessUloadedMarks_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="ProfessionalBodyReqApprovalRequest">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ProfessionalBodyReqApprovalRequest" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="ProfessionalBodyReqApprovalRequest">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="ProfessionalBodyReqApprovalRequest_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="ProfessionalBodyReqcancelRequest">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ProfessionalBodyReqcancelRequest" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="ProfessionalBodyReqcancelRequest">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="ProfessionalBodyReqcancelRequest_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="ProgrammeUnitOnOffer">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ProgrammeUnitOnOffer" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="ProgrammeUnitOnOffer">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="ProgrammeUnitOnOffer_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -14476,6 +14692,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="SendRejectionEmailAlert_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="SendSMS">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendSMS" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="SendSMS">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="SendSMS_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -15091,48 +15316,30 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
-    <operation name="UpdateRatings">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateRatings" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="UpdateRatings">
+    <operation name="InsertAdmission">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertAdmission" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="InsertAdmission">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
-      <output name="UpdateRatings_Result">
+      <output name="InsertAdmission_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
-    <operation name="UpdateRegisterdUnits">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateRegisterdUnits" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="UpdateRegisterdUnits">
+    <operation name="InsertApplicantCurrentEmp">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertApplicantCurrentEmp" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="InsertApplicantCurrentEmp">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
-      <output name="UpdateRegisterdUnits_Result">
+      <output name="InsertApplicantCurrentEmp_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
-    <operation name="UpdateRegistrationType">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateRegistrationType" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="UpdateRegistrationType">
+    <operation name="InsertApplicantEmpHist">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertApplicantEmpHist" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="InsertApplicantEmpHist">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
-      <output name="UpdateRegistrationType_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="UpdateResidency">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateResidency" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="UpdateResidency">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="UpdateResidency_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="UpdateScoreCardPeerReviewer">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateScoreCardPeerReviewer" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="UpdateScoreCardPeerReviewer">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="UpdateScoreCardPeerReviewer_Result">
+      <output name="InsertApplicantEmpHist_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -15241,6 +15448,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="InsertDrugPrescribe_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="InsertECTZBill">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertECTZBill" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="InsertECTZBill">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="InsertECTZBill_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -16234,42 +16450,6 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
-    <operation name="ProcessUloadedMarks">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ProcessUloadedMarks" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="ProcessUloadedMarks">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="ProcessUloadedMarks_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="ProfessionalBodyReqApprovalRequest">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ProfessionalBodyReqApprovalRequest" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="ProfessionalBodyReqApprovalRequest">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="ProfessionalBodyReqApprovalRequest_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="ProfessionalBodyReqcancelRequest">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ProfessionalBodyReqcancelRequest" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="ProfessionalBodyReqcancelRequest">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="ProfessionalBodyReqcancelRequest_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="ProgrammeUnitOnOffer">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ProgrammeUnitOnOffer" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="ProgrammeUnitOnOffer">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="ProgrammeUnitOnOffer_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
     <operation name="FnUpdateEmployeeInfo">
       <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:FnUpdateEmployeeInfo" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       <input name="FnUpdateEmployeeInfo">
@@ -16423,6 +16603,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
+    <operation name="GenerateEcitizenReceipt">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:GenerateEcitizenReceipt" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GenerateEcitizenReceipt">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GenerateEcitizenReceipt_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
     <operation name="GenerateExamAttendanceList">
       <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:GenerateExamAttendanceList" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       <input name="GenerateExamAttendanceList">
@@ -16447,6 +16636,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="GenerateHostelAllocationWithCateringCharge_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="GenerateHostelAllocationWithoutUnitRegistration">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:GenerateHostelAllocationWithoutUnitRegistration" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GenerateHostelAllocationWithoutUnitRegistration">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GenerateHostelAllocationWithoutUnitRegistration_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -16843,6 +17041,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="GetApplicationFeeAmount_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="GetBillRef">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:GetBillRef" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetBillRef">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetBillRef_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -17392,33 +17599,6 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="InsertActualImprestLineAmount_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="InsertAdmission">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertAdmission" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="InsertAdmission">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="InsertAdmission_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="InsertApplicantCurrentEmp">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertApplicantCurrentEmp" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="InsertApplicantCurrentEmp">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="InsertApplicantCurrentEmp_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="InsertApplicantEmpHist">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertApplicantEmpHist" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="InsertApplicantEmpHist">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="InsertApplicantEmpHist_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
