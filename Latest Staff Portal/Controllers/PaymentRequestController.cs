@@ -4,21 +4,19 @@ using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
     [CustomAuthorization(Role = "ALLUSERS")]
-    public class StaffClaimController : Controller
+    public class PaymentRequestController : Controller
     {
-        // GET: StaffClaim
-        public ActionResult StaffClaimRequisitionList()
+        // GET: PaymentRequest
+        public ActionResult PaymentRequestRequisitionList()
         {
             try
             {
@@ -38,12 +36,12 @@ namespace Latest_Staff_Portal.Controllers
                 return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
             }
         }
-        public PartialViewResult StaffClaimRequisitionListPartialView()
+        public PartialViewResult PaymentRequestRequisitionListPartialView()
         {
             try
             {
                 string StaffNo = Session["Username"].ToString();
-                List<StaffClaimList> ClaimList = new List<StaffClaimList>();
+                List<PaymentRequestList> ClaimList = new List<PaymentRequestList>();
 
                 string page = "StaffClaimList?$filter=Employee_No eq '" + StaffNo + "'&format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
@@ -54,7 +52,7 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        StaffClaimList CList = new StaffClaimList();
+                        PaymentRequestList CList = new PaymentRequestList();
                         CList.No = (string)config["No"];
                         CList.ReqDate = Convert.ToDateTime((string)config["Date"]).ToString("dd/MM/yyyy");
                         CList.Purpose = (string)config["Purpose"];
@@ -63,7 +61,7 @@ namespace Latest_Staff_Portal.Controllers
                         ClaimList.Add(CList);
                     }
                 }
-                return PartialView("~/Views/StaffClaim/StaffClaimReqListView.cshtml", ClaimList.OrderByDescending(x => x.No));
+                return PartialView("~/Views/PaymentRequest/PaymentRequestReqListView.cshtml", ClaimList.OrderByDescending(x => x.No));
             }
             catch (Exception ex)
             {
@@ -72,7 +70,7 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        public ActionResult NewStaffClaimRequest()
+        public ActionResult NewPaymentRequest()
         {
             try
             {
@@ -83,7 +81,7 @@ namespace Latest_Staff_Portal.Controllers
                 else
                 {
                     string StaffNo = Session["Username"].ToString();
-                    NewStaffClaimRequisition NewStaffClaim = new NewStaffClaimRequisition();
+                    NewPaymentRequestRequisition NewPaymentRequest = new NewPaymentRequestRequisition();
                     string Dim1 = "", Dim2 = "", RespC = "";
                     #region Employee Data
                     string pageData = "EmployeeList?$Campus,Department_Code,Responsibility_Center&$filter=No eq '" + StaffNo + "'&$format=json";
@@ -214,7 +212,29 @@ namespace Latest_Staff_Portal.Controllers
                         }
                         #endregion
 
-                        NewStaffClaim = new NewStaffClaimRequisition
+                        #region Vendors
+                        List<DropdownList> VendorList = new List<DropdownList>();
+                        string pageTrainer = "VendorList?$format=json";
+
+                        HttpWebResponse httpResponseTrainer = Credentials.GetOdataData(pageTrainer);
+                        using (var streamReader = new StreamReader(httpResponseTrainer.GetResponseStream()))
+                        {
+                            var result = streamReader.ReadToEnd();
+
+                            var details = JObject.Parse(result);
+
+
+                            foreach (JObject config in details["value"])
+                            {
+                                DropdownList CList = new DropdownList();
+                                CList.Value = (string)config["No"];
+                                CList.Text = (string)config["Name"];
+                                VendorList.Add(CList);
+                            }
+                        }
+                        #endregion
+
+                        NewPaymentRequest = new NewPaymentRequestRequisition
                         {
                             Campus = Dim1,
                             Department = Dim2,
@@ -242,9 +262,16 @@ namespace Latest_Staff_Portal.Controllers
                                                {
                                                    Text = x.Name,
                                                    Value = x.Code
+                                               }).ToList(),
+                            ListOfVendors = VendorList.Select(x =>
+                                               new SelectListItem()
+                                               {
+                                                   Text = x.Text,
+                                                   Value = x.Value
                                                }).ToList()
+
                         };
-                        return View(NewStaffClaim);
+                        return View(NewPaymentRequest);
                     }
                 }
             }
@@ -255,14 +282,14 @@ namespace Latest_Staff_Portal.Controllers
                 return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
             }
         }
-        public PartialViewResult NewStaffClaimLine()
+        public PartialViewResult NewPaymentRequestLine()
         {
             try
             {
-                StaffClaimTypesList StaffClaimTypes = new StaffClaimTypesList();
+                PaymentRequestTypesList PaymentRequestTypes = new PaymentRequestTypesList();
 
                 #region Imprest Type List
-                List<StaffClaimTypes> ClaimTList = new List<StaffClaimTypes>();
+                List<PaymentRequestTypes> ClaimTList = new List<PaymentRequestTypes>();
                 string page = "StaffClaimTypes?$filter=Type eq 'Claim' and Description ne ''&format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
@@ -274,25 +301,25 @@ namespace Latest_Staff_Portal.Controllers
 
                     foreach (JObject config in details["value"])
                     {
-                        StaffClaimTypes ClaimList = new StaffClaimTypes();
+                        PaymentRequestTypes ClaimList = new PaymentRequestTypes();
                         ClaimList.Code = (string)config["Code"];
                         ClaimList.Description = (string)config["Description"];
                         ClaimTList.Add(ClaimList);
                     }
                 }
                 #endregion
-
-                StaffClaimTypes = new StaffClaimTypesList
+                PaymentRequestTypes = new PaymentRequestTypesList
                 {
-                    ListOfStaffClaimTypes = ClaimTList.Select(x =>
+                    ListOfPaymentRequestTypes = ClaimTList.Select(x =>
                                           new SelectListItem()
                                           {
                                               Text = x.Description,
                                               Value = x.Code
                                           }).OrderBy(x => x.Text).ToList()
+
                 };
 
-                return PartialView("~/Views/StaffClaim/StaffClaimItemForm.cshtml", StaffClaimTypes);
+                return PartialView("~/Views/PaymentRequest/PaymentRequestItemForm.cshtml", PaymentRequestTypes);
             }
             catch (Exception ex)
             {
@@ -302,25 +329,25 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult SubmitStaffClaimRequisition(StaffClaimHeader staffClaimHeader)
+        public JsonResult SubmitPaymentRequestRequisition(PaymentRequestHeader PaymentRequestHeader)
         {
             bool successVal = false;
             try
             {
                 string School = "";
-                if (staffClaimHeader.school != null)
+                if (PaymentRequestHeader.school != null)
                 {
-                    School = staffClaimHeader.school;
+                    School = PaymentRequestHeader.school;
                 }
                 string StaffNo = Session["Username"].ToString();
-                string DocNo = Credentials.ObjNav.InsertStaffClaims(StaffNo, staffClaimHeader.Campus, staffClaimHeader.Department
-                                  , staffClaimHeader.RespC, staffClaimHeader.Remarks, School,"",0);
+                string DocNo = Credentials.ObjNav.InsertStaffClaims(StaffNo, PaymentRequestHeader.Campus, PaymentRequestHeader.Department
+                                  , PaymentRequestHeader.RespC, PaymentRequestHeader.Remarks, "", "", 1);
 
                 if (DocNo != "")
                 {
-                    string Redirect = "/StaffClaim/StaffClaimDocumentView?DocNo=" + DocNo;
+                    string Redirect = "/PaymentRequest/PaymentRequestDocumentView?DocNo=" + DocNo;
 
-                    Session["SuccessMsg"] = "Staff Claim Requisition, Document No: " + DocNo + ", created Successfully. Add line(s) and attachment(s) then send for approval";
+                    Session["SuccessMsg"] = "Payment Request Requisition, Document No: " + DocNo + ", created Successfully. Add line(s) and attachment(s) then send for approval";
                     return Json(new { message = Redirect, success = true }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -337,7 +364,7 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult StaffClaimDocumentView(string DocNo)
+        public ActionResult PaymentRequestDocumentView(string DocNo)
         {
             try
             {
@@ -348,8 +375,8 @@ namespace Latest_Staff_Portal.Controllers
                 else
                 {
                     string StaffNo = Session["Username"].ToString();
-                    #region Staff Claim Header
-                    StaffClaimHeader ClaimDoc = new StaffClaimHeader();
+                    #region Payment Request Header
+                    PaymentRequestHeader ClaimDoc = new PaymentRequestHeader();
 
                     string page = "StaffClaimCard?$filter=No eq '" + DocNo + "'&format=json";
                     HttpWebResponse httpResponse = Credentials.GetOdataData(page);
@@ -389,8 +416,8 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                #region Staff Claim Lines
-                List<StaffClaimLines> ClaimLines = new List<StaffClaimLines>();
+                #region Payment Request Lines
+                List<PaymentRequestLines> ClaimLines = new List<PaymentRequestLines>();
                 string pageLine = "StaffCaimLines?$filter=No eq '" + DocNo + "'&format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
@@ -400,7 +427,7 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        StaffClaimLines claimLine = new StaffClaimLines();
+                        PaymentRequestLines claimLine = new PaymentRequestLines();
                         claimLine.DocNo = (string)config["No"];
                         claimLine.AdvanceType = (string)config["Advance_Type"];
                         claimLine.Item = (string)config["Account_No"];
@@ -412,12 +439,12 @@ namespace Latest_Staff_Portal.Controllers
                     }
                 }
                 #endregion
-                StaffClaimLinesList Lines = new StaffClaimLinesList
+                PaymentRequestLinesList Lines = new PaymentRequestLinesList
                 {
                     Status = Status,
-                    ListOfStaffClaimLines = ClaimLines
+                    ListOfPaymentRequestLines = ClaimLines
                 };
-                return PartialView("~/Views/StaffClaim/StaffClaimDocumentLineView.cshtml", Lines);
+                return PartialView("~/Views/PaymentRequest/PaymentRequestDocumentLineView.cshtml", Lines);
             }
             catch (Exception ex)
             {
@@ -426,28 +453,28 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        public JsonResult SendStaffClaimAppForApproval(string DocNo, string Redirect)
+        public JsonResult SendPaymentRequestAppForApproval(string DocNo, string Redirect)
         {
             try
             {
                 Credentials.ObjNav.StaffClaimRequisitionApprovalRequest(DocNo);
                 if (Redirect == "Y")
                 {
-                    Session["SuccessMsg"] = "Staff Claim Requisition, Document No " + DocNo + " send for approval Successfully";
+                    Session["SuccessMsg"] = "Payment Request Requisition, Document No " + DocNo + " send for approval Successfully";
                 }
-                return Json(new { message = "Staff Claim Requisition,Document No " + DocNo + " send for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = "Payment Request Requisition,Document No " + DocNo + " send for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult CancelStaffClaimAppForApproval(string DocNo)
+        public JsonResult CancelPaymentRequestAppForApproval(string DocNo)
         {
             try
             {
                 Credentials.ObjNav.HRCanceStaffClaimRequisition(DocNo);
-                return Json(new { message = "Staff Claim Requisition approval cancelled Successfully", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = "Payment Request Requisition approval cancelled Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -455,34 +482,34 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult UpdateStaffClaimHeader(string DocNo, StaffClaimHeader staffClaimHeader)
+        public JsonResult UpdatePaymentRequestHeader(string DocNo, PaymentRequestHeader PaymentRequestHeader)
         {
             try
             {
                 string School = "", Campus = "", Department = "", RespC = "", Remarks = "";
-                if (staffClaimHeader.Campus != null)
+                if (PaymentRequestHeader.Campus != null)
                 {
-                    Campus = staffClaimHeader.Campus;
+                    Campus = PaymentRequestHeader.Campus;
                 }
-                if (staffClaimHeader.school != null)
+                if (PaymentRequestHeader.school != null)
                 {
-                    School = staffClaimHeader.school;
+                    School = PaymentRequestHeader.school;
                 }
-                if (staffClaimHeader.Department != null)
+                if (PaymentRequestHeader.Department != null)
                 {
-                    Department = staffClaimHeader.Department;
+                    Department = PaymentRequestHeader.Department;
                 }
-                if (staffClaimHeader.RespC != null)
+                if (PaymentRequestHeader.RespC != null)
                 {
-                    RespC = staffClaimHeader.RespC;
+                    RespC = PaymentRequestHeader.RespC;
                 }
-                if (staffClaimHeader.Remarks != null)
+                if (PaymentRequestHeader.Remarks != null)
                 {
-                    Remarks = staffClaimHeader.Remarks;
+                    Remarks = PaymentRequestHeader.Remarks;
                 }
                 Credentials.ObjNav.UpdateStaffClaims(DocNo.Trim(), DateTime.Today, Campus, Department,
                     School, RespC, Remarks);
-                return Json(new { message = "Staff Claim header Updated successfully", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = "Payment Request header Updated successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -490,20 +517,20 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult SubmitClaimLine(string DocNo, StaffClaimHeader staffClaimHeader, StaffClaimLines staffClaimLine)
+        public JsonResult SubmitClaimLine(string DocNo, PaymentRequestHeader PaymentRequestHeader, PaymentRequestLines PaymentRequestLine)
         {
             try
             {
                 string School = "";
                 string StaffNo = Session["Username"].ToString();
-                string item = staffClaimLine.Item.Trim();
-                string itemDesc = staffClaimLine.ItemDesc.Trim();
-                string amnt = staffClaimLine.Amount.Trim();
+                string item = PaymentRequestLine.Item.Trim();
+                string itemDesc = PaymentRequestLine.ItemDesc.Trim();
+                string amnt = PaymentRequestLine.Amount.Trim();
 
-                Credentials.ObjNav.StaffClaimRequisitionLinesInsert(DocNo, item, Convert.ToDecimal(amnt), StaffNo, staffClaimHeader.Campus,
-                    staffClaimHeader.Department, itemDesc, School);
+                Credentials.ObjNav.StaffClaimRequisitionLinesInsert(DocNo, item, Convert.ToDecimal(amnt), StaffNo, PaymentRequestHeader.Campus,
+                    PaymentRequestHeader.Department, itemDesc, School);
                 string DocNetAmount = GetClaimDocNetAmount(DocNo);
-                return Json(new { NetAmout = DocNetAmount, message = "Claim Line Added successfully", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { NetAmout = DocNetAmount, message = "Payment Request Line Added successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -517,7 +544,7 @@ namespace Latest_Staff_Portal.Controllers
             {
                 Credentials.ObjNav.StaffClaimRemoveLine(Convert.ToInt32(LnNo), DocNo, ItemNo);
                 string DocNetAmount = GetClaimDocNetAmount(DocNo);
-                return Json(new { NetAmout = DocNetAmount, message = "Claim Line Deleted successfully", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { NetAmout = DocNetAmount, message = "Payment Request Line Deleted successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -547,7 +574,7 @@ namespace Latest_Staff_Portal.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public PartialViewResult FileUploadForm()
         {
-            return PartialView("~/Views/StaffClaim/FileAttachmentForm.cshtml");
+            return PartialView("~/Views/PaymentRequest/FileAttachmentForm.cshtml");
         }
     }
 }

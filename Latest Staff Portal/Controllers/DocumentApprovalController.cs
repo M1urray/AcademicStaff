@@ -51,6 +51,7 @@ namespace Latest_Staff_Portal.Controllers
                         DocCount.TransferOrder = 0;
                         DocCount.CafCount = 0;
                         DocCount.PVCount = 0;
+                        DocCount.PurchaseClaimCount = 0;
 
                         string page = "ApprovalEntries?$filter=Approver_ID eq '" + userID + "' and Status eq '" + rn + "'&$format=json";
                         HttpWebResponse httpResponse = Credentials.GetOdataData(page);
@@ -88,6 +89,10 @@ namespace Latest_Staff_Portal.Controllers
                                 if ((string)config["Table_ID"] == "70135454")
                                 {
                                     DocCount.ClaimCount = DocCount.ClaimCount + 1;
+                                }
+                                if ((string)config["Table_ID"] == "70135454")
+                                {
+                                    DocCount.PurchaseClaimCount = DocCount.PurchaseClaimCount + 1;
                                 }
                                 if ((string)config["Table_ID"] == "70135362")
                                 {
@@ -949,6 +954,71 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     DocHeader = ClaimDoc,
                     ListOfStaffClaimLines = ClaimLines
+                };
+                return PartialView("~/Views/DocumentApproval/Document Approval Views/StaffclaimApprovalDocDetails.cshtml", docDetails);
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+            }
+        }
+        public PartialViewResult PurchaseClaimReqDocApprovalDetails(string DocNo, string Sequence)
+        {
+            try
+            {
+                #region Purchase Claim Header
+                PurchaseClaimHeader ClaimDoc = new PurchaseClaimHeader();
+
+                string page = "StaffClaimCard?$filter=No eq '" + DocNo + "'&$format=json";
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    foreach (JObject config in details["value"])
+                    {
+                        ClaimDoc.No = (string)config["No"];
+                        ClaimDoc.DateRequested = Convert.ToDateTime((string)config["Date"]).ToString("dd/MM/yyyy");
+                        ClaimDoc.Remarks = (string)config["Purpose"];
+                        ClaimDoc.school = (string)config["Dim3"];
+                        ClaimDoc.Campus = (string)config["Function_Name"];
+                        ClaimDoc.Department = (string)config["Budget_Center_Name"];
+                        ClaimDoc.RespC = (string)config["Responsibility_Center"];
+                        ClaimDoc.TotalAmount = Convert.ToDecimal((string)config["Total_Net_Amount"]).ToString("#,##0.00");
+                        ClaimDoc.Status = (string)config["Status"];
+                        ClaimDoc.RequestorNo = (string)config["Account_No"];
+                        ClaimDoc.RequestorName = CommonClass.GetEmployeeName((string)config["Account_No"]);
+                    }
+                }
+                #endregion
+                #region Purchase Claim Lines
+                List<PurchaseClaimLines> ClaimLines = new List<PurchaseClaimLines>();
+                string pageLine = "StaffCaimLines?$filter=No eq '" + DocNo + "'&$format=json";
+                HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
+                using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    foreach (JObject config in details["value"])
+                    {
+                        PurchaseClaimLines claimLine = new PurchaseClaimLines();
+                        claimLine.AdvanceType = (string)config["Advance_Type"];
+                        claimLine.Item = (string)config["Account_No"];
+                        claimLine.ItemDesc = (string)config["Account_Name"];
+                        claimLine.ItemDesc2 = (string)config["Purpose"];
+                        claimLine.Amount = Convert.ToDecimal((string)config["Amount"]).ToString("#,##0.00");
+                        ClaimLines.Add(claimLine);
+                    }
+                }
+                #endregion
+                PurchaseClaimDocument docDetails = new PurchaseClaimDocument
+                {
+                    DocHeader = ClaimDoc,
+                    ListOfPurchaseClaimLines = ClaimLines
                 };
                 return PartialView("~/Views/DocumentApproval/Document Approval Views/StaffclaimApprovalDocDetails.cshtml", docDetails);
             }

@@ -126,3 +126,7 @@ var TrainingRequisitiontLink = function() {
     ShowProgress();
     window.location = "/Training/TrainingRequisitionList";
 }
+var PaymentRequestRequisitiontLink = function () {
+    ShowProgress();
+    window.location = "/PaymentRequest/PaymentRequestRequisitionList";
+}

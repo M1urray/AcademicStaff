@@ -1,4 +1,4 @@
-﻿@model Latest_Staff_Portal.ViewModel.NewStaffClaimRequisition
+﻿@model Latest_Staff_Portal.ViewModel.NewPaymentRequestRequisition
 <style>
     thead {
         background-color: black;
@@ -16,7 +16,7 @@
 </style>
 <div class="card pre-scrollable">
     <div class="card-body">
-        <b>Staff Claim Header</b>
+        <b> Payment Requisition Header</b>
         <hr />
         <div class="row">
             <div class="col-md-6">
@@ -28,17 +28,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.Label("School(Optional)", htmlAttributes: new { @class = "control-label col-md-12" })
-                    <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.school, Model.ListOfSchool, "--select School--", new { @class = "form-control", @id = "ddlSchool" })
-                        @Html.ValidationMessageFor(model => model.school, "", new { @class = "text-danger" })
-                    </div>
+            @*<div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("School(Optional)", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.school, Model.ListOfSchool, "--select School--", new { @class = "form-control", @id = "ddlSchool" })
+                    @Html.ValidationMessageFor(model => model.school, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
-        <div class="row">
+        </div>*@
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
@@ -48,12 +46,24 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.Label("Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
                         @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
                         @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Vendor", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Vendor, Model.ListOfVendors, "--Select Vendor--", new { @class = "form-control", @id = "ddlVendor" })
+                        @Html.ValidationMessageFor(model => model.school, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -70,7 +80,7 @@
         </div>       
         <hr />
         <div align="center">
-            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitStaffClaimRequisition();" />
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitPaymentRequestRequisition();" />
         </div>
     </div>
 </div>
