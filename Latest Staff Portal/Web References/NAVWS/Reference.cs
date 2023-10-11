@@ -29,6 +29,8 @@ namespace Latest_Staff_Portal.NAVWS {
     [System.Web.Services.WebServiceBindingAttribute(Name="WebPortal_Binding", Namespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal")]
     public partial class WebPortal : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
+        private System.Threading.SendOrPostCallback ValidateCourseReggistrationOperationCompleted;
+        
         private System.Threading.SendOrPostCallback ValidateCourseRegistrationOperationCompleted;
         
         private System.Threading.SendOrPostCallback ValidateStartDateOperationCompleted;
@@ -64,6 +66,8 @@ namespace Latest_Staff_Portal.NAVWS {
         private System.Threading.SendOrPostCallback unbookHostelOperationCompleted;
         
         private System.Threading.SendOrPostCallback updateDashboardProfileOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SendLeaveApplicationForApprovalOperationCompleted;
         
         private System.Threading.SendOrPostCallback SendRejectionEmailAlertOperationCompleted;
         
@@ -231,7 +235,7 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback ValidateBiometricsOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ValidateCourseReggistrationOperationCompleted;
+        private System.Threading.SendOrPostCallback PaymentRequestLineUpdateOperationCompleted;
         
         private System.Threading.SendOrPostCallback PostAttendanceListOperationCompleted;
         
@@ -394,8 +398,6 @@ namespace Latest_Staff_Portal.NAVWS {
         private System.Threading.SendOrPostCallback SendGraduationDocForApprovalOperationCompleted;
         
         private System.Threading.SendOrPostCallback SendImpSurrenderForApprovalOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SendLeaveApplicationForApprovalOperationCompleted;
         
         private System.Threading.SendOrPostCallback InsertApplicantRefereeOperationCompleted;
         
@@ -1090,6 +1092,9 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
+        public event ValidateCourseReggistrationCompletedEventHandler ValidateCourseReggistrationCompleted;
+        
+        /// <remarks/>
         public event ValidateCourseRegistrationCompletedEventHandler ValidateCourseRegistrationCompleted;
         
         /// <remarks/>
@@ -1142,6 +1147,9 @@ namespace Latest_Staff_Portal.NAVWS {
         
         /// <remarks/>
         public event updateDashboardProfileCompletedEventHandler updateDashboardProfileCompleted;
+        
+        /// <remarks/>
+        public event SendLeaveApplicationForApprovalCompletedEventHandler SendLeaveApplicationForApprovalCompleted;
         
         /// <remarks/>
         public event SendRejectionEmailAlertCompletedEventHandler SendRejectionEmailAlertCompleted;
@@ -1393,7 +1401,7 @@ namespace Latest_Staff_Portal.NAVWS {
         public event ValidateBiometricsCompletedEventHandler ValidateBiometricsCompleted;
         
         /// <remarks/>
-        public event ValidateCourseReggistrationCompletedEventHandler ValidateCourseReggistrationCompleted;
+        public event PaymentRequestLineUpdateCompletedEventHandler PaymentRequestLineUpdateCompleted;
         
         /// <remarks/>
         public event PostAttendanceListCompletedEventHandler PostAttendanceListCompleted;
@@ -1637,9 +1645,6 @@ namespace Latest_Staff_Portal.NAVWS {
         
         /// <remarks/>
         public event SendImpSurrenderForApprovalCompletedEventHandler SendImpSurrenderForApprovalCompleted;
-        
-        /// <remarks/>
-        public event SendLeaveApplicationForApprovalCompletedEventHandler SendLeaveApplicationForApprovalCompleted;
         
         /// <remarks/>
         public event InsertApplicantRefereeCompletedEventHandler InsertApplicantRefereeCompleted;
@@ -2623,6 +2628,36 @@ namespace Latest_Staff_Portal.NAVWS {
         public event DeleteHRAppraisalDutiesRespCompletedEventHandler DeleteHRAppraisalDutiesRespCompleted;
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateCourseReggistration", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="ValidateCourseReggistration_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void ValidateCourseReggistration(string stdNo, string sem) {
+            this.Invoke("ValidateCourseReggistration", new object[] {
+                        stdNo,
+                        sem});
+        }
+        
+        /// <remarks/>
+        public void ValidateCourseReggistrationAsync(string stdNo, string sem) {
+            this.ValidateCourseReggistrationAsync(stdNo, sem, null);
+        }
+        
+        /// <remarks/>
+        public void ValidateCourseReggistrationAsync(string stdNo, string sem, object userState) {
+            if ((this.ValidateCourseReggistrationOperationCompleted == null)) {
+                this.ValidateCourseReggistrationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnValidateCourseReggistrationOperationCompleted);
+            }
+            this.InvokeAsync("ValidateCourseReggistration", new object[] {
+                        stdNo,
+                        sem}, this.ValidateCourseReggistrationOperationCompleted, userState);
+        }
+        
+        private void OnValidateCourseReggistrationOperationCompleted(object arg) {
+            if ((this.ValidateCourseReggistrationCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ValidateCourseReggistrationCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateCourseRegistration", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="ValidateCourseRegistration_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public void ValidateCourseRegistration(string stdNo, string prog, string semester) {
             this.Invoke("ValidateCourseRegistration", new object[] {
@@ -3250,6 +3285,37 @@ namespace Latest_Staff_Portal.NAVWS {
             if ((this.updateDashboardProfileCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.updateDashboardProfileCompleted(this, new updateDashboardProfileCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendLeaveApplicationForApproval" +
+            "", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendLeaveApplicationForApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void SendLeaveApplicationForApproval(string docNo, string emplNo) {
+            this.Invoke("SendLeaveApplicationForApproval", new object[] {
+                        docNo,
+                        emplNo});
+        }
+        
+        /// <remarks/>
+        public void SendLeaveApplicationForApprovalAsync(string docNo, string emplNo) {
+            this.SendLeaveApplicationForApprovalAsync(docNo, emplNo, null);
+        }
+        
+        /// <remarks/>
+        public void SendLeaveApplicationForApprovalAsync(string docNo, string emplNo, object userState) {
+            if ((this.SendLeaveApplicationForApprovalOperationCompleted == null)) {
+                this.SendLeaveApplicationForApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendLeaveApplicationForApprovalOperationCompleted);
+            }
+            this.InvokeAsync("SendLeaveApplicationForApproval", new object[] {
+                        docNo,
+                        emplNo}, this.SendLeaveApplicationForApprovalOperationCompleted, userState);
+        }
+        
+        private void OnSendLeaveApplicationForApprovalOperationCompleted(object arg) {
+            if ((this.SendLeaveApplicationForApprovalCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SendLeaveApplicationForApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -6235,32 +6301,36 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateCourseReggistration", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="ValidateCourseReggistration_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ValidateCourseReggistration(string stdNo, string sem) {
-            this.Invoke("ValidateCourseReggistration", new object[] {
-                        stdNo,
-                        sem});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:PaymentRequestLineUpdate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="PaymentRequestLineUpdate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PaymentRequestLineUpdate(string reqNo, int lineNo, decimal reqAmount, string desc) {
+            this.Invoke("PaymentRequestLineUpdate", new object[] {
+                        reqNo,
+                        lineNo,
+                        reqAmount,
+                        desc});
         }
         
         /// <remarks/>
-        public void ValidateCourseReggistrationAsync(string stdNo, string sem) {
-            this.ValidateCourseReggistrationAsync(stdNo, sem, null);
+        public void PaymentRequestLineUpdateAsync(string reqNo, int lineNo, decimal reqAmount, string desc) {
+            this.PaymentRequestLineUpdateAsync(reqNo, lineNo, reqAmount, desc, null);
         }
         
         /// <remarks/>
-        public void ValidateCourseReggistrationAsync(string stdNo, string sem, object userState) {
-            if ((this.ValidateCourseReggistrationOperationCompleted == null)) {
-                this.ValidateCourseReggistrationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnValidateCourseReggistrationOperationCompleted);
+        public void PaymentRequestLineUpdateAsync(string reqNo, int lineNo, decimal reqAmount, string desc, object userState) {
+            if ((this.PaymentRequestLineUpdateOperationCompleted == null)) {
+                this.PaymentRequestLineUpdateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPaymentRequestLineUpdateOperationCompleted);
             }
-            this.InvokeAsync("ValidateCourseReggistration", new object[] {
-                        stdNo,
-                        sem}, this.ValidateCourseReggistrationOperationCompleted, userState);
+            this.InvokeAsync("PaymentRequestLineUpdate", new object[] {
+                        reqNo,
+                        lineNo,
+                        reqAmount,
+                        desc}, this.PaymentRequestLineUpdateOperationCompleted, userState);
         }
         
-        private void OnValidateCourseReggistrationOperationCompleted(object arg) {
-            if ((this.ValidateCourseReggistrationCompleted != null)) {
+        private void OnPaymentRequestLineUpdateOperationCompleted(object arg) {
+            if ((this.PaymentRequestLineUpdateCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ValidateCourseReggistrationCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.PaymentRequestLineUpdateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -8963,37 +9033,6 @@ namespace Latest_Staff_Portal.NAVWS {
             if ((this.SendImpSurrenderForApprovalCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.SendImpSurrenderForApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendLeaveApplicationForApproval" +
-            "", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendLeaveApplicationForApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SendLeaveApplicationForApproval(string docNo, string emplNo) {
-            this.Invoke("SendLeaveApplicationForApproval", new object[] {
-                        docNo,
-                        emplNo});
-        }
-        
-        /// <remarks/>
-        public void SendLeaveApplicationForApprovalAsync(string docNo, string emplNo) {
-            this.SendLeaveApplicationForApprovalAsync(docNo, emplNo, null);
-        }
-        
-        /// <remarks/>
-        public void SendLeaveApplicationForApprovalAsync(string docNo, string emplNo, object userState) {
-            if ((this.SendLeaveApplicationForApprovalOperationCompleted == null)) {
-                this.SendLeaveApplicationForApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendLeaveApplicationForApprovalOperationCompleted);
-            }
-            this.InvokeAsync("SendLeaveApplicationForApproval", new object[] {
-                        docNo,
-                        emplNo}, this.SendLeaveApplicationForApprovalOperationCompleted, userState);
-        }
-        
-        private void OnSendLeaveApplicationForApprovalOperationCompleted(object arg) {
-            if ((this.SendLeaveApplicationForApprovalCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SendLeaveApplicationForApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -21395,6 +21434,10 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4161.0")]
+    public delegate void ValidateCourseReggistrationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4161.0")]
     public delegate void ValidateCourseRegistrationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
@@ -21706,6 +21749,10 @@ namespace Latest_Staff_Portal.NAVWS {
             }
         }
     }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4161.0")]
+    public delegate void SendLeaveApplicationForApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4161.0")]
@@ -22745,7 +22792,7 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4161.0")]
-    public delegate void ValidateCourseReggistrationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void PaymentRequestLineUpdateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4161.0")]
@@ -23416,10 +23463,6 @@ namespace Latest_Staff_Portal.NAVWS {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4161.0")]
     public delegate void SendImpSurrenderForApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4161.0")]
-    public delegate void SendLeaveApplicationForApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4161.0")]

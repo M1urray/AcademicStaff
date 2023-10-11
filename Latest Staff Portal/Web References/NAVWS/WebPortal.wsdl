@@ -2,6 +2,19 @@
 <definitions xmlns:tns="urn:microsoft-dynamics-schemas/codeunit/WebPortal" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal" xmlns="http://schemas.xmlsoap.org/wsdl/">
   <types>
     <schema elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="ValidateCourseReggistration">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="stdNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="sem" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ValidateCourseReggistration_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
       <element name="ValidateCourseRegistration">
         <complexType>
           <sequence>
@@ -290,6 +303,19 @@
           <sequence>
             <element minOccurs="1" maxOccurs="1" name="return_value" type="boolean" />
           </sequence>
+        </complexType>
+      </element>
+      <element name="SendLeaveApplicationForApproval">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="emplNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="SendLeaveApplicationForApproval_Result">
+        <complexType>
+          <sequence />
         </complexType>
       </element>
       <element name="SendRejectionEmailAlert">
@@ -1636,15 +1662,17 @@
           </sequence>
         </complexType>
       </element>
-      <element name="ValidateCourseReggistration">
+      <element name="PaymentRequestLineUpdate">
         <complexType>
           <sequence>
-            <element minOccurs="1" maxOccurs="1" name="stdNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="sem" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="reqNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="lineNo" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="reqAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="desc" type="string" />
           </sequence>
         </complexType>
       </element>
-      <element name="ValidateCourseReggistration_Result">
+      <element name="PaymentRequestLineUpdate_Result">
         <complexType>
           <sequence />
         </complexType>
@@ -2845,19 +2873,6 @@
         </complexType>
       </element>
       <element name="SendImpSurrenderForApproval_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
-      <element name="SendLeaveApplicationForApproval">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="emplNo" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="SendLeaveApplicationForApproval_Result">
         <complexType>
           <sequence />
         </complexType>
@@ -8120,6 +8135,12 @@
       </element>
     </schema>
   </types>
+  <message name="ValidateCourseReggistration">
+    <part name="parameters" element="tns:ValidateCourseReggistration" />
+  </message>
+  <message name="ValidateCourseReggistration_Result">
+    <part name="parameters" element="tns:ValidateCourseReggistration_Result" />
+  </message>
   <message name="ValidateCourseRegistration">
     <part name="parameters" element="tns:ValidateCourseRegistration" />
   </message>
@@ -8227,6 +8248,12 @@
   </message>
   <message name="updateDashboardProfile_Result">
     <part name="parameters" element="tns:updateDashboardProfile_Result" />
+  </message>
+  <message name="SendLeaveApplicationForApproval">
+    <part name="parameters" element="tns:SendLeaveApplicationForApproval" />
+  </message>
+  <message name="SendLeaveApplicationForApproval_Result">
+    <part name="parameters" element="tns:SendLeaveApplicationForApproval_Result" />
   </message>
   <message name="SendRejectionEmailAlert">
     <part name="parameters" element="tns:SendRejectionEmailAlert" />
@@ -8726,11 +8753,11 @@
   <message name="ValidateBiometrics_Result">
     <part name="parameters" element="tns:ValidateBiometrics_Result" />
   </message>
-  <message name="ValidateCourseReggistration">
-    <part name="parameters" element="tns:ValidateCourseReggistration" />
+  <message name="PaymentRequestLineUpdate">
+    <part name="parameters" element="tns:PaymentRequestLineUpdate" />
   </message>
-  <message name="ValidateCourseReggistration_Result">
-    <part name="parameters" element="tns:ValidateCourseReggistration_Result" />
+  <message name="PaymentRequestLineUpdate_Result">
+    <part name="parameters" element="tns:PaymentRequestLineUpdate_Result" />
   </message>
   <message name="PostAttendanceList">
     <part name="parameters" element="tns:PostAttendanceList" />
@@ -9217,12 +9244,6 @@
   </message>
   <message name="SendImpSurrenderForApproval_Result">
     <part name="parameters" element="tns:SendImpSurrenderForApproval_Result" />
-  </message>
-  <message name="SendLeaveApplicationForApproval">
-    <part name="parameters" element="tns:SendLeaveApplicationForApproval" />
-  </message>
-  <message name="SendLeaveApplicationForApproval_Result">
-    <part name="parameters" element="tns:SendLeaveApplicationForApproval_Result" />
   </message>
   <message name="InsertApplicantReferee">
     <part name="parameters" element="tns:InsertApplicantReferee" />
@@ -11187,6 +11208,10 @@
     <part name="parameters" element="tns:DeleteHRAppraisalDutiesResp_Result" />
   </message>
   <portType name="WebPortal_Port">
+    <operation name="ValidateCourseReggistration">
+      <input name="ValidateCourseReggistration" message="tns:ValidateCourseReggistration" />
+      <output name="ValidateCourseReggistration_Result" message="tns:ValidateCourseReggistration_Result" />
+    </operation>
     <operation name="ValidateCourseRegistration">
       <input name="ValidateCourseRegistration" message="tns:ValidateCourseRegistration" />
       <output name="ValidateCourseRegistration_Result" message="tns:ValidateCourseRegistration_Result" />
@@ -11258,6 +11283,10 @@
     <operation name="updateDashboardProfile">
       <input name="updateDashboardProfile" message="tns:updateDashboardProfile" />
       <output name="updateDashboardProfile_Result" message="tns:updateDashboardProfile_Result" />
+    </operation>
+    <operation name="SendLeaveApplicationForApproval">
+      <input name="SendLeaveApplicationForApproval" message="tns:SendLeaveApplicationForApproval" />
+      <output name="SendLeaveApplicationForApproval_Result" message="tns:SendLeaveApplicationForApproval_Result" />
     </operation>
     <operation name="SendRejectionEmailAlert">
       <input name="SendRejectionEmailAlert" message="tns:SendRejectionEmailAlert" />
@@ -11591,9 +11620,9 @@
       <input name="ValidateBiometrics" message="tns:ValidateBiometrics" />
       <output name="ValidateBiometrics_Result" message="tns:ValidateBiometrics_Result" />
     </operation>
-    <operation name="ValidateCourseReggistration">
-      <input name="ValidateCourseReggistration" message="tns:ValidateCourseReggistration" />
-      <output name="ValidateCourseReggistration_Result" message="tns:ValidateCourseReggistration_Result" />
+    <operation name="PaymentRequestLineUpdate">
+      <input name="PaymentRequestLineUpdate" message="tns:PaymentRequestLineUpdate" />
+      <output name="PaymentRequestLineUpdate_Result" message="tns:PaymentRequestLineUpdate_Result" />
     </operation>
     <operation name="PostAttendanceList">
       <input name="PostAttendanceList" message="tns:PostAttendanceList" />
@@ -11918,10 +11947,6 @@
     <operation name="SendImpSurrenderForApproval">
       <input name="SendImpSurrenderForApproval" message="tns:SendImpSurrenderForApproval" />
       <output name="SendImpSurrenderForApproval_Result" message="tns:SendImpSurrenderForApproval_Result" />
-    </operation>
-    <operation name="SendLeaveApplicationForApproval">
-      <input name="SendLeaveApplicationForApproval" message="tns:SendLeaveApplicationForApproval" />
-      <output name="SendLeaveApplicationForApproval_Result" message="tns:SendLeaveApplicationForApproval_Result" />
     </operation>
     <operation name="InsertApplicantReferee">
       <input name="InsertApplicantReferee" message="tns:InsertApplicantReferee" />
@@ -13234,6 +13259,15 @@
   </portType>
   <binding name="WebPortal_Binding" type="tns:WebPortal_Port">
     <binding transport="http://schemas.xmlsoap.org/soap/http" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    <operation name="ValidateCourseReggistration">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateCourseReggistration" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="ValidateCourseReggistration">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="ValidateCourseReggistration_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
     <operation name="ValidateCourseRegistration">
       <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateCourseRegistration" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       <input name="ValidateCourseRegistration">
@@ -13393,6 +13427,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="updateDashboardProfile_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="SendLeaveApplicationForApproval">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendLeaveApplicationForApproval" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="SendLeaveApplicationForApproval">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="SendLeaveApplicationForApproval_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -14143,12 +14186,12 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
-    <operation name="ValidateCourseReggistration">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateCourseReggistration" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="ValidateCourseReggistration">
+    <operation name="PaymentRequestLineUpdate">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:PaymentRequestLineUpdate" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="PaymentRequestLineUpdate">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
-      <output name="ValidateCourseReggistration_Result">
+      <output name="PaymentRequestLineUpdate_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -14878,15 +14921,6 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="SendImpSurrenderForApproval_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="SendLeaveApplicationForApproval">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendLeaveApplicationForApproval" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="SendLeaveApplicationForApproval">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="SendLeaveApplicationForApproval_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>

@@ -39,7 +39,7 @@ namespace Latest_Staff_Portal.ViewModel
         public int ImpCount { get; set; }
         public int SurrCount { get; set; }
         public int ClaimCount { get; set; }
-        public int PurchaseClaimCount { get; set; }
+        public int PaymentRequestCount { get; set; }
         public int TransportCount { get; set; }
         public int Clearance { get; set; }
         public int TransferOrder { get; set; }

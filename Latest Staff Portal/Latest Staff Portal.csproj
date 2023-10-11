@@ -502,7 +502,7 @@
     <Content Include="Views\StaffClearance\StaffClearanceListPartialView.cshtml" />
     <Content Include="Views\StaffClearance\NewStaffClearanceRequest.cshtml" />
     <Content Include="Views\StaffClearance\StaffClearanceDocumentView.cshtml" />
-    <Content Include="Views\DocumentApproval\Document Approval Views\PurchaseClaimApprovalDocDetails.cshtml" />
+    <Content Include="Views\DocumentApproval\Document Approval Views\PaymentRequestApprovalDocDetails.cshtml" />
     <Content Include="Views\PaymentRequest\FileAttachmentForm.cshtml" />
     <Content Include="Views\PaymentRequest\NewPaymentRequest.cshtml" />
     <Content Include="Views\PaymentRequest\PaymentRequestDocumentLineView.cshtml" />
@@ -510,6 +510,7 @@
     <Content Include="Views\PaymentRequest\PaymentRequestItemForm.cshtml" />
     <Content Include="Views\PaymentRequest\PaymentRequestReqListView.cshtml" />
     <Content Include="Views\PaymentRequest\PaymentRequestRequisitionList.cshtml" />
+    <Content Include="Views\PaymentRequest\PaymentReqEditItemForm.cshtml" />
     <None Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

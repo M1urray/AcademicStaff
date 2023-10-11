@@ -657,6 +657,82 @@
             }
         });
     };
+    var EditItem = function (DocNo, LnNo) {
+        $("#lblT").text("Edit Payment Request Line");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ LnNo: LnNo, DocNo: DocNo }),
+            url: '/PaymentRequest/EditPaymentRequestLine',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    };
+    var UpdateLineItem = function (LnNo) {
+        var paymentType = $("#ddlPaymentType").children("option:selected").val();
+        var amount = $("#txtAmount").val();
+        var paymentDescription = $("#txtDescription").val();
+
+        if (paymentType == "") {
+            Swal.fire('Warning', "Select Payment Type", 'warning');
+            return;
+    }
+    else if (amount == "") {
+        Swal.fire('Warning', "Enter Amount", 'warning');
+        return;
+    }
+        else if (paymentDescription == "") {
+        Swal.fire('Warning', "Give brief description of the item", 'warning');
+        return;
+    }
+        else if (paymentDescription.length > 150) {
+        Swal.fire('Warning', "Your Payment  Description should have a maximum of 200 characters", 'warning');
+        return;
+    }
+    else {
+        var DocNo = `@Model.No`;
+            var paymentRequestLine = {};
+            paymentRequestLine.ItemDesc = paymentDescription;
+           paymentRequestLine.Amount = amount;
+            paymentRequestLine.Item = paymentType;
+        ShowProgress();
+        $.ajax({
+            type: "POST",
+            url: "/PaymentRequest/UpdatePaymentRequestLine",
+            data: JSON.stringify({ DocNo: DocNo, LnNo: LnNo, paymentRequestLines: paymentRequestLine }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    HideProgress();
+                    LoadClaimDocumentLines(DocNo, 'Pending');
+                    $("#txtNetAmount").val(data.NetAmount);
+                    $("#myModal").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    Swal.fire('Warning', data.message, 'warning');
+                    HideProgress();
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+}
     var SendDocForApproval = function () {
         var DocNo = `@Model.No`;
         ShowProgress();

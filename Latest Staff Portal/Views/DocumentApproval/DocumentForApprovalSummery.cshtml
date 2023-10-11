@@ -51,10 +51,10 @@
                     hasNoPending = true;
                     <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70135454','Staff Claim Requisition','@Model.DocCount.Status','N');">Staff Claim Requisitions (<span class="badge badge-info badge-pill">@Model.DocCount.ClaimCount</span>)</a></li>
                 }
-                @if (Model.DocCount.PurchaseClaimCount > 0)
+                @if (Model.DocCount.PaymentRequestCount > 0)
                 {
                     hasNoPending = true;
-                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70135454','Purchase Claim Requisition','@Model.DocCount.Status','N');">Payment Requisitions (<span class="badge badge-info badge-pill">@Model.DocCount.PurchaseClaimCount</span>)</a></li>
+                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70135454','Payment Request Requisition','@Model.DocCount.Status','N');">Payment Requisitions (<span class="badge badge-info badge-pill">@Model.DocCount.PaymentRequestCount</span>)</a></li>
                 }
                 @if (Model.DocCount.Clearance > 0)
                 {

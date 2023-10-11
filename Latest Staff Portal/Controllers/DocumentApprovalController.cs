@@ -51,7 +51,7 @@ namespace Latest_Staff_Portal.Controllers
                         DocCount.TransferOrder = 0;
                         DocCount.CafCount = 0;
                         DocCount.PVCount = 0;
-                        DocCount.PurchaseClaimCount = 0;
+                        DocCount.PaymentRequestCount = 0;
 
                         string page = "ApprovalEntries?$filter=Approver_ID eq '" + userID + "' and Status eq '" + rn + "'&$format=json";
                         HttpWebResponse httpResponse = Credentials.GetOdataData(page);
@@ -92,7 +92,7 @@ namespace Latest_Staff_Portal.Controllers
                                 }
                                 if ((string)config["Table_ID"] == "70135454")
                                 {
-                                    DocCount.PurchaseClaimCount = DocCount.PurchaseClaimCount + 1;
+                                    DocCount.PaymentRequestCount = DocCount.PaymentRequestCount + 1;
                                 }
                                 if ((string)config["Table_ID"] == "70135362")
                                 {
@@ -964,14 +964,14 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        public PartialViewResult PurchaseClaimReqDocApprovalDetails(string DocNo, string Sequence)
+        public PartialViewResult PaymentRequestReqDocApprovalDetails(string DocNo, string Sequence)
         {
             try
             {
                 #region Purchase Claim Header
-                PurchaseClaimHeader ClaimDoc = new PurchaseClaimHeader();
+                PaymentRequestHeader ClaimDoc = new PaymentRequestHeader();
 
-                string page = "StaffClaimCard?$filter=No eq '" + DocNo + "'&$format=json";
+                string page = "PaymentRequestCard?$filter=No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -995,7 +995,7 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 #endregion
                 #region Purchase Claim Lines
-                List<PurchaseClaimLines> ClaimLines = new List<PurchaseClaimLines>();
+                List<PaymentRequestLines> ClaimLines = new List<PaymentRequestLines>();
                 string pageLine = "StaffCaimLines?$filter=No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
@@ -1005,7 +1005,7 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        PurchaseClaimLines claimLine = new PurchaseClaimLines();
+                        PaymentRequestLines claimLine = new PaymentRequestLines();
                         claimLine.AdvanceType = (string)config["Advance_Type"];
                         claimLine.Item = (string)config["Account_No"];
                         claimLine.ItemDesc = (string)config["Account_Name"];
@@ -1015,12 +1015,12 @@ namespace Latest_Staff_Portal.Controllers
                     }
                 }
                 #endregion
-                PurchaseClaimDocument docDetails = new PurchaseClaimDocument
+                PaymentRequestDocument docDetails = new PaymentRequestDocument
                 {
                     DocHeader = ClaimDoc,
-                    ListOfPurchaseClaimLines = ClaimLines
+                    ListOfPaymentRequestLines = ClaimLines
                 };
-                return PartialView("~/Views/DocumentApproval/Document Approval Views/StaffclaimApprovalDocDetails.cshtml", docDetails);
+                return PartialView("~/Views/DocumentApproval/Document Approval Views/PaymentRequestApprovalDocDetails.cshtml", docDetails);
             }
             catch (Exception ex)
             {

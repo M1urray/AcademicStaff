@@ -1,4 +1,5 @@
-﻿using Latest_Staff_Portal.CustomSecurity;
+﻿using iTextSharp.text.pdf.parser;
+using Latest_Staff_Portal.CustomSecurity;
 using Latest_Staff_Portal.Models;
 using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json.Linq;
@@ -43,7 +44,7 @@ namespace Latest_Staff_Portal.Controllers
                 string StaffNo = Session["Username"].ToString();
                 List<PaymentRequestList> ClaimList = new List<PaymentRequestList>();
 
-                string page = "StaffClaimList?$filter=Employee_No eq '" + StaffNo + "'&format=json";
+                string page = "PaymentRequestList?$filter=Employee_No eq '" + StaffNo + "'&format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -378,7 +379,7 @@ namespace Latest_Staff_Portal.Controllers
                     #region Payment Request Header
                     PaymentRequestHeader ClaimDoc = new PaymentRequestHeader();
 
-                    string page = "StaffClaimCard?$filter=No eq '" + DocNo + "'&format=json";
+                    string page = "PaymentRequestCard?$filter=No eq '" + DocNo + "'&format=json";
                     HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
@@ -529,7 +530,7 @@ namespace Latest_Staff_Portal.Controllers
 
                 Credentials.ObjNav.StaffClaimRequisitionLinesInsert(DocNo, item, Convert.ToDecimal(amnt), StaffNo, PaymentRequestHeader.Campus,
                     PaymentRequestHeader.Department, itemDesc, School);
-                string DocNetAmount = GetClaimDocNetAmount(DocNo);
+                string DocNetAmount = GetDocNetAmount(DocNo);
                 return Json(new { NetAmout = DocNetAmount, message = "Payment Request Line Added successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -543,7 +544,7 @@ namespace Latest_Staff_Portal.Controllers
             try
             {
                 Credentials.ObjNav.StaffClaimRemoveLine(Convert.ToInt32(LnNo), DocNo, ItemNo);
-                string DocNetAmount = GetClaimDocNetAmount(DocNo);
+                string DocNetAmount = GetDocNetAmount(DocNo);
                 return Json(new { NetAmout = DocNetAmount, message = "Payment Request Line Deleted successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -551,7 +552,24 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        protected string GetClaimDocNetAmount(string DocNo)
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult UpdatePaymentRequestLine(string DocNo, string LnNo, PaymentRequestLines paymentRequestLines)
+        {
+            try
+            {
+                string StaffNo = Session["Username"].ToString();
+                string itemDesc = paymentRequestLines.ItemDesc.Trim();
+                string amnt = paymentRequestLines.Amount.Trim();
+                Credentials.ObjNav.PaymentRequestLineUpdate(DocNo, Convert.ToInt32(LnNo), Convert.ToDecimal(amnt), itemDesc);
+                string DocNetAmount = GetDocNetAmount(DocNo);
+                return Json(new { NetAmount = DocNetAmount, message = "Payment Request Line updated successfully", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+           protected string GetDocNetAmount(string DocNo)
         {
             string amount = "";
             string page = "StaffClaimCard?$select=Total_Net_Amount&$filter=No eq '" + DocNo + "'&format=json";
@@ -570,6 +588,72 @@ namespace Latest_Staff_Portal.Controllers
                 }
             }
             return amount;
+        }
+        [AcceptVerbs(HttpVerbs.Post)]
+        public PartialViewResult EditPaymentRequestLine(string LnNo, string DocNo)
+        {
+            try
+            {
+                int ln = Convert.ToInt32(LnNo);
+                #region Payment Request Lines
+                PaymentRequestLines claimLine = new PaymentRequestLines();
+                string pageLine = "StaffCaimLines?$filter=No eq '" + DocNo + "' and Line_No eq " + ln + "&$format=json";
+                HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
+                using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    foreach (JObject config in details["value"])
+                    {
+                        claimLine.DocNo = (string)config["No"];
+                        claimLine.AdvanceType = (string)config["Advance_Type"];
+                        claimLine.Item = (string)config["Account_No"];
+                        claimLine.ItemDesc = (string)config["Account_Name"];
+                        claimLine.ItemDesc2 = (string)config["Purpose"];
+                        claimLine.LnNo = (string)config["Line_No"];
+                        claimLine.Amount = Convert.ToDecimal((string)config["Amount"]).ToString("#,##0.00");
+                    }
+                }
+                #endregion
+                #region Imprest Type List
+                List<PaymentRequestTypes> ClaimTList = new List<PaymentRequestTypes>();
+                string page = "StaffClaimTypes?$filter=Type eq 'Claim' and Description ne ''&format=json";
+
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+                    foreach (JObject config in details["value"])
+                    {
+                        PaymentRequestTypes ClaimList = new PaymentRequestTypes();
+                        ClaimList.Code = (string)config["Code"];
+                        ClaimList.Description = (string)config["Description"];
+                        ClaimTList.Add(ClaimList);
+                    }
+                }
+                #endregion
+                PaymentRequestItemDetails paymentRequest = new PaymentRequestItemDetails
+                {
+                    ItemDetails = claimLine,
+                    ListOfPaymentRequestTypes = ClaimTList.Select(x =>
+                                          new SelectListItem()
+                                          {
+                                              Text = x.Description,
+                                              Value = x.Code
+                                          }).OrderBy(x => x.Text).ToList()
+                };
+                return PartialView("~/Views/PaymentRequest/PaymentReqEditItemForm.cshtml", paymentRequest);
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+            }
         }
         [AcceptVerbs(HttpVerbs.Get)]
         public PartialViewResult FileUploadForm()

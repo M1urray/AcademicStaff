@@ -78,4 +78,9 @@ namespace Latest_Staff_Portal.ViewModel
         public PaymentRequestHeader DocHeader { get; set; }
         public List<PaymentRequestLines> ListOfPaymentRequestLines { get; set; }
     }
+    public class PaymentRequestItemDetails
+    {
+        public List<SelectListItem> ListOfPaymentRequestTypes { get; set; }
+        public PaymentRequestLines ItemDetails { get; set; }
+    }
 }

@@ -502,7 +502,7 @@ namespace Latest_Staff_Portal.Controllers
 
                 Credentials.ObjNav.StaffClaimRequisitionLinesInsert(DocNo, item, Convert.ToDecimal(amnt), StaffNo, staffClaimHeader.Campus,
                     staffClaimHeader.Department, itemDesc, School);
-                string DocNetAmount = GetClaimDocNetAmount(DocNo);
+                string DocNetAmount = GetDocNetAmount(DocNo);
                 return Json(new { NetAmout = DocNetAmount, message = "Claim Line Added successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -516,7 +516,7 @@ namespace Latest_Staff_Portal.Controllers
             try
             {
                 Credentials.ObjNav.StaffClaimRemoveLine(Convert.ToInt32(LnNo), DocNo, ItemNo);
-                string DocNetAmount = GetClaimDocNetAmount(DocNo);
+                string DocNetAmount = GetDocNetAmount(DocNo);
                 return Json(new { NetAmout = DocNetAmount, message = "Claim Line Deleted successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -524,7 +524,7 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        protected string GetClaimDocNetAmount(string DocNo)
+        protected string GetDocNetAmount(string DocNo)
         {
             string amount = "";
             string page = "StaffClaimCard?$select=Total_Net_Amount&$filter=No eq '" + DocNo + "'&format=json";

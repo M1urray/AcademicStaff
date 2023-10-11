@@ -1,4 +1,4 @@
-﻿@model Latest_Staff_Portal.ViewModel.PurchaseClaimDocument
+﻿@model Latest_Staff_Portal.ViewModel.PaymentRequestDocument
 <div class="row">
     <div class="col-md-6">
         <b>Document No</b>
@@ -66,9 +66,9 @@
         </thead>
         <tbody>
             @{
-                if (Model.ListOfPurchaseClaimLines != null && Model.ListOfPurchaseClaimLines.Count() > 0)
+                if (Model.ListOfPaymentRequestLines != null && Model.ListOfPaymentRequestLines.Count() > 0)
                 {
-                    foreach (var item in Model.ListOfPurchaseClaimLines)
+                    foreach (var item in Model.ListOfPaymentRequestLines)
                     {
                         <tr>
                             <td>
