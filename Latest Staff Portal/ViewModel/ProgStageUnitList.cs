@@ -14,4 +14,8 @@ namespace Latest_Staff_Portal.ViewModel
     {
         public string ListOfProgrammesStageUnits { get; set; }
     }
+    public class LessonList
+    {
+        public List<SelectListItem> ListOfLessons { get; set; }
+    }
 }

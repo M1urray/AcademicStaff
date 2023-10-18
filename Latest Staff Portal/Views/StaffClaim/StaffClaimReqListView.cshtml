@@ -7,8 +7,7 @@
                 <th>No</th>
                 <th>Date</th>
                 <th>Request Description</th>
-                <th>Directorate</th>
-                <th>Department</th>
+                <th>Responsibility Center</th>
                 <th>Status</th>
             </tr>
         </thead>
@@ -19,9 +18,7 @@
                     foreach (var item in Model)
                     {
                         <tr>
-                            <td>
-                                <input type="button" onclick="SelectedRow('@item.No','@item.Status');" class="btn btn-sm btn-danger" value="Select" />
-                            </td>
+                            <td><a href="#" onclick="SelectedRow('@item.No');">Select</a></td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.No)
                             </td>
@@ -32,10 +29,7 @@
                                 @Html.DisplayFor(modelItem => item.Purpose)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.BudgetCeter)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Function)
+                                @Html.DisplayFor(modelItem => item.RespC)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Status)

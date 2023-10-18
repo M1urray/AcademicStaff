@@ -1,0 +1,18 @@
+﻿@model Latest_Staff_Portal.ViewModel.GeneralComments
+<div class="row">
+    <div class="col-md-12">
+        <b>Apprisee Comments</b>
+        @Html.TextAreaFor(m => m.AppraiseeComment, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "ObjAppraisorComments" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <b>Supervisor Comments</b>
+        @Html.TextAreaFor(m => m.SuporvisorComment, new { @class = "form-control", @id = "GeneralAppraisorComments" })
+    </div>
+</div>
+<hr />
+<div align="center">
+    <input type="button" value="Save Comments" class="btn btn-primary" onclick="SaveSupComments('5');" />
+</div>
+

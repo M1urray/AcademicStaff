@@ -2,8 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Latest_Staff_Portal.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Latest_Staff_Portal_NAVWS_WebService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://sk-erp-server.sk.org:7047/ERP/WS/Sports%20Kenya/Codeunit/WebService</Value>
+    <Setting Name="Latest_Staff_Portal_NAVW_WebPortal" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://41.89.236.8:7047/ERP/WS/THARAKA%20UNIVERSITY%20COLLEGE/Codeunit/WebPortal</Value>
+    </Setting>
+    <Setting Name="Latest_Staff_Portal_NAVWS_WebPortal" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://erp.dsl.ke:7333/MIBS/WS/MIBS/Codeunit/WebPortal</Value>
     </Setting>
   </Settings>
 </SettingsFile>

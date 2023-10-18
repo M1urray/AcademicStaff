@@ -10,19 +10,18 @@
     }
 
     .BtnPadding {
-        padding: 1px;
+        padding: 4px;
         font-size: 12px;
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div class="card pre-scrollable">
     <div class="card-title">Transport Requisition List</div>
     <div class="card-body">
         <a href="#" onclick="NewTrasnportRequisition();" class="btn btn-primary BtnPadding">New Transport Request</a>
+        <a href="#" onclick="ViewTransporteDoc();" class="btn btn-danger BtnPadding disabled" id="ViewDoc">View Document</a>
+        <a href="#" onclick="SendDocForApproval();" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send Approval Request</a>
+        <a href="#" onclick="CancelDocForApproval();" class="btn btn-danger BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
+        <a href="#" onclick="ViewApprovalTrail();" class="btn btn-primary BtnPadding disabled" id="AppTrail">Document Approval Status</a>
         <hr />
         <div id="divTransportRegList"></div>
     </div>
@@ -45,24 +44,6 @@
         </div>
     </div>
 </div>
-@*//////////////////////Modal Links////////////////////////////*@
-<div class="modal fade" id="myModalLinks" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content bg-white">
-            <div class="modal-header">
-                <h4 class="modal-title">Actions</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="modalBodyLinks">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script src="~/assets/js/ShowProgression.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -76,7 +57,7 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: "/Transport/TransportRequisitionListPartialView",
+            url: '@Url.Action("TransportRequisitionListPartialView", "Transport")',
             success: function (data) {
                 $("#divTransportRegList").html(data);
                 HideProgress();
@@ -86,7 +67,38 @@
                 alert("There is some problem to process your request. Please try after some time");
             }
         });
-    }    
+    }
+    var SelectedRow = function () {
+        $('table tbody tr').click(function () {
+            $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
+            var row = $('#datatable-buttons tr.selectedTableRow');
+            var Status = row.find("td").eq(8).html().trim();
+            if (Status == "Open") {
+                $("#ViewDoc").removeClass("disabled");
+                $("#SendDocAppr").removeClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
+            }
+            else if (Status == "Pending Approval") {
+                $("#ViewDoc").removeClass("disabled");
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").removeClass("disabled");
+                $("#AppTrail").removeClass("disabled");
+            }
+            else if (Status == "Approved") {
+                $("#ViewDoc").removeClass("disabled");
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
+            }
+            else {
+                $("#ViewDoc").addClass("disabled");
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
+            }
+        });
+    }
     var NewTrasnportRequisition = function () {
         $("#labelF").text("New Transport Requisition");
         ShowProgress();
@@ -96,7 +108,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Transport/NewTransportApplication',
+            url: '@Url.Action("NewTransportApplication", "Transport")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -111,7 +123,7 @@
     var SubmitTransportRequisition = function () {
         var Commencement = $("#txtCommence").val();
         var Destination = $("#txtDestination").val();
-        //var ResponC = $("#ddlRespC").children("option:selected").val();
+        var ResponC = $("#ddlRespC").children("option:selected").val();
         var DateTrip = $("#dtPicker").val();
         var TimeTrip = $("#txtTime").val();
         var NoOfDays = $("#txtNoOfDays").val();
@@ -124,10 +136,10 @@
             Swal.fire('error', 'Enter Place of Destination', 'error');
             return;
         }
-        //else if (ResponC == "") {
-        //    Swal.fire('error', 'Select Responsibility Center', 'error');
-        //    return;
-        //}
+        else if (ResponC == "") {
+            Swal.fire('error', 'Select Responsibility Center', 'error');
+            return;
+        }
         else if (DateTrip == "") {
             Swal.fire('error', 'Select Date of Trip', 'error');
             return;
@@ -148,7 +160,7 @@
             var NewTransportDocument = {};
             NewTransportDocument.Commencement = Commencement;
             NewTransportDocument.Destination = Destination;
-            //NewTransportDocument.RespC = ResponC;
+            NewTransportDocument.RespC = ResponC;
             NewTransportDocument.DateTrip = DateTrip;
             NewTransportDocument.TimeTrip = TimeTrip;
             NewTransportDocument.NoOfDays = NoOfDays;
@@ -156,15 +168,17 @@
             ShowProgress();
             $.ajax({
                 type: "post",
-                url: "/Transport/SubmitTransportDocument",
+                url: '@Url.Action("SubmitTransportDocument", "Transport")',
                 data: JSON.stringify({ NewApp: NewTransportDocument }),
                 contentType: "application/json; charset = utf-8",
                 success: function (data) {
                     if (data.success == true) {
-                        window.location = data.message;
+                        //window.location = data.message;
+                        LoadTransportReqList();
                         $("#myModal").modal("hide");
                     }
                     else {
+                        LoadTransportReqList();
                         $("#myModal").modal("hide");
                         HideProgress();
                         Swal.fire('error', data.message, 'error');
@@ -177,32 +191,17 @@
             });
         }
     }
-    var SelectedRow = function (DocNo, Status) {
+    var ViewTransporteDoc = function () {
+        //$("#labelF").text("Leave Details Document");
         ShowProgress();
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'TRANSP' }),
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: '/Common/CommonActions',
-            success: function (data) {
-                $("#modalBodyLinks").html(data);
-                HideProgress();
-                $("#myModalLinks").modal("show");
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        window.location = '@Url.Action("TransportDocumentDetails", "Transport")?AppDoc=' + DocNo;
     }
-    var ViewDoc = function (DocNo) {
-        ShowProgress();
-        window.location = "/Transport/TransportDocumentDetails?AppDoc=" + DocNo;
-    }
-    var SendDocForApproval = function (DocNo) {
+    var SendDocForApproval = function () {
+        $("#labelF").text("Leave Details Document");
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
         ShowProgress();
         $.ajax({
             async: true,
@@ -211,25 +210,27 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Transport/SendDocAppForApproval',
+            url: '@Url.Action("SendDocAppForApproval", "Transport")',
             success: function (data) {
+                LoadLeaveReqList();
                 if (data.success == true) {
-                    HideProgress();
-                    LoadTransportReqList();
-                    $("#myModalLinks").modal("hide");
                     Swal.fire('Success', data.message, 'success');
                 }
                 else {
-                    HideProgress();
                     Swal.fire('Error', data.message, 'error');
                 }
             },
             error: function (err) {
                 Swal.fire('Warning', err, 'warning');
             }
-        });        
+        });
+        DiableButtons();
+        HideProgress();
     }
-    var CancelDocForApproval = function (DocNo) {
+    var CancelDocForApproval = function () {
+        $("#labelF").text("Leave Details Document");
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
         ShowProgress();
         $.ajax({
             async: true,
@@ -238,15 +239,16 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Transport/CancelTransportAppForApproval',
+            url: '@Url.Action("CancelLeaveAppForApproval", "Transport")',
             success: function (data) {
+                LoadLeaveReqList();
                 if (data.success == true) {
+                    DiableButtons();
                     HideProgress();
-                    LoadTransportReqList();
-                    $("#myModalLinks").modal("hide");
                     Swal.fire('Success', data.message, 'success');
                 }
                 else {
+                    DiableButtons();
                     HideProgress();
                     Swal.fire('Error', data.message, 'error');
                 }
@@ -256,22 +258,24 @@
                 Swal.fire('Warning', err, 'warning');
             }
         });
+
     }
-    var ViewApprovalTrail = function (DocNo) {
-        $("#labelF").text("Document Approval Trail");
+    var ViewApprovalTrail = function () {
+        $("#labelF").text("Document Approval Status");
         ShowProgress();
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
         $.ajax({
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, RecID: "FLT-Transport Requisition: " + DocNo }),
+            data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/DocumentApprovalTrail',
+            url: '@Url.Action("LeaveDocumentApprovalTrail", "Common")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
-                $("#myModalLinks").modal("hide");
                 $("#myModal").modal("show");
             },
             error: function (err) {
@@ -280,29 +284,12 @@
             }
         });
     }
-    var ViewDocComments = function (DocNo) {
-        $("#labelF").text("Document Comments");
-        ShowProgress();
-        var RecordID = "FLT-Transport Requisition: " + DocNo;
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            data: JSON.stringify({ RecID: RecordID }),
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: '/Common/DocumentApprovalComments',
-            success: function (data) {
-                $("#modalBody").html(data);
-                HideProgress();
-                $("#myModalLinks").modal("hide");
-                $("#myModal").modal("show");
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
+    var DiableButtons = function () {
+        $("#ViewDoc").addClass("disabled");
+        $("#SendDocAppr").addClass("disabled");
+        $("#CancelDocAppr").addClass("disabled");
+        $("#AppTrail").addClass("disabled");
+        $('table tbody tr').siblings().removeClass("selectedTableRow");
     }
 </script>
 

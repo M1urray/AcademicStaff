@@ -18,11 +18,6 @@
         font-size: 12px;
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div style="background-color: black;">
     <a href="#" onclick="ImprestSurrenderRequisitionLink();" style="color:yellow"><<< Back To Imprest Surrender List</a>
 </div>
@@ -61,20 +56,22 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <b>Branch</b>
-                @Html.DropDownListFor(m => m.Directorate, new SelectList(Model.ListOfDirectorate, "Value", "Text", Model.Directorate), "--Select Directorate--", new { @id = "ddlDirectorate", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                <b>Institute</b>
+                @Html.TextBoxFor(m => m.CampusName, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
             </div>
             <div class="col-md-6">
                 <b>Department</b>
-                @Html.DropDownListFor(m => m.Department, new SelectList(Model.ListOfDepartment, "Value", "Text", Model.Department), "--Select Department--", new { @id = "ddlDepartment", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                @Html.TextBoxFor(m => m.DepartmentName, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <b>Status</b>
-                @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                <b>Responsibility</b>
+                @Html.TextBoxFor(m => m.RespC, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
             </div>
             <div class="col-md-6">
+                <b>Status</b>
+                @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
             </div>
         </div>
         <hr />
@@ -162,8 +159,6 @@
         else {
             $("#DivSendForApproval").hide();
         }
-        document.getElementById("ddlDirectorate").disabled = true;
-        document.getElementById("ddlDepartment").disabled = true;
     });
     var LoadImprestSurrenderLines = function (DocNo, Status) {
         ShowProgress();
@@ -196,7 +191,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            data: JSON.stringify({ DocNo: DocNo, TableID: 70135168, Status: Status}),
+            data: JSON.stringify({ DocNo: DocNo, TableID: 70135450, Status: Status}),
             url: "/Common/DocumentAttachments",
             success: function (data) {
                 HideProgress();
@@ -212,7 +207,7 @@
         ShowProgress();
         window.location = "/ImprestSurrender/ImprestSurrenderRequisitionList";
     }
-    var EditItem = function (DocNo, AccNo, Amnt, EntryNo) {
+    var EditItem = function (DocNo, AccNo, Amnt) {
         $("#lblTle").text("New Surrender Line");
         ShowProgress();
         $.ajax({
@@ -221,7 +216,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            data: JSON.stringify({ DocNo: DocNo, AccountNo: AccNo, Amount: Amnt, EntryNo: EntryNo }),
+            data: JSON.stringify({ DocNo: DocNo, AccountNo: AccNo, Amount: Amnt }),
             url: '/ImprestSurrender/EditImpSurrenderLine',
             success: function (data) {
                 $("#modalBody").html(data);
@@ -234,8 +229,8 @@
             }
         });
     };
-    var UpdateLineItem = function (DocNo, AccNo,Amnt,EntryNo) {
-        var ActaulAmount = parseFloat($("#txtAmount").val());
+    var UpdateLineItem = function (DocNo, AccNo,Amnt) {
+        var ActaulAmount = $("#txtAmount").val();
         var Receipt = $("#ddlReceiptNo").children("option:selected").val();
 
         if ((ActaulAmount == "0.00" || ActaulAmount == "") && Receipt == "") {
@@ -252,7 +247,7 @@
             $.ajax({
                 type: "POST",
                 url: "/ImprestSurrender/UpdateSurrenderLine",
-                data: JSON.stringify({ DocNo: DocNo, AccNo: AccNo, ActualSpend: ActaulAmount, ReceiptNo: Receipt, EntryNo: EntryNo}),
+                data: JSON.stringify({ DocNo: DocNo, AccNo: AccNo, ActualSpend: ActaulAmount, ReceiptNo: Receipt}),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -287,32 +282,27 @@
             processData: false,
             data: JSON.stringify({ tblID: tbl, No: No, ID: Id, fileName: fName, ext: ext }),
             success: function (data) {
-                try {
-                    if (data.success == true) {
-                        if (data.view == true) {
-                            var viewer = $("#modalAttachmentBody");
-                            if (ext == "pdf") {
-                                PDFObject.embed("data:application/" + ext + ";base64," + data.message + "", viewer);
-                            }
-                            if (ext == "png" || ext == "jpg") {
-                                PDFObject.embed("data:image/" + ext + ";base64," + data.message + "", viewer);
-                            }
-                            $("#myModalAttachment").modal("show");
-                            HideProgress();
+                if (data.success == true) {
+                    if (data.view == true) {
+                        var viewer = $("#modalAttachmentBody");
+                        if (ext == "pdf") {
+                            PDFObject.embed("data:application/" + ext + ";base64," + data.message + "", viewer);
                         }
-                        else {
-                            window.location = '/Common/AttachmentDownload?fileName=' + data.message;
-                            Swal.fire('Success', 'Document Downloaded successfully', 'success');
-                            HideProgress();
+                        if (ext == "png" || ext == "jpg") {
+                            PDFObject.embed("data:image/" + ext + ";base64," + data.message + "", viewer);
                         }
+                        $("#myModalAttachment").modal("show");
+                        HideProgress();
                     }
                     else {
+                        window.location = '/Common/AttachmentDownload?fileName=' + data.message;
+                        Swal.fire('Success', 'Document Downloaded successfully', 'success');
                         HideProgress();
-                        Swal.fire('Warning', data.message, 'warning');
                     }
                 }
-                catch (ex) {
-                    Swal.fire('Warning', ex, 'warning');
+                else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
                 }
             },
             error: function (err) {
@@ -383,52 +373,48 @@
         });
     };
     var SaveAttachmentFile = function () {
-        var DocNo = `@Model.No`;
+        //var DocNo = `@Model.No`;
+        var DocNo = "SUR-00064";
         var filename; var base64String; var filetype;
-        var files = document.getElementById('ImprestSurrenderfileAttachment').files;
+        var files = document.getElementById('fileAttachment').files;
         if (files.length) {
             var file = files[0];
-            if (file.size > 2000000) {
-                Swal.fire('Warning', 'Please only files less than 2MB allowed. Thanks!!', 'warning');
-            }
-            else {
-                var blob = file.slice();
-                filetype = file.type;
-                filename = file.name;
-                var reader = new FileReader();
-                reader.onloadend = function (evt) {
-                    if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-                        var cont = evt.target.result
-                        base64String = getB64Str(cont);
-                        ShowProgress();
-                        //Send the JSON array to Controller using AJAX.
-                        $.ajax({
-                            type: "POST",
-                            url: "/Common/SaveAttachedFile",
-                            data: JSON.stringify({ DocNo: DocNo, base64Upload: base64String, fileName: filename, Extn: filetype, TableID: 70135168 }),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.success) {
-                                    HideProgress();
-                                    GetDocumentAttachments();
-                                    $("#myModal").modal("hide");
-                                    Swal.fire('Success', data.message, 'success');
-                                }
-                                else {
-                                    Swal.fire('Warning', data.message, 'warning');
-                                    HideProgress();
-                                }
-                            },
-                            error: function (err) {
+            var blob = file.slice();
+            filetype = file.type;
+            filename = file.name;
+            var reader = new FileReader();
+            reader.onloadend = function (evt) {
+                if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+                    var cont = evt.target.result
+                    base64String = getB64Str(cont);
+                    ShowProgress();
+                    //Send the JSON array to Controller using AJAX.
+                    $.ajax({
+                        type: "POST",
+                        url: "/Common/SaveAttachedFile",
+                        data: JSON.stringify({ DocNo: DocNo, base64Upload: base64String, fileName: filename, Extn: filetype, TableID: 70135450 }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success) {
+                                HideProgress();
+                                GetDocumentAttachments();
+                                $("#myModal").modal("hide");
+                                Swal.fire('Success', data.message, 'success');
+                            }
+                            else {
+                                Swal.fire('Warning', data.message, 'warning');
+                                HideProgress();
+                            }
+                        },
+                        error: function (err) {
                                 HideProgress();
                                 Swal.fire('Warning', err, 'warning');
-                            }
-                        });
-                    }
-                };
-                reader.readAsArrayBuffer(blob);
-            }
+                        }
+                    });
+                }
+            };
+            reader.readAsArrayBuffer(blob);
         }
     };
     function getB64Str(buffer) {
@@ -458,14 +444,15 @@
                     async: true,
                     type: "POST",
                     datatype: "json",
-                    data: JSON.stringify({ DocNo: DocNo, Redirect: "Y" }),
+                    data: JSON.stringify({ DocNo: DocNo }),
                     contentType: "application/json; charset = utf-8",
                     processData: false,
                     url: '/ImprestSurrender/SendImprestSurrenderForApproval',
                     success: function (data) {
                         if (data.success == true) {
                             HideProgress();
-                            window.location = "/ImprestSurrender/ImprestSurrenderRequisitionList";
+                            LoadImprestSurrenderLines(`@Model.No`, 'Pending Approval');
+                            Swal.fire('Success', data.message, 'success');
                         }
                         else {
                             HideProgress();

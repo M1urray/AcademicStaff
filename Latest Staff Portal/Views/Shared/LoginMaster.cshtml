@@ -21,9 +21,9 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Sport Kenya | Staff Portal</title>
+    <title>MIBs | Staff Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Sports Kenya Staff Portal" name="description" />
+    <meta content="MIBs Staff Portal" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="~/assets/images/favicon.ico">
@@ -37,42 +37,49 @@
     <link href="~/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
     <script src="~/assets/js/jquery2.0.3.min.js"></script>
+    <style>        
+        .card-body {
+            background-image: linear-gradient(to bottom,#3d57fa,#fd4c4f);
+        }
+
+        .text-muted {
+            color: #006dd9 !important;
+        }
+
+        .lblClass {
+            color: wheat;
+        }
+        .bg-soft-primary {
+            border: 5px solid;
+        }
+    </style>
 </head>
 <body>
     @*<script src="~/assets/js/ObfuscateSite.js"></script>*@
+    <link href="~/assets/css/Loader.css" rel="stylesheet" />
+    <div class="loading" align="center" id="divLoader">
+        <br />
+        <img src="~/assets/images/ajax-loader2.gif" alt="" width="150" height="150" />
+    </div>
     <div class="account-pages my-5 pt-sm-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6 col-xl-5">
                     <div class="card overflow-hidden">
-                        <div class="bg-danger">
+                        <div class="bg-soft-primary">
                             <div class="row">
-                                <div class="col-7">
-                                    <div class="text-primary p-4">
-                                        <h5 class="text-primary textAnimation" id="h5">@Greetings !</h5>
-                                        <p>Login to continue to Staff Portal.</p>
-                                    </div>
-                                </div>
-                                <div class="col-5 align-self-end">
-                                    <img src="~/assets/images/profile-img.png" alt="" class="img-fluid">
+                                <div class="col-12">
+                                    <img src="~/assets/images/Logo.png" alt="" class="img-fluid">
                                 </div>
                             </div>
                         </div>
                         <div class="card-body pt-0">
-                            <div>
-                                <a href="#">
-                                    <div class="avatar-md profile-user-wid mb-4">
-                                        <span class="avatar-title rounded-circle bg-white">
-                                            <img src="~/assets/images/Logo.png" alt="" class="rounded-circle" height="60">
-                                        </span>
-                                    </div>
-                                </a>
-                            </div>
+                            <hr />
                             @RenderBody()
                         </div>
                     </div>
                     <div class="mt-5 text-center">
-                        <p>© @DateTime.Now.Year. Designed <i class="mdi mdi-heart text-danger"></i> by DSL Systems</p>
+                        <p>© @DateTime.Now.Year. Designed <i class="mdi mdi-heart text-danger"></i> by <a href="http://dsl.ke/" target="_blank">DSL Systems</a></p>
                     </div>
                 </div>
             </div>
@@ -80,5 +87,6 @@
     </div>
     <!-- Sweet Alerts js -->
     <script src="~/assets/js/sweetalert2.min.js"></script>
+    <script src="~/assets/js/ShowProgression.js"></script>
 </body>
 </html>

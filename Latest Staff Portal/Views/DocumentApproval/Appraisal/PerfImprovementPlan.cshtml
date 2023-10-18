@@ -1,0 +1,72 @@
+﻿@model Latest_Staff_Portal.ViewModel.SectionDetails
+<style>
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div class="pre-scrollable">
+    <table id="tableSkillDev" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th>Area of Improvement</th>
+                <th width="15%">Weight</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    {
+                        if (Model.ObjList.Count() > 0)
+                        {
+                            int i = 1;
+                            foreach (var item in Model.ObjList)
+                            {
+                                <tr class="HasData">
+                                    <td>
+                                        @i
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Objective)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.weight)
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr class="NoData">
+                                <td colspan="3" style="color:red">
+                                    No Records Found
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+        </tbody>        
+    </table>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <b>Apprisee Comments</b>
+        @Html.TextAreaFor(m => m.AppraiseeComment, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "ObjAppraisorComments" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <b>Supervisor Comments</b>
+        @Html.TextAreaFor(m => m.SuporvisorComment, new { @class = "form-control", @id = "SkillsDevAppraisorComments" })
+    </div>
+</div>
+<hr />
+<div align="center">
+    <input type="button" value="Save Comments" class="btn btn-primary" onclick="SaveSupComments('4');" />
+</div>
+

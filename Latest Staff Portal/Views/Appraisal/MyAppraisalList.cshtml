@@ -15,23 +15,19 @@
     }
 
     .BtnPadding {
-        padding: 1px;
+        padding: 4px;
         font-size: 12px;
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div class="card pre-scrollable">
     <div class="card-title">My Appraisal List</div>
     <div class="card-body">
         <a href="#" onclick="NewAppraisalDoc();" class="btn btn-primary BtnPadding">Create Appraisal Document</a>
         <a href="#" onclick="ViewAppraisalDoc();" class="btn btn-danger BtnPadding disabled" id="ViewDoc">View Document</a>
-        @*<a href="#" onclick="SendLeaveDocForApproval();" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send Approval Request</a>
-        <a href="#" onclick="CancelLeaveDocForApproval();" class="btn btn-danger BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
-        <a href="#" onclick="ViewLeaveApprovalTrail();" class="btn btn-primary BtnPadding disabled" id="AppTrail">Document Approval Status</a>*@
+        <a href="#" onclick="SendDocForApproval();" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send Approval Request</a>
+        <a href="#" onclick="CancelDocForApproval();" class="btn btn-danger BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
+        <a href="#" onclick="ViewApprovalTrail();" class="btn btn-primary BtnPadding disabled" id="AppTrail">Document Approval Status</a>
+        <a href="#" onclick="GenerateApprisalReport();" class="btn btn-danger BtnPadding disabled" id="IdReport">Print Report</a>
         <hr />
         <div id="divAppraisalList"></div>
     </div>
@@ -54,7 +50,26 @@
         </div>
     </div>
 </div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModalReport" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">P9 Report</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyReport" style="width:100%;height:450px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         LoadAppraisalReqList();
@@ -67,7 +82,7 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: "/Appraisal/AppraisalRequisitionListPartialView",
+            url: '@Url.Action("AppraisalRequisitionListPartialView", "Appraisal")',
             success: function (data) {
                 HideProgress();
                 $("#divAppraisalList").html(data);
@@ -87,7 +102,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Appraisal/NewApprisalRequisition',
+            url: '@Url.Action("NewApprisalRequisition", "Appraisal")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -101,29 +116,29 @@
     }
     var SubmitAppraisalRequisition = function () {
         var ApprisalPeriod = $("#ddlApprPeriod").children("option:selected").val();
-        var SupNo = $("#ddlSup").children("option:selected").val();
-        //var ResponC = $("#ddlRespC").children("option:selected").val();
+        var ApprisalType = $("#ddlAppTypes").children("option:selected").val();
+        var ResponC = $("#ddlRespC").children("option:selected").val();
         if (ApprisalPeriod == "") {
             Swal.fire('error', 'Select Apprisal Period', 'error');
             return;
         }
-        //else if (ApprisalType == "") {
-        //    Swal.fire('error', 'Select Appraisal Types', 'error');
-        //    return;
-        //}
-        //else if (ResponC == "") {
-        //    Swal.fire('error', 'Select Responsibility Center', 'error');
-        //    return;
-        //}
+        else if (ApprisalType == "") {
+            Swal.fire('error', 'Select Appraisal Types', 'error');
+            return;
+        }
+        else if (ResponC == "") {
+            Swal.fire('error', 'Select Responsibility Center', 'error');
+            return;
+        }
         else {
             var NewAppraisalDocument = {};
             NewAppraisalDocument.ApprisalPeriod = ApprisalPeriod;
-            NewAppraisalDocument.SupNo = SupNo;
-            //NewAppraisalDocument.Responsibility = ResponC;
+            NewAppraisalDocument.ApprisalType = ApprisalType;
+            NewAppraisalDocument.Responsibility = ResponC;
             ShowProgress();
             $.ajax({
                 type: "post",
-                url: "/Appraisal/SubmitAppraisalDocument",
+                url:'@Url.Action("SubmitAppraisalDocument", "Appraisal")',
                 data: JSON.stringify({ NewApp: NewAppraisalDocument }),
                 contentType: "application/json; charset = utf-8",
                 success: function (data) {
@@ -131,9 +146,9 @@
                         window.location = data.message;
                     }
                     else {
-                        HideProgress();
+                        LoadAppraisalReqList();
                         $("#myModal").modal("hide");
-                        
+                        HideProgress();
                         Swal.fire('error', data.message, 'error');
                     }
                 },
@@ -148,13 +163,154 @@
         $('table tbody tr').click(function () {
             $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
             var row = $('#tableScoreCard tr.selectedTableRow');
-            $("#ViewDoc").removeClass("disabled");           
+            var Status = row.find("td").eq(5).html().trim();
+            $("#ViewDoc").removeClass("disabled");
+            $("#IdReport").removeClass("disabled");
+            if (Status == "New") {
+                $("#SendDocAppr").removeClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
+            }
+            else if (Status == "Pending Approval") {
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").removeClass("disabled");
+                $("#AppTrail").removeClass("disabled");
+            }
+            else if (Status == "Approved") {
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
+            }
+            else {
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
+            }
         });
     }
     var ViewAppraisalDoc = function () {
+        $("#labelF").text("Leave Details Document");
         ShowProgress();
         var row = $('#tableScoreCard tr.selectedTableRow');
         var DocNo = row.find("td").eq(1).html().trim();
-        window.location = "/Appraisal/AppraisalScoreCard?AppDoc=" + DocNo;
-    }   
+        window.location = '@Url.Action("AppraisalScoreCard", "Appraisal")?AppDoc=' + DocNo;
+    }
+    var SendDocForApproval = function () {
+        var row = $('#tableScoreCard tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("SendAppraisalForApproval", "Appraisal")',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadAppraisalReqList();
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+        DiableButtons();
+    }
+    var CancelDocForApproval = function () {
+        var row = $('#tableScoreCard tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("CancelAppraisalForApproval", "Appraisal")',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadAppraisalReqList();
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+        DiableButtons();
+    }
+    var ViewApprovalTrail = function () {
+        $("#labelF").text("Document Approval Trail");
+        ShowProgress();
+        var row = $('#tableScoreCard tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("DocumentApprovalTrail", "Common")',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var DiableButtons = function () {
+        $("#ViewDoc").addClass("disabled");
+        $("#SendDocAppr").addClass("disabled");
+        $("#CancelDocAppr").addClass("disabled");
+        $("#AppTrail").addClass("disabled");
+        $('table tbody tr').siblings().removeClass("selectedTableRow");
+    }
+    var GenerateApprisalReport = function () {
+        $("#labelF").text("Apprisal Document");
+        var row = $('#tableScoreCard tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        ShowProgress();
+        $.ajax({
+            url: '@Url.Action("GenerateAppraisalReport", "ViewDocument")',
+            datatype: "json",
+            type: "POST",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    var viewer = $("#modalBodyReport");
+                    PDFObject.embed(data.message, viewer);
+                    $("#myModalReport").modal("show");
+                    HideProgress();
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
 </script>

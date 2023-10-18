@@ -17,5 +17,49 @@ namespace Latest_Staff_Portal.Controllers
         {
             return View();
         }
+        public JsonResult VoteBook()
+        {
+            bool success = false;
+            try
+            {
+                string message = "";
+
+                if (Session["Username"] == null)
+                {
+                    Response.Redirect(Url.Action("Login", "Login"));
+                }
+                else
+                {
+                    string StaffDepartment = CommonClass.EmployeeDepartment(Session["username"].ToString());
+
+                    string filename = StaffDepartment.Replace("/", "");
+
+                    Credentials.ObjNav.PrintVoteBookBalance(Session["username"].ToString(), StaffDepartment, "VOTE BAL-" + filename + ".pdf");
+                    filename = "VOTE BAL-" + filename + ".pdf";
+
+                    string DestPath = Server.MapPath("~/Downloads/");
+                    CommonClass.MoveFile(filename, DestPath);
+                    string DestinationPath = Server.MapPath("~/Downloads/" + filename);
+                    CommonClass.MoveFile(filename, DestinationPath);
+
+                    System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
+                    if (file.Exists)
+                    {
+                        success = true;
+                        message = Credentials.fileDownLoads + filename;
+                    }
+                    else
+                    {
+                        success = false;
+                        message = "File Not Found";
+                    }
+                }
+                return Json(new { message = message, success }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message, success }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

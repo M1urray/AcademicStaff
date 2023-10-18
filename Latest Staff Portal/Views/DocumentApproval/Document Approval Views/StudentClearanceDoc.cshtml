@@ -1,0 +1,69 @@
+﻿@model Latest_Staff_Portal.ViewModel.StudentClearance
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    hr {
+        margin: 4px;
+    }
+</style>
+@if (Model.CommentFound == true)
+{
+    <div class="row" style="background-color:gray">
+        <div class="col-md-12">
+            <b>Comments</b>
+            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control" })
+            <br />
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-md-6">
+        <b>Document No</b>
+        @Html.TextBoxFor(m => m.Code, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Student No</b>
+        @Html.TextBoxFor(m => m.StudentNo, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Student Name</b>
+        @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Requisition Type</b>
+        @Html.TextBoxFor(m => m.RegType, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Status</b>
+        @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @rows = 5 })
+    </div>
+    <div class="col-md-6">
+        <b>Date Applied</b>
+        @Html.TextBoxFor(m => m.DateApplied, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Programme</b>
+        @Html.TextBoxFor(m => m.Programme, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Semester</b>
+        @Html.TextBoxFor(m => m.Semester, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Student Status</b>
+        @Html.TextBoxFor(m => m.StudentStatus, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+    </div>
+</div>

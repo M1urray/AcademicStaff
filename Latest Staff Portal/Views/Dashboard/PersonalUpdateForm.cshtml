@@ -1,0 +1,89 @@
+﻿@model Latest_Staff_Portal.ViewModel.EmployeeView
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Personal Email", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.PersonalEmail, new { @class = "form-control", @id = "txtPersonalEmail" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Company Email", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.CompanyEmail, new { @class = "form-control", @id = "txtCompanyEmail" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("ID Number/Passport Number", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.IDNo, new { @class = "form-control", @id = "txtIDNo" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Date of Birth", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.DoB, new { @type = "datetime", @class = "form-control", @id = "dtDoB", @onkeydown = "return false;", @autocomplete = "off", placeholder = "dd/mm/yyyy" })
+                <div class='a'></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Postal Code", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.PostalCode, new { @class = "form-control", @id = "txtPostCode" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Postal Address", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.Address1, new { @class = "form-control", @id = "txtPostAddress" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Phone Number", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control", @id = "txtPhoneNumber" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+       
+    </div>
+</div>
+<hr />
+<div align="center">
+    <input type="button" class="btn btn-primary waves-effect waves-light" value="Update Information" onclick="UpdatePersonalInformation();" />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dtDoB').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-150:-10',
+            showOtherMonths: true,
+            dateFormat: 'dd/mm/yy'
+        });
+        $(window).resize(function () {
+            $('#dtPicker').datepicker('hide');
+            $('#dtPicker').blur();
+        });
+    });
+</script>

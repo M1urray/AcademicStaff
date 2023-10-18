@@ -2,7 +2,8 @@
 @{
     Layout = null;
     string imgSrc = "", gender = "", Name = "";
-    bool IsICT = false;
+    bool HOD = false, Dean = false, Lecturer = false;
+    int CountNotif = 0;
     if (Session["Username"] == null)
     {
         Html.Action("Login", "Login");
@@ -22,13 +23,36 @@
         {
             imgSrc = Session["ImgProfile"].ToString();
         }
-
+        CountNotif = CommonClass.GetDocumentCount();
         if (Session["StaffDetails"] == null)
         {
             string[] s = CommonClass.GetStaffDetails(Session["Username"].ToString());
             gender = s[0];
             Name = s[1];
-
+            if (s[2] == "False")
+            {
+                HOD = false;
+            }
+            else
+            {
+                HOD = true;
+            }
+            if (s[3] == "False")
+            {
+                Dean = false;
+            }
+            else
+            {
+                Dean = true;
+            }
+            if (s[4] == "False")
+            {
+                Lecturer = false;
+            }
+            else
+            {
+                Lecturer = true;
+            }
             Session["StaffDetails"] = s;
         }
         else
@@ -36,8 +60,31 @@
             string[] s = (string[])Session["StaffDetails"];
             gender = s[0];
             Name = s[1];
+            if (s[2] == "False")
+            {
+                HOD = false;
+            }
+            else
+            {
+                HOD = true;
+            }
+            if (s[3] == "False")
+            {
+                Dean = false;
+            }
+            else
+            {
+                Dean = true;
+            }
+            if (s[4] == "False")
+            {
+                Lecturer = false;
+            }
+            else
+            {
+                Lecturer = true;
+            }
         }
-        IsICT = CommonClass.IsICTStaff(Session["Username"].ToString());
     }
 }
 <!DOCTYPE html>
@@ -45,9 +92,9 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Sports Kenya | Staff Portal</title>
+    <title>MIBs | Staff Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Sports Kenya Staff Portal" name="description" />
+    <meta content="MIBs Staff Portal" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="~/assets/images/favicon.ico">
@@ -72,7 +119,7 @@
     <link href="~/assets/css/Loader.css" rel="stylesheet" />
     <div class="loading" align="center" id="divLoader">
         <br />
-        <img src="~/assets/images/ajax-loader.gif" alt="" />
+        <img src="~/assets/images/ajax-loader2.gif" alt="" width="150" height="150" />
     </div>
     <!-- Begin page -->
     <div id="layout-wrapper">
@@ -102,6 +149,17 @@
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
                 </div>
+                @if (CountNotif > 0)
+                {
+                    <div class="dropdown d-inline-block" onclick="ShowNotifications();">
+                        <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="bx bx-bell bx-tada" ></i>
+                            <span class="badge badge-danger badge-pill">@CountNotif</span>
+                            <img src="~/assets/images/NEW2.gif" class="rounded" />
+                        </button>
+                    </div>
+                }
                 <div class="d-flex">
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
@@ -137,6 +195,7 @@
             </div>
         </header> <!-- ========== Left Sidebar Start ========== -->
         <div class="vertical-menu">
+
             <div data-simplebar class="h-100">
 
                 <!--- Sidemenu -->
@@ -150,123 +209,131 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="menu-title">Requisitions</li>
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="bx bx-link"></i>
-                                <span>Requisition Links</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#" onclick="LeaveRequisitionLink();">Leave Requisition</a></li>
-                                <li><a href="#" onclick="PurchaseRequisitionLink();">Purchase Requisition</a></li>
-                                <li><a href="#" onclick="StoreRequisitiontLink();">Store Requisition</a></li>
-                                <li><a href="#" onclick="ImprestRequisitiontLink();">Imprest Requisition</a></li>
-                                <li><a href="#" onclick="ImprestSurrenderLink();">Imprest Surrender</a></li>
-                                <li><a href="#" onclick="StaffClaimRequisitiontLink();">Staff Claim Requisition</a></li>
-                                <li><a href="#" onclick="TransportRequisitiontLink();">Transport Requisition</a></li>
-                                <li><a href="#" onclick="TrainingRequisitiontLink();">Training Requisition</a></li>
-                                <li><a href="#" onclick="TransportRequisitiontLink();">Casual Requisition</a></li>
-                                <li><a href="#" onclick="TrainingRequisitiontLink();">Maintenance Requisition</a></li>
-                                <li><a href="#" onclick="TrainingRequisitiontLink();">Employee Requisition</a></li>
-                                <li><a href="#" onclick="StandingImprestLink();">Requisition List</a></li>
-                                <li><a href="#" onclick="StandingImpReimbursementLink();">Reimbursement List</a></li>
-                                <li><a href="#" onclick="StandingImpSurrenderLink();">Surrender List</a></li>
 
-                            </ul>
-                        </li>
-                        <li class="menu-title">ICT</li>
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="bx bxs-receipt"></i>
-                                <span>ICT Help Desk</span>
+                            <a href="#" onclick="NoticeBoardLink();">
+                                <i class="bx bx-alarm"></i>
+                                <span>Notice Board</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#" onclick="ICTRequisitionlink();">User Support Request</a></li>
-                                <li><a href="#" onclick="ICTAssetRequisitionlink();">ICT Asset Requisition</a></li>
-                                @if (IsICT)
-                                {
-                                    <li><a href="#" onclick="ICTAssetServicing_Maintancelink();">Service/Maintenance</a></li>
-                                }
-                            </ul>
                         </li>
-                        @*<li class="menu-title">Security Management</li>
+                        @if (HOD || Dean)
+                        {
+                            <li class="menu-title">Management</li>
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="bx bx-user"></i>
-                                    <span>Visitors Management</span>
+                                    <i class="bx bx-store"></i>
+                                    <span>HOD/DEAN Section</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="#" onclick="NewVisitorLink();">New Visitor</a></li>
-                                    <li><a href="#" onclick="ActiveVisitorsLink();">Active Visitors</a></li>
-                                    <li><a href="#" onclick="ClearedVisitorsLink();">Cleared Visitors</a></li>
+
+                                    <li><a href="#" onclick="LecturerListLink();">Lecturer List</a></li>
+                                    @*<li><a href="#" onclick="PartTimeRequisitionLink();">Part-Time Requisition</a></li>*@
+                                    @*<li><a href="#">Upload Lecturer List</a></li>*@
+                                    <li><a href="#" onclick="VoteBookBalanceLink();">Vote Book Balance</a></li>
+                                    @*<li><a href="#">Student Results</a></li>*@
+                                    @*<li><a href="#">Management Reports</a></li>*@
                                 </ul>
                             </li>
+                        }
+                        <li class="menu-title">Programmes</li>
+                        <li>
+                            <a href="#" onclick="ProgrammeListLink();">
+                                <i class="bx bx-anchor"></i>
+                                <span>Programme List</span>
+                            </a>
+                        </li>
+                        @if (Lecturer)
+                        {
+                            <li class="menu-title">Academics</li>
                             <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="bx bx-lock-open"></i>
-                                    <span>GatePass Management</span>
+                                <a href="#" onclick="CourseAllocationLink();" class=" waves-effect">
+                                    <i class="bx bx-list-ul"></i>
+                                    <span>Allocated Units</span>
                                 </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="#" onclick="GatePassLink();">Gate Pass</a></li>
-                                    <li><a href="#" onclick="ApprovedGatePassLink();">Approved Gate Pass</a></li>
-                                </ul>
-                            </li>*@
-                        <li class="menu-title">Work Plan Section</li>
+                            </li>
+                        }
+                        <li class="menu-title">Requisitions</li>
+                        @*<li>
+            <a href="#" onclick="SponsorshipRequisitionLink();" class=" waves-effect">
+                <i class="bx bx-calendar"></i>
+                <span>Sponsorship Application</span>
+            </a>
+        </li>*@
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="bx bxs-hand-right"></i>
-                                <span>WorkPlan Links</span>
+                            <a href="#" onclick="LeaveRequisitionLink();" class=" waves-effect">
+                                <i class="bx bx-calendar"></i>
+                                <span>Leave Requisition</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#" onclick="IndividualWKPlanLink();">Individual Work Plan list</a></li>
-                                <li><a href="#" onclick="SupervisorIndividualWKPlanReviewLink();">Supervisor Review List</a></li>
-                            </ul>
                         </li>
-                        <li class="menu-title">Appraisal Section</li>
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="bx bxs-hand-right"></i>
-                                <span>Appraisal Links</span>
+                            <a href="#" onclick="PurchaseRequisitionLink();" class=" waves-effect">
+                                <i class="bx bxs-business"></i>
+                                <span>Purchase Requisition</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#" onclick="AppraisalPreambleLink();">Appraisal Preamble</a></li>
-                                <li><a href="#" onclick="AppraisalRequisitiontLink();">Appraisal Requisition</a></li>
-                                <li><a href="#" onclick="SupervisorRequisitiontReviewLink();">Supervisor Review List</a></li>
-                            </ul>
                         </li>
-                        <li class="menu-title">Asset Management</li>
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="bx bxs-cart"></i>
-                                <span>Asset Links</span>
+                            <a href="#" onclick="StoreRequisitiontLink();" class=" waves-effect">
+                                <i class="bx bxs-store"></i>
+                                <span>Store Requisition</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#" onclick="AssignedAssetLink();">Assigned Assets</a></li>
-                                <li><a href="#" onclick="AssetTransferLink();">Asset Transfer Requests</a></li>
-                            </ul>
                         </li>
+                        <li>
+                            <a href="#" onclick="ImprestRequisitiontLink();" class=" waves-effect">
+                                <i class="bx bx-money"></i>
+                                <span>Imprest Requisition</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="ImprestSurrenderLink();" class=" waves-effect">
+                                <i class="bx bx-receipt"></i>
+                                <span>Imprest Surrender</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="StaffClaimRequisitiontLink();" class=" waves-effect">
+                                <i class="bx bx-receipt"></i>
+                                <span>Staff Claim Requisition</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="AppraisalRequisitiontLink();" class=" waves-effect">
+                                <i class="bx bx-award"></i>
+                                <span>Appraisal Requisition</span>
+                            </a>
+                        </li>
+                        @*<li>
+            <a href="#" onclick="TransportRequisitiontLink();" class=" waves-effect">
+                <i class="bx bx-car"></i>
+                <span>Transport Requisition</span>
+            </a>
+        </li>*@
                         <li class="menu-title">Reports</li>
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="bx bxs-file-pdf"></i>
-                                <span>Report Links</span>
+                            <a href="#" onclick="PayslipViewLink();" class=" waves-effect">
+                                <i class="dripicons-briefcase"></i>
+                                <span>Payslip</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#" onclick="PayslipViewLink();">Payslip</a></li>
-                                <li><a href="#" onclick="P9ViewLink();">P9</a></li>
-                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" onclick="P9ViewLink();" class=" waves-effect">
+                                <i class="dripicons-paperclip"></i>
+                                <span>P9</span>
+                            </a>
                         </li>
                         <li class="menu-title">Approvals</li>
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="bx bx-check"></i>
-                                <span>Approval Links</span>
+                            <a href="#" onclick="DocumentApprovalSummeryLink('Open');" class="waves-effect">
+                                <i class="dripicons-store"></i>
+                                <span>Pending Approval</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#" onclick="DocumentApprovalSummeryLink('Open');">Pending my Approval</a></li>
-                                <li><a href="#" onclick="ApprovedDocLink('Approved');">My Approved Documents</a></li>
-                                <li><a href="#" onclick="RejectedDocLink('Rejected');">My Rejected Documents</a></li>
-                            </ul>
+                            <a href="#" onclick="ApprovedDocLink('Approved');" class="waves-effect">
+                                <i class="fa fa-ticket-alt"></i>
+                                <span>Approved Documents</span>
+                            </a>
+                            <a href="#" onclick="RejectedDocLink('Rejected');" class="waves-effect">
+                                <i class="fa fa-times-circle"></i>
+                                <span>Rejected Documents</span>
+                            </a>
                         </li>
                         <li class="menu-title">settings</li>
                         <li>
@@ -275,6 +342,15 @@
                                 <span>change password</span>
                             </a>
                         </li>
+                        @if (Session["UserID"].ToString() == @"DSL0\NGAITUNGU" || Session["UserID"].ToString() == @"DSL0\ECHEGE")
+                        {
+                            <li>
+                                <a href="#" onclick="ADUserSetLink();" class=" waves-effect">
+                                    <i class="dripicons-user-group"></i>
+                                    <span>AD User Setup</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <!-- Sidebar -->
@@ -286,23 +362,38 @@
                 <div class="container-fluid">
                     @RenderBody()
                     <!-- End Page-content -->
-                    <footer class="footer" style="color: #051936;background-color: #E9EEF2">
+                    <footer class="footer" style="color: #051936; background-color:#3d57fa">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-sm-4">
-                                    @DateTime.Now.Year © Sports Kenya.
+                                <div class="col-sm-6">
+                                    @DateTime.Now.Year © MIBs.
                                 </div>
-                                <div class="col-sm-4 text-center">
-                                    <img src="~/assets/images/Logo.png" alt="" height="40" style="vertical-align:middle">
-                                </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <div class="text-sm-right d-none d-sm-block">
-                                        Design & Developed by <a href="http://dsl.ke/" target="_blank">DSL Systems</a>
+                                        Design & Developed by <a href="https://dsl.ke/" target="_blank" class="text-success">DSL Solutions</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/////////////////notification/////////////////////-->
+    <div class="modal fade" id="myModalViewNotification" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content bg-white">
+                <div class="modal-header">
+                    <h4 class="modal-title">Notifications | <img src="~/assets/images/NEW2.gif" /></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBodyViewNotification" style="font-size:12px">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -344,6 +435,119 @@
     <script src="~/assets/js/pages/app.js"></script>
 
     <script src="~/assets/js/ShowProgression.js"></script>
-    <script src="~/SiteJS/SideBarLink.js"></script>
+    <script type="text/javascript">
+        var ShowNotifications = function () {
+            ShowProgress();
+            $.ajax({
+                async: true,
+                type: "GET",
+                dataType: 'HTML',
+                contentType: false,
+                processData: false,
+                url: '@Url.Action("NotificationMessages", "Common")',
+                success: function (data) {
+                    HideProgress();
+                    $("#modalBodyViewNotification").html(data);
+                    $("#myModalViewNotification").modal("show");
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('Warning', 'There is some problem to process your request. Please try after some time', 'warning');
+                }
+            });
+        }
+        var DashBoardLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("Dashboard", "Dashboard")';
+        }
+        var ProgrammeListLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("ProgrammeList", "Programme")';
+        }
+        var NoticeBoardLink = function() {
+            ShowProgress();
+            window.location = '@Url.Action("GetNotice", "Common")';
+        }
+        var LecturerListLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("LecturerList", "Lecturer")';
+        }
+        var PartTimeRequisitionLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("PartTimeRequistionList", "Lecturer")';
+        }
+        var CourseAllocationLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("CourseAllocationUnits", "Lecturer")';
+        }
+        var VoteBookBalanceLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("ViewDocuments", "ViewDocuments")?DocT=VOTEBOOK';
+        }
+        var SponsorshipRequisitionLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("SponsorshipApplicationList", "Sponsorship")';
+        }
+        var LeaveRequisitionLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("LeaveRequisitionList", "Leave")';
+        }
+        var PurchaseRequisitionLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("PurchaseRequisitionList", "Purchase")';
+        }
+        var StoreRequisitiontLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("StoreRequisitionList", "Store")';
+        }
+        var ImprestRequisitiontLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("ImprestRequisitionList", "Imprest")';
+        }
+        var ImprestSurrenderLink = function () {
+            ShowProgress();
+            window.location = "/ImprestSurrender/ImprestSurrenderRequisitionList";
+        }
+        var StaffClaimRequisitiontLink = function () {
+            ShowProgress();
+             window.location = '@Url.Action("StaffClaimRequisitionList", "StaffClaim")';
+        }
+        var AppraisalRequisitiontLink = function () {
+            ShowProgress();
+             window.location = '@Url.Action("MyAppraisalList", "Appraisal")';
+        }
+        var TransportRequisitiontLink = function () {
+            ShowProgress();
+             window.location = '@Url.Action("TransportRequisitionList", "Transport")';
+        }
+        var PayslipViewLink = function () {
+            ShowProgress();
+             window.location = '@Url.Action("DocumentViewPayslip", "ViewDocument")';
+        }
+        var P9ViewLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("DocumentViewp9", "ViewDocument")';
+        }
+        var DocumentApprovalSummeryLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("DocumentForApprovalSummery", "DocumentApproval")?rn=Open';
+        }
+        var ApprovedDocLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("DocumentForApprovalSummery", "DocumentApproval")?rn=Approved';
+        }
+        var RejectedDocLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("DocumentForApprovalSummery", "DocumentApproval")?rn=Rejected';
+        }
+        var ChangePasswordLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("ChangePassword", "Settings")';
+        }
+        var ADUserSetLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("ListofUsers", "ADSetup")';
+        }
+    </script>
 </body>
 </html>

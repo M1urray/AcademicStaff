@@ -1,0 +1,54 @@
+﻿@model Latest_Staff_Portal.ViewModel.ScoreCardObjectives
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-6">
+            <span style="font-weight: bold">Document No</span>
+            @Html.TextBoxFor(model => model.DocumentNo, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        </div>
+        <div class="col-md-6">
+            <span style="font-weight: bold">Competence</span>
+            @Html.TextAreaFor(model => model.Objective, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <span style="font-weight: bold">Appraisee Score</span>
+            @Html.TextBoxFor(model => model.Ratings, new { @class = "form-control", @style = "background-color:#dedebd", @readonly = "readonly", @onkeypress = "return functionDecimal(event,this.value)" })
+        </div>
+        <div class="col-md-6">
+            <span style="font-weight: bold">Supervisor Score</span>
+            @Html.TextBoxFor(model => model.SupervisorRating, new { @class = "form-control", @id = "txtSupervisorRating", @onkeypress = "return functionDecimal(event,this.value)" })
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary" value="Save Evaluation" onclick="SaveSkillCompScore('@Model.LineNo','@Model.DocumentNo');" />
+    </div>
+</div>
+<script type="text/javascript">
+    function functionDecimal(evt, val) {
+        try {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+
+            if (charCode == 46) {
+                if (!(val.indexOf(".") > -1)) {
+                    return true;
+                }
+                else {
+                    Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                }
+            }
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                return false;
+            }
+            return true;
+        } catch (w) {
+            Swal.fire(w);
+        }
+    }
+</script>
+
+
+
+

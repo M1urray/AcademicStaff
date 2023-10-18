@@ -1,5 +1,8 @@
 ﻿@model Latest_Staff_Portal.ViewModel.NewPurchaseRequisition
-
+@{
+    ViewBag.Title = "NewPurchaseRequest";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
 <style>
     thead {
         background-color: black;
@@ -15,56 +18,439 @@
         background-color: #dedbdb
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
+<div style="background-color: black;">
+    <a href="#" onclick="PurchaseRequisitionLink();" style="color:yellow"><<< Back To Purchase Requisition List</a>
 </div>
-<div class="card-body">
-    <b>Purchase Header</b>
-    <hr />
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                @Html.Label("Directorate", htmlAttributes: new { @class = "control-label col-md-12" })
-                <div class="col-md-12">
-                    @Html.DropDownListFor(m => m.Directorate, new SelectList(Model.ListOfDirectorate, "Value", "Text", Model.Department), "--Select Directorate--", new { @id = "ddlDirectorate", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
-                    @Html.ValidationMessageFor(model => model.Directorate, "", new { @class = "text-danger" })
+<div class="card pre-scrollable">
+    <div class="card-body">
+        <b>Purchase Header</b>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Label("Reason:(50 characters)", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <textarea id="txtRemarks" class="form-control" maxlength="50"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Campus", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Campus, Model.ListOfCampus, "--select Campus--", new { @class = "form-control", @id = "ddlCampus" })
+                        @Html.ValidationMessageFor(model => model.Campus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="form-group">
                     @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
-                        @Html.DropDownListFor(m => m.Department, new SelectList(Model.ListOfDepartment, "Value", "Text", Model.Division), "--Select Department--", new { @id = "ddlDepartment", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                        @Html.DropDownListFor(model => model.Department, Model.ListOfDepartment, "--select Department--", new { @class = "form-control", @id = "ddlDepartment" })
                         @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
         </div>
-    </div>   
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                @Html.Label("Reason:(100 characters)", htmlAttributes: new { @class = "control-label col-md-12" })
-                <div class="col-md-12">
-                    <textarea id="txtRemarks" class="form-control" maxlength="50"></textarea>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
+                        @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Attachment(Optioal)", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <input type="file" class="form-control" id="fileAttachment" />
+                    </div>
                 </div>
             </div>
         </div>
+        <hr style="border:1px solid black" />
+        <b>Purchase Lines</b>
+        <hr />
+        <div class="pre-scrollable">
+            <table class="table table-hover" id="PRVLines">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Item Code</th>
+                        <th>Description</th>
+                        <th>Description 2</th>
+                        <th style="text-align:center">Quantity</th>
+                        <th style="text-align:center">Amount</th>
+                        <th>Where Needed</th>
+                        <th style="text-align:right">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                    <tr class="NoRecords">
+                        <td colspan="6">
+                            <span style="color:red" id="NoRecords">No Lines Added</span>
+                        </td>
+                        <td colspan="7" class="text-right">
+                            <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddPRVLines();" />
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <hr />
+        <div align="center">
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitPurchaseRequisition();" />
+        </div>
     </div>
-    <hr style="border:1px solid black" />
-    <div align="center">
-        <input type="button" class="btn btn-primary waves-effect waves-light" value="Create Document" onclick="SubmitPurchaseRequisition(`@Model.DisDir`);" />
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" ke aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">New Purchase Line</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
 <script src="~/assets/js/ShowProgression.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        document.getElementById("ddlDirectorate").disabled = true;
-        document.getElementById("ddlDepartment").disabled = true;
-    });    
+        $("#ddlDepartment,#ddlRespC").select2({
+            width: '100%'
+        });
+    });
+    var AddPRVLines = function () {
+        var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+        var RespoC = $("#ddlRespC").children("option:selected").val();
+
+        if (Remarks == "") {
+            Swal.fire('Warning', "Enter Reason for the purchase", 'warning');
+            return;
+        }
+        else if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
+            return;
+        }
+        else if (Department == "") {
+            Swal.fire('Warning', "Select Department", 'warning');
+            return;
+        }
+        else if (RespoC == "") {
+            Swal.fire('Warning', "Select Responsibility center", 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                async: true,
+                type: "POST",
+                datatype: "json",
+                contentType: "application/json; charset = utf-8",
+                processData: false,
+                url: '@Url.Action("NewPurchaseLine", "Purchase")',
+                success: function (data) {
+                    $("#modalBody").html(data);
+                    HideProgress();
+                    $("#myModal").modal("show");
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    };
+    var PurchaseRequisitionLink = function () {
+        ShowProgress();
+        window.location = '@Url.Action("PurchaseRequisitionList", "Purchase")';
+    }
+    var AddLineItem = function () {
+        var Item;
+        var ItemDesc;
+        var PRVType = $("#PRVType").children("option:selected").text();
+        var itemvalue = $("#IdSearchItem").val();
+        var Amount = $("#txtAmount").val();
+        var Qnty = $("#txtQuantity").val();
+        var Location = $("#ddlLocation").children("option:selected").val();
+        var ItemDescription = $("#txtDescription").val();
+
+        if (itemvalue == "") {
+            Swal.fire('Warning', "Enter Item", 'warning');
+            return;
+        }
+        if (itemvalue == "") {
+            Swal.fire('Warning', "Enter Item", 'warning');
+            return;
+        }
+        else if (Amount == "") {
+            Swal.fire('Warning', "Enter Amount", 'warning');
+            return;
+        }
+        else if (Qnty == "") {
+            Swal.fire('Warning', "Enter Quantity", 'warning');
+            return;
+        }
+        else if (Location == "") {
+            Swal.fire('Warning', "Select the Location needed", 'warning');
+            return;
+        }
+        else if (ItemDescription == "") {
+            Swal.fire('Warning', "Give brief description of the item", 'warning');
+            return;
+        }
+        else if (ItemDescription.length > 50) {
+            Swal.fire('Warning', "Item description should not exceed 50 characters", 'warning');
+            return;
+        }
+        else {
+            if (itemvalue != "") {
+                var s = itemvalue.split('~');
+
+                Item = s[0];
+                ItemDesc = s[1];
+            }
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#PRVLines > TBODY")[0];
+
+            //Add Row.
+            var row = tBody.insertRow(-1);
+
+            //Add Item.
+            var cell = $(row.insertCell(-1));
+            cell.html(PRVType);
+
+            //Add Item.
+            var cell = $(row.insertCell(-1));
+            cell.html(Item);
+
+            //Add Item Desc.
+            var cell = $(row.insertCell(-1));
+            cell.html(ItemDesc);
+
+            //Add Description.
+            cell = $(row.insertCell(-1));
+            cell.html(ItemDescription);
+
+            //Add Qnty.
+            var cell = $(row.insertCell(-1));
+            cell.attr("align", "center");
+            cell.html(Qnty);
+
+            //Add Amount.
+            var cell = $(row.insertCell(-1));
+            cell.attr("align", "center");
+            cell.html(Amount);
+
+            //Add location.
+            var cell = $(row.insertCell(-1));
+            cell.html(Location);
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            cell.attr("align", "right");
+            var btnRemove = $("<input />");
+            btnRemove.attr("type", "button");
+            btnRemove.addClass("btn btn-primary BtnPadding");
+            btnRemove.attr("onclick", "Remove(this);");
+            btnRemove.val("Remove");
+            cell.append(btnRemove);
+
+            DetermineNoOfRows();
+            $("#myModal").modal("hide");
+            Swal.fire('Success', "Purchase line added successfully", 'success');
+            //Clear the TextBoxes.
+            //txtName.val("");
+            //txtCountry.val("");
+
+        }
+    }
+    var DetermineNoOfRows = function () {
+        var totalRowCount = $("#PRVLines TBODY tr").length;
+        if (totalRowCount > 0) {
+            $("#NoRecords").hide();
+        }
+        else {
+            $("#NoRecords").show();
+        }
+    }
+    function Remove(button) {
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var Item = $("TD", row).eq(0).html();
+        var ItemDesc = $("TD", row).eq(0).html();
+        if (confirm("Do you want to remove: " + Item + "~" + ItemDesc)) {
+            //Get the reference of the Table.
+            var table = $("#PRVLines")[0];
+
+            //Delete the Table row using it's Index.
+            table.deleteRow(row[0].rowIndex);
+        }
+        DetermineNoOfRows();
+    };
+    var SubmitPurchaseRequisition = function () {
+        var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+        var RespoC = $("#ddlRespC").children("option:selected").val();
+
+        if (Remarks == "") {
+            Swal.fire('Warning', "Enter Reason for the purchase", 'warning');
+            return;
+        }
+        else if (Remarks.length > 50) {
+            Swal.fire('Warning', "Your Reason should have a maximum of 50 characters", 'warning');
+            return;
+        }
+        else if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
+            return;
+        }
+        else if (Department == "") {
+            Swal.fire('Warning', "Select Department", 'warning');
+            return;
+        }
+        else if (RespoC == "") {
+            Swal.fire('Warning', "Select Responsibility center", 'warning');
+            return;
+        }
+        else {
+            var PRVHeader = {};
+            PRVHeader.Remarks = Remarks;
+            PRVHeader.Campus = Campus;
+            PRVHeader.Department = Department;
+            PRVHeader.RespC = RespoC;
+
+            //Loop through the Table rows and build a JSON array.
+            var PRVLines = new Array();
+            $("#PRVLines TBODY TR").each(function () {
+                var row = $(this);
+                var PRVLine = {};
+                PRVLine.LineType = row.find("TD").eq(0).html();
+                PRVLine.Item = row.find("TD").eq(1).html();
+                PRVLine.ItemDesc = row.find("TD").eq(3).html();
+                PRVLine.Qnty = row.find("TD").eq(4).html();
+                PRVLine.Amount = row.find("TD").eq(5).html();
+                PRVLine.Location = row.find("TD").eq(6).html();
+                PRVLines.push(PRVLine);
+            });
+            if (PRVLines.length < 1) {
+                Swal.fire('Warning', 'You have not Added any Purchase Requisition line(s)', 'warning');
+                HideProgress();
+                return;
+            }
+            else {
+                var filename; var base64String; var filetype;
+                var files = document.getElementById('fileAttachment').files;
+
+                if (files.length) {
+                    var file = files[0];
+                    var blob = file.slice();
+                    filetype = file.type;
+                    filename = file.name;
+                    var reader = new FileReader();
+
+                    reader.onloadend = function (evt) {
+                        if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+
+                            var cont = evt.target.result
+                            base64String = getB64Str(cont);
+
+                            ShowProgress();
+
+                            //Send the JSON array to Controller using AJAX.
+                            $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("SubmitPurchaseRequisition", "Purchase")',
+                                //data: data,
+                                data: JSON.stringify({ prvHeader: PRVHeader, prvLines: PRVLines, base64Upload: base64String, fileName: filename, Extn: filetype }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data.success) {
+                                        window.location = '@Url.Action("PurchaseRequisitionList", "Purchase")';
+                                    }
+                                    else {
+                                        Swal.fire('Warning', data.message, 'warning');
+                                        HideProgress();
+                                    }
+                                },
+                                error: function (err) {
+                                    HideProgress();
+                                    Swal.fire('Warning', err, 'warning');
+                                }
+                            });
+                        }
+                    };
+                    reader.readAsArrayBuffer(blob);
+                }
+                else {
+                    filename = "";
+                    base64String = "";
+                    filetype = "";
+                    ShowProgress();
+                    //Send the JSON array to Controller using AJAX.
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("SubmitPurchaseRequisition", "Purchase")',
+                        //data: data,
+                        data: JSON.stringify({ prvHeader: PRVHeader, prvLines: PRVLines, base64Upload: base64String, fileName: filename, Extn: filetype }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success) {
+                                window.location = "/Purchase/PurchaseRequisitionList";
+                            }
+                            else {
+                                Swal.fire('Warning', data.message, 'warning');
+                                HideProgress();
+                                $("#IdSearchItem").val('')
+                                $("#txtAmount").val('');
+                                $('#ddlLocation').val('').select2();
+                                $("#txtQuantity").val('');
+                                $("#txtDescription").val('');
+                            }
+                        },
+                        error: function (err) {
+                            HideProgress();
+                            Swal.fire('Warning', err, 'warning');
+                            $("#IdSearchItem").val('')
+                            $("#txtAmount").val('');
+                            $('#ddlLocation').val('').select2();
+                            $("#txtQuantity").val('');
+                            $("#txtDescription").val('');
+                        }
+                    });
+                }
+            }
+        }
+    };
+    function getB64Str(buffer) {
+        var binary = '';
+        var bytes = new Uint8Array(buffer);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+    }
 </script>
 

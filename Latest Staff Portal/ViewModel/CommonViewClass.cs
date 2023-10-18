@@ -6,12 +6,6 @@ using System.Web.Mvc;
 
 namespace Latest_Staff_Portal.ViewModel
 {
-    public class DocumentNumber
-    {
-        public string Code { get; set; }
-        public string Status { get; set; }
-        public string DocType { get; set; }
-    }
     public class RespCenter
     {
         public string Code { get; set; }
@@ -50,12 +44,6 @@ namespace Latest_Staff_Portal.ViewModel
         public string Code { get; set; }
         public List<SelectListItem> ListOfLocations { get; set; }
     }
-    public class NewStoreLine
-    {
-        public string Code { get; set; }
-        public List<SelectListItem> ListOfItems { get; set; }
-        public List<SelectListItem> ListOfLocations { get; set; }
-    }
     public class CommonDropDownList
     {
         public List<SelectListItem> ListOfSchools { get; set; }
@@ -68,8 +56,10 @@ namespace Latest_Staff_Portal.ViewModel
         public string Value { get; set; }
         public string Text { get; set; }
     }
-    public class DropdownListData
+    public class NoticeBoard
     {
-        public List<SelectListItem> ListOfddlData { get; set; }
+        public string Description { get; set; }
+        public string Campus { get; set; }
+        public string DatePosted { get; set; }
     }
 }

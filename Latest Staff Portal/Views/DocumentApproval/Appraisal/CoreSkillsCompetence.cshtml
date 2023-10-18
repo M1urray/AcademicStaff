@@ -1,0 +1,81 @@
+﻿@model Latest_Staff_Portal.ViewModel.SectionDetails
+<style>
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div class="pre-scrollable">
+    <table id="tableSkillComp" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="80%">Core Competence and Values</th>
+                <th width="5%">Self<br />Rating</th>
+                <th width="5%">Sup.<br />Rating</th>
+                <th style="text-align:center" width="5%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    {
+                        if (Model.ObjList.Count() > 0)
+                        {
+                            int i = 1;
+                            foreach (var item in Model.ObjList)
+                            {
+                                <tr class="HasData">
+                                    <td>
+                                        @i
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Objective)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ratings)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SupervisorRating)
+                                    </td>
+                                    <td style="text-align:center">
+                                        <a href="javascript:void(0);" class="text-danger" onclick="EditSkillCompItem('@item.LineNo','@item.DocumentNo');">Edit</a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr class="NoData">
+                                <td colspan="5" style="color:red">
+                                    No Records Found
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+        </tbody>       
+    </table>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <b>Apprisee Comments</b>
+        @Html.TextAreaFor(m => m.AppraiseeComment, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <b>Supervisor Comments</b>
+        @Html.TextAreaFor(m => m.SuporvisorComment, new { @class = "form-control", @id = "SkillCompAppraisorComments" })
+    </div>
+</div>
+<hr />
+<div align="center">
+    <input type="button" value="Save Comments" class="btn btn-primary" onclick="SaveSupComments('3');" />
+</div>
+
+

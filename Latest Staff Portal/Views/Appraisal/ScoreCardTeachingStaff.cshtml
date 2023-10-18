@@ -1,0 +1,1428 @@
+﻿
+@{
+    ViewBag.Title = "ScoreCardTeachingStaff";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+</style>
+<div class="card">
+    <div class="card-title">Appraisal Document(Document No : @Request.QueryString["AppDoc"]) | <input type="button" onclick="GenerateApprisalReport();" class="btn btn-danger pull-right" value="Print Report" /></div>
+    <div class="card-body">
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingOne" aria-controls="collapseOne" aria-expanded="true" data-toggle="collapse" href="#collapseOne">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-up"></span>General Information
+                    </h6>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Apprisal Code</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning" id="DocNo">@Model.ApprisalCode</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">User ID</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.UserID</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Staff Number</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.StaffNo</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Staff Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.StaffName</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Responsibility Center</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.RespCenter</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Apprisal Type</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.AppraisalType</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Apprisal Period</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning" id="AppPeriod">@Model.ApprisalPeriod</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Department</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.Department</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingTwo" aria-expanded="false" aria-controls="collapseTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span> Area of Assessment
+                    </h6>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                     data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row" style="border:1px solid black">
+                            <h6>I . EXCELLENCE IN TEACHING</h6>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Documented Evidence of Teaching Activities</th>
+                                            <th>Self - Score</th>
+                                            <th>Dean's Score</th>
+                                            <th>Agreed Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Preparation: Training Manuals / Posted e-learning notes/ upto date slides</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Handling of teaching load (Achieve workload of the semester).</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Use of Innovative and Active Learning Approaches</th>
+                                            <th>Self - Score</th>
+                                            <th>Dean's Score</th>
+                                            <th>Agreed Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Case study/ laboratory exercises</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Group assignments / Term Projects/ Term Paper</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Guest speaker/ field trip</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Use of technology and participatory methods, e.g power point/ CD/video</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Use of e-learning as a teaching aid</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Innovative and product development (e.g. software)</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Curriculum and Faculty/Student Growth Related Activities</th>
+                                            <th>Self - Score</th>
+                                            <th>Dean's Score</th>
+                                            <th>Agreed Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Course/syllabus review</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Organization/Participation in course meetings/moderations</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>New course introduction</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Supervision of students' projects</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Supervision of students' Masters dessertation</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Supervision of students' PhD Thesis</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mentoring: students/faculty</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Student/ Peer Assessment of Faculty Teaching</th>
+                                            <th>Self - Score</th>
+                                            <th>Dean's Score</th>
+                                            <th>Agreed Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Evidence of effective use of mid - semester course evaluation results</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Evidence of use of student performance by mid - semester to capture and prevent problem cases, use of early warning system</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Written comments/ letters/ e-mails/ recognitions/ awards</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Peer evaluation or self evaluation reviewed by Dean</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Examination</th>
+                                            <th>Self - Score</th>
+                                            <th>Dean's Score</th>
+                                            <th>Agreed Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Punctuality in submitting examinations and marked scripts, etc.</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Availability for exams and results moderation</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" style="border:1px solid black">
+                            <h6>II . EXCELLENCE IN RESEARCH</h6>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Peer Reviewed Publications</th>
+                                            <th>Self - Score</th>
+                                            <th>Dean's Score</th>
+                                            <th>Agreed Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Peer Reviewed Case study</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Refereed journal paper</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>University level book</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>PhD Pogress Report (Confirmed through SGS)</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Refereed book chapter</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>PhD Thesis</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Paper in refereed conference proceedings</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Book review</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Unpublished Research Works</th>
+                                            <th>Self - Score</th>
+                                            <th>Dean's Score</th>
+                                            <th>Agreed Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Book Manuscript submitted for peer review [attach acknowledgement ]</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Peer reviewed research project proposals accepted</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Working papers or cases submitted for peer review</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Abstract acceptance for conference [each 1 point for a max of 2 point]</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Professional newsletter/bulletin article [each 1 point for a max of 2 points]</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Other Research Activities</th>
+                                            <th>Self - Score</th>
+                                            <th>Dean's Score</th>
+                                            <th>Agreed Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Conference presentation/Research Seminar ( local or internation)</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Relevant industry consultancy or project etc through the university</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>External research grant award:KES less than 1 million:2 points.KES 1 to 5 Million: 3 points.KES 5,000,001 - 10 million: 4 points.KES above 10 miliion: 5 points</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Conference participation without presentation of paper [each 1 point for a max 2 points</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Newspapers/ Radio/ TV presentation [each 1 point for a max. of 2 points]</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Innovation and Professional Development Activities</th>
+                                            <th>Self - Score</th>
+                                            <th>Dean's Score</th>
+                                            <th>Agreed Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Participation in any of the following: Faculty development workshop/ Seminars/Education Effectiveness/ CUE</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Membership of professional/ Academic bodies</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" style="border:1px solid black">
+                            <h6>III . EXCELLENCE IN SERVICE</h6>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Service to the University / Students</th>
+                                            <th>Self - Score</th>
+                                            <th>Dean's Score</th>
+                                            <th>Agreed Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Chair of University - wide committee ( e.g. Curriculum Committee)</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Effective club advisor/ Patron (Student Club Evaluation form)</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Effective member of University - wide committee ( e.g Academic Council Committee- at least 75% attendance)</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Effective member of special school committee member ( e.g.curriculum committee - at least 75% attendance)</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Effective membership of a conference organizing committee</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Organization of Public lecture series or seminar series</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Participation in departmental and Faculty meetings (at least 75% attendance)</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Membership of disciplinary committee</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Chair of Faculty Departmental Committee</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Support of student sports ( e.g. as referee, coach, trainer etc)</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Participation in students/ parents meetings/ orientation</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Member of interviewing panel</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Student advising ( e.g. career/ professional)</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Initiate revenue generating activities</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Financial contribution to University initiated projects</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Service to Profession & Civic Leadership</th>
+                                            <th>Self - Score</th>
+                                            <th>Dean's Score</th>
+                                            <th>Agreed Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Chair/Member of professional conference organizing committee</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Journal articles and other manuscripts reviewer</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Member of journal editorial board</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Service as external examiner or program reviewer</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Member of Community Committee</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Participation in community based activities</td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                            <td><input type="text" class="form-control" style="width:60px;text-align:center" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>           
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingSix" aria-expanded="false" aria-controls="collapseSix" data-toggle="collapse" href="#collapseSix">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>Core Skills & Competencies
+                    </h6>
+                </div>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divCoreCompVal"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingSeven" aria-expanded="false" aria-controls="collapseSeven" data-toggle="collapse" href="#collapseSeven">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>Performance Improvement Plan
+                    </h6>
+                </div>
+                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divPImpPlan"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingNine" aria-expanded="false" aria-controls="collapseNine" data-toggle="collapse" href="#collapseNine">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>General Comments
+                    </h6>
+                </div>
+                <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divGeneralComm"></div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div align="right">
+                <input type="button" value="Send To Supervisor >>>" class="btn btn-primary" onclick="SendDocForApproval();" />
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModalReport" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">P9 Report</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyReport" style="width:100%;height:450px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.shadow-none').on('shown.bs.collapse', function () {
+            $(this).find('.fa-arrow-down').removeClass('fa-arrow-down').addClass('fa-arrow-up');
+        }).on('hidden.bs.collapse', function () {
+            $(this).find('.fa-arrow-up').removeClass('fa-arrow-up').addClass('fa-arrow-down');
+        });
+        LoadSectionData();
+    });
+    var LoadSectionData = function () {
+        ShowProgress();
+        var DocNo = $("#DocNo").html();
+        //LoadScoreCardObjective(DocNo);
+        //LoadScoreCardObjectiveEvaluation(DocNo);
+        LoadCoreSkillsCompValues(DocNo);
+        LoadPImprSkillsDevPlan(DocNo);
+        LoadGeneralComments(DocNo);
+        HideProgress();
+    };
+    ///////////////Load Data////////////////
+    var LoadScoreCardObjective = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo, Type: "S" }),
+            url: '@Url.Action("LoadScoreCardObjectives", "Appraisal")',
+            success: function (data) {
+                $("#divScoreCard").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadScoreCardObjectiveEvaluation = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo, Type: "E" }),
+            url: '@Url.Action("LoadScoreCardObjectives", "Appraisal")',
+            success: function (data) {
+                $("#divScoreCardEval").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadCoreSkillsCompValues = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: '@Url.Action("LoadCoreSkillsCompetenceValues", "Appraisal")',
+            success: function (data) {
+                $("#divCoreCompVal").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadPImprSkillsDevPlan = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: '@Url.Action("LoadPImprovementSkillsDevPlan", "Appraisal")',
+            success: function (data) {
+                $("#divPImpPlan").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadGeneralComments = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: '@Url.Action("LoadGeneralComments", "Appraisal")',
+            success: function (data) {
+                $("#divGeneralComm").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    ///////////////End of Load////////////////////
+    ///////////////Objective////////////////////
+    var NewObjectiveLine = function () {
+        $("#labelF").text("New Objective Line");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("NewObjectiveLine", "Appraisal")',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SaveObjectiveRecord = function () {
+        var DocNo = $("#DocNo").html();
+        var AppPeriod = $("#AppPeriod").html();
+        var Obj = $('#txtObj').val();
+        var KeyP = $('#txtPerIndicator').val();
+        var Target = $('#txtTarget').val();
+        if (DocNo == "") {
+            Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
+            return;
+        }
+        else if (AppPeriod == "") {
+            Swal.fire('error', 'Appraisal period cannot be empty', 'error');
+            return;
+        }
+        else if (Obj == "") {
+            Swal.fire('error', 'Enter Objective', 'error');
+            return;
+        }
+        else if (KeyP == "") {
+            Swal.fire('error', 'Enter Key Performance Indicator', 'error');
+            return;
+        }
+        else if (Target == "") {
+            Swal.fire('error', 'Enter Target', 'error');
+            return;
+        }
+        else {
+            var ApprisalObjective = {};
+            ApprisalObjective.DocNo = DocNo;
+            ApprisalObjective.Objective = Obj;
+            ApprisalObjective.KeyPerformance = KeyP;
+            ApprisalObjective.AppraisalPeriod = AppPeriod;
+            ApprisalObjective.Target = Target;
+
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("SubmitAppraisalObjectiveLine", "Appraisal")',
+                data: JSON.stringify({ AppObjective: ApprisalObjective }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        Swal.fire('Success', data.message, 'success');
+                        HideProgress();
+                        LoadScoreCardObjective(DocNo);
+                        LoadScoreCardObjectiveEvaluation(DocNo);
+                        $("#myModal").modal("hide");
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    var RemoveObjectiveItem = function (LineNo, DocNo) {
+        ShowProgress();
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("DeleteAppraisalObjectiveLine", "Appraisal")',
+            data: JSON.stringify({ LnNo: LineNo, DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    Swal.fire('Success', data.message, 'success');
+                    HideProgress();
+                    LoadScoreCardObjective(DocNo);
+                    LoadScoreCardObjectiveEvaluation(DocNo);
+                    $("#myModal").modal("hide");
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire('error', data.message, 'error');
+            }
+        });
+    }
+    var EvalObjectiveItem = function (LineNo, DocNo) {
+        $("#labelF").text("Evaluate Objective Line");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            url: '@Url.Action("EvaluateAppraisalObjectiveLine", "Appraisal")',
+            data: JSON.stringify({ LnNo: LineNo, DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SaveEvaluationLine = function (LineNo, DocNo) {
+        var EvalValueachvmnt = $("#txtAchvmnt").val();
+        var ratings = $("#txtSelfRating").val();
+        if (EvalValueachvmnt == "") {
+            Swal.fire('error', 'Enter achievement for the objective', 'error');
+            return;
+        }
+        else if (ratings == "") {
+            Swal.fire('error', 'Enter self ratings', 'error');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("SaveAppraisalObjectiveLineAchievement", "Appraisal")',
+                data: JSON.stringify({ LnNo: LineNo, DocNo: DocNo, achvmnt: EvalValueachvmnt, ratings: ratings }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        Swal.fire('Success', data.message, 'success');
+                        HideProgress();
+                        LoadScoreCardObjectiveEvaluation(DocNo);
+                        $("#myModal").modal("hide");
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    ///////////////End Objective////////////////////
+    ///////////////Skills Compe////////////////////
+    var AddCoreCompetenceVal = function () {
+        $("#labelF").text("Core Skills & Competence");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("NewCoreCompetenceValue", "Appraisal")',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SaveCoreCompetenceValueLine = function () {
+        var DocNo = $("#DocNo").html();
+        var AppPeriod = $("#AppPeriod").html();
+        var myTableArray = [];
+        $('#tableAddSkillComp tbody tr').each(function () {
+            var arrayOfThisRow = [];
+            var tableData = $(this).find('td');
+            if (tableData.length > 0) {
+                tableData.each(function () {
+                    if ($(this).find("input[type=text]").length) {
+                        var myText = $(this).find("input[type=text]").val();
+
+                        arrayOfThisRow.push(myText);
+                    }
+                    else arrayOfThisRow.push($(this).text());
+                });
+
+                myTableArray.push(arrayOfThisRow);
+            }
+        });
+        if (DocNo == "") {
+            Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
+            return;
+        }
+        else if (AppPeriod == "") {
+            Swal.fire('error', 'Appraisal period cannot be empty', 'error');
+            return;
+        }
+        else if (myTableArray.length < 1) {
+            Swal.fire('Warning', 'You have not Added any installment line(s)', 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SubmitCoreCompetenceValue", "Appraisal")',
+                data: { DocNo: DocNo, AppPeriod: AppPeriod, skillComp: myTableArray },
+                contenttype: "text/plain; charset=utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        HideProgress();
+                        LoadCoreSkillsCompValues(DocNo);
+                        Swal.fire('Success', data.message, 'success');
+                        $("#myModal").modal("hide");
+
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    var EditSkillCompItem = function (LineNo, DocNo) {
+        $("#labelF").text("Skill $ Competence Score");
+        ShowProgress();
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("EditSkillCompetenceValue", "Appraisal")',
+            data: JSON.stringify({ LnNo: LineNo, DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SaveSkillCompScore = function (LineNo, DocNo) {
+        var Score = $("#txtRating").val();
+        if (Score == "") {
+            Swal.fire('error', 'Enter Appraisee Score', 'error');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("SubmitSkillCompScore", "Appraisal")',
+                data: JSON.stringify({ LnNo: LineNo, DocNo: DocNo, score: Score }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        Swal.fire('Success', data.message, 'success');
+                        HideProgress();
+                        LoadCoreSkillsCompValues(DocNo);
+                        $("#myModal").modal("hide");
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    ///////////////end Skills Compe////////////////////
+    ///////////////Skills Dev////////////////////
+    var AddAreaOfImprovement = function () {
+        $("#labelF").text("Areas of Improvement");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("NewSkillDevelopment", "Appraisal")',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SaveSkillDevelopmentLine = function () {
+        var DocNo = $("#DocNo").html();
+        var AppPeriod = $("#AppPeriod").html();
+        var SkillDev = $('#txtAreaOfImprovement').val();
+        var weight = $("#ddlweight").children("option:selected").val();
+
+        if (DocNo == "") {
+            Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
+            return;
+        }
+        else if (AppPeriod == "") {
+            Swal.fire('error', 'Appraisal period cannot be empty', 'error');
+            return;
+        }
+        else if (SkillDev == "") {
+            Swal.fire('error', 'Enter Area of Improvement', 'error');
+            return;
+        }
+        else if (weight == "") {
+            Swal.fire('error', 'Select weight', 'error');
+            return;
+        }
+
+        else {
+            var ApprisalObjective = {};
+            ApprisalObjective.DocNo = DocNo;
+            ApprisalObjective.Objective = SkillDev;
+            ApprisalObjective.AppraisalPeriod = AppPeriod;
+            ApprisalObjective.weight = weight;
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("SubmitSkillDevelopmentValue", "Appraisal")',
+                data: JSON.stringify({ AppObjective: ApprisalObjective }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        HideProgress();
+                        LoadPImprSkillsDevPlan(DocNo);
+                        Swal.fire('Success', data.message, 'success');
+                        $("#myModal").modal("hide");
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    var RemoveAreaImprovItem = function (LineNo, DocNo) {
+        ShowProgress();
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("DeleteSkillDevelopmentValue", "Appraisal")',
+            data: JSON.stringify({ LnNo: LineNo, DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    Swal.fire('Success', data.message, 'success');
+                    HideProgress();
+                    LoadPImprSkillsDevPlan(DocNo);
+                    $("#myModal").modal("hide");
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire('error', data.message, 'error');
+            }
+        });
+    }
+    ///////////////end Skills Dev////////////////////
+    ///////////////Save Comments////////////////////
+    var SaveComments = function (section) {
+        var DocNo = $("#DocNo").html();
+        if (DocNo == "") {
+            Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
+            return;
+        }
+        else {
+            if (section == "1") {
+                var rows = $("#tableObj > tbody > tr.HasData").length;
+                if (parseInt(rows) < 1) {
+                    Swal.fire('error', "You have not entered your objectives", 'error');
+                }
+                else {
+                    var comments = $("#ObjAppraiseeComments").val();
+                    if (comments == "") {
+                        Swal.fire('error', 'Enter appraisee Objective Comment', 'error');
+                        return;
+                    }
+                    else {
+                        SubmitSectionComments(DocNo, section, comments);
+                    }
+                }
+            }
+            else if (section == "2") {
+                var rows = $("#tableObjReview > tbody > tr.HasData").length;
+                if (parseInt(rows) < 1) {
+                    Swal.fire('error', "You have not entered your objectives", 'error');
+                }
+                else {
+                    var comments = $("#ObjReviewComments").val();
+                    if (comments == "") {
+                        Swal.fire('error', 'Enter appraisee Objective review Comment', 'error');
+                        return;
+                    }
+                    else {
+                        SubmitSectionComments(DocNo, section, comments);
+                    }
+                }
+            }
+            else if (section == "3") {
+                var rows = $("#tableSkillComp > tbody > tr.HasData").length;
+                if (parseInt(rows) < 1) {
+                    Swal.fire('error', "You have not entered your Skills and Competences", 'error');
+                }
+                else {
+                    var comments = $("#SkillCompAppraiseeComments").val();
+                    if (comments == "") {
+                        Swal.fire('error', 'Enter appraisee skills and competence Comment', 'error');
+                        return;
+                    }
+                    else {
+                        SubmitSectionComments(DocNo, section, comments);
+                    }
+                }
+            }
+            else if (section == "4") {
+                var rows = $("#tableSkillDev > tbody > tr.HasData").length;
+                if (parseInt(rows) < 1) {
+                    Swal.fire('error', "You have not entered your skills and development", 'error');
+                }
+                else {
+                    var comments = $("#SkillsDevAppraiseeComments").val();
+                    if (comments == "") {
+                        Swal.fire('error', 'Enter appraisee Skills and Development Comment', 'error');
+                        return;
+                    }
+                    else {
+                        SubmitSectionComments(DocNo, section, comments);
+                    }
+                }
+            }
+            else if (section == "5") {
+                var comments = $("#GeneralAppraiseeComments").val();
+                if (comments == "") {
+                    Swal.fire('error', 'Enter appraisee general Comment', 'error');
+                    return;
+                }
+                else {
+                    SubmitSectionComments(DocNo, section, comments);
+                }
+            }
+            else {
+                Swal.fire('error', "Failed to save comments", 'error');
+                return;
+            }
+        }
+    }
+    var SubmitSectionComments = function (DocNo, section, comment) {
+        ShowProgress();
+        $.ajax({
+            type: "post",
+            url: "/Appraisal/SaveAppriseeComments",
+            data: JSON.stringify({ DocNo: DocNo, Comment: comment, sectioon: section }),
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    Swal.fire('Success', data.message, 'success');
+                    HideProgress();
+                    if (section == "1") {
+                        LoadScoreCardObjective(DocNo);
+                    }
+                    if (section == "2") {
+                        LoadScoreCardObjectiveEvaluation(DocNo);
+                    }
+                    if (section == "3") {
+                        LoadCoreSkillsCompValues(DocNo);
+                    }
+                    if (section == "4") {
+                        LoadPImprSkillsDevPlan(DocNo);
+                    }
+                    if (section == "5") {
+                        LoadGeneralComments(DocNo);
+                    }
+                    $("#myModal").modal("hide");
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire('error', data.message, 'error');
+            }
+        });
+    }
+    ///////////////End////////////////////
+    var SendDocForApproval = function () {
+        var DocNo = $("#DocNo").html();
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("SendAppraisalForApproval", "Appraisal")',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadSectionData();
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var GenerateApprisalReport = function () {
+        $("#labelF").text("Apprisal Document");
+        var DocNo = $("#DocNo").html();
+        ShowProgress();
+        $.ajax({
+            url: '@Url.Action("GenerateAppraisalReport", "Appraisal")',
+            datatype: "json",
+            type: "POST",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    var viewer = $("#modalBodyReport");
+                    PDFObject.embed(data.message, viewer);
+                    $("#myModalReport").modal("show");
+                    HideProgress();
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+</script>
+

@@ -30,7 +30,7 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                if (Session["UserID"] == null)
+                if (Session["Username"] == null)
                 {
                     return Json(new { message = "/Login/Login", success = false, redirect = true }, JsonRequestBehavior.AllowGet);
                 }
@@ -38,12 +38,6 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     string StaffNo = Session["UserID"].ToString();
 
-                    string[] s = new string[2];
-                    if (StaffNo.Contains("\\"))
-                    {
-                        s = StaffNo.Split('\\');
-                        StaffNo = s[1];
-                    }
                     string ok = Credentials.ResetPassword(StaffNo, newpass);
 
                     if (ok == "CHANGED")

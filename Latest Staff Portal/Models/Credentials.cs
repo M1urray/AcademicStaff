@@ -1,30 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Configuration;
 using System.Net;
-using System.Web.Mvc;
-using System.Web.Caching;
-using System.Web.UI;
-using System.IO;
 using Latest_Staff_Portal.NAVWS;
 using System.DirectoryServices;
 using System.Web.Configuration;
 using System.DirectoryServices.AccountManagement;
+using System.IO;
 
 namespace Latest_Staff_Portal.Models
 {
     public class Credentials
     {
-        private static DirectorySearcher dirSearch = null;
-        public static string fileSourcePath = @"C:\DBs\Portal Reports\";
-        public static string fileDestinationPath = @"C:\PORTAL\Live\Downloads\";
-        public static string fileUploadsPath = @"\\192.168.1.148\Document Uploads\";
+        public static string ImportantDocParth = ConfigurationManager.AppSettings["MEMOPATH"];
+        public static string fileUploadsPath = ConfigurationManager.AppSettings["MEMOPATH"];
+        public static string fileDestinationPath = ConfigurationManager.AppSettings["FILE_SOURCE"];
+        public static string fileSourcePath = ConfigurationManager.AppSettings["FILE_SOURCE"];
+        public static string fileDownLoads = ConfigurationManager.AppSettings["DOWNLOADLINKS"];
         public static HttpWebResponse GetOdataData(string page)
         {
             HttpWebResponse httpResponse = null;
-            string Url = ConfigurationManager.AppSettings["W_PWD"];
+
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["ODATA_URI"] + page);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "GET";
@@ -37,11 +32,11 @@ namespace Latest_Staff_Portal.Models
 
             return httpResponse;
         }
-        public static WebService ObjNav
+        public static WebPortal ObjNav
         {
             get
             {
-                var ws = new WebService();
+                var ws = new WebPortal();
 
                 try
                 {
@@ -65,23 +60,26 @@ namespace Latest_Staff_Portal.Models
             try
             {
                 string UName = "";
+                string[] s = new string[2];
                 if (username.Contains(@"\\"))
                 {
-                    UName = username.Replace(@"\\", "").Trim();
+                    s = username.Split('\\');
+                    UName = s[1].Replace(@"\", "").Trim();
                 }
                 else if (username.Contains(@"\"))
                 {
-                    UName = username.Replace(@"\", "").Trim();
+                    s = username.Split('\\');
+                    UName = s[1].Replace(@"\", "").Trim();
                 }
                 else
                 {
                     UName = username.Trim();
                 }
-                string AdminAccountName = WebConfigurationManager.AppSettings["AD_USER"];
-                string AdminPassword = WebConfigurationManager.AppSettings["ADW_PWD"];
-                string Domain = WebConfigurationManager.AppSettings["AD_DOMAIN"];
+                string AdminAccountName = WebConfigurationManager.AppSettings["W_USER"];
+                string AdminPassword = WebConfigurationManager.AppSettings["W_PWD"];
+                string Domain = WebConfigurationManager.AppSettings["DOMAIN"];
 
-                using (PrincipalContext pContext = new PrincipalContext(ContextType.Domain, "192.168.2.156", AdminAccountName, AdminPassword))
+                using (PrincipalContext pContext = new PrincipalContext(ContextType.Domain, ConfigurationManager.AppSettings["ADIPADDRESS"], AdminAccountName, AdminPassword))
                 {
                     UserPrincipal up = UserPrincipal.FindByIdentity(pContext, username);
                     if (up != null)
@@ -104,10 +102,9 @@ namespace Latest_Staff_Portal.Models
             try
             {
                 File.WriteAllBytes(filePath, Convert.FromBase64String(base64String));
-                if (CommonClass.IfFileExists(filePath))
-                {
-                    ObjNav.ImportStaffProfilePicture(StaffNo, filePath, fileName);
-                }
+                CommonClass.MoveUploadedFile(filePath, fileName);
+                string UploadFilePath = Credentials.fileUploadsPath + fileName;
+                ObjNav.ImportStaffProfilePicture(StaffNo, UploadFilePath, fileName);
                 Uploaded = true;
             }
             catch (Exception ex)
@@ -123,11 +120,7 @@ namespace Latest_Staff_Portal.Models
             {
                 File.WriteAllBytes(filePath, Convert.FromBase64String(base64String));
 
-                if (CommonClass.IfFileExists(filePath))
-                {
-                    ObjNav.UploadAttachedDocument(DocNo, filePath, base64String, TableID);
-                }
-               
+                ObjNav.UploadAttachedDocument(DocNo, filePath, base64String, TableID);
                 Uploaded = "SUCCESS";
             }
             catch (Exception ex)
@@ -142,6 +135,19 @@ namespace Latest_Staff_Portal.Models
             try
             {
                 PicString = ObjNav.GetDocumentAttachment(TblID, DocNo, Id);
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Clear();
+            }
+            return PicString;
+        }
+        public static string GetCourseDocumentAttachmet(int TblID, string DocNo)
+        {
+            string PicString = "";
+            try
+            {
+                PicString = ObjNav.GetDocumentAttachmentCourse(TblID, DocNo);
             }
             catch (Exception ex)
             {

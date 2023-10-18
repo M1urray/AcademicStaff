@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.Proposal>
+<style>
+    .btnPadding {
+        padding: 5px;
+        font-size: 10px;
+    }
+</style>
+<div class="pre-scrollable">
+    <table id="dtProposalReview" class="table table-condensed table-striped dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead style="background-color:black;color:white">
+            <tr>
+                <th>Action</th>
+                <th>No</th>
+                <th>Description</th>
+                <th>Objective</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null && Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <button id="btnReview" class="btn btn-primary btnPadding" onclick="ReviewProposal('@item.Proposal_No');">Review</button>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Proposal_No)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Objective)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

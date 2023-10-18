@@ -50,15 +50,19 @@
                 }
             }
         </tbody>
+        <tfoot>
+            <tr class="HideLineButton">
+                <td class="text-right" colspan="6">
+                    <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddStaffClaimLines();" />
+                </td>
+            </tr>
+        </tfoot>
     </table>
-</div>
-<div align="right">
-    <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddStaffClaimLines();" />
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
         var status = '@Model.Status';
-        if (status == "Pending" || status == "Open") {
+        if (status == "Pending") {
             $(".tdAction").show();
             $(".HideLineButton").show();
         }

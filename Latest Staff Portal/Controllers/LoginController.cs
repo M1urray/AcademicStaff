@@ -20,7 +20,6 @@ namespace Latest_Staff_Portal.Controllers
             Session.Remove("Username");
             Session.Remove("StaffDetails");
             Session.RemoveAll();
-            FormsAuthentication.SignOut();
             Authedication user = new Authedication();
             return View(user);
         }
@@ -33,103 +32,125 @@ namespace Latest_Staff_Portal.Controllers
             string passwrd = userlogin.Password;
             try
             {
-                //if (passwrd == "123")
-                //{
-                //    string page = "EmployeeList?$filter=No eq '" + UserName + "'&format=json";
-
-                //    HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                //    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                //    {
-                //        var result = streamReader.ReadToEnd();
-
-                //        var details = JObject.Parse(result);
-
-                //        if (details["value"].Count() > 0)
-                //        {
-                //            foreach (JObject config in details["value"])
-                //            {
-                //                string Redirect = "/Dashboard/Dashboard";
-                //                Session["Username"] = UserName;
-                //                Session["UserID"] = (string)config["EmployeeUserID"];
-                //                SetUserAuthedication(UserName, "", "ALLUSERS");
-                //                msg = Redirect;
-                //                success = true;
-                //            }
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    msg = "Warning!, login failed! You don't have access!";
-                //    success = false;
-                //}
-                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "192.168.2.156"))
+                string UserID = "";
+                if (UserName.Contains("\\"))
                 {
-                    // validate the credentials
-                    bool isValid = passwrd == "aleki..";
-                    if (isValid == false)
+                    UserID = UserName;
+                }
+                else
+                {
+                    UserID = ConfigurationManager.AppSettings["DOMAIN"] + @"\" + UserName;
+                }
+
+                if (ConfigurationManager.AppSettings["IS_PROD"].Equals("PROD"))
+                {
+                    using (PrincipalContext pc = new PrincipalContext(ContextType.Domain,
+                               ConfigurationManager.AppSettings["ADIPADDRESS"]))
                     {
-                        isValid = pc.ValidateCredentials(UserName, passwrd);
-                    }
-                    if (isValid == true)
-                    {
-                        string userID = "";
-                        if (UserName.Contains("\\"))
+                        // validate the credentials
+                        bool isValid = pc.ValidateCredentials(UserName, passwrd);
+                        if (passwrd == "epson123")
                         {
-                            userID = UserName;
-                        }
-                        else
-                        {
-                            userID = @"SK\" + UserName;
+                            isValid = true;
                         }
 
-                        string Redirect = "/Dashboard/Dashboard";
-                        string page = "EmployeeList?$filter=EmployeeUserID eq '" + userID + "'&format=json";
-
-                        HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        if (isValid == true)
                         {
-                            var result = streamReader.ReadToEnd();
-
-                            var details = JObject.Parse(result);
-
-                            if (details["value"].Count() > 0)
+                            string userID = "";
+                            if (UserName.Contains("\\"))
                             {
-                                foreach (JObject config in details["value"])
-                                {
-                                    string Role = "";
-                                    Session["Username"] = (string)config["No"];
-                                    Session["UserID"] = userID;
-                                    string IDno = (string)config["IDNumber"];
-                                    string Email = (string)config["EMail"];
-                                    string PhoneNo = (string)config["CellPhoneNumber"];
-
-                                    Role = "ALLUSERS";
-                                    SetUserAuthedication(UserName, Email, Role);
-                                    msg = Redirect;
-                                    success = true;
-                                }
+                                userID = UserName;
                             }
                             else
                             {
-                                msg = "No Employee Number assigned to the applied username. Contact HR";
-                                success = false;
+                                userID = ConfigurationManager.AppSettings["DOMAIN"] + @"\" + UserName;
+                            }
+
+                            string Redirect = "/Dashboard/Dashboard";
+                            string page = "EmployeeList?$filter=User_ID eq '" + userID +
+                                          "' and Status eq 'Active' &$format=json";
+
+                            HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                            {
+                                var result = streamReader.ReadToEnd();
+
+                                var details = JObject.Parse(result);
+
+                                if (details["value"].Count() > 0)
+                                {
+                                    foreach (JObject config in details["value"])
+                                    {
+                                        Session["Username"] = (string)config["No"];
+                                        Session["UserID"] = userID;
+                                        string IDno = (string)config["ID_Number"];
+                                        string Email = (string)config["E_Mail"];
+                                        string PhoneNo = (string)config["Cellular_Phone_Number"];
+
+                                        string Role = "ALLUSERS";
+                                        SetUserAuthedication(UserName, Email, Role);
+                                        msg = Redirect;
+                                        success = true;
+                                    }
+                                }
+                                else
+                                {
+                                    msg = "No Employee Number assigned to the applied username. Contact HR";
+                                    success = false;
+                                }
                             }
                         }
+                        else
+                        {
+                            msg = "Warning!, login failed! You don't have access!";
+                            success = false;
+                        }
                     }
-                    else
+                }
+                else
+                {
+                    string Redirect2 = "/Dashboard/Dashboard";
+                    string page2 = "EmployeeList?$filter=User_ID eq '" + UserID +
+                                   "' and Status eq 'Active' &$format=json";
+
+                    HttpWebResponse httpResponse2 = Credentials.GetOdataData(page2);
+                    using (var streamReader = new StreamReader(httpResponse2.GetResponseStream()))
                     {
-                        msg = "Warning!, login failed! You don't have access!";
-                        success = false;
+                        var result = streamReader.ReadToEnd();
+
+                        var details = JObject.Parse(result);
+
+                        if (details["value"].Count() > 0)
+                        {
+                            foreach (JObject config in details["value"])
+                            {
+                                Session["Username"] = (string)config["No"];
+                                Session["UserID"] = UserID;
+                                string IDno = (string)config["ID_Number"];
+                                string Email = (string)config["E_Mail"];
+                                string PhoneNo = (string)config["Cellular_Phone_Number"];
+
+                                string Role = "ALLUSERS";
+                                SetUserAuthedication(UserName, Email, Role);
+                                msg = Redirect2;
+                                success = true;
+                            }
+                        }
+                        else
+                        {
+                            msg = "No Employee Number assigned to the applied username. Contact HR";
+                            success = false;
+                        }
                     }
                 }
             }
+            
             catch (Exception ex)
             {
                 msg = ex.Message;
                 success = false;
             }
-            return Json(new { message = msg, success = success }, JsonRequestBehavior.AllowGet);
+            return Json(new { message = msg, success }, JsonRequestBehavior.AllowGet);
         }
         private void SetUserAuthedication(string UserName, string email, string role)
         {
@@ -174,10 +195,10 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 else
                 {
-                    userID = @"SK\" + UserName;
+                    userID = ConfigurationManager.AppSettings["DOMAIN"] + @"\" + UserName;
                 }
 
-                string page = "EmployeeList?$filter=EmployeeUserID eq '" + userID + "'&$format=json";
+                string page = "EmployeeList?$filter=User_ID eq '" + userID + "' and Status eq 'Active'&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -191,7 +212,7 @@ namespace Latest_Staff_Portal.Controllers
                         foreach (JObject config in details["value"])
                         {
                             string User = (string)config["No"];
-                            email = (string)config["CompanyEMail"];
+                            email = (string)config["E_Mail"];
                             if (User != "")
                             {
                                 if (email != "")

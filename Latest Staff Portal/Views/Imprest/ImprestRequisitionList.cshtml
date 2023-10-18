@@ -10,20 +10,19 @@
     }
 
     .BtnPadding {
-        padding: 1px;
+        padding: 4px;
         font-size: 12px;
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div class="card pre-scrollable">
     <div class="card-title">Imprest Requisition List</div>
     <hr />
     <div class="card-body">
         <a href="#" onclick="NewImprestRequisition();" class="btn btn-primary BtnPadding">New Request</a>
+        <a href="#" onclick="ViewDoc();" class="btn btn-danger BtnPadding disabled" id="ViewDoc">View Document</a>
+        <a href="#" onclick="SendDocForApproval();" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send Approval Request</a>
+        <a href="#" onclick="CancelDocForApproval();" class="btn btn-primary BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
+        <a href="#" onclick="ViewApprovalTrail();" class="btn btn-danger BtnPadding disabled" id="AppTrail">Document Approval Trail</a>
         <hr />
         <div id="divRegList"></div>
     </div>
@@ -33,7 +32,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content bg-white">
             <div class="modal-header">
-                <h4 class="modal-title">New Imprest Requisition</h4>
+                <h4 class="modal-title"><label id="labelF"></label></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -46,34 +45,24 @@
         </div>
     </div>
 </div>
-@*//////////////////////Modal Links////////////////////////////*@
-<div class="modal fade" id="myModalLinks" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content bg-white">
-            <div class="modal-header">
-                <h4 class="modal-title">Actions</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="modalBodyLinks">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script src="~/assets/js/ShowProgression.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         LoadImprestReqList();
         var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
+        var Errormsg = '@Request.RequestContext.HttpContext.Session["ErrorMsg"]';
         if (Successmsg != "") {
-            Swal.fire('Success', Successmsg, 'success', true);
+            Swal.fire('Success', Successmsg, 'success',true);
             $.ajax({
                 type: "POST",
-                url: "/Common/NullibySessions"
+                url: '@Url.Action("NullibySessions", "Common")'
+            });
+        }
+        if (Errormsg != "") {
+            Swal.fire('Warning', Errormsg, 'warning',true);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("NullibySessions", "Common")'
             });
         }
     });
@@ -85,7 +74,7 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: "/Imprest/ImprestRequisitionListPartialView",
+            url: '@Url.Action("ImprestRequisitionListPartialView", "Imprest")',
             success: function (data) {
                 $("#divRegList").html(data);
                 HideProgress();
@@ -98,139 +87,47 @@
     }
     var NewImprestRequisition = function () {
         ShowProgress();
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: "/Imprest/NewImprestRequest",
-            success: function (data) {
-                $("#modalBody").html(data);
-                HideProgress();
-                $("#myModal").modal("show");
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
+        window.location = '@Url.Action("NewImprestRequest", "Imprest")';
+    }
+    var SelectedRow = function () {
+        $('table tbody tr').click(function () {
+            $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
+            var row = $('#datatable-buttons tr.selectedTableRow');
+            var Status = row.find("td").eq(6).html().trim();
+            $("#ViewDoc").removeClass("disabled");
+            if (Status == "Pending") {
+                $("#SendDocAppr").removeClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
+            }
+            else if (Status == "Pending Approval") {
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").removeClass("disabled");
+                $("#AppTrail").removeClass("disabled");
+            }
+            else if (Status == "Approved") {
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
+            }
+            else {
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
             }
         });
     }
-    var SubmitImprestRequisition = function (DiReg) {
-        var dateNeeded = $("#dtPicker").val();
-        var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
-        var Directorate = $("#ddlDirectorate").children("option:selected").val();
-        var Department = $("#ddlDepartment").children("option:selected").val();
-        if (dateNeeded == "") {
-            Swal.fire('Warning', "Select Date needed", 'warning');
-            return;
-        }
-        if (Remarks == "") {
-            Swal.fire('Warning', "Enter Reason for the purchase", 'warning');
-            return;
-        }
-        if (Remarks.length > 150) {
-            Swal.fire('Warning', "Reason for purchase cannot exceed 150 characters", 'warning');
-            return;
-        }
-        else if (Directorate == "" && DiReg == false) {
-            Swal.fire('Warning', "Select Directorate", 'warning');
-            return;
-        }
-        else if (Department == "") {
-            Swal.fire('Warning', "Select Department", 'warning');
-            return;
-        }
-        else {
-            var ImprestHeader = {};
-            ImprestHeader.DateNeeded = dateNeeded;
-            ImprestHeader.Remarks = Remarks;
-            ImprestHeader.Directorate = Directorate;
-            ImprestHeader.Department = Department;
-            //ImprestHeader.Section = Section;
-            ShowProgress();
-            //Send the JSON array to Controller using AJAX.
-            $.ajax({
-                type: "POST",
-                url: "/Imprest/SubmitImprestRequisition",
-                data: JSON.stringify({ imprestHeader: ImprestHeader }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    if (data.success) {
-                        window.location = data.message;
-                    }
-                    else {
-                        Swal.fire('Warning', data.message, 'warning');
-                        HideProgress();
-                    }
-                },
-                error: function (err) {
-                    HideProgress();
-                    Swal.fire('Warning', err, 'warning');
-                }
-            });
-        }
-    };
-    var SelectedRow = function (DocNo, Status) {
+    var ViewDoc = function () {
+        $("#labelF").text("Purchase Details Document");
         ShowProgress();
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'IMP' }),
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: '/Common/CommonActions',
-            success: function (data) {
-                $("#modalBodyLinks").html(data);
-                HideProgress();
-                $("#myModalLinks").modal("show");
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        window.location = '@Url.Action("ImprestDocumentView", "Imprest")?DocNo=' + DocNo;
     }
-    var ViewDoc = function (DocNo) {
-        ShowProgress();
-        window.location = "/Imprest/ImprestDocumentView?DocNo=" + DocNo;
-    }
-    var SendDocForApproval = function (DocNo) {
-        ShowProgress();
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, Redirect: "N" }),
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: '/Imprest/SendImprestAppForApproval',
-            success: function (data) {
-                if (data.LogOut == true) {
-                    window.location = data.message;
-                }
-                else {
-                    if (data.success == true) {
-                        HideProgress();
-                        LoadImprestReqList();
-                        $("#myModalLinks").modal("hide");
-                        Swal.fire('Success', data.message, 'success');
-                    }
-                    else {
-                        HideProgress();
-                        Swal.fire('Error', data.message, 'error');
-                    }
-                }
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
-    }
-    var CancelDocForApproval = function (DocNo) {
+    var SendDocForApproval = function () {
+        $("#labelF").text("Imprest Details Document");
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
         ShowProgress();
         $.ajax({
             async: true,
@@ -239,22 +136,19 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Imprest/CancelImprestAppForApproval',
+            url: '@Url.Action("SendImprestAppForApproval", "Imprest")',
             success: function (data) {
-                if (data.LogOut == false) {
-                    window.location = data.message;
+                HideProgress();
+                LoadImprestReqList();
+                if (data.success == true) {
+                    DiableButtons();
+                    HideProgress();
+                    Swal.fire('Success', data.message, 'success');
                 }
                 else {
-                    if (data.success == true) {
-                        HideProgress();
-                        LoadImprestReqList();
-                        $("#myModalLinks").modal("hide");
-                        Swal.fire('Success', data.message, 'success');
-                    }
-                    else {
-                        HideProgress();
-                        Swal.fire('Error', data.message, 'error');
-                    }
+                    DiableButtons();
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
                 }
             },
             error: function (err) {
@@ -262,22 +156,56 @@
                 Swal.fire('Warning', err, 'warning');
             }
         });
-    };
-    var ViewApprovalTrail = function (DocNo) {
-        $("#labelF").text("Document Approval Trail");
+    }
+    var CancelDocForApproval = function () {
+        $("#labelF").text("Imprest Details Document");
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
         ShowProgress();
         $.ajax({
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, RecID: "Imprest Header: " + DocNo }),
+            data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/DocumentApprovalTrail',
+            url: '@Url.Action("CancelImprestAppForApproval", "Imprest")',
+            success: function (data) {
+                HideProgress();
+                LoadImprestReqList();
+                if (data.success == true) {
+                    DiableButtons();
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    DiableButtons();
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+
+    }
+    var ViewApprovalTrail = function () {
+        $("#labelF").text("Document Approval Trail");
+        ShowProgress();
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("DocumentApprovalTrail", "Common")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
-                $("#myModalLinks").modal("hide");
                 $("#myModal").modal("show");
             },
             error: function (err) {
@@ -286,29 +214,15 @@
             }
         });
     }
-    var ViewDocComments = function (DocNo) {
-        $("#labelF").text("Document Comments");
-        ShowProgress();
-        var RecordID = "Imprest Header: " + DocNo;
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            data: JSON.stringify({ RecID: RecordID }),
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: '/Common/DocumentApprovalComments',
-            success: function (data) {
-                $("#modalBody").html(data);
-                HideProgress();
-                $("#myModalLinks").modal("hide");
-                $("#myModal").modal("show");
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
+    var DiableButtons = function () {
+        $("#ViewDoc").addClass("disabled");
+        $("#SendDocAppr").addClass("disabled");
+        $("#CancelDocAppr").addClass("disabled");
+        $("#AppTrail").addClass("disabled");
+        $('table tbody tr').siblings().removeClass("selectedTableRow");
+    }
+    var DisplayAlert = function (msg) {
+        Swal.fire(msg);
     }
 </script>
 

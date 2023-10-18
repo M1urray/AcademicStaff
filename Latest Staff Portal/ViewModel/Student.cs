@@ -15,5 +15,8 @@ namespace Latest_Staff_Portal.ViewModel
         public string Status { get; set; }
         public string Programme { get; set; }
         public string Semester { get; set; }
+        public string StudentStatus { get; set; }
+        public bool CommentFound { get; set; }
+        public string Comment { get; set; }
     }
 }

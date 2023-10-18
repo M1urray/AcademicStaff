@@ -1,0 +1,441 @@
+﻿@{
+    ViewBag.Title = "ScoreCardTeachingStaff";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+</style>
+<div class="card">
+    <div class="card-title">Appraisal Document(Document No : @Request.QueryString["DocNo"])</div>
+    <div class="card-body">
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingOne" aria-controls="collapseOne" aria-expanded="true" data-toggle="collapse" href="#collapseOne">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-up"></span>General Information
+                    </h6>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Apprisal Code</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning" id="DocNo">@Model.ApprisalCode</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">User ID</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.UserID</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Staff Number</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.StaffNo</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Staff Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.StaffName</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Responsibility Center</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.RespCenter</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Apprisal Type</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.AppraisalType</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 2px">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Apprisal Period</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning" id="AppPeriod">@Model.ApprisalPeriod</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Department</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="label label-warning">@Model.Department</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingTwo" aria-expanded="false" aria-controls="collapseTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span> Appraisal Objective Settings
+                    </h6>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                     data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divScoreCard"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingThree" aria-expanded="false" aria-controls="collapseThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span> Appraisal Objective Evaluation
+                    </h6>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                     data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divScoreCardEval"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingNine" aria-expanded="false" aria-controls="collapseNine" data-toggle="collapse" href="#collapseNine">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>General Comments
+                    </h6>
+                </div>
+                <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divGeneralComm"></div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <hr />
+            <div>
+                <a href="#" onclick="RejectedDoc();" class="btn btn-danger BtnPadding" id="RejectDoc"><<< Send Back to Appraisee</a> |
+                <a href="#" onclick="ApproveDoc();" class="btn btn-primary BtnPadding pull-right">Send to HR >>></a>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.shadow-none').on('shown.bs.collapse', function () {
+            $(this).find('.fa-arrow-down').removeClass('fa-arrow-down').addClass('fa-arrow-up');
+        }).on('hidden.bs.collapse', function () {
+            $(this).find('.fa-arrow-up').removeClass('fa-arrow-up').addClass('fa-arrow-down');
+        });
+
+        var DocNo = $("#DocNo").html();
+        LoadScoreCardObjective(DocNo);
+        LoadScoreCardObjectiveEvaluation(DocNo);
+        LoadGeneralComments(DocNo);
+    });
+    ///////////////Load Data////////////////
+    var LoadScoreCardObjective = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo, Type: "S" }),
+            url: "/DocumentApproval/LoadScoreCardObjectives",
+            success: function (data) {
+                $("#divScoreCard").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadScoreCardObjectiveEvaluation = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo, Type: "E" }),
+            url: "/DocumentApproval/LoadScoreCardObjectives",
+            success: function (data) {
+                $("#divScoreCardEval").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadGeneralComments = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: "/DocumentApproval/LoadGeneralComments",
+            success: function (data) {
+                $("#divGeneralComm").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    ///////////////End of Load////////////////////
+    ///////////////Objective////////////////////
+    var EvalObjectiveItem = function (LineNo, DocNo) {
+        $("#labelF").text("Evaluate Objective Line");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            url: "/DocumentApproval/EvaluateAppraisalObjectiveLine",
+            data: JSON.stringify({ LnNo: LineNo, DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SaveEvaluationLine = function (LineNo, DocNo) {
+        var ratings = $("#txtSupRating").val();
+        if (ratings == "") {
+            Swal.fire('error', 'Enter Supervisor ratings', 'error');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: "/DocumentApproval/SaveAppraisalObjectiveLineAchievement",
+                data: JSON.stringify({ LnNo: LineNo, DocNo: DocNo, ratings: ratings }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        Swal.fire('Success', data.message, 'success');
+                        HideProgress();
+                        LoadScoreCardObjectiveEvaluation(DocNo);
+                        $("#myModal").modal("hide");
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    ///////////////End Objective////////////////////
+    ///////////////Save Comments////////////////////
+    var SaveSupComments = function (section) {
+        var DocNo = $("#DocNo").html();
+        if (DocNo == "") {
+            Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
+            return;
+        }
+        else {
+            if (section == "1") {
+                var comments = $("#ObjAppraisorComments").val();
+                if (comments == "") {
+                    Swal.fire('error', 'Enter supervisor Objective Comment', 'error');
+                    return;
+                }
+                else {
+                    SubmitSectionComments(DocNo, section, comments);
+                }
+            }
+            else if (section == "2") {
+                var comments = $("#ObjSupReviewComments").val();
+                if (comments == "") {
+                    Swal.fire('error', 'Enter supervisor Objective review Comment', 'error');
+                    return;
+                }
+                else {
+                    SubmitSectionComments(DocNo, section, comments);
+                }
+            }
+            else if (section == "3") {
+                var comments = $("#SkillCompAppraisorComments").val();
+                if (comments == "") {
+                    Swal.fire('error', 'Enter supervisor skills and competence Comment', 'error');
+                    return;
+                }
+                else {
+                    SubmitSectionComments(DocNo, section, comments);
+                }
+            }
+            else if (section == "4") {
+                var comments = $("#SkillsDevAppraisorComments").val();
+                if (comments == "") {
+                    Swal.fire('error', 'Enter supervisor Skills and Development Comment', 'error');
+                    return;
+                }
+                else {
+                    SubmitSectionComments(DocNo, section, comments);
+                }
+            }
+            else if (section == "5") {
+                var comments = $("#GeneralAppraisorComments").val();
+                if (comments == "") {
+                    Swal.fire('error', 'Enter supervisor general Comment', 'error');
+                    return;
+                }
+                else {
+                    SubmitSectionComments(DocNo, section, comments);
+                }
+            }
+            else {
+                Swal.fire('error', "Failed to save comments", 'error');
+                return;
+            }
+        }
+    }
+    var SubmitSectionComments = function (DocNo, section, comment) {
+        ShowProgress();
+        $.ajax({
+            type: "post",
+            url: "/DocumentApproval/SaveAppriseeComments",
+            data: JSON.stringify({ DocNo: DocNo, Comment: comment, sectioon: section }),
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    Swal.fire('Success', data.message, 'success');
+                    HideProgress();
+                    if (section == "1") {
+                        LoadScoreCardObjective(DocNo);
+                    }
+                    if (section == "2") {
+                        LoadScoreCardObjectiveEvaluation(DocNo);
+                    }
+                    if (section == "3") {
+                        LoadCoreSkillsCompValues(DocNo);
+                    }
+                    if (section == "4") {
+                        LoadPImprSkillsDevPlan(DocNo);
+                    }
+                    if (section == "5") {
+                        LoadGeneralComments(DocNo);
+                    }
+                    $("#myModal").modal("hide");
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire('error', data.message, 'error');
+            }
+        });
+    }
+    ///////////////End////////////////////
+    var BackToList = function () {
+        ShowProgress();
+        window.location = "/DocumentApproval/DocumentForApproval";
+    }
+    var RejectedDoc = function () {
+        var comments = "";
+        var DocNo = GetParameterValues('DocNo');
+        var TbID = GetParameterValues('TID');
+        var SeqNo = GetParameterValues('SeqNo');
+        function GetParameterValues(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ TBID: TbID, DocNo: DocNo, Comments: comments, SeqNo: SeqNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/DocumentApproval/RejectDocument',
+            success: function (data) {
+                if (data.success == true) {
+                    window.location = "/DocumentApproval/DocumentForApproval";
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+
+    }
+
+</script>

@@ -37,27 +37,37 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
-      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    <Reference Include="ADClassLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\AD Class\ADClassLibrary\ADClassLibrary\obj\Debug\ADClassLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
-    <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -106,9 +116,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -122,31 +129,27 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ADSetupController.cs" />
     <Compile Include="Controllers\AppraisalController.cs" />
-    <Compile Include="Controllers\AssetController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DocumentApprovalController.cs" />
-    <Compile Include="Controllers\FuelController.cs" />
-    <Compile Include="Controllers\GatePassController.cs" />
     <Compile Include="Controllers\ICTController.cs" />
     <Compile Include="Controllers\ImprestController.cs" />
     <Compile Include="Controllers\ImprestSurrenderController.cs" />
-    <Compile Include="Controllers\IndividualWorkPlanController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
+    <Compile Include="Controllers\LecturerController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProgrammeController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\SponsorshipController.cs" />
     <Compile Include="Controllers\StaffClaimController.cs" />
-    <Compile Include="Controllers\StandingImpReimbursementController.cs" />
-    <Compile Include="Controllers\StandingImprestController.cs" />
-    <Compile Include="Controllers\StandingImprestSurrenderController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
-    <Compile Include="Controllers\TrainingController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TransportController.cs" />
     <Compile Include="Controllers\ViewDocumentController.cs" />
     <Compile Include="Controllers\ViewDocumentsController.cs" />
-    <Compile Include="Controllers\VisitorsController.cs" />
     <Compile Include="CustomSecurity\CustomAuthorization.cs" />
     <Compile Include="CustomSecurity\CustomeAuthentication.cs" />
     <Compile Include="CustomSecurity\CustomPrincipal.cs" />
@@ -163,28 +166,23 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ADSetup.cs" />
     <Compile Include="ViewModel\Appraisal.cs" />
     <Compile Include="ViewModel\CommonViewClass.cs" />
     <Compile Include="ViewModel\CustomerList.cs" />
-    <Compile Include="ViewModel\Dimension_Caption.cs" />
-    <Compile Include="ViewModel\DocComments.cs" />
     <Compile Include="ViewModel\DocumentAttachment.cs" />
     <Compile Include="ViewModel\DocumentsForApproval.cs" />
     <Compile Include="ViewModel\EmployeeView.cs" />
     <Compile Include="ViewModel\Error.cs" />
-    <Compile Include="ViewModel\FixedAsset.cs" />
-    <Compile Include="ViewModel\Fuel.cs" />
-    <Compile Include="ViewModel\GatePass.cs" />
     <Compile Include="ViewModel\ICT.cs" />
     <Compile Include="ViewModel\ImportantDocs.cs" />
     <Compile Include="ViewModel\Imprest.cs" />
     <Compile Include="ViewModel\ImprestSurrender.cs" />
-    <Compile Include="ViewModel\IndividualWorkPlan.cs" />
+    <Compile Include="ViewModel\InformClass.cs" />
     <Compile Include="ViewModel\Leave.cs" />
     <Compile Include="ViewModel\Lecturer.cs" />
-    <Compile Include="ViewModel\NewStandingImprest.cs" />
+    <Compile Include="ViewModel\Notifications.cs" />
     <Compile Include="ViewModel\ParttimeLecturer.cs" />
-    <Compile Include="ViewModel\Payment.cs" />
     <Compile Include="ViewModel\Programme.cs" />
     <Compile Include="ViewModel\ProgStageList.cs" />
     <Compile Include="ViewModel\ProgStages.cs" />
@@ -194,17 +192,14 @@
     <Compile Include="ViewModel\Sponsorship.cs" />
     <Compile Include="ViewModel\StaffClaim.cs" />
     <Compile Include="ViewModel\StageUnits.cs" />
-    <Compile Include="ViewModel\StandingImprest.cs" />
-    <Compile Include="ViewModel\StandingImpSurrender.cs" />
     <Compile Include="ViewModel\Store.cs" />
     <Compile Include="ViewModel\Student.cs" />
     <Compile Include="ViewModel\SubmitLecAssignedUnit.cs" />
-    <Compile Include="ViewModel\Training.cs" />
+    <Compile Include="ViewModel\TransferOrder.cs" />
     <Compile Include="ViewModel\Transport.cs" />
     <Compile Include="ViewModel\UnitAllocationDropdownList.cs" />
     <Compile Include="ViewModel\UnitStudentListFilters.cs" />
     <Compile Include="ViewModel\ViewDocuments.cs" />
-    <Compile Include="ViewModel\Visitors.cs" />
     <Compile Include="Web References\NAVWS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -233,9 +228,10 @@
     <Content Include="assets\fonts\fa-solid-900.svg" />
     <Content Include="assets\fonts\materialdesignicons-webfont2f9b.html" />
     <Content Include="assets\images\ajax-loader.gif" />
+    <Content Include="assets\images\ajax-loader2.gif" />
     <Content Include="assets\images\favicon.ico" />
     <Content Include="assets\images\Logo.png" />
-    <Content Include="assets\images\Logo2.png" />
+    <Content Include="assets\images\NEW2.gif" />
     <Content Include="assets\images\profile-img.png" />
     <Content Include="assets\images\profile_f.png" />
     <Content Include="assets\images\profile_m.png" />
@@ -266,6 +262,90 @@
     <Content Include="assets\js\vfs_fonts.js" />
     <Content Include="assets\select2\css\select2.min.css" />
     <Content Include="assets\select2\js\select2.min.js" />
+    <Content Include="bin\ADClassLibrary.dll" />
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\Antlr3.Runtime.pdb" />
+    <Content Include="bin\BouncyCastle.Crypto.dll" />
+    <Content Include="bin\itextsharp.dll" />
+    <Content Include="bin\Latest Staff Portal.dll" />
+    <Content Include="bin\Latest Staff Portal.pdb" />
+    <Content Include="bin\Latest Staff Portal.XmlSerializers.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Newtonsoft.Json.xml" />
+    <Content Include="bin\roslyn\csc.exe" />
+    <Content Include="bin\roslyn\csi.exe" />
+    <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll" />
+    <Content Include="bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll" />
+    <Content Include="bin\roslyn\Microsoft.Win32.Primitives.dll" />
+    <Content Include="bin\roslyn\System.AppContext.dll" />
+    <Content Include="bin\roslyn\System.Collections.Immutable.dll" />
+    <Content Include="bin\roslyn\System.Console.dll" />
+    <Content Include="bin\roslyn\System.Diagnostics.DiagnosticSource.dll" />
+    <Content Include="bin\roslyn\System.Diagnostics.FileVersionInfo.dll" />
+    <Content Include="bin\roslyn\System.Diagnostics.StackTrace.dll" />
+    <Content Include="bin\roslyn\System.Globalization.Calendars.dll" />
+    <Content Include="bin\roslyn\System.IO.Compression.dll" />
+    <Content Include="bin\roslyn\System.IO.Compression.ZipFile.dll" />
+    <Content Include="bin\roslyn\System.IO.FileSystem.dll" />
+    <Content Include="bin\roslyn\System.IO.FileSystem.Primitives.dll" />
+    <Content Include="bin\roslyn\System.Net.Http.dll" />
+    <Content Include="bin\roslyn\System.Net.Sockets.dll" />
+    <Content Include="bin\roslyn\System.Reflection.Metadata.dll" />
+    <Content Include="bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Algorithms.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Encoding.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Primitives.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.X509Certificates.dll" />
+    <Content Include="bin\roslyn\System.Text.Encoding.CodePages.dll" />
+    <Content Include="bin\roslyn\System.Threading.Tasks.Extensions.dll" />
+    <Content Include="bin\roslyn\System.ValueTuple.dll" />
+    <Content Include="bin\roslyn\System.Xml.ReaderWriter.dll" />
+    <Content Include="bin\roslyn\System.Xml.XmlDocument.dll" />
+    <Content Include="bin\roslyn\System.Xml.XPath.dll" />
+    <Content Include="bin\roslyn\System.Xml.XPath.XDocument.dll" />
+    <Content Include="bin\roslyn\vbc.exe" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe" />
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Helpers.xml" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Mvc.xml" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Optimization.xml" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.xml" />
+    <Content Include="bin\WebGrease.dll" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-grid.rtl.css" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Content\bootstrap-utilities.css" />
+    <Content Include="Content\bootstrap-utilities.min.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.rtl.css" />
+    <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="CustomErrorPage.html" />
     <Content Include="DatePicker\images\ui-icons_444444_256x240.png" />
     <Content Include="DatePicker\images\ui-icons_555555_256x240.png" />
     <Content Include="DatePicker\images\ui-icons_777620_256x240.png" />
@@ -275,6 +355,37 @@
     <Content Include="DatePicker\jquery-ui.min.css" />
     <Content Include="DatePicker\jquery-ui.min.js" />
     <Content Include="Global.asax" />
+    <Content Include="Properties\PublishProfiles\FolderProfile.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\FolderProfile1.pubxml.user" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.esm.js" />
+    <Content Include="Scripts\bootstrap.esm.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="bin\Latest Staff Portal.dll.config" />
+    <Content Include="bin\roslyn\csc.exe.config" />
+    <Content Include="bin\roslyn\csc.rsp" />
+    <Content Include="bin\roslyn\csi.exe.config" />
+    <Content Include="bin\roslyn\csi.rsp" />
+    <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.Managed.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="bin\roslyn\vbc.exe.config" />
+    <Content Include="bin\roslyn\vbc.rsp" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Scripts\jquery-3.6.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.6.0.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="SiteJS\DashboardJS.js" />
     <Content Include="SiteJS\ForgetPasswordJS.js" />
     <Content Include="SiteJS\LoginJS.js" />
@@ -288,10 +399,20 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Common\Notification.cshtml" />
+    <Content Include="Uploads\Jan 2022 semester plan.pdf" />
+    <Content Include="Uploads\MIBS STAFF WELFARE CONSTITUTION..pdf" />
+    <Content Include="Web References\NAVWS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Common\GetNotice.cshtml" />
+    <None Include="Web References\NAVWS\WebPortal.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Attachments\" />
+    <Folder Include="MarkSheets\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\fonts\boxicons.eot" />
@@ -317,33 +438,64 @@
     <Content Include="assets\fonts\materialdesignicons-webfont2f9b.ttf" />
     <Content Include="assets\fonts\materialdesignicons-webfont2f9b.woff" />
     <Content Include="assets\fonts\materialdesignicons-webfontd41d.eot" />
-    <Content Include="Downloads\p.pdf" />
+    <Content Include="Attachments\EXAMCARD-B13112092020.pdf" />
+    <Content Include="Downloads\CLASSLIST-COU-AEB1103.pdf" />
+    <Content Include="Content\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\bootstrap.rtl.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="packages.config" />
+    <Content Include="Views\Shared\Sitemaster.cshtml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Views\Settings\ChangePassword.cshtml" />
-    <Content Include="Views\Login\ForgotPassword.cshtml" />
-    <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Appraisal\AppraisalScoreCard.cshtml" />
-    <Content Include="Views\Appraisal\MyAppraisalList.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\AppraisalListView.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\CompetenceValues.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\DepartmentalObjective.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\KPIForm.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\KPIReviewForm.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\MGRCompetenceValues.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\NewApprisalRequest.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\PerformanceIndicator.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\PerformanceIndicatorReview.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\TrainingDevelopment.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\TrainingDevForm.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\ValueCompetenceForm.cshtml" />
-    <Content Include="Views\Common\ErrorMessange.cshtml" />
-    <Content Include="Views\Common\Unauthorized.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
-    <Content Include="Views\Dashboard\ProfilePic.cshtml" />
+    <Content Include="Views\Programme\ProgrammeList.cshtml" />
+    <Content Include="Views\Programme\ProgrammeStages.cshtml" />
+    <Content Include="Views\Programme\ProgStageUnits.cshtml" />
+    <Content Include="Views\Programme\ProgrammeStageDocFilters.cshtml" />
+    <Content Include="Views\Lecturer\LecturerList.cshtml" />
+    <Content Include="Views\Lecturer\LecturerUnitAllocations.cshtml" />
+    <Content Include="Views\Lecturer\AssignedUnitsList.cshtml" />
+    <Content Include="Views\Lecturer\CourseAllocationUnits.cshtml" />
+    <Content Include="Views\Lecturer\StudentUnitList.cshtml" />
+    <Content Include="Views\Lecturer\LoadStudentList.cshtml" />
+    <Content Include="Views\Sponsorship\SponsorshipApplicationList.cshtml" />
+    <Content Include="Views\Sponsorship\SponsorshipList.cshtml" />
+    <Content Include="Views\Sponsorship\NewSponsorshipApplication.cshtml" />
+    <Content Include="Views\Sponsorship\SponsorshipDocumentDetails.cshtml" />
+    <Content Include="Views\Leave\LeaveRequisitionList.cshtml" />
+    <Content Include="Views\Leave\LeaveReqListPartialView.cshtml" />
+    <Content Include="Views\Leave\LeaveDocumentView.cshtml" />
+    <Content Include="Views\Shared\Partial Views\ApprovalTrail.cshtml" />
+    <Content Include="Views\Leave\NewLeaveApplication.cshtml" />
+    <Content Include="Views\Purchase\PurchaseRequisitionList.cshtml" />
+    <Content Include="Views\Purchase\PRVReqListView.cshtml" />
+    <Content Include="Views\Purchase\PRVItemForm.cshtml" />
+    <Content Include="Views\Purchase\NewPurchaseRequest.cshtml" />
+    <Content Include="Views\Transport\TransportRequisitionList.cshtml" />
+    <Content Include="Views\Transport\TRListView.cshtml" />
+    <Content Include="Views\Transport\NewTransportRequisition.cshtml" />
+    <Content Include="Views\Transport\TransportDocumentDetails.cshtml" />
+    <Content Include="Views\Appraisal\MyAppraisalList.cshtml" />
+    <Content Include="Views\ViewDocument\DocumentViewPayslip.cshtml" />
+    <Content Include="Views\ViewDocument\DocumentViewp9.cshtml" />
+    <Content Include="Views\Programme\ScoreSheetSemesterFilter.cshtml" />
+    <Content Include="Views\Lecturer\PartTimeRequistionList.cshtml" />
+    <Content Include="Views\Purchase\PurchaseDocumentView.cshtml" />
     <Content Include="Views\ICT\ICTListView.cshtml" />
     <Content Include="Views\ICT\ICTRequisitionList.cshtml" />
     <Content Include="Views\ICT\NewICTRequest.cshtml" />
@@ -353,165 +505,102 @@
     <Content Include="Views\ImprestSurrender\ImprestSurrenderRequisitionList.cshtml" />
     <Content Include="Views\ImprestSurrender\SurrenderItemEditForm.cshtml" />
     <Content Include="Views\ImprestSurrender\ViewSurrenderDocument.cshtml" />
-    <Content Include="Views\Imprest\FileAttachmentForm.cshtml" />
+    <Content Include="Views\Student\StudentRequisitionLinks.cshtml" />
     <Content Include="Views\Imprest\ImprestDocumentLineView.cshtml" />
-    <Content Include="Views\Imprest\ImprestDocumentView.cshtml" />
-    <Content Include="Views\Imprest\ImprestEditItemForm.cshtml" />
-    <Content Include="Views\Imprest\ImprestItemForm.cshtml" />
-    <Content Include="Views\Imprest\ImprestReqListView.cshtml" />
-    <Content Include="Views\Imprest\ImprestRequisitionList.cshtml" />
-    <Content Include="Views\Imprest\NewImprestRequest.cshtml" />
     <Content Include="Views\Purchase\FileAttachmentForm.cshtml" />
-    <Content Include="Views\Purchase\NewPurchaseRequest.cshtml" />
     <Content Include="Views\Purchase\PRVItemEditForm.cshtml" />
-    <Content Include="Views\Purchase\PRVItemForm.cshtml" />
-    <Content Include="Views\Purchase\PRVReqListView.cshtml" />
     <Content Include="Views\Purchase\PurchaseDocumentLineView.cshtml" />
-    <Content Include="Views\Purchase\PurchaseDocumentView.cshtml" />
-    <Content Include="Views\Purchase\PurchaseRequisitionList.cshtml" />
-    <Content Include="Views\StaffClaim\FileAttachmentForm.cshtml" />
-    <Content Include="Views\StaffClaim\NewStaffClaimRequest.cshtml" />
+    <Content Include="Views\Sponsorship\ConceptApplicationList.cshtml" />
+    <Content Include="Views\Sponsorship\EthicalReviewDocument.cshtml" />
+    <Content Include="Views\Sponsorship\EthicalReviewList.cshtml" />
+    <Content Include="Views\Sponsorship\ProposalEthicalReview.cshtml" />
     <Content Include="Views\StaffClaim\StaffClaimDocumentLineView.cshtml" />
-    <Content Include="Views\StaffClaim\StaffClaimDocumentView.cshtml" />
-    <Content Include="Views\StaffClaim\StaffClaimEditItemForm.cshtml" />
-    <Content Include="Views\StaffClaim\StaffClaimItemForm.cshtml" />
-    <Content Include="Views\StaffClaim\StaffClaimReqListView.cshtml" />
-    <Content Include="Views\StaffClaim\StaffClaimRequisitionList.cshtml" />
-    <Content Include="Views\Store\FileAttachmentForm.cshtml" />
-    <Content Include="Views\Store\NewStoreRequest.cshtml" />
     <Content Include="Views\Store\StoreDocumentLineView.cshtml" />
-    <Content Include="Views\Store\StoreDocumentView.cshtml" />
     <Content Include="Views\Store\StoreItemEditForm.cshtml" />
-    <Content Include="Views\Store\StoreItemForm.cshtml" />
-    <Content Include="Views\Store\StoreReqListView.cshtml" />
-    <Content Include="Views\Store\StoreRequisitionList.cshtml" />
-    <Content Include="Views\ViewDocuments\ViewDocuments.cshtml" />
-    <Content Include="Views\ViewDocument\DocumentViewp9.cshtml" />
-    <Content Include="Views\ViewDocument\DocumentViewPayslip.cshtml" />
-    <Content Include="Views\ViewDocument\LeaveStatement.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\LoginMaster.cshtml" />
-    <Content Include="Views\Shared\Sitemaster.cshtml" />
-    <Content Include="Views\Shared\Partial Views\ApprovalTrail.cshtml" />
+    <Content Include="Views\Common\ErrorMessange.cshtml" />
+    <Content Include="Views\Dashboard\ProfilePic.cshtml" />
+    <Content Include="Views\Imprest\FileAttachmentForm.cshtml" />
+    <Content Include="Views\StaffClaim\FileAttachmentForm.cshtml" />
     <Content Include="Views\Shared\Partial Views\ErroMessangeView.cshtml" />
     <Content Include="Views\Shared\Partial Views\ImportantDocs.cshtml" />
     <Content Include="Views\Shared\Partial Views\ImportantDocsToApprove.cshtml" />
-    <Content Include="Views\Leave\LeaveDocumentView.cshtml" />
-    <Content Include="Views\Leave\LeaveReqListPartialView.cshtml" />
-    <Content Include="Views\Leave\LeaveRequisitionList.cshtml" />
-    <Content Include="Views\Leave\NewLeaveApplication.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\CoreSkillsCompetence.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\AddAppraisalObjectiveLine.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\AddCoreCompetenceValue.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\NewApprisalRequest.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\PerfImprovementPlan.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\AppraisalListView.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\HRAppraisalObjectives.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\AddAreaOfImprovement.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\ObjectiveEvauation.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\EvaluateObjective.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\ScoreSkillCompetence.cshtml" />
+    <Content Include="Views\Appraisal\Partial Views\GeneralComments.cshtml" />
+    <Content Include="Views\DocumentApproval\Appraisal\ScoreCardNonTeachingStaff.cshtml" />
+    <Content Include="Views\DocumentApproval\Appraisal\ScoreCardTeachingStaff.cshtml" />
+    <Content Include="Views\DocumentApproval\Appraisal\HRAppraisalObjectives.cshtml" />
+    <Content Include="Views\DocumentApproval\Appraisal\ObjectiveEvauation.cshtml" />
+    <Content Include="Views\DocumentApproval\Appraisal\CoreSkillsCompetence.cshtml" />
+    <Content Include="Views\DocumentApproval\Appraisal\PerfImprovementPlan.cshtml" />
+    <Content Include="Views\DocumentApproval\Appraisal\GeneralComments.cshtml" />
+    <Content Include="Views\DocumentApproval\Appraisal\EvaluateObjective.cshtml" />
+    <Content Include="Views\DocumentApproval\Appraisal\ScoreSkillCompetence.cshtml" />
+    <Content Include="Views\Appraisal\ScoreCardGeneralStaff.cshtml" />
+    <Content Include="Views\Appraisal\ScoreCardNonTeachingStaff.cshtml" />
+    <Content Include="Views\Appraisal\ScoreCardTeachingStaff.cshtml" />
+    <Content Include="Views\Dashboard\PersonalUpdateForm.cshtml" />
+    <Content Include="Views\Dashboard\QualificationForm.cshtml" />
+    <Content Include="Views\Dashboard\DashboardInformation.cshtml" />
     <Content Include="Views\DocumentApproval\Document Approval Views\DocApprovalTrail.cshtml" />
     <Content Include="Views\DocumentApproval\Document Approval Views\DocumentComments.cshtml" />
     <Content Include="Views\DocumentApproval\Document Approval Views\DocumentForApprovalList.cshtml" />
     <Content Include="Views\DocumentApproval\Document Approval Views\ImprestApprovalDocDetails.cshtml" />
     <Content Include="Views\DocumentApproval\Document Approval Views\ImprestSurrenderApprovalDocDetails.cshtml" />
-    <Content Include="Views\DocumentApproval\Document Approval Views\LeaveDocumentView.cshtml" />
+    <Content Include="Views\DocumentApproval\Document Approval Views\LeaveApprovalDocDetails.cshtml" />
     <Content Include="Views\DocumentApproval\Document Approval Views\PurchaseApprovalDocDetails.cshtml" />
     <Content Include="Views\DocumentApproval\Document Approval Views\StaffclaimApprovalDocDetails.cshtml" />
     <Content Include="Views\DocumentApproval\Document Approval Views\StoreApprovalDocDetails.cshtml" />
+    <Content Include="Views\DocumentApproval\Document Approval Views\StudentClearanceDoc.cshtml" />
     <Content Include="Views\DocumentApproval\Document Approval Views\TransferOrder.cshtml" />
-    <Content Include="Views\DocumentApproval\Document Approval Views\TransportApprovalDocDetails.cshtml" />
     <Content Include="Views\DocumentApproval\DocumentForApprovalSummery.cshtml" />
     <Content Include="Views\DocumentApproval\GetDocumentForApprovalList.cshtml" />
     <Content Include="Views\DocumentApproval\RejectedDocuments.cshtml" />
-    <Content Include="Views\Shared\Partial Views\DocumentApprovalComments.cshtml" />
-    <Content Include="Views\Common\CommonAction.cshtml" />
-    <Content Include="Views\Training\Partial Views\NewTrainingRequisition.cshtml" />
-    <Content Include="Views\Training\Partial Views\ParticipantForm.cshtml" />
-    <Content Include="Views\Training\Partial Views\ParticipantList.cshtml" />
-    <Content Include="Views\Training\Partial Views\TRListView.cshtml" />
-    <Content Include="Views\Training\TrainingDocumentDetails.cshtml" />
-    <Content Include="Views\Training\TrainingRequisitionList.cshtml" />
-    <Content Include="Views\Transport\Partial Views\NewTransportRequisition.cshtml" />
-    <Content Include="Views\Transport\Partial Views\PassengerForm.cshtml" />
-    <Content Include="Views\Transport\Partial Views\PassengerList.cshtml" />
-    <Content Include="Views\Transport\Partial Views\TRListView.cshtml" />
-    <Content Include="Views\Transport\TransportDocumentDetails.cshtml" />
-    <Content Include="Views\Transport\TransportRequisitionList.cshtml" />
-    <Content Include="Views\DocumentApproval\Document Approval Views\TrainingApprovalDocDetails.cshtml" />
-    <Content Include="Uploads\p.pdf" />
-    <Content Include="Views\DocumentApproval\Document Approval Views\PVDocument.cshtml" />
-    <Content Include="Views\Asset\AssetTransferList.cshtml" />
-    <Content Include="Views\Asset\AssignedAssetList.cshtml" />
-    <Content Include="Views\Asset\Partial Views\AssetTransferForm.cshtml" />
-    <Content Include="Views\Asset\Partial Views\AssignedAssetList.cshtml" />
-    <Content Include="Views\Asset\Partial Views\TransferAssetList.cshtml" />
-    <Content Include="Views\GatePass\ApprovedGatePassList.cshtml" />
-    <Content Include="Views\GatePass\GatePassList.cshtml" />
-    <Content Include="Views\GatePass\Partial Views\GatePassForm.cshtml" />
-    <Content Include="Views\GatePass\Partial Views\GatePassListView.cshtml" />
-    <Content Include="Views\Visitors\ActiveVisitorsList.cshtml" />
-    <Content Include="Views\Visitors\ClearedVisitorsList.cshtml" />
-    <Content Include="Views\Visitors\GatePassList.cshtml" />
-    <Content Include="Views\Visitors\NewVisitorsList.cshtml" />
-    <Content Include="Views\Visitors\Partial Views\NewVisitorForm.cshtml" />
-    <Content Include="Views\Visitors\Partial Views\VisitorsListView.cshtml" />
-    <Content Include="Views\DocumentApproval\Document Approval Views\PayrollJournal.cshtml" />
-    <Content Include="Views\ICT\ICTAssetTransferList.cshtml" />
-    <Content Include="Views\ICT\ICTAssetTransferListView.cshtml" />
-    <Content Include="Views\ICT\NewICTAssetRequest.cshtml" />
-    <Content Include="Views\ICT\ICTAssetRequestDocument.cshtml" />
-    <Content Include="Views\ICT\ICTServMntList.cshtml" />
-    <Content Include="Views\ICT\NewICTServiceRequest.cshtml" />
-    <Content Include="Views\ICT\ICTAssetServiceReqListView.cshtml" />
-    <Content Include="Views\ICT\ServiceDocView.cshtml" />
-    <Content Include="Views\ICT\CancelRemarks.cshtml" />
-    <Content Include="Views\ICT\DocumentComments.cshtml" />
-    <Content Include="Views\Leave\LeavePlannerList.cshtml" />
-    <Content Include="Views\Leave\LeavePlannerListPartialView.cshtml" />
-    <Content Include="Views\Leave\LeavePlannerDoument.cshtml" />
-    <Content Include="Views\Leave\LeavePlannerLines.cshtml" />
-    <Content Include="Views\Leave\NewLeavePlanForm.cshtml" />
-    <Content Include="Views\Appraisal\AppraisalPreamble.cshtml" />
-    <Content Include="Views\Appraisal\MyReviewAppraisalList.cshtml" />
-    <Content Include="Views\Appraisal\AppraisalReview\ApprisalReviewDocument.cshtml" />
-    <Content Include="Views\Appraisal\AppraisalReview\AppraisalReviewList.cshtml" />
-    <Content Include="Views\Fuel\FuelChargeCardList.cshtml" />
-    <Content Include="Views\Fuel\FuelRechargeCardReqListView.cshtml" />
-    <Content Include="Views\Fuel\NewCardRechargeRequest.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\IndividualWorkPlanList.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\Partial View\IndividualWKListView.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\IndividualWorkPlanCard.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\Partial View\IndividualObjective.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\ObjectiveTargetList.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\Partial View\ObjectiveTargetListView.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\Partial View\NewActivityForm.cshtml" />
-    <Content Include="Views\Appraisal\Partial Views\ApprisalEvaluationLines.cshtml" />
-    <Content Include="Views\ICT\ConfirmRemarks.cshtml" />
-    <Content Include="Views\Training\Partial Views\FileAttachmentForm.cshtml" />
-    <Content Include="Views\Common\WorkPlanActionLinks.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\Partial View\NewObjectiveForm.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\Partial View\NewTargetForm.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\IndividualWorkPlanReviewList.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\Partial Review\IndividualWKReviewListView.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\IndividualWorkPlanReviewCard.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\Partial Review\IndividualObjectiveReview.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\ObjectiveTargetReviewList.cshtml" />
-    <Content Include="Views\IndividualWorkPlan\Partial Review\ObjectiveTargetReviewList.cshtml" />
-    <Content Include="Web References\NAVWS\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
-    <Content Include="Views\StandingImpReimbursement\FileAttachmentForm.cshtml" />
-    <Content Include="Views\StandingImpReimbursement\NewRequest.cshtml" />
-    <Content Include="Views\StandingImpReimbursement\ReimbDocumentLineView.cshtml" />
-    <Content Include="Views\StandingImpReimbursement\ReimbItemForm.cshtml" />
-    <Content Include="Views\StandingImpReimbursement\ReimbursementDocView.cshtml" />
-    <Content Include="Views\StandingImpReimbursement\ReimbursementList.cshtml" />
-    <Content Include="Views\StandingImpReimbursement\ReimbursementReqListView.cshtml" />
-    <Content Include="Views\StandingImprest\DocFileAttachmentForm.cshtml" />
-    <Content Include="Views\StandingImprest\NewRequest.cshtml" />
-    <Content Include="Views\StandingImprest\StandingImprestDocView.cshtml" />
-    <Content Include="Views\StandingImprest\StandingImprestReqListView.cshtml" />
-    <Content Include="Views\StandingImprest\StandingImprestRequisitionList.cshtml" />
-    <Content Include="Views\StandingImprestSurrender\FileAttachmentForm.cshtml" />
-    <Content Include="Views\StandingImprestSurrender\NewRequest.cshtml" />
-    <Content Include="Views\StandingImprestSurrender\SImprestDocumentLines.cshtml" />
-    <Content Include="Views\StandingImprestSurrender\SISurrenderDocView.cshtml" />
-    <Content Include="Views\StandingImprestSurrender\SISurrenderItemForm.cshtml" />
-    <Content Include="Views\StandingImprestSurrender\SISurrenderList.cshtml" />
-    <Content Include="Views\StandingImprestSurrender\SISurrenderReqListView.cshtml" />
-    <None Include="Web References\NAVWS\WebService.wsdl" />
+    <Content Include="Views\Lecturer\PassFail.cshtml" />
+    <Content Include="Views\Login\ForgotPassword.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Imprest\ImprestDocumentView.cshtml" />
+    <Content Include="Views\Imprest\ImprestItemForm.cshtml" />
+    <Content Include="Views\Imprest\ImprestReqListView.cshtml" />
+    <Content Include="Views\Imprest\ImprestRequisitionList.cshtml" />
+    <Content Include="Views\Imprest\NewImprestRequest.cshtml" />
+    <Content Include="Views\Settings\ChangePassword.cshtml" />
+    <Content Include="Views\StaffClaim\NewStaffClaimRequest.cshtml" />
+    <Content Include="Views\StaffClaim\StaffClaimDocumentView.cshtml" />
+    <Content Include="Views\StaffClaim\StaffClaimItemForm.cshtml" />
+    <Content Include="Views\StaffClaim\StaffClaimReqListView.cshtml" />
+    <Content Include="Views\StaffClaim\StaffClaimRequisitionList.cshtml" />
+    <Content Include="Views\Store\NewStoreRequest.cshtml" />
+    <Content Include="Views\Store\StoreDocumentView.cshtml" />
+    <Content Include="Views\Store\StoreItemForm.cshtml" />
+    <Content Include="Views\Store\StoreReqListView.cshtml" />
+    <Content Include="Views\Store\StoreRequisitionList.cshtml" />
+    <Content Include="Views\ViewDocuments\ViewDocuments.cshtml" />
+    <Content Include="Views\Shared\LoginMaster.cshtml" />
+    <Content Include="Views\Lecturer\ClassAttendanceList.cshtml" />
+    <Content Include="Views\Lecturer\LoadAtendanceEntries.cshtml" />
+    <Content Include="Views\Lecturer\LoadClassAttendance.cshtml" />
+    <Content Include="Views\ADSetup\ListofUsers.cshtml" />
+    <Content Include="Views\ADSetup\Partial View\ListOfADUsers.cshtml" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.esm.min.js.map" />
+    <Content Include="Scripts\bootstrap.esm.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.6.0.min.map" />
+    <Content Include="Views\ADSetup\Partial View\ADUserDetails.cshtml" />
+    <Content Include="Views\ADSetup\Partial View\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -520,16 +609,16 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://sk-erp-server.sk.org:7047/ERP/WS/Sports%2520Kenya/Codeunit/WebService">
+    <WebReferenceUrl Include="http://erp.dsl.ke:7333/MIBS/WS/MIBS/Codeunit/WebPortal">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\NAVWS\</RelPath>
-      <UpdateFromURL>http://sk-erp-server.sk.org:7047/ERP/WS/Sports%2520Kenya/Codeunit/WebService</UpdateFromURL>
+      <UpdateFromURL>http://erp.dsl.ke:7333/MIBS/WS/MIBS/Codeunit/WebPortal</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Latest_Staff_Portal_NAVWS_WebService</CachedSettingsPropName>
+      <CachedSettingsPropName>Latest_Staff_Portal_NAVWS_WebPortal</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <PropertyGroup>
@@ -551,8 +640,6 @@
           <DevelopmentServerPort>51144</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44365/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>https://localhost:44365/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -562,6 +649,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

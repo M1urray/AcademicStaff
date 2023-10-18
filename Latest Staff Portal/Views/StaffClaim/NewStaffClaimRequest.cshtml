@@ -1,5 +1,8 @@
 ﻿@model Latest_Staff_Portal.ViewModel.NewStaffClaimRequisition
-
+@{
+    ViewBag.Title = "NewStaffClaimRequest";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
 <style>
     thead {
         background-color: black;
@@ -15,92 +18,102 @@
         background-color: #dedbdb
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
+<div style="background-color: black;">
+    <a href="#" onclick="StaffClaimRequisitionLink();" style="color:yellow"><<< Back To Staff Claim Requisition List</a>
 </div>
 <div class="card pre-scrollable">
     <div class="card-body">
         <b>Staff Claim Header</b>
         <hr />
-        <div>
-            <div class="row">
-                <div class="col-md-6">
-                    Raise From
-                    <select class="form-control" id="ddlFrom" onchange="ShowFrom();">
-                        <option value="">----</option>
-                        <option value="1">Imprest</option>
-                        <option value="2">Normal</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Campus", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Campus, Model.ListOfCampus, "--select Campus--", new { @class = "form-control", @id = "ddlCampus" })
+                        @Html.ValidationMessageFor(model => model.Campus, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("School(Optional)", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.school, Model.ListOfSchool, "--select School--", new { @class = "form-control", @id = "ddlSchool" })
+                        @Html.ValidationMessageFor(model => model.school, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Department, Model.ListOfDepartment, "--select Department--", new { @class = "form-control", @id = "ddlDepartment" })
+                        @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
+                        @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Purpose(50 Characters):", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <textarea id="txtRemarks" class="form-control" maxlength="50"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Attachment(Optioal)", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <input type="file" class="form-control" id="fileAttachment" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr style="border:1px solid black" />
+        <b>Staff Claim Lines</b>
+        <hr />
+        <div class="pre-scrollable">
+            <table class="table table-hover" id="StaffClaimLines">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                        <th>Description 2</th>
+                        <th style="text-align:center">Amount</th>
+                        <th style="text-align:right">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                    <tr class="NoRecords">
+                        <td colspan="4">
+                            <span style="color:red" id="NoRecords">No Lines Added</span>
+                        </td>
+                        <td class="text-right">
+                            <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddStaffClaimLines();" />
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
         <hr />
-        <div id="diVImprestDocs">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            Choose Imprest Document Number
-                            <select class="form-control" id="ddlImprest">
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.Label("Purpose(100 Characters):", htmlAttributes: new { @class = "control-label col-md-12" })
-                                <div class="col-md-12">
-                                    <textarea id="txtImpRemarks" class="form-control" maxlength="50"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="divClaimForm">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Html.Label("Directorate", htmlAttributes: new { @class = "control-label col-md-12" })
-                        <div class="col-md-12">
-                            @Html.DropDownListFor(model => model.Directorate, Model.ListOfDirectorate, "--select Directorate--", new { @class = "form-control", @id = "ddlDirectorate", @readonly = "readonly", @style = "background-color:#dedebd" })
-                            @Html.ValidationMessageFor(model => model.Directorate, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
-                        <div class="col-md-12">
-                            @Html.DropDownListFor(model => model.Department, Model.ListOfDepartment, "--select Department--", new { @class = "form-control", @id = "ddlDepartment", @readonly = "readonly", @style = "background-color:#dedebd" })
-                            @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        @Html.Label("Purpose(100 Characters):", htmlAttributes: new { @class = "control-label col-md-12" })
-                        <div class="col-md-12">
-                            <textarea id="txtRemarks" class="form-control" maxlength="50"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="divButtonSave">
-            <hr style="border:1px solid black" />
-            <div align="center">
-                <input type="button" class="btn btn-primary waves-effect waves-light" value="Create Document" onclick="SubmitStaffClaimRequisition(`@Model.DisDir`);" />
-            </div>
+        <div align="center">
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitStaffClaimRequisition();" />
         </div>
     </div>
 </div>
@@ -125,40 +138,273 @@
 <script src="~/assets/js/ShowProgression.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#divClaimForm,#diVImprestDocs,#divButtonSave").hide();
-        document.getElementById("ddlDirectorate").disabled = true;
-        document.getElementById("ddlDepartment").disabled = true;
+        $("#ddlDepartment,#ddlRespC").select2({
+            width: '100%'
+        });
     });
-    var ShowFrom = function () {
-        var from = $("#ddlFrom").children("option:selected").val();
-        if (from == "") {
-            $("#divClaimForm,#diVImprestDocs,#divButtonSave").hide();
-            Swal.fire('Warning', "Select Imprest from", 'warning');
+    var AddStaffClaimLines = function () {
+        var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+        var RespoC = $("#ddlRespC").children("option:selected").val();
+
+        if (Remarks.length > 50) {
+            Swal.fire('Warning', "Your Purpose should have a maximum of 50 characters", 'warning');
             return;
         }
-        else if (from == "1") {
-            $("#divClaimForm").hide();
-            $("#diVImprestDocs,#divButtonSave").show();
-
-            ShowProgress();
-            $("#ddlImprest option").remove();
-            $('#ddlImprest').empty().append('<option selected="selected" value="">--Select Imprest--</option>');
-
-            $.getJSON("/StaffClaim/GetImprestList", {},
-                function (data) {
-                    $('#ddlImprest').empty().append('<option selected="selected" value="">--Select Imprest--</option>');
-                    $.each(data.ListOfImprest, function () {
-                        $("#ddlImprest").append($("<option></option>").val(this['Value']).html(this['Text']));
-                    });
-                    $("#ddlImprest").select2({
-                        width: '100%'
-                    });
-                    HideProgress();
-                });
+        else if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
+            return;
+        }
+        else if (Department == "") {
+            Swal.fire('Warning', "Select Department", 'warning');
+            return;
+        }
+        else if (RespoC == "") {
+            Swal.fire('Warning', "Select Responsibility center", 'warning');
+            return;
+        }
+        else if (Remarks == "") {
+            Swal.fire('Warning', "Enter Purpose for the purchase", 'warning');
+            return;
         }
         else {
-            $("#divClaimForm,#divButtonSave").show();
-            $("#diVImprestDocs").hide();
+            ShowProgress();
+            $.ajax({
+                async: true,
+                type: "POST",
+                datatype: "json",
+                contentType: "application/json; charset = utf-8",
+                processData: false,
+                url: '@Url.Action("NewStaffClaimLine", "StaffClaim")',
+                success: function (data) {
+                    $("#modalBody").html(data);
+                    HideProgress();
+                    $("#myModal").modal("show");
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    };
+    var StaffClaimRequisitionLink = function () {
+        ShowProgress();
+        window.location = '@Url.Action("StaffClaimRequisitionList", "StaffClaim")';
+    }
+    var AddLineItem = function () {
+        var ClaimType = $("#ddlClaimType").children("option:selected").val();
+        var ClaimTypeDesc = $("#ddlClaimType").children("option:selected").text();
+        var Amount = $("#txtAmount").val();
+        var ClaimDescription = $("#txtDescription").val();
+
+        if (ClaimType == "") {
+            Swal.fire('Warning', "Select Staff Claim Type", 'warning');
+            return;
+        }
+        else if (Amount == "") {
+            Swal.fire('Warning', "Enter Amount", 'warning');
+            return;
+        }
+        else if (ClaimDescription == "") {
+            Swal.fire('Warning', "Give brief description of the item", 'warning');
+            return;
+        }
+        else if (ClaimDescription.length > 50) {
+            Swal.fire('Warning', "Your Claim Description should have a maximum of 50 characters", 'warning');
+            return;
+        }
+        else {
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#StaffClaimLines > TBODY")[0];
+
+            //Add Row.
+            var row = tBody.insertRow(-1);
+
+            //Add Item.
+            var cell = $(row.insertCell(-1));
+            cell.html(ClaimType);
+
+            //Add Description.
+            cell = $(row.insertCell(-1));
+            cell.html(ClaimTypeDesc);
+
+            //Add Description 2.
+            cell = $(row.insertCell(-1));
+            cell.html(ClaimDescription);
+
+            //Add Amount.
+            var cell = $(row.insertCell(-1));
+            cell.attr("align", "center");
+            cell.html(Amount);
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            cell.attr("align", "right");
+            var btnRemove = $("<input />");
+            btnRemove.attr("type", "button");
+            btnRemove.addClass("btn btn-primary BtnPadding");
+            btnRemove.attr("onclick", "Remove(this);");
+            btnRemove.val("Remove");
+            cell.append(btnRemove);
+
+            DetermineNoOfRows();
+            $("#myModal").modal("hide");
+            Swal.fire('Success', "Staff Claim line added successfully", 'success');
+            //Clear the TextBoxes.
+            //txtName.val("");
+            //txtCountry.val("");
+        }
+    }
+    var DetermineNoOfRows = function () {
+        var totalRowCount = $("#StaffClaimLines TBODY tr").length;
+        if (totalRowCount > 0) {
+            $("#NoRecords").hide();
+        }
+        else {
+            $("#NoRecords").show();
+        }
+    }
+    function Remove(button) {
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var Item = $("TD", row).eq(0).html();
+        var ItemDesc = $("TD", row).eq(0).html();
+        if (confirm("Do you want to remove: " + Item + "~" + ItemDesc)) {
+            //Get the reference of the Table.
+            var table = $("#ClaimLines")[0];
+
+            //Delete the Table row using it's Index.
+            table.deleteRow(row[0].rowIndex);
+        }
+        DetermineNoOfRows();
+    };
+    var SubmitStaffClaimRequisition = function () {
+        var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var School = $("#ddlSchool").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+        var RespoC = $("#ddlRespC").children("option:selected").val();
+        if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
+            return;
+        }
+        else if (Department == "") {
+            Swal.fire('Warning', "Select Department", 'warning');
+            return;
+        }
+        else if (RespoC == "") {
+            Swal.fire('Warning', "Select Responsibility center", 'warning');
+            return;
+        }
+        else if (Remarks == "") {
+            Swal.fire('Warning', "Enter Reason for the purchase", 'warning');
+            return;
+        }
+        else if (Remarks.length > 50) {
+            Swal.fire('Warning', "Your Purpose should have a maximum of 50 characters", 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            if (School == "") {
+                School = "";
+            }
+            var StaffClaimHeader = {};
+            StaffClaimHeader.Remarks = Remarks;
+            StaffClaimHeader.school = School;
+            StaffClaimHeader.Campus = Campus;
+            StaffClaimHeader.Department = Department;
+            StaffClaimHeader.RespC = RespoC;
+
+            //Loop through the Table rows and build a JSON array.
+            var StaffClaimLines = new Array();
+            $("#StaffClaimLines TBODY TR").each(function () {
+                var row = $(this);
+                var StaffClaimLine = {};
+                StaffClaimLine.Item = row.find("TD").eq(0).html();
+                StaffClaimLine.ItemDesc = row.find("TD").eq(2).html();
+                StaffClaimLine.Amount = row.find("TD").eq(3).html();
+                StaffClaimLines.push(StaffClaimLine);
+            });
+            if (StaffClaimLines.length < 1) {
+                Swal.fire('Warning', 'You have not Added any Staff Claim Requisition line(s)', 'warning');
+                HideProgress();
+                return;
+            }
+            else {
+                var filename; var base64String; var filetype;
+                var files = document.getElementById('fileAttachment').files;
+
+                if (files.length) {
+                    var file = files[0];
+                    var blob = file.slice();
+                    filetype = file.type;
+                    filename = file.name;
+                    var reader = new FileReader();
+
+                    reader.onloadend = function (evt) {
+                        if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+
+                            var cont = evt.target.result
+                            base64String = getB64Str(cont);
+
+                            ShowProgress();
+
+                            //Send the JSON array to Controller using AJAX.
+                            $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("SubmitStaffClaimRequisition", "StaffClaim")',
+                                data: JSON.stringify({ staffClaimHeader: StaffClaimHeader, staffClaimLines: StaffClaimLines, base64Upload: base64String, fileName: filename, Extn: filetype }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data.success) {
+                                        window.location = '@Url.Action("StaffClaimRequisitionList", "StaffClaim")';
+                                    }
+                                    else {
+                                        Swal.fire('Warning', data.message, 'warning');
+                                        HideProgress();
+                                    }
+                                },
+                                error: function (err) {
+                                    HideProgress();
+                                    Swal.fire('Warning', err, 'warning');
+                                }
+                            });
+                        }
+                    };
+                    reader.readAsArrayBuffer(blob);
+                }
+                else {
+                    filename = "";
+                    base64String = "";
+                    filetype = "";
+                    ShowProgress();
+                    //Send the JSON array to Controller using AJAX.
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("SubmitStaffClaimRequisition", "StaffClaim")',
+                        data: JSON.stringify({ staffClaimHeader: StaffClaimHeader, staffClaimLines: StaffClaimLines, base64Upload: base64String, fileName: filename, Extn: filetype }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success) {
+                                window.location = '@Url.Action("StaffClaimRequisitionList", "StaffClaim")';
+                            }
+                            else {
+                                Swal.fire('Warning', data.message, 'warning');
+                                HideProgress();
+                            }
+                        },
+                        error: function (err) {
+                            HideProgress();
+                            Swal.fire('Warning', err, 'warning');
+                        }
+                    });
+                }
+            }
         }
     };
 </script>

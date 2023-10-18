@@ -7,13 +7,15 @@ namespace Latest_Staff_Portal.ViewModel
 {
     public class DocumentAttachment
     {
-        public string TabelID { get; set; }
+        public int TabelID { get; set; }
         public string No { get; set; }
         public string FileName { get; set; }
         public string FileExt { get; set; }
         public int ID { get; set; }
         public string LineNo { get; set; }
         public string DocType { get; set; }
+        public string Remarks { get; set; }
+        public string Date { get; set; }
     }
     public class DocumentAttachmentList
     {

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.ADSetup>
+<div class="pre-scrollable">
+    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead style="background-color:black;color:white">
+            <tr>
+                <th width="10%">Action</th>
+                <th>User ID</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Phone No</th>
+                <th>Status</th>
+                <th width="10%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null && Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <button onclick="ViewDetails('@item.UserID');" class="btn btn-sm btn-danger" style="background-color:green">View Details</button>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PhoneNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Disabled)
+                            </td>
+                            <td>
+                                <button onclick="ChangePassword('@item.UserID','@item.UserName');" class="btn btn-sm btn-danger">Change Password</button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#datatable").DataTable(), $("#datatable-buttons").DataTable({
+            lengthChange: !1,
+            buttons: [
+                "copy",
+                {
+                    extend: 'excel',
+                    title: 'AD Users List'
+                },
+                {
+                    extend: 'pdf',
+                    title: 'AD Users List'
+                }
+            ]
+        }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)")
+    });
+</script>
+
+

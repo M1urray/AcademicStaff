@@ -46,7 +46,7 @@ namespace Latest_Staff_Portal.Controllers
                 string StaffNo = Session["Username"].ToString();
                 List<PurchaseReqList> PurchaseList = new List<PurchaseReqList>();
 
-                string page = "PurchaseRequisition?$filter=Employee_No_ eq '" + StaffNo + "'&$format=json";
+                string page = "PurchaseRequisition?$filter=Employee_No eq '" + StaffNo + "'&format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -56,17 +56,10 @@ namespace Latest_Staff_Portal.Controllers
                     foreach (JObject config in details["value"])
                     {
                         PurchaseReqList PRVList = new PurchaseReqList();
-                        PRVList.No = (string)config["No_"];
+                        PRVList.No = (string)config["No"];
                         PRVList.OrderDate = Convert.ToDateTime((string)config["Order_Date"]).ToString("dd/MM/yyyy");
                         PRVList.Description = (string)config["Posting_Description"];
-                        if ((string)config["Status"] == "Released" || (string)config["Status"] == "Posted")
-                        {
-                            PRVList.Status = "Approved";
-                        }
-                        else
-                        {
-                            PRVList.Status = (string)config["Status"];
-                        }
+                        PRVList.Status = (string)config["Status"];
                         PurchaseList.Add(PRVList);
                     }
                 }
@@ -90,167 +83,133 @@ namespace Latest_Staff_Portal.Controllers
                 else
                 {
                     string StaffNo = Session["Username"].ToString();
-                    string Dir = "", Dep = "";
-                    bool ResRegardDirectorate = false;
+                    Session["Servicedetails"] = null;
+                    Session["Itemdetails"] = null;
                     NewPurchaseRequisition NewPRV = new NewPurchaseRequisition();
                     Session["httpResponse"] = null;
+                    #region Institute List
+                    List<DimensionValues> Campuses = new List<DimensionValues>();
+                    string pageCampus = "DimValues?$select=Code,Name&$filter=Dimension_Code eq 'CAMPUS' and Blocked eq false&$format=json";
 
-                    #region Employee Data
-                    string pageData = "EmployeeList?$filter=No eq '" + StaffNo + "'&$format=json";
-
-                    HttpWebResponse httpResponse = Credentials.GetOdataData(pageData);
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    HttpWebResponse httpResponseCampus = Credentials.GetOdataData(pageCampus);
+                    using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
 
                         var details = JObject.Parse(result);
 
-                        if (details["value"].Count() > 0)
+
+                        foreach (JObject config in details["value"])
                         {
-                            foreach (JObject config in details["value"])
-                            {
-                                Dir = (string)config["_x003C_GlobSal_Dimension_1_Code_x003E_"];
-                                Dep = (string)config["GlobalDimension2Code"];
-                                ResRegardDirectorate = (bool)config["Disregard_Directorate"];
-                            }
+                            DimensionValues CmpList = new DimensionValues();
+                            CmpList.Code = (string)config["Code"];
+                            CmpList.Name = (string)config["Name"];
+                            Campuses.Add(CmpList);
                         }
                     }
                     #endregion
-                    if (Dir == "" && ResRegardDirectorate == false)
+
+                    #region School
+                    List<DimensionValues> School = new List<DimensionValues>();
+                    string pageSchool = "DimValues?$select=Code,Name&$filter=Dimension_Code eq 'SCHOOL' and Blocked eq false&$format=json";
+
+                    HttpWebResponse httpResponseSchool = Credentials.GetOdataData(pageSchool);
+                    using (var streamReader = new StreamReader(httpResponseSchool.GetResponseStream()))
                     {
-                        Error erroMsg = new Error();
-                        erroMsg.Message = "Your directorate has not been set. Contact HR";
-                        return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                        var result = streamReader.ReadToEnd();
+
+                        var details = JObject.Parse(result);
+
+
+                        foreach (JObject config in details["value"])
+                        {
+                            DimensionValues SchoolList = new DimensionValues();
+                            SchoolList.Code = (string)config["Code"];
+                            SchoolList.Name = (string)config["Name"];
+                            School.Add(SchoolList);
+                        }
                     }
-                    else if (Dep == "")
+                    #endregion
+
+                    #region Department List
+                    List<DimensionValues> Department = new List<DimensionValues>();
+                    string pageDepartment = "DimValues?$select=Code,Name&$filter=Dimension_Code eq 'DEPARTMENTS' and Blocked eq false&$format=json";
+
+                    HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDepartment);
+                    using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
                     {
-                        Error erroMsg = new Error();
-                        erroMsg.Message = "Your department has not been set. Contact HR";
-                        return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                        var result = streamReader.ReadToEnd();
+
+                        var details = JObject.Parse(result);
+
+
+                        foreach (JObject config in details["value"])
+                        {
+                            DimensionValues DepartmentList = new DimensionValues();
+                            DepartmentList.Code = (string)config["Code"];
+                            DepartmentList.Name = (string)config["Name"];
+                            Department.Add(DepartmentList);
+                        }
                     }
-                    else
+                    #endregion
+
+                    #region Responsibility
+                    List<RespCenter> RespCList = new List<RespCenter>();
+                    string pageResC = "ResponsibilityCenters?$format=json";
+
+                    HttpWebResponse httpResponseResC = Credentials.GetOdataData(pageResC);
+                    using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
                     {
-                        #region Directorate List
-                        List<DimensionValues> DirectorateList = new List<DimensionValues>();
-                        string pageDir = "DimensionValues?$filter=Dimension_Code eq 'BRANCH'&$format=json";
+                        var result = streamReader.ReadToEnd();
 
-                        HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
-                        using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
+                        var details = JObject.Parse(result);
+
+
+                        foreach (JObject config in details["value"])
                         {
-                            var result = streamReader.ReadToEnd();
-
-                            var details = JObject.Parse(result);
-
-
-                            foreach (JObject config in details["value"])
-                            {
-                                DimensionValues Directorate = new DimensionValues();
-                                Directorate.Code = (string)config["Code"];
-                                Directorate.Name = (string)config["Name"];
-                                DirectorateList.Add(Directorate);
-                            }
+                            RespCenter RCList = new RespCenter();
+                            RCList.Code = (string)config["Code"];
+                            RCList.Name = (string)config["Name"];
+                            RespCList.Add(RCList);
                         }
-                        #endregion
-
-                        #region Department
-                        List<DimensionValues> DepartmentList = new List<DimensionValues>();
-                        string pageDepartment = "DimensionValues?$filter=Dimension_Code eq 'DEPARTMENT'&$format=json";
-
-                        HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDepartment);
-                        using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
-                        {
-                            var result = streamReader.ReadToEnd();
-
-                            var details = JObject.Parse(result);
-
-
-                            foreach (JObject config in details["value"])
-                            {
-                                DimensionValues Department = new DimensionValues();
-                                Department.Code = (string)config["Code"];
-                                Department.Name = (string)config["Name"];
-                                DepartmentList.Add(Department);
-                            }
-                        }
-                        #endregion
-
-                        #region Section List
-                        List<DimensionValues> SectionList = new List<DimensionValues>();
-                        string pageSection = "DimensionValues?$filter=Dimension_Code eq 'SECTION'&format=json";
-
-                        HttpWebResponse httpResponseSection = Credentials.GetOdataData(pageSection);
-                        using (var streamReader = new StreamReader(httpResponseSection.GetResponseStream()))
-                        {
-                            var result = streamReader.ReadToEnd();
-
-                            var details = JObject.Parse(result);
-
-
-                            foreach (JObject config in details["value"])
-                            {
-                                DimensionValues Section = new DimensionValues();
-                                Section.Code = (string)config["Code"];
-                                Section.Name = (string)config["Name"];
-                                SectionList.Add(Section);
-                            }
-                        }
-                        #endregion
-
-                        #region Responsibility
-                        List<RespCenter> RespCList = new List<RespCenter>();
-                        string pageResC = "ResponsibilityCenters?$format=json";
-
-                        HttpWebResponse httpResponseResC = Credentials.GetOdataData(pageResC);
-                        using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
-                        {
-                            var result = streamReader.ReadToEnd();
-
-                            var details = JObject.Parse(result);
-
-
-                            foreach (JObject config in details["value"])
-                            {
-                                RespCenter RCList = new RespCenter();
-                                RCList.Code = (string)config["Code"];
-                                RCList.Name = (string)config["Name"];
-                                RespCList.Add(RCList);
-                            }
-                        }
-                        #endregion
-
-                        NewPRV = new NewPurchaseRequisition
-                        {
-                            Directorate = Dir,
-                            Department = Dep,
-                            DisDir = ResRegardDirectorate,
-                            ListOfDirectorate = DirectorateList.Select(x =>
-                                               new SelectListItem()
-                                               {
-                                                   Text = x.Name,
-                                                   Value = x.Code
-                                               }).ToList(),
-                            ListOfDepartment = DepartmentList.Select(x =>
-                                                 new SelectListItem()
-                                                 {
-                                                     Text = x.Name,
-                                                     Value = x.Code
-                                                 }).ToList(),
-                            ListOfResponsibility = RespCList.Select(x =>
-                                               new SelectListItem()
-                                               {
-                                                   Text = x.Name,
-                                                   Value = x.Code
-                                               }).ToList()
-                        };
-                        return View("~/Views/Purchase/NewPurchaseRequest.cshtml", NewPRV);
                     }
+                    #endregion
+
+                    NewPRV = new NewPurchaseRequisition
+                    {
+                        ListOfCampus = Campuses.Select(x =>
+                                             new SelectListItem()
+                                             {
+                                                 Text = x.Name,
+                                                 Value = x.Code
+                                             }).ToList(),
+                        ListOfSchool = School.Select(x =>
+                                             new SelectListItem()
+                                             {
+                                                 Text = x.Name,
+                                                 Value = x.Code
+                                             }).ToList(),
+                        ListOfDepartment = Department.Select(x =>
+                                            new SelectListItem()
+                                            {
+                                                Text = x.Name,
+                                                Value = x.Code
+                                            }).ToList(),
+                        ListOfResponsibility = RespCList.Select(x =>
+                                           new SelectListItem()
+                                           {
+                                               Text = x.Name,
+                                               Value = x.Code
+                                           }).ToList()
+                    };
+                    return View(NewPRV);
                 }
             }
             catch (Exception ex)
             {
                 Error erroMsg = new Error();
                 erroMsg.Message = ex.Message;
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
             }
         }
         public PartialViewResult NewPurchaseLine()
@@ -299,41 +258,69 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult SubmitPurchaseRequisition(PRVHeader prvHeader)
+        public JsonResult SubmitPurchaseRequisition(PRVHeader prvHeader, List<PRVLines> prvLines, string base64Upload, string fileName, string Extn)
         {
+            bool successVal = false;
             try
             {
                 string StaffNo = Session["Username"].ToString();
-                string Directorate = "", section = "", respC = "", userID = "";
-                if (prvHeader.Directorate != null)
+                string DocNo = Credentials.ObjNav.PurchaseRequisitionCreate(StaffNo, prvHeader.Campus, prvHeader.Department, prvHeader.Remarks, prvHeader.RespC, "");
+                int ln = 1;
+                foreach (var c in prvLines)
                 {
-                    Directorate = prvHeader.Directorate;
+                    int Type = 0;
+                    if (c.LineType.Trim() == "Service")
+                    {
+                        Type = 1;
+                    }
+                    if (c.LineType.Trim() == "Item")
+                    {
+                        Type = 2;
+                    }
+                    if (c.LineType.Trim() == "Asset")
+                    {
+                        Type = 4;
+                    }
+                    string item = c.Item.Trim();
+                    string itemDesc = c.ItemDesc.Trim();
+                    string qnty = c.Qnty.Trim();
+                    string amnt = c.Amount.Trim();
+                    string location = c.Location.Trim();
+                    Credentials.ObjNav.PurchaseRequisitionLines(DocNo, item, Convert.ToDecimal(qnty), itemDesc, Type, location,Convert.ToDecimal(amnt));
+                    ln++;
                 }
-                if (prvHeader.RespC != null)
-                {
-                    respC = prvHeader.RespC;
-                }
-                if (Session["UserID"] != null)
-                {
-                    userID = Session["UserID"].ToString();
-                }
-                string DocNo = Credentials.ObjNav.PurchaseRequisitionCreate(StaffNo, Directorate, prvHeader.Department, section, prvHeader.Remarks, respC, userID);
+                successVal = true;
+                Credentials.ObjNav.PurchaseRequisitionApprovalRequest(DocNo);
+                Session["SuccessMsg"] = "Purchase Requisition, Document No: " + DocNo + ", Submitted Successfully";
 
-                if (DocNo != "")
+                if (base64Upload != "")
                 {
-                    string Redirect = "/Purchase/PurchaseDocumentView?DocNo=" + DocNo;
-
-                    Session["SuccessMsg"] = "Purchase Requisition, Document No: " + DocNo + ", created Successfully. Add line(s) and attachment(s) then send for approval";
-                    return Json(new { message = Redirect, success = true }, JsonRequestBehavior.AllowGet);
+                    string filePath = Server.MapPath("~/Uploads/" + fileName);
+                    CommonClass.MoveUploadedFile(filePath, fileName);
+                    string UploadFilePath = Credentials.fileUploadsPath + fileName;
+                    if (CommonClass.IfFileExists(UploadFilePath))
+                    {
+                        string s = Credentials.UploadDocumentAttachment(DocNo, base64Upload, UploadFilePath, 38);
+                        if (s == "SUCCESS")
+                        {
+                            Session["SuccessMsg"] = "Purchase Requisition, Document No: " + DocNo + ", Submitted Successfully and attachment File Uploaded Successfully";
+                        }
+                        else
+                        {
+                            Session["SuccessMsg"] = "Purchase Requisition, Document No: " + DocNo + ", Submitted Successfully but error encountered while uploading attachment" +
+                                "Error encountered :" + s;
+                        }
+                    }
                 }
-                else
-                {
-                    return Json(new { message = "Document not created. Please try again later...", success = false }, JsonRequestBehavior.AllowGet);
-                }
+                return Json(new { success = successVal }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
+                if (successVal)
+                {
+                    Session["ErrorMsg"] = ex.Message.Replace("'", "");
+                }
+                return Json(new { message = ex.Message.Replace("'", ""), success = successVal }, JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult PurchaseDocumentView(string DocNo)
@@ -350,72 +337,7 @@ namespace Latest_Staff_Portal.Controllers
                     #region Purchase Header
                     PRVHeader PurchaseDoc = new PRVHeader();
 
-                    #region Directorate List
-                    List<DimensionValues> DirectorateList = new List<DimensionValues>();
-                    string pageDepartment = "DimensionValues?$filter=Dimension_Code eq 'BRANCH'&format=json";
-
-                    HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDepartment);
-                    using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
-                    {
-                        var result = streamReader.ReadToEnd();
-
-                        var details = JObject.Parse(result);
-
-
-                        foreach (JObject config in details["value"])
-                        {
-                            DimensionValues Directorate = new DimensionValues();
-                            Directorate.Code = (string)config["Code"];
-                            Directorate.Name = (string)config["Name"];
-                            DirectorateList.Add(Directorate);
-                        }
-                    }
-                    #endregion
-
-                    #region Department
-                    List<DimensionValues> DepartmentList = new List<DimensionValues>();
-                    string pageDivision = "DimensionValues?$filter=Dimension_Code eq 'DEPARTMENT'&format=json";
-
-                    HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDivision);
-                    using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
-                    {
-                        var result = streamReader.ReadToEnd();
-
-                        var details = JObject.Parse(result);
-
-
-                        foreach (JObject config in details["value"])
-                        {
-                            DimensionValues DList = new DimensionValues();
-                            DList.Code = (string)config["Code"];
-                            DList.Name = (string)config["Name"];
-                            DepartmentList.Add(DList);
-                        }
-                    }
-                    #endregion             
-
-                    #region Responsibility
-                    List<RespCenter> RespCList = new List<RespCenter>();
-                    string pageResC = "ResponsibilityCenters?$format=json";
-
-                    HttpWebResponse httpResponseResC = Credentials.GetOdataData(pageResC);
-                    using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
-                    {
-                        var result = streamReader.ReadToEnd();
-
-                        var details = JObject.Parse(result);
-
-
-                        foreach (JObject config in details["value"])
-                        {
-                            RespCenter RCList = new RespCenter();
-                            RCList.Code = (string)config["Code"];
-                            RCList.Name = (string)config["Name"];
-                            RespCList.Add(RCList);
-                        }
-                    }
-                    #endregion
-                    string page = "PurchaseRequisition?$filter=No_ eq '" + DocNo + "'&$format=json";
+                    string page = "PurchaseRegDocument?$filter=No eq '" + DocNo + "'&format=json";
                     HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
@@ -424,42 +346,17 @@ namespace Latest_Staff_Portal.Controllers
                         var details = JObject.Parse(result);
                         foreach (JObject config in details["value"])
                         {
-                            PurchaseDoc.No = (string)config["No_"];
+                            PurchaseDoc.No = (string)config["No"];
                             PurchaseDoc.Date = Convert.ToDateTime((string)config["Order_Date"]).ToString("dd/MM/yyyy");
                             PurchaseDoc.Remarks = (string)config["Posting_Description"];
-                            PurchaseDoc.Directorate = (string)config["Shortcut_Dimension_1_Code"];
+                            PurchaseDoc.Campus = (string)config["Shortcut_Dimension_1_Code"];
+                            PurchaseDoc.CampusName = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_1_Code"]);
                             PurchaseDoc.Department = (string)config["Shortcut_Dimension_2_Code"];
-                            //PurchaseDoc.Section = (string)config["Shortcut_Dimension_3_Code"];
-                            PurchaseDoc.RespC = (string)config["Responsibility_Center"];
-                            PurchaseDoc.DisDir = CommonClass.DisregardDirectorate(StaffNo);
-                            if ((string)config["Status"] == "Released" || (string)config["Status"] == "Posted")
-                            {
-                                PurchaseDoc.Status = "Approved";
-                            }
-                            else
-                            {
-                                PurchaseDoc.Status = (string)config["Status"];
-                            }
+                            PurchaseDoc.DepartmentName = (string)config["Department_Name"];
+                            PurchaseDoc.RespC = (string)config["Responsibility_Center_BR"];
+                            PurchaseDoc.Status = (string)config["Status"];
                         }
                     }
-                    PurchaseDoc.ListOfDirectorate = DirectorateList.Select(x =>
-                                           new SelectListItem()
-                                           {
-                                               Text = x.Name,
-                                               Value = x.Code
-                                           }).ToList();
-                    PurchaseDoc.ListOfDepartment = DepartmentList.Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Code
-                                  }).ToList();
-                    PurchaseDoc.ListOfResponsibility = RespCList.Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Code
-                                  }).ToList();
                     #endregion
                     return View(PurchaseDoc);
                 }
@@ -477,7 +374,7 @@ namespace Latest_Staff_Portal.Controllers
             {
                 #region Purchase Lines
                 List<PRVLines> PurchaseLines = new List<PRVLines>();
-                string pageLine = "PurchaseLines?$filter=Document_No_ eq '" + DocNo + "'&$format=json";
+                string pageLine = "PurchaseLines?$filter=Document_No eq '" + DocNo + "'&format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -495,8 +392,8 @@ namespace Latest_Staff_Portal.Controllers
                         {
                             PurchaseLine.LineType = (string)config["Type"];
                         }
-                        PurchaseLine.DocNo = (string)config["Document_No_"];
-                        PurchaseLine.Item = (string)config["No_"];
+                        PurchaseLine.DocNo = (string)config["Document_No"];
+                        PurchaseLine.Item = (string)config["No"];
                         PurchaseLine.ItemDesc = (string)config["Description"];
                         PurchaseLine.Description2 = (string)config["Description_2"];
                         PurchaseLine.Qnty = (string)config["Quantity"];
@@ -504,7 +401,7 @@ namespace Latest_Staff_Portal.Controllers
                         PurchaseLine.Amount = (string)config["Direct_Unit_Cost"];
                         PurchaseLine.LineAmount = (string)config["Line_Amount"];
                         PurchaseLine.Location = (string)config["Location_Code"];
-                        PurchaseLine.LnNo = (string)config["Line_No_"];
+                        PurchaseLine.LnNo = (string)config["Line_No"];
                         PurchaseLines.Add(PurchaseLine);
                     }
                 }
@@ -523,20 +420,16 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        public JsonResult SendPurchaseAppForApproval(string DocNo, string Redirect)
+        public JsonResult SendPurchaseAppForApproval(string DocNo)
         {
             try
             {
                 Credentials.ObjNav.PurchaseRequisitionApprovalRequest(DocNo);
-                if (Redirect == "Y")
-                {
-                    Session["SuccessMsg"] = "Purchase Requisition, Document No " + DocNo + " send for approval Successfully";
-                }
-                return Json(new { message = "Purchase Requisition, Document No " + DocNo + " send for approval Successfully",  success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = "Purchase Requisition send for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
         public JsonResult CancelPurchaseAppForApproval(string DocNo)
@@ -548,28 +441,23 @@ namespace Latest_Staff_Portal.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult UpdatePurchaseHeader(string DocNo, PRVHeader prvHeader)
+        public JsonResult UpdatePurchaseHeader(string DocNo, PRVHeader prvHeader, string base64Upload, string fileName, string Extn)
         {
             try
             {
-                string Directorate = "", Department = "", Section = "", RespC = "", Remarks = "";
-
-                if (prvHeader.Directorate != null)
+                string School = "", Campus = "", Department = "", RespC = "", Remarks = "";
+                if (prvHeader.Campus != null)
                 {
-                    Directorate = prvHeader.Directorate;
+                    Campus = prvHeader.Campus;
                 }
                 if (prvHeader.Department != null)
                 {
                     Department = prvHeader.Department;
                 }
-                //if (prvHeader.Section != null)
-                //{
-                //    Section = prvHeader.Section;
-                //}
                 if (prvHeader.RespC != null)
                 {
                     RespC = prvHeader.RespC;
@@ -578,8 +466,8 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     Remarks = prvHeader.Remarks;
                 }
-                Credentials.ObjNav.UpdatePurchaseRequisition(DocNo.Trim(), Directorate, Department, Section,
-                     RespC, Remarks);
+                Credentials.ObjNav.UpdatePurchaseRequisition(DocNo.Trim(), Campus, Department,
+                    School, RespC, Remarks);
                 return Json(new { message = "Purchase header Updated successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -595,7 +483,7 @@ namespace Latest_Staff_Portal.Controllers
                 int ln = Convert.ToInt32(LnNo);
                 #region Purchase Line
                 PRVLines PurchaseLine = new PRVLines();
-                string pageLine = "PurchaseLines?$filter=Document_No_ eq '" + DocNo + "' and Line_No_ eq " + ln + "&format=json";
+                string pageLine = "PurchaseLines?$filter=Document_No eq '" + DocNo + "' and Line_No eq " + ln + "&format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -612,15 +500,15 @@ namespace Latest_Staff_Portal.Controllers
                         {
                             PurchaseLine.LineType = (string)config["Type"];
                         }
-                        PurchaseLine.DocNo = (string)config["Document_No_"];
-                        PurchaseLine.Item = (string)config["No_"];
+                        PurchaseLine.DocNo = (string)config["Document_No"];
+                        PurchaseLine.Item = (string)config["No"];
                         PurchaseLine.ItemDesc = (string)config["Description"];
                         PurchaseLine.Description2 = (string)config["Description_2"];
                         PurchaseLine.Qnty = (string)config["Quantity"];
                         PurchaseLine.UnitM = (string)config["Unit_of_Measure"];
                         PurchaseLine.Amount = (string)config["Direct_Unit_Cost"];
                         PurchaseLine.Location = (string)config["Location_Code"];
-                        PurchaseLine.LnNo = (string)config["Line_No_"];
+                        PurchaseLine.LnNo = (string)config["Line_No"];
                     }
                 }
                 #endregion
@@ -664,8 +552,7 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult SubmitPurchaseLine(string DocNo, PRVLines prvLine)
+        public JsonResult SubmitPurchaseLine(string DocNo, PRVHeader prvHeader, PRVLines prvLine)
         {
             try
             {
@@ -683,19 +570,14 @@ namespace Latest_Staff_Portal.Controllers
                     Type = 4;
                 }
                 string item = prvLine.Item.Trim();
-                string itemDesc = "";
-                if (prvLine.ItemDesc != null && prvLine.ItemDesc != "")
-                {
-                    itemDesc = prvLine.ItemDesc.Trim();
-                }
+                string itemDesc = prvLine.ItemDesc.Trim();
                 string qnty = prvLine.Qnty.Trim();
                 string amnt = prvLine.Amount.Trim();
-                string location = "";
-                if (prvLine.Location != null && prvLine.Location != "")
-                {
-                    location = prvLine.Location.Trim();
-                }
-                Credentials.ObjNav.PurchaseRequisitionLines(DocNo, item, Convert.ToDecimal(qnty), Convert.ToDecimal(amnt), itemDesc, Type, location);
+                string location = prvLine.Location.Trim();
+                int Counter = GetDocumentCount(DocNo);
+                int ln = Counter + 1;
+
+                Credentials.ObjNav.PurchaseRequisitionLines(DocNo, item, Convert.ToDecimal(qnty), itemDesc, Type, location,Convert.ToDecimal(amnt));
 
                 return Json(new { message = "Purchase Line Added successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
@@ -707,7 +589,7 @@ namespace Latest_Staff_Portal.Controllers
         protected int GetDocumentCount(string DocNo)
         {
             int count = 0;
-            string pageLine = "PurchaseLines?$select=Line_No_&$orderby=Line_No_ desc&$top=1&$filter=Document_No_ eq '" + DocNo + "'&$format=json";
+            string pageLine = "PurchaseLines?$select=Line_No&$orderby=Line_No desc&$top=1&$filter=Document_No eq '" + DocNo + "'&format=json";
             HttpWebResponse httpResponse = Credentials.GetOdataData(pageLine);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
@@ -718,7 +600,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     foreach (JObject config in details["value"])
                     {
-                        count = (int)config["Line_No_"];
+                        count = (int)config["Line_No"];
                     }
                 }
             }
@@ -729,12 +611,7 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                string desc = "";
-                if (prvLine.Description2 != null)
-                {
-                    desc = prvLine.Description2;
-                }
-                Credentials.ObjNav.PurchaseRequistionLineUpdate(Convert.ToInt32(prvLine.LnNo), Convert.ToInt32(prvLine.Qnty), Convert.ToInt32(prvLine.Amount), prvLine.DocNo, desc);
+                Credentials.ObjNav.PurchaseRequistionLineUpdate(Convert.ToInt32(prvLine.LnNo), Convert.ToInt32(prvLine.Qnty), prvLine.DocNo, prvLine.Description2,Convert.ToDecimal(prvLine.Amount));
                 return Json(new { message = "Purchase Line Updated successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

@@ -4,17 +4,14 @@
         <thead>
             <tr>
                 <th>Type</th>
-                <th>No</th>
+                <th>Item</th>
                 <th>Description</th>
-                <th>Receiving Location</th>
+                <th>Store</th>
                 <th class="text-center">Quantity</th>
                 <th>Unit Measure</th>
-                <th class="text-left">Unit Amount</th>
-                <th class="text-left">Amount</th>
-                @if (Model.Status == "Open")
-                {
-                    <th style="text-align:center" class="tdAction">Action</th>
-                }
+                <th class="text-center">Unit Amount</th>
+                <th class="text-center">Amount</th>
+                <th style="text-align:center" class="tdAction">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -42,38 +39,48 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.UnitM)
                             </td>
-                            <td class="text-left">
+                            <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.Amount)
                             </td>
-                            <td class="text-left">
+                            <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.LineAmount)
                             </td>
-                            @if (Model.Status == "Open")
-                            {
-                                <td style="text-align:center">
-                                    <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" onclick="EditItem('@item.DocNo','@item.LnNo');"><i class="mdi mdi-pencil font-size-16"></i></a>
-                                    <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="RemoveItem('@item.DocNo','@item.LnNo');"><i class="mdi mdi-close font-size-16"></i></a>
-                                </td>
-                            }
+                            <td style="text-align:center" class="tdAction">
+                                <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" onclick="EditItem('@item.DocNo','@item.LnNo');"><i class="mdi mdi-pencil font-size-16"></i></a>
+                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="RemoveItem('@item.DocNo','@item.LnNo');"><i class="mdi mdi-close font-size-16"></i></a>
+                            </td>
                         </tr>
                     }
                 }
                 else
                 {
                     <tr>
-                        <td colspan="9" style="color:red">
+                        <td colspan="8" style="color:red">
                             No Records Found
                         </td>
                     </tr>
                 }
             }
         </tbody>
+        <tfoot>
+            <tr class="HideLineButton">
+                <td class="text-right" colspan="8">
+                    <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddPRVLines();" />
+                </td>
+            </tr>
+        </tfoot>
     </table>
 </div>
-<hr />
-@if (Model.Status == "Open")
-{
-    <div style="text-align:right">
-        <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddPRVLines();" />
-    </div>
-}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var status = '@Model.Status';
+        if (status == "Open") {
+            $(".tdAction").show();
+            $(".HideLineButton").show();
+        }
+        else {
+            $(".tdAction").hide();
+            $(".HideLineButton").hide();
+        }
+    });
+</script>

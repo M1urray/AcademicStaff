@@ -30,10 +30,10 @@
         <div class="row" id="DivService">
             <div class="col-md-6">
                 <label id="labelSearch"></label>
-                <select class="form-control" id="ddlSearchItem" name="ddlSearchItem"></select>
+                <input type="text" class="form-control" id="IdSearchItem" />
             </div>
             <div class="col-md-6">
-                Unit Amount
+                Amount
                 <input type="text" class="form-control" id="txtAmount" onkeypress="return functionDecimal(event,this.value)" />
             </div>
         </div>
@@ -42,14 +42,14 @@
                 Quantity
                 <input type="text" class="form-control" id="txtQuantity" onkeypress="return functionx(event)" />
             </div>
-            <div class="col-md-6" id="divStore">
-                Receiving Location
+            <div class="col-md-6">
+                Where Needed
                 @Html.DropDownListFor(model => model.Code, Model.ListOfLocations, "--select Location--", new { @class = "form-control", @id = "ddlLocation" })
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                Description(50 Characters(Optional))
+                Description(50 Characters)
                 <textarea id="txtDescription" class="form-control" maxlength="50"></textarea>
             </div>
         </div>
@@ -62,7 +62,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#DivItSearchForm").hide();
-        $("#ddlLocation,#ddlSearchItem").select2({
+        $("#ddlLocation").select2({
             width: '100%',
             placeholder: 'Search...'
         });
@@ -77,37 +77,41 @@
             var url;
             if (PRVType == "1") {
                 $("#labelSearch").text("Search Service");
-                $("#divStore").hide();
-                url = "/Common/GetServiceList";
+                url = '@Url.Action("GetServiceList", "Common")';
             }
             else if (PRVType == "2") {
-                $("#labelSearch").text("Search Item");                
-                url = "/Common/GetItemList";
+                $("#labelSearch").text("Search Item");
+                url = '@Url.Action("GetItemList", "Common")';
             }
             else if (PRVType == "4") {
                 $("#labelSearch").text("Search Fixed Asset");
-                url = "/Common/GetFixedAssetList";
+                url = '@Url.Action("GetFixedAssetList", "Common")';
             }
             else {
                 return;
             }
-            $("#ddlSearchItem option").remove();
-            $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
-            $.getJSON(url,
-                function (data) {
+            $.ajax({
+                async: true,
+                type: "POST",
+                datatype: "json",
+                contentType: "application/json; charset = utf-8",
+                processData: false,
+                url: url,
+                success: function (data) {
                     if (data.success == true) {
-                        $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
-                        $.each(data.DropDownData.ListOfddlData, function () {
-                            $("#ddlSearchItem").append($("<option></option>").val(this['Value']).html(this['Text']));
-                        });
-
                         $("#DivItSearchForm").show();
                         HideProgress();
                     }
                     else {
                         Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
                     }
-                });
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
         }
         $("#IdSearchItem").val('');
         $("#txtAmount").val('');
@@ -115,6 +119,32 @@
         $('#ddlLocation').val('');
         $("#txtDescription").val('');
     }
+    $(function () {
+        $('#IdSearchItem').autocomplete({
+            source: function (request, response) {
+                var PRVType = $("#PRVType").children("option:selected").val();
+                var url;
+                if (PRVType == "1") {
+                    url = '@Url.Action("GetService", "Common")';
+                }
+                if (PRVType == "2") {
+                    url = '@Url.Action("GetItem", "Common")';
+                }
+                if (PRVType == "4") {
+                    url ='@Url.Action("GetFixedAsset", "Common")'; 
+                }
+                ShowProgress();
+                $.getJSON(url, { Item: request.term },
+                    function (data) {
+                        response(data.ItemList);
+                        appendTo: "#IdSearchItem"
+                    });
+                HideProgress();
+            },
+            minLength: 1
+        });
+    });
+
     function functionDecimal(evt, val) {
         try {
             var charCode = (evt.which) ? evt.which : event.keyCode;

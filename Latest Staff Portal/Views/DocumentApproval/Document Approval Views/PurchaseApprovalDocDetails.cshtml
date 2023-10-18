@@ -9,37 +9,20 @@
         @Html.TextBoxFor(m => m.DocHeader.Date, new { @class = "form-control", @readonly = "readonly" })
     </div>
 </div>
-@if (string.IsNullOrWhiteSpace(Model.DocHeader.DocumentDate))
-{
-    <div class="row">
-        <div class="col-md-6">
-            <b>Requestor No</b>
-            @Html.TextBoxFor(m => m.DocHeader.RequestorNo, new { @class = "form-control", @readonly = "readonly" })
-        </div>
-        <div class="col-md-6">
-            <b>Requestor Name</b>
-            @Html.TextBoxFor(m => m.DocHeader.RequestorName, new { @class = "form-control", @readonly = "readonly" })
-        </div>
-    </div>
-}
-else
-{
 <div class="row">
     <div class="col-md-6">
-        <b>Vendor Name</b>
-        @Html.TextBoxFor(m => m.DocHeader.VendorName, new { @class = "form-control", @readonly = "readonly" })
+        <b>Requestor No</b>
+        @Html.TextBoxFor(m => m.DocHeader.RequestorNo, new { @class = "form-control", @readonly = "readonly" })
     </div>
     <div class="col-md-6">
-        <b>Document Date</b>
-        @Html.TextBoxFor(m => m.DocHeader.DocumentDate, new { @class = "form-control", @readonly = "readonly" })
+        <b>Requestor Name</b>
+        @Html.TextBoxFor(m => m.DocHeader.RequestorName, new { @class = "form-control", @readonly = "readonly" })
     </div>
 </div>
-}
-
 <div class="row">
     <div class="col-md-6">
-        <b>Directorate</b>
-        @Html.TextBoxFor(m => m.DocHeader.Directorate, new { @class = "form-control", @readonly = "readonly" })
+        <b>Campus</b>
+        @Html.TextBoxFor(m => m.DocHeader.Campus, new { @class = "form-control", @readonly = "readonly" })
     </div>
     <div class="col-md-6">
         <b>Department</b>
@@ -51,13 +34,9 @@ else
         <b>Status</b>
         @Html.TextBoxFor(m => m.DocHeader.Status, new { @class = "form-control", @readonly = "readonly" })
     </div>
-   
     <div class="col-md-6">
-        @if (!string.IsNullOrWhiteSpace(Model.DocHeader.DocumentDate))
-        {
-            <b>Sender Name</b>
-            @Html.TextBoxFor(m => m.DocHeader.SenderName, new { @class = "form-control", @readonly = "readonly" })
-        }
+        <b>Responsibility Center</b>
+        @Html.TextBoxFor(m => m.DocHeader.RespC, new { @class = "form-control", @readonly = "readonly" })
     </div>
 </div>
 <div class="row">

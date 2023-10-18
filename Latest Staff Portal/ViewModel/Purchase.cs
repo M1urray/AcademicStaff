@@ -15,43 +15,31 @@ namespace Latest_Staff_Portal.ViewModel
     }
     public class NewPurchaseRequisition
     {
-        public string Directorate { get; set; }
+        public string school { get; set; }
+        public string Campus { get; set; }
         public string Department { get; set; }
-        public string Division { get; set; }
         public string RespC { get; set; }
-        public bool DisDir { get; set; }        
-        public List<SelectListItem> ListOfDirectorate { get; set; }
+        public List<SelectListItem> ListOfSchool { get; set; }
+        public List<SelectListItem> ListOfCampus { get; set; }
         public List<SelectListItem> ListOfDepartment { get; set; }
-        public List<SelectListItem> ListOfDivision { get; set; }
         public List<SelectListItem> ListOfResponsibility { get; set; }
     }
     public class PRVHeader
     {
         public string No { get; set; }
         public string Remarks { get; set; }
-        public string Directorate { get; set; }
+        public string Campus { get; set; }
+        public string CampusName { get; set; }
         public string Department { get; set; }
+        public string DepartmentName { get; set; }
         public string RespC { get; set; }
         public string Date { get; set; }
         public string Status { get; set; }
         public string RequestorNo { get; set; }
         public string RequestorName { get; set; }
-
-        //Fields specific to Orders
-        public string SenderName { get; set; }
-        public string VendorName { get; set; }
-        public string DocumentDate { get; set; }
-
-        //End of fields
         public bool CommentFound { get; set; }
         public string Comment { get; set; }
-        public bool DisDir { get; set; }        
-        public List<SelectListItem> ListOfDirectorate { get; set; }
-        public List<SelectListItem> ListOfDepartment { get; set; }
-        public List<SelectListItem> ListOfDivision { get; set; }
-        public List<SelectListItem> ListOfResponsibility { get; set; }
     }
-
     public class PRVLines
     {
         public string DocNo { get; set; }

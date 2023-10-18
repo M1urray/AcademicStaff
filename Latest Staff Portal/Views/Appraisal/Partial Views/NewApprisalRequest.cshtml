@@ -12,12 +12,25 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                @Html.Label("Supervisor", htmlAttributes: new { @class = "control-label col-md-12" })
+                @Html.Label("Appraisal Type", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-12">
-                    @Html.DropDownListFor(model => model.SupNo, Model.ListOfEmployees, "--select Your Supervisor--", new { @class = "form-control", @id = "ddlSup" })
-                    @Html.ValidationMessageFor(model => model.SupNo, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(model => model.AppraisalTypes, Model.ListOfApprisalTypes, "--select Apprisal Type--", new { @class = "form-control", @id = "ddlAppTypes" })
+                    @Html.ValidationMessageFor(model => model.AppraisalTypes, "", new { @class = "text-danger" })
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
+                    @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
         </div>
     </div>
     <hr />
@@ -25,12 +38,4 @@
         <input type="button" class="btn btn-primary waves-effect waves-light" value="Create Appraisal Document" onclick="SubmitAppraisalRequisition();" />
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $("#ddlSup").select2({
-            width: '100%',
-            placeholder: 'Search...'
-        });
-    });
-</script>
 

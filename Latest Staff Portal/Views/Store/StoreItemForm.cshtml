@@ -1,14 +1,23 @@
-﻿@model Latest_Staff_Portal.ViewModel.NewStoreLine
+﻿@model Latest_Staff_Portal.ViewModel.LocationList
 <style>
     .ui-front {
         z-index: 2000 !important;
+    }
+
+    .ui-autocomplete {
+        /* these sets the height and width */
+        max-height: 200px;
+        max-width: 236px;
+        /* these make it scroll for anything outside */
+        overflow-x: scroll;
+        overflow-y: scroll;
     }
 </style>
 <div class="bg-soft-dark" style="color:black">
     <div class="row" id="DivService">
         <div class="col-md-6">
-            Store Item
-            @Html.DropDownListFor(model => model.Code, Model.ListOfItems, "----", new { @class = "form-control", @id = "ddlItems" })
+            Search Item
+            <input type="text" class="form-control" id="IdItems" />
         </div>
         <div class="col-md-6">
             Quantity
@@ -19,6 +28,7 @@
         <div class="col-md-6">
             Issuing Store
             @Html.DropDownListFor(model => model.Code, Model.ListOfLocations, "--select Location--", new { @class = "form-control", @id = "ddlLocation" })
+
         </div>
         <div class="col-md-6">
         </div>
@@ -36,10 +46,52 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#ddlItems,#ddlLocation").select2({
+        GetItemList();
+        $("#ddlLocation").select2({
             width: '100%'
         });
-    });   
+    });
+    var GetItemList = function () {
+        ShowProgress();
+        var url;
+        url = '@Url.Action("GetItemList", "Common")',
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: url,
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                }
+                else {
+                    Swal.fire('Warning', data.message, 'warning');
+                    HideProgress();
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    $(function () {
+        $('#IdItems').autocomplete({
+            source: function (request, response) {
+                ShowProgress();
+                $.getJSON('@Url.Action("GetItem", "Common")', { Item: request.term },
+                    function (data) {
+                        response(data.ItemList);
+                        appendTo: "#IdItems"
+                    });
+                HideProgress();
+            },
+            minLength: 1,
+        });
+    });
+
     function functionDecimal(evt, val) {
         try {
             var charCode = (evt.which) ? evt.which : event.keyCode;

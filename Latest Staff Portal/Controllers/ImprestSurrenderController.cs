@@ -33,7 +33,7 @@ namespace Latest_Staff_Portal.Controllers
             catch (Exception ex)
             {
                 Error erroMsg = new Error();
-                erroMsg.Message = ex.Message.Replace("'", "");
+                erroMsg.Message = ex.Message;
                 return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
             }
         }
@@ -44,7 +44,7 @@ namespace Latest_Staff_Portal.Controllers
                 string StaffNo = Session["Username"].ToString();
                 List<ImprestSurrenderList> SurrenderList = new List<ImprestSurrenderList>();
 
-                string page = "ImprestSurrenderList?$filter=Account_No eq '" + StaffNo + "'&$format=json";
+                string page = "ImprestSurrenderList?$filter=Account_No eq '" + StaffNo + "'&format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -71,7 +71,7 @@ namespace Latest_Staff_Portal.Controllers
             catch (Exception ex)
             {
                 Error erroMsg = new Error();
-                erroMsg.Message = ex.Message.Replace("'", "");
+                erroMsg.Message = ex.Message;
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
@@ -89,7 +89,7 @@ namespace Latest_Staff_Portal.Controllers
                 #region ImprestList
                 List<ImprestList> ImpList = new List<ImprestList>();
                 ImprestList Imp = null;
-                string page = "PostedImprest?$filter=AccountNo eq '" + StaffNo + "' and SurrenderStatus ne 'Full' &$format=json";
+                string page = "PostedImprest?$filter=AccountNo eq '" + StaffNo + "' and SurrenderStatus ne 'Full' &format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -122,7 +122,7 @@ namespace Latest_Staff_Portal.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
         protected bool isImprestSurrendered(string DocNo, decimal Amount)
@@ -179,97 +179,10 @@ namespace Latest_Staff_Portal.Controllers
                 else
                 {
                     string StaffNo = Session["Username"].ToString();
-                    #region Directorate List
-                    List<DimensionValues> DirectorateList = new List<DimensionValues>();
-                    string pageDir = "DimensionValues?$filter=Dimension_Code eq 'BRANCH'&$format=json";
-
-                    HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
-                    using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
-                    {
-                        var result = streamReader.ReadToEnd();
-
-                        var details = JObject.Parse(result);
-
-
-                        foreach (JObject config in details["value"])
-                        {
-                            DimensionValues Directorate = new DimensionValues();
-                            Directorate.Code = (string)config["Code"];
-                            Directorate.Name = (string)config["Name"];
-                            DirectorateList.Add(Directorate);
-                        }
-                    }
-                    #endregion
-
-                    #region Department
-                    List<DimensionValues> DepartmentList = new List<DimensionValues>();
-                    string pageDepartment = "DimensionValues?$filter=Dimension_Code eq 'DEPARTMENT'&$format=json";
-
-                    HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDepartment);
-                    using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
-                    {
-                        var result = streamReader.ReadToEnd();
-
-                        var details = JObject.Parse(result);
-
-
-                        foreach (JObject config in details["value"])
-                        {
-                            DimensionValues Department = new DimensionValues();
-                            Department.Code = (string)config["Code"];
-                            Department.Name = (string)config["Name"];
-                            DepartmentList.Add(Department);
-                        }
-                    }
-                    #endregion
-
-                    #region Section List
-                    List<DimensionValues> SectionList = new List<DimensionValues>();
-                    string pageSection = "DimensionValues?$filter=Dimension_Code eq 'SECTION'&format=json";
-
-                    HttpWebResponse httpResponseSection = Credentials.GetOdataData(pageSection);
-                    using (var streamReader = new StreamReader(httpResponseSection.GetResponseStream()))
-                    {
-                        var result = streamReader.ReadToEnd();
-
-                        var details = JObject.Parse(result);
-
-
-                        foreach (JObject config in details["value"])
-                        {
-                            DimensionValues Section = new DimensionValues();
-                            Section.Code = (string)config["Code"];
-                            Section.Name = (string)config["Name"];
-                            SectionList.Add(Section);
-                        }
-                    }
-                    #endregion
-
-                    #region Responsibility
-                    List<RespCenter> RespCList = new List<RespCenter>();
-                    string pageResC = "ResponsibilityCenters?$format=json";
-
-                    HttpWebResponse httpResponseResC = Credentials.GetOdataData(pageResC);
-                    using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
-                    {
-                        var result = streamReader.ReadToEnd();
-
-                        var details = JObject.Parse(result);
-
-
-                        foreach (JObject config in details["value"])
-                        {
-                            RespCenter RCList = new RespCenter();
-                            RCList.Code = (string)config["Code"];
-                            RCList.Name = (string)config["Name"];
-                            RespCList.Add(RCList);
-                        }
-                    }
-                    #endregion
                     #region Imp Surrender Header
                     ImprestSurrenderHeader ImpDoc = new ImprestSurrenderHeader();
 
-                    string page = "ImprestSurrenderCard?$filter=No eq '" + DocNo + "'&$format=json";
+                    string page = "ImprestSurrenderCard?$filter=No eq '" + DocNo + "'&format=json";
                     HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
@@ -284,32 +197,14 @@ namespace Latest_Staff_Portal.Controllers
                             ImpDoc.AccountName = (string)config["AccountName"];
                             ImpDoc.ImprestNo = (string)config["Imprest_Issue_Doc_No"];
                             ImpDoc.ImpIssueDate = (string)config["Imprest_Issue_Date"];
-                            ImpDoc.Directorate = (string)config["Global_Dimension_1_Code"];
-                            ImpDoc.Department = (string)config["Shortcut_Dimension_2_Code"];
+                            ImpDoc.CampusName = (string)config["Global_Dimension_1_Code"];
+                            ImpDoc.DepartmentName = (string)config["Shortcut_Dimension_2_Code"];
                             ImpDoc.RespC = (string)config["Responsibility_Center"];
                             ImpDoc.TotalAmount = Convert.ToDecimal((string)config["Amount"]).ToString("#,##0.00");
                             ImpDoc.Status = (string)config["Status"];
                             ImpDoc.ImpPurpose = (string)config["Imp_Purpose"];
                         }
                     }
-                    ImpDoc.ListOfDirectorate = DirectorateList.Select(x =>
-                                           new SelectListItem()
-                                           {
-                                               Text = x.Name,
-                                               Value = x.Code
-                                           }).ToList();
-                    ImpDoc.ListOfDepartment = DepartmentList.Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Code
-                                  }).ToList();
-                    ImpDoc.ListOfResponsibility = RespCList.Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Code
-                                  }).ToList();
                     #endregion
                     return View(ImpDoc);
                 }
@@ -317,7 +212,7 @@ namespace Latest_Staff_Portal.Controllers
             catch (Exception ex)
             {
                 Error erroMsg = new Error();
-                erroMsg.Message = ex.Message.Replace("'", "");
+                erroMsg.Message = ex.Message;
                 return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
             }
         }
@@ -327,7 +222,7 @@ namespace Latest_Staff_Portal.Controllers
             {
                 #region Imp surrender Lines
                 List<ImprestSurrenderLines> ImpLines = new List<ImprestSurrenderLines>();
-                string pageLine = "ImpSurrenderLines?$filter=SurrenderDocNo eq '" + DocNo + "'&$format=json";
+                string pageLine = "ImpSurrenderLines?$filter=SurrenderDocNo eq '" + DocNo + "'&format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -341,10 +236,9 @@ namespace Latest_Staff_Portal.Controllers
                         ImSLine.AccountNo = (string)config["AccountNo"];
                         ImSLine.AccountName = (string)config["AccountName"];
                         ImSLine.Amount = Convert.ToDecimal((string)config["Amount"]).ToString("#,##0.00");
-                        ImSLine.ActaulSpend = Convert.ToDecimal((string)config["ActualSpent"]).ToString("#,##0.00");
+                        ImSLine.ActaulSpend = (string)config["ActualSpent"];
                         ImSLine.ReceiptNo = (string)config["CashReceiptNo"];
                         ImSLine.ReceiptAmount = Convert.ToDecimal((string)config["CashReceiptAmount"]).ToString("#,##0.00");
-                        ImSLine.EntryNo = (string)config["Entry_No"];
                         ImpLines.Add(ImSLine);
                     }
                 }
@@ -359,12 +253,12 @@ namespace Latest_Staff_Portal.Controllers
             catch (Exception ex)
             {
                 Error erroMsg = new Error();
-                erroMsg.Message = ex.Message.Replace("'", "");
+                erroMsg.Message = ex.Message;
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public PartialViewResult EditImpSurrenderLine(string DocNo, string AccountNo, string Amount,string EntryNo)
+        public PartialViewResult EditImpSurrenderLine(string DocNo, string AccountNo, string Amount)
         {
             try
             {
@@ -386,7 +280,7 @@ namespace Latest_Staff_Portal.Controllers
                 #endregion
                 #region Posted Receipts
                 List<DropdownList> postedReciept = new List<DropdownList>();
-                string pageLine = "PostedReceipts?$select=No&$filter=Customer_No eq '" + StaffNo + "' and Surrender_No eq ''&$format=json";
+                string pageLine = "PostedReceipts?$select=No&$filter=Customer_No eq '" + StaffNo + "' and Surrender_No eq ''&format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -408,7 +302,6 @@ namespace Latest_Staff_Portal.Controllers
                     DocNo = DocNo,
                     AccountNo = AccountNo,
                     Amount = Amount,
-                    EntryNo = EntryNo,
                     ListOfPostedReceipts = postedReciept.Select(x =>
                                           new SelectListItem()
                                           {
@@ -421,16 +314,16 @@ namespace Latest_Staff_Portal.Controllers
             catch (Exception ex)
             {
                 Error erroMsg = new Error();
-                erroMsg.Message = ex.Message.Replace("'", "");
+                erroMsg.Message = ex.Message;
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult UpdateSurrenderLine(string DocNo, string AccNo, string ActualSpend, string ReceiptNo,string EntryNo)
+        public JsonResult UpdateSurrenderLine(string DocNo, string AccNo, string ActualSpend, string ReceiptNo)
         {
             try
             {
-                string SDocNo = "", AccountNo = "", ActAmount = "", RptNo = "", LineNo = "0";
+                string SDocNo = "", AccountNo = "", ActAmount = "", RptNo = "";
                 if (DocNo != null)
                 {
                     SDocNo = DocNo;
@@ -447,11 +340,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     RptNo = ReceiptNo;
                 }
-                if (EntryNo != null)
-                {
-                    LineNo = EntryNo;
-                }
-                Credentials.ObjNav.fnImprestSurrenderLineUpdate(SDocNo, AccountNo, Convert.ToDecimal(ActAmount), RptNo,Convert.ToInt32(LineNo));
+                Credentials.ObjNav.fnImprestSurrenderLineUpdate(SDocNo, AccountNo, Convert.ToDecimal(ActAmount), RptNo);
 
                 string msg = "Imprest surrender line updated Successfully";
 
@@ -463,16 +352,12 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult SendImprestSurrenderForApproval(string DocNo, string Redirect)
+        public JsonResult SendImprestSurrenderForApproval(string DocNo)
         {
             try
             {
                 Credentials.ObjNav.SendImpSurrenderForApproval(DocNo);
-                if (Redirect == "Y")
-                {
-                    Session["SuccessMsg"] = "Imprest Surrender Requisition, Document No " + DocNo + " send for approval Successfully";
-                }
-                return Json(new { message = "Imprest Surrender Requisition, Document No " + DocNo + " send for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = "Imprest Surrender send for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -484,7 +369,7 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                Credentials.ObjNav.CancelImpSurrenderApproval(DocNo);
+                //Credentials.ObjNav.HRCanceImprestRequisition(DocNo);
                 return Json(new { message = "Imprest Surrender approval cancelled Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

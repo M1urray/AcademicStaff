@@ -1,0 +1,63 @@
+﻿@model Latest_Staff_Portal.ViewModel.ScoreCardObjectives
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-6">
+            <span style="font-weight: bold">Objective</span>
+            @Html.TextAreaFor(model => model.Objective, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        </div>
+        <div class="col-md-6">
+            <span style="font-weight: bold">Key Performance Indicator</span>
+            @Html.TextAreaFor(model => model.KeyPerformanceIndicator, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <span style="font-weight: bold">Target</span>
+            @Html.TextAreaFor(model => model.Targets, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        </div>
+        <div class="col-md-6">
+            <span style="font-weight: bold">Achievements</span>
+            @Html.TextAreaFor(model => model.Achievements, new { @class = "form-control", @id = "txtAchvmnt", @readonly = "readonly", @style = "background-color:#dedebd" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <span style="font-weight: bold">Self Rating</span>
+            @Html.TextBoxFor(model => model.Ratings, new { @class = "form-control", @id = "txtSelfRating", @readonly = "readonly", @style = "background-color:#dedebd", @onkeypress = "return functionDecimal(event,this.value)" })
+        </div>
+        <div class="col-md-6">
+            <span style="font-weight: bold">Supervisor Rating</span>
+            @Html.TextBoxFor(model => model.SupervisorRating, new { @class = "form-control", @id = "txtSupRating", @onkeypress = "return functionDecimal(event,this.value)" })
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary" value="Save Evaluation" onclick="SaveEvaluationLine('@Model.LineNo','@Model.DocumentNo');" />
+    </div>
+</div>
+<script type="text/javascript">
+    function functionDecimal(evt, val) {
+        try {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+
+            if (charCode == 46) {
+                if (!(val.indexOf(".") > -1)) {
+                    return true;
+                }
+                else {
+                    Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                }
+            }
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                return false;
+            }
+            return true;
+        } catch (w) {
+            Swal.fire(w);
+        }
+    }
+</script>
+
+
+

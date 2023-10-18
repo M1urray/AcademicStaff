@@ -1,0 +1,72 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewSponsorshipDocument
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        Document No
+        @Html.TextBoxFor(m => m.No, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+    </div>
+    <div class="col-md-6">
+        Concept Title
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+    </div>
+</div>
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        Objective
+        @Html.TextBoxFor(m => m.Objective, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+    </div>
+    <div class="col-md-6">
+        Address
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+    </div>
+</div>
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        Email
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+    </div>
+    <div class="col-md-6">
+        Principal Investigator name
+        @Html.TextBoxFor(m => m.PInvest, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+    </div>
+</div>
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        Responsibility Center
+        @Html.TextBoxFor(m => m.RespC, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+    </div>
+    <div class="col-md-6">
+        Date Created
+        @Html.TextBoxFor(m => m.DateCreated, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+    </div>
+</div>
+<div class="row" style="padding: 2px">
+    <div class="col-md-6">
+        Status
+        @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+    </div>
+    <div class="col-md-6">
+        Approval Status
+        @Html.TextBoxFor(m => m.ApprovalStatus, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        Review Remarks
+        <textarea rows="3" id="txtRemarks" class="form-control"></textarea>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        Recommendations
+        <select class="form-control" id="Recomm">
+            <option value="">----</option>
+            <option value="1">Approved</option>
+            <option value="2">Rejected</option>
+        </select>
+    </div>
+    <div class="col-md-6"></div>
+</div>
+<hr />
+<div align="center">
+    <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Review" onclick="SubmitConceptReview('@Model.No');" />
+</div>

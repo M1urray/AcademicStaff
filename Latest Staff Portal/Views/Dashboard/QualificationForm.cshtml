@@ -1,0 +1,116 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.EmpQualification>
+<div class="pre-scrollable">
+    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead style="background-color:black;color:white">
+            <tr>
+                <th>Qualification</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Description</th>
+                <th>Specialization</th>
+                <th>Institution</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null && Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Qualification)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FromDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ToDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Specialization)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Institute)
+                            </td>
+                            <td style="text-align:center" class="tdAction">
+                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="DeleteQualification('@item.Qualification','@item.Description','@item.Institute','@item.Specialization');"><i class="mdi mdi-close font-size-16"></i></a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        Qualification Level
+        <select class="form-control" id="ddlQual" name="ddlQual">
+            <option value="">--Select Type--</option>
+            <option value="1">Certificate</option>
+            <option value="2">Diploma</option>
+            <option value="3">Undergraduate</option>
+            <option value="4">Master</option>
+            <option value="5">PHD</option>
+            <option value="6">Higher Diploma</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        Description
+        <input type="text" class="form-control" id="txtDescription" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        Date from
+        <input type="text" class="form-control" id="txtDateFrom" placeholder="dd/mm/yyyy" onkeydown="return false;" autocomplete="off" />
+    </div>
+    <div class="col-md-6">
+        Date To
+        <input type="text" class="form-control" id="txtDateTo" placeholder="dd/mm/yyyy" onkeydown="return false;" autocomplete="off" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        Institution
+        <input type="text" class="form-control" id="txtInstitute" />
+    </div>
+    <div class="col-md-6">
+        Specialization
+        <input type="text" class="form-control" id="txtSpecialization" />
+    </div>
+</div>
+<hr />
+<div align="center">
+    <input type="button" class="btn btn-primary waves-effect waves-light" value="Insert Qualification" onclick="InsertQualification();" />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#txtDateFrom,#txtDateTo').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-80:+0',
+            showOtherMonths: true,
+            dateFormat: 'dd/mm/yy'
+        });
+        $(window).resize(function () {
+            $('#txtDateFrom,#txtDateTo').datepicker('hide');
+            $('#txtDateFrom,#txtDateTo').blur();
+        });
+    });
+</script>

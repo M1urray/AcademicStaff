@@ -5105,8 +5105,8 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .card-header {
     padding: .75rem 1.25rem;
     margin-bottom: 0;
-    background-color: #b2b2b4;
-    border-bottom: 0 solid #b2b2b4
+    background-color: darkgrey;
+    border-bottom: 0 solid darkgrey
 }
 
     .card-header:first-child {
@@ -6495,7 +6495,7 @@ a.close.disabled {
     -ms-flex-pack: justify;
     justify-content: space-between;
     padding: 0.5rem 1rem;
-    background-color: #bfbfbf;
+    background-color: #3d57fa;
     border-bottom: 1px solid #eff2f7;
     border-top-left-radius: calc(.3rem - 1px);
     border-top-right-radius: calc(.3rem - 1px)
@@ -7208,7 +7208,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .bg-light {
-    background-color: #40bdd1 !important
+    background-color: white !important
 }
 
 a.bg-light:focus, a.bg-light:hover, button.bg-light:focus, button.bg-light:hover {
@@ -8905,7 +8905,7 @@ a.bg-pink:focus, a.bg-pink:hover, button.bg-pink:focus, button.bg-pink:hover {
 
 .mb-1, .my-1 {
     margin-bottom: .25rem !important;
-    border: solid 1px #A3DDF0;
+    border: solid 1px #6B6A03;
 }
 
 .ml-1, .mx-1 {
@@ -10811,7 +10811,7 @@ a.bg-pink:focus, a.bg-pink:hover, button.bg-pink:focus, button.bg-pink:hover {
 }
 
 .text-primary {
-    color: black !important
+    color: #163269 !important
 }
 
 a.text-primary:focus, a.text-primary:hover {
@@ -11043,8 +11043,7 @@ label {
 }
 
 .bg-soft-primary {
-    background-color: #ca8d10 !important;
-    border: 3px solid #ca8d10;
+    background-color: white !important
 }
 
 .bg-soft-secondary {
@@ -11305,7 +11304,7 @@ a, button {
     font-weight: 500
 }
 
-.nav-pills > a { 
+.nav-pills > a {
     color: #495057;
     font-weight: 500
 }
