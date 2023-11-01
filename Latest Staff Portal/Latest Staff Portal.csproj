@@ -215,6 +215,7 @@
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\StaffClearanceController.cs" />
     <Compile Include="Controllers\TrainingController.cs" />
+    <Compile Include="Controllers\TransportController.cs" />
     <Compile Include="Controllers\ViewDocumentController.cs" />
     <Compile Include="Controllers\ViewDocumentsController.cs" />
     <Compile Include="CustomSecurity\CustomAuthorization.cs" />
@@ -301,12 +302,9 @@
     <Content Include="assets\fonts\fa-solid-900.html" />
     <Content Include="assets\fonts\fa-solid-900.svg" />
     <Content Include="assets\fonts\materialdesignicons-webfont2f9b.html" />
-    <Content Include="assets\images\ajax-loader.gif" />
     <Content Include="assets\images\ajax-loader2.gif" />
     <Content Include="assets\images\login-bg2.jpg" />
-    <Content Include="assets\images\logo2.png" />
     <Content Include="assets\images\favicon.ico" />
-    <Content Include="assets\images\login-bg.gif" />
     <Content Include="assets\images\profile-img.png" />
     <Content Include="assets\images\profile_f.png" />
     <Content Include="assets\images\profile_m.png" />
