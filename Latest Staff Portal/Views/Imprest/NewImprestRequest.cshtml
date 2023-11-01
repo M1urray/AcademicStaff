@@ -14,36 +14,10 @@
         background-color: #dedbdb
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div class="card pre-scrollable">
     <div class="card-body">
         <b>Imprest Header</b>
         <hr />
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.Label("Branch", htmlAttributes: new { @class = "control-label col-md-12" })
-                    <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.Directorate, Model.ListOfDirectorate, "--select Directorate--", new { @class = "form-control", @id = "ddlDirectorate", @readonly = "readonly", @style = "background-color:#dedebd" })
-                        @Html.ValidationMessageFor(model => model.Directorate, "", new { @class = "text-danger" })
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
-                    <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.Department, Model.ListOfDepartment, "--select Department--", new { @class = "form-control", @id = "ddlDepartment", @readonly = "readonly", @style = "background-color:#dedebd" })
-                        @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -56,16 +30,56 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    @Html.Label("Purpose:(250 Characters)", htmlAttributes: new { @class = "control-label col-md-12" })
+                    @Html.Label("Purpose:(150 Characters)", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
-                        <textarea id="txtRemarks" rows="4" class="form-control" maxlength="250"></textarea>
+                        <textarea id="txtRemarks" class="form-control" maxlength="150"></textarea>
                     </div>
                 </div>
             </div>
         </div>
-        <hr style="border:1px solid black" />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Division", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Campus, Model.ListOfCampus, "--select Division--", new { @class = "form-control", @id = "ddlCampus" })
+                        @Html.ValidationMessageFor(model => model.Campus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Department, Model.ListOfDepartment, "--select Department--", new { @class = "form-control", @id = "ddlDepartment" })
+                        @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Donor", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.school, Model.ListOfSchool, "--select Donor Center--", new { @class = "form-control", @id = "ddlDonor" })
+                        @Html.ValidationMessageFor(model => model.school, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
+                        @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <hr style="border:1px solid black" />        
         <div align="center">
-            <input type="button" class="btn btn-primary waves-effect waves-light" value="Create Document" onclick="SubmitImprestRequisition('@Model.DisDir');" />
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitImprestRequisition();" />
         </div>
     </div>
 </div>
@@ -85,8 +99,9 @@
             $('#dtPicker').datepicker('hide');
             $('#dtPicker').blur();
         });
-        document.getElementById("ddlDirectorate").disabled = true;
-        document.getElementById("ddlDepartment").disabled = true;
-    });
+        $("#ddlDepartment,#ddlRespC").select2({
+            width: '100%'
+        });
+    }); 
 </script>
 

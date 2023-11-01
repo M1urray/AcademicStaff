@@ -1,0 +1,119 @@
+﻿@model Latest_Staff_Portal.ViewModel.SectionDetails
+<style>
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div class="pre-scrollable">
+    <table id="tableSkillComp" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="80%">Core Competence and Values</th>
+                <th width="5%">Self<br />Rating(%)</th>
+                <th width="5%">Peer.<br />Rating(%)</th>
+                <th width="5%">Sup.<br />Rating(%)</th>
+                <th style="text-align:center" width="5%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    {
+                        if (Model.ObjList.Count() > 0)
+                        {
+                            int i = 1;
+                            foreach (var item in Model.ObjList)
+                            {
+                                <tr class="HasData">
+                                    <td>
+                                        @i
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Objective)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ratings)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PeerRating)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SupervisorRating)
+                                    </td>
+                                    <td style="text-align:center">
+                                        <a href="javascript:void(0);" class="text-danger" onclick="EditSkillCompItem('@item.LineNo','@item.DocumentNo','@Model.Level');">Edit</a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr class="NoData">
+                                <td colspan="5" style="color:red">
+                                    No Records Found
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+        </tbody>
+        @if (Model.Level == "A")
+        {
+            <tfoot>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <hr style="border-color:black" />
+                        <input type="button" value="Add Skills & Competence" class="btn btn-danger BtnPadding" onclick="AddCoreCompetenceVal();" />
+                    </td>
+                </tr>
+            </tfoot>
+        }
+    </table>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <b>Appraisee Comments</b>
+        @Html.TextAreaFor(m => m.AppraiseeComment, new { @class = "form-control", @id = "SkillCompAppraiseeComments" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <b>Supervisor Comments</b>
+        @Html.TextAreaFor(m => m.SuporvisorComment, new { @class = "form-control", @id = "ObjSkillsCompeAppraisorComments" })
+    </div>
+</div>
+<hr />
+<div align="center">
+    <input type="button" value="Save Comments" class="btn btn-primary" onclick="SaveComments('3','@Model.Level');" />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var rows = $("#tableSkillComp > tbody > tr.HasData").length;
+        if (parseInt(rows) > 0) {
+            $("#tableSkillComp > tfoot").hide();
+        }
+        else {
+            $("#tableSkillComp > tfoot").show();
+        }
+
+        if ('@Model.Level' == "A") {
+            $("#ObjSkillsCompeAppraisorComments").attr("readonly", true);
+            $("#ObjSkillsCompeAppraisorComments").css("background-color", "#dedebd");
+        }
+        else if ('@Model.Level' == "S") {
+            $("#SkillCompAppraiseeComments").attr("readonly", true);
+            $("#SkillCompAppraiseeComments").css("background-color", "#dedebd");
+        }
+        else {
+            $("#SkillCompAppraiseeComments,#ObjSkillsCompeAppraisorComments").attr("readonly", true);
+            $("#SkillCompAppraiseeComments,#ObjSkillsCompeAppraisorComments").css("background-color", "#dedebd");
+        }
+    })
+</script>
+

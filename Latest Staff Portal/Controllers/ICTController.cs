@@ -14,7 +14,7 @@ using System.Web.Mvc;
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
-    [CustomAuthorization(Role = "ALLUSERS")]
+    [CustomAuthorization(Role = "FULLTIME")]
     public class ICTController : Controller
     {
         // GET: ICT
@@ -60,136 +60,98 @@ namespace Latest_Staff_Portal.Controllers
                     ICTReqList.Add(ICTList);
                 }
             }
-            return PartialView("~/Views/ICT/ICTListView.cshtml", ICTReqList);
+            return PartialView("~/Views/ICT/ICTListView.cshtml", ICTReqList.OrderByDescending(x => x.No));
         }
         public PartialViewResult NewICTRequest()
         {
             string StaffNo = Session["Username"].ToString();
-            string Dir = "", Dep = "";
-            #region Employee Data
-            string pageData = "EmployeeList?$filter=No eq '" + StaffNo + "'&$format=json";
+            NewICTRequisition NewICTReq = new NewICTRequisition();
+            #region Directorate List
+            List<DimensionValues> DirectorateList = new List<DimensionValues>();
+            string pageDir = "DimensionValues?$filter=Global_Dimension_No_ eq 1&$format=json";
 
-            HttpWebResponse httpResponse = Credentials.GetOdataData(pageData);
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
+            using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
             {
                 var result = streamReader.ReadToEnd();
 
                 var details = JObject.Parse(result);
 
-                if (details["value"].Count() > 0)
+
+                foreach (JObject config in details["value"])
                 {
-                    foreach (JObject config in details["value"])
-                    {
-                        Dir = (string)config["_x003C_GlobSal_Dimension_1_Code_x003E_"];
-                        Dep = (string)config["GlobalDimension2Code"];
-                    }
+                    DimensionValues Directorate = new DimensionValues();
+                    Directorate.Code = (string)config["Code"];
+                    Directorate.Name = (string)config["Name"];
+                    DirectorateList.Add(Directorate);
                 }
             }
             #endregion
-            if (Dir == "")
+
+            #region Department
+            List<DimensionValues> DepartmentList = new List<DimensionValues>();
+            string pageDepartment = "DimensionValues?$filter=Global_Dimension_No_ eq 2&$format=json";
+
+            HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDepartment);
+            using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
             {
-                Error erroMsg = new Error();
-                erroMsg.Message = "Your directorate has not been set. Contact HR";
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
+                {
+                    DimensionValues Department = new DimensionValues();
+                    Department.Code = (string)config["Code"];
+                    Department.Name = (string)config["Name"];
+                    DepartmentList.Add(Department);
+                }
             }
-            else if (Dep == "")
+            #endregion
+            #region Categories
+            List<DropdownList> CategoryList = new List<DropdownList>();
+            string pageResC = "ICTRequisitionCategory?$format=json";
+
+            HttpWebResponse httpResponseResC = Credentials.GetOdataData(pageResC);
+            using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
             {
-                Error erroMsg = new Error();
-                erroMsg.Message = "Your department has not been set. Contact HR";
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
+                {
+                    DropdownList CatList = new DropdownList();
+                    CatList.Value = (string)config["Code"];
+                    CatList.Text = (string)config["Description"];
+                    CategoryList.Add(CatList);
+                }
             }
-            else
+            #endregion
+            NewICTReq = new NewICTRequisition
             {
-                NewICTRequisition NewICTReq = new NewICTRequisition();
-                #region Directorate List
-                List<DimensionValues> DirectorateList = new List<DimensionValues>();
-                string pageDir = "DimensionValues?$filter=Dimension_Code eq 'BRANCH'&$format=json";
-
-                HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
-                using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DimensionValues Directorate = new DimensionValues();
-                        Directorate.Code = (string)config["Code"];
-                        Directorate.Name = (string)config["Name"];
-                        DirectorateList.Add(Directorate);
-                    }
-                }
-                #endregion
-
-                #region Department
-                List<DimensionValues> DepartmentList = new List<DimensionValues>();
-                string pageDepartment = "DimensionValues?$filter=Dimension_Code eq 'DEPARTMENT'&$format=json";
-
-                HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDepartment);
-                using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DimensionValues Department = new DimensionValues();
-                        Department.Code = (string)config["Code"];
-                        Department.Name = (string)config["Name"];
-                        DepartmentList.Add(Department);
-                    }
-                }
-                #endregion
-                #region Categories
-                List<DropdownList> CategoryList = new List<DropdownList>();
-                string pageResC = "ICTRequisitionCategory?$format=json";
-
-                HttpWebResponse httpResponseResC = Credentials.GetOdataData(pageResC);
-                using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DropdownList CatList = new DropdownList();
-                        CatList.Value = (string)config["Code"];
-                        CatList.Text = (string)config["Description"];
-                        CategoryList.Add(CatList);
-                    }
-                }
-                #endregion
-                NewICTReq = new NewICTRequisition
-                {
-                    Directorate = Dir,
-                    Department = Dep,
-                    ListOfDirectorate = DirectorateList.Select(x =>
-                                         new SelectListItem()
-                                         {
-                                             Text = x.Name,
-                                             Value = x.Code
-                                         }).ToList(),
-                    ListOfDepartment = DepartmentList.Select(x =>
-                                        new SelectListItem()
-                                        {
-                                            Text = x.Name,
-                                            Value = x.Code
-                                        }).ToList(),
-                    ListOfCategory = CategoryList.Select(x =>
-                                       new SelectListItem()
-                                       {
-                                           Text = x.Text,
-                                           Value = x.Value
-                                       }).ToList()
-                };
-                return PartialView("~/Views/ICT/NewICTRequest.cshtml", NewICTReq);
-            }
+                ListOfDirectorate = DirectorateList.Select(x =>
+                                     new SelectListItem()
+                                     {
+                                         Text = x.Name,
+                                         Value = x.Code
+                                     }).ToList(),
+                ListOfDepartment = DepartmentList.Select(x =>
+                                    new SelectListItem()
+                                    {
+                                        Text = x.Name,
+                                        Value = x.Code
+                                    }).ToList(),
+                ListOfCategory = CategoryList.Select(x =>
+                                   new SelectListItem()
+                                   {
+                                       Text = x.Text,
+                                       Value = x.Value
+                                   }).ToList()
+            };
+            return PartialView("~/Views/ICT/NewICTRequest.cshtml", NewICTReq);
         }
         public PartialViewResult CancelICTRequestForm(string DocNo)
         {
@@ -203,9 +165,8 @@ namespace Latest_Staff_Portal.Controllers
             try
             {
                 DateTime requireddate = DateTime.ParseExact(NewReq.RequiredDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                var username = Session["username"].ToString();
 
-                string DocNo = Credentials.ObjNav.ICTRequisitionCreate(username, NewReq.Directorate,
+                string DocNo = Credentials.ObjNav.ICTRequisitionCreate(Session["username"].ToString(), NewReq.Directorate,
                      NewReq.Department, Convert.ToInt32(NewReq.Urgency), requireddate, NewReq.Description, NewReq.ReqCat);
                 //if (DocNo != "")
                 //{
@@ -228,29 +189,9 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                Credentials.ObjNav.CancelICTRequisitionCreate(DocNo, CancelR);
+                //Credentials.ObjNav.CancelICTRequisitionCreate(DocNo, CancelR);
                
                 return Json(new { message = "ICT Requisition DocNo " + DocNo + " cancelled Successfully", success = true }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
-            }
-        }
-        public PartialViewResult ConfirmICTRequestForm(string DocNo)
-        {
-            ICTCancel c = new ICTCancel();
-            c.DocNo = DocNo;
-            return PartialView("~/Views/ICT/ConfirmRemarks.cshtml", c);
-        }
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult ConfirmICTRequest(string DocNo,string Resolved, string ConfirmR)
-        {
-            try
-            {
-                Credentials.ObjNav.ConfirmClosureOfICTRequisition(DocNo, ConfirmR);
-
-                return Json(new { message = "Confirmation Submitted Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -305,104 +246,66 @@ namespace Latest_Staff_Portal.Controllers
         public PartialViewResult NewICTTransferRequest()
         {
             string StaffNo = Session["Username"].ToString();
-            string Dir = "", Dep = "";
-            #region Employee Data
-            string pageData = "EmployeeList?$filter=No eq '" + StaffNo + "'&$format=json";
+            NewICTRequisition NewICTReq = new NewICTRequisition();
+            #region Directorate List
+            List<DimensionValues> DirectorateList = new List<DimensionValues>();
+            string pageDir = "DimensionValues?$filter=Global_Dimension_No_ eq 1&$format=json";
 
-            HttpWebResponse httpResponse = Credentials.GetOdataData(pageData);
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
+            using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
             {
                 var result = streamReader.ReadToEnd();
 
                 var details = JObject.Parse(result);
 
-                if (details["value"].Count() > 0)
+
+                foreach (JObject config in details["value"])
                 {
-                    foreach (JObject config in details["value"])
-                    {
-                        Dir = (string)config["_x003C_GlobSal_Dimension_1_Code_x003E_"];
-                        Dep = (string)config["GlobalDimension2Code"];
-                    }
+                    DimensionValues Directorate = new DimensionValues();
+                    Directorate.Code = (string)config["Code"];
+                    Directorate.Name = (string)config["Name"];
+                    DirectorateList.Add(Directorate);
                 }
             }
             #endregion
-            if (Dir == "")
-            {
-                Error erroMsg = new Error();
-                erroMsg.Message = "Your directorate has not been set. Contact HR";
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
-            }
-            else if (Dep == "")
-            {
-                Error erroMsg = new Error();
-                erroMsg.Message = "Your department has not been set. Contact HR";
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
-            }
-            else
-            {
-                NewICTRequisition NewICTReq = new NewICTRequisition();
-                #region Directorate List
-                List<DimensionValues> DirectorateList = new List<DimensionValues>();
-                string pageDir = "DimensionValues?$filter=Dimension_Code eq 'DIRECTORATES'&$format=json";
 
-                HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
-                using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
+            #region Department
+            List<DimensionValues> DepartmentList = new List<DimensionValues>();
+            string pageDepartment = "DimensionValues?$filter=Global_Dimension_No_ eq 2&$format=json";
+
+            HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDepartment);
+            using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
                 {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DimensionValues Directorate = new DimensionValues();
-                        Directorate.Code = (string)config["Code"];
-                        Directorate.Name = (string)config["Name"];
-                        DirectorateList.Add(Directorate);
-                    }
+                    DimensionValues Department = new DimensionValues();
+                    Department.Code = (string)config["Code"];
+                    Department.Name = (string)config["Name"];
+                    DepartmentList.Add(Department);
                 }
-                #endregion
-
-                #region Department
-                List<DimensionValues> DepartmentList = new List<DimensionValues>();
-                string pageDepartment = "DimensionValues?$filter=Dimension_Code eq 'DEPARTMENT'&$format=json";
-
-                HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDepartment);
-                using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DimensionValues Department = new DimensionValues();
-                        Department.Code = (string)config["Code"];
-                        Department.Name = (string)config["Name"];
-                        DepartmentList.Add(Department);
-                    }
-                }
-                #endregion
-                NewICTReq = new NewICTRequisition
-                {
-                    Directorate = Dir,
-                    Department = Dep,
-                    ListOfDirectorate = DirectorateList.Select(x =>
-                                         new SelectListItem()
-                                         {
-                                             Text = x.Name,
-                                             Value = x.Code
-                                         }).ToList(),
-                    ListOfDepartment = DepartmentList.Select(x =>
-                                        new SelectListItem()
-                                        {
-                                            Text = x.Name,
-                                            Value = x.Code
-                                        }).ToList()
-                };
-                return PartialView("~/Views/ICT/NewICTAssetRequest.cshtml", NewICTReq);
             }
+            #endregion
+            NewICTReq = new NewICTRequisition
+            {
+                ListOfDirectorate = DirectorateList.Select(x =>
+                                     new SelectListItem()
+                                     {
+                                         Text = x.Name,
+                                         Value = x.Code
+                                     }).ToList(),
+                ListOfDepartment = DepartmentList.Select(x =>
+                                    new SelectListItem()
+                                    {
+                                        Text = x.Name,
+                                        Value = x.Code
+                                    }).ToList()
+            };
+            return PartialView("~/Views/ICT/NewICTAssetRequest.cshtml", NewICTReq);
         }
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult SubmitICTTransferRequest(ICTAssetRequest NewReq)
@@ -411,7 +314,7 @@ namespace Latest_Staff_Portal.Controllers
             {
                 DateTime requireddate = DateTime.ParseExact(NewReq.Date_Requested.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
-                string DocNo = Credentials.ObjNav.SubmitICTAssetMovement(Session["username"].ToString(), requireddate, NewReq.Description,NewReq.reason);
+                string DocNo = Credentials.ObjNav.SubmitICTAssetMovement(Session["username"].ToString(), requireddate, NewReq.Description);
 
                 return Json(new { message = "ICT Asset Requisition DocNo " + DocNo + " Submitted Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
@@ -518,132 +421,94 @@ namespace Latest_Staff_Portal.Controllers
         public PartialViewResult NewICTServMntRequest()
         {
             string StaffNo = Session["Username"].ToString();
-            string Dir = "", Dep = "";
-            #region Employee Data
-            string pageData = "EmployeeList?$filter=No eq '" + StaffNo + "'&$format=json";
+            NewICTRequisition NewICTReq = new NewICTRequisition();
+            #region Directorate List
+            List<DimensionValues> DirectorateList = new List<DimensionValues>();
+            string pageDir = "DimensionValues?$filter=Dimension_Code eq 'DIRECTORATES'&$format=json";
 
-            HttpWebResponse httpResponse = Credentials.GetOdataData(pageData);
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
+            using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
             {
                 var result = streamReader.ReadToEnd();
 
                 var details = JObject.Parse(result);
 
-                if (details["value"].Count() > 0)
+
+                foreach (JObject config in details["value"])
                 {
-                    foreach (JObject config in details["value"])
-                    {
-                        Dir = (string)config["_x003C_GlobSal_Dimension_1_Code_x003E_"];
-                        Dep = (string)config["GlobalDimension2Code"];
-                    }
+                    DimensionValues Directorate = new DimensionValues();
+                    Directorate.Code = (string)config["Code"];
+                    Directorate.Name = (string)config["Name"];
+                    DirectorateList.Add(Directorate);
                 }
             }
             #endregion
-            if (Dir == "")
+
+            #region Department
+            List<DimensionValues> DepartmentList = new List<DimensionValues>();
+            string pageDepartment = "DimensionValues?$filter=Dimension_Code eq 'DEPARTMENT'&$format=json";
+
+            HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDepartment);
+            using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
             {
-                Error erroMsg = new Error();
-                erroMsg.Message = "Your directorate has not been set. Contact HR";
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
+                {
+                    DimensionValues Department = new DimensionValues();
+                    Department.Code = (string)config["Code"];
+                    Department.Name = (string)config["Name"];
+                    DepartmentList.Add(Department);
+                }
             }
-            else if (Dep == "")
+            #endregion
+            #region ICT Asset List
+            List<DropdownList> ICTAssetList = new List<DropdownList>();
+            string pageICTAsset = "ICTAssetRegister?$format=json";
+
+            HttpWebResponse httpResponseICTAsset = Credentials.GetOdataData(pageICTAsset);
+            using (var streamReader = new StreamReader(httpResponseICTAsset.GetResponseStream()))
             {
-                Error erroMsg = new Error();
-                erroMsg.Message = "Your department has not been set. Contact HR";
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
+                {
+                    DropdownList Asset = new DropdownList();
+                    Asset.Value = (string)config["Asset_No"];
+                    Asset.Text = (string)config["Asset_Description"];
+                    ICTAssetList.Add(Asset);
+                }
             }
-            else
+            #endregion
+            NewICTReq = new NewICTRequisition
             {
-                NewICTRequisition NewICTReq = new NewICTRequisition();
-                #region Directorate List
-                List<DimensionValues> DirectorateList = new List<DimensionValues>();
-                string pageDir = "DimensionValues?$filter=Dimension_Code eq 'BRANCH'&$format=json";
-
-                HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
-                using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DimensionValues Directorate = new DimensionValues();
-                        Directorate.Code = (string)config["Code"];
-                        Directorate.Name = (string)config["Name"];
-                        DirectorateList.Add(Directorate);
-                    }
-                }
-                #endregion
-
-                #region Department
-                List<DimensionValues> DepartmentList = new List<DimensionValues>();
-                string pageDepartment = "DimensionValues?$filter=Dimension_Code eq 'DEPARTMENT'&$format=json";
-
-                HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDepartment);
-                using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DimensionValues Department = new DimensionValues();
-                        Department.Code = (string)config["Code"];
-                        Department.Name = (string)config["Name"];
-                        DepartmentList.Add(Department);
-                    }
-                }
-                #endregion
-                #region ICT Asset List
-                List<DropdownList> ICTAssetList = new List<DropdownList>();
-                string pageICTAsset = "ICTAssetRegister?$format=json";
-
-                HttpWebResponse httpResponseICTAsset = Credentials.GetOdataData(pageICTAsset);
-                using (var streamReader = new StreamReader(httpResponseICTAsset.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DropdownList Asset = new DropdownList();
-                        Asset.Value = (string)config["Asset_No"];
-                        Asset.Text = (string)config["Asset_Description"];
-                        ICTAssetList.Add(Asset);
-                    }
-                }
-                #endregion
-                NewICTReq = new NewICTRequisition
-                {
-                    Code = "",
-                    Directorate = Dir,
-                    Department = Dep,
-                    ListOfDirectorate = DirectorateList.Select(x =>
-                                         new SelectListItem()
-                                         {
-                                             Text = x.Name,
-                                             Value = x.Code
-                                         }).ToList(),
-                    ListOfDepartment = DepartmentList.Select(x =>
-                                        new SelectListItem()
-                                        {
-                                            Text = x.Name,
-                                            Value = x.Code
-                                        }).ToList(),                    
-                    ListOfICTAsset = ICTAssetList.Select(x =>
-                                        new SelectListItem()
-                                        {
-                                            Text = x.Text,
-                                            Value = x.Value
-                                        }).ToList()
-                };
-                return PartialView("~/Views/ICT/NewICTServiceRequest.cshtml", NewICTReq);
-            }
+                Code = "",              
+                ListOfDirectorate = DirectorateList.Select(x =>
+                                     new SelectListItem()
+                                     {
+                                         Text = x.Name,
+                                         Value = x.Code
+                                     }).ToList(),
+                ListOfDepartment = DepartmentList.Select(x =>
+                                    new SelectListItem()
+                                    {
+                                        Text = x.Name,
+                                        Value = x.Code
+                                    }).ToList(),
+                ListOfICTAsset = ICTAssetList.Select(x =>
+                                    new SelectListItem()
+                                    {
+                                        Text = x.Text,
+                                        Value = x.Value
+                                    }).ToList()
+            };
+            return PartialView("~/Views/ICT/NewICTServiceRequest.cshtml", NewICTReq);
         }
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult SubmitICTServmntRequest(ICTServiceRequest NewReq)
@@ -708,58 +573,5 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         #endregion
-
-        public PartialViewResult DocumentCommentsView()
-        {
-            string StaffNo = Session["Username"].ToString();
-            ICTAssetRequest RegDoc = new ICTAssetRequest();
-
-            string page = "AssetMvtCard?$filter=Requestor eq '" + StaffNo + "'&format=json";
-
-            HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-
-                var details = JObject.Parse(result);
-                foreach (JObject config in details["value"])
-                {
-                    RegDoc.DocNo = (string)config["Doc_No"];
-                    RegDoc.Asset = (string)config["Asset_No"];
-                    RegDoc.Description = (string)config["Asset_Description"];
-                    RegDoc.Requestor_No = (string)config["Requestor"];
-                    RegDoc.Requestor_Name = (string)config["Requestor_Name"];
-
-                    DateTime d = Convert.ToDateTime(new DateTime(0));
-                    if ((DateTime)config["Date_Requested"] != new DateTime(0))
-                    {
-                        RegDoc.Date_Requested = Convert.ToDateTime((string)config["Date_Requested"]).ToString("dd/MM/yyyy");
-                    }
-                    else
-                    {
-                        RegDoc.Date_Requested = "";
-                    }
-                    if ((DateTime)config["Date_Requested"] != new DateTime(0))
-                    {
-                        RegDoc.Date_Moved = Convert.ToDateTime((string)config["Date_Moved"]).ToString("dd/MM/yyyy");
-                    }
-                    else
-                    {
-                        RegDoc.Date_Moved = "";
-                    }
-                    if ((DateTime)config["Date_Requested"] != new DateTime(0))
-                    {
-                        RegDoc.Date_Returned = Convert.ToDateTime((string)config["Date_Returned"]).ToString("dd/MM/yyyy");
-                    }
-                    else
-                    {
-                        RegDoc.Date_Returned = "";
-                    }
-                    RegDoc.Status = (string)config["Status"];
-                    RegDoc.Remarks = (string)config["Remarks"];
-                }
-            }
-            return PartialView("~/Views/ICT/DocumentComments.cshtml", RegDoc);
-        }
     }
 }

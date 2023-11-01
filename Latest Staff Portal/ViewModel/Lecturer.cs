@@ -26,6 +26,11 @@ namespace Latest_Staff_Portal.ViewModel
         public string Campus_Code { get; set; }
         public string Name { get; set; }
         public string Student_Type { get; set; }
+        public string CourseClass { get; set; }
+        public string Day { get; set; }
+        public string Period { get; set; }
+        public string Room { get; set; }
+        public string stdCount { get; set; }
     }
     public class LecCategory
     {
@@ -35,5 +40,14 @@ namespace Latest_Staff_Portal.ViewModel
     {
         public string Code { get; set; }
         public List<SelectListItem> ListOfLecCategories { get; set; }
+    }
+    public class LecAssignUnit
+    {
+        public string Code { get; set; }
+        public List<SelectListItem> ListOfLec { get; set; }
+        public string DocNo { get; set; }
+        public string Unit { get; set; }
+        public string Semester { get; set; }
+        public string Ln { get; set; }
     }
 }

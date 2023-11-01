@@ -16,8 +16,10 @@ namespace Latest_Staff_Portal.ViewModel
         public string DateRequested { get; set; }
         public string DateOfTrip { get; set; }
         public string respC { get; set; }
+        public string NoOfPassngers { get; set; }
         public string NoOfDays { get; set; }
-        public string Status { get; set; }       
+        public string Status { get; set; }
+        public bool TRMgr { get; set; }
     }
     public class NewTransportRequisition
     {
@@ -32,6 +34,7 @@ namespace Latest_Staff_Portal.ViewModel
         public string DateTrip { get; set; }
         public string TimeTrip { get; set; }
         public string NoOfDays { get; set; }
+        public string NoOfPassengers { get; set; }        
         public string Purpose { get; set; }
     }
     public class Passengers

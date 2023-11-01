@@ -3,13 +3,11 @@
     <table id="tableScoreCard" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
         <thead>
             <tr>
-                <th></th>
+                <th>Action</th>
                 <th>Apprisal Code</th>
-                <th>Stafff Name</th>
+                <th>Staff Name</th>
                 <th>Appraisal Period</th>
-                @*<th>Responsibility Center</th>*@
-                <th>Status</th>
-
+                <th>Open To</th>
             </tr>
         </thead>
         <tbody>
@@ -31,12 +29,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ApprisalPeriod)
-                                    </td>
-                                    @*<td>
-                                        @Html.DisplayFor(modelItem => item.RespCenter)
-                                    </td>*@
+                                    </td>                                    
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Status)
+                                        @Html.DisplayFor(modelItem => item.OpenTo)
                                     </td>
                                 </tr>
                             }

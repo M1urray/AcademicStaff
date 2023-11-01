@@ -41,18 +41,42 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <b>Directorate</b>
-                @Html.DropDownListFor(m => m.Directorate, new SelectList(Model.ListOfDirectorate, "Value", "Text", Model.Directorate), "--Select directorate--", new { @id = "ddlDirectorate", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                <b>Status</b>
+                @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtStatus" })
             </div>
             <div class="col-md-6">
-                <b>Department</b>
-                @Html.DropDownListFor(m => m.Department, new SelectList(Model.ListOfDepartment, "Value", "Text", Model.Department), "--Select Department--", new { @id = "ddlDepartment", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                <b>Division</b>
+                @Html.TextBoxFor(m => m.CampusName, new { @class = "form-control ", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtCampus" })
+                <select class="form-control" id="ddlCampus" name="ddlCampus">
+                </select>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <b>Status</b>
-                @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtStatus" })
+                <b>Department</b>
+                @Html.TextBoxFor(m => m.DepartmentName, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtDepartment" })
+                <div id="divDepartment">
+                    <select class="form-control" id="ddlDepartment" name="ddlDepartment">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <b>Donor</b>
+                @Html.TextBoxFor(m => m.schoolName, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtSchool" })
+                <div id="divDonor">
+                    <select class="form-control" id="ddlDonor" name="ddlDonor">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Responsibility Center</b>
+                @Html.TextBoxFor(m => m.RespC, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtRespC" })
+                <div id="divRespC">
+                    <select class="form-control" id="ddlRespC" name="ddlRespC">
+                    </select>
+                </div>
             </div>
             <div class="col-md-6">
                 <b>Total Net Amount</b>
@@ -65,28 +89,28 @@
                 @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @rows = 5, @id = "txtPurpose" })
             </div>
         </div>
-    </div>
-    <hr />
-    <div align="center" id="DivUpdateButton">
-        <input type="button" class="btn btn-primary waves-effect waves-light" value="Update Header" onclick="UpdateStaffClaimHeader();" />
-    </div>
-    <div id="DivImpLines">
-        <hr style="border:1px solid black" />
-        <b>Staff Claim Lines</b>
         <hr />
-        <div id="divClaimLines"></div>
-        <hr style="border:1px solid black" />
-        <div class="row">
-            <div class="col-md-12">
-                <b>Attachments</b>
-                <div id="divAttachDocs"></div>
+        <div align="center" id="DivUpdateButton">
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Update Header" onclick="UpdateStaffClaimHeader();" />
+        </div>
+        <div id="DivImpLines">
+            <hr style="border:1px solid black" />
+            <b>Staff Claim Lines</b>
+            <hr />
+            <div id="divClaimLines"></div>
+            <hr style="border:1px solid black" />
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Attachments</b>
+                    <div id="divAttachDocs"></div>
+                </div>
             </div>
+            <hr style="border:1px solid black" />
+            <div align="right" id="DivSendForApproval">
+                <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval();" />
+            </div>
+            <hr />
         </div>
-        <hr style="border:1px solid black" />
-        <div align="right" id="DivSendForApproval">
-            <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval();" />
-        </div>
-        <hr />
     </div>
 </div>
 @*//////////////////////Modal////////////////////////////*@
@@ -130,10 +154,20 @@
 <script type="text/javascript">
     $(document).ready(function () {
         LoadClaimDocumentLines(`@Model.No`,`@Model.Status`);
-        
+        HideHeaderEditInput();
         var status = `@Model.Status`;
-        HideHeaderEditInput(status);
+        if (status == "Pending") {
+            $("#HideEditButton").show();
+            $("#HideLineButton").show();
+            $("#DivSendForApproval").show();
+        }
+        else {
+            $("#HideEditButton").hide();
+            $("#HideLineButton").hide();
+            $("#DivSendForApproval").hide();
+        }
         var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
+        var Errormsg = '@Request.RequestContext.HttpContext.Session["ErrorMsg"]';
         if (Successmsg != "") {
             Swal.fire('Success', Successmsg, 'success',true);
             $.ajax({
@@ -141,8 +175,13 @@
                 url: "/Common/NullibySessions"
             });
         }
-        document.getElementById("ddlDirectorate").disabled = true;
-        document.getElementById("ddlDepartment").disabled = true;
+        if (Errormsg != "") {
+            Swal.fire('Warning', Errormsg, 'warning',true);
+            $.ajax({
+                type: "POST",
+                url: "/Common/NullibySessions"
+            });
+        }
     });
     var LoadClaimDocumentLines = function (DocNo,Status) {
         ShowProgress();
@@ -175,7 +214,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            data: JSON.stringify({ DocNo: DocNo, TableID: 70135169, Status: Status}),
+            data: JSON.stringify({ DocNo: DocNo, TableID: 70135454, Status: Status}),
             url: "/Common/DocumentAttachments",
             success: function (data) {
                 HideProgress();
@@ -192,70 +231,106 @@
         window.location = "/StaffClaim/StaffClaimRequisitionList";
     }
     var EditDocument = function () {
-         var status = `@Model.Status`;
         if ($("#btnEdit").val() == "Edit Header") {
+            var Campus = `@Model.Campus`;
+            var Department = `@Model.Department`;
+            var School = `@Model.school`;
+            var RespC = `@Html.Raw(HttpUtility.HtmlDecode(Model.RespC).Replace("'", "\\'"))`;
+            ShowProgress();
+            $('#ddlCampus').empty().append('<option selected="selected" value="">--Select Campus--</option>');
+            $('#ddlDepartment').empty().append('<option selected="selected" value="">--Select Department--</option>');
+            $('#ddlDonor').empty().append('<option selected="selected" value="">--Select Donor--</option>');
+            $('#ddlRespC').empty().append('<option selected="selected" value="">--Select Responsibility Center--</option>');
+
+            $.getJSON("/Common/GetCommonDropdwnListData", null,
+                function (data) {
+                    $('#ddlCampus').empty().append('<option selected="selected" value="">--Select Campus--</option>');
+                    $('#ddlDepartment').empty().append('<option selected="selected" value="">--Select Department--</option>');
+                    $('#ddlDonor').empty().append('<option selected="selected" value="">--Select Donor--</option>');
+                    $('#ddlRespC').empty().append('<option selected="selected" value="">--Select Responsibility Center--</option>');
+                    $.each(data.DropDownData.ListOfCampus, function () {
+                        $("#ddlCampus").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    $('#ddlCampus').val(Campus.trim());
+                    $.each(data.DropDownData.ListOfDepartments, function () {
+                        $("#ddlDepartment").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    $("#ddlDepartment").val(Department.trim());
+                    $.each(data.DropDownData.ListOfSchools, function () {
+                        $("#ddlDonor").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    $("#ddlDonor").val(School.trim());
+                    $.each(data.DropDownData.ListOfRespC, function () {
+                        $("#ddlRespC").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    $("#ddlRespC").val(RespC.trim());
+                    HideProgress();
+                });
+
             $("#btnEdit").val("Clear Header Edit");
+            $("#ddlDepartment,#ddlRespC").select2({
+                width: '100%'
+            });
             ShowHeaderEditInput();
         }
         else {
-            HideHeaderEditInput(status);
+            HideHeaderEditInput();
             $("#btnEdit").val("Edit Header");
         }
     }
-    var HideHeaderEditInput = function (Status) {
-        if (Status == "Open") {
-            $("#HideEditButton").show();
-            $("#HideLineButton").show();
-            $("#DivSendForApproval").show();
-        }
-        else {
-            $("#HideEditButton").hide();
-            $("#HideLineButton").hide();
-            $("#DivSendForApproval").hide();
-        }
-        $("#DivUpdateButton").hide();
-        $("#DivImpLines").show();
-        $("#txtPurpose").css("background-color", "#dedebd");
+    var HideHeaderEditInput = function () {
+        $("#txtCampus,#txtDepartment,#txtSchool,#txtRespC,#DivImpLines").show();
+        $("#ddlCampus,#divDepartment,#divDonor,#divRespC,#DivUpdateButton").hide();
+        $("#txtPurpose").css("background-color", "#dedeb");
         $("#txtPurpose").attr("readonly", true);
-
     }
     var ShowHeaderEditInput = function () {
-        $("#DivUpdateButton").show();
-        $("#DivImpLines").hide();
-        $("#txtPurpose").css("background-color", "white");
-        $("#txtPurpose").attr("readonly", false);        
+        $("#txtCampus,#txtDepartment,#txtSchool,#txtRespC,#DivImpLines").hide();
+        $("#ddlCampus,#divDepartment,#divDonor,#divRespC,#DivUpdateButton").show();
+        $("#txtPurpose").css("background", "white");
+        $("#txtPurpose").attr("readonly", false);
     }
     var UpdateStaffClaimHeader = function () {
         var DocNo = `@Model.No`;
         var Remarks = $("#txtPurpose").val().replace(/(\r\n|\n|\r)/gm, " ");
-        var Directorate = $("#ddlDirectorate").children("option:selected").val();
-        var Department = $("#ddlDepartment").children("option:selected").val();
-        //var Section = $("#ddlSection").children("option:selected").val();
-        if (Directorate == "" && DiReg == false) {
-            Swal.fire('Warning', "Select Directorate", 'warning');
+        var Campus = $("#ddlCampus").children("option:selected").val().trim();
+        var CampusName = $("#ddlCampus").children("option:selected").text();
+        var School = $("#ddlDonor").children("option:selected").val().trim();
+        var Department = $("#ddlDepartment").children("option:selected").val().trim();
+        var DepartmentName = $("#ddlDepartment").children("option:selected").text();
+        var RespoC = $("#ddlRespC").children("option:selected").val().trim();
+
+        if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
             return;
         }
         else if (Department == "") {
             Swal.fire('Warning', "Select Department", 'warning');
             return;
         }
-        //else if (Division == "") {
-        //    Swal.fire('Warning', "Select Division", 'warning');
-        //    return;
-        //}
+        else if (School == "") {
+            Swal.fire('Warning', "Select Donor", 'warning');
+            return;
+        }
+        else if (RespoC == "") {
+            Swal.fire('Warning', "Select Responsibility center", 'warning');
+            return;
+        }
         else if (Remarks == "") {
             Swal.fire('Warning', "Enter Reason for the purchase", 'warning');
             return;
         }
-        else if (Remarks.length > 250) {
-            Swal.fire('Warning', "Your Purpose should have a maximum of 250 characters", 'warning');
+        else if (Remarks.length > 150) {
+            Swal.fire('Warning', "Reason for purchase cannot exceed 150 characters", 'warning');
             return;
         }
         else {
             var StaffClaimHeader = {};
             StaffClaimHeader.Remarks = Remarks;
-            StaffClaimHeader.Directorate = Directorate;
+            StaffClaimHeader.school = School;
+            StaffClaimHeader.Campus = Campus;
             StaffClaimHeader.Department = Department;
+            StaffClaimHeader.RespC = RespoC;
             ShowProgress();
             $.ajax({
                 type: "POST",
@@ -266,9 +341,12 @@
                 success: function (data) {
                     if (data.success) {
                         HideProgress();
-                        HideHeaderEditInput('Open');
+                        HideHeaderEditInput();
                         $("#btnEdit").val("Edit Header");
                         $("#txtPurpose").val(Remarks);
+                        $("#txtCampus").val(CampusName);
+                        $("#txtDepartment").val(DepartmentName);
+                        $("#txtRespC").val(RespoC);
                         Swal.fire('Success', data.message, 'success');
                     }
                     else {
@@ -308,47 +386,42 @@
         var files = document.getElementById('StaffClaimfileAttachment').files;
         if (files.length) {
             var file = files[0];
-            if (file.size > 2000000) {
-                Swal.fire('Warning', 'Please only files less than 2MB allowed. Thanks!!', 'warning');
-            }
-            else {
-                var blob = file.slice();
-                filetype = file.type;
-                filename = file.name;
-                var reader = new FileReader();
-                reader.onloadend = function (evt) {
-                    if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-                        var cont = evt.target.result
-                        base64String = getB64Str(cont);
-                        ShowProgress();
-                        //Send the JSON array to Controller using AJAX.
-                        $.ajax({
-                            type: "POST",
-                            url: "/Common/SaveAttachedFile",
-                            data: JSON.stringify({ DocNo: DocNo, base64Upload: base64String, fileName: filename, Extn: filetype, TableID: 70135169 }),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.success) {
-                                    HideProgress();
-                                    GetDocumentAttachments();
-                                    $("#myModal").modal("hide");
-                                    Swal.fire('Success', data.message, 'success');
-                                }
-                                else {
-                                    Swal.fire('Warning', data.message, 'warning');
-                                    HideProgress();
-                                }
-                            },
-                            error: function (err) {
+            var blob = file.slice();
+            filetype = file.type;
+            filename = file.name;
+            var reader = new FileReader();
+            reader.onloadend = function (evt) {
+                if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+                    var cont = evt.target.result
+                    base64String = getB64Str(cont);
+                    ShowProgress();
+                    //Send the JSON array to Controller using AJAX.
+                    $.ajax({
+                        type: "POST",
+                        url: "/Common/SaveAttachedFile",
+                        data: JSON.stringify({ DocNo: DocNo, base64Upload: base64String, fileName: filename, Extn: filetype, TableID: 70135454 }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success) {
                                 HideProgress();
-                                Swal.fire('Warning', err, 'warning');
+                                GetDocumentAttachments();
+                                $("#myModal").modal("hide");
+                                Swal.fire('Success', data.message, 'success');
                             }
-                        });
-                    }
-                };
-                reader.readAsArrayBuffer(blob);
-            }
+                            else {
+                                Swal.fire('Warning', data.message, 'warning');
+                                HideProgress();
+                            }
+                        },
+                        error: function (err) {
+                            HideProgress();
+                            Swal.fire('Warning', err, 'warning');
+                        }
+                    });
+                }
+            };
+            reader.readAsArrayBuffer(blob);
         }
     };
     function getB64Str(buffer) {
@@ -446,10 +519,23 @@
     };
     var AddStaffClaimLines = function () {
         var Remarks = `@Model.Remarks`;
-        var Directorate = `@Model.Directorate`;
+        var Campus = `@Model.Campus`;
         var Department = `@Model.Department`;
+        var RespoC = `@Model.RespC`;
 
-        if (Remarks == "") {
+         if (Campus == "") {
+            Swal.fire('Warning', "Campus required", 'warning');
+            return;
+        }
+        else if (Department == "") {
+            Swal.fire('Warning', "Department required", 'warning');
+            return;
+        }
+        else if (RespoC == "") {
+            Swal.fire('Warning', "Responsibility center required", 'warning');
+            return;
+        }
+        else if (Remarks == "") {
             Swal.fire('Warning', "Purpose for the purchase required", 'warning');
             return;
         }
@@ -479,8 +565,9 @@
         }
     };
     var AddLineItem = function () {
-        var Directorate = `@Model.Directorate`;
+        var Campus = `@Model.Campus`;
         var Department = `@Model.Department`;
+        var RespC = `@Html.Raw(HttpUtility.HtmlDecode(Model.RespC).Replace("'", "\\'"))`;
 
         var ClaimType = $("#ddlClaimType").children("option:selected").val();
         var ClaimTypeDesc = $("#ddlClaimType").children("option:selected").text();
@@ -507,13 +594,10 @@
             ShowProgress();
             var DocNo = `@Model.No`;
             var StaffClaimHeader = {};
-            StaffClaimHeader.Directorate = Directorate;
-            if (`@Model.DisDir` == true) {
-                StaffClaimHeader.Department = "";
-            }
-            else {
-                StaffClaimHeader.Department = Department;
-            }
+            StaffClaimHeader.Campus = Campus;
+            StaffClaimHeader.Department = Department;
+            StaffClaimHeader.RespC = RespC;
+
             var StaffClaimLine = {};
             StaffClaimLine.Item = ClaimType;
             StaffClaimLine.ItemDesc = ClaimDescription
@@ -526,11 +610,10 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
-                    if (data.success == true) {
+                    if (data.success) {
                         HideProgress();
                         LoadClaimDocumentLines(DocNo, 'Pending');
                         $("#txtNetAmount").val(data.NetAmout);
-                        Swal.fire('Success', data.message, 'success');
                         $("#myModal").modal("hide");
                     }
                     else {
@@ -546,82 +629,6 @@
             //Clear the TextBoxes.
             //txtName.val("");
             //txtCountry.val("");
-        }
-    }
-    var EditItem = function (DocNo, LnNo) {
-        $("#lblT").text("Edit Staff Claim Line");
-        ShowProgress();
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            data: JSON.stringify({ LnNo: LnNo, DocNo: DocNo }),
-            url: '/StaffClaim/EditStaffClaimLine',
-            success: function (data) {
-                $("#modalBody").html(data);
-                HideProgress();
-                $("#myModal").modal("show");
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
-    };
-    var UpdateLineItem = function (DocNo, LnNo, ItemNo) {
-        var ImpType = $("#ddlImpType").children("option:selected").val();
-        var ImpTypeDesc = $("#ddlImpType").children("option:selected").text();
-        var Amount = $("#txtAmount").val();
-        var ItemDescription = $("#txtDescription").val();
-
-        if (ImpType == "") {
-            Swal.fire('Warning', "Select Imprest Type", 'warning');
-            return;
-        }
-        else if (Amount == "") {
-            Swal.fire('Warning', "Enter Amount", 'warning');
-            return;
-        }
-        else if (ItemDescription == "") {
-            Swal.fire('Warning', "Give brief description of the item", 'warning');
-            return;
-        }
-        else if (ItemDescription.length > 150) {
-            Swal.fire('Warning', "Your Item Description should have a maximum of 200 characters", 'warning');
-            return;
-        }
-        else {
-            var DocNo = `@Model.No`;
-            var ImpLine = {};
-            ImpLine.Item = ImpType;
-            ImpLine.ItemDesc = ItemDescription;
-            ImpLine.Amount = Amount;
-
-            $.ajax({
-                type: "POST",
-                url: "/Imprest/SubmitImprestLine",
-                data: JSON.stringify({ DocNo: DocNo, imprestLine: ImpLine }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    if (data.success) {
-                        HideProgress();
-                        LoadImprestDocumentLines(DocNo, 'Pending');
-                        $("#myModal").modal("hide");
-                        Swal.fire('Success', data.message, 'success');
-                    }
-                    else {
-                        Swal.fire('Warning', data.message, 'warning');
-                        HideProgress();
-                    }
-                },
-                error: function (err) {
-                    HideProgress();
-                    Swal.fire('Warning', err, 'warning');
-                }
-            });
         }
     }
     var RemoveItem = function (DocNo, LnNo, itmNo) {
@@ -679,7 +686,6 @@
             url: '/StaffClaim/SendStaffClaimAppForApproval',
             success: function (data) {
                 if (data.success == true) {
-                    HideProgress();
                     window.location = "/StaffClaim/StaffClaimRequisitionList";
                 }
                 else {

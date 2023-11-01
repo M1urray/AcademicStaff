@@ -1,0 +1,164 @@
+﻿@model Latest_Staff_Portal.ViewModel.StudentRedUnit
+@using Newtonsoft.Json.Linq;
+@using Latest_Staff_Portal.Models;
+@{
+    var details = new JObject();
+    int NoOfexamPapers = 0;
+
+    string ProgC = "";
+    if (Session["ProgCate"] == null)
+    {
+        ProgC = Credentials.ObjNav.GetExamCategory(Model.Unit, Model.Prog);
+        Session["ProgCate"] = ProgC;
+    }
+    else
+    {
+        ProgC = Session["ProgCate"].ToString();
+    }
+    string page = "ExamSetup?$filter=Category eq '" + ProgC + "' and Type eq 'Supplementary'&format=json";
+    NoOfexamPapers = CommonClass.ReturnNumberofExamPapers(ProgC);
+    HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+    {
+        var result = streamReader.ReadToEnd();
+        details = JObject.Parse(result);
+    }
+}
+<style>
+    .table-hover {
+        background-color: lightgray;
+    }
+
+    .dt-body-left {
+        text-align: left;
+    }
+
+    .dt-body-center {
+        text-align: center;
+    }
+</style>
+<div class="pre-scrollable">
+    @{
+        string s = " | ";
+        foreach (JObject config in details["value"])
+        {
+            s = s + config["Code"].ToString() + " = " + config["Max_Score"].ToString() + " | ";
+        }
+    }
+    <hr style="margin:2px" />
+    <div style="color:red">
+        Max Score => @s
+    </div>
+    <hr />
+    <table id="dtSupp" class="table table-bordered nowrap table-hover" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead style="background:black;color:white">
+            <tr>
+                <th width="5%">#</th>
+                <th>Student No</th>
+                <th>Name</th>
+                @{
+                    foreach (JObject config in details["value"])
+                    {
+                        <th width="10%" style="text-align:center">@config["Code"].ToString()</th>
+                    }
+                    if (NoOfexamPapers > 1)
+                    {
+                        <th width="5%" style="text-align:center">Avg.</th>
+                    }
+                }
+                <th width="5%" style="text-align:center">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 1;
+                if (Model != null)
+                {
+                    {
+                        if (Model.Cust.Count() > 0)
+                        {
+                            foreach (var item in Model.Cust)
+                            {
+                                decimal Total = 0;
+                                string TotalMark = "";
+                                decimal TotalExamM = 0;
+                                bool HasMarks = false;
+                                <tr>
+                                    <td>
+                                        @i
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.No)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    @{
+                                        foreach (JObject config in details["value"])
+                                        {
+                                            string TextValue = "";
+                                            string pageE = "ExamResults?$filter=Student_No eq '" + item.No + "' and Semester eq '" + item.Semester + "' and ExamType eq '" + config["Code"].ToString() + "' and Unit eq '" + item.Unit + "' and Cancelled eq false&$format=json";
+
+                                            HttpWebResponse httpResponseE = Credentials.GetOdataData(pageE);
+                                            using (var streamReader = new StreamReader(httpResponseE.GetResponseStream()))
+                                            {
+                                                var result1 = streamReader.ReadToEnd();
+                                                var details1 = JObject.Parse(result1);
+                                                foreach (JObject config1 in details1["value"])
+                                                {
+                                                    TextValue = "";
+                                                    TextValue = config1["Score"].ToString();
+                                                    if (NoOfexamPapers > 1)
+                                                    {
+                                                        if (config["Type"].ToString() == "CAT")
+                                                        {
+                                                            Total = Total + Convert.ToDecimal(TextValue);
+                                                        }
+                                                        if (config["Type"].ToString() == "Final Exam")
+                                                        {
+                                                            TotalExamM = TotalExamM + Convert.ToDecimal(TextValue);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        Total = Total + Convert.ToDecimal(TextValue);
+                                                    }
+                                                    HasMarks = true;
+                                                }
+                                                <td align="center" valign="middle">
+                                                    @Html.TextBox(config["Code"].ToString(), TextValue, new { maxlength = 2, Style = "text-align:center;", @class = "form-control textboxWidth" })
+                                                </td>
+                                            }
+                                        }
+                                        if (NoOfexamPapers > 1)
+                                        {
+                                            decimal avg = 0;
+                                            avg = Math.Round((TotalExamM / NoOfexamPapers), 0);
+                                            Total = Total + avg;
+                                            <td style="text-align:center;vertical-align:middle">@avg.ToString()</td>
+                                        }
+                                        if (HasMarks)
+                                        {
+                                            TotalMark = Math.Round(Total, 0).ToString();
+                                        }
+                                    }
+                                    <td style="text-align:center;vertical-align:middle">@TotalMark</td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div align="center">
+            <input type="button" class="btn btn-danger" value="Save/Update" onclick="SaveSuppStudentMarks(`@Model.Prog`);" />
+        </div>
+    </div>
+</div>
+

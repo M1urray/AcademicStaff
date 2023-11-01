@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
-    [CustomAuthorization(Role = "ALLUSERS")]
+    [CustomAuthorization(Role = "FULLTIME,PARTTIME")]
     public class SettingsController : Controller
     {
         // GET: Settings
@@ -38,12 +38,6 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     string StaffNo = Session["UserID"].ToString();
 
-                    string[] s = new string[2];
-                    if (StaffNo.Contains("\\"))
-                    {
-                        s = StaffNo.Split('\\');
-                        StaffNo = s[1];
-                    }
                     string ok = Credentials.ResetPassword(StaffNo, newpass);
 
                     if (ok == "CHANGED")

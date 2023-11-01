@@ -96,11 +96,26 @@
                             </div>
                         </div>
                         <hr />
+                        <div class="row" style="padding: 2px" id="divPeerAssign">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Peer Reviewer</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.DropDownListFor(model => model.No, Model.ListOfEmployee, "--select Peer--", new { @class = "form-control", @id = "ddlPeer" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <input type="button" class="btn btn-primary waves-effect waves-light" value="Assign Peer" onclick="AssignDocPeer();" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            @*@if (Model.AppraisalStage == "Objective Setting")
-                {*@
             <div class="card mb-1 shadow-none" id="divObjSettings">
                 <div class="card-header" id="headingTwo" aria-expanded="false" aria-controls="collapseTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                     <h6 class="m-0">
@@ -110,15 +125,10 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                      data-parent="#accordion">
                     <div class="card-body">
-                        <p style="color:red">To be completed by the Appraisee in consultation with the Supervisor at the beginning of the appraisal period</p>
-                        <hr />
                         <div id="divScoreCard"></div>
                     </div>
                 </div>
             </div>
-            @*}
-                @if (Model.AppraisalStage == "Evaluation")
-                {*@
             <div class="card mb-1 shadow-none" id="divObjSettingReview">
                 <div class="card-header" id="headingThree" aria-expanded="false" aria-controls="collapseThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
                     <h6 class="m-0">
@@ -128,39 +138,34 @@
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                      data-parent="#accordion">
                     <div class="card-body">
-                        <p style="color:red">
-                            To be completed by the Supervisor in consultation with the Appraisee at the end of the appraisal period
-                        </p>
-                        <hr />
                         <div id="divScoreCardEval"></div>
                     </div>
                 </div>
             </div>
-            @*<div class="card mb-1 shadow-none" id="divSkillsComp">
-                    <div class="card-header" id="headingSix" aria-expanded="false" aria-controls="collapseSix" data-toggle="collapse" href="#collapseSix">
-                        <h6 class="m-0">
-                            <span class="fa fa-arrow-down"></span>Core Skills & Competencies
-                        </h6>
-                    </div>
-                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
-                        <div class="card-body">
-                            <div id="divCoreCompVal"></div>
-                        </div>
+            <div class="card mb-1 shadow-none" id="divSkillsComp">
+                <div class="card-header" id="headingSix" aria-expanded="false" aria-controls="collapseSix" data-toggle="collapse" href="#collapseSix">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>Core Skills & Competencies
+                    </h6>
+                </div>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divCoreCompVal"></div>
                     </div>
                 </div>
-                <div class="card mb-1 shadow-none" id="divSkillsDev">
-                    <div class="card-header" id="headingSeven" aria-expanded="false" aria-controls="collapseSeven" data-toggle="collapse" href="#collapseSeven">
-                        <h6 class="m-0">
-                            <span class="fa fa-arrow-down"></span>Performance Improvement Plan
-                        </h6>
+            </div>
+            <div class="card mb-1 shadow-none" id="divSkillsDev">
+                <div class="card-header" id="headingSeven" aria-expanded="false" aria-controls="collapseSeven" data-toggle="collapse" href="#collapseSeven">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>Performance Improvement Plan
+                    </h6>
+                </div>
+                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divPImpPlan"></div>
                     </div>
-                    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
-                        <div class="card-body">
-                            <div id="divPImpPlan"></div>
-                        </div>
-                    </div>
-                </div>*@
-            @* } *@
+                </div>
+            </div>
             <div class="card mb-1 shadow-none" id="divGeneralComments">
                 <div class="card-header" id="headingNine" aria-expanded="false" aria-controls="collapseNine" data-toggle="collapse" href="#collapseNine">
                     <h6 class="m-0">
@@ -176,10 +181,14 @@
             <hr />
             <div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <input type="button" value="<<< Send Back to Appraisee" class="btn btn-primary" onclick="SendDocTo('0');" id="btnAppraisee" />
+                        <input type="button" value="<<< Send Back to Supervisor" class="btn btn-primary" onclick="SendDocTo('1');" id="btnSupervisor" />
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <input type="button" value="Send To Peer >>>" class="btn btn-primary" onclick="SendDocTo('2');" id="btnPeer" />
+                    </div>
+                    <div class="col-md-4">
                         <input type="button" value="Send To HR >>>" class="btn btn-primary" onclick="SendDocTo('3');" id="btnHR" />
                     </div>
                 </div>
@@ -213,36 +222,49 @@
         }).on('hidden.bs.collapse', function () {
             $(this).find('.fa-arrow-up').removeClass('fa-arrow-up').addClass('fa-arrow-down');
         });
-        LoadSectionData();
+        $("#ddlPeer").select2({
+            width: '100%'
+        });
+        var level = GetParameterValues('Level');
+        function GetParameterValues(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+        if (level == "P") {
+            $("#divPeerAssign").hide();
+            $("#divObjSettings").hide();
+            $("#divSkillsDev").hide();
+            $("#divGeneralComments").hide();
+            $("#btnAppraisee").hide();
+            $("#btnPeer").hide();
+            $("#btnHR").hide();
+        }
+        else {
+            $("#divPeerAssign").show();
+            $("#btnSupervisor").hide();
+        }
+        LoadSectionData(level);
     });
-    var LoadSectionData = function () {
+    var LoadSectionData = function (level) {
         ShowProgress();
         var DocNo = $("#DocNo").html();
-        @*if ('@Model.AppraisalStage' == "Objective Setting") {
-            LoadScoreCardObjective(DocNo, level);
-        }
-        if ('@Model.AppraisalStage' == "Evaluation") {
-            LoadScoreCardObjectiveEvaluation(DocNo, level);
-            LoadCoreSkillsCompValues(DocNo, level);
-            LoadPImprSkillsDevPlan(DocNo, level);
-        }*@
-        LoadScoreCardObjective(DocNo);
-        LoadScoreCardObjectiveEvaluation(DocNo);
-        //LoadCoreSkillsCompValues(DocNo);
-        //LoadPImprSkillsDevPlan(DocNo);
-        //LoadScoreCardObjective(DocNo);
-
-        //LoadGeneralComments(DocNo);
+        LoadScoreCardObjective(DocNo, level);
+        LoadScoreCardObjectiveEvaluation(DocNo, level);
+        LoadCoreSkillsCompValues(DocNo, level);
+        LoadPImprSkillsDevPlan(DocNo, level);
+        LoadGeneralComments(DocNo, level);
         HideProgress();
     };
     ///////////////Load Data////////////////
-    var LoadScoreCardObjective = function (DocNo) {
+    var LoadScoreCardObjective = function (DocNo, level) {
         $.ajax({
             async: true,
             type: "post",
             contentType: "application/json; charset = utf-8",
-            data: JSON.stringify({ AppDoc: DocNo, Type: "S", Level: "S" }),
-            url: "/Appraisal/LoadPerformanceIndicator",
+            data: JSON.stringify({ AppDoc: DocNo, Type: "S", Level: level }),
+            url: "/Appraisal/LoadScoreCardObjectives",
             success: function (data) {
                 $("#divScoreCard").html(data);
             },
@@ -251,13 +273,13 @@
             }
         });
     }
-    var LoadScoreCardObjectiveEvaluation = function (DocNo) {
+    var LoadScoreCardObjectiveEvaluation = function (DocNo, level) {
         $.ajax({
             async: true,
             type: "post",
             contentType: "application/json; charset = utf-8",
-            data: JSON.stringify({ AppDoc: DocNo, Type: "E", Level: "S" }),
-            url: "/Appraisal/LoadPerformanceIndicator",
+            data: JSON.stringify({ AppDoc: DocNo, Type: "E", Level: level }),
+            url: "/Appraisal/LoadScoreCardObjectives",
             success: function (data) {
                 $("#divScoreCardEval").html(data);
             },
@@ -296,12 +318,12 @@
             }
         });
     }
-    var LoadGeneralComments = function (DocNo) {
+    var LoadGeneralComments = function (DocNo, level) {
         $.ajax({
             async: true,
             type: "post",
             contentType: "application/json; charset = utf-8",
-            data: JSON.stringify({ AppDoc: DocNo, Level: "S" }),
+            data: JSON.stringify({ AppDoc: DocNo, Level: level }),
             url: "/Appraisal/LoadGeneralComments",
             success: function (data) {
                 $("#divGeneralComm").html(data);
@@ -313,17 +335,17 @@
     }
     ///////////////End of Load////////////////////
     ///////////////Objective////////////////////
-    var EvalKPIItem = function (DocNo, LnNo, Level) {
-        $("#labelF").text("KPI Evaluation Form");
+    var EvalObjectiveItem = function (LineNo, DocNo, Level) {
+        $("#labelF").text("Evaluate Objective Line");
         ShowProgress();
         $.ajax({
             async: true,
             type: "POST",
             datatype: "json",
+            url: "/Appraisal/EvaluateAppraisalObjectiveLine",
+            data: JSON.stringify({ LnNo: LineNo, DocNo: DocNo, Level: Level }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            data: JSON.stringify({ DocNo: DocNo, LnNo: LnNo, Level: Level }),
-            url: '/Appraisal/KPIEvaluationForm',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -335,48 +357,25 @@
             }
         });
     }
-    var SaveKPIReviewRecord = function (DocNo, LnNo) {
-        var ResultsAchvd = $("#txtResultsAchved").val();
-        var Ratings = $("#txtAgreedScore").val();
-        //var SelfAssessment = $("#ddlSelfAssessment").children("option:selected").val();
-        //var remarks = $("#txtAppComments").val();
-
-        if (DocNo == "") {
-            Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
-            return;
-        }
-        if (LnNo == "") {
-            Swal.fire('error', 'Appraisal Record Line Number Cannot be empty', 'error');
-            return;
-        }
-        else if (ResultsAchvd == "") {
-            Swal.fire('error', 'enter KIP Results Achieved', 'error');
-            return;
-        }
-        else if (Ratings == "") {
-            Swal.fire('error', 'Enter Ratings', 'error');
+    var SaveEvaluationLine = function (LineNo, DocNo, Level) {
+        var ratings = $("#txtRating").val();
+        if (ratings == "") {
+            Swal.fire('error', 'Enter self ratings', 'error');
             return;
         }
         else {
-            var PerformanceIndicator = {};
-            PerformanceIndicator.Appraisal_No = DocNo;
-            PerformanceIndicator.Line_No = LnNo;
-            PerformanceIndicator.Key_Result_Areas_Output = ResultsAchvd;
-            PerformanceIndicator.Self_Assesment = Ratings;
-            //PerformanceIndicator.Appraisee_Comments = remarks;
-
             ShowProgress();
             $.ajax({
                 type: "post",
-                url: "/Appraisal/SubmitKPIsEvaluation",
-                data: JSON.stringify({ kpi: PerformanceIndicator }),
+                url: "/Appraisal/SaveAppraisalObjectiveLineAchievement",
+                data: JSON.stringify({ LnNo: LineNo, DocNo: DocNo, achvmnt: "", ratings: ratings, Level: Level }),
                 contentType: "application/json; charset = utf-8",
                 success: function (data) {
                     if (data.success == true) {
                         Swal.fire('Success', data.message, 'success');
-                        LoadScoreCardObjectiveEvaluation(DocNo);
-                        $("#myModal").modal("hide");
                         HideProgress();
+                        LoadScoreCardObjectiveEvaluation(DocNo, Level);
+                        $("#myModal").modal("hide");
                     }
                     else {
                         HideProgress();
@@ -667,6 +666,5 @@
         }
     }
 </script>
-
 
 

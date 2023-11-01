@@ -129,19 +129,25 @@
         });
     }
     var SubmitTrainingRequest = function () {
-        var Directorate = $("#ddlDirectorate").children("option:selected").val();
+        var Campus = $("#ddlDim1").children("option:selected").val();
         var Department = $("#ddlDepartment").children("option:selected").val();
        // var Section = $("#ddlSection").children("option:selected").val();
         var Course = $("#ddlCourse").children("option:selected").val();
+        var CourseDesc = $("#txtTrDescr").val();
         var TrainingCat = $("#ddlCategory").children("option:selected").val();
         var Sponsor = $("#ddlSponsor").children("option:selected").val();
         var Startdate = $("#dtFrom").val();
         var EndDate = $("#dtTo").val();
         var Trainer = $("#ddlTrainer").children("option:selected").val();
+        var TrainerName = $("#txtTrainerName").val();
         var Cost = $("#txtCost").val();
         var Purpose = $("#txtRemarks").val();
         if (Course == "") {
             Swal.fire('error', 'Select Course', 'error');
+            return;
+        }
+        else if (Course == "OTHER" && CourseDesc == "") {
+            Swal.fire('error', 'Enter Course description', 'error');
             return;
         }
         else if (TrainingCat == "") {
@@ -164,6 +170,10 @@
             Swal.fire('error', 'Select Trainer', 'error');
             return;
         }
+        else if (Trainer == "OTHER" && TrainerName == "") {
+            Swal.fire('error', 'Enter Trainer Name', 'error');
+            return;
+        }
         else if (Cost == "") {
             Swal.fire('error', 'Enter Cost of Training', 'error');
             return;
@@ -174,15 +184,16 @@
         }
         else {
             var TrainingList = {};
-            TrainingList.Directorate = Directorate;
+            TrainingList.Campus = Campus;
             TrainingList.Department = Department;
-            //TrainingList.Section = Section;
             TrainingList.Course_Title = Course;
+            TrainingList.Course_Desc = CourseDesc;
             TrainingList.Training_Category = TrainingCat;
             TrainingList.Sponsor = Sponsor;
             TrainingList.StartDate = Startdate;
             TrainingList.EndDate = EndDate;
             TrainingList.Trainer = Trainer;
+            TrainingList.TrainerName = TrainerName;
             TrainingList.Cost = Cost;
             TrainingList.Purpose = Purpose;
             ShowProgress();

@@ -1,0 +1,208 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.CustomerList>
+@using Newtonsoft.Json.Linq;
+@using Latest_Staff_Portal.Models;
+@{
+    var details = new JObject();
+    string Prog = "", Unit = "", UnitName = "", Sem = "";
+    Sem = Session["Sem"].ToString();
+    if (Session["Unit"] != null)
+    {
+        Unit = Session["Unit"].ToString();
+        Sem = Session["Sem"].ToString();
+        if (Session["UnitName"].ToString() != "")
+        {
+            UnitName = Session["UnitName"].ToString();
+        }
+        string Lec = Session["Username"].ToString();
+        string classCode = Session["ClassCode"].ToString();
+
+        string ProgC = "";
+        if (Session["ProgCate"] == null)
+        {
+            ProgC = Credentials.ObjNav.GetExamCategory(Unit, Prog);
+            Session["ProgCate"] = ProgC;
+        }
+        else
+        {
+            ProgC = Session["ProgCate"].ToString();
+        }
+        string page = "ExamSetup?$filter=Category eq '" + ProgC + "' and Type eq 'Supplementary'&format=json";
+
+        HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+        {
+            var result = streamReader.ReadToEnd();
+            details = JObject.Parse(result);
+        }
+    }
+    else
+    {
+        Response.Redirect("/CourseAllocationUnits/Lecturer");
+    }
+}
+<style>
+    .table-hover {
+        background-color: lightgray;
+    }
+
+    .dt-body-left {
+        text-align: left;
+    }
+
+    .dt-body-center {
+        text-align: center;
+    }
+</style>
+<div class="pre-scrollable">
+    @{
+        string s = " | ";
+        foreach (JObject config in details["value"])
+        {
+            s = s + config["Code"].ToString() + " = " + config["Max_Score"].ToString() + " | ";
+        }
+    }
+    <div>
+        Programme => @Html.Label(Prog, new { @id = "lblProg" }) | Unit => @Html.Label(Unit, new { @id = "lblUnit" }) (@Html.Label(UnitName))
+    </div>
+    <hr style="margin:2px" />
+    <div style="color:red">
+        Max Score => @s
+    </div>
+    <hr />
+    <table id="datatable-buttons" class="table table-bordered nowrap table-hover" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th>Student No</th>
+                <th>Name</th>
+                @{
+                    foreach (JObject config in details["value"])
+                    {
+                        <th width="10%" style="text-align:center">@config["Code"].ToString()</th>
+                    }
+                }
+                @*<th>Exam Mark</th>*@
+                <th width="5%" style="text-align:center">Total</th>
+                <th hidden></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 1;
+                if (Model != null)
+                {
+                    string TotalMark = "";
+
+                    if (Model.Count() > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @i
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.No)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                @{
+                                    decimal Total = 0;
+                                    bool HasMarks = false;
+                                    foreach (JObject config in details["value"])
+                                    {
+                                        string TextValue = "";
+
+                                        string page = "ExamResults?$filter=Student_No eq '" + item.No + "' and Semester eq '" + Sem + "' and ExamType eq '" + config["Code"].ToString() + "' and Unit eq '" + Unit + "' and Cancelled eq false&$format=json";
+
+                                        HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                                        {
+                                            var result1 = streamReader.ReadToEnd();
+                                            var details1 = JObject.Parse(result1);
+                                            foreach (JObject config1 in details1["value"])
+                                            {
+                                                TextValue = "";
+                                                TextValue = config1["Score"].ToString();
+                                                HasMarks = true;
+                                            }
+                                            <td align="center" valign="middle">
+                                                @Html.TextBox(config["Code"].ToString(), TextValue, new { maxlength = 2, Style = "text-align:center;", @class = "form-control textboxWidth" })@*<span style="vertical-align:middle;color:red;font-size:10px">@Contribution</span>*@
+                                            </td>
+                                        }
+                                    }
+                                    if (HasMarks)
+                                    {
+                                        TotalMark = Math.Round(Total, 2).ToString();
+                                    }
+                                }
+                                <td style="text-align:center;vertical-align:middle">@TotalMark</td>
+                                @*<td valign="middle">
+                                        @Html.TextBoxFor(m => item.Marks, new { @maxlength = 2, @Style = "text-align:center;", @class = "form-control textboxWidth" })
+                                    </td>*@
+                                <td hidden>
+                                    @Html.DisplayFor(modelItem => item.ApplicationNo)
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div align="center">
+            <input type="button" class="btn btn-danger" value="Save/Update" onclick="SaveStudentMarks();" />
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div align="center">
+            <input type="button" class="btn btn-primary" value="Print Scoresheet" onclick="PrintScoresheet();" />
+        </div>
+    </div>
+</div>
+<hr />
+<script type="text/javascript">
+    $(document).ready(function () {
+        var Prog = $("#lblProg").text();
+        var Unit = $("#lblUnit").text();
+        @*var ProgName = '@Request.RequestContext.HttpContext.Session["ProgName"]';
+        var UnitName = '@Request.RequestContext.HttpContext.Session["UnitName"]';
+        var LecNo = '@Request.RequestContext.HttpContext.Session["Username"]';
+        var LecName = '@Request.RequestContext.HttpContext.Session["LecName"]';*@
+        var buttonCommon = {
+            exportOptions: {
+                format: {
+                    body: function (inner, rowidx, colidx, node) {
+                        if ($(node).children("input").length > 0) {
+                            return $(node).children("input").first().val().replace(",", "");
+                        } else {
+                            return inner.replace(",", "");
+                        }
+                    }
+                }
+            }
+        };
+        $("#datatable").DataTable(), $("#datatable-buttons").DataTable({
+            dom: 'Bfrtip',
+            lengthChange: !1,
+            pageLength: 100,
+            buttons: [
+                $.extend(!0, {}, buttonCommon, {
+                    extend: "csvHtml5",
+                    text: "Export to CSV File",
+                    title: Prog + '-' + Unit
+                })
+              ]
+        }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-12:eq(0)")
+    });
+</script>
+

@@ -1,0 +1,348 @@
+﻿@{
+    ViewBag.Title = "LecturerUnitAllocations";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="BackToLecList();" style="color:yellow"><<< Back To Lecturer List</a>
+</div>
+<div class="card pre-scrollable">
+    <div class="card-title">Assigned Units</div>
+    <hr />
+    <div class="card-body">
+        @{
+            string Lec = Request.QueryString["Lecturer"];
+        }
+        @*<input type="button" name="btnAssignUnit" value="Assign Unit" class="btn btn-primary" onclick="AssignNewUnits()" />*@
+        <hr />
+        <div id="divAssignedUnits"></div>
+    </div>
+</div>
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">Assign New Unit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12" style="background-color: white">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span style="font-weight: bold">Programme Category</span>
+                            <select class="form-control" id="Category" name="Category" onchange="ShowRequiredDiv()">
+                                <option value="">--Select Category--</option>
+                                <option value="Certificate">Certificate</option>
+                                <option value="Diploma">Diploma</option>
+                                <option value="Undergraduate">Undergraduate</option>
+                                <option value="Masters">Masters</option>
+                                <option value="PHD">PHD</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div><hr /></div>
+                <div class="col-md-12" style="background-color: white;" id="ProgrammeDetails">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span style="font-weight: bold">Course</span>
+                            <select class="form-control" id="ddlProgramme" name="ddlProgramme" onchange="GetProgrammeStages()">
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <span style="font-weight: bold">Stage</span>
+                            <select class="form-control" id="ddlStage" name="ddlStage" onchange="GetProgrammeStageUnits()">
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span style="font-weight: bold">Semester</span>
+                            <select class="form-control" id="ddlSemester" name="ddlSemester">
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <span style="font-weight: bold">Unit</span>
+                            <select class="form-control" id="ddlUnit" name="ddlUnit">
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span style="font-weight: bold">Campus</span>
+                            <select class="form-control" id="ddlCampus" name="ddlCampus">
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <span style="font-weight: bold">Course Class</span>
+                                <select class="form-control" id="ddlClasses" name="ddlStudyMode">
+                                </select>
+                        </div>
+                    </div>
+                    <hr />
+                    <div align="center">
+                        <input type="button" class="btn btn-primary waves-effect waves-light" value="Assign Unit" onclick="SubmitNewUnitAllocation('@Lec');" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ProgrammeDetails").hide();
+        var Lec = GetParameterValues('Lecturer');
+        function GetParameterValues(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+        $("#ddlProgramme,#ddlUnit,#ddlSemester").select2({
+            width: '100%'
+        });
+        LoadLecturerAssignedUnits(Lec);
+    });
+    function LoadLecturerAssignedUnits(Lec) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ Lecturer: Lec }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: "/Lecturer/GetLecturerAssinedUnits",
+            success: function (data) {
+                $("#divAssignedUnits").html(data);
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                alert("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var AssignNewUnits = function () {
+        $("#myModal").modal("show");
+    };
+    var ShowRequiredDiv = function () {
+        debugger
+        var Category = $("#Category").children("option:selected").val();
+        if (Category == "") {
+            $("#ProgrammeDetails").hide();
+        }
+        else {
+            ShowProgress();            
+            $("#ProgrammeDetails").show();
+            $('#ddlProgramme').empty().append('<option selected="selected" value="0">--Select Programme--</option>');
+            $('#ddlStage').empty().append('<option selected="selected" value="0">--Select Stage--</option>');
+            $('#ddlUnit').empty().append('<option selected="selected" value="0">--Select Unit--</option>');
+            $('#ddlClasses').empty().append('<option selected="selected" value="0">--Select Class--</option>');
+
+            $.getJSON("/Lecturer/GetCommonDropdwnListData", { Categ: Category },
+                function (data) {
+                    $("#ddlProgramme").empty().append('<option selected="selected" value="0">--Select Programme--</option>');
+                    $('#ddlSemester').empty().append('<option selected="selected" value="0">--Select Semester--</option>');
+                    $('#ddlCampus').empty().append('<option selected="selected" value="0">--Select Campus--</option>');
+                    $('#ddlStudyMode').empty().append('<option selected="selected" value="0">--Select Study Mode--</option>');
+                    $('#ddlClasses').empty().append('<option selected="selected" value="0">--Select Class--</option>');
+                    $.each(data.DropDownData.ListOfProgrammes, function () {
+                        $("#ddlProgramme").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    $.each(data.DropDownData.ListOfSemesters, function () {
+                        $("#ddlSemester").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    $.each(data.DropDownData.ListOfCampus, function () {
+                        $("#ddlCampus").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    $.each(data.DropDownData.ListOfCourseClasses, function () {
+                        $("#ddlClasses").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+
+                    HideProgress();
+                });
+        }
+    }
+    var GetProgrammeStages = function () {
+        var Prog = $("#ddlProgramme").children("option:selected").val();
+        if (Prog == "0") {
+            $("#ddlStage option").remove();
+            $("#ddlUnit option").remove();
+            $('#ddlStage').empty().append('<option selected="selected" value="0">--Select Stage--</option>');
+            $('#ddlUnit').empty().append('<option selected="selected" value="0">--Select Unit--</option>');
+        }
+        else {
+            ShowProgress();
+            $("#ddlUnit option").remove();
+            $('#ddlStage').empty().append('<option selected="selected" value="0">--Select Stage--</option>');
+            $('#ddlUnit').empty().append('<option selected="selected" value="0">--Select Unit--</option>');
+
+            $.getJSON("/Lecturer/GetProgrammeStages", { Prog: Prog },
+                function (data) {
+                    $('#ddlStage').empty().append('<option selected="selected" value="0">--Select Stage--</option>');
+                    $.each(data.ListOfProgrammesStages, function () {
+                        $("#ddlStage").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    HideProgress();
+                });
+        }
+    }
+    var GetProgrammeStageUnits = function () {
+        var Prog = $("#ddlProgramme").children("option:selected").val();
+        var Stage = $("#ddlStage").children("option:selected").val();
+        if (Stage == "0") {
+            $("#ddlUnit option").remove();
+            $('#ddlUnit').empty().append('<option selected="selected" value="0">--Select Unit--</option>');
+        }
+        else {
+            ShowProgress();
+            $("#ddlUnit option").remove();
+            $('#ddlUnit').empty().append('<option selected="selected" value="0">--Select Unit--</option>');
+
+            $.getJSON("/Lecturer/GetProgrammeStageUnits", { Prog: Prog, Stage: Stage },
+                function (data) {
+                    $('#ddlUnit').empty().append('<option selected="selected" value="0">--Select Stage--</option>');
+                    $.each(data.ListOfProgrammesStageUnits, function () {
+                        $("#ddlUnit").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    HideProgress();
+                });
+        }
+    };
+    var SubmitNewUnitAllocation = function (lec) {
+        var prog = $("#ddlProgramme").children("option:selected").val();
+        var stage = $("#ddlStage").children("option:selected").val();
+        var sem = $("#ddlSemester").children("option:selected").val();
+        var unit = $("#ddlUnit").children("option:selected").val();
+        var campus = $("#ddlCampus").children("option:selected").val();
+        var CourseClass = $("#ddlClasses").children("option:selected").val();
+        if (lec == "") {
+            Swal.fire('Warning', 'No lecturer', 'warning');
+            return;
+        }
+        else if (prog == "0") {
+            Swal.fire('Warning', 'Select Programme', 'warning');
+            return;
+        }
+        else if (stage == "0") {
+            Swal.fire('Warning', 'Select Stage', 'warning');
+            return;
+        }
+        else if (sem == "0") {
+            Swal.fire('Warning', 'Select Semester', 'warning');
+            return;
+        }
+        else if (unit == "0") {
+            Swal.fire('Warning', 'Select Unit', 'warning');
+            return;
+        }
+        else if (campus == "0") {
+            Swal.fire('Warning', 'Select Campus', 'warning');
+            return;
+        }
+        else if (CourseClass == "0") {
+            Swal.fire('Warning', 'Select Class', 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            var SubmitLecAssignedUnit = {};
+            SubmitLecAssignedUnit.Lect = lec;
+            SubmitLecAssignedUnit.Prog = prog;
+            SubmitLecAssignedUnit.Stage = stage;
+            SubmitLecAssignedUnit.Sem = sem;
+            SubmitLecAssignedUnit.Unit = unit;
+            SubmitLecAssignedUnit.Campus = campus;
+            SubmitLecAssignedUnit.CourseClass = CourseClass;
+            $.ajax({
+                url: "/Lecturer/AssignLecturerUnit",
+                datatype: "json",
+                type: "POST",
+                data: JSON.stringify({ UnitDetails: SubmitLecAssignedUnit }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        HideProgress();
+                        var Lec = GetParameterValues('Lecturer');
+                        function GetParameterValues(name) {
+                            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                            var results = regex.exec(location.search);
+                            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+                        }
+                        LoadLecturerAssignedUnits(Lec);
+                        $("#myModal").modal("hide");
+                        Swal.fire('Success', data.message, 'success');
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('Warning', data.message, 'warning');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            });
+        }
+    };
+    var BackToLecList = function () {
+        ShowProgress();
+        window.location = "/Lecturer/LecturerList";
+    }
+    var SelectedRow = function (Prog, Stage, Semester, Unit, Campus) {
+        //ShowProgress();
+        //var SubmitLecAssignedUnit = {};
+        //SubmitLecAssignedUnit.Lect = lec;
+        //SubmitLecAssignedUnit.Prog = prog;
+        //SubmitLecAssignedUnit.Stage = stage;
+        //SubmitLecAssignedUnit.Sem = sem;
+        //SubmitLecAssignedUnit.Unit = unit;
+        //SubmitLecAssignedUnit.Campus = campus;
+        //$.ajax({
+        //    url: "/Lecturer/AssignLecturerUnit",
+        //    datatype: "json",
+        //    type: "POST",
+        //    data: JSON.stringify({ UnitDetails: SubmitLecAssignedUnit }),
+        //    contentType: "application/json; charset = utf-8",
+        //    success: function (data) {
+        //        if (data.success == true) {
+        //            HideProgress();
+        //            var Lec = GetParameterValues('Lecturer');
+        //            function GetParameterValues(name) {
+        //                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        //                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        //                var results = regex.exec(location.search);
+        //                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        //            }
+        //            LoadLecturerAssignedUnits(Lec);
+        //            $("#myModal").modal("hide");
+        //            Swal.fire('Success', data.message, 'success');
+        //        }
+        //        else {
+        //            HideProgress();
+        //            Swal.fire('Warning', data.message, 'warning');
+        //        }
+        //    },
+        //    error: function () {
+        //        HideProgress();
+        //        Swal.fire('Error', data.message, 'error');
+        //    }
+        //});
+    }
+</script>
+

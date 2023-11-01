@@ -130,7 +130,6 @@
         var Department = $("#ddlDepartment").children("option:selected").val();
         var dateRequired = $('#dtPicker').val();
         var Remarks = $("#txtRemarks").val();
-        var Reason = $("#txtReason").val();
         if (Directorate == "") {
             Swal.fire('error', 'Select Directorate', 'error');
             return;
@@ -147,17 +146,12 @@
             Swal.fire('error', 'Enter general remarks of the issues', 'error');
             return;
         }
-        else if (Reason == "") {
-            Swal.fire('error', 'Enter the reason for the asset request', 'error');
-            return;
-        }
         else {
             var ICTAssetRequest = {};
             //ICTAssetRequest.Directorate = Directorate;
             //ICTAssetRequest.Department = Department;
             ICTAssetRequest.Date_Requested = dateRequired;
             ICTAssetRequest.Description = Remarks;
-            ICTAssetRequest.reason = Reason;
             ShowProgress();
             $.ajax({
                 type: "post",
@@ -227,30 +221,5 @@
             }
         });
     }
-    var ViewDocComments = function (DocNo) {
-       // $("#labelF").text("Document Comments");
-        ShowProgress();
-        var RecordID = "ICT Asset Transfer: " + DocNo;
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            data: JSON.stringify({ RecID: RecordID }),
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: '/ICT/DocumentCommentsView',
-            success: function (data) {
-                $("#modalBody").html(data);
-                HideProgress();
-                $("#myModalLinks").modal("hide");
-                $("#myModal").modal("show");
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
-    }
-
 </script>
 

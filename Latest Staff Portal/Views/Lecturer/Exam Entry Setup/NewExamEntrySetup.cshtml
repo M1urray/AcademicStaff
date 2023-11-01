@@ -1,0 +1,87 @@
+﻿@model Latest_Staff_Portal.ViewModel.MySetupEntry
+<div class="row">
+    <div class="col-md-6">
+        <span style="font-weight: bold">Category</span>
+        @Html.DropDownListFor(model => model.Type, Model.ListOfExamCodes, "--select Category--", new { @class = "form-control", @id = "ddlCategory" })
+    </div>
+    <div class="col-md-6">
+        <span style="font-weight: bold">Description</span>
+        <textarea id="txtDesc" class="form-control"></textarea>
+    </div>
+</div>
+<hr />
+<div align="center">
+    <button class="btn btn-primary waves-effect waves-light" onclick="AddSetup();">Add</button>
+</div>
+<hr />
+<div class="row" style="font-size: 11px">
+    <div class="col-md-12 pre-scrollable">
+        <div id="divExamStupLines"></div>
+        <table class="table table-hover" id="ExamSetUpLines">
+            <thead>
+                <tr>
+                    <th hidden="hidden"></th>
+                    <th>Exam Type</th>
+                    <th>Description</th>
+                    <th>Max. Score(%)</th>
+                    <th>Weight(%)</th>
+                    @*<th>Order</th>*@
+                    <th hidden="hidden"></th>
+                    <th style="text-align:right" width="10%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tbody>
+                @{
+                    int i = 1;
+                    if (Model.ListOfExamEntry != null && Model.ListOfExamEntry.Count() > 0)
+                    {
+                        foreach (var item in Model.ListOfExamEntry)
+                        {
+                            <tr style="background-color:darkgrey;color:black;font-size:14px">
+                                <td hidden="hidden">
+                                    @Html.DisplayFor(modelItem => item.EntryType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Type)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(modelItem => item.MaxScore, new { Style = "text-align:center;width:100px", @class = "form-control textboxWidth" })
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(modelItem => item.Contr, new { Style = "text-align:center;width:100px", @class = "form-control textboxWidth" })
+                                </td>
+                                @*<td>
+                                    @Html.TextBoxFor(modelItem => item.Order, new { Style = "text-align:center;width:100px", @class = "form-control textboxWidth" })
+                                </td>*@
+                                <td hidden="hidden">
+                                    @Html.DisplayFor(modelItem => item.EntryNo)
+                                </td>
+                                <td>
+                                    <button id="btnDelete" class="btn btn-danger btn-sm" onclick="RemoveEntrySetup('@item.Type', '@item.EntryNo');">Remove</button>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" style="color:red">
+                                No Records Found
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<hr />
+<div align="center">
+    <button class="btn btn-primary waves-effect waves-light" onclick="UpdateSetup();">Update Setup</button>
+</div>
+

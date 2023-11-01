@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.ScoreCardObjectives>
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-12 pre-scrollable">
+            <table id="tableAddSkillComp" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                <thead>
+                    <tr>
+                        <th width="5%">#</th>
+                        <th>Code</th>
+                        <th>Core Competence and Values</th>
+                        <th width="20%">Max. Score(%)</th>
+                        <th width="20%">Self Ratings(%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        if (Model != null)
+                        {
+                            {
+                                if (Model.Count() > 0)
+                                {
+                                    int i = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @i
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DocumentNo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Objective)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.weight)
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" style="text-align:center" />
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4" style="color:red">
+                                            No Records Found
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary" value="Save Records" onclick="SaveCoreCompetenceValueLine();" />
+    </div>
+</div>
+
+

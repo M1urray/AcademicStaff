@@ -41,8 +41,8 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <b>Directorate</b>
-                @Html.DropDownListFor(m => m.Directorate, new SelectList(Model.ListOfDirectorate, "Value", "Text", Model.Directorate), "--Select Directorate--", new { @id = "ddlDirectorate", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                <b>Campus</b>
+                @Html.DropDownListFor(m => m.Campus, new SelectList(Model.ListOfCampus, "Value", "Text", Model.Campus), "--Select Campus--", new { @id = "ddlDim1", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
             </div>
             <div class="col-md-6">
                 <b>Department</b>
@@ -131,9 +131,10 @@
                 type: "POST",
                 url: "/Common/NullibySessions"
             });
-        }        
+        }
         document.getElementById("ddlDirectorate").disabled = true;
         document.getElementById("ddlDepartment").disabled = true;
+        document.getElementById("ddlSection").disabled = true;
     });
     var LoadTrainingDocumentLines = function (DocNo, Status) {
         ShowProgress();
@@ -165,7 +166,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            data: JSON.stringify({ DocNo: DocNo, TableID: 70135040, Status: Status}),
+            data: JSON.stringify({ DocNo: DocNo, TableID: 70135040, Status: "New"}),
             url: "/Common/DocumentAttachments",
             success: function (data) {
                 HideProgress();
@@ -279,13 +280,13 @@
         };
     }
     var AddAttachment = function () {
-        $("#labelF").text("File Upload");
+        $("#lblTitl").text("File Upload");
         ShowProgress();
         $.ajax({
             async: true,
             type: "GET",
             datatype: "html",
-            url: '/Training/FileUploadForm',
+            url: '/Purchase/FileUploadForm',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -297,16 +298,16 @@
             }
         });
     };
-    var SaveAttachmentFile = function () {        
+    var SaveAttachmentFile = function () {
         var DocNo = `@Model.Application_No`;
         var filename; var base64String; var filetype;
-        var files = document.getElementById('TRAttachment').files;
+        var files = document.getElementById('PurchasefileAttachment').files;
         if (files.length) {
             var file = files[0];
             if (file.size > 2000000) {
                 Swal.fire('Warning', 'Please only files less than 2MB allowed. Thanks!!', 'warning');
             }
-            else {                
+            else {
                 var blob = file.slice();
                 filetype = file.type;
                 filename = file.name;
@@ -320,7 +321,7 @@
                         $.ajax({
                             type: "POST",
                             url: "/Common/SaveAttachedFile",
-                            data: JSON.stringify({ DocNo: DocNo, base64Upload: base64String, fileName: filename, Extn: filetype, TableID: 70135040 }),
+                            data: JSON.stringify({ DocNo: DocNo, base64Upload: base64String, fileName: filename, Extn: filetype, TableID: 38 }),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (data) {

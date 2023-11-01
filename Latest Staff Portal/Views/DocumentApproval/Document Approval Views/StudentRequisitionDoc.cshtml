@@ -1,0 +1,194 @@
+﻿@model Latest_Staff_Portal.ViewModel.StudentReqDoc
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    hr {
+        margin: 4px;
+    }
+
+    .checkboxClass {
+        width: 20px;
+        height: 20px;
+        padding: 0px;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+@if (Model.Doc.CommentFound == true)
+{
+    <div class="row" style="background-color:gray">
+        <div class="col-md-12">
+            <b>Comments</b>
+            @Html.TextAreaFor(m => m.Doc.Comment, new { @class = "form-control" })
+            <br />
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-md-6">
+        <b>Document No</b>
+        @Html.TextBoxFor(m => m.Doc.Code, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Student No</b>
+        @Html.TextBoxFor(m => m.Doc.StudentNo, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Student Name</b>
+        @Html.TextBoxFor(m => m.Doc.StudentName, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Requisition Type</b>
+        @Html.TextBoxFor(m => m.Doc.RegType, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Status</b>
+        @Html.TextBoxFor(m => m.Doc.Status, new { @class = "form-control", @readonly = "readonly", @rows = 5 })
+    </div>
+    <div class="col-md-6">
+        <b>Date Applied</b>
+        @Html.TextBoxFor(m => m.Doc.DateApplied, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Programme</b>
+        @Html.TextBoxFor(m => m.Doc.Programme, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>@Model.Doc.RegType</b>
+        @Html.TextBoxFor(m => m.Doc.ProgrammeTo, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Student Status</b>
+        @Html.TextBoxFor(m => m.Doc.StudentStatus, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Semester</b>
+        @Html.TextBoxFor(m => m.Doc.Semester, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+@if (Model.Doc.ReqCount > 0)
+{
+    <hr style="border:1px solid black" />
+    <b>Course Lines</b>
+    <hr />
+    <div class="pre-scrollable">
+        <div id="divRegList"></div>
+    </div>
+}
+@*//////////////////////Modal////////////////////////////*@
+<div id="myModal1" class="modal fade" tabindex="-1" role="dialog" ke aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: #00aeee">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">Assign Lecturer</h5>
+                <button type="button" class="close" onclick="$('#myModal1').modal('hide');" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody1">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" onclick="$('#myModal1').modal('hide');">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadStudentReqList('@Model.Doc.Code', '@Model.Doc.RegType');
+    });
+    var LoadStudentReqList = function (DocNo, RegT) {
+        //ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo, RegT: RegT }),
+            url: "/DocumentApproval/StudentRequisitionDocLines",
+            success: function (data) {
+                $("#divRegList").html(data);
+                //HideProgress();
+            },
+            error: function () {
+                //HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var AssignLec = function (Unit, Sem,Ln) {
+        var DocNo = '@Model.Doc.Code';
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ DocNo: DocNo, Unit: Unit, Sem: Sem, Ln:Ln }),
+            url: '/DocumentApproval/NewLecAssignForm',
+            success: function (data) {
+                $("#modalBody1").html(data);
+                HideProgress();
+                $("#myModal1").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    };
+    var SubmitAssignLec = function (DocNo,Unit, Sem, Ln) {
+        var Lec = $("#ddlLecturer").children("option:selected").val();
+        var Sec = $("#ddlSection").children("option:selected").val();
+        if (Lec == "") {
+            Swal.fire('Warning', "Select Lecturer", 'warning');
+            return;
+        }
+        else if (Sec == "") {
+            Swal.fire('Warning', "Select Section", 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                async: true,
+                type: "POST",
+                datatype: "json",
+                contentType: "application/json; charset = utf-8",
+                data: JSON.stringify({ DocNo: DocNo, Unit: Unit, Lec: Lec, Sec: Sec, Ln: Ln,Sem: Sem }),
+                url: '/DocumentApproval/SaveSpecialExamLec',
+                success: function (data) {
+                    if (data.success == true) {
+                        LoadStudentReqList('@Model.Doc.Code', '@Model.Doc.RegType');
+                        HideProgress();
+                        Swal.fire('Success', "Lecturer Assigned successfully", 'success');
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('Warning', data.message, 'warning');
+                        return;
+                    }
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    };
+</script>
+

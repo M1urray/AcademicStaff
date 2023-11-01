@@ -115,6 +115,7 @@
         var DateTrip = $("#dtPicker").val();
         var TimeTrip = $("#txtTime").val();
         var NoOfDays = $("#txtNoOfDays").val();
+        var NoOfPs = $("#txtNoOfPassengers").val();
         var Purpose = $("#txtRemarks").val();
         if (Commencement == "") {
             Swal.fire('error', 'Enter Place of Commencement', 'error');
@@ -140,6 +141,10 @@
             Swal.fire('error', 'Enter No of Days', 'error');
             return;
         }
+        else if (NoOfPs == "") {
+            Swal.fire('error', 'Enter No of Passengers travelling', 'error');
+            return;
+        }
         else if (Purpose == "") {
             Swal.fire('error', 'Enter Purpose of the Trip', 'error');
             return;
@@ -152,6 +157,7 @@
             NewTransportDocument.DateTrip = DateTrip;
             NewTransportDocument.TimeTrip = TimeTrip;
             NewTransportDocument.NoOfDays = NoOfDays;
+            NewTransportDocument.NoOfPassengers = NoOfPs;
             NewTransportDocument.Purpose = Purpose;
             ShowProgress();
             $.ajax({
@@ -208,7 +214,7 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo }),
+            data: JSON.stringify({ DocNo: DocNo, Redirect:"N" }),
             contentType: "application/json; charset = utf-8",
             processData: false,
             url: '/Transport/SendDocAppForApproval',

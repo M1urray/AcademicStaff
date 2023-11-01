@@ -55,203 +55,165 @@ namespace Latest_Staff_Portal.Controllers
         {
             string StaffNo = Session["Username"].ToString();
             NewTrainingDocument NewAppl = new NewTrainingDocument();
-            string Dir = "", Dep = "";
-            #region Employee Data
-            string pageData = "EmployeeList?$filter=No eq '" + StaffNo + "'&$format=json";
+            #region Campus List
+            List<DimensionValues> DirectorateList = new List<DimensionValues>();
+            string pageDir = "DimensionValues?$filter=Global_Dimension_No_ eq 1&$format=json";
 
-            HttpWebResponse httpResponse = Credentials.GetOdataData(pageData);
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
+            using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
             {
                 var result = streamReader.ReadToEnd();
 
                 var details = JObject.Parse(result);
 
-                if (details["value"].Count() > 0)
+
+                foreach (JObject config in details["value"])
                 {
-                    foreach (JObject config in details["value"])
-                    {
-                        Dir = (string)config["_x003C_GlobSal_Dimension_1_Code_x003E_"];
-                        Dep = (string)config["GlobalDimension2Code"];
-                    }
+                    DimensionValues Directorate = new DimensionValues();
+                    Directorate.Code = (string)config["Code"];
+                    Directorate.Name = (string)config["Name"];
+                    DirectorateList.Add(Directorate);
                 }
             }
             #endregion
-            if (Dir == "")
+
+            #region Department
+            List<DimensionValues> DepartmentList = new List<DimensionValues>();
+            string pageDepartment = "DimensionValues?$filter=Global_Dimension_No_ eq 2&$format=json";
+
+            HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDepartment);
+            using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
             {
-                Error erroMsg = new Error();
-                erroMsg.Message = "Your directorate has not been set. Contact HR";
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
+                {
+                    DimensionValues Department = new DimensionValues();
+                    Department.Code = (string)config["Code"];
+                    Department.Name = (string)config["Name"];
+                    DepartmentList.Add(Department);
+                }
             }
-            else if (Dep == "")
+            #endregion
+
+            #region Schools List
+            List<DimensionValues> SectionList = new List<DimensionValues>();
+            string pageSection = "DimensionValues?$filter=Global_Dimension_No_ eq 3&$format=json";
+
+            HttpWebResponse httpResponseSection = Credentials.GetOdataData(pageSection);
+            using (var streamReader = new StreamReader(httpResponseSection.GetResponseStream()))
             {
-                Error erroMsg = new Error();
-                erroMsg.Message = "Your department has not been set. Contact HR";
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
+                {
+                    DimensionValues Section = new DimensionValues();
+                    Section.Code = (string)config["Code"];
+                    Section.Name = (string)config["Name"];
+                    SectionList.Add(Section);
+                }
             }
-            else
+            #endregion
+
+            #region Responsibility
+            List<RespCenter> RespCList = new List<RespCenter>();
+            string pageResC = "ResponsibilityCenters?$format=json";
+
+            HttpWebResponse httpResponseResC = Credentials.GetOdataData(pageResC);
+            using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
             {
-                #region Directorate List
-                List<DimensionValues> DirectorateList = new List<DimensionValues>();
-                string pageDir = "DimensionValues?$filter=Dimension_Code eq 'BRANCH'&$format=json";
+                var result = streamReader.ReadToEnd();
 
-                HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
-                using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
                 {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DimensionValues Directorate = new DimensionValues();
-                        Directorate.Code = (string)config["Code"];
-                        Directorate.Name = (string)config["Name"];
-                        DirectorateList.Add(Directorate);
-                    }
+                    RespCenter RCList = new RespCenter();
+                    RCList.Code = (string)config["Code"];
+                    RCList.Name = (string)config["Name"];
+                    RespCList.Add(RCList);
                 }
-                #endregion
-
-                #region Department
-                List<DimensionValues> DepartmentList = new List<DimensionValues>();
-                string pageDepartment = "DimensionValues?$filter=Dimension_Code eq 'DEPARTMENT'&$format=json";
-
-                HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDepartment);
-                using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DimensionValues Department = new DimensionValues();
-                        Department.Code = (string)config["Code"];
-                        Department.Name = (string)config["Name"];
-                        DepartmentList.Add(Department);
-                    }
-                }
-                #endregion
-
-                #region Section List
-                List<DimensionValues> SectionList = new List<DimensionValues>();
-                string pageSection = "DimensionValues?$filter=Dimension_Code eq 'SECTION'&format=json";
-
-                HttpWebResponse httpResponseSection = Credentials.GetOdataData(pageSection);
-                using (var streamReader = new StreamReader(httpResponseSection.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DimensionValues Section = new DimensionValues();
-                        Section.Code = (string)config["Code"];
-                        Section.Name = (string)config["Name"];
-                        SectionList.Add(Section);
-                    }
-                }
-                #endregion
-
-                #region Responsibility
-                List<RespCenter> RespCList = new List<RespCenter>();
-                string pageResC = "ResponsibilityCenters?$format=json";
-
-                HttpWebResponse httpResponseResC = Credentials.GetOdataData(pageResC);
-                using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        RespCenter RCList = new RespCenter();
-                        RCList.Code = (string)config["Code"];
-                        RCList.Name = (string)config["Name"];
-                        RespCList.Add(RCList);
-                    }
-                }
-                #endregion
-
-                #region Courses
-                List<DropdownList> CourseList = new List<DropdownList>();
-                string pageCourse = "HRCourseList?$filter=Closed eq false&$format=json";
-
-                HttpWebResponse httpResponseCourse = Credentials.GetOdataData(pageCourse);
-                using (var streamReader = new StreamReader(httpResponseCourse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DropdownList CList = new DropdownList();
-                        CList.Value = (string)config["Course_Code"];
-                        CList.Text = (string)config["Course_Tittle"];
-                        CourseList.Add(CList);
-                    }
-                }
-                #endregion
-                #region Trainers
-                List<DropdownList> TrainerList = new List<DropdownList>();
-                string pageTrainer = "VendorList?$format=json";
-
-                HttpWebResponse httpResponseTrainer = Credentials.GetOdataData(pageTrainer);
-                using (var streamReader = new StreamReader(httpResponseTrainer.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DropdownList CList = new DropdownList();
-                        CList.Value = (string)config["No"];
-                        CList.Text = (string)config["Name"];
-                        TrainerList.Add(CList);
-                    }
-                }
-                #endregion
-
-                NewAppl = new NewTrainingDocument
-                {
-                    Directorate = Dir,
-                    Department = Dep,
-                    ListOfDirectorate = DirectorateList.Select(x =>
-                                       new SelectListItem()
-                                       {
-                                           Text = x.Name,
-                                           Value = x.Code
-                                       }).ToList(),
-                    ListOfDepartment = DepartmentList.Select(x =>
-                                         new SelectListItem()
-                                         {
-                                             Text = x.Name,
-                                             Value = x.Code
-                                         }).ToList(),
-                    ListOfCourses = CourseList.Select(x =>
-                                       new SelectListItem()
-                                       {
-                                           Text = x.Text,
-                                           Value = x.Value
-                                       }).ToList(),
-                    ListOfTrainers = TrainerList.Select(x =>
-                                      new SelectListItem()
-                                      {
-                                          Text = x.Text,
-                                          Value = x.Value
-                                      }).ToList()
-                };
-                return PartialView("~/Views/Training/Partial Views/NewTrainingRequisition.cshtml", NewAppl);
             }
+            #endregion
+
+            #region Courses
+            List<DropdownList> CourseList = new List<DropdownList>();
+            string pageCourse = "HRCourseList?$filter=Closed eq false&$format=json";
+
+            HttpWebResponse httpResponseCourse = Credentials.GetOdataData(pageCourse);
+            using (var streamReader = new StreamReader(httpResponseCourse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
+                {
+                    DropdownList CList = new DropdownList();
+                    CList.Value = (string)config["Course_Code"];
+                    CList.Text = (string)config["Course_Tittle"];
+                    CourseList.Add(CList);
+                }
+            }
+            #endregion
+            #region Trainers
+            List<DropdownList> TrainerList = new List<DropdownList>();
+            string pageTrainer = "VendorList?$format=json";
+
+            HttpWebResponse httpResponseTrainer = Credentials.GetOdataData(pageTrainer);
+            using (var streamReader = new StreamReader(httpResponseTrainer.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
+                {
+                    DropdownList CList = new DropdownList();
+                    CList.Value = (string)config["No"];
+                    CList.Text = (string)config["Name"];
+                    TrainerList.Add(CList);
+                }
+            }
+            #endregion
+
+            NewAppl = new NewTrainingDocument
+            {
+                ListOfCampus = DirectorateList.Select(x =>
+                                   new SelectListItem()
+                                   {
+                                       Text = x.Name,
+                                       Value = x.Code
+                                   }).ToList(),
+                ListOfDepartment = DepartmentList.Select(x =>
+                                     new SelectListItem()
+                                     {
+                                         Text = x.Name,
+                                         Value = x.Code
+                                     }).ToList(),
+                ListOfCourses = CourseList.Select(x =>
+                                   new SelectListItem()
+                                   {
+                                       Text = x.Text,
+                                       Value = x.Value
+                                   }).ToList(),
+                ListOfTrainers = TrainerList.Select(x =>
+                                  new SelectListItem()
+                                  {
+                                      Text = x.Text,
+                                      Value = x.Value
+                                  }).ToList()
+            };
+            return PartialView("~/Views/Training/Partial Views/NewTrainingRequisition.cshtml", NewAppl);
         }
         [HttpPost]
         public JsonResult SubmitTrainingDocument(TrainingList NewApp)
@@ -260,9 +222,9 @@ namespace Latest_Staff_Portal.Controllers
             {
                 DateTime StartDate = DateTime.ParseExact(NewApp.StartDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 DateTime EndDate = DateTime.ParseExact(NewApp.EndDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                string DocNo = Credentials.ObjNav.TrainingRequisitionCreate(Session["username"].ToString(), NewApp.Directorate, NewApp.Department, "",
-                    NewApp.Course_Title, "", Convert.ToInt32(NewApp.Training_Category), Convert.ToInt32(NewApp.Sponsor), StartDate, EndDate,
-                    NewApp.Trainer, "", Convert.ToDecimal(NewApp.Cost), NewApp.Purpose);
+                string DocNo = Credentials.ObjNav.TrainingRequisitionCreate(Session["username"].ToString(), NewApp.Campus, NewApp.Department, "",
+                    NewApp.Course_Title, NewApp.Course_Desc, Convert.ToInt32(NewApp.Training_Category), Convert.ToInt32(NewApp.Sponsor), StartDate, EndDate,
+                    NewApp.Trainer, NewApp.TrainerName, Convert.ToDecimal(NewApp.Cost), NewApp.Purpose,"","");
 
                 string Redirect = "/Training/TrainingDocumentDetails?AppDoc=" + DocNo;
 
@@ -283,9 +245,9 @@ namespace Latest_Staff_Portal.Controllers
             {
                 string StaffNo = Session["Username"].ToString();
                 TrainingList TranDoc = new TrainingList();
-                #region Directorate List
+                #region Campus List
                 List<DimensionValues> DirectorateList = new List<DimensionValues>();
-                string pageDir = "DimensionValues?$filter=Dimension_Code eq 'DIRECTORATES'&$format=json";
+                string pageDir = "DimensionValues?$filter=Global_Dimension_No_ eq 1&$format=json";
 
                 HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDir);
                 using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
@@ -307,7 +269,7 @@ namespace Latest_Staff_Portal.Controllers
 
                 #region Department
                 List<DimensionValues> DepartmentList = new List<DimensionValues>();
-                string pageDepartment = "DimensionValues?$filter=Dimension_Code eq 'DEPARTMENT'&$format=json";
+                string pageDepartment = "DimensionValues?$filter=Global_Dimension_No_ eq 2&$format=json";
 
                 HttpWebResponse httpResponseDivision = Credentials.GetOdataData(pageDepartment);
                 using (var streamReader = new StreamReader(httpResponseDivision.GetResponseStream()))
@@ -327,9 +289,9 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 #endregion
 
-                #region Section List
+                #region Schools List
                 List<DimensionValues> SectionList = new List<DimensionValues>();
-                string pageSection = "DimensionValues?$filter=Dimension_Code eq 'SECTION'&format=json";
+                string pageSection = "DimensionValues?$filter=Global_Dimension_No_ eq 3&$format=json";
 
                 HttpWebResponse httpResponseSection = Credentials.GetOdataData(pageSection);
                 using (var streamReader = new StreamReader(httpResponseSection.GetResponseStream()))
@@ -430,14 +392,14 @@ namespace Latest_Staff_Portal.Controllers
                         TranDoc.Training_Category = (string)config["Training_Category"];
                         TranDoc.Course_Title = (string)config["Course_Title"];
                         TranDoc.Course_Desc = (string)config["Description"];
-                        TranDoc.Directorate = (string)config["Global_Dimension_1"];
-                        TranDoc.Department = (string)config["Global_Dimension_2"];
+                        TranDoc.Campus = (string)config["Campus"];
+                        TranDoc.Department = (string)config["Department"];
                         TranDoc.Trainer = (string)config["Trainer"];
                         TranDoc.Purpose = (string)config["Purpose_of_Training"];
                         TranDoc.Status = (string)config["Status"];
                     }
                 }
-                TranDoc.ListOfDirectorate = DirectorateList.Select(x =>
+                TranDoc.ListOfCampus = DirectorateList.Select(x =>
                                       new SelectListItem()
                                       {
                                           Text = x.Name,
@@ -521,7 +483,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     DropdownList ddl = new DropdownList();
                     ddl.Value = (string)config["No"];
-                    ddl.Text = (string)config["FirstName"] + " " + (string)config["MiddleName"] + " " + (string)config["LastName"];
+                    ddl.Text = (string)config["First_Name"] + " " + (string)config["Middle_Name"] + " " + (string)config["Last_Name"];
                     EmployeeList.Add(ddl);
                 }
             }
@@ -589,11 +551,6 @@ namespace Latest_Staff_Portal.Controllers
             {
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
-        }
-        [AcceptVerbs(HttpVerbs.Get)]
-        public PartialViewResult FileUploadForm()
-        {
-            return PartialView("~/Views/Training/Partial Views/FileAttachmentForm.cshtml");
         }
     }
 }

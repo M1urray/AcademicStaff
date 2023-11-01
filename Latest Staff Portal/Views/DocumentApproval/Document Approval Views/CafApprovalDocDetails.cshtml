@@ -1,0 +1,137 @@
+﻿@model Latest_Staff_Portal.ViewModel.CafDocument
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    hr {
+        margin: 4px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-6">
+        <b>Document No</b>
+        @Html.TextBoxFor(m => m.DocHeader.No, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Date Needed</b>
+        @Html.TextBoxFor(m => m.DocHeader.DateNeeded, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Requestor No</b>
+        @Html.TextBoxFor(m => m.DocHeader.Employee, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Requestor Name</b>
+        @Html.TextBoxFor(m => m.DocHeader.EmployeeName, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Status</b>
+        @Html.TextBoxFor(m => m.DocHeader.Status, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Division</b>
+        @Html.TextBoxFor(m => m.DocHeader.Campus, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Department</b>
+        @Html.TextBoxFor(m => m.DocHeader.Department, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Responsibility Center</b>
+        @Html.TextBoxFor(m => m.DocHeader.RespC, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Venue</b>
+        @Html.TextBoxFor(m => m.DocHeader.Venue, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Time Needed</b>
+        @Html.TextBoxFor(m => m.DocHeader.TimeNeeded, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Cafeteria</b>
+        @Html.TextBoxFor(m => m.DocHeader.CafName, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Total Net Amount</b>
+        @Html.TextBoxFor(m => m.DocHeader.TotalCost, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <b>Purpose</b>
+        @Html.TextAreaFor(m => m.DocHeader.Event_Name, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<hr />
+<hr style="border:1px solid black" />
+<b>Food Item Lines</b>
+<hr />
+<div class="pre-scrollable">
+    <table class="table table-centered table-nowrap" id="CafLines">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Description</th>
+                <th style="text-align:center">Quantity</th>
+                <th style="text-align:center">Unit Cost</th>
+                <th style="text-align:center">Total Amount</th>               
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.ListOfCafLines != null && Model.ListOfCafLines.Count() > 0)
+                {
+                    foreach (var item in Model.ListOfCafLines)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Item)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemName)
+                            </td>
+                            <td align="center">
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td align="center">
+                                @Html.DisplayFor(modelItem => item.UnitCost)
+                            </td>
+                            <td align="center">
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<hr style="border:1px solid black" />
+<div class="row">
+    <div class="col-md-12">
+        <b>Attachments</b>
+        <div id="divAttachDocs"></div>
+    </div>
+</div>
+

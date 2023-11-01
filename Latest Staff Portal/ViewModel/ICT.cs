@@ -51,7 +51,6 @@ namespace Latest_Staff_Portal.ViewModel
         public string Date_Returned { get; set; }
         public string Status { get; set; }
         public string Remarks { get; set; }
-        public string reason { get; set; }
     }
     public class ICTServiceRequest
     {
@@ -65,7 +64,6 @@ namespace Latest_Staff_Portal.ViewModel
         public string NextSeviceDate { get; set; }
         public string Status { get; set; }
         public string Remarks { get; set; }
-         public string Reason { get; set; }
     }
     public class ICTCancel
     {

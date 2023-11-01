@@ -3,6 +3,15 @@
     .ui-front {
         z-index: 2000 !important;
     }
+
+    .ui-autocomplete {
+        /* these sets the height and width */
+        max-height: 200px;
+        max-width: 236px;
+        /* these make it scroll for anything outside */
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
 </style>
 <div class="bg-soft-dark" style="color:black">
     <div class="row" id="DivService">
@@ -12,13 +21,14 @@
         </div>
         <div class="col-md-6">
             Quantity
-            <input type="text" class="form-control" id="txtQuantity" onkeypress="return functionx(event)" />
+            <input type="text" class="form-control" id="txtQuantity" onkeypress="return functionDecimal(event,this.value)" />
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             Issuing Store
             @Html.DropDownListFor(model => model.Code, Model.ListOfLocations, "--select Location--", new { @class = "form-control", @id = "ddlLocation" })
+
         </div>
         <div class="col-md-6">
         </div>
@@ -39,7 +49,8 @@
         $("#ddlItems,#ddlLocation").select2({
             width: '100%'
         });
-    });   
+    });  
+
     function functionDecimal(evt, val) {
         try {
             var charCode = (evt.which) ? evt.which : event.keyCode;

@@ -31,21 +31,22 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        <b>Directorate</b>
-        @Html.TextBoxFor(m => m.DocHeader.Directorate, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        <b>Division</b>
+        @Html.TextBoxFor(m => m.DocHeader.CampusName, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
     <div class="col-md-6">
         <b>Department</b>
-        @Html.TextBoxFor(m => m.DocHeader.Department, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        @Html.TextBoxFor(m => m.DocHeader.DepartmentName, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
 </div>
 <div class="row">
     <div class="col-md-6">
-        <b>Status</b>
-        @Html.TextBoxFor(m => m.DocHeader.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        <b>Responsibility</b>
+        @Html.TextBoxFor(m => m.DocHeader.RespC, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
     <div class="col-md-6">
-
+        <b>Status</b>
+        @Html.TextBoxFor(m => m.DocHeader.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
 </div>
 <div class="row">
@@ -53,7 +54,7 @@
         <b>Amount</b>
         @Html.TextBoxFor(m => m.DocHeader.TotalAmount, new { @class = "form-control ", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6">   
     </div>
 </div>
 <hr />

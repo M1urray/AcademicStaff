@@ -1,0 +1,349 @@
+﻿
+@{
+    ViewBag.Title = "ExamSetup";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<div class="card pre-scrollable">
+    <div class="card-title">Mark Entry Window</div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <b>Exam Type</b>
+                    <select id="ddlType" class="form-control" onchange="GetExamForm()">
+                        <option value="">----</option>
+                        <option value="1">Special Exam</option>
+                        @*<option value="2">Supplimentary</option>*@
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+        <hr />
+        <div id="divD">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <b>Student No.</b>
+                        <input type="text" class="form-control" id="txtStdNo" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <br />
+                        <input type="button" class="btn btn-primary waves-effect waves-light" value="Get Semesters" onclick="GetSemesters();" />
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Semester", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            <select class="form-control" id="ddlSemester" name="ddlSemester" onchange="GetRegisteredUnits()"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Unit", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            <select class="form-control" id="ddlUnit" name="ddlUnit" onchange="GetStudentRegisterdUnit()"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div>
+                <div id="divStudentList"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ddlSemester option").remove();
+        $('#ddlSemester').empty().append('<option selected="selected" value="">--Select Semester--</option>');
+
+        $("#ddlUnit option").remove();
+        $('#ddlUnit').empty().append('<option selected="selected" value="">--Select Unit--</option>');
+
+        $("#ddlType,#ddlSemester,#ddlUnit").select2({
+            width: '100%'
+        });
+        $("#divD").hide();
+    });
+    var GetExamForm = function () {
+        var ExamT = $("#ddlType").children("option:selected").val();
+        if (ExamT == "") {
+            ClearData();
+        }
+        else {
+            $("#divD").show();
+        }
+    };
+    var GetSemesters = function () {
+        $("#ddlSemester option").remove();
+        $('#ddlSemester').empty().append('<option selected="selected" value="">--Select Semester--</option>');
+
+        $("#ddlUnit option").remove();
+        $('#ddlUnit').empty().append('<option selected="selected" value="">--Select Unit--</option>');
+        $("#divStudentList").html("");
+
+        var StdNo = $("#txtStdNo").val();
+        if (StdNo == "") {
+            Swal.fire('Warning', 'Enter Student Reg No.', 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            $("#ddlSemester option").remove();
+            $('#ddlSemester').empty().append('<option selected="selected" value="">--Select Semester--</option>');
+
+            $.getJSON("/Exams/GetRegisteredSemesterd", { StdNo: StdNo },
+                function (data) {
+                    $.each(data.ListOfddlData, function () {
+                        $("#ddlSemester").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    HideProgress();
+                });
+        }
+    }
+    var GetRegisteredUnits = function () {
+        $("#divStudentList").html("");
+        var StdNo = $("#txtStdNo").val();
+        var Sem = $("#ddlSemester").children("option:selected").val();
+        if (StdNo == "" || Sem == "") {
+            $("#txtStdNo").val("");
+            $("#ddlUnit option").remove();
+            $('#ddlUnit').empty().append('<option selected="selected" value="">--Select Unit--</option>');
+        }
+        else {
+            ShowProgress();
+            $("#ddlUnit option").remove();
+            $('#ddlUnit').empty().append('<option selected="selected" value="">--Select Unit--</option>');
+
+            $.getJSON("/Exams/GetRegisteredUnits", { StdNo: StdNo, Sem: Sem },
+                function (data) {
+                    $.each(data.ListOfddlData, function () {
+                        $("#ddlUnit").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    HideProgress();
+                });
+        }
+    }
+    var GetStudentRegisterdUnit = function () {
+        var ExamT = $("#ddlType").children("option:selected").val();
+        if (ExamT == "1") {
+            LoadStudentSpecialUnit();
+        }
+        else {
+            LoadStudentSupplimentaryUnit();
+        }
+    };
+    var LoadStudentSpecialUnit = function () {
+        var StdNo = $("#txtStdNo").val();
+        var Sem = $("#ddlSemester").children("option:selected").val();
+        var Unit = $("#ddlUnit").children("option:selected").val();
+
+        if (StdNo == "") {
+            Swal.fire('Warning', 'Enter Student Reg No.', 'warning');
+            return;
+        }
+        else if (Sem == "") {
+            Swal.fire('Warning', 'Select Semester', 'warning');
+            return;
+        }
+        else if (Unit == "") {
+            Swal.fire('Warning', 'Select Unit', 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                async: true,
+                type: "POST",
+                datatype: "json",
+                contentType: "application/json; charset = utf-8",
+                processData: false,
+                data: JSON.stringify({ StdNo: StdNo, Sem: Sem, Unit: Unit }),
+                url: "/Exams/LoadStudentSpecialUnit",
+                success: function (data) {
+                    $("#divStudentList").html(data);
+                    HideProgress();
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('Warning', 'There is some problem to process your request. Please try after some time', 'warning');
+                }
+            });
+        }
+    }
+    var LoadStudentSupplimentaryUnit = function () {
+        var StdNo = $("#txtStdNo").val();
+        var Sem = $("#ddlSemester").children("option:selected").val();
+        var Unit = $("#ddlUnit").children("option:selected").val();
+
+        if (StdNo == "") {
+            Swal.fire('Warning', 'Enter Student Reg No.', 'warning');
+            return;
+        }
+        else if (Sem == "") {
+            Swal.fire('Warning', 'Select Semester', 'warning');
+            return;
+        }
+        else if (Unit == "") {
+            Swal.fire('Warning', 'Select Unit', 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                async: true,
+                type: "POST",
+                datatype: "json",
+                contentType: "application/json; charset = utf-8",
+                processData: false,
+                data: JSON.stringify({ StdNo: StdNo, Sem: Sem, Unit: Unit }),
+                url: "/Exams/LoadStudentSuppUnit",
+                success: function (data) {
+                    $("#divStudentList").html(data);
+                    HideProgress();
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('Warning', 'There is some problem to process your request. Please try after some time', 'warning');
+                }
+            });
+        }
+    }
+    var SaveSpecialStudentMarks = function (Prog) {
+        var StdNo = $("#txtStdNo").val();
+        var Sem = $("#ddlSemester").children("option:selected").val();
+        var Unit = $("#ddlUnit").children("option:selected").val();
+
+        var myTableHeaderArray = [];
+        var myTableArray = [];
+
+        $('#dtSpecial thead tr').each(function () {
+            var arrayOfThisHeader = [];
+            var tableData = $(this).find('th');
+            if (tableData.length > 0) {
+                tableData.each(function () {
+                    arrayOfThisHeader.push($(this).text());
+                });
+                myTableHeaderArray.push(arrayOfThisHeader);
+            }
+        });
+        $('#dtSpecial tbody tr').each(function () {
+            var arrayOfThisRow = [];
+            var tableData = $(this).find('td');
+            if (tableData.length > 0) {
+                tableData.each(function () {
+                    if ($(this).find("input[type=text]").length) {
+                        var myText = $(this).find("input[type=text]").val();
+                        arrayOfThisRow.push(myText);
+                    }
+                    else arrayOfThisRow.push($(this).text());
+                });
+
+                myTableArray.push(arrayOfThisRow);
+            }
+        });
+        ShowProgress();
+        $.ajax({
+            type: "post",
+            url: "/Exams/SaveSpecialMarksStudentMarks",
+            data: { Prog: Prog, Sem: Sem, Unit: Unit, headers: myTableHeaderArray, Rows: myTableArray },
+            contenttype: "text/plain; charset=utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadStudentSpecialUnit();
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            },
+            error: function () {
+                if (data.success == false) {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            }
+        });
+    }
+    var SaveSuppStudentMarks = function (Prog) {
+        var StdNo = $("#txtStdNo").val();
+        var Sem = $("#ddlSemester").children("option:selected").val();
+        var Unit = $("#ddlUnit").children("option:selected").val();
+
+        var myTableHeaderArray = [];
+        var myTableArray = [];
+
+        $('#dtSupp thead tr').each(function () {
+            var arrayOfThisHeader = [];
+            var tableData = $(this).find('th');
+            if (tableData.length > 0) {
+                tableData.each(function () {
+                    arrayOfThisHeader.push($(this).text());
+                });
+                myTableHeaderArray.push(arrayOfThisHeader);
+            }
+        });
+        $('#dtSupp tbody tr').each(function () {
+            var arrayOfThisRow = [];
+            var tableData = $(this).find('td');
+            if (tableData.length > 0) {
+                tableData.each(function () {
+                    if ($(this).find("input[type=text]").length) {
+                        var myText = $(this).find("input[type=text]").val();
+                        arrayOfThisRow.push(myText);
+                    }
+                    else arrayOfThisRow.push($(this).text());
+                });
+
+                myTableArray.push(arrayOfThisRow);
+            }
+        });
+        ShowProgress();
+        $.ajax({
+            type: "post",
+            url: "/Exams/SaveSuppMarksStudentMarks",
+            data: { Prog: Prog, Sem: Sem, Unit: Unit, headers: myTableHeaderArray, Rows: myTableArray },
+            contenttype: "text/plain; charset=utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadStudentSupplimentaryUnit();
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            },
+            error: function () {
+                if (data.success == false) {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            }
+        });
+    }
+    var ClearData = function () {
+        $("#txtStdNo").val("");
+        $("#ddlSemester option").remove();
+        $('#ddlSemester').empty().append('<option selected="selected" value="">--Select Semester--</option>');
+
+        $("#ddlUnit option").remove();
+        $('#ddlUnit').empty().append('<option selected="selected" value="">--Select Unit--</option>');
+        $("#divStudentList").html("");
+        $("#divD").hide();
+    };
+</script>
+
+

@@ -72,4 +72,10 @@ namespace Latest_Staff_Portal.ViewModel
     {
         public List<SelectListItem> ListOfddlData { get; set; }
     }
+
+    public class PurchaseRequisition
+    {
+        public string Code { get; set; }
+        public string Description { get; set; }
+    }
 }

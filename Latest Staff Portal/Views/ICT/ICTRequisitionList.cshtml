@@ -113,7 +113,7 @@
         var Directorate = $("#ddlDirectorate").children("option:selected").val();
         var Department = $("#ddlDepartment").children("option:selected").val();
         var Urgency = $("#ddlUrgency").children("option:selected").val();
-        var dateRequired = $('#dtPicker').val();
+        var dateRequired = $('#dtPicker').val();        
         var Remarks = $("#txtRemarks").val();
         if (Category == "") {
             Swal.fire('error', 'Select Category', 'error');
@@ -195,7 +195,7 @@
     };
     var SubmitCancelrequestRequisition = function (DocNo) {
         var Remarks = $("#txtCancelR").val();
-
+      
         if (Remarks == "") {
             Swal.fire('error', 'Enter cancel remarks for this issue', 'error');
             return;
@@ -206,64 +206,6 @@
                 type: "post",
                 url: "/ICT/CancelICTRequest",
                 data: JSON.stringify({ DocNo: DocNo, CancelR: Remarks }),
-                contentType: "application/json; charset = utf-8",
-                success: function (data) {
-                    if (data.success == true) {
-                        HideProgress();
-                        LoadICTReqList();
-                        $("#myModal").modal("hide");
-                        Swal.fire('Success', data.message, 'success');
-                    }
-                    else {
-                        HideProgress();
-                        Swal.fire('error', data.message, 'error');
-                    }
-                },
-                error: function () {
-                    HideProgress();
-                    Swal.fire('error', data.message, 'error');
-                }
-            });
-        }
-    }
-    var ConfirmRequest = function (DocNo) {
-        $("#labelF").text("Confirmation Remarks");
-        ShowProgress();
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            contentType: "application/json; charset = utf-8",
-            data: JSON.stringify({ DocNo: DocNo }),
-            url: '/ICT/ConfirmICTRequestForm',
-            success: function (data) {
-                $("#modalBody").html(data);
-                HideProgress();
-                $("#myModal").modal("show");
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
-    };
-    var SubmitConfirmationrequest = function (DocNo) {
-        var Remarks = $("#txtConfirmR").val();
-        //var Resolved = $("#ddlResolved").children("option:selected").val();
-        //if (Resolved == "") {
-        //    Swal.fire('error', 'State whether issue reolved', 'error');
-        //    return;
-        //}
-        if (Remarks == "") {
-            Swal.fire('error', 'Enter Remarks', 'error');
-            return;
-        }
-        else {
-            ShowProgress();
-            $.ajax({
-                type: "post",
-                url: "/ICT/ConfirmICTRequest",
-                data: JSON.stringify({ DocNo: DocNo, Resolved: "", ConfirmR: Remarks }),
                 contentType: "application/json; charset = utf-8",
                 success: function (data) {
                     if (data.success == true) {

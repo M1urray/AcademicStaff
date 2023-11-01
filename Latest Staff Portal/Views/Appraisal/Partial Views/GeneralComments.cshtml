@@ -1,0 +1,33 @@
+﻿@model Latest_Staff_Portal.ViewModel.GeneralComments
+<div class="row">
+    <div class="col-md-12">
+        <b>Appraisee Comments</b>
+        @Html.TextAreaFor(m => m.AppraiseeComment, new { @class = "form-control", @id = "GeneralAppraiseeComments" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <b>Supervisor Comments</b>
+        @Html.TextAreaFor(m => m.SuporvisorComment, new { @class = "form-control", @id = "GeneralAppraisorComments" })
+    </div>
+</div>
+<hr />
+<div align="center">
+    <input type="button" value="Save Comments" class="btn btn-primary" onclick="SaveComments('5','@Model.Level');" />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@Model.Level' == "A") {
+            $("#GeneralAppraisorComments").attr("readonly", true);
+            $("#GeneralAppraisorComments").css("background-color", "#dedebd");
+        }
+        else if ('@Model.Level' == "S") {
+            $("#GeneralAppraiseeComments").attr("readonly", true);
+            $("#GeneralAppraiseeComments").css("background-color", "#dedebd");
+        }
+        else {
+            $("#GeneralAppraiseeComments,#GeneralAppraisorComments").attr("readonly", true);
+            $("#GeneralAppraiseeComments,#GeneralAppraisorComments").css("background-color", "#dedebd");
+        }
+    });
+</script>

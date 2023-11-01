@@ -47,6 +47,16 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
+            @Html.Label("No of Passengers", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="txtNoOfPassengers" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
             @Html.Label("Purpose of the Trip", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
                 <textarea id="txtRemarks" class="form-control"></textarea>

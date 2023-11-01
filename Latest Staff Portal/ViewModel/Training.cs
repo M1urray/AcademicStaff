@@ -17,15 +17,16 @@ namespace Latest_Staff_Portal.ViewModel
         public string Training_Category { get; set; }
         public string Course_Title { get; set; }
         public string Course_Desc { get; set; }
-        public string Directorate { get; set; }
+        public string Campus { get; set; }
         public string Department { get; set; }
         public string RespC { get; set; }
         public string Trainer { get; set; }
+        public string TrainerName { get; set; }
         public string Sponsor { get; set; }
         public string Cost { get; set; }
         public string Purpose { get; set; }
         public string Status { get; set; }
-        public List<SelectListItem> ListOfDirectorate { get; set; }
+        public List<SelectListItem> ListOfCampus { get; set; }
         public List<SelectListItem> ListOfDepartment { get; set; }
         public List<SelectListItem> ListOfResponsibility { get; set; }
         public List<SelectListItem> ListOfCourses { get; set; }
@@ -33,13 +34,13 @@ namespace Latest_Staff_Portal.ViewModel
     }
     public class NewTrainingDocument
     {
-        public string Department { get; set; }
-        public string Directorate { get; set; }
+        public string Campus { get; set; }
+        public string Department { get; set; }        
         public string RespC { get; set; }
         public string Course { get; set; }
         public string Trainer { get; set; }
         public List<SelectListItem> ListOfDepartment { get; set; }
-        public List<SelectListItem> ListOfDirectorate { get; set; }
+        public List<SelectListItem> ListOfCampus { get; set; }
         public List<SelectListItem> ListOfResponsibility { get; set; }
         public List<SelectListItem> ListOfCourses { get; set; }
         public List<SelectListItem> ListOfTrainers { get; set; }

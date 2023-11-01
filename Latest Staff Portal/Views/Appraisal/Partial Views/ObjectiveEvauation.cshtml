@@ -1,0 +1,114 @@
+﻿@model Latest_Staff_Portal.ViewModel.SectionDetails
+<style>
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div class="pre-scrollable">
+    <table id="tableObjReview" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="20%">Objective</th>
+                <th width="20%">KPI</th>
+                <th width="20%">Targets</th>
+                <th width="20%">Achievements</th>
+                <th width="5%" style="text-align:center">Self<br />Rating(%)</th>
+                <th width="5%" style="text-align:center">Peer<br />Rating(%)</th>
+                <th width="5%" style="text-align:center">Sup.<br />Rating(%)</th>
+                <th width="5%" style="text-align:right">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    {
+                        if (Model.ObjList.Count() > 0)
+                        {
+                            int i = 1;
+                            foreach (var item in Model.ObjList)
+                            {
+                                <tr class="HasData">
+                                    <td>
+                                        @i
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Objective)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.KeyPerformanceIndicator)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Targets)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Achievements)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ratings)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PeerRating)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SupervisorRating)
+                                    </td>
+                                    <td style="text-align:right">
+                                        <a href="javascript:void(0);" class="text-danger" onclick="EvalObjectiveItem('@item.LineNo','@item.DocumentNo','@Model.Level');">Evaluate</a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr class="NoData">
+                                <td colspan="6" style="color:red">
+                                    No Records Found
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <b>Appraisee Comments</b>
+        @Html.TextAreaFor(m => m.AppraiseeComment, new { @class = "form-control", @id = "ObjReviewComments" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <b>Supervisor Comments</b>
+        @Html.TextAreaFor(m => m.SuporvisorComment, new { @class = "form-control", @id = "ObjReviewAppraisorComments" })
+    </div>
+</div>
+<hr />
+<div align="center">
+    <input type="button" value="Save Comments" class="btn btn-primary" onclick="SaveComments('2','@Model.Level');" />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@Model.Level' == "A") {
+            $("#ObjReviewAppraisorComments").attr("readonly", true);
+            $("#ObjReviewAppraisorComments").css("background-color", "#dedebd");
+        }
+        else if ('@Model.Level' == "S") {
+            $("#ObjReviewComments").attr("readonly", true);
+            $("#ObjReviewComments").css("background-color", "#dedebd");
+        }
+        else {
+            $("#ObjReviewComments,#ObjReviewAppraisorComments").attr("readonly", true);
+            $("#ObjReviewComments,#ObjReviewAppraisorComments").css("background-color", "#dedebd");
+        }
+    });
+</script>
+
+

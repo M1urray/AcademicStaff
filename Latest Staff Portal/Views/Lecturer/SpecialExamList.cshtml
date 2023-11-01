@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Special Exam List";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .textboxWidth {
+        width: 50px;
+    }
+
+    .table td {
+        padding: 0.1rem;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="BackToUnitsAllocation();" style="color:yellow"><<< Back To Units Allocation</a>
+</div>
+<hr style="margin:2px" />
+<div id="divStudentList"></div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModalUnits" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Score Sheet</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody" style="width:100%;height:500px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadStudentList("");
+    });
+    var LoadStudentList = function (message) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/lecturer/LoadSpecialExamStudentUnitList",
+            success: function (data) {
+                $("#divStudentList").html(data);
+                if (message != "") {
+                    Swal.fire('Success', message, 'success');
+                }
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                alert("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var SaveStudentMarks = function () {
+        var myTableArray = [];
+        
+        $('#datatable-buttons tbody tr').each(function () {
+            var arrayOfThisRow = [];
+            var tableData = $(this).find('td');
+            if (tableData.length > 0) {
+                tableData.each(function () {
+                    if ($(this).find("input[type=text]").length) {
+                        var myText = $(this).find("input[type=text]").val();
+                        arrayOfThisRow.push(myText);
+                    }
+                    else arrayOfThisRow.push($(this).text());
+                });
+
+                myTableArray.push(arrayOfThisRow);
+            }
+        });
+        ShowProgress();
+        $.ajax({
+            type: "post",
+            url: "/lecturer/SaveSpecialExamMarks",
+            data: { Rows: myTableArray },
+            contenttype: "text/plain; charset=utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadStudentList(data.message);
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('error', err, 'error');
+            }
+        });
+    }
+    var BackToUnitsAllocation = function () {
+        ShowProgress();
+        window.location = "/Lecturer/SpecialExamAllocationUnits";
+    }
+    var PrintScoresheet = function () {
+        ShowProgress();
+        $.ajax({
+            url: '/Lecturer/PrintScoreSheet',
+            datatype: "json",
+            type: "POST",
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    var viewer = $("#modalBody");
+                    PDFObject.embed(data.message, viewer);
+                    $("#myModalUnits").modal("show");
+                    HideProgress();
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+</script>
+
