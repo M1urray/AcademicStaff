@@ -1,5 +1,4 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
+﻿using iText;
 using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -681,7 +680,7 @@ namespace Latest_Staff_Portal.Models
                 //    PdfPCell Logo_a6 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Border = 0 };
                 //    tableFirstApplicationLogo.AddCell(Logo_a6);
 
-                //    iTextSharp.text.Image Logo_jpg = iTextSharp.text.Image.GetInstance(Logo_Path);
+                //    iText.text.Image Logo_jpg = iText.text.Image.GetInstance(Logo_Path);
                 //    Logo_jpg.ScaleToFit(80f, 60f);
                 //    Logo_jpg.Border = 0;
                 //    Logo_jpg.BorderWidth = 0;

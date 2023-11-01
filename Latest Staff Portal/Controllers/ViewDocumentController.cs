@@ -1,4 +1,4 @@
-﻿using iTextSharp.text.pdf;
+﻿using iText.Kernel.Pdf;
 using Latest_Staff_Portal.CustomSecurity;
 using Latest_Staff_Portal.Models;
 using Latest_Staff_Portal.ViewModel;
@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -248,11 +249,22 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
+                //using (Stream input = new FileStream(TfileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                //using (Stream output = new FileStream(NewFileName, FileMode.Create, FileAccess.Write, FileShare.None))
+                //{
+                //    PdfReader reader = new PdfReader(input);
+                //    PdfEncryptor.Encrypt(reader, output, true, );
+                //}
                 using (Stream input = new FileStream(TfileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-                using (Stream output = new FileStream(NewFileName, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
-                    PdfReader reader = new PdfReader(input);
-                    PdfEncryptor.Encrypt(reader, output, true, password, password, PdfWriter.ALLOW_PRINTING);
+                    using (Stream output = new FileStream(NewFileName, FileMode.Create, FileAccess.Write, FileShare.None))
+                    {
+                        PdfReader reader = new PdfReader(input);
+                        reader.SetUnethicalReading(true);
+                        EncryptionProperties encryptionProperties = new EncryptionProperties();
+                        encryptionProperties.SetStandardEncryption(Encoding.ASCII.GetBytes(password), null, EncryptionConstants.ALLOW_PRINTING, EncryptionConstants.STANDARD_ENCRYPTION_128);
+                        PdfEncryptor.Encrypt(reader, output, encryptionProperties);
+                    }
                 }
                 if (System.IO.File.Exists(TfileName) == true)
                 {
