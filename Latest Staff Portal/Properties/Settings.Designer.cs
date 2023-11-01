@@ -26,7 +26,7 @@ namespace Latest_Staff_Portal.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://maachah.negst.net:7047/KIJABE/WS/KIJABE%20LIVE/Codeunit/WebPortal")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://108.181.199.151:9101/AIU/WS/AIU/Codeunit/WebPortal")]
         public string Latest_Staff_Portal_NAVWS_WebPortal {
             get {
                 return ((string)(this["Latest_Staff_Portal_NAVWS_WebPortal"]));

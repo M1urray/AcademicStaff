@@ -19,7 +19,7 @@
             }
         }
         else
-        {KIJABE
+        {
             imgSrc = Session["ImgProfile"].ToString();
         }
 
@@ -123,9 +123,9 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>KIJABE | Staff Portal</title>
+    <title>AIC -  KIJABE HOSPITAL | Staff Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="KIJABE Staff Portal" name="description" />
+    <meta content="AIC -  KIJABE HOSPITAL | Staff Portal" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="~/assets/images/favicon.ico">
@@ -254,31 +254,43 @@
                         }
                         @if (Lecturer || PartTimeLec)
                         {
-                            <li class="menu-title">Academics</li>
+                            <li class="menu-title">Appraisal Section</li>
                             <li>
-                                <a href="#" onclick="CourseAllocationLink();" class=" waves-effect">
-                                    <i class="bx bx-list-ul"></i>
-                                    <span>Allocated Units</span>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bxs-hand-right"></i>
+                                    <span>Appraisal Links</span>
                                 </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="#" onclick="AppraisalRequisitiontLink();">Appraisal Requisition</a></li>
+                                    @*<li><a href="#" onclick="SupervisorRequisitiontReviewLink();">Supervisor Review List</a></li>*@
+                                </ul>
                             </li>
-                            <li>
-                                <a href="#" onclick="MarkEntryLink();" class=" waves-effect">
-                                    <i class="bx bx-question-mark"></i>
-                                    <span>Mark Entry</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="CourseEvalLink();" class=" waves-effect">
-                                    <i class="bx bx-question-mark"></i>
-                                    <span>Course Evaluation</span>
-                                </a>
-                            </li>
-                            @*<li>
-                                    <a href="#" onclick="PartTimeReqLink();" class=" waves-effect">
-                                        <i class="bx bx-receipt"></i>
-                                        <span>Part-Time Claims</span>
-                                    </a>
-                                </li>*@
+                            @* <li class="menu-title">Academics</li> *@
+                            @* <li> *@
+                            @*     <a href="#" onclick="CourseAllocationLink();" class=" waves-effect"> *@
+                            @*         <i class="bx bx-list-ul"></i> *@
+                            @*         <i class="bx bx-list-ul"></i> *@
+                            @*         <span>Allocated Units</span> *@
+                            @*     </a> *@
+                            @* </li> *@
+                            @* <li> *@
+                            @*     <a href="#" onclick="MarkEntryLink();" class=" waves-effect"> *@
+                            @*         <i class="bx bx-question-mark"></i> *@
+                            @*         <span>Mark Entry</span> *@
+                            @*     </a> *@
+                            @* </li> *@
+                            @* <li> *@
+                            @*     <a href="#" onclick="CourseEvalLink();" class=" waves-effect"> *@
+                            @*         <i class="bx bx-question-mark"></i> *@
+                            @*         <span>Course Evaluation</span> *@
+                            @*     </a> *@
+                            @* </li> *@
+                            @* <li> *@
+                            @*     <a href="#" onclick="PartTimeReqLink();" class=" waves-effect"> *@
+                            @*         <i class="bx bx-receipt"></i> *@
+                            @*         <span>Part-Time Claims</span> *@
+                            @*     </a> *@
+                            @* </li> *@
 
                         }
                         @if (!PartTimeLec)
@@ -291,15 +303,15 @@
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="#" onclick="LeaveRequisitionLink();">Leave Requisition</a></li>
-                                    <li><a href="#" onclick="PurchaseRequisitionLink();">Purchase Requisition</a></li>
-                                    <li><a href="#" onclick="StoreRequisitiontLink();">Store Requisition</a></li>
-                                    <li><a href="#" onclick="ImprestRequisitiontLink();">Imprest Requisition</a></li>
-                                    <li><a href="#" onclick="ImprestSurrenderLink();">Imprest Surrender</a></li>
-                                    <li><a href="#" onclick="PaymentRequestRequisitiontLink();">Payment Requisition</a></li>
-                                    <li><a href="#" onclick="StaffClaimRequisitiontLink();">Staff Claim Requisition</a></li>
+                                    @* <li><a href="#" onclick="PurchaseRequisitionLink();">Purchase Requisition</a></li> *@
+                                    @* <li><a href="#" onclick="StoreRequisitiontLink();">Store Requisition</a></li> *@
+                                    @* <li><a href="#" onclick="ImprestRequisitiontLink();">Imprest Requisition</a></li> *@
+                                    @* <li><a href="#" onclick="ImprestSurrenderLink();">Imprest Surrender</a></li> *@
+                                    @* <li><a href="#" onclick="PaymentRequestRequisitiontLink();">Payment Requisition</a></li> *@
+                                    @* <li><a href="#" onclick="StaffClaimRequisitiontLink();">Staff Claim Requisition</a></li> *@
                                     <li><a href="#" onclick="TransportRequisitiontLink();">Transport Requisition</a></li>
-                                    <li><a href="#" onclick="CafFoodRequisitionLink();">Cafeteria Food Request</a></li>
-                                    @*<li><a href="#" onclick="ICTRequisitionlink();">ICT Requisition</a></li>*@
+                                    @* <li><a href="#" onclick="CafFoodRequisitionLink();">Cafeteria Food Request</a></li> *@
+                                    @* <li><a href="#" onclick="ICTRequisitionlink();">ICT Requisition</a></li> *@
                                     <li><a href="#" onclick="TrainingRequisitiontLink();">Training Requisition</a></li>
                                     <li><a href="#" onclick="ExitInterviewlink();">Exit Interview</a></li>
                                     <li><a href="#" onclick="StaffClearancelink();">Staff Clearance</a></li>
@@ -342,6 +354,7 @@
                                     <li><a href="#" onclick="RejectedDocLink('Rejected');">My Rejected Documents</a></li>
                                 </ul>
                             </li>
+
                             @*<li class="menu-title">Approvals</li>
                                 <li>
                                     <a href="#" onclick="DocumentApprovalSummeryLink('Open');" class="waves-effect">
@@ -361,11 +374,11 @@
                         <li class="menu-title">settings</li>
                         <li>
                             <a href="https://ssp.KIJABE.ac.ke" class=" waves-effect">
-                            @*<a href="#" onclick="ChangePasswordLink();" class=" waves-effect">*@
-                                    <i class="dripicons-gear"></i>
-                                    <span>Change password</span>
-                                </a>
-</li>
+                                @*<a href="#" onclick="ChangePasswordLink();" class=" waves-effect">*@
+                                <i class="dripicons-gear"></i>
+                                <span>Change password</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- Sidebar -->

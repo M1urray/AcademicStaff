@@ -222,7 +222,7 @@ namespace Latest_Staff_Portal.Controllers
                     string fileDestinationPath = Server.MapPath("~/Downloads/");
                     CommonClass.MoveFile(filename, fileDestinationPath);
                     string DestinationPath = fileDestinationPath + filename;
-                    System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
+                    FileInfo file = new FileInfo(DestinationPath);
                     if (file.Exists)
                     {
                         success = true;

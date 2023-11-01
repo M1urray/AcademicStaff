@@ -207,28 +207,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AppraisalController.cs" />
-    <Compile Include="Controllers\CafeteriaController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DocumentApprovalController.cs" />
-    <Compile Include="Controllers\ICTController.cs" />
-    <Compile Include="Controllers\ImprestController.cs" />
-    <Compile Include="Controllers\ImprestSurrenderController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
-    <Compile Include="Controllers\LecturerController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\ParttimeClaimController.cs" />
-    <Compile Include="Controllers\PaymentRequestController.cs" />
-    <Compile Include="Controllers\ProgrammeController.cs" />
-    <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
-    <Compile Include="Controllers\StaffClaimController.cs" />
     <Compile Include="Controllers\StaffClearanceController.cs" />
-    <Compile Include="Controllers\StoreController.cs" />
-    <Compile Include="Controllers\StudentController.cs" />
-    <Compile Include="Controllers\TimeTableController.cs" />
     <Compile Include="Controllers\TrainingController.cs" />
-    <Compile Include="Controllers\TransportController.cs" />
     <Compile Include="Controllers\ViewDocumentController.cs" />
     <Compile Include="Controllers\ViewDocumentsController.cs" />
     <Compile Include="CustomSecurity\CustomAuthorization.cs" />
@@ -581,10 +567,10 @@
     <Content Include="Views\PaymentRequest\PaymentRequestReqListView.cshtml" />
     <Content Include="Views\PaymentRequest\PaymentRequestRequisitionList.cshtml" />
     <Content Include="Views\PaymentRequest\PaymentReqEditItemForm.cshtml" />
-    <None Include="Web References\NAVWS\Reference.map">
+    <Content Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    </Content>
     <None Include="Web References\NAVWS\WebPortal.wsdl" />
   </ItemGroup>
   <ItemGroup>
@@ -594,10 +580,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://maachah.negst.net:7047/AIU/WS/AIU%2520LIVE/Codeunit/WebPortal">
+    <WebReferenceUrl Include="http://108.181.199.151:9101/AIU/WS/AIU/Codeunit/WebPortal">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\NAVWS\</RelPath>
-      <UpdateFromURL>http://maachah.negst.net:7047/AIU/WS/AIU%2520LIVE/Codeunit/WebPortal</UpdateFromURL>
+      <UpdateFromURL>http://108.181.199.151:9101/AIU/WS/AIU/Codeunit/WebPortal</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

@@ -2,33 +2,6 @@
 <definitions xmlns:tns="urn:microsoft-dynamics-schemas/codeunit/WebPortal" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal" xmlns="http://schemas.xmlsoap.org/wsdl/">
   <types>
     <schema elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal" xmlns="http://www.w3.org/2001/XMLSchema">
-      <element name="ValidateCourseReggistration">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="stdNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="sem" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="ValidateCourseReggistration_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
-      <element name="ValidateCourseRegistration">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="stdNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="prog" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="semester" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="ValidateCourseRegistration_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
       <element name="ValidateStartDate">
         <complexType>
           <sequence>
@@ -303,19 +276,6 @@
           <sequence>
             <element minOccurs="1" maxOccurs="1" name="return_value" type="boolean" />
           </sequence>
-        </complexType>
-      </element>
-      <element name="SendLeaveApplicationForApproval">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="emplNo" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="SendLeaveApplicationForApproval_Result">
-        <complexType>
-          <sequence />
         </complexType>
       </element>
       <element name="SendRejectionEmailAlert">
@@ -895,23 +855,6 @@
           <sequence />
         </complexType>
       </element>
-      <element name="StudentSelfPromotionWithResidence">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="stdNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="studProg" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="regF" type="int" />
-            <element minOccurs="1" maxOccurs="1" name="residence" type="int" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="StudentSelfPromotionWithResidence_Result">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="return_value" type="boolean" />
-          </sequence>
-        </complexType>
-      </element>
       <element name="StudentSelfPromotion">
         <complexType>
           <sequence>
@@ -1097,6 +1040,7 @@
             <element minOccurs="1" maxOccurs="1" name="employee_No" type="string" />
             <element minOccurs="1" maxOccurs="1" name="dim1" type="string" />
             <element minOccurs="1" maxOccurs="1" name="dim2" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="dim3" type="string" />
             <element minOccurs="1" maxOccurs="1" name="course" type="string" />
             <element minOccurs="1" maxOccurs="1" name="courseDesc" type="string" />
             <element minOccurs="1" maxOccurs="1" name="category" type="int" />
@@ -1108,7 +1052,7 @@
             <element minOccurs="1" maxOccurs="1" name="cost" type="decimal" />
             <element minOccurs="1" maxOccurs="1" name="purpose" type="string" />
             <element minOccurs="1" maxOccurs="1" name="venue" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="sponsorName" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="sponorName" type="string" />
           </sequence>
         </complexType>
       </element>
@@ -1662,17 +1606,29 @@
           </sequence>
         </complexType>
       </element>
-      <element name="PaymentRequestLineUpdate">
+      <element name="ValidateCourseReggistration">
         <complexType>
           <sequence>
-            <element minOccurs="1" maxOccurs="1" name="reqNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="lineNo" type="int" />
-            <element minOccurs="1" maxOccurs="1" name="reqAmount" type="decimal" />
-            <element minOccurs="1" maxOccurs="1" name="desc" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="stdNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="sem" type="string" />
           </sequence>
         </complexType>
       </element>
-      <element name="PaymentRequestLineUpdate_Result">
+      <element name="ValidateCourseReggistration_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="ValidateCourseRegistration">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="stdNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="prog" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="semester" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ValidateCourseRegistration_Result">
         <complexType>
           <sequence />
         </complexType>
@@ -2877,6 +2833,19 @@
           <sequence />
         </complexType>
       </element>
+      <element name="SendLeaveApplicationForApproval">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="emplNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="SendLeaveApplicationForApproval_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
       <element name="InsertApplicantReferee">
         <complexType>
           <sequence>
@@ -3990,7 +3959,6 @@
             <element minOccurs="1" maxOccurs="1" name="purpose" type="string" />
             <element minOccurs="1" maxOccurs="1" name="schooCode" type="string" />
             <element minOccurs="1" maxOccurs="1" name="dim4" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="reqType" type="int" />
           </sequence>
         </complexType>
       </element>
@@ -8135,18 +8103,6 @@
       </element>
     </schema>
   </types>
-  <message name="ValidateCourseReggistration">
-    <part name="parameters" element="tns:ValidateCourseReggistration" />
-  </message>
-  <message name="ValidateCourseReggistration_Result">
-    <part name="parameters" element="tns:ValidateCourseReggistration_Result" />
-  </message>
-  <message name="ValidateCourseRegistration">
-    <part name="parameters" element="tns:ValidateCourseRegistration" />
-  </message>
-  <message name="ValidateCourseRegistration_Result">
-    <part name="parameters" element="tns:ValidateCourseRegistration_Result" />
-  </message>
   <message name="ValidateStartDate">
     <part name="parameters" element="tns:ValidateStartDate" />
   </message>
@@ -8248,12 +8204,6 @@
   </message>
   <message name="updateDashboardProfile_Result">
     <part name="parameters" element="tns:updateDashboardProfile_Result" />
-  </message>
-  <message name="SendLeaveApplicationForApproval">
-    <part name="parameters" element="tns:SendLeaveApplicationForApproval" />
-  </message>
-  <message name="SendLeaveApplicationForApproval_Result">
-    <part name="parameters" element="tns:SendLeaveApplicationForApproval_Result" />
   </message>
   <message name="SendRejectionEmailAlert">
     <part name="parameters" element="tns:SendRejectionEmailAlert" />
@@ -8470,12 +8420,6 @@
   </message>
   <message name="StudentRetakenChargesCreate_Result">
     <part name="parameters" element="tns:StudentRetakenChargesCreate_Result" />
-  </message>
-  <message name="StudentSelfPromotionWithResidence">
-    <part name="parameters" element="tns:StudentSelfPromotionWithResidence" />
-  </message>
-  <message name="StudentSelfPromotionWithResidence_Result">
-    <part name="parameters" element="tns:StudentSelfPromotionWithResidence_Result" />
   </message>
   <message name="StudentSelfPromotion">
     <part name="parameters" element="tns:StudentSelfPromotion" />
@@ -8753,11 +8697,17 @@
   <message name="ValidateBiometrics_Result">
     <part name="parameters" element="tns:ValidateBiometrics_Result" />
   </message>
-  <message name="PaymentRequestLineUpdate">
-    <part name="parameters" element="tns:PaymentRequestLineUpdate" />
+  <message name="ValidateCourseReggistration">
+    <part name="parameters" element="tns:ValidateCourseReggistration" />
   </message>
-  <message name="PaymentRequestLineUpdate_Result">
-    <part name="parameters" element="tns:PaymentRequestLineUpdate_Result" />
+  <message name="ValidateCourseReggistration_Result">
+    <part name="parameters" element="tns:ValidateCourseReggistration_Result" />
+  </message>
+  <message name="ValidateCourseRegistration">
+    <part name="parameters" element="tns:ValidateCourseRegistration" />
+  </message>
+  <message name="ValidateCourseRegistration_Result">
+    <part name="parameters" element="tns:ValidateCourseRegistration_Result" />
   </message>
   <message name="PostAttendanceList">
     <part name="parameters" element="tns:PostAttendanceList" />
@@ -9244,6 +9194,12 @@
   </message>
   <message name="SendImpSurrenderForApproval_Result">
     <part name="parameters" element="tns:SendImpSurrenderForApproval_Result" />
+  </message>
+  <message name="SendLeaveApplicationForApproval">
+    <part name="parameters" element="tns:SendLeaveApplicationForApproval" />
+  </message>
+  <message name="SendLeaveApplicationForApproval_Result">
+    <part name="parameters" element="tns:SendLeaveApplicationForApproval_Result" />
   </message>
   <message name="InsertApplicantReferee">
     <part name="parameters" element="tns:InsertApplicantReferee" />
@@ -11208,14 +11164,6 @@
     <part name="parameters" element="tns:DeleteHRAppraisalDutiesResp_Result" />
   </message>
   <portType name="WebPortal_Port">
-    <operation name="ValidateCourseReggistration">
-      <input name="ValidateCourseReggistration" message="tns:ValidateCourseReggistration" />
-      <output name="ValidateCourseReggistration_Result" message="tns:ValidateCourseReggistration_Result" />
-    </operation>
-    <operation name="ValidateCourseRegistration">
-      <input name="ValidateCourseRegistration" message="tns:ValidateCourseRegistration" />
-      <output name="ValidateCourseRegistration_Result" message="tns:ValidateCourseRegistration_Result" />
-    </operation>
     <operation name="ValidateStartDate">
       <input name="ValidateStartDate" message="tns:ValidateStartDate" />
       <output name="ValidateStartDate_Result" message="tns:ValidateStartDate_Result" />
@@ -11283,10 +11231,6 @@
     <operation name="updateDashboardProfile">
       <input name="updateDashboardProfile" message="tns:updateDashboardProfile" />
       <output name="updateDashboardProfile_Result" message="tns:updateDashboardProfile_Result" />
-    </operation>
-    <operation name="SendLeaveApplicationForApproval">
-      <input name="SendLeaveApplicationForApproval" message="tns:SendLeaveApplicationForApproval" />
-      <output name="SendLeaveApplicationForApproval_Result" message="tns:SendLeaveApplicationForApproval_Result" />
     </operation>
     <operation name="SendRejectionEmailAlert">
       <input name="SendRejectionEmailAlert" message="tns:SendRejectionEmailAlert" />
@@ -11431,10 +11375,6 @@
     <operation name="StudentRetakenChargesCreate">
       <input name="StudentRetakenChargesCreate" message="tns:StudentRetakenChargesCreate" />
       <output name="StudentRetakenChargesCreate_Result" message="tns:StudentRetakenChargesCreate_Result" />
-    </operation>
-    <operation name="StudentSelfPromotionWithResidence">
-      <input name="StudentSelfPromotionWithResidence" message="tns:StudentSelfPromotionWithResidence" />
-      <output name="StudentSelfPromotionWithResidence_Result" message="tns:StudentSelfPromotionWithResidence_Result" />
     </operation>
     <operation name="StudentSelfPromotion">
       <input name="StudentSelfPromotion" message="tns:StudentSelfPromotion" />
@@ -11620,9 +11560,13 @@
       <input name="ValidateBiometrics" message="tns:ValidateBiometrics" />
       <output name="ValidateBiometrics_Result" message="tns:ValidateBiometrics_Result" />
     </operation>
-    <operation name="PaymentRequestLineUpdate">
-      <input name="PaymentRequestLineUpdate" message="tns:PaymentRequestLineUpdate" />
-      <output name="PaymentRequestLineUpdate_Result" message="tns:PaymentRequestLineUpdate_Result" />
+    <operation name="ValidateCourseReggistration">
+      <input name="ValidateCourseReggistration" message="tns:ValidateCourseReggistration" />
+      <output name="ValidateCourseReggistration_Result" message="tns:ValidateCourseReggistration_Result" />
+    </operation>
+    <operation name="ValidateCourseRegistration">
+      <input name="ValidateCourseRegistration" message="tns:ValidateCourseRegistration" />
+      <output name="ValidateCourseRegistration_Result" message="tns:ValidateCourseRegistration_Result" />
     </operation>
     <operation name="PostAttendanceList">
       <input name="PostAttendanceList" message="tns:PostAttendanceList" />
@@ -11947,6 +11891,10 @@
     <operation name="SendImpSurrenderForApproval">
       <input name="SendImpSurrenderForApproval" message="tns:SendImpSurrenderForApproval" />
       <output name="SendImpSurrenderForApproval_Result" message="tns:SendImpSurrenderForApproval_Result" />
+    </operation>
+    <operation name="SendLeaveApplicationForApproval">
+      <input name="SendLeaveApplicationForApproval" message="tns:SendLeaveApplicationForApproval" />
+      <output name="SendLeaveApplicationForApproval_Result" message="tns:SendLeaveApplicationForApproval_Result" />
     </operation>
     <operation name="InsertApplicantReferee">
       <input name="InsertApplicantReferee" message="tns:InsertApplicantReferee" />
@@ -13259,24 +13207,6 @@
   </portType>
   <binding name="WebPortal_Binding" type="tns:WebPortal_Port">
     <binding transport="http://schemas.xmlsoap.org/soap/http" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-    <operation name="ValidateCourseReggistration">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateCourseReggistration" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="ValidateCourseReggistration">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="ValidateCourseReggistration_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="ValidateCourseRegistration">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateCourseRegistration" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="ValidateCourseRegistration">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="ValidateCourseRegistration_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
     <operation name="ValidateStartDate">
       <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateStartDate" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       <input name="ValidateStartDate">
@@ -13427,15 +13357,6 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="updateDashboardProfile_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="SendLeaveApplicationForApproval">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendLeaveApplicationForApproval" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="SendLeaveApplicationForApproval">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="SendLeaveApplicationForApproval_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -13760,15 +13681,6 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="StudentRetakenChargesCreate_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="StudentSelfPromotionWithResidence">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:StudentSelfPromotionWithResidence" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="StudentSelfPromotionWithResidence">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="StudentSelfPromotionWithResidence_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -14186,12 +14098,21 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
-    <operation name="PaymentRequestLineUpdate">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:PaymentRequestLineUpdate" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="PaymentRequestLineUpdate">
+    <operation name="ValidateCourseReggistration">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateCourseReggistration" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="ValidateCourseReggistration">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
-      <output name="PaymentRequestLineUpdate_Result">
+      <output name="ValidateCourseReggistration_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="ValidateCourseRegistration">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateCourseRegistration" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="ValidateCourseRegistration">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="ValidateCourseRegistration_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -14921,6 +14842,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="SendImpSurrenderForApproval_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="SendLeaveApplicationForApproval">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendLeaveApplicationForApproval" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="SendLeaveApplicationForApproval">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="SendLeaveApplicationForApproval_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -17870,7 +17800,7 @@
   </binding>
   <service name="WebPortal">
     <port name="WebPortal_Port" binding="tns:WebPortal_Binding">
-      <address location="http://maachah.negst.net:7047/KIJABE/WS/KIJABE%20LIVE/Codeunit/WebPortal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <address location="http://108.181.199.151:9101/AIU/WS/AIU/Codeunit/WebPortal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
     </port>
   </service>
 </definitions>

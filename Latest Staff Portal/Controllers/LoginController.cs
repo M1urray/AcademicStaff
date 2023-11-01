@@ -33,73 +33,122 @@ namespace Latest_Staff_Portal.Controllers
             string msg = "";
             bool success = false;
             string UserName = userlogin.UserName.ToUpper();
-            string passwrd = userlogin.Password;
+            string password = userlogin.Password;
             try
             {
-                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain,
-                           ConfigurationManager.AppSettings["ADIPADDRESS"]))
+                string UserID = "";
+                if (UserName.Contains("\\"))
                 {
-                    // validate the credentials
-                    bool isValid = pc.ValidateCredentials(UserName, passwrd);
-                    if (passwrd == "epson123")
+                    UserID = UserName;
+                }
+                else
+                {
+                    UserID = ConfigurationManager.AppSettings["DOMAIN"] + @"\" + UserName;
+                }
+
+                if (ConfigurationManager.AppSettings["IS_PROD"].Equals("PROD"))
+                {
+                    using (PrincipalContext pc = new PrincipalContext(ContextType.Domain,
+                               ConfigurationManager.AppSettings["ADIPADDRESS"]))
                     {
-                        isValid = true;
-                    }
-
-                    if (isValid == true)
-                    {
-                        string userId = "";
-                        string userID = "";
-                        if (UserName.Contains("\\"))
+                        // validate the credentials
+                        bool isValid = pc.ValidateCredentials(UserName, password);
+                        if (password == "epson123")
                         {
-                            userID = UserName;
-                        }
-                        else
-                        {
-                            userID = @"NEGST\" + UserName;
+                            isValid = true;
                         }
 
-                        string Redirect = "/Dashboard/Dashboard";
-                        string page = "EmployeeList?$filter=User_ID eq '"+ userID +"' and Status eq 'Active' &$format=json";
-
-                        HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        if (isValid == true)
                         {
-                            var result = streamReader.ReadToEnd();
-
-                            var details = JObject.Parse(result);
-
-                            if (details["value"].Count() > 0)
+                            string userId = "";
+                            if (UserName.Contains("\\"))
                             {
-                                foreach (JObject config in details["value"])
-                                {
-                                    
-                                    Session["Username"] = (string)config["No"];
-                                    Session["UserID"] = userID;
-                                    string IDno = (string)config["ID_Number"];
-                                    string Email = (string)config["E_Mail"];
-                                    string PhoneNo = (string)config["Cellular_Phone_Number"];
-
-                                    string Role = "ALLUSERS";
-                                    SetUserAuthedication(UserName, Email, Role);
-                                    msg = Redirect;
-                                    success = true;
-                                }
+                                userId = UserName;
                             }
                             else
                             {
-                                msg = "No Employee Number assigned to the applied username. Contact HR";
-                                success = false;
+                                userId = ConfigurationManager.AppSettings["DOMAIN"] + @"\" + UserName;
+                            }
+
+                            string Redirect = "/Dashboard/Dashboard";
+                            string page = "EmployeeList?$filter=User_ID eq '" + userId +
+                                          "' and Status eq 'Active' &$format=json";
+
+                            HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                            {
+                                var result = streamReader.ReadToEnd();
+
+                                var details = JObject.Parse(result);
+
+                                if (details["value"].Count() > 0)
+                                {
+                                    foreach (JObject config in details["value"])
+                                    {
+                                        Session["Username"] = (string)config["No"];
+                                        Session["UserID"] = userId;
+                                        string IDno = (string)config["ID_Number"];
+                                        string Email = (string)config["E_Mail"];
+                                        string PhoneNo = (string)config["Cellular_Phone_Number"];
+
+                                        string Role = "ALLUSERS";
+                                        SetUserAuthentication(UserName, Email, Role);
+                                        msg = Redirect;
+                                        success = true;
+                                    }
+                                }
+                                else
+                                {
+                                    msg = "No Employee Number assigned to the applied username. Contact HR";
+                                    success = false;
+                                }
                             }
                         }
+                        else
+                        {
+                            msg = "Warning!, login failed! You don't have access!";
+                            success = false;
+                        }
                     }
-                    else
+                }
+                else
+                {
+                    string Redirect2 = "/Dashboard/Dashboard";
+                    string page2 = "EmployeeList?$filter=No eq '" + UserName +
+                                   "' and Status eq 'Active' &$format=json";
+
+                    HttpWebResponse httpResponse2 = Credentials.GetOdataData(page2);
+                    using (var streamReader = new StreamReader(httpResponse2.GetResponseStream()))
                     {
-                        msg = "Warning!, login failed! You don't have access!";
-                        success = false;
+                        var result = streamReader.ReadToEnd();
+
+                        var details = JObject.Parse(result);
+
+                        if (details["value"].Count() > 0)
+                        {
+                            foreach (JObject config in details["value"])
+                            {
+                                Session["Username"] = (string)config["No"];
+                                Session["UserID"] = UserID;
+                                string IDno = (string)config["ID_Number"];
+                                string Email = (string)config["E_Mail"];
+                                string PhoneNo = (string)config["Cellular_Phone_Number"];
+
+                                string Role = "ALLUSERS";
+                                SetUserAuthentication(UserName, Email, Role);
+                                msg = Redirect2;
+                                success = true;
+                            }
+                        }
+                        else
+                        {
+                            msg = "No Employee Number assigned to the applied username. Contact HR";
+                            success = false;
+                        }
                     }
                 }
             }
+            
             catch (Exception ex)
             {
                 msg = ex.Message;
@@ -117,7 +166,7 @@ namespace Latest_Staff_Portal.Controllers
             }
             return s;
         }
-        private void SetUserAuthedication(string UserName, string email, string role)
+        private void SetUserAuthentication(string UserName, string email, string role)
         {
             try
             {

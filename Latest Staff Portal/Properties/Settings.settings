@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Latest_Staff_Portal_NAVWS_WebPortal" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://maachah.negst.net:7047/KIJABE/WS/KIJABE%20LIVE/Codeunit/WebPortal</Value>
+      <Value Profile="(Default)">http://108.181.199.151:9101/AIU/WS/AIU/Codeunit/WebPortal</Value>
     </Setting>
   </Settings>
 </SettingsFile>

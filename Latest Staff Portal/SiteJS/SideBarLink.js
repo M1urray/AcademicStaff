@@ -130,3 +130,11 @@ var PaymentRequestRequisitiontLink = function () {
     ShowProgress();
     window.location = "/PaymentRequest/PaymentRequestRequisitionList";
 }
+var AppraisalRequisitiontLink = function () {
+    ShowProgress();
+    window.location = "/Appraisal/MyAppraisalList";
+}
+var SupervisorRequisitiontReviewLink = function () {
+    ShowProgress();
+    window.location = "/Appraisal/MyReviewAppraisalList";
+}

@@ -55,20 +55,21 @@
         <div style="border-left: solid 2px green;border-right: solid 2px green;padding: 5px;
         height: 100%">
             <b>Staff No :</b>  @Model.No<br />
-            <b>Name : </b>  @Model.Name<br />
-            <b>Imprest Balance : </b>  @CustBal
+            <hr/>
+            <b >Name : </b>" @Model.Name<br />
+            @* <b>Imprest Balance : </b>  @CustBal *@
         </div>
     </div>
     <div class="col-md-4">
-        <hr />
+        @* <hr /> *@
         <b>Annual Leave Entitlement :</b> @Model.AllocatedDays<br />
         <b>Days carried Forward : </b>  @Model.CarryForawrd<br />
         <b>Reimbursed Days : </b>  @Model.ReimbDays<br />
         <b>Leave Taken : </b>  @Model.LeaveTaken<br />
         <b>Leave Balance : </b>  @Model.LeaveBal
-        <hr />
-        <button class="btn btn-sm btn-success form-control" onclick="AcademicCalender('@Model.Semester');">Get Academic Calender</button>
-        <hr />
+        @* <hr /> *@
+        @* <button class="btn btn-sm btn-success form-control" onclick="AcademicCalender('@Model.Semester');">Get Academic Calender</button> *@
+        @* <hr /> *@
     </div>
 </div>
 <hr />

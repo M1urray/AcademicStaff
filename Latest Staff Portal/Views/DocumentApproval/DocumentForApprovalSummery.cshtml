@@ -80,62 +80,62 @@
     </div>
 </div>
 <hr />
-<div class="card pre-scrollable" style="border: 3px solid #516471">
-    <div class="card-title">@Model.StdCount.Status Student Requisition Approval List</div>
-    <hr />
-    <div class="card-body">
-        @if (Model.StdCount != null)
-        {
-            hasNoPending = false;
-            <ol class="list-group">
-                @if (Model.StdCount.ProgTransCount > 0)
-                {
-                    hasNoPending = true;
-                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Programme Transfer','@Model.StdCount.Status','Programme Transfer');">Programme Major (<span class="badge badge-info badge-pill">@Model.StdCount.ProgTransCount</span>)</a></li>
-                }
-                @if (Model.StdCount.MajorCount > 0)
-                {
-                    hasNoPending = true;
-                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Double Major','@Model.StdCount.Status','Double Major');">Double Major (<span class="badge badge-info badge-pill">@Model.StdCount.MajorCount</span>)</a></li>
-                }
-                @if (Model.StdCount.MinorCount > 0)
-                {
-                    hasNoPending = true;
-                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Programme Minor','@Model.StdCount.Status','Programme Minor');">Programme Minors (<span class="badge badge-info badge-pill">@Model.StdCount.MinorCount</span>)</a></li>
-                }
-                @if (Model.StdCount.DoubleConcCount > 0)
-                {
-                    hasNoPending = true;
-                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Double Concentration','@Model.StdCount.Status','Double Concentration');">Double Concentration (<span class="badge badge-info badge-pill">@Model.StdCount.DoubleConcCount</span>)</a></li>
-                }
-                @if (Model.StdCount.ExemptionConcCount > 0)
-                {
-                    hasNoPending = true;
-                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894', 'Exemption', '@Model.StdCount.Status', 'Exemption');">Exemptions (<span class="badge badge-info badge-pill">@Model.StdCount.ExemptionConcCount</span>)</a></li>
-                }
-                @if (Model.StdCount.SExamCount > 0)
-                {
-                    hasNoPending = true;
-                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894', 'Special Exams', '@Model.StdCount.Status', 'Special Exams');">Special Exams (<span class="badge badge-info badge-pill">@Model.StdCount.SExamCount</span>)</a></li>
-                }
-                @if (Model.StdCount.ExamChlngConcCount > 0)
-                {
-                    hasNoPending = true;
-                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894', 'Exam Challenge', '@Model.StdCount.Status', 'Exam Challenge');">Exam Challenge (<span class="badge badge-info badge-pill">@Model.StdCount.ExamChlngConcCount</span>)</a></li>
-                }
-                @if (Model.StdCount.GraduationCount > 0)
-                {
-                    hasNoPending = true;
-                    <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134931', 'Graduation Request', '@Model.StdCount.Status', 'Graduation Request');">Graduation Request (<span class="badge badge-info badge-pill">@Model.StdCount.GraduationCount</span>)</a></li>
-                }
-            </ol>
-        }
-        @if (!hasNoPending)
-        {
-            <p style="color:red">You have no student requisitions awaiting your approval</p>
-        }
-    </div>
-</div>
+@* <div class="card pre-scrollable" style="border: 3px solid #516471"> *@
+@*     <div class="card-title">@Model.StdCount.Status Student Requisition Approval List</div> *@
+@*     <hr /> *@
+@*     <div class="card-body"> *@
+@*         @if (Model.StdCount != null) *@
+@*         { *@
+@*             hasNoPending = false; *@
+@*             <ol class="list-group"> *@
+@*                 @if (Model.StdCount.ProgTransCount > 0) *@
+@*                 { *@
+@*                     hasNoPending = true; *@
+@*                     <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Programme Transfer','@Model.StdCount.Status','Programme Transfer');">Programme Major (<span class="badge badge-info badge-pill">@Model.StdCount.ProgTransCount</span>)</a></li> *@
+@*                 } *@
+@*                 @if (Model.StdCount.MajorCount > 0) *@
+@*                 { *@
+@*                     hasNoPending = true; *@
+@*                     <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Double Major','@Model.StdCount.Status','Double Major');">Double Major (<span class="badge badge-info badge-pill">@Model.StdCount.MajorCount</span>)</a></li> *@
+@*                 } *@
+@*                 @if (Model.StdCount.MinorCount > 0) *@
+@*                 { *@
+@*                     hasNoPending = true; *@
+@*                     <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Programme Minor','@Model.StdCount.Status','Programme Minor');">Programme Minors (<span class="badge badge-info badge-pill">@Model.StdCount.MinorCount</span>)</a></li> *@
+@*                 } *@
+@*                 @if (Model.StdCount.DoubleConcCount > 0) *@
+@*                 { *@
+@*                     hasNoPending = true; *@
+@*                     <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894','Double Concentration','@Model.StdCount.Status','Double Concentration');">Double Concentration (<span class="badge badge-info badge-pill">@Model.StdCount.DoubleConcCount</span>)</a></li> *@
+@*                 } *@
+@*                 @if (Model.StdCount.ExemptionConcCount > 0) *@
+@*                 { *@
+@*                     hasNoPending = true; *@
+@*                     <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894', 'Exemption', '@Model.StdCount.Status', 'Exemption');">Exemptions (<span class="badge badge-info badge-pill">@Model.StdCount.ExemptionConcCount</span>)</a></li> *@
+@*                 } *@
+@*                 @if (Model.StdCount.SExamCount > 0) *@
+@*                 { *@
+@*                     hasNoPending = true; *@
+@*                     <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894', 'Special Exams', '@Model.StdCount.Status', 'Special Exams');">Special Exams (<span class="badge badge-info badge-pill">@Model.StdCount.SExamCount</span>)</a></li> *@
+@*                 } *@
+@*                 @if (Model.StdCount.ExamChlngConcCount > 0) *@
+@*                 { *@
+@*                     hasNoPending = true; *@
+@*                     <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134894', 'Exam Challenge', '@Model.StdCount.Status', 'Exam Challenge');">Exam Challenge (<span class="badge badge-info badge-pill">@Model.StdCount.ExamChlngConcCount</span>)</a></li> *@
+@*                 } *@
+@*                 @if (Model.StdCount.GraduationCount > 0) *@
+@*                 { *@
+@*                     hasNoPending = true; *@
+@*                     <li class="list-group-item"><a href="#" onclick="GetDocumentApprovalList('70134931', 'Graduation Request', '@Model.StdCount.Status', 'Graduation Request');">Graduation Request (<span class="badge badge-info badge-pill">@Model.StdCount.GraduationCount</span>)</a></li> *@
+@*                 } *@
+@*             </ol> *@
+@*         } *@
+@*         @if (!hasNoPending) *@
+@*         { *@
+@*             <p style="color:red">You have no student requisitions awaiting your approval</p> *@
+@*         } *@
+@*     </div> *@
+@* </div> *@
 <script src="~/assets/js/ShowProgression.js"></script>
 <script type="text/javascript">
     var GetDocumentApprovalList = function (TbleID, Title, Status, DocType) {
