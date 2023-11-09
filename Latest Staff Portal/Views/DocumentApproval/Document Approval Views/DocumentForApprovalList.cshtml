@@ -18,7 +18,9 @@
                     if (item.CommentFound)
                     {
                         <tr style="background-color:red">
-                            <td><a href="#" onclick="ViewDoc('@item.TabelID','@item.Document_No','@item.Sequence','@item.Entry_No', '@item.Sender_Name', '@item.Document_Type');">View Document</a></td>
+                            <td>
+                            <a href="#" onclick="ViewDoc('@item.TabelID','@item.Document_No','@item.Sequence','@item.Entry_No', '@item.Sender_Name', '@item.Document_Type');">View Document</a>
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Document_No)
                             </td>
