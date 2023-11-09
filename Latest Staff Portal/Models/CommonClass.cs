@@ -147,14 +147,14 @@ namespace Latest_Staff_Portal.Models
             {
                 string sourcefile = Credentials.fileSourcePath + FileName;
                 string destinationfile = DestinationPath + FileName;
-                if (System.IO.File.Exists(destinationfile) == true)
+                if (File.Exists(destinationfile) == true)
                 {
-                    System.IO.File.Delete(destinationfile);
-                    System.IO.File.Move(sourcefile, destinationfile);
+                    File.Delete(destinationfile);
+                    File.Move(sourcefile, destinationfile);
                 }
-                if (System.IO.File.Exists(destinationfile) == false)
+                if (File.Exists(destinationfile) == false)
                 {
-                    System.IO.File.Move(sourcefile, destinationfile);
+                    File.Move(sourcefile, destinationfile);
                 }
                 s = true;
             }

