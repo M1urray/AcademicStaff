@@ -16,58 +16,6 @@
           </sequence>
         </complexType>
       </element>
-      <element name="PrintClassList">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="prog" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="unit" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="stage" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="sem" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="classCode" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="campus" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="studentT" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="filenameFromApp" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="PrintClassList_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
-      <element name="DeleteLecturerUnit">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="lect" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="oldProg" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="oldStage" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="oldSemester" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="oldUnit" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="oldCampus" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="oldStudyMode" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="lineNo" type="int" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="DeleteLecturerUnit_Result">
-        <complexType>
-          <sequence />
-        </complexType>
-      </element>
-      <element name="GetProfilePictureStudent">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="studentNo" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="GetProfilePictureStudent_Result">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
-          </sequence>
-        </complexType>
-      </element>
       <element name="UpdateAcceptance">
         <complexType>
           <sequence>
@@ -1538,6 +1486,25 @@
         </complexType>
       </element>
       <element name="PrescribeDrugs_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="PrintClassList">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="prog" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="unit" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="stage" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="sem" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="classCode" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="campus" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="studentT" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="filenameFromApp" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="PrintClassList_Result">
         <complexType>
           <sequence />
         </complexType>
@@ -3184,6 +3151,20 @@
         <complexType>
           <sequence>
             <element minOccurs="1" maxOccurs="1" name="return_value" type="decimal" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetProfilePictureStudent">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="studentNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetProfilePictureStudent_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
           </sequence>
         </complexType>
       </element>
@@ -5650,6 +5631,25 @@
           <sequence />
         </complexType>
       </element>
+      <element name="DeleteLecturerUnit">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="lect" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="oldProg" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="oldStage" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="oldSemester" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="oldUnit" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="oldCampus" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="oldStudyMode" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="lineNo" type="int" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="DeleteLecturerUnit_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
       <element name="DeletePharmacyLine">
         <complexType>
           <sequence>
@@ -6558,24 +6558,6 @@
   <message name="GetProfilePicture_Result">
     <part name="parameters" element="tns:GetProfilePicture_Result" />
   </message>
-  <message name="PrintClassList">
-    <part name="parameters" element="tns:PrintClassList" />
-  </message>
-  <message name="PrintClassList_Result">
-    <part name="parameters" element="tns:PrintClassList_Result" />
-  </message>
-  <message name="DeleteLecturerUnit">
-    <part name="parameters" element="tns:DeleteLecturerUnit" />
-  </message>
-  <message name="DeleteLecturerUnit_Result">
-    <part name="parameters" element="tns:DeleteLecturerUnit_Result" />
-  </message>
-  <message name="GetProfilePictureStudent">
-    <part name="parameters" element="tns:GetProfilePictureStudent" />
-  </message>
-  <message name="GetProfilePictureStudent_Result">
-    <part name="parameters" element="tns:GetProfilePictureStudent_Result" />
-  </message>
   <message name="UpdateAcceptance">
     <part name="parameters" element="tns:UpdateAcceptance" />
   </message>
@@ -7109,6 +7091,12 @@
   </message>
   <message name="PrescribeDrugs_Result">
     <part name="parameters" element="tns:PrescribeDrugs_Result" />
+  </message>
+  <message name="PrintClassList">
+    <part name="parameters" element="tns:PrintClassList" />
+  </message>
+  <message name="PrintClassList_Result">
+    <part name="parameters" element="tns:PrintClassList_Result" />
   </message>
   <message name="PrintCourseStatement">
     <part name="parameters" element="tns:PrintCourseStatement" />
@@ -7775,6 +7763,12 @@
   </message>
   <message name="GetGraduationFee_Result">
     <part name="parameters" element="tns:GetGraduationFee_Result" />
+  </message>
+  <message name="GetProfilePictureStudent">
+    <part name="parameters" element="tns:GetProfilePictureStudent" />
+  </message>
+  <message name="GetProfilePictureStudent_Result">
+    <part name="parameters" element="tns:GetProfilePictureStudent_Result" />
   </message>
   <message name="GetStage">
     <part name="parameters" element="tns:GetStage" />
@@ -8682,6 +8676,12 @@
   <message name="DeleteLabtreatLine_Result">
     <part name="parameters" element="tns:DeleteLabtreatLine_Result" />
   </message>
+  <message name="DeleteLecturerUnit">
+    <part name="parameters" element="tns:DeleteLecturerUnit" />
+  </message>
+  <message name="DeleteLecturerUnit_Result">
+    <part name="parameters" element="tns:DeleteLecturerUnit_Result" />
+  </message>
   <message name="DeletePharmacyLine">
     <part name="parameters" element="tns:DeletePharmacyLine" />
   </message>
@@ -9022,18 +9022,6 @@
     <operation name="GetProfilePicture">
       <input name="GetProfilePicture" message="tns:GetProfilePicture" />
       <output name="GetProfilePicture_Result" message="tns:GetProfilePicture_Result" />
-    </operation>
-    <operation name="PrintClassList">
-      <input name="PrintClassList" message="tns:PrintClassList" />
-      <output name="PrintClassList_Result" message="tns:PrintClassList_Result" />
-    </operation>
-    <operation name="DeleteLecturerUnit">
-      <input name="DeleteLecturerUnit" message="tns:DeleteLecturerUnit" />
-      <output name="DeleteLecturerUnit_Result" message="tns:DeleteLecturerUnit_Result" />
-    </operation>
-    <operation name="GetProfilePictureStudent">
-      <input name="GetProfilePictureStudent" message="tns:GetProfilePictureStudent" />
-      <output name="GetProfilePictureStudent_Result" message="tns:GetProfilePictureStudent_Result" />
     </operation>
     <operation name="UpdateAcceptance">
       <input name="UpdateAcceptance" message="tns:UpdateAcceptance" />
@@ -9390,6 +9378,10 @@
     <operation name="PrescribeDrugs">
       <input name="PrescribeDrugs" message="tns:PrescribeDrugs" />
       <output name="PrescribeDrugs_Result" message="tns:PrescribeDrugs_Result" />
+    </operation>
+    <operation name="PrintClassList">
+      <input name="PrintClassList" message="tns:PrintClassList" />
+      <output name="PrintClassList_Result" message="tns:PrintClassList_Result" />
     </operation>
     <operation name="PrintCourseStatement">
       <input name="PrintCourseStatement" message="tns:PrintCourseStatement" />
@@ -9834,6 +9826,10 @@
     <operation name="GetGraduationFee">
       <input name="GetGraduationFee" message="tns:GetGraduationFee" />
       <output name="GetGraduationFee_Result" message="tns:GetGraduationFee_Result" />
+    </operation>
+    <operation name="GetProfilePictureStudent">
+      <input name="GetProfilePictureStudent" message="tns:GetProfilePictureStudent" />
+      <output name="GetProfilePictureStudent_Result" message="tns:GetProfilePictureStudent_Result" />
     </operation>
     <operation name="GetStage">
       <input name="GetStage" message="tns:GetStage" />
@@ -10439,6 +10435,10 @@
       <input name="DeleteLabtreatLine" message="tns:DeleteLabtreatLine" />
       <output name="DeleteLabtreatLine_Result" message="tns:DeleteLabtreatLine_Result" />
     </operation>
+    <operation name="DeleteLecturerUnit">
+      <input name="DeleteLecturerUnit" message="tns:DeleteLecturerUnit" />
+      <output name="DeleteLecturerUnit_Result" message="tns:DeleteLecturerUnit_Result" />
+    </operation>
     <operation name="DeletePharmacyLine">
       <input name="DeletePharmacyLine" message="tns:DeletePharmacyLine" />
       <output name="DeletePharmacyLine_Result" message="tns:DeletePharmacyLine_Result" />
@@ -10672,33 +10672,6 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="GetProfilePicture_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="PrintClassList">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:PrintClassList" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="PrintClassList">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="PrintClassList_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="DeleteLecturerUnit">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:DeleteLecturerUnit" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="DeleteLecturerUnit">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="DeleteLecturerUnit_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="GetProfilePictureStudent">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:GetProfilePictureStudent" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="GetProfilePictureStudent">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="GetProfilePictureStudent_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -11500,6 +11473,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="PrescribeDrugs_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="PrintClassList">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:PrintClassList" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="PrintClassList">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="PrintClassList_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -12499,6 +12481,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="GetGraduationFee_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="GetProfilePictureStudent">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:GetProfilePictureStudent" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetProfilePictureStudent">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetProfilePictureStudent_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -13861,6 +13852,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
+    <operation name="DeleteLecturerUnit">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:DeleteLecturerUnit" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="DeleteLecturerUnit">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="DeleteLecturerUnit_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
     <operation name="DeletePharmacyLine">
       <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:DeletePharmacyLine" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       <input name="DeletePharmacyLine">
@@ -14368,7 +14368,7 @@
   </binding>
   <service name="WebPortal">
     <port name="WebPortal_Port" binding="tns:WebPortal_Binding">
-      <address location="http://erp.dsl.ke:7333/MIBS/WS/MIBS/Codeunit/WebPortal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <address location="http://erp.dsl.ke:3031/MIBS/WS/MIBS/Codeunit/WebPortal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
     </port>
   </service>
 </definitions>
