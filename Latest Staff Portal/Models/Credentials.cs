@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Configuration;
 using System.Net;
-using System.Web.Mvc;
-using System.Web.Caching;
-using System.Web.UI;
 using System.IO;
 using Latest_Staff_Portal.NAVWS;
 using System.DirectoryServices;

@@ -231,6 +231,7 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DocumentApprovalController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
@@ -262,6 +263,7 @@
     <Compile Include="ViewModel\DocComments.cs" />
     <Compile Include="ViewModel\DocumentAttachment.cs" />
     <Compile Include="ViewModel\DocumentsForApproval.cs" />
+    <Compile Include="ViewModel\Employee.cs" />
     <Compile Include="ViewModel\EmployeeView.cs" />
     <Compile Include="ViewModel\Error.cs" />
     <Compile Include="ViewModel\ExamSetupEntry.cs" />
@@ -590,6 +592,10 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Employee\EmployeeDocumentView.cshtml" />
+    <Content Include="Views\Employee\EmployeeListPartialView.cshtml" />
+    <Content Include="Views\Employee\EmployeeRequestList.cshtml" />
+    <Content Include="Views\Employee\NewEmployeeRequest.cshtml" />
     <None Include="Web References\NAVWS\WebPortal.wsdl" />
   </ItemGroup>
   <ItemGroup>

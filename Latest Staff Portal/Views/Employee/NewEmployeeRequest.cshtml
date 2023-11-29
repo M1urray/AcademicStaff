@@ -1,0 +1,105 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewEmployeeRequisition
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 7px;
+        font-size: 12px;
+    }
+
+    .NoRecords {
+        background-color: #dedbdb
+    }
+</style>
+<div class="card pre-scrollable">
+    <div class="card-body">
+        <b>Employee Requisition Form</b>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Job Id", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.JobId, Model.ListOfJobs, "--select Job Id--", new { @class = "form-control", @id = "ddlJobId" })
+                        @* @Html.ValidationMessageFor(model => model.JobId, "", new { @class = "text-danger" }) *@
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Type Of Contract", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.ListOfContracts, Model.ListOfContracts, "--select Contact Type--", new { @class = "form-control", @id = "ddlContract" })
+                        @*@Html.ValidationMessageFor(model => model.ListOfContracts, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.Label("Priority", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <select class="form-control" id="priority">
+                            <option value="1">High</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Low</option>
+                        </select>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.Label("Reason For Request:(150 Characters)", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <select class="form-control" id="requestReason">
+                            <option value="0">New Vacancy</option>
+                            <option value="1">Replacement</option>
+                            <option value="2">Retrenchment</option>
+                            <option value="3">Demise</option>
+                        </select>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div align="center">
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Clearance" onclick="SubmitClearanceRequest();" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function functionDecimal(evt, val) {
+        try {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+
+            if (charCode === 46) {
+                if (!(val.indexOf(".") > -1)) {
+                    return true;
+                }
+                else {
+                    window.Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                }
+            }
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                window.Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                return false;
+            }
+            return true;
+        } catch (w) {
+            window.Swal.fire(w);
+        }
+    }
+    function functionX(evt) {
+        if (evt.charCode > 31 && (evt.charCode < 48 || evt.charCode > 57)) {
+            window.Swal.fire("Error", "Please enter only numeric characters in the text box", "error");
+            return false;
+        }
+    }
+</script>
+

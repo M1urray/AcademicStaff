@@ -131,10 +131,14 @@ var PaymentRequestRequisitiontLink = function () {
     window.location = "/PaymentRequest/PaymentRequestRequisitionList";
 }
 var AppraisalRequisitiontLink = function () {
-    ShowProgress();
+    window.ShowProgress();
     window.location = "/Appraisal/MyAppraisalList";
 }
 var SupervisorRequisitiontReviewLink = function () {
     ShowProgress();
     window.location = "/Appraisal/MyReviewAppraisalList";
+}
+var EmployeeRequisitionLink = function () {
+    window.ShowProgress();
+    window.location = "/Employee/EmployeeRequestList";
 }

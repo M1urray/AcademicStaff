@@ -1,0 +1,307 @@
+﻿
+@{
+    ViewBag.Title = "EmployeeRequestList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+
+<style>
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 7px;
+        font-size: 12px;
+    }
+</style>
+<div class="card pre-scrollable">
+    <div class="card-title">Employee Request List</div>
+    <hr />
+    <div class="card-body">
+        <a href="#" onclick="NewEmployeeRequest();" class="btn btn-primary BtnPadding">New Employee Request</a>
+        <hr />
+        <div id="divEmployeeRequestList"></div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal Links////////////////////////////*@
+<div class="modal fade" id="myModalLinks" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Actions</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyLinks">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        LoadEmployeeList();
+    });
+    var LoadEmployeeList = function() {
+        window.ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/Employee/EmployeeListPartialView",
+            success: function(data) {
+                $("#divEmployeeRequestList").html(data);
+                window.HideProgress();
+            },
+            error: function() {
+                window.HideProgress();
+                alert("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var SubmitEmployeeRequest = function() {
+
+        
+        var jobId = $("#ddlJobId").children("option:selected").val();
+        var contractType = $("#ddlContract").children("option:selected").val();
+        var priority = $("#priority").children("option:selected").val();
+        var requiredPositions = $("#txtRequired").val();
+        var reasonForRequest = $("#requestReason").children("option:selected").val();
+        if (reasonForRequest == "") {
+            window.Swal.fire('error', "Remarks Should Not be Empty and Should be Less than 150 characters", 'warning');
+            return;
+        } 
+        else if (lastDateOfService == "") {
+            window.Swal.fire('error', "Last Date OF Service Cannot be Empty");
+            return;
+        }
+        else 
+        {
+            var newEmployeeRequisition = {};
+            newEmployeeRequisition.JobId = jobId ;
+            newEmployeeRequisition.Contract = contractType;
+            newEmployeeRequisition.Priority = priority;
+            newEmployeeRequisition.RequiredPositions = requiredPositions;
+            newEmployeeRequisition.ReasonForRequest = reasonForRequest;
+            window.ShowProgress();
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/Employee/SubmitEmployeeRequest",
+                data: JSON.stringify({ NewEmployeeRequisition: newEmployeeRequisition }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data) {
+                    if (data.success) {
+                        window.HideProgress();
+                        LoadEmployeeList();
+                        $("#myModal").modal("hide");
+                        window.Swal.fire('Success', data.message, 'success');
+                    } else {
+                        window.HideProgress();
+                        window.Swal.fire('Warning', data.message, 'warning');
+                    }
+                },
+                error: function(err) {
+                    window.HideProgress();
+                    window.Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    };
+    var NewEmployeeRequest = function() {
+        $("#labelF").text("New Employee Requisition Form");
+        window.ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Employee/NewEmployeeRequest',
+            success: function(data) {
+                $("#modalBody").html(data);
+                window.HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function(err) {
+                window.HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SelectedRow = function (docNo, status) {
+        window.ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: docNo, Status: status, DocType: 'PRN' }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/CommonActions',
+            success: function (data) {
+                $("#modalBodyLinks").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+//    var SendDocForApproval = function (DocNo) {
+//        ShowProgress();
+//        $.ajax({
+//            async: true,
+//            type: "POST",
+//            datatype: "json",
+//            data: JSON.stringify({ DocNo: DocNo, Redirect: "N" }),
+//            contentType: "application/json; charset = utf-8",
+//            processData: false,
+//            url: '/Purchase/SendPurchaseAppForApproval',
+//            success: function (data) {
+//                if (data.success == true) {
+//                    HideProgress();
+//                    LoadPurchaseReqList();
+//                    $("#myModalLinks").modal("hide");
+//                    Swal.fire('Success', data.message, 'success');
+//                }
+//                else {
+//                    HideProgress();
+//                    Swal.fire('Error', data.message, 'error');
+//                }
+//            },
+//            error: function (err) {
+//                HideProgress();
+//                Swal.fire('Warning', err, 'warning');
+//            }
+//        });
+//    }
+//    var CancelDocForApproval = function (DocNo) {
+//        ShowProgress();
+//        $.ajax({
+//            async: true,
+//            type: "POST",
+//            datatype: "json",
+//            data: JSON.stringify({ DocNo: DocNo }),
+//            contentType: "application/json; charset = utf-8",
+//            processData: false,
+//            url: '/Purchase/CancelPurchaseAppForApproval',
+//            success: function (data) {
+//                if (data.success == true) {
+//                    HideProgress();
+//                    LoadPurchaseReqList();
+//                    $("#myModalLinks").modal("hide");
+//                    Swal.fire('Success', data.message, 'success');
+//                }
+//                else {
+//                    HideProgress();
+//                    Swal.fire('Error', data.message, 'error');
+//                }
+//            },
+//            error: function (err) {
+//                HideProgress();
+//                Swal.fire('Warning', err, 'warning');
+//            }
+//        });
+//
+//    }
+    var ViewApprovalTrail = function (docNo) {
+        $("#labelF").text("Document Approval Trail");
+        window.ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: docNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalTrail',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewDocComments = function (docNo) {
+        $("#labelF").text("Document Comments");
+        window.ShowProgress();
+        var RecordID = "Purchase Header: Quote," + docNo;
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ RecID: RecordID }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalComments',
+            success: function (data) {
+                $("#modalBody").html(data);
+                window.HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                window.HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewDoc = function (docNo) {
+        $("#labelF").text("Employee Requisition Detailed Document");
+        window.ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: docNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Employee/EmployeeDocumentView',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                window.HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+</script>
+
