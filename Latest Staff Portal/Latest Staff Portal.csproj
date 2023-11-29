@@ -599,10 +599,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://108.181.199.151:9101/AIU/WS/AIU/Codeunit/WebPortal">
+    <WebReferenceUrl Include="http://108.181.199.151:7047/BC220/WS/KIJABE%2520TEST/Codeunit/WebPortal">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\NAVWS\</RelPath>
-      <UpdateFromURL>http://108.181.199.151:9101/AIU/WS/AIU/Codeunit/WebPortal</UpdateFromURL>
+      <UpdateFromURL>http://108.181.199.151:7047/BC220/WS/KIJABE%2520TEST/Codeunit/WebPortal</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
