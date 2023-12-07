@@ -3962,6 +3962,7 @@
             <element minOccurs="1" maxOccurs="1" name="vendorName" type="string" />
             <element minOccurs="1" maxOccurs="1" name="schooCode" type="string" />
             <element minOccurs="1" maxOccurs="1" name="dim4" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="paymenttype" type="int" />
           </sequence>
         </complexType>
       </element>
@@ -5435,14 +5436,12 @@
         <complexType>
           <sequence>
             <element minOccurs="1" maxOccurs="1" name="reqNo" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="leaveType" type="string" />
             <element minOccurs="1" maxOccurs="1" name="appliedDays" type="decimal" />
             <element minOccurs="1" maxOccurs="1" name="startDate" type="date" />
             <element minOccurs="1" maxOccurs="1" name="endDate" type="date" />
             <element minOccurs="1" maxOccurs="1" name="returnDate" type="date" />
             <element minOccurs="1" maxOccurs="1" name="senderComments" type="string" />
             <element minOccurs="1" maxOccurs="1" name="reliever_No" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="responsibilityCenter" type="string" />
           </sequence>
         </complexType>
       </element>

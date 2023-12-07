@@ -260,10 +260,10 @@
             Swal.fire('error', 'Select Number of days you want to apply for leave', 'error');
             return;
         }
-        //else if (Reliever == "") {
-        //    Swal.fire('error', 'Select Reliever', 'error');
-        //    return;
-        //}
+        else if (Reliever == "") {
+            Swal.fire('error', 'Select Reliever', 'error');
+            return;
+        }
         else if (StartDate == "") {
             Swal.fire('error', 'Select Start Date', 'error');
             return;

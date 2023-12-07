@@ -455,7 +455,7 @@
     <Content Include="Views\ICT\ICTListView.cshtml" />
     <Content Include="Views\ICT\ICTRequisitionList.cshtml" />
     <Content Include="Views\ICT\NewICTRequest.cshtml" />
-    <Content Include="Views\ImprestSurrender\FileAttachmentForm.cshtml" />
+    <Content Include="Views\Leave\FileAttachmentForm.cshtml" />
     <Content Include="Views\ImprestSurrender\ImprestSurrenderLineView.cshtml" />
     <Content Include="Views\ImprestSurrender\ImprestSurrenderListView.cshtml" />
     <Content Include="Views\ImprestSurrender\ImprestSurrenderRequisitionList.cshtml" />
@@ -593,6 +593,7 @@
     <Content Include="Views\Employee\EmployeeListPartialView.cshtml" />
     <Content Include="Views\Employee\EmployeeRequestList.cshtml" />
     <Content Include="Views\Employee\NewEmployeeRequest.cshtml" />
+    <Content Include="Views\ImprestSurrender\FileAttachmentForm.cshtml" />
     <None Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

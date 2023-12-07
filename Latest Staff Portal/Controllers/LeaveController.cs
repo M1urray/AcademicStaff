@@ -50,7 +50,7 @@ namespace Latest_Staff_Portal.Controllers
                         LvList.Leave_Type = (string)config["Leave_Type"];
                         LvList.Applied_Days = (string)config["Applied_Days"];
                         LvList.Date = Convert.ToDateTime((string)config["Date"]).ToString("dd/MM/yyyy");
-                        LvList.Starting_Date = Convert.ToDateTime((string)config["Start_Date"]).ToString("dd/MM/yyyy");
+                        LvList.Starting_Date = Convert.ToDateTime((string)config["Starting_Date"]).ToString("dd/MM/yyyy");
                         LvList.End_Date = Convert.ToDateTime((string)config["End_Date"]).ToString("dd/MM/yyyy");
                         LvList.Return_Date = Convert.ToDateTime((string)config["Return_Date"]).ToString("dd/MM/yyyy");
                         LvList.Reliever = (string)config["Reliever_Name"];
@@ -383,9 +383,9 @@ namespace Latest_Staff_Portal.Controllers
                 DateTime endDate = DateTime.ParseExact(NewApp.End_Date.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 DateTime returndate = DateTime.ParseExact(NewApp.Return_Date.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
-                // Credentials.ObjNav.HRUpdateLeaveApplication(NewApp.No, NewApp.Reliever, startDate, endDate, returndate, Remarks, Convert.ToDecimal(NewApp.Applied_Days));
+                Credentials.ObjNav.HRLeaveApplicationUpdate(NewApp.No,Convert.ToDecimal(NewApp.Applied_Days), startDate, endDate, returndate, Remarks, NewApp.Reliever);
 
-                return Json(new { message = "Leave Application Updated and send for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = "Leave Application Updated and sent for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -440,7 +440,7 @@ namespace Latest_Staff_Portal.Controllers
                         LeaveDoc.Leave_Type = (string)config["Leave_Type"];
                         LeaveDoc.Applied_Days = (string)config["Applied_Days"];
                         LeaveDoc.Date = Convert.ToDateTime((string)config["Application_Date"]).ToString("dd/MM/yyyy");
-                        LeaveDoc.Starting_Date = Convert.ToDateTime((string)config["Start_Date"]).ToString("dd/MM/yyyy");
+                        LeaveDoc.Starting_Date = Convert.ToDateTime((string)config["Starting_Date"]).ToString("dd/MM/yyyy");
                         LeaveDoc.End_Date = Convert.ToDateTime((string)config["End_Date"]).ToString("dd/MM/yyyy");
                         LeaveDoc.Return_Date = Convert.ToDateTime((string)config["Return_Date"]).ToString("dd/MM/yyyy");
                         LeaveDoc.Reliever = (string)config["Reliever"];
@@ -598,7 +598,6 @@ namespace Latest_Staff_Portal.Controllers
                 string StaffNo = Session["Username"].ToString();
                 string DocNo = Credentials.ObjNav.CreateLeavePlannerHeader(StaffNo);
                 return Json(new { message = "/Leave/LeavePlannerDocument?DocNo=" + DocNo, success = true }, JsonRequestBehavior.AllowGet);
-                // return Json(new { message = "/Leave/LeavePlannerDoument?DocNo=", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -853,6 +852,10 @@ namespace Latest_Staff_Portal.Controllers
             {
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
+        }
+        public PartialViewResult FileUploadForm()
+        {
+            return PartialView("~/Views/Leave/FileAttachmentForm.cshtml");
         }
     }
 }

@@ -11846,7 +11846,7 @@ namespace Latest_Staff_Portal.NAVWS {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertPaymentRequest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="InsertPaymentRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string InsertPaymentRequest(string employeeNo, string campus, string department, string responsibility, string purpose, string vendorName, string schooCode, string dim4) {
+        public string InsertPaymentRequest(string employeeNo, string campus, string department, string responsibility, string purpose, string vendorName, string schooCode, string dim4, int paymenttype) {
             object[] results = this.Invoke("InsertPaymentRequest", new object[] {
                         employeeNo,
                         campus,
@@ -11855,17 +11855,18 @@ namespace Latest_Staff_Portal.NAVWS {
                         purpose,
                         vendorName,
                         schooCode,
-                        dim4});
+                        dim4,
+                        paymenttype});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void InsertPaymentRequestAsync(string employeeNo, string campus, string department, string responsibility, string purpose, string vendorName, string schooCode, string dim4) {
-            this.InsertPaymentRequestAsync(employeeNo, campus, department, responsibility, purpose, vendorName, schooCode, dim4, null);
+        public void InsertPaymentRequestAsync(string employeeNo, string campus, string department, string responsibility, string purpose, string vendorName, string schooCode, string dim4, int paymenttype) {
+            this.InsertPaymentRequestAsync(employeeNo, campus, department, responsibility, purpose, vendorName, schooCode, dim4, paymenttype, null);
         }
         
         /// <remarks/>
-        public void InsertPaymentRequestAsync(string employeeNo, string campus, string department, string responsibility, string purpose, string vendorName, string schooCode, string dim4, object userState) {
+        public void InsertPaymentRequestAsync(string employeeNo, string campus, string department, string responsibility, string purpose, string vendorName, string schooCode, string dim4, int paymenttype, object userState) {
             if ((this.InsertPaymentRequestOperationCompleted == null)) {
                 this.InsertPaymentRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertPaymentRequestOperationCompleted);
             }
@@ -11877,7 +11878,8 @@ namespace Latest_Staff_Portal.NAVWS {
                         purpose,
                         vendorName,
                         schooCode,
-                        dim4}, this.InsertPaymentRequestOperationCompleted, userState);
+                        dim4,
+                        paymenttype}, this.InsertPaymentRequestOperationCompleted, userState);
         }
         
         private void OnInsertPaymentRequestOperationCompleted(object arg) {
@@ -15278,40 +15280,36 @@ namespace Latest_Staff_Portal.NAVWS {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:HRLeaveApplicationUpdate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="HRLeaveApplicationUpdate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string HRLeaveApplicationUpdate(string reqNo, string leaveType, decimal appliedDays, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime startDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime endDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime returnDate, string senderComments, string reliever_No, string responsibilityCenter) {
+        public string HRLeaveApplicationUpdate(string reqNo, decimal appliedDays, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime startDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime endDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime returnDate, string senderComments, string reliever_No) {
             object[] results = this.Invoke("HRLeaveApplicationUpdate", new object[] {
                         reqNo,
-                        leaveType,
                         appliedDays,
                         startDate,
                         endDate,
                         returnDate,
                         senderComments,
-                        reliever_No,
-                        responsibilityCenter});
+                        reliever_No});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void HRLeaveApplicationUpdateAsync(string reqNo, string leaveType, decimal appliedDays, System.DateTime startDate, System.DateTime endDate, System.DateTime returnDate, string senderComments, string reliever_No, string responsibilityCenter) {
-            this.HRLeaveApplicationUpdateAsync(reqNo, leaveType, appliedDays, startDate, endDate, returnDate, senderComments, reliever_No, responsibilityCenter, null);
+        public void HRLeaveApplicationUpdateAsync(string reqNo, decimal appliedDays, System.DateTime startDate, System.DateTime endDate, System.DateTime returnDate, string senderComments, string reliever_No) {
+            this.HRLeaveApplicationUpdateAsync(reqNo, appliedDays, startDate, endDate, returnDate, senderComments, reliever_No, null);
         }
         
         /// <remarks/>
-        public void HRLeaveApplicationUpdateAsync(string reqNo, string leaveType, decimal appliedDays, System.DateTime startDate, System.DateTime endDate, System.DateTime returnDate, string senderComments, string reliever_No, string responsibilityCenter, object userState) {
+        public void HRLeaveApplicationUpdateAsync(string reqNo, decimal appliedDays, System.DateTime startDate, System.DateTime endDate, System.DateTime returnDate, string senderComments, string reliever_No, object userState) {
             if ((this.HRLeaveApplicationUpdateOperationCompleted == null)) {
                 this.HRLeaveApplicationUpdateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRLeaveApplicationUpdateOperationCompleted);
             }
             this.InvokeAsync("HRLeaveApplicationUpdate", new object[] {
                         reqNo,
-                        leaveType,
                         appliedDays,
                         startDate,
                         endDate,
                         returnDate,
                         senderComments,
-                        reliever_No,
-                        responsibilityCenter}, this.HRLeaveApplicationUpdateOperationCompleted, userState);
+                        reliever_No}, this.HRLeaveApplicationUpdateOperationCompleted, userState);
         }
         
         private void OnHRLeaveApplicationUpdateOperationCompleted(object arg) {
