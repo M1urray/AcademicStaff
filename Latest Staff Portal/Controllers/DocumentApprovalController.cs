@@ -214,7 +214,7 @@ namespace Latest_Staff_Portal.Controllers
                 return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
             }
         }
-        public ActionResult GetDocumentFoApprovalList(string TbID, string Title, string Status, string DocType)
+        public ActionResult GetDocumentForApprovalList(string TbID, string Title, string Status, string DocType)
         {
             try
             {
