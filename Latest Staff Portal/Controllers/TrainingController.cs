@@ -219,13 +219,13 @@ namespace Latest_Staff_Portal.Controllers
             {
                 DateTime StartDate = DateTime.ParseExact(NewApp.StartDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 DateTime EndDate = DateTime.ParseExact(NewApp.EndDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                //string DocNo = Credentials.ObjNav.TrainingRequisitionCreate(Session["username"].ToString(), NewApp.Dim1, NewApp.Dim2, "",
-                //                  NewApp.CourseTitle, "", Convert.ToInt32(NewApp.TrainingCategory), Convert.ToInt32(NewApp.Sponsor), StartDate, EndDate,
-                //                  NewApp.Trainer, "", Convert.ToDecimal(NewApp.Cost), NewApp.Purpose,"","");
+                string DocNo = Credentials.ObjNav.TrainingRequisitionCreate(Session["username"].ToString(), NewApp.Dim1, NewApp.Dim2, "",
+                                  NewApp.CourseTitle, Convert.ToInt32(NewApp.TrainingCategory), Convert.ToInt32(NewApp.Sponsor), StartDate, EndDate,
+                                  NewApp.Trainer, "", Convert.ToDecimal(NewApp.Cost), NewApp.Purpose,"","");
 
-                //string Redirect = "/Training/TrainingDocumentDetails?AppDoc=" + DocNo;
+                string Redirect = "/Training/TrainingDocumentDetails?AppDoc=" + DocNo;
 
-                return Json(new { message="Created", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { message= Redirect, success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
