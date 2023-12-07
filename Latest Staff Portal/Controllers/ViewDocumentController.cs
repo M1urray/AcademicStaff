@@ -150,9 +150,6 @@ namespace Latest_Staff_Portal.Controllers
             P9Details ListYears = new P9Details();
             #region YearList
             List<YearCodes> yearCodes = new List<YearCodes>();
-
-            //string page = "prTransactionList?$select=Period_Year&format=json";
-            //string page = "PrPayrollPeriods?$select=PeriodYear&$filter=Closed eq true&format=json";
             string page = "PrPayrollPeriods?$select=PeriodYear&$format=json";
 
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
