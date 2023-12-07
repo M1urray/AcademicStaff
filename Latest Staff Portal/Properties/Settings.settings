@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Latest_Staff_Portal_NAVWS_WebPortal" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://108.181.199.151:7047/BC220/WS/KIJABE%20TEST/Codeunit/WebPortal</Value>
+      <Value Profile="(Default)">http://192.168.2.15:7047/BC220/WS/KIJABE%20TEST/Codeunit/WebPortal</Value>
     </Setting>
   </Settings>
 </SettingsFile>

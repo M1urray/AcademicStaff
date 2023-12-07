@@ -588,14 +588,14 @@
     <Content Include="Views\PaymentRequest\PaymentRequestReqListView.cshtml" />
     <Content Include="Views\PaymentRequest\PaymentRequestRequisitionList.cshtml" />
     <Content Include="Views\PaymentRequest\PaymentReqEditItemForm.cshtml" />
-    <Content Include="Web References\NAVWS\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\Employee\EmployeeDocumentView.cshtml" />
     <Content Include="Views\Employee\EmployeeListPartialView.cshtml" />
     <Content Include="Views\Employee\EmployeeRequestList.cshtml" />
     <Content Include="Views\Employee\NewEmployeeRequest.cshtml" />
+    <Content Include="Web References\NAVWS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
     <None Include="Web References\NAVWS\WebPortal.wsdl" />
   </ItemGroup>
   <ItemGroup>
@@ -605,10 +605,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://108.181.199.151:7047/BC220/WS/KIJABE%2520TEST/Codeunit/WebPortal">
+    <WebReferenceUrl Include="http://192.168.2.15:7047/BC220/WS/KIJABE%2520TEST/Codeunit/WebPortal">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\NAVWS\</RelPath>
-      <UpdateFromURL>http://108.181.199.151:7047/BC220/WS/KIJABE%2520TEST/Codeunit/WebPortal</UpdateFromURL>
+      <UpdateFromURL>http://192.168.2.15:7047/BC220/WS/KIJABE%2520TEST/Codeunit/WebPortal</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
