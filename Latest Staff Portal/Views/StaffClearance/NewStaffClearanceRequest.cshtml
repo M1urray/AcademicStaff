@@ -13,10 +13,13 @@
     .NoRecords {
         background-color: #dedbdb
     }
+    .b{
+        font-size:medium
+    }
 </style>
 <div class="card pre-scrollable">
     <div class="card-body">
-        <b>Staff Clearance Form</b>
+        <b >Staff Clearance Form</b>
         <hr />
         <div class="row">
             <div class="col-md-6">
@@ -99,8 +102,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.Label("Last Date of Service", htmlAttributes: new { @class = "control-label col-md-12" })
@@ -109,16 +110,38 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
+
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.Label("Reason for Clearing", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
-                        <textarea id="txtReason" class="form-control"></textarea>
+                        <select id="txtReason" class="form-control">
+                            <option value="">Select an option</option>
+                            <option value="Resignation">Resignation</option>
+                            <option value="Termination">Termination</option>
+                            <option value="Dismissal">Dismissal</option>
+                            <option value="Retirement">Retirement</option>
+                        </select>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Hand-Over Report(Optional)", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <input type="file" class="form-control" id="fileAttachment" multiple/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
         <hr />
+
         <div align="center">
             <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Clearance" onclick="SubmitClearanceRequest();" />
         </div>
@@ -142,6 +165,16 @@
         document.getElementById("txtPhoneNumber").disabled = true;
         document.getElementById("txtEmail").disabled = true;
         document.getElementById("txtAddress").disabled = true;
+        $("#txtOptionSelect").hide();
     });
+    function showHideEmployerBalanceOption() {
+        var selectedOption = $("#employerBenefitOption").children("option:selected").val();
+        if (selectedOption == 1) {
+            $("#txtOptionSelect").show();
+        }
+        else {
+            $("#txtOptionSelect").hide();
+        }
+    }
 </script>
 

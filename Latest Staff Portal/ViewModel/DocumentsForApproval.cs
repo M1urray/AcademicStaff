@@ -43,6 +43,7 @@ namespace Latest_Staff_Portal.ViewModel
         public int TransportCount { get; set; }
         public int Clearance { get; set; }
         public int TransferOrder { get; set; }
+        public int Training { get; set; }
         public int CafCount { get; set; }
         public int PVCount { get; set; }
     }

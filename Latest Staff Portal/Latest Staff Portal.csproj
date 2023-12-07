@@ -232,6 +232,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DocumentApprovalController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\ExitInterviewController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
@@ -592,10 +593,27 @@
     <Content Include="Views\Employee\EmployeeListPartialView.cshtml" />
     <Content Include="Views\Employee\EmployeeRequestList.cshtml" />
     <Content Include="Views\Employee\NewEmployeeRequest.cshtml" />
-    <Content Include="Web References\NAVWS\Reference.map">
+    <None Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
+    <Content Include="Views\Leave\LeavePlannerDocument.cshtml" />
+    <Content Include="Views\Leave\LeavePlannerLines.cshtml" />
+    <Content Include="Views\Leave\LeavePlannerList.cshtml" />
+    <Content Include="Views\Leave\LeavePlannerListPartialView.cshtml" />
+    <Content Include="Views\Leave\NewLeavePlanForm.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewDocumentLineView.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewDocumentView.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewForm.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewListPartialView.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewQuestionLineView.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewRequisitionList.cshtml" />
+    <Content Include="Views\ExitInterview\ExitReasonsForm.cshtml" />
+    <Content Include="Views\ExitInterview\FileAttachmentForm.cshtml" />
+    <Content Include="Views\ExitInterview\NewExitInterviewRequest.cshtml" />
+    <Content Include="Views\StaffClearance\StaffClearance.cshtml" />
+    <Content Include="Views\StaffClearance\FileAttachmentForm.cshtml" />
+    <Content Include="Views\DocumentApproval\Document Approval Views\TrainingApprovalDocDetails.cshtml" />
     <None Include="Web References\NAVWS\WebPortal.wsdl" />
   </ItemGroup>
   <ItemGroup>

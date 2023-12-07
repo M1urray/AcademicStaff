@@ -92,7 +92,7 @@ var ICTRequisitionlink = function () {
 }
 var ExitInterviewlink = function () {
     ShowProgress();
-    window.location = "/StaffClearance/ExitInterview";
+    window.location = "/ExitInterview/ExitInterviewRequisitionList";
 }
 var StaffClearancelink = function () {
     ShowProgress();
@@ -141,4 +141,8 @@ var SupervisorRequisitiontReviewLink = function () {
 var EmployeeRequisitionLink = function () {
     window.ShowProgress();
     window.location = "/Employee/EmployeeRequestList";
+}
+var LeavePlannerLink = function () {
+    ShowProgress();
+    window.location = "/Leave/LeavePlannerList";
 }

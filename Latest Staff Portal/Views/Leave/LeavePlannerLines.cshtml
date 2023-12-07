@@ -1,0 +1,72 @@
+﻿@model Latest_Staff_Portal.ViewModel.LeavePlannerLinesList
+<div class="pre-scrollable">
+    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead style="background-color:black;color:white">
+            <tr>
+                <th>Leave Type</th>
+                <th>No. of Days</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Return Date</th>
+                <th>Comments</th>
+                @if (Model.Status == "New")
+                {
+                    <th style="text-align:center" class="tdAction">Action</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.ListOfLeavePlannerLines != null && Model.ListOfLeavePlannerLines.Count() > 0)
+                {
+                    foreach (var item in Model.ListOfLeavePlannerLines)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LeaveType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DaysApplied)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReturnDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Comments)
+                            </td>
+                            @if (Model.Status == "New")
+                            {
+                                <td style="text-align:center" class="tdAction">
+                                    <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="DeleteLeavePlannerLine('@item.DocNo','@item.Line_No');"><i class="mdi mdi-close font-size-16"></i></a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@if (Model.Status == "New")
+{
+    <div style="text-align:right">
+        <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="LeavePlannerLineForm();" />
+    </div>
+}
+
+
+

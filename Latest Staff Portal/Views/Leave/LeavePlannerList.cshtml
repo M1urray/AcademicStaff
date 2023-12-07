@@ -1,0 +1,210 @@
+﻿
+@{
+    ViewBag.Title = "LeavePlannerList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 7px;
+        font-size: 12px;
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="card pre-scrollable">
+    <div class="card-title">Leave Planner List</div>
+    <div class="card-body">
+        <a href="#" onclick="NewLeavePlanner();" class="btn btn-primary BtnPadding">New Leave Planner</a>
+        <hr />
+        <div id="divLeavePlannerList"></div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal Links////////////////////////////*@
+<div class="modal fade" id="myModalLinks" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Actions</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyLinks">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadLeaveplannerList();
+    });
+    var LoadLeaveplannerList = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/Leave/LeavePlannerListPartialView",
+            success: function (data) {
+                $("#divLeavePlannerList").html(data);
+                HideProgress();
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+                HideProgress();
+            }
+        });
+    }
+    var NewLeavePlanner = function () {
+        $.ajaxSetup({ cache: false });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to create a new Leave Planner document!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Create it!'
+        }).then((result) => {
+            if (result.value) {
+                ShowProgress();
+                $.ajax({
+                    type: "POST",
+                    url: "/Leave/NewLeavePlanner",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            window.location = data.message;
+                        }
+                        else {
+                            Swal.fire('Warning', data.message, 'warning');
+                            HideProgress();
+                        }
+                    },
+                    error: function (err) {
+                        HideProgress();
+                        Swal.fire('Warning', err, 'warning');
+                    }
+                });
+            }
+            else {
+                Swal.fire('Cancelled', 'Document not created', 'error');
+            }
+        });
+    }
+    var SelectedRow = function (DocNo, Status) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'LVP' }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/CommonActions',
+            success: function (data) {
+                $("#modalBodyLinks").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewDoc = function (DocNo) {
+        ShowProgress();
+        window.location = "/Leave/LeavePlannerDocument?DocNo=" + DocNo;       
+    }
+    var SendDocForApproval = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Leave/SendLeavePlannerForApproval',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadLeaveplannerList();
+                    $("#myModalLinks").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var CancelDocForApproval = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Leave/CancelLeavePlannerForApproval',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadLeaveplannerList();
+                    $("#myModalLinks").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+
+    }
+</script>

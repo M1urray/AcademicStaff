@@ -50,7 +50,7 @@ namespace Latest_Staff_Portal.Controllers
                         EmpView.Gender = (string)config["Gender"];
                         EmpView.MaritalStatus = (string)config["Marital_Status"];
                         EmpView.Nationality = (string)config["Citizenship"];
-                        EmpView.County = (string)config["County_Name"];
+                        EmpView.County = (string)config["County_Code"];
                         EmpView.DoB = Convert.ToDateTime((string)config["Date_Of_Birth"]).ToString("dd/MM/yyyy");
                         EmpView.DateOfJoin = Convert.ToDateTime((string)config["Date_Of_Join"]).ToString("dd/MM/yyyy");
                         EmpView.Address1 = config["Postal_Address"].ToString();
@@ -63,7 +63,7 @@ namespace Latest_Staff_Portal.Controllers
                         EmpView.JobTitle = config["Job_Title"].ToString();
                         EmpView.EmpStatus = config["Status"].ToString();
                         EmpView.Department = config["Department_Name"].ToString();
-                        // EmpView.JobCat = config["Category"].ToString();
+                        EmpView.JobCat = config["Leave_Grade"].ToString();
                         EmpView.Campus = config["Campus"].ToString();
                         EmpView.PinNo = config["PIN_Number"].ToString();
                         EmpView.NSSFNo = config["NSSF_No"].ToString();

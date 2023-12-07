@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "StaffClearanceRequestList";
+    ViewBag.Title = "ExitInterviewRequisitionList";
     Layout = "~/Views/Shared/Sitemaster.cshtml";
 }
 
@@ -16,12 +16,12 @@
     }
 </style>
 <div class="card pre-scrollable">
-    <div class="card-title">Clearance Request List</div>
+    <div class="card-title">Resignation Request List</div>
     <hr />
     <div class="card-body">
-        <a href="#" onclick="NewClearanceRequest();" class="btn btn-primary BtnPadding">New Clearance Request</a>
+        <a href="#" onclick="NewExitInterviewRequest();" class="btn btn-primary BtnPadding">New Resignation Request</a>
         <hr />
-        <div id="divClearanceRequestList"></div>
+        <div id="divExitInterview"></div>
     </div>
 </div>
 @*//////////////////////Modal////////////////////////////*@
@@ -61,11 +61,20 @@
     </div>
 </div>
 <script src="~/assets/js/ShowProgression.js"></script>
+
 <script type="text/javascript">
-    $(document).ready(function() {
-        LoadClearanceList();
+    $(document).ready(function () {
+        LoadExitInterviewList();
+        var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
+        if (Successmsg != "") {
+            Swal.fire('Success', Successmsg, 'success', true);
+            $.ajax({
+                type: "POST",
+                url: "/Common/NullibySessions"
+            });
+        }
     });
-    var LoadClearanceList = function() {
+    var LoadExitInterviewList = function () {
         ShowProgress();
         $.ajax({
             async: true,
@@ -73,75 +82,60 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: "/staffClearance/staffClearanceListPartialView",
-            success: function(data) {
-                $("#divClearanceRequestList").html(data);
+            url: "/ExitInterview/ExitInterviewListPartialView",
+            success: function (data) {
+                $("#divExitInterview").html(data);
                 HideProgress();
             },
-            error: function() {
+            error: function () {
                 HideProgress();
                 alert("There is some problem to process your request. Please try after some time");
             }
         });
     }
-    var SubmitClearanceRequest = function() {
+    var SubmitExitInterviewRequest = function () {
+        var employeeNumber = $("#txtStaffNo").val();
         var lastDateOfService = $("#txtLastDateOfService").val();
-        var remarks = $("#txtReason").children("option:selected").val();
-        var phoneNumber = $("#txtPhoneNumber").val();
-        var email = $("#txtEmail").val();
-        var staffNo = $("#txtStaffNo").val();
-        var address = $("#txtAddress").val();
-        var memberBenefit = $("#memberBenefits").val();
-        var employerBenefit = $("#employerBenefitOption").val();
-        var employerBalance = $("#employerBalanceOptionSelect").val();
-        if (remarks == "") {
-            Swal.fire('error', "Reason Cannot be empty ", 'warning');
-            return;
-        } 
-        else if (lastDateOfService == "") {
-            Swal.fire('error', "Last Date OF Service Cannot be Empty");
+        var Designation = $("#txtDesignation").val();
+        var lengthOfService = $("#txtLengthOfService").val();
+        var employeeCategory = $("#txtEmpCat").val();
+        if (lastDateOfService == "") {
+            Swal.fire('error', "Last Date of Service Should Not be Empty and Should be Less than 150 characters", 'warning');
             return;
         }
-        else 
-        {
-            var staffClearance = {};
-            staffClearance.staffNo = staffNo;
-            staffClearance.email = email;
-            staffClearance.phoneNumber = phoneNumber;
-            staffClearance.address = address;
-            staffClearance.ReasonForClearing = remarks;
-            staffClearance.LastDateOfService = lastDateOfService;
-            staffClearance.MemberBenefit = memberBenefit;
-            staffClearance.EmployerBenefit = employerBenefit;
-            staffClearance.EmployerBalance = employerBalance;
+        else {
+            var newExitInterview = {};
+            newExitInterview.EmployeeNumber = employeeNumber;
+            newExitInterview.LeavingDate = lastDateOfService;
+            newExitInterview.Designation = Designation;
+            newExitInterview.LengthOfService = lengthOfService;
+            newExitInterview.EmployeeCategory = employeeCategory;
             ShowProgress();
             //Send the JSON array to Controller using AJAX.
             $.ajax({
                 type: "POST",
-                url: "/StaffClearance/SubmitClearanceRequest",
-                data: JSON.stringify({ staffClearance: staffClearance }),
+                url: "/ExitInterview/SubmitExitInterview",
+                data: JSON.stringify({ newExitInterview: newExitInterview }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function(data) {
+                success: function (data) {
                     if (data.success) {
-                        HideProgress();
-                        LoadClearanceList();
-                        $("#myModal").modal("hide");
-                        Swal.fire('Success', data.message, 'success');
-                    } else {
-                        HideProgress();
+                        window.location = data.message;
+                    }
+                    else {
                         Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
                     }
                 },
-                error: function(err) {
+                error: function (err) {
                     HideProgress();
                     Swal.fire('Warning', err, 'warning');
                 }
             });
         }
     };
-    var NewClearanceRequest = function() {
-        $("#labelF").text("New Clearance Form");
+    var NewExitInterviewRequest = function () {
+        $("#labelF").text("New Exit Header Form");
         ShowProgress();
         $.ajax({
             async: true,
@@ -149,13 +143,13 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/StaffClearance/NewStaffClearanceRequest',
-            success: function(data) {
+            url: '/ExitInterview/NewExitInterviewRequest',
+            success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
                 $("#myModal").modal("show");
             },
-            error: function(err) {
+            error: function (err) {
                 HideProgress();
                 Swal.fire('Warning', err, 'warning');
             }
@@ -182,67 +176,67 @@
             }
         });
     }
-//    var ViewDoc = function (DocNo) {
-//        ShowProgress();
-//        window.location = "/Purchase/PurchaseDocumentView?DocNo=" + DocNo;
-//    }
-//    var SendDocForApproval = function (DocNo) {
-//        ShowProgress();
-//        $.ajax({
-//            async: true,
-//            type: "POST",
-//            datatype: "json",
-//            data: JSON.stringify({ DocNo: DocNo, Redirect: "N" }),
-//            contentType: "application/json; charset = utf-8",
-//            processData: false,
-//            url: '/Purchase/SendPurchaseAppForApproval',
-//            success: function (data) {
-//                if (data.success == true) {
-//                    HideProgress();
-//                    LoadPurchaseReqList();
-//                    $("#myModalLinks").modal("hide");
-//                    Swal.fire('Success', data.message, 'success');
-//                }
-//                else {
-//                    HideProgress();
-//                    Swal.fire('Error', data.message, 'error');
-//                }
-//            },
-//            error: function (err) {
-//                HideProgress();
-//                Swal.fire('Warning', err, 'warning');
-//            }
-//        });
-//    }
-//    var CancelDocForApproval = function (DocNo) {
-//        ShowProgress();
-//        $.ajax({
-//            async: true,
-//            type: "POST",
-//            datatype: "json",
-//            data: JSON.stringify({ DocNo: DocNo }),
-//            contentType: "application/json; charset = utf-8",
-//            processData: false,
-//            url: '/Purchase/CancelPurchaseAppForApproval',
-//            success: function (data) {
-//                if (data.success == true) {
-//                    HideProgress();
-//                    LoadPurchaseReqList();
-//                    $("#myModalLinks").modal("hide");
-//                    Swal.fire('Success', data.message, 'success');
-//                }
-//                else {
-//                    HideProgress();
-//                    Swal.fire('Error', data.message, 'error');
-//                }
-//            },
-//            error: function (err) {
-//                HideProgress();
-//                Swal.fire('Warning', err, 'warning');
-//            }
-//        });
-//
-//    }
+        var ViewDoc = function (DocNo) {
+            ShowProgress();
+            window.location = "/ExitInterview/ExitInterviewDocumentView?DocNo=" + DocNo;
+        }
+    //    var SendDocForApproval = function (DocNo) {
+    //        ShowProgress();
+    //        $.ajax({
+    //            async: true,
+    //            type: "POST",
+    //            datatype: "json",
+    //            data: JSON.stringify({ DocNo: DocNo, Redirect: "N" }),
+    //            contentType: "application/json; charset = utf-8",
+    //            processData: false,
+    //            url: '/Purchase/SendPurchaseAppForApproval',
+    //            success: function (data) {
+    //                if (data.success == true) {
+    //                    HideProgress();
+    //                    LoadPurchaseReqList();
+    //                    $("#myModalLinks").modal("hide");
+    //                    Swal.fire('Success', data.message, 'success');
+    //                }
+    //                else {
+    //                    HideProgress();
+    //                    Swal.fire('Error', data.message, 'error');
+    //                }
+    //            },
+    //            error: function (err) {
+    //                HideProgress();
+    //                Swal.fire('Warning', err, 'warning');
+    //            }
+    //        });
+    //    }
+    //    var CancelDocForApproval = function (DocNo) {
+    //        ShowProgress();
+    //        $.ajax({
+    //            async: true,
+    //            type: "POST",
+    //            datatype: "json",
+    //            data: JSON.stringify({ DocNo: DocNo }),
+    //            contentType: "application/json; charset = utf-8",
+    //            processData: false,
+    //            url: '/Purchase/CancelPurchaseAppForApproval',
+    //            success: function (data) {
+    //                if (data.success == true) {
+    //                    HideProgress();
+    //                    LoadPurchaseReqList();
+    //                    $("#myModalLinks").modal("hide");
+    //                    Swal.fire('Success', data.message, 'success');
+    //                }
+    //                else {
+    //                    HideProgress();
+    //                    Swal.fire('Error', data.message, 'error');
+    //                }
+    //            },
+    //            error: function (err) {
+    //                HideProgress();
+    //                Swal.fire('Warning', err, 'warning');
+    //            }
+    //        });
+    //
+    //    }
     var ViewApprovalTrail = function (DocNo) {
         $("#labelF").text("Document Approval Trail");
         ShowProgress();
@@ -290,28 +284,5 @@
             }
         });
     }
-    var ViewDoc = function (DocNo) {
-        $("#labelF").text("Staff Clearance Details Document");
-        ShowProgress();
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo }),
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: '/StaffClearance/StaffClearanceDocumentView',
-            success: function (data) {
-                $("#modalBody").html(data);
-                HideProgress();
-                $("#myModalLinks").modal("hide");
-                $("#myModal").modal("show");
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
-    }
+    
 </script>
-

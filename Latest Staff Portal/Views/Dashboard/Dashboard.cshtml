@@ -54,9 +54,9 @@
     <div class="col-md-6">
         <div style="border-left: solid 2px green;border-right: solid 2px green;padding: 5px;
         height: 100%">
-            <b>Staff No :</b>  @Model.No<br />
+            <b>Staff No :</b> @Model.No<br />
             <hr/>
-            <b >Name : </b>" @Model.Name<br />
+            <b >Name : </b> @Model.Name<br />
             @* <b>Imprest Balance : </b>  @CustBal *@
         </div>
     </div>
@@ -154,7 +154,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">County</label>
+                                        <label style="font-size: 12px; font-weight: bold">Home County</label>
                                     </div>
                                     <div class="col-md-8">
                                         <span class="label label-warning">@Model.County</span>
@@ -184,55 +184,12 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                      data-parent="#accordion">
                     <div class="card-body">
+                        
                         <div class="row" style="padding: 2px">
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Address 1</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.Address1</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Address 2</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.Address2</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">City</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.City</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">County</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.County</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Home Telephone</label>
+                                        <label style="font-size: 12px; font-weight: bold">Personal Phone No</label>
                                     </div>
                                     <div class="col-md-8">
                                         <span class="label label-warning">@Model.HomeTelNo</span>
@@ -242,7 +199,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Mobile Number</label>
+                                        <label style="font-size: 12px; font-weight: bold">Alternative Phone No</label>
                                     </div>
                                     <div class="col-md-8">
                                         <span class="label label-warning">@Model.PhoneNo</span>
@@ -254,7 +211,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Work Telephone</label>
+                                        <label style="font-size: 12px; font-weight: bold">Personal Email</label>
                                     </div>
                                     <div class="col-md-8">
                                         <span class="label label-warning">@Model.WorkTel</span>
@@ -264,7 +221,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Company Email</label>
+                                        <label style="font-size: 12px; font-weight: bold">Corporate Email</label>
                                     </div>
                                     <div class="col-md-8">
                                         <span class="label label-warning">@Model.CompanyEmail</span>
@@ -276,16 +233,16 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Personal Email</label>
+                                        <label style="font-size: 12px; font-weight: bold">Extension</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <span class="label label-warning">@Model.PersonalEmail</span>
+                                        <span class="label label-warning">@Model.WorkTel</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                            </div>
+
                         </div>
+                       
                     </div>
                 </div>
             </div>
@@ -333,7 +290,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label style="font-size: 12px; font-weight: bold">Job Title</label>
                                     </div>
                                     <div class="col-md-6">
@@ -355,8 +312,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <label style="font-size: 12px; font-weight: bold">Job Category</label>
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Leave Category</label>
                                     </div>
                                     <div class="col-md-6">
                                         <span class="label label-warning">@Model.JobCat</span>
@@ -368,7 +325,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label style="font-size: 12px; font-weight: bold">Department</label>
+                                        <label style="font-size: 12px; font-weight: bold">Division</label>
                                     </div>
                                     <div class="col-md-6">
                                         <span class="label label-warning">@Model.Department</span>
@@ -377,8 +334,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <label style="font-size: 12px; font-weight: bold">Campus</label>
+                                    <div class="col-md-4">
+                                        <label style="font-size: 12px; font-weight: bold">Department</label>
                                     </div>
                                     <div class="col-md-6">
                                         <span class="label label-warning">@Model.Campus</span>
@@ -389,23 +346,40 @@
                     </div>
                 </div>
             </div>
-            <div class="card mb-1 shadow-none">
-                <div class="card-header" id="headingThree1" aria-expanded="false" aria-controls="collapseThree1" data-toggle="collapse" href="#collapseThree1">
-                    <h6 class="m-0">
-                        <span class="fa fa-arrow-down"></span> Qualifications
-                    </h6>
-                </div>
-                <div id="collapseThree1" class="collapse"
-                     aria-labelledby="headingThree1" data-parent="#accordion">
-                    <div class="card-body">
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-12">
-                                <div id="divQualifications"></div>
-                            </div>
+        <div class="card mb-1 shadow-none">
+            <div class="card-header" id="headingThree1" aria-expanded="false" aria-controls="collapseThree1" data-toggle="collapse" href="#collapseThree1">
+                <h6 class="m-0">
+                    <span class="fa fa-arrow-down"></span> Qualifications
+                </h6>
+            </div>
+            <div id="collapseThree1" class="collapse"
+                 aria-labelledby="headingThree1" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row" style="padding: 2px">
+                        <div class="col-md-12">
+                            <div id="divQualifications"></div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card mb-1 shadow-none">
+            <div class="card-header" id="headingThree2" aria-expanded="false" aria-controls="collapseThree3" data-toggle="collapse" href="#collapseThree3">
+                <h6 class="m-0">
+                    <span class="fa fa-arrow-down"></span> Professional Membership
+                </h6>
+            </div>
+            <div id="collapseThree3" class="collapse"
+                 aria-labelledby="headingThree3" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row" style="padding: 2px">
+                        <div class="col-md-12">
+                            <div id="divQualificationss"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
             <div class="card mb-1 shadow-none">
                 <div class="card-header" id="headingFour" aria-expanded="false" aria-controls="collapseFour" data-toggle="collapse" href="#collapseFour">
                     <h6 class="m-0">
@@ -428,7 +402,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Branch</label>
+                                        <label style="font-size: 12px; font-weight: bold">Bank Branch</label>
                                     </div>
                                     <div class="col-md-8">
                                         <span class="label label-warning">@Model.Branch</span>
@@ -440,7 +414,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Account Number</label>
+                                        <label style="font-size: 12px; font-weight: bold">Bank Account No</label>
                                     </div>
                                     <div class="col-md-8">
                                         <span class="label label-warning">@Model.AccountNo</span>
@@ -450,7 +424,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">PIN Number</label>
+                                        <label style="font-size: 12px; font-weight: bold">KRA Pin Number</label>
                                     </div>
                                     <div class="col-md-8">
                                         <span class="label label-warning">@Model.PinNo</span>
@@ -480,6 +454,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>

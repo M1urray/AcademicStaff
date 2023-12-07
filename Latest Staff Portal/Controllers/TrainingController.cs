@@ -1,4 +1,5 @@
-﻿using Latest_Staff_Portal.Models;
+﻿using Latest_Staff_Portal.CustomSecurity;
+using Latest_Staff_Portal.Models;
 using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
@@ -12,6 +13,8 @@ using System.Web.Mvc;
 
 namespace Latest_Staff_Portal.Controllers
 {
+    [CustomeAuthentication]
+    [CustomAuthorization(Role = "ALLUSERS")]
     public class TrainingController : Controller
     {
         // GET: Training
@@ -433,7 +436,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     DropdownList ddl = new DropdownList();
                     ddl.Value = (string)config["No"];
-                    ddl.Text = (string)config["FirstName"] + " " + (string)config["MiddleName"] + " " + (string)config["LastName"];
+                    ddl.Text = (string)config["First_Name"] + " " + (string)config["Middle_Name"] + " " + (string)config["Last_Name"];
                     EmployeeList.Add(ddl);
                 }
             }

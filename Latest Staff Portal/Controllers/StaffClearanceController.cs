@@ -2,6 +2,7 @@
 using Latest_Staff_Portal.Models;
 using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json.Linq;
+using Org.BouncyCastle.Bcpg;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -18,38 +19,6 @@ namespace Latest_Staff_Portal.Controllers
     [CustomAuthorization(Role = "ALLUSERS")]
     public class StaffClearanceController : Controller
     {
-        // GET: StaffClearance
-        public ActionResult ExitInterview()
-        {
-            try
-            {
-                string StaffNo = Session["Username"].ToString();
-                ExitInterview ExtInterview = new ExitInterview();
-                ExtInterview.No = "";
-                ExtInterview.Q1 = "";
-                ExtInterview.Q2 = "";
-                ExtInterview.Q3 = "";
-                ExtInterview.Q4 = "";
-                ExtInterview.Q5 = "";
-                ExtInterview.Q6 = "";
-                ExtInterview.Q7 = "";
-                ExtInterview.Q8 = "";
-                ExtInterview.Q9 = "";
-                ExtInterview.Q10 = "";
-                ExtInterview.Q11 = "";
-                ExtInterview.Q12 = "";
-                ExtInterview.Q13 = "";
-                ExtInterview.Q14 = "";
-                return View(ExtInterview);
-            }
-            catch (Exception ex)
-            {
-                Error erroMsg = new Error();
-                erroMsg.Message = ex.Message;
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
-            }
-        }
-
         public ActionResult StaffClearanceRequestList()
         {
             try
@@ -137,18 +106,18 @@ namespace Latest_Staff_Portal.Controllers
 
                 DateTime LastDayOfService = DateTime.ParseExact(staffClearance.LastDateOfService.Replace("-", "/"),
                     "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                string DocNo = Credentials.ObjNav.StaffClearanceRequest(staffClearance.StaffNo,
-                    staffClearance.PhoneNumber, staffClearance.Email, staffClearance.Address,
-                    staffClearance.ReasonForClearing, LastDayOfService);
-                if (DocNo != "")
-                {
-                    return Json(
-                        new
-                        {
-                            message = "Clearance Requisition, Document No: " + DocNo + ", created Successfully.",
-                            success = true
-                        }, JsonRequestBehavior.AllowGet);
-                }
+                // string DocNo = Credentials.ObjNav.StaffClearanceRequest(staffClearance.StaffNo,
+                //     staffClearance.PhoneNumber, staffClearance.Email, staffClearance.Address,
+                //     staffClearance.ReasonForClearing, LastDayOfService,staffClearance.MemberBenefit,staffClearance.EmployerBenefit,staffClearance.EmployerBalance);
+                // if (DocNo != "")
+                // {
+                //     return Json(
+                //         new
+                //         {
+                //             message = "Clearance Requisition, Document No: " + DocNo + ", created Successfully.",
+                //             success = true
+                //         }, JsonRequestBehavior.AllowGet);
+                // }
 
                 return Json(new { message = "Document not created. Please try again later...", success = false },
                     JsonRequestBehavior.AllowGet);
@@ -183,6 +152,10 @@ namespace Latest_Staff_Portal.Controllers
             }
 
             return PartialView("~/Views/StaffClearance/StaffClearanceDocumentView.cshtml", staffClearanceLists);
+        }
+        public PartialViewResult FileUploadForm()
+        {
+            return PartialView("~/Views/StaffClearance/FileAttachmentForm.cshtml");
         }
     }
 }

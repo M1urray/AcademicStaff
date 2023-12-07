@@ -1,0 +1,120 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewLeavePlanForm
+<style>
+    .ui-front {
+        z-index: 2000 !important;
+    }    
+</style>
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-6">
+            Leave Type
+            @Html.DropDownListFor(model => model.Code, Model.ListOfLeaveTypes, "--select Leave Type--", new { @class = "form-control", @id = "ddlLeaveType" })
+        </div>
+        <div class="col-md-6">
+            No of Days
+            <input type="text" class="form-control" id="txtNoOfDays" onkeypress="return functionx(event)" />
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.Label("Start Date", new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    <input type="datetime" class="form-control" placeholder="dd/mm/yyyy" id="txtStartDate" onkeydown="return false;" autocomplete="off" onkeyup="DateChanged(this)" />
+                    <div class='a'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("End Date", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    <label id="EndDate" style="color:#6B6A03"></label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Return Date", new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    <label id="ReturnDate" style="color:#6B6A03"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            Remarks(150 Characters)
+            <textarea id="txtRemarks" class="form-control" maxlength="150"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Add Line" onclick="AddLeavePlanLineItem();" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#txtStartDate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-0:+2',
+            showOtherMonths: true,
+            dateFormat: 'dd/mm/yy',
+            minDate: 0
+        });
+        $(window).resize(function () {
+            $('#txtStartDate').datepicker('hide');
+            $('#txtStartDate').blur();
+        });
+        $('#txtStartDate').change(function () {
+            var StartDate = $('#txtStartDate').val();
+            var days = $('#txtNoOfDays').val();
+            var LvType = $("#ddlLeaveType").children("option:selected").val();
+            if (LvType == "") {
+                $('#txtNoOfDays').val("");
+                Swal.fire('Warning', 'Select Leave Type', 'warning');
+                $('#txtStartDate').val("");
+                return;
+            }
+            else if (days == "0" || days == "") {
+                Swal.fire('Warning', 'Enter Number of days', 'warning');
+                $('#txtStartDate').val("");
+                return;
+            }
+            else if (StartDate == "") {
+                Swal.fire('Warning', 'Select Leave Start Date', 'warning');
+                $('#txtStartDate').val("");
+                return;
+            }
+            else {
+                ShowProgress();
+                $.getJSON("/Leave/End_ReturnDates", { startDate: StartDate, days: days, LvType: LvType },
+                    function (data) {
+                        if (data.success == true) {
+                            $('#EndDate').html(data.ERDate.EndDate);
+                            $('#ReturnDate').html(data.ERDate.ReturnDate);
+                            HideProgress();
+                        }
+                        else {
+                            Swal.fire('Warning', data.message, 'warning');
+                            $('#txtStartDate').val("");
+                            HideProgress();
+                        }
+                    });
+            }
+        });
+    });
+    function functionx(evt) {
+        if (evt.charCode > 31 && (evt.charCode < 48 || evt.charCode > 57)) {
+            Swal.fire("Error", "Please enter only numeric characters in the text box", "error");
+            return false;
+        }
+    }
+</script>
+

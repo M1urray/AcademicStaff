@@ -1,14 +1,10 @@
-﻿using iText;
-using Latest_Staff_Portal.ViewModel;
-using Newtonsoft.Json;
+﻿using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Script.Serialization;
 
 namespace Latest_Staff_Portal.Models
 {
@@ -67,6 +63,55 @@ namespace Latest_Staff_Portal.Models
             }
             return CSem;
         }
+        public static string Current_HR_Calender()
+        {
+            string code = "";
+            try
+            {
+                string page = "HRLeaveCalender?$select=Code&$filter=Current eq true&format=json";
+
+                HttpWebResponse httpResponseResC = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+
+                    foreach (JObject config in details["value"])
+                    {
+                        code = (string)config["Code"];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Clear();
+            }
+            return code;
+        }
+        public static string GetEmployeeGender(string StaffNo)
+        {
+            string gender = "";
+
+            string page = "EmployeeList?$select=Gender&$filter=No eq '" + StaffNo + "'&$format=json";
+
+            HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+                if (details["value"].Count() > 0)
+                {
+                    foreach (JObject config in details["value"])
+                    {
+                        gender = (string)config["Gender"];
+                    }
+                }
+            }
+            return gender;
+        }
         public static string ExamSemester()
         {
             string CSem = "";
@@ -98,8 +143,7 @@ namespace Latest_Staff_Portal.Models
             string PicString = "";
             try
             {
-                string StaffNo = User;
-                PicString = Credentials.ObjNav.GetProfilePicture(StaffNo);
+                PicString = Credentials.ObjNav.GetProfilePicture(User);
             }
             catch (Exception ex)
             {

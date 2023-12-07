@@ -120,4 +120,17 @@ namespace Latest_Staff_Portal.ViewModel
         public string Name { get; set; }
         public List<SelectListItem> ListOfEmployee { get; set; }
     }
+    public class TrainingCost
+    {
+        public string No { get; set; }
+        public string Item { get; set; }
+        public string Cost { get; set; }
+    }
+    public class TrainingDocument
+    {
+        public TrainingList DocHeader { get; set; }
+        public List<Trainees> ListOfTrainees { get; set; }
+        public List<TrainingCost> ListOfTraininingCost { get; set; }
+    }
+
 }

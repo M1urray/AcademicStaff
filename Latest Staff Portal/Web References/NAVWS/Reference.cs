@@ -29,6 +29,16 @@ namespace Latest_Staff_Portal.NAVWS {
     [System.Web.Services.WebServiceBindingAttribute(Name="WebPortal_Binding", Namespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal")]
     public partial class WebPortal : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
+        private System.Threading.SendOrPostCallback UpdateStudentPasswordOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UpdateStudentThesisOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UpdateTimetableProjectionsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UploadAttachedDocumentOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ValidateApplicationFormHeaderOperationCompleted;
+        
         private System.Threading.SendOrPostCallback ValidateBiometricsOperationCompleted;
         
         private System.Threading.SendOrPostCallback ValidateCourseReggistrationOperationCompleted;
@@ -69,9 +79,21 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback updateDashboardProfileOperationCompleted;
         
+        private System.Threading.SendOrPostCallback SendConceptForApprovalOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SendEmailWithAttachmentOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SendEmailOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SendEmailsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SendGraduationDocForApprovalOperationCompleted;
+        
         private System.Threading.SendOrPostCallback SendImpSurrenderForApprovalOperationCompleted;
         
         private System.Threading.SendOrPostCallback SendLeaveApplicationForApprovalOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SendLeavePlannerforApprovalOperationCompleted;
         
         private System.Threading.SendOrPostCallback SendRejectionEmailAlertOperationCompleted;
         
@@ -227,15 +249,13 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback UpdateStudentPassword1OperationCompleted;
         
-        private System.Threading.SendOrPostCallback UpdateStudentPasswordOperationCompleted;
+        private System.Threading.SendOrPostCallback MealBookingOperationCompleted;
         
-        private System.Threading.SendOrPostCallback UpdateStudentThesisOperationCompleted;
+        private System.Threading.SendOrPostCallback ModifyExamSetupEntryOperationCompleted;
         
-        private System.Threading.SendOrPostCallback UpdateTimetableProjectionsOperationCompleted;
+        private System.Threading.SendOrPostCallback ModifyLeavePlannerLinesOperationCompleted;
         
-        private System.Threading.SendOrPostCallback UploadAttachedDocumentOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ValidateApplicationFormHeaderOperationCompleted;
+        private System.Threading.SendOrPostCallback OnlineClearanceOperationCompleted;
         
         private System.Threading.SendOrPostCallback OnlineStaffClearanceOperationCompleted;
         
@@ -391,15 +411,11 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback SendApprovalEmailAlertOperationCompleted;
         
-        private System.Threading.SendOrPostCallback SendConceptForApprovalOperationCompleted;
+        private System.Threading.SendOrPostCallback InsertApplicantCurrentEmpOperationCompleted;
         
-        private System.Threading.SendOrPostCallback SendEmailWithAttachmentOperationCompleted;
+        private System.Threading.SendOrPostCallback InsertApplicantEmpHistOperationCompleted;
         
-        private System.Threading.SendOrPostCallback SendEmailOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SendEmailsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SendGraduationDocForApprovalOperationCompleted;
+        private System.Threading.SendOrPostCallback InsertApplicantQualificationOperationCompleted;
         
         private System.Threading.SendOrPostCallback InsertApplicantRefereeOperationCompleted;
         
@@ -456,6 +472,8 @@ namespace Latest_Staff_Portal.NAVWS {
         private System.Threading.SendOrPostCallback InsertLabLinesOperationCompleted;
         
         private System.Threading.SendOrPostCallback InsertLabResultsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback InsertLeavePlannerLinesOperationCompleted;
         
         private System.Threading.SendOrPostCallback InsertLecExamSetupEntryOperationCompleted;
         
@@ -563,11 +581,9 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback MarkTreatmentCompleteOperationCompleted;
         
-        private System.Threading.SendOrPostCallback MealBookingOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateSenateSummaryOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ModifyExamSetupEntryOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback OnlineClearanceOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateSickoffPrintoutOperationCompleted;
         
         private System.Threading.SendOrPostCallback GenerateStudentAdmissionLetterOperationCompleted;
         
@@ -667,6 +683,8 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback HRCancelLeaveApplicationOperationCompleted;
         
+        private System.Threading.SendOrPostCallback HRCancelLeavePlannerApplicationOperationCompleted;
+        
         private System.Threading.SendOrPostCallback HRCancelPurchaseRequisitionOperationCompleted;
         
         private System.Threading.SendOrPostCallback HRCancelStoreRequisitionOperationCompleted;
@@ -733,11 +751,7 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback InsertAdmissionOperationCompleted;
         
-        private System.Threading.SendOrPostCallback InsertApplicantCurrentEmpOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertApplicantEmpHistOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertApplicantQualificationOperationCompleted;
+        private System.Threading.SendOrPostCallback DeleteHRAppraisalDutiesRespOperationCompleted;
         
         private System.Threading.SendOrPostCallback DeleteHRAppraisalObjectiveOperationCompleted;
         
@@ -746,6 +760,8 @@ namespace Latest_Staff_Portal.NAVWS {
         private System.Threading.SendOrPostCallback DeleteHRAppraisalSkillsDevelopmentOperationCompleted;
         
         private System.Threading.SendOrPostCallback DeleteLabtreatLineOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DeleteLeavePlannerLinesOperationCompleted;
         
         private System.Threading.SendOrPostCallback DeleteLecturerEvaluationOnlineLearningOperationCompleted;
         
@@ -901,10 +917,6 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback GenerateScoreSheetOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GenerateSenateSummaryOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback GenerateSickoffPrintoutOperationCompleted;
-        
         private System.Threading.SendOrPostCallback AcademicRefereeOperationCompleted;
         
         private System.Threading.SendOrPostCallback AddEmployeeQualificationsOperationCompleted;
@@ -1015,6 +1027,8 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback CreateDCFActivityOperationCompleted;
         
+        private System.Threading.SendOrPostCallback CreateLeavePlannerHeaderOperationCompleted;
+        
         private System.Threading.SendOrPostCallback CreateNewPharmacyOperationCompleted;
         
         private System.Threading.SendOrPostCallback CreateStudentApprovalTemplateOperationCompleted;
@@ -1053,8 +1067,6 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback DeleteFoodMenuOperationCompleted;
         
-        private System.Threading.SendOrPostCallback DeleteHRAppraisalDutiesRespOperationCompleted;
-        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -1092,6 +1104,21 @@ namespace Latest_Staff_Portal.NAVWS {
                 this.useDefaultCredentialsSetExplicitly = true;
             }
         }
+        
+        /// <remarks/>
+        public event UpdateStudentPasswordCompletedEventHandler UpdateStudentPasswordCompleted;
+        
+        /// <remarks/>
+        public event UpdateStudentThesisCompletedEventHandler UpdateStudentThesisCompleted;
+        
+        /// <remarks/>
+        public event UpdateTimetableProjectionsCompletedEventHandler UpdateTimetableProjectionsCompleted;
+        
+        /// <remarks/>
+        public event UploadAttachedDocumentCompletedEventHandler UploadAttachedDocumentCompleted;
+        
+        /// <remarks/>
+        public event ValidateApplicationFormHeaderCompletedEventHandler ValidateApplicationFormHeaderCompleted;
         
         /// <remarks/>
         public event ValidateBiometricsCompletedEventHandler ValidateBiometricsCompleted;
@@ -1154,10 +1181,28 @@ namespace Latest_Staff_Portal.NAVWS {
         public event updateDashboardProfileCompletedEventHandler updateDashboardProfileCompleted;
         
         /// <remarks/>
+        public event SendConceptForApprovalCompletedEventHandler SendConceptForApprovalCompleted;
+        
+        /// <remarks/>
+        public event SendEmailWithAttachmentCompletedEventHandler SendEmailWithAttachmentCompleted;
+        
+        /// <remarks/>
+        public event SendEmailCompletedEventHandler SendEmailCompleted;
+        
+        /// <remarks/>
+        public event SendEmailsCompletedEventHandler SendEmailsCompleted;
+        
+        /// <remarks/>
+        public event SendGraduationDocForApprovalCompletedEventHandler SendGraduationDocForApprovalCompleted;
+        
+        /// <remarks/>
         public event SendImpSurrenderForApprovalCompletedEventHandler SendImpSurrenderForApprovalCompleted;
         
         /// <remarks/>
         public event SendLeaveApplicationForApprovalCompletedEventHandler SendLeaveApplicationForApprovalCompleted;
+        
+        /// <remarks/>
+        public event SendLeavePlannerforApprovalCompletedEventHandler SendLeavePlannerforApprovalCompleted;
         
         /// <remarks/>
         public event SendRejectionEmailAlertCompletedEventHandler SendRejectionEmailAlertCompleted;
@@ -1391,19 +1436,16 @@ namespace Latest_Staff_Portal.NAVWS {
         public event UpdateStudentPassword1CompletedEventHandler UpdateStudentPassword1Completed;
         
         /// <remarks/>
-        public event UpdateStudentPasswordCompletedEventHandler UpdateStudentPasswordCompleted;
+        public event MealBookingCompletedEventHandler MealBookingCompleted;
         
         /// <remarks/>
-        public event UpdateStudentThesisCompletedEventHandler UpdateStudentThesisCompleted;
+        public event ModifyExamSetupEntryCompletedEventHandler ModifyExamSetupEntryCompleted;
         
         /// <remarks/>
-        public event UpdateTimetableProjectionsCompletedEventHandler UpdateTimetableProjectionsCompleted;
+        public event ModifyLeavePlannerLinesCompletedEventHandler ModifyLeavePlannerLinesCompleted;
         
         /// <remarks/>
-        public event UploadAttachedDocumentCompletedEventHandler UploadAttachedDocumentCompleted;
-        
-        /// <remarks/>
-        public event ValidateApplicationFormHeaderCompletedEventHandler ValidateApplicationFormHeaderCompleted;
+        public event OnlineClearanceCompletedEventHandler OnlineClearanceCompleted;
         
         /// <remarks/>
         public event OnlineStaffClearanceCompletedEventHandler OnlineStaffClearanceCompleted;
@@ -1637,19 +1679,13 @@ namespace Latest_Staff_Portal.NAVWS {
         public event SendApprovalEmailAlertCompletedEventHandler SendApprovalEmailAlertCompleted;
         
         /// <remarks/>
-        public event SendConceptForApprovalCompletedEventHandler SendConceptForApprovalCompleted;
+        public event InsertApplicantCurrentEmpCompletedEventHandler InsertApplicantCurrentEmpCompleted;
         
         /// <remarks/>
-        public event SendEmailWithAttachmentCompletedEventHandler SendEmailWithAttachmentCompleted;
+        public event InsertApplicantEmpHistCompletedEventHandler InsertApplicantEmpHistCompleted;
         
         /// <remarks/>
-        public event SendEmailCompletedEventHandler SendEmailCompleted;
-        
-        /// <remarks/>
-        public event SendEmailsCompletedEventHandler SendEmailsCompleted;
-        
-        /// <remarks/>
-        public event SendGraduationDocForApprovalCompletedEventHandler SendGraduationDocForApprovalCompleted;
+        public event InsertApplicantQualificationCompletedEventHandler InsertApplicantQualificationCompleted;
         
         /// <remarks/>
         public event InsertApplicantRefereeCompletedEventHandler InsertApplicantRefereeCompleted;
@@ -1734,6 +1770,9 @@ namespace Latest_Staff_Portal.NAVWS {
         
         /// <remarks/>
         public event InsertLabResultsCompletedEventHandler InsertLabResultsCompleted;
+        
+        /// <remarks/>
+        public event InsertLeavePlannerLinesCompletedEventHandler InsertLeavePlannerLinesCompleted;
         
         /// <remarks/>
         public event InsertLecExamSetupEntryCompletedEventHandler InsertLecExamSetupEntryCompleted;
@@ -1895,13 +1934,10 @@ namespace Latest_Staff_Portal.NAVWS {
         public event MarkTreatmentCompleteCompletedEventHandler MarkTreatmentCompleteCompleted;
         
         /// <remarks/>
-        public event MealBookingCompletedEventHandler MealBookingCompleted;
+        public event GenerateSenateSummaryCompletedEventHandler GenerateSenateSummaryCompleted;
         
         /// <remarks/>
-        public event ModifyExamSetupEntryCompletedEventHandler ModifyExamSetupEntryCompleted;
-        
-        /// <remarks/>
-        public event OnlineClearanceCompletedEventHandler OnlineClearanceCompleted;
+        public event GenerateSickoffPrintoutCompletedEventHandler GenerateSickoffPrintoutCompleted;
         
         /// <remarks/>
         public event GenerateStudentAdmissionLetterCompletedEventHandler GenerateStudentAdmissionLetterCompleted;
@@ -2051,6 +2087,9 @@ namespace Latest_Staff_Portal.NAVWS {
         public event HRCancelLeaveApplicationCompletedEventHandler HRCancelLeaveApplicationCompleted;
         
         /// <remarks/>
+        public event HRCancelLeavePlannerApplicationCompletedEventHandler HRCancelLeavePlannerApplicationCompleted;
+        
+        /// <remarks/>
         public event HRCancelPurchaseRequisitionCompletedEventHandler HRCancelPurchaseRequisitionCompleted;
         
         /// <remarks/>
@@ -2150,13 +2189,7 @@ namespace Latest_Staff_Portal.NAVWS {
         public event InsertAdmissionCompletedEventHandler InsertAdmissionCompleted;
         
         /// <remarks/>
-        public event InsertApplicantCurrentEmpCompletedEventHandler InsertApplicantCurrentEmpCompleted;
-        
-        /// <remarks/>
-        public event InsertApplicantEmpHistCompletedEventHandler InsertApplicantEmpHistCompleted;
-        
-        /// <remarks/>
-        public event InsertApplicantQualificationCompletedEventHandler InsertApplicantQualificationCompleted;
+        public event DeleteHRAppraisalDutiesRespCompletedEventHandler DeleteHRAppraisalDutiesRespCompleted;
         
         /// <remarks/>
         public event DeleteHRAppraisalObjectiveCompletedEventHandler DeleteHRAppraisalObjectiveCompleted;
@@ -2169,6 +2202,9 @@ namespace Latest_Staff_Portal.NAVWS {
         
         /// <remarks/>
         public event DeleteLabtreatLineCompletedEventHandler DeleteLabtreatLineCompleted;
+        
+        /// <remarks/>
+        public event DeleteLeavePlannerLinesCompletedEventHandler DeleteLeavePlannerLinesCompleted;
         
         /// <remarks/>
         public event DeleteLecturerEvaluationOnlineLearningCompletedEventHandler DeleteLecturerEvaluationOnlineLearningCompleted;
@@ -2402,12 +2438,6 @@ namespace Latest_Staff_Portal.NAVWS {
         public event GenerateScoreSheetCompletedEventHandler GenerateScoreSheetCompleted;
         
         /// <remarks/>
-        public event GenerateSenateSummaryCompletedEventHandler GenerateSenateSummaryCompleted;
-        
-        /// <remarks/>
-        public event GenerateSickoffPrintoutCompletedEventHandler GenerateSickoffPrintoutCompleted;
-        
-        /// <remarks/>
         public event AcademicRefereeCompletedEventHandler AcademicRefereeCompleted;
         
         /// <remarks/>
@@ -2573,6 +2603,9 @@ namespace Latest_Staff_Portal.NAVWS {
         public event CreateDCFActivityCompletedEventHandler CreateDCFActivityCompleted;
         
         /// <remarks/>
+        public event CreateLeavePlannerHeaderCompletedEventHandler CreateLeavePlannerHeaderCompleted;
+        
+        /// <remarks/>
         public event CreateNewPharmacyCompletedEventHandler CreateNewPharmacyCompleted;
         
         /// <remarks/>
@@ -2630,7 +2663,188 @@ namespace Latest_Staff_Portal.NAVWS {
         public event DeleteFoodMenuCompletedEventHandler DeleteFoodMenuCompleted;
         
         /// <remarks/>
-        public event DeleteHRAppraisalDutiesRespCompletedEventHandler DeleteHRAppraisalDutiesRespCompleted;
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateStudentPassword", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="UpdateStudentPassword_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void UpdateStudentPassword(string studNo, string pwd) {
+            this.Invoke("UpdateStudentPassword", new object[] {
+                        studNo,
+                        pwd});
+        }
+        
+        /// <remarks/>
+        public void UpdateStudentPasswordAsync(string studNo, string pwd) {
+            this.UpdateStudentPasswordAsync(studNo, pwd, null);
+        }
+        
+        /// <remarks/>
+        public void UpdateStudentPasswordAsync(string studNo, string pwd, object userState) {
+            if ((this.UpdateStudentPasswordOperationCompleted == null)) {
+                this.UpdateStudentPasswordOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateStudentPasswordOperationCompleted);
+            }
+            this.InvokeAsync("UpdateStudentPassword", new object[] {
+                        studNo,
+                        pwd}, this.UpdateStudentPasswordOperationCompleted, userState);
+        }
+        
+        private void OnUpdateStudentPasswordOperationCompleted(object arg) {
+            if ((this.UpdateStudentPasswordCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpdateStudentPasswordCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateStudentThesis", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="UpdateStudentThesis_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void UpdateStudentThesis(string stdNo, string title, string desc, string publication1, string publication2, string publication3, string sup1, string sup2, string sup3, string unit) {
+            this.Invoke("UpdateStudentThesis", new object[] {
+                        stdNo,
+                        title,
+                        desc,
+                        publication1,
+                        publication2,
+                        publication3,
+                        sup1,
+                        sup2,
+                        sup3,
+                        unit});
+        }
+        
+        /// <remarks/>
+        public void UpdateStudentThesisAsync(string stdNo, string title, string desc, string publication1, string publication2, string publication3, string sup1, string sup2, string sup3, string unit) {
+            this.UpdateStudentThesisAsync(stdNo, title, desc, publication1, publication2, publication3, sup1, sup2, sup3, unit, null);
+        }
+        
+        /// <remarks/>
+        public void UpdateStudentThesisAsync(string stdNo, string title, string desc, string publication1, string publication2, string publication3, string sup1, string sup2, string sup3, string unit, object userState) {
+            if ((this.UpdateStudentThesisOperationCompleted == null)) {
+                this.UpdateStudentThesisOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateStudentThesisOperationCompleted);
+            }
+            this.InvokeAsync("UpdateStudentThesis", new object[] {
+                        stdNo,
+                        title,
+                        desc,
+                        publication1,
+                        publication2,
+                        publication3,
+                        sup1,
+                        sup2,
+                        sup3,
+                        unit}, this.UpdateStudentThesisOperationCompleted, userState);
+        }
+        
+        private void OnUpdateStudentThesisOperationCompleted(object arg) {
+            if ((this.UpdateStudentThesisCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpdateStudentThesisCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateTimetableProjections", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="UpdateTimetableProjections_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void UpdateTimetableProjections(string staffNo, string unit, string period, string dayWk, string lecRoom, string section, string lecture, string campus, int classSize, int entryNo) {
+            this.Invoke("UpdateTimetableProjections", new object[] {
+                        staffNo,
+                        unit,
+                        period,
+                        dayWk,
+                        lecRoom,
+                        section,
+                        lecture,
+                        campus,
+                        classSize,
+                        entryNo});
+        }
+        
+        /// <remarks/>
+        public void UpdateTimetableProjectionsAsync(string staffNo, string unit, string period, string dayWk, string lecRoom, string section, string lecture, string campus, int classSize, int entryNo) {
+            this.UpdateTimetableProjectionsAsync(staffNo, unit, period, dayWk, lecRoom, section, lecture, campus, classSize, entryNo, null);
+        }
+        
+        /// <remarks/>
+        public void UpdateTimetableProjectionsAsync(string staffNo, string unit, string period, string dayWk, string lecRoom, string section, string lecture, string campus, int classSize, int entryNo, object userState) {
+            if ((this.UpdateTimetableProjectionsOperationCompleted == null)) {
+                this.UpdateTimetableProjectionsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateTimetableProjectionsOperationCompleted);
+            }
+            this.InvokeAsync("UpdateTimetableProjections", new object[] {
+                        staffNo,
+                        unit,
+                        period,
+                        dayWk,
+                        lecRoom,
+                        section,
+                        lecture,
+                        campus,
+                        classSize,
+                        entryNo}, this.UpdateTimetableProjectionsOperationCompleted, userState);
+        }
+        
+        private void OnUpdateTimetableProjectionsOperationCompleted(object arg) {
+            if ((this.UpdateTimetableProjectionsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpdateTimetableProjectionsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:UploadAttachedDocument", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="UploadAttachedDocument_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void UploadAttachedDocument(string docNo, string fileName, string attachment, int tableID) {
+            this.Invoke("UploadAttachedDocument", new object[] {
+                        docNo,
+                        fileName,
+                        attachment,
+                        tableID});
+        }
+        
+        /// <remarks/>
+        public void UploadAttachedDocumentAsync(string docNo, string fileName, string attachment, int tableID) {
+            this.UploadAttachedDocumentAsync(docNo, fileName, attachment, tableID, null);
+        }
+        
+        /// <remarks/>
+        public void UploadAttachedDocumentAsync(string docNo, string fileName, string attachment, int tableID, object userState) {
+            if ((this.UploadAttachedDocumentOperationCompleted == null)) {
+                this.UploadAttachedDocumentOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUploadAttachedDocumentOperationCompleted);
+            }
+            this.InvokeAsync("UploadAttachedDocument", new object[] {
+                        docNo,
+                        fileName,
+                        attachment,
+                        tableID}, this.UploadAttachedDocumentOperationCompleted, userState);
+        }
+        
+        private void OnUploadAttachedDocumentOperationCompleted(object arg) {
+            if ((this.UploadAttachedDocumentCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UploadAttachedDocumentCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateApplicationFormHeader", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="ValidateApplicationFormHeader_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void ValidateApplicationFormHeader(string appNo) {
+            this.Invoke("ValidateApplicationFormHeader", new object[] {
+                        appNo});
+        }
+        
+        /// <remarks/>
+        public void ValidateApplicationFormHeaderAsync(string appNo) {
+            this.ValidateApplicationFormHeaderAsync(appNo, null);
+        }
+        
+        /// <remarks/>
+        public void ValidateApplicationFormHeaderAsync(string appNo, object userState) {
+            if ((this.ValidateApplicationFormHeaderOperationCompleted == null)) {
+                this.ValidateApplicationFormHeaderOperationCompleted = new System.Threading.SendOrPostCallback(this.OnValidateApplicationFormHeaderOperationCompleted);
+            }
+            this.InvokeAsync("ValidateApplicationFormHeader", new object[] {
+                        appNo}, this.ValidateApplicationFormHeaderOperationCompleted, userState);
+        }
+        
+        private void OnValidateApplicationFormHeaderOperationCompleted(object arg) {
+            if ((this.ValidateApplicationFormHeaderCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ValidateApplicationFormHeaderCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateBiometrics", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="ValidateBiometrics_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -3324,6 +3538,162 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendConceptForApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendConceptForApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void SendConceptForApproval(string reqNo) {
+            this.Invoke("SendConceptForApproval", new object[] {
+                        reqNo});
+        }
+        
+        /// <remarks/>
+        public void SendConceptForApprovalAsync(string reqNo) {
+            this.SendConceptForApprovalAsync(reqNo, null);
+        }
+        
+        /// <remarks/>
+        public void SendConceptForApprovalAsync(string reqNo, object userState) {
+            if ((this.SendConceptForApprovalOperationCompleted == null)) {
+                this.SendConceptForApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendConceptForApprovalOperationCompleted);
+            }
+            this.InvokeAsync("SendConceptForApproval", new object[] {
+                        reqNo}, this.SendConceptForApprovalOperationCompleted, userState);
+        }
+        
+        private void OnSendConceptForApprovalOperationCompleted(object arg) {
+            if ((this.SendConceptForApprovalCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SendConceptForApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendEmailWithAttachment", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendEmailWithAttachment_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public bool SendEmailWithAttachment(ref string receiver, string subject, string message, string filePath, string fileName) {
+            object[] results = this.Invoke("SendEmailWithAttachment", new object[] {
+                        receiver,
+                        subject,
+                        message,
+                        filePath,
+                        fileName});
+            receiver = ((string)(results[1]));
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SendEmailWithAttachmentAsync(string receiver, string subject, string message, string filePath, string fileName) {
+            this.SendEmailWithAttachmentAsync(receiver, subject, message, filePath, fileName, null);
+        }
+        
+        /// <remarks/>
+        public void SendEmailWithAttachmentAsync(string receiver, string subject, string message, string filePath, string fileName, object userState) {
+            if ((this.SendEmailWithAttachmentOperationCompleted == null)) {
+                this.SendEmailWithAttachmentOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendEmailWithAttachmentOperationCompleted);
+            }
+            this.InvokeAsync("SendEmailWithAttachment", new object[] {
+                        receiver,
+                        subject,
+                        message,
+                        filePath,
+                        fileName}, this.SendEmailWithAttachmentOperationCompleted, userState);
+        }
+        
+        private void OnSendEmailWithAttachmentOperationCompleted(object arg) {
+            if ((this.SendEmailWithAttachmentCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SendEmailWithAttachmentCompleted(this, new SendEmailWithAttachmentCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendEmail", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendEmail_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public bool SendEmail(ref string receiver, string subject, string message) {
+            object[] results = this.Invoke("SendEmail", new object[] {
+                        receiver,
+                        subject,
+                        message});
+            receiver = ((string)(results[1]));
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SendEmailAsync(string receiver, string subject, string message) {
+            this.SendEmailAsync(receiver, subject, message, null);
+        }
+        
+        /// <remarks/>
+        public void SendEmailAsync(string receiver, string subject, string message, object userState) {
+            if ((this.SendEmailOperationCompleted == null)) {
+                this.SendEmailOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendEmailOperationCompleted);
+            }
+            this.InvokeAsync("SendEmail", new object[] {
+                        receiver,
+                        subject,
+                        message}, this.SendEmailOperationCompleted, userState);
+        }
+        
+        private void OnSendEmailOperationCompleted(object arg) {
+            if ((this.SendEmailCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SendEmailCompleted(this, new SendEmailCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendEmails", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendEmails_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void SendEmails() {
+            this.Invoke("SendEmails", new object[0]);
+        }
+        
+        /// <remarks/>
+        public void SendEmailsAsync() {
+            this.SendEmailsAsync(null);
+        }
+        
+        /// <remarks/>
+        public void SendEmailsAsync(object userState) {
+            if ((this.SendEmailsOperationCompleted == null)) {
+                this.SendEmailsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendEmailsOperationCompleted);
+            }
+            this.InvokeAsync("SendEmails", new object[0], this.SendEmailsOperationCompleted, userState);
+        }
+        
+        private void OnSendEmailsOperationCompleted(object arg) {
+            if ((this.SendEmailsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SendEmailsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendGraduationDocForApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendGraduationDocForApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void SendGraduationDocForApproval(string docNo) {
+            this.Invoke("SendGraduationDocForApproval", new object[] {
+                        docNo});
+        }
+        
+        /// <remarks/>
+        public void SendGraduationDocForApprovalAsync(string docNo) {
+            this.SendGraduationDocForApprovalAsync(docNo, null);
+        }
+        
+        /// <remarks/>
+        public void SendGraduationDocForApprovalAsync(string docNo, object userState) {
+            if ((this.SendGraduationDocForApprovalOperationCompleted == null)) {
+                this.SendGraduationDocForApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendGraduationDocForApprovalOperationCompleted);
+            }
+            this.InvokeAsync("SendGraduationDocForApproval", new object[] {
+                        docNo}, this.SendGraduationDocForApprovalOperationCompleted, userState);
+        }
+        
+        private void OnSendGraduationDocForApprovalOperationCompleted(object arg) {
+            if ((this.SendGraduationDocForApprovalCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SendGraduationDocForApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendImpSurrenderForApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendImpSurrenderForApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public void SendImpSurrenderForApproval(string reqNo) {
             this.Invoke("SendImpSurrenderForApproval", new object[] {
@@ -3379,6 +3749,34 @@ namespace Latest_Staff_Portal.NAVWS {
             if ((this.SendLeaveApplicationForApprovalCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.SendLeaveApplicationForApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendLeavePlannerforApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendLeavePlannerforApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void SendLeavePlannerforApproval(string docNo) {
+            this.Invoke("SendLeavePlannerforApproval", new object[] {
+                        docNo});
+        }
+        
+        /// <remarks/>
+        public void SendLeavePlannerforApprovalAsync(string docNo) {
+            this.SendLeavePlannerforApprovalAsync(docNo, null);
+        }
+        
+        /// <remarks/>
+        public void SendLeavePlannerforApprovalAsync(string docNo, object userState) {
+            if ((this.SendLeavePlannerforApprovalOperationCompleted == null)) {
+                this.SendLeavePlannerforApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendLeavePlannerforApprovalOperationCompleted);
+            }
+            this.InvokeAsync("SendLeavePlannerforApproval", new object[] {
+                        docNo}, this.SendLeavePlannerforApprovalOperationCompleted, userState);
+        }
+        
+        private void OnSendLeavePlannerforApprovalOperationCompleted(object arg) {
+            if ((this.SendLeavePlannerforApprovalCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SendLeavePlannerforApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -6150,186 +6548,150 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateStudentPassword", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="UpdateStudentPassword_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateStudentPassword(string studNo, string pwd) {
-            this.Invoke("UpdateStudentPassword", new object[] {
-                        studNo,
-                        pwd});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:MealBooking", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="MealBooking_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void MealBooking(string studentNo, string semester) {
+            this.Invoke("MealBooking", new object[] {
+                        studentNo,
+                        semester});
         }
         
         /// <remarks/>
-        public void UpdateStudentPasswordAsync(string studNo, string pwd) {
-            this.UpdateStudentPasswordAsync(studNo, pwd, null);
+        public void MealBookingAsync(string studentNo, string semester) {
+            this.MealBookingAsync(studentNo, semester, null);
         }
         
         /// <remarks/>
-        public void UpdateStudentPasswordAsync(string studNo, string pwd, object userState) {
-            if ((this.UpdateStudentPasswordOperationCompleted == null)) {
-                this.UpdateStudentPasswordOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateStudentPasswordOperationCompleted);
+        public void MealBookingAsync(string studentNo, string semester, object userState) {
+            if ((this.MealBookingOperationCompleted == null)) {
+                this.MealBookingOperationCompleted = new System.Threading.SendOrPostCallback(this.OnMealBookingOperationCompleted);
             }
-            this.InvokeAsync("UpdateStudentPassword", new object[] {
-                        studNo,
-                        pwd}, this.UpdateStudentPasswordOperationCompleted, userState);
+            this.InvokeAsync("MealBooking", new object[] {
+                        studentNo,
+                        semester}, this.MealBookingOperationCompleted, userState);
         }
         
-        private void OnUpdateStudentPasswordOperationCompleted(object arg) {
-            if ((this.UpdateStudentPasswordCompleted != null)) {
+        private void OnMealBookingOperationCompleted(object arg) {
+            if ((this.MealBookingCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateStudentPasswordCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.MealBookingCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateStudentThesis", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="UpdateStudentThesis_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateStudentThesis(string stdNo, string title, string desc, string publication1, string publication2, string publication3, string sup1, string sup2, string sup3, string unit) {
-            this.Invoke("UpdateStudentThesis", new object[] {
-                        stdNo,
-                        title,
-                        desc,
-                        publication1,
-                        publication2,
-                        publication3,
-                        sup1,
-                        sup2,
-                        sup3,
-                        unit});
-        }
-        
-        /// <remarks/>
-        public void UpdateStudentThesisAsync(string stdNo, string title, string desc, string publication1, string publication2, string publication3, string sup1, string sup2, string sup3, string unit) {
-            this.UpdateStudentThesisAsync(stdNo, title, desc, publication1, publication2, publication3, sup1, sup2, sup3, unit, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateStudentThesisAsync(string stdNo, string title, string desc, string publication1, string publication2, string publication3, string sup1, string sup2, string sup3, string unit, object userState) {
-            if ((this.UpdateStudentThesisOperationCompleted == null)) {
-                this.UpdateStudentThesisOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateStudentThesisOperationCompleted);
-            }
-            this.InvokeAsync("UpdateStudentThesis", new object[] {
-                        stdNo,
-                        title,
-                        desc,
-                        publication1,
-                        publication2,
-                        publication3,
-                        sup1,
-                        sup2,
-                        sup3,
-                        unit}, this.UpdateStudentThesisOperationCompleted, userState);
-        }
-        
-        private void OnUpdateStudentThesisOperationCompleted(object arg) {
-            if ((this.UpdateStudentThesisCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateStudentThesisCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdateTimetableProjections", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="UpdateTimetableProjections_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateTimetableProjections(string staffNo, string unit, string period, string dayWk, string lecRoom, string section, string lecture, string campus, int classSize, int entryNo) {
-            this.Invoke("UpdateTimetableProjections", new object[] {
-                        staffNo,
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:ModifyExamSetupEntry", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="ModifyExamSetupEntry_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void ModifyExamSetupEntry(string examType, string entryCode, decimal maxScore, decimal contrib, string lecturer, string semester, string unit, string _Class, int entryNo) {
+            this.Invoke("ModifyExamSetupEntry", new object[] {
+                        examType,
+                        entryCode,
+                        maxScore,
+                        contrib,
+                        lecturer,
+                        semester,
                         unit,
-                        period,
-                        dayWk,
-                        lecRoom,
-                        section,
-                        lecture,
-                        campus,
-                        classSize,
+                        _Class,
                         entryNo});
         }
         
         /// <remarks/>
-        public void UpdateTimetableProjectionsAsync(string staffNo, string unit, string period, string dayWk, string lecRoom, string section, string lecture, string campus, int classSize, int entryNo) {
-            this.UpdateTimetableProjectionsAsync(staffNo, unit, period, dayWk, lecRoom, section, lecture, campus, classSize, entryNo, null);
+        public void ModifyExamSetupEntryAsync(string examType, string entryCode, decimal maxScore, decimal contrib, string lecturer, string semester, string unit, string _Class, int entryNo) {
+            this.ModifyExamSetupEntryAsync(examType, entryCode, maxScore, contrib, lecturer, semester, unit, _Class, entryNo, null);
         }
         
         /// <remarks/>
-        public void UpdateTimetableProjectionsAsync(string staffNo, string unit, string period, string dayWk, string lecRoom, string section, string lecture, string campus, int classSize, int entryNo, object userState) {
-            if ((this.UpdateTimetableProjectionsOperationCompleted == null)) {
-                this.UpdateTimetableProjectionsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateTimetableProjectionsOperationCompleted);
+        public void ModifyExamSetupEntryAsync(string examType, string entryCode, decimal maxScore, decimal contrib, string lecturer, string semester, string unit, string _Class, int entryNo, object userState) {
+            if ((this.ModifyExamSetupEntryOperationCompleted == null)) {
+                this.ModifyExamSetupEntryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnModifyExamSetupEntryOperationCompleted);
             }
-            this.InvokeAsync("UpdateTimetableProjections", new object[] {
-                        staffNo,
+            this.InvokeAsync("ModifyExamSetupEntry", new object[] {
+                        examType,
+                        entryCode,
+                        maxScore,
+                        contrib,
+                        lecturer,
+                        semester,
                         unit,
-                        period,
-                        dayWk,
-                        lecRoom,
-                        section,
-                        lecture,
-                        campus,
-                        classSize,
-                        entryNo}, this.UpdateTimetableProjectionsOperationCompleted, userState);
+                        _Class,
+                        entryNo}, this.ModifyExamSetupEntryOperationCompleted, userState);
         }
         
-        private void OnUpdateTimetableProjectionsOperationCompleted(object arg) {
-            if ((this.UpdateTimetableProjectionsCompleted != null)) {
+        private void OnModifyExamSetupEntryOperationCompleted(object arg) {
+            if ((this.ModifyExamSetupEntryCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateTimetableProjectionsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.ModifyExamSetupEntryCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:UploadAttachedDocument", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="UploadAttachedDocument_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UploadAttachedDocument(string docNo, string fileName, string attachment, int tableID) {
-            this.Invoke("UploadAttachedDocument", new object[] {
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:ModifyLeavePlannerLines", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="ModifyLeavePlannerLines_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void ModifyLeavePlannerLines(string docNo, int lineNo, string leaveT, decimal nodays, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime startDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime enddate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime returnDate, string remarks) {
+            this.Invoke("ModifyLeavePlannerLines", new object[] {
                         docNo,
-                        fileName,
-                        attachment,
-                        tableID});
+                        lineNo,
+                        leaveT,
+                        nodays,
+                        startDate,
+                        enddate,
+                        returnDate,
+                        remarks});
         }
         
         /// <remarks/>
-        public void UploadAttachedDocumentAsync(string docNo, string fileName, string attachment, int tableID) {
-            this.UploadAttachedDocumentAsync(docNo, fileName, attachment, tableID, null);
+        public void ModifyLeavePlannerLinesAsync(string docNo, int lineNo, string leaveT, decimal nodays, System.DateTime startDate, System.DateTime enddate, System.DateTime returnDate, string remarks) {
+            this.ModifyLeavePlannerLinesAsync(docNo, lineNo, leaveT, nodays, startDate, enddate, returnDate, remarks, null);
         }
         
         /// <remarks/>
-        public void UploadAttachedDocumentAsync(string docNo, string fileName, string attachment, int tableID, object userState) {
-            if ((this.UploadAttachedDocumentOperationCompleted == null)) {
-                this.UploadAttachedDocumentOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUploadAttachedDocumentOperationCompleted);
+        public void ModifyLeavePlannerLinesAsync(string docNo, int lineNo, string leaveT, decimal nodays, System.DateTime startDate, System.DateTime enddate, System.DateTime returnDate, string remarks, object userState) {
+            if ((this.ModifyLeavePlannerLinesOperationCompleted == null)) {
+                this.ModifyLeavePlannerLinesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnModifyLeavePlannerLinesOperationCompleted);
             }
-            this.InvokeAsync("UploadAttachedDocument", new object[] {
+            this.InvokeAsync("ModifyLeavePlannerLines", new object[] {
                         docNo,
-                        fileName,
-                        attachment,
-                        tableID}, this.UploadAttachedDocumentOperationCompleted, userState);
+                        lineNo,
+                        leaveT,
+                        nodays,
+                        startDate,
+                        enddate,
+                        returnDate,
+                        remarks}, this.ModifyLeavePlannerLinesOperationCompleted, userState);
         }
         
-        private void OnUploadAttachedDocumentOperationCompleted(object arg) {
-            if ((this.UploadAttachedDocumentCompleted != null)) {
+        private void OnModifyLeavePlannerLinesOperationCompleted(object arg) {
+            if ((this.ModifyLeavePlannerLinesCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UploadAttachedDocumentCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.ModifyLeavePlannerLinesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:ValidateApplicationFormHeader", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="ValidateApplicationFormHeader_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ValidateApplicationFormHeader(string appNo) {
-            this.Invoke("ValidateApplicationFormHeader", new object[] {
-                        appNo});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:OnlineClearance", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="OnlineClearance_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void OnlineClearance(string studentNo, string reqNo, string studentProg) {
+            this.Invoke("OnlineClearance", new object[] {
+                        studentNo,
+                        reqNo,
+                        studentProg});
         }
         
         /// <remarks/>
-        public void ValidateApplicationFormHeaderAsync(string appNo) {
-            this.ValidateApplicationFormHeaderAsync(appNo, null);
+        public void OnlineClearanceAsync(string studentNo, string reqNo, string studentProg) {
+            this.OnlineClearanceAsync(studentNo, reqNo, studentProg, null);
         }
         
         /// <remarks/>
-        public void ValidateApplicationFormHeaderAsync(string appNo, object userState) {
-            if ((this.ValidateApplicationFormHeaderOperationCompleted == null)) {
-                this.ValidateApplicationFormHeaderOperationCompleted = new System.Threading.SendOrPostCallback(this.OnValidateApplicationFormHeaderOperationCompleted);
+        public void OnlineClearanceAsync(string studentNo, string reqNo, string studentProg, object userState) {
+            if ((this.OnlineClearanceOperationCompleted == null)) {
+                this.OnlineClearanceOperationCompleted = new System.Threading.SendOrPostCallback(this.OnOnlineClearanceOperationCompleted);
             }
-            this.InvokeAsync("ValidateApplicationFormHeader", new object[] {
-                        appNo}, this.ValidateApplicationFormHeaderOperationCompleted, userState);
+            this.InvokeAsync("OnlineClearance", new object[] {
+                        studentNo,
+                        reqNo,
+                        studentProg}, this.OnlineClearanceOperationCompleted, userState);
         }
         
-        private void OnValidateApplicationFormHeaderOperationCompleted(object arg) {
-            if ((this.ValidateApplicationFormHeaderCompleted != null)) {
+        private void OnOnlineClearanceOperationCompleted(object arg) {
+            if ((this.OnlineClearanceCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ValidateApplicationFormHeaderCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.OnlineClearanceCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -8918,158 +9280,148 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendConceptForApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendConceptForApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SendConceptForApproval(string reqNo) {
-            this.Invoke("SendConceptForApproval", new object[] {
-                        reqNo});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertApplicantCurrentEmp", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="InsertApplicantCurrentEmp_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void InsertApplicantCurrentEmp(string applicantNo, string employer, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_Employed, string position_Held, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp) {
+            this.Invoke("InsertApplicantCurrentEmp", new object[] {
+                        applicantNo,
+                        employer,
+                        date_Employed,
+                        position_Held,
+                        date_Left,
+                        keyExperience,
+                        reasonLeaving,
+                        postaladdress,
+                        phneNo,
+                        current_Salary,
+                        expected_Salary,
+                        currentEmp});
         }
         
         /// <remarks/>
-        public void SendConceptForApprovalAsync(string reqNo) {
-            this.SendConceptForApprovalAsync(reqNo, null);
+        public void InsertApplicantCurrentEmpAsync(string applicantNo, string employer, System.DateTime date_Employed, string position_Held, System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp) {
+            this.InsertApplicantCurrentEmpAsync(applicantNo, employer, date_Employed, position_Held, date_Left, keyExperience, reasonLeaving, postaladdress, phneNo, current_Salary, expected_Salary, currentEmp, null);
         }
         
         /// <remarks/>
-        public void SendConceptForApprovalAsync(string reqNo, object userState) {
-            if ((this.SendConceptForApprovalOperationCompleted == null)) {
-                this.SendConceptForApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendConceptForApprovalOperationCompleted);
+        public void InsertApplicantCurrentEmpAsync(string applicantNo, string employer, System.DateTime date_Employed, string position_Held, System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp, object userState) {
+            if ((this.InsertApplicantCurrentEmpOperationCompleted == null)) {
+                this.InsertApplicantCurrentEmpOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertApplicantCurrentEmpOperationCompleted);
             }
-            this.InvokeAsync("SendConceptForApproval", new object[] {
-                        reqNo}, this.SendConceptForApprovalOperationCompleted, userState);
+            this.InvokeAsync("InsertApplicantCurrentEmp", new object[] {
+                        applicantNo,
+                        employer,
+                        date_Employed,
+                        position_Held,
+                        date_Left,
+                        keyExperience,
+                        reasonLeaving,
+                        postaladdress,
+                        phneNo,
+                        current_Salary,
+                        expected_Salary,
+                        currentEmp}, this.InsertApplicantCurrentEmpOperationCompleted, userState);
         }
         
-        private void OnSendConceptForApprovalOperationCompleted(object arg) {
-            if ((this.SendConceptForApprovalCompleted != null)) {
+        private void OnInsertApplicantCurrentEmpOperationCompleted(object arg) {
+            if ((this.InsertApplicantCurrentEmpCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SendConceptForApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.InsertApplicantCurrentEmpCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendEmailWithAttachment", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendEmailWithAttachment_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool SendEmailWithAttachment(ref string receiver, string subject, string message, string filePath, string fileName) {
-            object[] results = this.Invoke("SendEmailWithAttachment", new object[] {
-                        receiver,
-                        subject,
-                        message,
-                        filePath,
-                        fileName});
-            receiver = ((string)(results[1]));
-            return ((bool)(results[0]));
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertApplicantEmpHist", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="InsertApplicantEmpHist_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void InsertApplicantEmpHist(string applicantNo, string employer, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_Employed, string position_Held, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp) {
+            this.Invoke("InsertApplicantEmpHist", new object[] {
+                        applicantNo,
+                        employer,
+                        date_Employed,
+                        position_Held,
+                        date_Left,
+                        keyExperience,
+                        reasonLeaving,
+                        postaladdress,
+                        phneNo,
+                        current_Salary,
+                        expected_Salary,
+                        currentEmp});
         }
         
         /// <remarks/>
-        public void SendEmailWithAttachmentAsync(string receiver, string subject, string message, string filePath, string fileName) {
-            this.SendEmailWithAttachmentAsync(receiver, subject, message, filePath, fileName, null);
+        public void InsertApplicantEmpHistAsync(string applicantNo, string employer, System.DateTime date_Employed, string position_Held, System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp) {
+            this.InsertApplicantEmpHistAsync(applicantNo, employer, date_Employed, position_Held, date_Left, keyExperience, reasonLeaving, postaladdress, phneNo, current_Salary, expected_Salary, currentEmp, null);
         }
         
         /// <remarks/>
-        public void SendEmailWithAttachmentAsync(string receiver, string subject, string message, string filePath, string fileName, object userState) {
-            if ((this.SendEmailWithAttachmentOperationCompleted == null)) {
-                this.SendEmailWithAttachmentOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendEmailWithAttachmentOperationCompleted);
+        public void InsertApplicantEmpHistAsync(string applicantNo, string employer, System.DateTime date_Employed, string position_Held, System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp, object userState) {
+            if ((this.InsertApplicantEmpHistOperationCompleted == null)) {
+                this.InsertApplicantEmpHistOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertApplicantEmpHistOperationCompleted);
             }
-            this.InvokeAsync("SendEmailWithAttachment", new object[] {
-                        receiver,
-                        subject,
-                        message,
-                        filePath,
-                        fileName}, this.SendEmailWithAttachmentOperationCompleted, userState);
+            this.InvokeAsync("InsertApplicantEmpHist", new object[] {
+                        applicantNo,
+                        employer,
+                        date_Employed,
+                        position_Held,
+                        date_Left,
+                        keyExperience,
+                        reasonLeaving,
+                        postaladdress,
+                        phneNo,
+                        current_Salary,
+                        expected_Salary,
+                        currentEmp}, this.InsertApplicantEmpHistOperationCompleted, userState);
         }
         
-        private void OnSendEmailWithAttachmentOperationCompleted(object arg) {
-            if ((this.SendEmailWithAttachmentCompleted != null)) {
+        private void OnInsertApplicantEmpHistOperationCompleted(object arg) {
+            if ((this.InsertApplicantEmpHistCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SendEmailWithAttachmentCompleted(this, new SendEmailWithAttachmentCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.InsertApplicantEmpHistCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendEmail", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendEmail_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool SendEmail(ref string receiver, string subject, string message) {
-            object[] results = this.Invoke("SendEmail", new object[] {
-                        receiver,
-                        subject,
-                        message});
-            receiver = ((string)(results[1]));
-            return ((bool)(results[0]));
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertApplicantQualification", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="InsertApplicantQualification_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void InsertApplicantQualification(string applicantNo, string qType, string qCode, string institution, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime from, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime toDate, string mbrshpNo, int status, string publications, string grade) {
+            this.Invoke("InsertApplicantQualification", new object[] {
+                        applicantNo,
+                        qType,
+                        qCode,
+                        institution,
+                        from,
+                        toDate,
+                        mbrshpNo,
+                        status,
+                        publications,
+                        grade});
         }
         
         /// <remarks/>
-        public void SendEmailAsync(string receiver, string subject, string message) {
-            this.SendEmailAsync(receiver, subject, message, null);
+        public void InsertApplicantQualificationAsync(string applicantNo, string qType, string qCode, string institution, System.DateTime from, System.DateTime toDate, string mbrshpNo, int status, string publications, string grade) {
+            this.InsertApplicantQualificationAsync(applicantNo, qType, qCode, institution, from, toDate, mbrshpNo, status, publications, grade, null);
         }
         
         /// <remarks/>
-        public void SendEmailAsync(string receiver, string subject, string message, object userState) {
-            if ((this.SendEmailOperationCompleted == null)) {
-                this.SendEmailOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendEmailOperationCompleted);
+        public void InsertApplicantQualificationAsync(string applicantNo, string qType, string qCode, string institution, System.DateTime from, System.DateTime toDate, string mbrshpNo, int status, string publications, string grade, object userState) {
+            if ((this.InsertApplicantQualificationOperationCompleted == null)) {
+                this.InsertApplicantQualificationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertApplicantQualificationOperationCompleted);
             }
-            this.InvokeAsync("SendEmail", new object[] {
-                        receiver,
-                        subject,
-                        message}, this.SendEmailOperationCompleted, userState);
+            this.InvokeAsync("InsertApplicantQualification", new object[] {
+                        applicantNo,
+                        qType,
+                        qCode,
+                        institution,
+                        from,
+                        toDate,
+                        mbrshpNo,
+                        status,
+                        publications,
+                        grade}, this.InsertApplicantQualificationOperationCompleted, userState);
         }
         
-        private void OnSendEmailOperationCompleted(object arg) {
-            if ((this.SendEmailCompleted != null)) {
+        private void OnInsertApplicantQualificationOperationCompleted(object arg) {
+            if ((this.InsertApplicantQualificationCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SendEmailCompleted(this, new SendEmailCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendEmails", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendEmails_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SendEmails() {
-            this.Invoke("SendEmails", new object[0]);
-        }
-        
-        /// <remarks/>
-        public void SendEmailsAsync() {
-            this.SendEmailsAsync(null);
-        }
-        
-        /// <remarks/>
-        public void SendEmailsAsync(object userState) {
-            if ((this.SendEmailsOperationCompleted == null)) {
-                this.SendEmailsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendEmailsOperationCompleted);
-            }
-            this.InvokeAsync("SendEmails", new object[0], this.SendEmailsOperationCompleted, userState);
-        }
-        
-        private void OnSendEmailsOperationCompleted(object arg) {
-            if ((this.SendEmailsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SendEmailsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:SendGraduationDocForApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="SendGraduationDocForApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SendGraduationDocForApproval(string docNo) {
-            this.Invoke("SendGraduationDocForApproval", new object[] {
-                        docNo});
-        }
-        
-        /// <remarks/>
-        public void SendGraduationDocForApprovalAsync(string docNo) {
-            this.SendGraduationDocForApprovalAsync(docNo, null);
-        }
-        
-        /// <remarks/>
-        public void SendGraduationDocForApprovalAsync(string docNo, object userState) {
-            if ((this.SendGraduationDocForApprovalOperationCompleted == null)) {
-                this.SendGraduationDocForApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendGraduationDocForApprovalOperationCompleted);
-            }
-            this.InvokeAsync("SendGraduationDocForApproval", new object[] {
-                        docNo}, this.SendGraduationDocForApprovalOperationCompleted, userState);
-        }
-        
-        private void OnSendGraduationDocForApprovalOperationCompleted(object arg) {
-            if ((this.SendGraduationDocForApprovalCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SendGraduationDocForApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.InsertApplicantQualificationCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -10354,6 +10706,46 @@ namespace Latest_Staff_Portal.NAVWS {
             if ((this.InsertLabResultsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.InsertLabResultsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertLeavePlannerLines", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="InsertLeavePlannerLines_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void InsertLeavePlannerLines(string docNo, string leaveT, decimal nodays, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime startDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime enddate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime returnDate, string remarks) {
+            this.Invoke("InsertLeavePlannerLines", new object[] {
+                        docNo,
+                        leaveT,
+                        nodays,
+                        startDate,
+                        enddate,
+                        returnDate,
+                        remarks});
+        }
+        
+        /// <remarks/>
+        public void InsertLeavePlannerLinesAsync(string docNo, string leaveT, decimal nodays, System.DateTime startDate, System.DateTime enddate, System.DateTime returnDate, string remarks) {
+            this.InsertLeavePlannerLinesAsync(docNo, leaveT, nodays, startDate, enddate, returnDate, remarks, null);
+        }
+        
+        /// <remarks/>
+        public void InsertLeavePlannerLinesAsync(string docNo, string leaveT, decimal nodays, System.DateTime startDate, System.DateTime enddate, System.DateTime returnDate, string remarks, object userState) {
+            if ((this.InsertLeavePlannerLinesOperationCompleted == null)) {
+                this.InsertLeavePlannerLinesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertLeavePlannerLinesOperationCompleted);
+            }
+            this.InvokeAsync("InsertLeavePlannerLines", new object[] {
+                        docNo,
+                        leaveT,
+                        nodays,
+                        startDate,
+                        enddate,
+                        returnDate,
+                        remarks}, this.InsertLeavePlannerLinesOperationCompleted, userState);
+        }
+        
+        private void OnInsertLeavePlannerLinesOperationCompleted(object arg) {
+            if ((this.InsertLeavePlannerLinesCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.InsertLeavePlannerLinesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -12866,108 +13258,72 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:MealBooking", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="MealBooking_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void MealBooking(string studentNo, string semester) {
-            this.Invoke("MealBooking", new object[] {
-                        studentNo,
-                        semester});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:GenerateSenateSummary", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="GenerateSenateSummary_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateSenateSummary(string prog, string academicYear, string stage, string progOptions, int docType, string filenameFromApp) {
+            this.Invoke("GenerateSenateSummary", new object[] {
+                        prog,
+                        academicYear,
+                        stage,
+                        progOptions,
+                        docType,
+                        filenameFromApp});
         }
         
         /// <remarks/>
-        public void MealBookingAsync(string studentNo, string semester) {
-            this.MealBookingAsync(studentNo, semester, null);
+        public void GenerateSenateSummaryAsync(string prog, string academicYear, string stage, string progOptions, int docType, string filenameFromApp) {
+            this.GenerateSenateSummaryAsync(prog, academicYear, stage, progOptions, docType, filenameFromApp, null);
         }
         
         /// <remarks/>
-        public void MealBookingAsync(string studentNo, string semester, object userState) {
-            if ((this.MealBookingOperationCompleted == null)) {
-                this.MealBookingOperationCompleted = new System.Threading.SendOrPostCallback(this.OnMealBookingOperationCompleted);
+        public void GenerateSenateSummaryAsync(string prog, string academicYear, string stage, string progOptions, int docType, string filenameFromApp, object userState) {
+            if ((this.GenerateSenateSummaryOperationCompleted == null)) {
+                this.GenerateSenateSummaryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateSenateSummaryOperationCompleted);
             }
-            this.InvokeAsync("MealBooking", new object[] {
-                        studentNo,
-                        semester}, this.MealBookingOperationCompleted, userState);
+            this.InvokeAsync("GenerateSenateSummary", new object[] {
+                        prog,
+                        academicYear,
+                        stage,
+                        progOptions,
+                        docType,
+                        filenameFromApp}, this.GenerateSenateSummaryOperationCompleted, userState);
         }
         
-        private void OnMealBookingOperationCompleted(object arg) {
-            if ((this.MealBookingCompleted != null)) {
+        private void OnGenerateSenateSummaryOperationCompleted(object arg) {
+            if ((this.GenerateSenateSummaryCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.MealBookingCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GenerateSenateSummaryCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:ModifyExamSetupEntry", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="ModifyExamSetupEntry_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ModifyExamSetupEntry(string examType, string entryCode, decimal maxScore, decimal contrib, string lecturer, string semester, string unit, string _Class, int entryNo) {
-            this.Invoke("ModifyExamSetupEntry", new object[] {
-                        examType,
-                        entryCode,
-                        maxScore,
-                        contrib,
-                        lecturer,
-                        semester,
-                        unit,
-                        _Class,
-                        entryNo});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:GenerateSickoffPrintout", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="GenerateSickoffPrintout_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public string GenerateSickoffPrintout(string treatmentNo, string filenameFromApp) {
+            object[] results = this.Invoke("GenerateSickoffPrintout", new object[] {
+                        treatmentNo,
+                        filenameFromApp});
+            return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void ModifyExamSetupEntryAsync(string examType, string entryCode, decimal maxScore, decimal contrib, string lecturer, string semester, string unit, string _Class, int entryNo) {
-            this.ModifyExamSetupEntryAsync(examType, entryCode, maxScore, contrib, lecturer, semester, unit, _Class, entryNo, null);
+        public void GenerateSickoffPrintoutAsync(string treatmentNo, string filenameFromApp) {
+            this.GenerateSickoffPrintoutAsync(treatmentNo, filenameFromApp, null);
         }
         
         /// <remarks/>
-        public void ModifyExamSetupEntryAsync(string examType, string entryCode, decimal maxScore, decimal contrib, string lecturer, string semester, string unit, string _Class, int entryNo, object userState) {
-            if ((this.ModifyExamSetupEntryOperationCompleted == null)) {
-                this.ModifyExamSetupEntryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnModifyExamSetupEntryOperationCompleted);
+        public void GenerateSickoffPrintoutAsync(string treatmentNo, string filenameFromApp, object userState) {
+            if ((this.GenerateSickoffPrintoutOperationCompleted == null)) {
+                this.GenerateSickoffPrintoutOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateSickoffPrintoutOperationCompleted);
             }
-            this.InvokeAsync("ModifyExamSetupEntry", new object[] {
-                        examType,
-                        entryCode,
-                        maxScore,
-                        contrib,
-                        lecturer,
-                        semester,
-                        unit,
-                        _Class,
-                        entryNo}, this.ModifyExamSetupEntryOperationCompleted, userState);
+            this.InvokeAsync("GenerateSickoffPrintout", new object[] {
+                        treatmentNo,
+                        filenameFromApp}, this.GenerateSickoffPrintoutOperationCompleted, userState);
         }
         
-        private void OnModifyExamSetupEntryOperationCompleted(object arg) {
-            if ((this.ModifyExamSetupEntryCompleted != null)) {
+        private void OnGenerateSickoffPrintoutOperationCompleted(object arg) {
+            if ((this.GenerateSickoffPrintoutCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ModifyExamSetupEntryCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:OnlineClearance", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="OnlineClearance_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void OnlineClearance(string studentNo, string reqNo, string studentProg) {
-            this.Invoke("OnlineClearance", new object[] {
-                        studentNo,
-                        reqNo,
-                        studentProg});
-        }
-        
-        /// <remarks/>
-        public void OnlineClearanceAsync(string studentNo, string reqNo, string studentProg) {
-            this.OnlineClearanceAsync(studentNo, reqNo, studentProg, null);
-        }
-        
-        /// <remarks/>
-        public void OnlineClearanceAsync(string studentNo, string reqNo, string studentProg, object userState) {
-            if ((this.OnlineClearanceOperationCompleted == null)) {
-                this.OnlineClearanceOperationCompleted = new System.Threading.SendOrPostCallback(this.OnOnlineClearanceOperationCompleted);
-            }
-            this.InvokeAsync("OnlineClearance", new object[] {
-                        studentNo,
-                        reqNo,
-                        studentProg}, this.OnlineClearanceOperationCompleted, userState);
-        }
-        
-        private void OnOnlineClearanceOperationCompleted(object arg) {
-            if ((this.OnlineClearanceCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.OnlineClearanceCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GenerateSickoffPrintoutCompleted(this, new GenerateSickoffPrintoutCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -14526,6 +14882,35 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:HRCancelLeavePlannerApplication" +
+            "", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="HRCancelLeavePlannerApplication_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void HRCancelLeavePlannerApplication(string appNo) {
+            this.Invoke("HRCancelLeavePlannerApplication", new object[] {
+                        appNo});
+        }
+        
+        /// <remarks/>
+        public void HRCancelLeavePlannerApplicationAsync(string appNo) {
+            this.HRCancelLeavePlannerApplicationAsync(appNo, null);
+        }
+        
+        /// <remarks/>
+        public void HRCancelLeavePlannerApplicationAsync(string appNo, object userState) {
+            if ((this.HRCancelLeavePlannerApplicationOperationCompleted == null)) {
+                this.HRCancelLeavePlannerApplicationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRCancelLeavePlannerApplicationOperationCompleted);
+            }
+            this.InvokeAsync("HRCancelLeavePlannerApplication", new object[] {
+                        appNo}, this.HRCancelLeavePlannerApplicationOperationCompleted, userState);
+        }
+        
+        private void OnHRCancelLeavePlannerApplicationOperationCompleted(object arg) {
+            if ((this.HRCancelLeavePlannerApplicationCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.HRCancelLeavePlannerApplicationCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:HRCancelPurchaseRequisition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="HRCancelPurchaseRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public void HRCancelPurchaseRequisition(string appNo) {
             this.Invoke("HRCancelPurchaseRequisition", new object[] {
@@ -15999,148 +16384,30 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertApplicantCurrentEmp", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="InsertApplicantCurrentEmp_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertApplicantCurrentEmp(string applicantNo, string employer, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_Employed, string position_Held, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp) {
-            this.Invoke("InsertApplicantCurrentEmp", new object[] {
-                        applicantNo,
-                        employer,
-                        date_Employed,
-                        position_Held,
-                        date_Left,
-                        keyExperience,
-                        reasonLeaving,
-                        postaladdress,
-                        phneNo,
-                        current_Salary,
-                        expected_Salary,
-                        currentEmp});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:DeleteHRAppraisalDutiesResp", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="DeleteHRAppraisalDutiesResp_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void DeleteHRAppraisalDutiesResp(int lineNo) {
+            this.Invoke("DeleteHRAppraisalDutiesResp", new object[] {
+                        lineNo});
         }
         
         /// <remarks/>
-        public void InsertApplicantCurrentEmpAsync(string applicantNo, string employer, System.DateTime date_Employed, string position_Held, System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp) {
-            this.InsertApplicantCurrentEmpAsync(applicantNo, employer, date_Employed, position_Held, date_Left, keyExperience, reasonLeaving, postaladdress, phneNo, current_Salary, expected_Salary, currentEmp, null);
+        public void DeleteHRAppraisalDutiesRespAsync(int lineNo) {
+            this.DeleteHRAppraisalDutiesRespAsync(lineNo, null);
         }
         
         /// <remarks/>
-        public void InsertApplicantCurrentEmpAsync(string applicantNo, string employer, System.DateTime date_Employed, string position_Held, System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp, object userState) {
-            if ((this.InsertApplicantCurrentEmpOperationCompleted == null)) {
-                this.InsertApplicantCurrentEmpOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertApplicantCurrentEmpOperationCompleted);
+        public void DeleteHRAppraisalDutiesRespAsync(int lineNo, object userState) {
+            if ((this.DeleteHRAppraisalDutiesRespOperationCompleted == null)) {
+                this.DeleteHRAppraisalDutiesRespOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteHRAppraisalDutiesRespOperationCompleted);
             }
-            this.InvokeAsync("InsertApplicantCurrentEmp", new object[] {
-                        applicantNo,
-                        employer,
-                        date_Employed,
-                        position_Held,
-                        date_Left,
-                        keyExperience,
-                        reasonLeaving,
-                        postaladdress,
-                        phneNo,
-                        current_Salary,
-                        expected_Salary,
-                        currentEmp}, this.InsertApplicantCurrentEmpOperationCompleted, userState);
+            this.InvokeAsync("DeleteHRAppraisalDutiesResp", new object[] {
+                        lineNo}, this.DeleteHRAppraisalDutiesRespOperationCompleted, userState);
         }
         
-        private void OnInsertApplicantCurrentEmpOperationCompleted(object arg) {
-            if ((this.InsertApplicantCurrentEmpCompleted != null)) {
+        private void OnDeleteHRAppraisalDutiesRespOperationCompleted(object arg) {
+            if ((this.DeleteHRAppraisalDutiesRespCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertApplicantCurrentEmpCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertApplicantEmpHist", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="InsertApplicantEmpHist_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertApplicantEmpHist(string applicantNo, string employer, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_Employed, string position_Held, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp) {
-            this.Invoke("InsertApplicantEmpHist", new object[] {
-                        applicantNo,
-                        employer,
-                        date_Employed,
-                        position_Held,
-                        date_Left,
-                        keyExperience,
-                        reasonLeaving,
-                        postaladdress,
-                        phneNo,
-                        current_Salary,
-                        expected_Salary,
-                        currentEmp});
-        }
-        
-        /// <remarks/>
-        public void InsertApplicantEmpHistAsync(string applicantNo, string employer, System.DateTime date_Employed, string position_Held, System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp) {
-            this.InsertApplicantEmpHistAsync(applicantNo, employer, date_Employed, position_Held, date_Left, keyExperience, reasonLeaving, postaladdress, phneNo, current_Salary, expected_Salary, currentEmp, null);
-        }
-        
-        /// <remarks/>
-        public void InsertApplicantEmpHistAsync(string applicantNo, string employer, System.DateTime date_Employed, string position_Held, System.DateTime date_Left, string keyExperience, string reasonLeaving, string postaladdress, string phneNo, decimal current_Salary, decimal expected_Salary, int currentEmp, object userState) {
-            if ((this.InsertApplicantEmpHistOperationCompleted == null)) {
-                this.InsertApplicantEmpHistOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertApplicantEmpHistOperationCompleted);
-            }
-            this.InvokeAsync("InsertApplicantEmpHist", new object[] {
-                        applicantNo,
-                        employer,
-                        date_Employed,
-                        position_Held,
-                        date_Left,
-                        keyExperience,
-                        reasonLeaving,
-                        postaladdress,
-                        phneNo,
-                        current_Salary,
-                        expected_Salary,
-                        currentEmp}, this.InsertApplicantEmpHistOperationCompleted, userState);
-        }
-        
-        private void OnInsertApplicantEmpHistOperationCompleted(object arg) {
-            if ((this.InsertApplicantEmpHistCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertApplicantEmpHistCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:InsertApplicantQualification", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="InsertApplicantQualification_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertApplicantQualification(string applicantNo, string qType, string qCode, string institution, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime from, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime toDate, string mbrshpNo, int status, string publications, string grade) {
-            this.Invoke("InsertApplicantQualification", new object[] {
-                        applicantNo,
-                        qType,
-                        qCode,
-                        institution,
-                        from,
-                        toDate,
-                        mbrshpNo,
-                        status,
-                        publications,
-                        grade});
-        }
-        
-        /// <remarks/>
-        public void InsertApplicantQualificationAsync(string applicantNo, string qType, string qCode, string institution, System.DateTime from, System.DateTime toDate, string mbrshpNo, int status, string publications, string grade) {
-            this.InsertApplicantQualificationAsync(applicantNo, qType, qCode, institution, from, toDate, mbrshpNo, status, publications, grade, null);
-        }
-        
-        /// <remarks/>
-        public void InsertApplicantQualificationAsync(string applicantNo, string qType, string qCode, string institution, System.DateTime from, System.DateTime toDate, string mbrshpNo, int status, string publications, string grade, object userState) {
-            if ((this.InsertApplicantQualificationOperationCompleted == null)) {
-                this.InsertApplicantQualificationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertApplicantQualificationOperationCompleted);
-            }
-            this.InvokeAsync("InsertApplicantQualification", new object[] {
-                        applicantNo,
-                        qType,
-                        qCode,
-                        institution,
-                        from,
-                        toDate,
-                        mbrshpNo,
-                        status,
-                        publications,
-                        grade}, this.InsertApplicantQualificationOperationCompleted, userState);
-        }
-        
-        private void OnInsertApplicantQualificationOperationCompleted(object arg) {
-            if ((this.InsertApplicantQualificationCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertApplicantQualificationCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.DeleteHRAppraisalDutiesRespCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -16263,6 +16530,36 @@ namespace Latest_Staff_Portal.NAVWS {
             if ((this.DeleteLabtreatLineCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.DeleteLabtreatLineCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:DeleteLeavePlannerLines", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="DeleteLeavePlannerLines_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void DeleteLeavePlannerLines(string docNo, int lineNo) {
+            this.Invoke("DeleteLeavePlannerLines", new object[] {
+                        docNo,
+                        lineNo});
+        }
+        
+        /// <remarks/>
+        public void DeleteLeavePlannerLinesAsync(string docNo, int lineNo) {
+            this.DeleteLeavePlannerLinesAsync(docNo, lineNo, null);
+        }
+        
+        /// <remarks/>
+        public void DeleteLeavePlannerLinesAsync(string docNo, int lineNo, object userState) {
+            if ((this.DeleteLeavePlannerLinesOperationCompleted == null)) {
+                this.DeleteLeavePlannerLinesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteLeavePlannerLinesOperationCompleted);
+            }
+            this.InvokeAsync("DeleteLeavePlannerLines", new object[] {
+                        docNo,
+                        lineNo}, this.DeleteLeavePlannerLinesOperationCompleted, userState);
+        }
+        
+        private void OnDeleteLeavePlannerLinesOperationCompleted(object arg) {
+            if ((this.DeleteLeavePlannerLinesCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DeleteLeavePlannerLinesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -18971,76 +19268,6 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:GenerateSenateSummary", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="GenerateSenateSummary_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GenerateSenateSummary(string prog, string academicYear, string stage, string progOptions, int docType, string filenameFromApp) {
-            this.Invoke("GenerateSenateSummary", new object[] {
-                        prog,
-                        academicYear,
-                        stage,
-                        progOptions,
-                        docType,
-                        filenameFromApp});
-        }
-        
-        /// <remarks/>
-        public void GenerateSenateSummaryAsync(string prog, string academicYear, string stage, string progOptions, int docType, string filenameFromApp) {
-            this.GenerateSenateSummaryAsync(prog, academicYear, stage, progOptions, docType, filenameFromApp, null);
-        }
-        
-        /// <remarks/>
-        public void GenerateSenateSummaryAsync(string prog, string academicYear, string stage, string progOptions, int docType, string filenameFromApp, object userState) {
-            if ((this.GenerateSenateSummaryOperationCompleted == null)) {
-                this.GenerateSenateSummaryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateSenateSummaryOperationCompleted);
-            }
-            this.InvokeAsync("GenerateSenateSummary", new object[] {
-                        prog,
-                        academicYear,
-                        stage,
-                        progOptions,
-                        docType,
-                        filenameFromApp}, this.GenerateSenateSummaryOperationCompleted, userState);
-        }
-        
-        private void OnGenerateSenateSummaryOperationCompleted(object arg) {
-            if ((this.GenerateSenateSummaryCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GenerateSenateSummaryCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:GenerateSickoffPrintout", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="GenerateSickoffPrintout_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string GenerateSickoffPrintout(string treatmentNo, string filenameFromApp) {
-            object[] results = this.Invoke("GenerateSickoffPrintout", new object[] {
-                        treatmentNo,
-                        filenameFromApp});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GenerateSickoffPrintoutAsync(string treatmentNo, string filenameFromApp) {
-            this.GenerateSickoffPrintoutAsync(treatmentNo, filenameFromApp, null);
-        }
-        
-        /// <remarks/>
-        public void GenerateSickoffPrintoutAsync(string treatmentNo, string filenameFromApp, object userState) {
-            if ((this.GenerateSickoffPrintoutOperationCompleted == null)) {
-                this.GenerateSickoffPrintoutOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateSickoffPrintoutOperationCompleted);
-            }
-            this.InvokeAsync("GenerateSickoffPrintout", new object[] {
-                        treatmentNo,
-                        filenameFromApp}, this.GenerateSickoffPrintoutOperationCompleted, userState);
-        }
-        
-        private void OnGenerateSickoffPrintoutOperationCompleted(object arg) {
-            if ((this.GenerateSickoffPrintoutCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GenerateSickoffPrintoutCompleted(this, new GenerateSickoffPrintoutCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:AcademicReferee", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="AcademicReferee_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
         public bool AcademicReferee(string no, string name, string address, string email, string type) {
@@ -20816,6 +21043,36 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:CreateLeavePlannerHeader", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="CreateLeavePlannerHeader_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public string CreateLeavePlannerHeader(string staffNo) {
+            object[] results = this.Invoke("CreateLeavePlannerHeader", new object[] {
+                        staffNo});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void CreateLeavePlannerHeaderAsync(string staffNo) {
+            this.CreateLeavePlannerHeaderAsync(staffNo, null);
+        }
+        
+        /// <remarks/>
+        public void CreateLeavePlannerHeaderAsync(string staffNo, object userState) {
+            if ((this.CreateLeavePlannerHeaderOperationCompleted == null)) {
+                this.CreateLeavePlannerHeaderOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCreateLeavePlannerHeaderOperationCompleted);
+            }
+            this.InvokeAsync("CreateLeavePlannerHeader", new object[] {
+                        staffNo}, this.CreateLeavePlannerHeaderOperationCompleted, userState);
+        }
+        
+        private void OnCreateLeavePlannerHeaderOperationCompleted(object arg) {
+            if ((this.CreateLeavePlannerHeaderCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.CreateLeavePlannerHeaderCompleted(this, new CreateLeavePlannerHeaderCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:CreateNewPharmacy", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="CreateNewPharmacy_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
         public string CreateNewPharmacy() {
@@ -21435,34 +21692,6 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:DeleteHRAppraisalDutiesResp", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="DeleteHRAppraisalDutiesResp_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void DeleteHRAppraisalDutiesResp(int lineNo) {
-            this.Invoke("DeleteHRAppraisalDutiesResp", new object[] {
-                        lineNo});
-        }
-        
-        /// <remarks/>
-        public void DeleteHRAppraisalDutiesRespAsync(int lineNo) {
-            this.DeleteHRAppraisalDutiesRespAsync(lineNo, null);
-        }
-        
-        /// <remarks/>
-        public void DeleteHRAppraisalDutiesRespAsync(int lineNo, object userState) {
-            if ((this.DeleteHRAppraisalDutiesRespOperationCompleted == null)) {
-                this.DeleteHRAppraisalDutiesRespOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteHRAppraisalDutiesRespOperationCompleted);
-            }
-            this.InvokeAsync("DeleteHRAppraisalDutiesResp", new object[] {
-                        lineNo}, this.DeleteHRAppraisalDutiesRespOperationCompleted, userState);
-        }
-        
-        private void OnDeleteHRAppraisalDutiesRespOperationCompleted(object arg) {
-            if ((this.DeleteHRAppraisalDutiesRespCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DeleteHRAppraisalDutiesRespCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -21480,6 +21709,26 @@ namespace Latest_Staff_Portal.NAVWS {
             return false;
         }
     }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void UpdateStudentPasswordCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void UpdateStudentThesisCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void UpdateTimetableProjectionsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void UploadAttachedDocumentCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void ValidateApplicationFormHeaderCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
@@ -21827,11 +22076,95 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void SendConceptForApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void SendEmailWithAttachmentCompletedEventHandler(object sender, SendEmailWithAttachmentCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class SendEmailWithAttachmentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal SendEmailWithAttachmentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+        
+        /// <remarks/>
+        public string receiver {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[1]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void SendEmailCompletedEventHandler(object sender, SendEmailCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class SendEmailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal SendEmailCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+        
+        /// <remarks/>
+        public string receiver {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[1]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void SendEmailsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void SendGraduationDocForApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void SendImpSurrenderForApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void SendLeaveApplicationForApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void SendLeavePlannerforApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
@@ -22825,23 +23158,19 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void UpdateStudentPasswordCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void MealBookingCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void UpdateStudentThesisCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void ModifyExamSetupEntryCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void UpdateTimetableProjectionsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void ModifyLeavePlannerLinesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void UploadAttachedDocumentCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void ValidateApplicationFormHeaderCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void OnlineClearanceCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
@@ -23439,83 +23768,15 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void SendConceptForApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void InsertApplicantCurrentEmpCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void SendEmailWithAttachmentCompletedEventHandler(object sender, SendEmailWithAttachmentCompletedEventArgs e);
+    public delegate void InsertApplicantEmpHistCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class SendEmailWithAttachmentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal SendEmailWithAttachmentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-        
-        /// <remarks/>
-        public string receiver {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[1]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void SendEmailCompletedEventHandler(object sender, SendEmailCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class SendEmailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal SendEmailCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-        
-        /// <remarks/>
-        public string receiver {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[1]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void SendEmailsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void SendGraduationDocForApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void InsertApplicantQualificationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
@@ -23790,6 +24051,10 @@ namespace Latest_Staff_Portal.NAVWS {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void InsertLabResultsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void InsertLeavePlannerLinesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
@@ -24181,15 +24446,33 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void MealBookingCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void GenerateSenateSummaryCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void ModifyExamSetupEntryCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void GenerateSickoffPrintoutCompletedEventHandler(object sender, GenerateSickoffPrintoutCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void OnlineClearanceCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GenerateSickoffPrintoutCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GenerateSickoffPrintoutCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
@@ -24793,6 +25076,10 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void HRCancelLeavePlannerApplicationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void HRCancelPurchaseRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
@@ -25123,15 +25410,7 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void InsertApplicantCurrentEmpCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void InsertApplicantEmpHistCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void InsertApplicantQualificationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void DeleteHRAppraisalDutiesRespCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
@@ -25148,6 +25427,10 @@ namespace Latest_Staff_Portal.NAVWS {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void DeleteLabtreatLineCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void DeleteLeavePlannerLinesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
@@ -26033,36 +26316,6 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void GenerateSenateSummaryCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void GenerateSickoffPrintoutCompletedEventHandler(object sender, GenerateSickoffPrintoutCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GenerateSickoffPrintoutCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GenerateSickoffPrintoutCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void AcademicRefereeCompletedEventHandler(object sender, AcademicRefereeCompletedEventArgs e);
     
     /// <remarks/>
@@ -26855,6 +27108,32 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void CreateLeavePlannerHeaderCompletedEventHandler(object sender, CreateLeavePlannerHeaderCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class CreateLeavePlannerHeaderCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal CreateLeavePlannerHeaderCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void CreateNewPharmacyCompletedEventHandler(object sender, CreateNewPharmacyCompletedEventArgs e);
     
     /// <remarks/>
@@ -26950,10 +27229,6 @@ namespace Latest_Staff_Portal.NAVWS {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void DeleteFoodMenuCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void DeleteHRAppraisalDutiesRespCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
 }
 
 #pragma warning restore 1591

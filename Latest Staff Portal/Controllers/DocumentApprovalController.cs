@@ -48,6 +48,7 @@ namespace Latest_Staff_Portal.Controllers
                         DocCount.ClaimCount = 0;
                         DocCount.TransportCount = 0;
                         DocCount.Clearance = 0;
+                        DocCount.Training = 0;
                         DocCount.TransferOrder = 0;
                         DocCount.CafCount = 0;
                         DocCount.PVCount = 0;
@@ -113,6 +114,10 @@ namespace Latest_Staff_Portal.Controllers
                                 if ((string)config["Table_ID"] == "70134904")
                                 {
                                     DocCount.CafCount = DocCount.CafCount + 1;
+                                }
+                                if ((string)config["Table_ID"] == "70135040")
+                                {
+                                    DocCount.Training = DocCount.Training + 1;
                                 }
                             }
                             DocCount.Status = rn;
@@ -694,6 +699,87 @@ namespace Latest_Staff_Portal.Controllers
                     AmountInWords = amountInWords
                 };
                 return PartialView("~/Views/DocumentApproval/Document Approval Views/PurchaseApprovalDocDetails.cshtml", docDetails);
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+            }
+        }
+        public PartialViewResult TrainingReqDocApprovalDetails(string DocNo, string Sequence)
+        {
+            try
+            {
+                #region Header
+                TrainingList TranDoc = new TrainingList();
+                string page = "HRTrainingApplication?$filter=Application_No eq '" + DocNo + "'&$format=json";
+
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    foreach (JObject config in details["value"])
+                    {
+                        TranDoc.ApplicationNo = (string)config["Application_No"];
+                        TranDoc.ApplicationDate = Convert.ToDateTime((string)config["Application_Date"]).ToString("dd/MM/yyyy");
+                        TranDoc.StartDate = Convert.ToDateTime((string)config["From_Date"]).ToString("dd/MM/yyyy");
+                        TranDoc.EndDate = Convert.ToDateTime((string)config["To_Date"]).ToString("dd/MM/yyyy");
+                        TranDoc.TrainingCategory = (string)config["Training_Category"];
+                        TranDoc.CourseTitle = (string)config["Course_Title"];
+                        TranDoc.CourseDesc = (string)config["Description"];
+                        TranDoc.Trainer = (string)config["Trainer"];
+                        TranDoc.Purpose = (string)config["Purpose_of_Training"];
+                        TranDoc.Status = (string)config["Status"];
+                    }
+                }
+                #endregion
+                #region Training Lines
+                List<Trainees> participantList = new List<Trainees>();
+                string pageLine = "HRTrainingPartcipants?$filter=TrainingCode eq '" + DocNo + "'&$format=json";
+                HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
+                using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    foreach (JObject config in details["value"])
+                    {
+                        Trainees participants = new Trainees();
+                        participants.No = (string)config["EmployeeCode"];
+                        participants.Name = (string)config["Employeename"];
+                        participantList.Add(participants);
+                    }
+                }
+                #endregion
+                #region Training Lines
+                List<TrainingCost> TrainingCostList = new List<TrainingCost>();
+                string pageTLine = "HRTrainingCost?$filter=TrainingId eq '" + DocNo + "'&$format=json";
+                HttpWebResponse httpResponseTLine = Credentials.GetOdataData(pageTLine);
+                using (var streamReader = new StreamReader(httpResponseTLine.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    foreach (JObject config in details["value"])
+                    {
+                        TrainingCost TrCost = new TrainingCost();
+                        TrCost.No = (string)config["TrainingId"];
+                        TrCost.Item = (string)config["TrainingCostItem"];
+                        TrCost.Cost = ((decimal)config["Cost"]).ToString("#,##0.00");
+                        TrainingCostList.Add(TrCost);
+                    }
+                }
+                #endregion
+                TrainingDocument docDetails = new TrainingDocument
+                {
+                    DocHeader = TranDoc,
+                    ListOfTrainees = participantList,
+                    ListOfTraininingCost = TrainingCostList
+                };
+                return PartialView("~/Views/DocumentApproval/Document Approval Views/TrainingApprovalDocDetails.cshtml", docDetails);
             }
             catch (Exception ex)
             {
