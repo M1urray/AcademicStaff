@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "StaffOnLeaveRequisitionList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<div class="card pre-scrollable">
+    <div class="card-title">Staff On Leave</div>
+    <div class="card-body">
+        <hr />
+        <div id="divLeaveRegList"></div>
+    </div>
+    </div>
+    <script>
+    $(document).ready(function () {
+    LoadLeaveReqList();
+});
+var LoadLeaveReqList = function () {
+    ShowProgress();
+    $.ajax({
+        async: true,
+        type: "GET",
+        dataType: 'HTML',
+        contentType: false,
+        processData: false,
+        url: '@Url.Action("GetStaffOnLeavePartial", "Leave")',
+        success: function (data) {
+            $("#divLeaveRegList").html(data);
+            HideProgress();
+        },
+        error: function () {
+            Swal.fire("There is some problem to process your request. Please try after some time");
+            HideProgress();
+        }
+    });
+}
+    </script>
+

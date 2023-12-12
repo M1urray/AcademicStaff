@@ -1,0 +1,85 @@
+﻿@model Latest_Staff_Portal.ViewModel.StudentReqLinesDoc
+<table class="table table-hover" id="StdReqLines">
+    <thead>
+        <tr>
+            <th>Unit</th>
+            <th>Unit Name</th>
+            @if (Model.RegT == "Exemption" || Model.RegT == "Exam Challenge")
+            {
+                <th>Equivalent Unit</th>
+            }
+            @if (Model.RegT == "Special Exams")
+            {
+                <th class="text-center">Lecturer</th>
+                <th class="text-center">Section</th>
+                <th class="text-center">Exam Missed On</th>
+            }
+            <th class="text-center">Approve</th>
+            <th class="text-center">Charge</th>
+            <th class="hide"></th>
+            @if (Model.RegT == "Special Exams" || Model.RegT == "Exam Challenge")
+            {
+                <th class="text-right">Action</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model.DocLines != null && Model.DocLines.Count() > 0)
+            {
+                foreach (var item in Model.DocLines)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Unit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitName)
+                    </td>
+                    @if (Model.RegT == "Exemption" || Model.RegT == "Exam Challenge")
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Equivalent)
+                        </td>
+                    }
+                    @if (Model.RegT == "Special Exams")
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Lecture)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Section)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Semester_Unit_Done)
+                        </td>
+                    }
+                    <td align="center">
+                        <input type="checkbox" class="checkboxClass" name="chkApp" checked="@item.Approved" />
+                    </td>
+                    <td align="center">
+                        <input type="checkbox" class="checkboxClass" name="chkCharge" checked="@item.Charge" />
+                    </td>
+                    <td class="hide">
+                        @Html.DisplayFor(modelItem => item.LnNo)
+                    </td>
+                    @if (Model.RegT == "Special Exams" || Model.RegT == "Exam Challenge")
+                    {
+                        <td align="right">
+                            <button class="btn btn-danger BtnPadding" onclick="AssignLec('@item.Unit', '@item.Semester', '@item.LnNo');">Assign Lecturer</button>
+                        </td>
+                    }
+                </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" style="color:red">
+                        No Records Found
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

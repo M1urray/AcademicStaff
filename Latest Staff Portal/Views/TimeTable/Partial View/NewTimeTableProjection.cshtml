@@ -1,0 +1,122 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewTimeTable
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Campus", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.TableDoc.Campus, Model.ListOfCampus, "--select Campus--", new { @class = "form-control", @id = "ddlCampus", @onchange = "LoadLecRooms();" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Unit", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.TableDoc.Unit, Model.ListOfUnits, "--select Unit--", new { @class = "form-control", @id = "ddlUnit" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Day of Week", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.TableDoc.Day_of_Week, Model.ListOfDaysOfWeek, "--select Day--", new { @class = "form-control", @id = "ddlDoW" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Period", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.TableDoc.Period, Model.ListOfPeriods, "--select Period--", new { @class = "form-control", @id = "ddlPeriod" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Section", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.TableDoc.Section, Model.ListOfSections, "--select Section--", new { @class = "form-control", @id = "ddlSection" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Lecturer Room", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    <select class="form-control" id="ddlLecRoom">
+                        <option value="">--Select Room--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Lecturer", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.TableDoc.Lecturer, Model.ListOfLecturers, "--select Lecturer--", new { @class = "form-control", @id = "ddlLec" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Class Size", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.TextBoxFor(model => model.TableDoc.ClassSize, new { @class = "form-control", @id = "txtClassSize" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr style="border:1px solid black" />
+    <div align="center">
+        @if (Model.TableDoc.Unit != null && Model.TableDoc.EntryNo != null)
+        {
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Update Projection" onclick="UpdateProjection('@Model.TableDoc.EntryNo');" />
+        }
+        else
+        {
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Projection" onclick="SubmitProjection();" />
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ddlCampus,#ddlUnit,#ddlDoW,#ddlPeriod,#ddlSection,#ddlLecRoom,#ddlLec").select2({
+            width: '100%'
+        });
+        if ('@Model.TableDoc.Campus' != null && '@Model.TableDoc.Campus' != "") {
+            LoadLecRooms();
+            document.getElementById("ddlCampus").disabled = true;
+            document.getElementById("ddlUnit").disabled = true;
+            document.getElementById("ddlSection").disabled = true;
+        }
+    });
+    var LoadLecRooms = function () {
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        if (Campus == "") {
+            $("#ddlLecRoom option").remove();
+            $('#ddlLecRoom').empty().append('<option selected="selected" value="">--Select Lecturer Room--</option>');
+        }
+        else {
+            ShowProgress();
+            $.getJSON("/TimeTable/GetLecturerRooms", { Campus: Campus },
+                function (data) {
+                    $('#ddlLecRoom').empty().append('<option selected="selected" value="">--Select Lecturer Room--</option>');
+                    $.each(data.ListOfLecRooms, function () {
+                        $("#ddlLecRoom").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    HideProgress();
+                    if ('@Model.TableDoc.Lecture_Room' != null && '@Model.TableDoc.Lecture_Room' != "") {
+                        $('#ddlLecRoom').val('@Model.TableDoc.Lecture_Room'.trim());
+                    }
+                });
+        }
+    };
+</script>

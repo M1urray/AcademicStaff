@@ -1,0 +1,67 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewExitHeader
+<style>
+    .ui-front {
+        z-index: 2000 !important;
+    }
+</style>
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-6">
+            1.	What is the nature of your exit? ( Please select as appropriate)
+            <select id="exitNatureSelect" class="form-control">
+                <option value="">Select an option</option>
+                <option value="Resignation">Resignation</option>
+                <option value="Termination">Termination</option>
+                <option value="Dismissal">Dismissal</option>
+                <option value="Retirement">Retirement</option>
+            </select>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            2.	What reasons have made you leave your current work? (Please respond truthfully
+            <textarea id="txtReasons" class="form-control" maxlength="150"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            3.	Could your exit also be linked to any of the following reasons? ( Please select as appropriate)
+            <select id="exitReasonsSelect" class="form-control">
+                <option value="">Select an option</option>
+                <option value="Remuneration">Remuneration</option>
+                <option value="Promotion">Promotion</option>
+                <option value="Provident fund">Provident fund</option>
+                <option value="Training">Training</option>
+                <!-- Add more options for other reasons -->
+            </select>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            4.	What would you suggest to be done to address the problems noted in No. 3
+            <textarea id="txtSuggest" class="form-control" maxlength="150"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            5.	What did you like about Daystar University for the period you served?
+            <textarea id="txtLike" class="form-control" maxlength="150"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            6.	Any recommendation for improvement either for the department or the University in general
+            <textarea id="txtRecommendation" class="form-control" maxlength="150"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Questionnare" onclick="SubmitQuestions(`@Model.No`);" />
+    </div>
+</div>
+

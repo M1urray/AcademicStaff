@@ -27,6 +27,15 @@
     </div>
     <hr />
     <div id="DivItSearchForm">
+        <div id="divFAPG">
+            <div class="row">
+                <div class="col-md-12" id="Div2" runat="server">
+                    <span style="font-weight: bold">Asset Category</span>
+                    <select class="form-control" id="ddlFAPG" name="ddlFAPG" onchange="GetFixedAsset()"></select>
+                    <hr />
+                </div>
+            </div>
+        </div>
         <div class="row" id="DivService">
             <div class="col-md-6">
                 <label id="labelSearch"></label>
@@ -42,14 +51,14 @@
                 Quantity
                 <input type="text" class="form-control" id="txtQuantity" onkeypress="return functionx(event)" />
             </div>
-            <div class="col-md-6" id="divStore">
-                Receiving Location
+            <div class="col-md-6">
+                Where Needed
                 @Html.DropDownListFor(model => model.Code, Model.ListOfLocations, "--select Location--", new { @class = "form-control", @id = "ddlLocation" })
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                Description(50 Characters(Optional))
+                Description(50 Characters)
                 <textarea id="txtDescription" class="form-control" maxlength="50"></textarea>
             </div>
         </div>
@@ -62,7 +71,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#DivItSearchForm").hide();
-        $("#ddlLocation,#ddlSearchItem").select2({
+        $("#divFAPG").hide();
+        $("#ddlLocation,#ddlFAPG,#ddlSearchItem").select2({
             width: '100%',
             placeholder: 'Search...'
         });
@@ -77,35 +87,75 @@
             var url;
             if (PRVType == "1") {
                 $("#labelSearch").text("Search Service");
-                $("#divStore").hide();
-                url = "/Common/GetServiceList";
+                $("#divFAPG").hide();
+                url = '@Url.Action("GetServiceList", "Common")';
             }
             else if (PRVType == "2") {
-                $("#labelSearch").text("Search Item");                
-                url = "/Common/GetItemList";
+                $("#labelSearch").text("Search Item");
+                $("#divFAPG").hide();
+                url = '@Url.Action("GetItemList", "Common")';
             }
             else if (PRVType == "4") {
                 $("#labelSearch").text("Search Fixed Asset");
-                url = "/Common/GetFixedAssetList";
+                $("#divFAPG").show();
+                url = '@Url.Action("GetFAPostingGroups", "Common")';
             }
             else {
                 return;
             }
             $("#ddlSearchItem option").remove();
+            $("#ddlFAPG option").remove();
+            $('#ddlFAPG').empty().append('<option selected="selected" value="">----</option>');
             $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
             $.getJSON(url,
                 function (data) {
                     if (data.success == true) {
                         $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
                         $.each(data.DropDownData.ListOfddlData, function () {
-                            $("#ddlSearchItem").append($("<option></option>").val(this['Value']).html(this['Text']));
+                            if (PRVType == "4") {
+                                $("#ddlFAPG").append($("<option></option>").val(this['Value']).html(this['Text']));
+                            }
+                            else {
+                                $("#ddlSearchItem").append($("<option></option>").val(this['Value']).html(this['Text']));
+                            }
                         });
-
                         $("#DivItSearchForm").show();
                         HideProgress();
                     }
                     else {
                         Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                });
+        }
+        $("#IdSearchItem").val('');
+        $("#txtAmount").val('');
+        $("#txtQuantity").val('');
+        $('#ddlLocation').val('');
+        $("#txtDescription").val('');
+    }
+    var GetFixedAsset = function () {
+        var FAPG = $("#ddlFAPG").children("option:selected").val();
+        if (FAPG == "") {
+            $("#ddlSearchItem option").remove();
+            $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
+        }
+        else {
+            ShowProgress();
+            $("#ddlSearchItem option").remove();
+            $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
+            $.getJSON('@Url.Action("GetFixedAssetList", "Common")', { PostingG: FAPG },
+                function (data) {
+                    if (data.success == true) {
+                        $('#ddlSearchItem').empty().append('<option selected="selected" value="">----</option>');
+                        $.each(data.DropDownData.ListOfddlData, function () {
+                            $("#ddlSearchItem").append($("<option></option>").val(this['Value']).html(this['Text']));
+                        });
+                        HideProgress();
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
                     }
                 });
         }

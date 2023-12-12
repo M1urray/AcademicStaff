@@ -1,4 +1,10 @@
-﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.DocumentsForApproval>
+﻿@model Latest_Staff_Portal.ViewModel.DocumentsForApprovalList
+<style>
+    div.dataTables_wrapper div.dataTables_processing {
+        background-color: green;
+        color: white
+    }
+</style>
 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
     <thead style="background-color:black;color:white">
         <tr>
@@ -9,65 +15,51 @@
             <th>Status</th>
         </tr>
     </thead>
-    <tbody>
-        @{
-            if (Model != null && Model.Count() > 0)
-            {
-                foreach (var item in Model)
-                {
-                    if (item.CommentFound)
-                    {
-                        <tr style="background-color:red">
-                            <td><a href="#" onclick="ViewDoc('@item.TabelID','@item.Document_No','@item.Sequence','@item.Entry_No', '@item.Sender_Name', '@item.Document_Type');">View Document</a></td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Document_No)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Sender_Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DateSend)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Status)
-                            </td>
-                        </tr>
-                    }
-                    else
-                    {
-                        <tr>
-                            <td><a href="#" onclick="ViewDoc('@item.TabelID','@item.Document_No','@item.Sequence','@item.Entry_No', '@item.Sender_Name', '@item.Document_Type');">View Document</a></td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Document_No)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Sender_Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DateSend)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Status)
-                            </td>
-                        </tr>
-                    }
-                }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="4" style="color:red">
-                        No Records Found!
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
 </table>
 <script type="text/javascript">
     $(document).ready(function () {
+        var TableID = '@Model.TableID';
+        var Status = '@Model.Status';
+        var DocType = '@Model.DocType';
         $("#datatable").DataTable(), $("#datatable-buttons").DataTable({
             lengthChange: !1,
+            "ajax": {
+                "url": "/DocumentApproval/GetDataForApprovalList",
+                "type": "POST",
+                "dataType": "json",
+                "data": {
+                    "TbID": TableID, "Status": Status, "DocType": DocType
+                }
+                //"contentType": "application/json; charset = utf-8"
+            },
+            "columns": [
+                {
+                    render: function (data, type, row, meta) {
+                        //return '<a href="#" onclick=ViewDoc("' + row.TabelID + '","' + row.Document_No + '","' + row.Sequence + '","' + row.Entry_No + '")>View Document</a>';
+                        return '<a href="#" onclick="ViewDoc(\'' + row.TabelID + '\',\'' + row.Document_No + '\',\'' + row.Sequence + '\',\'' + row.Entry_No + '\')">View Document</a>';
+                    }
+                },
+                { "data": "Document_No", "name": "Document_No" },
+                { "data": "Sender_Name", "name": "Sender_Name" },
+                { "data": "DateSend", "name": "DateSend" },
+                { "data": "Status", "name": "Status" }
+            ],
+            rowCallback: function (row, data, index) {
+                if (data.TabelID == "70134894") {
+                    if (data.CommentFound == true) {
+                        $(row).css('background-color', "Red");
+                    }
+                    else {
+                        $(row).css('background-color', "White");
+                    }
+                }
+            },
+            "serverSide": "true",
+            "order": [0, "asc"],
+            "processing": "true",
+            "language": {
+                "processing":"Processing...Please wait...."
+            },
             buttons: [
                 "copy",
                 {

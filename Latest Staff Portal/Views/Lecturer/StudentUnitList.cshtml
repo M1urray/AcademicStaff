@@ -1,0 +1,275 @@
+﻿
+@{
+    ViewBag.Title = "StudentUnitList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .textboxWidth {
+        width: 60px;
+    }
+
+    .table td {
+        padding: 0.1rem;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="BackToUnitsAllocation();" style="color:yellow"><<< Back To Units Allocation</a>
+</div>
+<hr style="margin:2px" />
+<div id="divStudentList"></div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModalUnits" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Score Sheet</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody" style="width:100%;height:500px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadStudentList("");
+    });
+    var LoadStudentList = function (message) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: '@Url.Action("LoadStudentUnitList", "lecturer")',
+            success: function (data) {
+                $("#divStudentList").html(data);
+                if (message != "") {
+                    Swal.fire('Success', message, 'success');
+                }
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                alert("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var SaveStudentMarks = function () {
+        var myTableHeaderArray = [];
+        var myTableArray = [];
+
+        $('#datatable-buttons thead tr').each(function () {
+            var arrayOfThisHeader = [];
+            var tableData = $(this).find('th');
+            if (tableData.length > 0) {
+                tableData.each(function () {
+                    arrayOfThisHeader.push($(this).text());
+                });
+                myTableHeaderArray.push(arrayOfThisHeader);
+            }
+        });
+
+        var trs = $('#datatable-buttons').dataTable();
+
+        trs.$('tr').each(function () {
+            var arrayOfThisRow = [];
+            var tableData = $(this).find('td');
+            if (tableData.length > 0) {
+                tableData.each(function () {
+                    if ($(this).find("input[type=text]").length) {
+                        var myText = $(this).find("input[type=text]").val();
+                        arrayOfThisRow.push(myText);
+                    }
+                    else arrayOfThisRow.push($(this).text());
+                });
+
+                myTableArray.push(arrayOfThisRow);
+            }
+        });
+
+        ShowProgress();
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("savestudentmarks", "lecturer")',
+            data: { headers: myTableHeaderArray, Rows: myTableArray },
+            contenttype: "text/plain; charset=utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    if (data.failed == false) {
+                        HideProgress();
+                        LoadStudentList(data.message);
+                    }
+                    else {
+                        if (data.redirect == true) {
+                            window.location = '@Url.Action("CourseAllocationUnits", "lecturer")';
+                        }
+                        else {
+                            HideProgress();
+                            Swal.fire('Warning', data.message, 'warning');
+                        }
+                    }
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            },
+            error: function () {
+                if (data.success == false) {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            }
+        });
+    }
+    var SavePassFailtMarks = function () {
+        var myTableArray = [];
+        $('#dtPassFail tbody tr').each(function () {
+            var arrayOfThisRow = [];
+            var tableData = $(this).find('td');
+            if (tableData.length > 0) {
+                tableData.each(function () {
+                    if ($(this).find("select").length) {
+                        var myText = $(this).find("select").val();
+                        arrayOfThisRow.push(myText);
+                    }
+                    else arrayOfThisRow.push($(this).text());
+                });
+
+                myTableArray.push(arrayOfThisRow);
+            }
+        });
+        ShowProgress();
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("SavePassFailStudentMarks", "lecturer")',
+            data: { Rows: myTableArray },
+            contenttype: "text/plain; charset=utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    if (data.failed == false) {
+                        HideProgress();
+                        LoadStudentList(data.message);
+                    }
+                    else {
+                        if (data.redirect == true) {
+                            window.location = '@Url.Action("CourseAllocationUnits", "lecturer")';
+                        }
+                        else {
+                            HideProgress();
+                            Swal.fire('Warning', data.message, 'warning');
+                        }
+                    }
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            },
+            error: function () {
+                if (data.success == false) {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            }
+        });
+    }
+    var BackToUnitsAllocation = function () {
+        ShowProgress();
+        window.location = '@Url.Action("MarkEntryAllocationUnits", "lecturer")';
+    }
+    var UploadStudentMarks = function () {
+        var filename; var base64String; var filetype;
+        var files = document.getElementById('UploadedFile').files;
+        if (files.length) {
+            debugger
+            var file = files[0];
+            var blob = file.slice();
+            filetype = file.type;
+            filename = file.name;
+            var reader = new FileReader();
+
+            reader.onloadend = function (evt) {
+                if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+
+                    var cont = evt.target.result
+                    base64String = getB64Str(cont);
+                    ShowProgress();
+                    $.ajax({
+                        url: '@Url.Action("UploadStudentMarks", "lecturer")',
+                        datatype: "json",
+                        type: "POST",
+                        data: JSON.stringify({ base64Upload: base64String, fileName: filename, Extn: filetype }),
+                        contentType: "application/json; charset = utf-8",
+                        success: function (data) {
+                            if (data.success == true) {
+                                HideProgress();
+                                LoadStudentList(data.message);
+                            }
+                            else {
+                                HideProgress();
+                                LoadStudentList("");
+                                Swal.fire('Warning', data.message, 'warning');
+                            }
+                        },
+                        error: function () {
+                            HideProgress();
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    });
+                }
+            };
+            reader.readAsArrayBuffer(blob);
+        }
+    };
+    function getB64Str(buffer) {
+        var binary = '';
+        var bytes = new Uint8Array(buffer);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+    }
+    var PrintScoresheet = function (Type) {
+        ShowProgress();
+        $.ajax({
+            url: '@Url.Action("PrintScoreSheet", "lecturer")',
+            data: JSON.stringify({ Type: Type }),
+            datatype: "json",
+            type: "POST",
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    var viewer = $("#modalBody");
+                    PDFObject.embed(data.message, viewer);
+                    $("#myModalUnits").modal("show");
+                    HideProgress();
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+</script>

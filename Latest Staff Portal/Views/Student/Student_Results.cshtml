@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "StudentRequisitionLinks";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    hr {
+        margin: 1px;
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="card pre-scrollable">
+    <div class="card-title">Student Results</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <b>Enter Student Registration Number</b>
+                <input type="text" id="txtRegNo" class="form-control" />
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <button id="btnView" class="btn btn-danger" onclick="ViewResults();">View Results</button>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <iframe id="iframe" style="width:100%;height:600px"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var ViewResults = function () {
+        var StudentNo = $("#txtRegNo").val();
+        if (StudentNo == "") {
+            Swal.fire('Warning', 'Enter Student Number', 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                url: '@Url.Action("GetStudentResults", "ViewDocument")',
+                datatype: "json",
+                type: "POST",
+                data: JSON.stringify({ StudentNo: StudentNo }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        $('iframe').attr('src', data.message);
+                        HideProgress();
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('Warning', data.message, 'warning');
+                    }
+
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    }
+</script>
+

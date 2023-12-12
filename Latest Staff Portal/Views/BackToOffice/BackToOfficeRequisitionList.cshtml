@@ -1,0 +1,320 @@
+﻿
+@{
+    ViewBag.Title = "BackToOfficeRequisitionList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 7px;
+        font-size: 12px;
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="card pre-scrollable">
+    <div class="card-title">BackToOffice Requisition List</div>
+    <div class="card-body">
+        <a href="#" onclick="NewBackToOfficeRequisition();" class="btn btn-primary BtnPadding">New Back To Office  Request</a>
+        <hr />
+        <div id="divBackToOfficeRegList"></div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">New Back To Office Requisition</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal Links////////////////////////////*@
+<div class="modal fade" id="myModalLinks" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Actions</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyLinks">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadBackToOfficeReqList();
+    });
+    var LoadBackToOfficeReqList = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/BackToOffice/BackToOfficeRequisitionListPartialView",
+            success: function (data) {
+                $("#divBackToOfficeRegList").html(data);
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                alert("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var SelectedRow = function (DocNo, Status) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'TRAIN' }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/CommonActions',
+            success: function (data) {
+                $("#modalBodyLinks").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var NewBackToOfficeRequisition = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/BackToOffice/NewBackToOfficeApplication',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SubmitBackToOfficeRequest = function () {
+        var Directorate = $("#ddlDirectorate").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+       // var Section = $("#ddlSection").children("option:selected").val();
+        var Course = $("#ddlCourse").children("option:selected").val();
+        var BackToOfficeCat = $("#ddlCategory").children("option:selected").val();
+        var Sponsor = $("#ddlSponsor").children("option:selected").val();
+        var Startdate = $("#dtFrom").val();
+        var EndDate = $("#dtTo").val();
+        var Trainer = $("#ddlTrainer").children("option:selected").val();
+        var Cost = $("#txtCost").val();
+        var Purpose = $("#txtRemarks").val();
+        if (Course == "") {
+            Swal.fire('error', 'Select Course', 'error');
+            return;
+        }
+        else if (BackToOfficeCat == "") {
+            Swal.fire('error', 'Select BackToOffice Category', 'error');
+            return;
+        }
+        else if (Sponsor == "") {
+            Swal.fire('error', 'Select Sponsor', 'error');
+            return;
+        }
+        else if (Startdate == "") {
+            Swal.fire('error', 'Select Start Date', 'error');
+            return;
+        }
+        else if (EndDate == "") {
+            Swal.fire('error', 'Select End Date', 'error');
+            return;
+        }
+        else if (Trainer == "") {
+            Swal.fire('error', 'Select Trainer', 'error');
+            return;
+        }
+        else if (Cost == "") {
+            Swal.fire('error', 'Enter Cost of BackToOffice', 'error');
+            return;
+        }
+        else if (Purpose == "") {
+            Swal.fire('error', 'Enter Purpose of the Trip', 'error');
+            return;
+        }
+        else {
+            var BackToOfficeList = {};
+            BackToOfficeList.Directorate = Directorate;
+            BackToOfficeList.Department = Department;
+            //BackToOfficeList.Section = Section;
+            BackToOfficeList.Course_Title = Course;
+            BackToOfficeList.BackToOffice_Category = BackToOfficeCat;
+            BackToOfficeList.Sponsor = Sponsor;
+            BackToOfficeList.StartDate = Startdate;
+            BackToOfficeList.EndDate = EndDate;
+            BackToOfficeList.Trainer = Trainer;
+            BackToOfficeList.Cost = Cost;
+            BackToOfficeList.Purpose = Purpose;
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: "/BackToOffice/SubmitBackToOfficeDocument",
+                data: JSON.stringify({ NewApp: BackToOfficeList }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        window.location = data.message;
+                        $("#myModal").modal("hide");
+                    }
+                    else {
+                        $("#myModal").modal("hide");
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    var ViewDoc = function (DocNo) {
+        ShowProgress();
+        window.location = "/BackToOffice/BackToOfficeDocumentDetails?AppDoc=" + DocNo;
+    }
+    var SendDocForApproval = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, Redirect: "N" }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/BackToOffice/SendDocAppForApproval',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadTransportReqList();                   
+                    $("#myModalLinks").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });        
+    }
+    var CancelDocForApproval = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Transport/CancelTransportAppForApproval',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadTransportReqList();
+                    $("#myModalLinks").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewApprovalTrail = function (DocNo) {
+        $("#labelF").text("Document Approval Trail");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, RecID: "HR BackToOffice Applications: " + DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalTrail',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewDocComments = function (DocNo) {
+        $("#labelF").text("Document Comments");
+        ShowProgress();
+        var RecordID = "HR BackToOffice Applications: " + DocNo;
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ RecID: RecordID }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalComments',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+</script>
+

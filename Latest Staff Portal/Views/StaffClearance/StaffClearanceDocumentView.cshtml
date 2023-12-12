@@ -1,0 +1,42 @@
+﻿
+@model Latest_Staff_Portal.ViewModel.StaffClearanceList
+<table class="table table-bordered" style="width: 100%">
+    <tr>
+        <td>
+            <span style="font-size: small; font-weight: bold;">Document No</span>
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.No)
+        </td>
+        <td>
+            <span style="font-size: small; font-weight: bold;">Employee No</span>
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.StaffName)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span style="font-size: small; font-weight: bold;">Applied Date</span>
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.AppliedDate)
+        </td>
+        <td>
+            <span style="font-size: small; font-weight: bold;">Last Date Of Service</span>
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.EffectiveDate)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span style="font-size: small; font-weight: bold;">Status</span>
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.Status)
+        </td>
+    </tr>
+
+</table>
+

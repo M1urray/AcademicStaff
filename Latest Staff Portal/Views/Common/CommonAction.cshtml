@@ -9,13 +9,12 @@
     {
         <li class="list-group-item"><a href="#" onclick="SendDocForApproval('@Model.Code');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Send Approval Request</a></li>
     }
-    @if (Model.DocType == "LV" && Model.Status == "Pending Approval")
-    {
-        <li class="list-group-item"><a href="#" onclick="RecallDocForApproval('@Model.Code');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Recall Approval</a></li>
-    }
     @if (Model.Status == "Pending Approval")
     {
-        <li class="list-group-item"><a href="#" onclick="CancelDocForApproval('@Model.Code');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Cancel Approval Request</a></li>
+        if (@Model.DocType != "LV")
+        {
+            <li class="list-group-item"><a href="#" onclick="CancelDocForApproval('@Model.Code');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Cancel Approval Request</a></li>
+        }
         <li class="list-group-item"><a href="#" onclick="ViewApprovalTrail('@Model.Code');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Document Approval Trail</a></li>
     }
     <li class="list-group-item"><a href="#" onclick="ViewDocComments('@Model.Code');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Document Comments</a></li>

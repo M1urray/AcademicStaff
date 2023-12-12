@@ -5105,8 +5105,8 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .card-header {
     padding: .75rem 1.25rem;
     margin-bottom: 0;
-    background-color: #b2b2b4;
-    border-bottom: 0 solid #b2b2b4
+    background-color: #3db166;
+    border-bottom: 0 solid #3db166
 }
 
     .card-header:first-child {
@@ -6356,7 +6356,8 @@ a.close.disabled {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    outline: 0
+    outline: 0;
+    overflow-y: auto !important;
 }
 
 .modal-dialog {
@@ -6495,7 +6496,7 @@ a.close.disabled {
     -ms-flex-pack: justify;
     justify-content: space-between;
     padding: 0.5rem 1rem;
-    background-color: #bfbfbf;
+    background-color: #e68033;
     border-bottom: 1px solid #eff2f7;
     border-top-left-radius: calc(.3rem - 1px);
     border-top-right-radius: calc(.3rem - 1px)
@@ -7208,7 +7209,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .bg-light {
-    background-color: #40bdd1 !important
+    background-color: white !important
 }
 
 a.bg-light:focus, a.bg-light:hover, button.bg-light:focus, button.bg-light:hover {
@@ -8905,7 +8906,7 @@ a.bg-pink:focus, a.bg-pink:hover, button.bg-pink:focus, button.bg-pink:hover {
 
 .mb-1, .my-1 {
     margin-bottom: .25rem !important;
-    border: solid 1px #A3DDF0;
+    border: solid 1px #3db166;
 }
 
 .ml-1, .mx-1 {
@@ -10811,7 +10812,7 @@ a.bg-pink:focus, a.bg-pink:hover, button.bg-pink:focus, button.bg-pink:hover {
 }
 
 .text-primary {
-    color: black !important
+    color: white !important
 }
 
 a.text-primary:focus, a.text-primary:hover {
@@ -11020,7 +11021,7 @@ html {
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-    color: #051936
+    color: wheat
 }
 
 a {
@@ -11043,8 +11044,8 @@ label {
 }
 
 .bg-soft-primary {
-    background-color: #ca8d10 !important;
-    border: 3px solid #ca8d10;
+    background-color: #7d7a7a !important;
+    border: 3px solid #7d7a7a;
 }
 
 .bg-soft-secondary {
@@ -11305,7 +11306,7 @@ a, button {
     font-weight: 500
 }
 
-.nav-pills > a { 
+.nav-pills > a {
     color: #495057;
     font-weight: 500
 }

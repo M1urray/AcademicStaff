@@ -1,0 +1,61 @@
+﻿
+@model Latest_Staff_Portal.ViewModel.NewExitHeader
+<div class="table-responsive">
+    <table class="table table-centered table-nowrap" id="ExitReasons">
+        <thead>
+            <tr>
+                <th>Reason</th>
+                <th>Line Number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.Reasons != null && Model.Reasons.Count() > 0)
+                {
+                    foreach (var item in Model.Reasons)
+                    {
+                        <tr>
+                       
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Reason)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LnNo)
+                            </td>
+                            
+                            <td style="text-align:right" class="tdAction">
+                                <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" onclick="EditItem('@item.DocNo','@item.LnNo');"><i class="mdi mdi-pencil font-size-16"></i></a>
+                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="RemoveItem('@item.DocNo','@item.LnNo');"><i class="mdi mdi-close font-size-16"></i></a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div align="right">
+    <input type="button" value="Add Reason " class="btn btn-danger BtnPadding" onclick="AddLeavingReason();" />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var status = 'Pending';
+        if (status == "Pending") {
+            $(".tdAction").show();
+            $(".HideLineButton").show();
+        }
+        else {
+            $(".tdAction").hide();
+            $(".HideLineButton").hide();
+        }
+    });
+</script>

@@ -10,15 +10,10 @@
     }
 
     .BtnPadding {
-        padding: 1px;
+        padding: 7px;
         font-size: 12px;
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div class="card pre-scrollable">
     <div class="card-title">Imprest Surrender List</div>
     <hr />
@@ -98,19 +93,11 @@
     $(document).ready(function () {
         LoadImprestSurrenderList();
         var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
-        var Errormsg = '@Request.RequestContext.HttpContext.Session["ErrorMsg"]';
         if (Successmsg != "") {
-            Swal.fire('Success', Successmsg, 'success',true);
+            Swal.fire('Success', Successmsg, 'success', true);
             $.ajax({
                 type: "POST",
-                url: "/Common/NullibySessions"
-            });
-        }
-        if (Errormsg != "") {
-            Swal.fire('Warning', Errormsg, 'warning',true);
-            $.ajax({
-                type: "POST",
-                url: "/Common/NullibySessions"
+                url: '@Url.Action("NullibySessions", "Common")'
             });
         }
     });
@@ -122,7 +109,7 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: "/ImprestSurrender/ImprestSurrenderListPartialView",
+            url: '@Url.Action("ImprestSurrenderListPartialView", "ImprestSurrender")',
             success: function (data) {
                 $("#divRegList").html(data);
                 HideProgress();
@@ -136,7 +123,7 @@
     var NewImprestSurrenderRequisition = function () {
         $("#myImprestModal").modal("show");
         ShowProgress();
-        $.getJSON("/ImprestSurrender/NewImprestSurrender", null,
+        $.getJSON('@Url.Action("NewImprestSurrender", "ImprestSurrender")', null,
             function (data) {
                 $('#ddlImpDocs').empty().append('<option selected="selected" value="">--Select Imprest Document--</option>');
                 $.each(data.ImpSurrender.ListOfImprests, function () {
@@ -153,44 +140,28 @@
             return;
         }
         else {
-            $.ajaxSetup({ cache: false });
-            Swal.fire({
-                title: 'NOTE:',
-                text: "If there is any claim for this imprest,then claim it before surrendering. Do you wish to proceed?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Proceed!'
-            }).then((result) => {
-                if (result.value) {
-                    ShowProgress();
-                    $.ajax({
-                        type: "POST",
-                        url: "/ImprestSurrender/SubmitImprestSurrender",
-                        //data: data,
-                        data: JSON.stringify({ DocNo: DocNo }),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.success) {
-                                window.location = "/ImprestSurrender/ViewSurrenderDocument?DocNo=" + data.DocNo;
-                            }
-                            else {
-                                Swal.fire('Warning', data.message, 'warning');
-                                HideProgress();
-                            }
-                        },
-                        error: function (err) {
-                            HideProgress();
-                            Swal.fire('Warning', err, 'warning');
-                        }
-                    });
+            ShowProgress();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SubmitImprestSurrender", "ImprestSurrender")',
+                //data: data,
+                data: JSON.stringify({ DocNo: DocNo }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        window.location = '@Url.Action("ViewSurrenderDocument", "ImprestSurrender")?DocNo=' + data.DocNo;
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
                 }
-                else {
-                    window.location = "/ImprestSurrender/ViewSurrenderDocument?DocNo=" + DocNo;
-                }
-            });            
+            });
         }
     }
     var SelectedRow = function (DocNo, Status) {
@@ -202,7 +173,7 @@
             data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'SURR' }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/CommonActions',
+            url: '@Url.Action("CommonActions", "Common")',
             success: function (data) {
                 $("#modalBodyLinks").html(data);
                 HideProgress();
@@ -216,7 +187,7 @@
     }
     var ViewDoc = function (DocNo) {
         ShowProgress();
-        window.location = "/ImprestSurrender/ViewSurrenderDocument?DocNo=" + DocNo;
+        window.location = '@Url.Action("ViewSurrenderDocument", "ImprestSurrender")?DocNo=' + DocNo;
     }
     var SendDocForApproval = function (DocNo) {
         ShowProgress();
@@ -224,10 +195,10 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, Redirect: "N" }),
+            data: JSON.stringify({ DocNo: DocNo, Redirect: "N"}),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/ImprestSurrender/SendImprestSurrenderForApproval',
+            url: '@Url.Action("SendImprestSurrenderForApproval", "ImprestSurrender")',
             success: function (data) {
                 if (data.success == true) {
                     HideProgress();
@@ -256,7 +227,7 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/ImprestSurrender/CancelImprestSurrenderForApproval',
+            url: '@Url.Action("CancelImprestSurrenderForApproval", "ImprestSurrender")',
             success: function (data) {
                 if (data.success == true) {
                     HideProgress();
@@ -283,10 +254,10 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, RecID: "Imprest Surrender Header: " + DocNo }),
+            data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/DocumentApprovalTrail',
+            url: '@Url.Action("DocumentApprovalTrail", "Common")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -310,7 +281,7 @@
             data: JSON.stringify({ RecID: RecordID }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/DocumentApprovalComments',
+            url: '@Url.Action("DocumentApprovalComments", "Common")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();

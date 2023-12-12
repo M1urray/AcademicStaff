@@ -1,0 +1,157 @@
+﻿@model Latest_Staff_Portal.ViewModel.ClassAttendance
+@using Newtonsoft.Json.Linq;
+@using Latest_Staff_Portal.Models;
+<style>
+    .table-hover {
+        background-color: lightgray;
+    }
+
+    .dt-body-left {
+        text-align: left;
+    }
+
+    .dt-body-center {
+        text-align: center;
+    }
+
+    .greenColor {
+        background-color: green;
+        color: wheat;
+    }
+
+    .redColor {
+        background-color: red;
+        color: white;
+    }
+</style>
+<div class="pre-scrollable">
+    Weeks
+    @Html.DropDownListFor(model => model.Week, Model.ListOfWeeks, "--select Week--", new { @class = "form-control", @id = "ddlWeek", @onchange = "GetLessons()" })
+    @Html.ValidationMessageFor(model => model.Week, "", new { @class = "text-danger" })
+    <hr />    
+    <table id="TbAttendance" class="table table-bordered nowrap table-hover" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th>Student No</th>
+                <th>Name</th>
+                <th>Attendance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 1;
+                if (Model != null)
+                {
+                    {
+                        if (Model.StudentList.Count() > 0)
+                        {
+                            foreach (var item in Model.StudentList)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @i
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.No)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @if (item.Attendance == "2")
+                                        {
+                                            <select class="form-control dropdown" style="background-color:red" onchange="ChangeBackGroundColor(this);">
+                                                @if (item.Attendance == "1")
+                                                {
+                                                    <option value="1" selected="selected" class="greenColor">Present</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="1" class="greenColor">Present</option>
+                                                }
+                                                @if (item.Attendance == "2")
+                                                {
+                                                    <option value="2" selected="selected" class="redColor">Absent</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="2" class="redColor">Absent</option>
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select class="form-control dropdown" style="background-color:darkgray" onchange="ChangeBackGroundColor(this);">
+                                                @if (item.Attendance == "1")
+                                                {
+                                                    <option value="1" selected="selected" class="greenColor">Present</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="1" class="greenColor">Present</option>
+                                                }
+                                                @if (item.Attendance == "2")
+                                                {
+                                                    <option value="2" selected="selected" class="redColor">Absent</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="2" class="redColor">Absent</option>
+                                                }
+                                            </select>
+                                        }
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div align="center">
+            <input type="button" class="btn btn-danger" id="btnSubmit" value="Save Class Attendance" onclick="SaveClassAttendance('@Model.DocNo');" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#TbAttendance").DataTable({
+            lengthChange: !1,
+            buttons: [
+                "copy",
+                {
+                    extend: 'excel',
+                    title: 'Lecturer List'
+                },
+                {
+                    extend: 'pdf',
+                    title: 'Lecturer List'
+                }
+            ]
+        }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)");
+        if ('@Model.Week' != "") {
+            document.getElementById("ddlWeek").disabled = true;
+            document.getElementById("ddlLesson").disabled = true;
+            $("#btnSubmit").val("Update Attendance");
+        }
+    });
+    var ChangeBackGroundColor = function (Selectval) {
+        if (Selectval.value == "2") {
+            $(Selectval).css("background-color", "red");
+        }
+        else {
+            $(Selectval).css("background-color", "darkgray");
+        }
+    };
+</script>
+
+
+

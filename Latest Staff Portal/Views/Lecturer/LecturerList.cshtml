@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.Lecturer>
+@{
+    ViewBag.Title = "LecturerList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+</style>
+<div class="card pre-scrollable">
+    <div class="card-title">Lecturer List</div>
+    <hr />
+    <div class="card-body">
+        <table id="datatable-buttons" class="table table-bordered table-hover nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <thead>
+                <tr>
+                    <th>PF Number</th>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>Phone Number</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        {
+                            if (Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("LecturerUnitAllocations", "Lecturer", new { Lecturer = item.No })">@Html.DisplayFor(modelItem => item.No)</a>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.First_Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Middle_Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Last_Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Cellular_Phone_Number)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Gender)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Company_E_Mail)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" style="color:red">
+                                        No lecturer Records Found
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#datatable").DataTable(), $("#datatable-buttons").DataTable({
+            lengthChange: !1,
+            buttons: [
+                "copy",
+                {
+                    extend: 'excel',
+                    title: 'Lecturer List'
+                },
+                {
+                    extend: 'pdf',
+                    title: 'Lecturer List'
+                }
+            ]
+        }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)")
+    });
+</script>

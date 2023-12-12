@@ -5,7 +5,7 @@
             <tr>
                 <th>No</th>
                 <th>Name</th>
-                <th style="text-align:center" class="tdAction">Action</th>
+                <th style="text-align:center" class="tdAction" id="tdAction">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -39,19 +39,19 @@
         </tbody>
     </table>
 </div>
-<div align="right" class="HideLineButton">
+<div align="right" id="HideLineButton">
     <input type="button" value="Add Participant" class="btn btn-danger BtnPadding" onclick="AddParticipantLines();" />
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        var status = '@Model.Status';
+        var status = `@Model.Status`;
         if (status == "New") {
-            $(".tdAction").show();
-            $(".HideLineButton").show();
+            $("#tdAction").show();
+            $("#HideLineButton").show();
         }
         else {
-            $(".tdAction").hide();
-            $(".HideLineButton").hide();
+            $("#tdAction").hide();
+            $("#HideLineButton").hide();
         }
     });
 </script>

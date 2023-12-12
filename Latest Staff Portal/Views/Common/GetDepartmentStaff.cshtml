@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "GetDepartmentStaff";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+
+<div class="card pre-scrollable">
+    <div class="card-title">My Department Staff</div>
+    <div class="card-body">
+        <hr />
+        <div id="divStaffList"></div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+    LoadStaffList();
+});
+var LoadStaffList = function () {
+    ShowProgress();
+    $.ajax({
+        async: true,
+        type: "GET",
+        dataType: 'HTML',
+        contentType: false,
+        processData: false,
+        url: '@Url.Action("GetDepartmentStaffPartial", "Common")',
+        success: function (data) {
+            $("#divStaffList").html(data);
+            HideProgress();
+        },
+        error: function () {
+            Swal.fire("There is some problem to process your request. Please try after some time");
+            HideProgress();
+        }
+    });
+}
+</script>
+

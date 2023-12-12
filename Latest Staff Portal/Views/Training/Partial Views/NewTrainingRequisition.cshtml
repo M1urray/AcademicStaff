@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            @Html.Label("Directorate", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.Label("Campus", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
                 @Html.DropDownListFor(m => m.Directorate, new SelectList(Model.ListOfDirectorate, "Value", "Text", Model.Directorate), "--Select Directorate--", new { @id = "ddlDirectorate", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
                 @Html.ValidationMessageFor(model => model.Directorate, "", new { @class = "text-danger" })
