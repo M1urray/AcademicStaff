@@ -167,8 +167,8 @@ namespace Latest_Staff_Portal.Controllers
             try
             {
                 DateTime DateTrip = DateTime.ParseExact(NewApp.DateTrip.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                Credentials.ObjNav.TransportRequisitionCreate(Session["username"].ToString(), NewApp.Destination, NewApp.Commencement, DateTrip,
-                    NewApp.Purpose, Convert.ToInt32(NewApp.NoOfDays), 0, 0, 0, NewApp.RespC);
+                // Credentials.ObjNav.TransportRequisitionCreate(Session["username"].ToString(), NewApp.Destination, NewApp.Commencement, DateTrip,
+                //     NewApp.Purpose, Convert.ToInt32(NewApp.NoOfDays), 0, 0, 0, NewApp.RespC);
 
                 //string Redirect = "/Appraisal/ScoreCardAppraisal?AppDoc=" + DocNo;
                 string Redirect = "";
@@ -218,7 +218,7 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                Credentials.ObjNav.TravelRequisitionApprovalRequest(DocNo);
+                // Credentials.ObjNav.TravelRequisitionApprovalRequest(DocNo);
                 return Json(new { message = "Leave Application send for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

@@ -340,7 +340,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     RptNo = ReceiptNo;
                 }
-                Credentials.ObjNav.fnImprestSurrenderLineUpdate(SDocNo, AccountNo, Convert.ToDecimal(ActAmount), RptNo);
+                // Credentials.ObjNav.fnImprestSurrenderLineUpdate(SDocNo, AccountNo, Convert.ToDecimal(ActAmount), RptNo);
 
                 string msg = "Imprest surrender line updated Successfully";
 

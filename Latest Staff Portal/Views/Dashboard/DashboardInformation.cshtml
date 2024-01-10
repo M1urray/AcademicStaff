@@ -1,73 +1,73 @@
 ﻿@model Latest_Staff_Portal.ViewModel.EmployeeView
 <div id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="card mb-1 shadow-none">
-        <div class="card-header" id="headingFive" aria-expanded="true" aria-controls="collapseFive" data-toggle="collapse" href="#collapseFive">
-            <h6 class="m-0">
-                <span class="fa fa-arrow-up"></span> Internal Memos
-            </h6>
-        </div>
-        <div id="collapseFive" class="panel-collapse collapse show" aria-labelledby="headingFfive" data-parent="#accordion">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered dt-responsive nowrap">
-                            <thead style="color:white;background-color:black;">
-                                <tr>
-                                    <th width="5%">#</th>
-                                    <th width="45%">File Name</th>
-                                    <th width="40%">Remarks</th>
-                                    <th width="10%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    if (Model.ListInternalMemos.ListOfIntMemos != null && Model.ListInternalMemos.ListOfIntMemos.Count > 0)
-                                    {
-                                        if (Model.ListInternalMemos.hasFiles)
-                                        {
-                                            int i = 1;
-                                            foreach (var item in Model.ListInternalMemos.ListOfIntMemos)
-                                            {
-                                                <tr>
-                                                    <td>@i</td>
-                                                    <td>@item.FileName</td>
-                                                    <td>@item.Remarks</td>
-                                                    <td> <button id="btnview" class="btn btn-sm btn-danger btnPadding" onclick="ViewAttachment('@item.TabelID','@item.No','@item.ID','@item.FileName','@item.FileExt');">View Document</button></td>                                                    
-                                                </tr>
-                                                i++;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            foreach (var item in Model.ListInternalMemos.ListOfIntMemos)
-                                            {
-                                                <tr>
-                                                    <td colspan="4">@item.FileName</td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <tr>
-                                            <td colspan="4" style="color:Red">No Internal Memos found</td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @* <div class="card mb-1 shadow-none"> *@
+    @*     <div class="card-header" id="headingFive" aria-expanded="true" aria-controls="collapseFive" data-toggle="collapse" href="#collapseFive"> *@
+    @*         <h6 class="m-0"> *@
+    @*             <span class="fa fa-arrow-up"></span> Internal Memos *@
+    @*         </h6> *@
+    @*     </div> *@
+    @*     <div id="collapseFive" class="panel-collapse collapse show" aria-labelledby="headingFfive" data-parent="#accordion"> *@
+    @*         <div class="card-body"> *@
+    @*             <div class="row"> *@
+    @*                 <div class="col-md-12"> *@
+    @*                     <table class="table table-bordered dt-responsive nowrap"> *@
+    @*                         <thead style="color:white;background-color:black;"> *@
+    @*                             <tr> *@
+    @*                                 <th width="5%">#</th> *@
+    @*                                 <th width="45%">File Name</th> *@
+    @*                                 <th width="40%">Remarks</th> *@
+    @*                                 <th width="10%">Action</th> *@
+    @*                             </tr> *@
+    @*                         </thead> *@
+    @*                         <tbody> *@
+    @*                             @{ *@
+    @*                                 if (Model.ListInternalMemos.ListOfIntMemos != null && Model.ListInternalMemos.ListOfIntMemos.Count > 0) *@
+    @*                                 { *@
+    @*                                     if (Model.ListInternalMemos.hasFiles) *@
+    @*                                     { *@
+    @*                                         int i = 1; *@
+    @*                                         foreach (var item in Model.ListInternalMemos.ListOfIntMemos) *@
+    @*                                         { *@
+    @*                                             <tr> *@
+    @*                                                 <td>@i</td> *@
+    @*                                                 <td>@item.FileName</td> *@
+    @*                                                 <td>@item.Remarks</td> *@
+    @*                                                 <td> <button id="btnview" class="btn btn-sm btn-danger btnPadding" onclick="ViewAttachment('@item.TabelID','@item.No','@item.ID','@item.FileName','@item.FileExt');">View Document</button></td>                                                     *@
+    @*                                             </tr> *@
+    @*                                             i++; *@
+    @*                                         } *@
+    @*                                     } *@
+    @*                                     else *@
+    @*                                     { *@
+    @*                                         foreach (var item in Model.ListInternalMemos.ListOfIntMemos) *@
+    @*                                         { *@
+    @*                                             <tr> *@
+    @*                                                 <td colspan="4">@item.FileName</td> *@
+    @*                                             </tr> *@
+    @*                                         } *@
+    @*                                     } *@
+    @*                                 } *@
+    @*                                 else *@
+    @*                                 { *@
+    @*                                     <tr> *@
+    @*                                         <td colspan="4" style="color:Red">No Internal Memos found</td> *@
+    @*                                     </tr> *@
+    @*                                 } *@
+    @*                             } *@
+    @*                         </tbody> *@
+    @*                     </table> *@
+    @*                 </div> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </div> *@
     <div class="card mb-1 shadow-none">
         <div class="card-header" id="headingOne" aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
             <h6 class="m-0">
                 <span class="fa fa-arrow-up"></span> Personal Information
             </h6>
         </div>
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+        <div id="collapseOne" class="panel-collapse collapse show;" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
                 <div class="row" style="padding: 2px">
                     <div class="col-md-6">

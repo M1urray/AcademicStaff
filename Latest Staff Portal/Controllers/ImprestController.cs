@@ -270,15 +270,15 @@ namespace Latest_Staff_Portal.Controllers
 
                 string StaffNo = Session["Username"].ToString();
                 DateTime DateRequired = DateTime.ParseExact(imprestHeader.DateNeeded.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                string DocNo = Credentials.ObjNav.ImprestRequisitionCreate(StaffNo, School, DateRequired,
-                    imprestHeader.Campus, imprestHeader.Department, imprestHeader.Remarks, imprestHeader.RespC, "","");
+                string DocNo = "";
+                    // Credentials.ObjNav.ImprestRequisitionCreate(StaffNo, School, DateRequired, imprestHeader.Campus, imprestHeader.Department, imprestHeader.Remarks, imprestHeader.RespC, "","");
 
                 foreach (var c in imprestLines)
                 {
                     string item = c.Item.Trim();
                     string itemDesc = c.ItemDesc.Trim();
                     string amnt = c.Amount.Trim();
-                    Credentials.ObjNav.ImprestRequisitionLinesCreate(DocNo, item, Convert.ToDecimal(amnt), StaffNo, imprestHeader.Campus, imprestHeader.Department, itemDesc);
+                    Credentials.ObjNav.ImprestRequisitionLinesCreate("DocNo", item, Convert.ToDecimal(amnt), StaffNo, imprestHeader.Campus, imprestHeader.Department, itemDesc);
                 }
                 successVal = true;
                 Credentials.ObjNav.ImprestRequisitionApprovalRequest(DocNo);

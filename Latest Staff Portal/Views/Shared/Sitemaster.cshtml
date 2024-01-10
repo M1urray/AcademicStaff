@@ -92,7 +92,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>MIBs | Staff Portal</title>
+    <title>BROOKHURST | Staff Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="MIBs Staff Portal" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -149,17 +149,17 @@
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
                 </div>
-                @if (CountNotif > 0)
-                {
-                    <div class="dropdown d-inline-block" onclick="ShowNotifications();">
-                        <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="bx bx-bell bx-tada" ></i>
-                            <span class="badge badge-danger badge-pill">@CountNotif</span>
-                            <img src="~/assets/images/NEW2.gif" class="rounded" />
-                        </button>
-                    </div>
-                }
+                @* @if (CountNotif > 0) *@
+                @* { *@
+                @*     <div class="dropdown d-inline-block" onclick="ShowNotifications();"> *@
+                @*         <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" *@
+                @*                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> *@
+                @*             <i class="bx bx-bell bx-tada" ></i> *@
+                @*             <span class="badge badge-danger badge-pill">@CountNotif</span> *@
+                @*             <img src="~/assets/images/NEW2.gif" class="rounded" /> *@
+                @*         </button> *@
+                @*     </div> *@
+                @* } *@
                 <div class="d-flex">
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
@@ -210,36 +210,36 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="#" onclick="NoticeBoardLink();">
-                                <i class="bx bx-alarm"></i>
-                                <span>Notice Board</span>
-                            </a>
-                        </li>
-                        @if (HOD || Dean)
-                        {
-                            <li class="menu-title">Management</li>
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="bx bx-store"></i>
-                                    <span>HOD/DEAN Section</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-
-                                    <li><a href="#" onclick="LecturerListLink();">Lecturer List</a></li>
-                                    @*<li><a href="#" onclick="PartTimeRequisitionLink();">Part-Time Requisition</a></li>*@
-                                    @*<li><a href="#">Upload Lecturer List</a></li>*@
-                                    <li><a href="#" onclick="VoteBookBalanceLink();">Vote Book Balance</a></li>
-                                    @*<li><a href="#">Student Results</a></li>*@
-                                    @*<li><a href="#">Management Reports</a></li>*@
-                                </ul>
-                            </li>
-                        }
-                        <li class="menu-title">Programmes</li>
+                        @* <li> *@
+                        @*     <a href="#" onclick="NoticeBoardLink();"> *@
+                        @*         <i class="bx bx-alarm"></i> *@
+                        @*         <span>Notice Board</span> *@
+                        @*     </a> *@
+                        @* </li> *@
+                        @* @if (HOD || Dean) *@
+                        @* { *@
+                        @*     <li class="menu-title">Management</li> *@
+                        @*     <li> *@
+                        @*         <a href="javascript: void(0);" class="has-arrow waves-effect"> *@
+                        @*             <i class="bx bx-store"></i> *@
+                        @*             <span>HOD/DEAN Section</span> *@
+                        @*         </a> *@
+                        @*         <ul class="sub-menu" aria-expanded="false"> *@
+                        @* *@
+                        @*             <li><a href="#" onclick="LecturerListLink();">Lecturer List</a></li> *@
+                        @*             $1$<li><a href="#" onclick="PartTimeRequisitionLink();">Part-Time Requisition</a></li>#1# *@
+                        @*             $1$<li><a href="#">Upload Lecturer List</a></li>#1# *@
+                        @*             <li><a href="#" onclick="VoteBookBalanceLink();">Vote Book Balance</a></li> *@
+                        @*             $1$<li><a href="#">Student Results</a></li>#1# *@
+                        @*             $1$<li><a href="#">Management Reports</a></li>#1# *@
+                        @*         </ul> *@
+                        @*     </li> *@
+                        @* } *@
+                        <li class="menu-title">Subjects</li>
                         <li>
                             <a href="#" onclick="ProgrammeListLink();">
                                 <i class="bx bx-anchor"></i>
-                                <span>Programme List</span>
+                                <span>Subject List</span>
                             </a>
                         </li>
                         @if (Lecturer)
@@ -248,17 +248,11 @@
                             <li>
                                 <a href="#" onclick="CourseAllocationLink();" class=" waves-effect">
                                     <i class="bx bx-list-ul"></i>
-                                    <span>Allocated Units</span>
+                                    <span>Allocated Subjects</span>
                                 </a>
                             </li>
                         }
                         <li class="menu-title">Requisitions</li>
-                        @*<li>
-            <a href="#" onclick="SponsorshipRequisitionLink();" class=" waves-effect">
-                <i class="bx bx-calendar"></i>
-                <span>Sponsorship Application</span>
-            </a>
-        </li>*@
                         <li>
                             <a href="#" onclick="LeaveRequisitionLink();" class=" waves-effect">
                                 <i class="bx bx-calendar"></i>
@@ -295,18 +289,13 @@
                                 <span>Staff Claim Requisition</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#" onclick="AppraisalRequisitiontLink();" class=" waves-effect">
-                                <i class="bx bx-award"></i>
-                                <span>Appraisal Requisition</span>
-                            </a>
-                        </li>
-                        @*<li>
-            <a href="#" onclick="TransportRequisitiontLink();" class=" waves-effect">
-                <i class="bx bx-car"></i>
-                <span>Transport Requisition</span>
-            </a>
-        </li>*@
+                        @* <li> *@
+                        @*     <a href="#" onclick="AppraisalRequisitiontLink();" class=" waves-effect"> *@
+                        @*         <i class="bx bx-award"></i> *@
+                        @*         <span>Appraisal Requisition</span> *@
+                        @*     </a> *@
+                        @* </li> *@
+
                         <li class="menu-title">Reports</li>
                         <li>
                             <a href="#" onclick="PayslipViewLink();" class=" waves-effect">
@@ -335,22 +324,22 @@
                                 <span>Rejected Documents</span>
                             </a>
                         </li>
-                        <li class="menu-title">settings</li>
+                        <li class="menu-title">Settings</li>
                         <li>
                             <a href="#" onclick="ChangePasswordLink();" class=" waves-effect">
                                 <i class="dripicons-gear"></i>
-                                <span>change password</span>
+                                <span>Change password</span>
                             </a>
                         </li>
-                        @if (Session["UserID"].ToString() == @"DSL0\NGAITUNGU" || Session["UserID"].ToString() == @"DSL0\ECHEGE")
-                        {
-                            <li>
-                                <a href="#" onclick="ADUserSetLink();" class=" waves-effect">
-                                    <i class="dripicons-user-group"></i>
-                                    <span>AD User Setup</span>
-                                </a>
-                            </li>
-                        }
+                        @* @if (Session["UserID"].ToString() == @"DSL0\NGAITUNGU" || Session["UserID"].ToString() == @"DSL0\ECHEGE") *@
+                        @* { *@
+                        @*     <li> *@
+                        @*         <a href="#" onclick="ADUserSetLink();" class=" waves-effect"> *@
+                        @*             <i class="dripicons-user-group"></i> *@
+                        @*             <span>AD User Setup</span> *@
+                        @*         </a> *@
+                        @*     </li> *@
+                        @* } *@
                     </ul>
                 </div>
                 <!-- Sidebar -->
@@ -362,13 +351,16 @@
                 <div class="container-fluid">
                     @RenderBody()
                     <!-- End Page-content -->
-                    <footer class="footer" style="color: #051936; background-color:#3d57fa">
+                    <footer class="footer" style="color: #051936; background-color: #E9EEF2 ">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     @DateTime.Now.Year © MIBs.
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4 text-center">
+                                    <img src="/assets/images/Logo.png" alt="" height="40" style="vertical-align:middle">
+                                </div>
+                                <div class="col-sm-4">
                                     <div class="text-sm-right d-none d-sm-block">
                                         Design & Developed by <a href="https://dsl.ke/" target="_blank" class="text-success">DSL Solutions</a>
                                     </div>

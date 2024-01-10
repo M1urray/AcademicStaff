@@ -150,8 +150,8 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                string DocNo = Credentials.ObjNav.createAppraisalDocument(Session["username"].ToString(), NewApp.ApprisalPeriod,"", "","");
-                string Redirect = "/Appraisal/AppraisalScoreCard?AppDoc=" + DocNo;
+                // string DocNo = Credentials.ObjNav.createAppraisalDocument(Session["username"].ToString(), NewApp.ApprisalPeriod,"", "","");
+                string Redirect = "/Appraisal/AppraisalScoreCard?AppDoc=" + "DocNo";
 
                 return Json(new { message = Redirect, success = true }, JsonRequestBehavior.AllowGet);
             }

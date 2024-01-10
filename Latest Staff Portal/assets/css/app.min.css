@@ -6,7 +6,7 @@
     right: 0;
     left: 0;
     z-index: 1002;
-    background-color: #3d57fa;
+    background-color: #d5b358;
     -webkit-box-shadow: 0 .75rem 1.5rem rgba(18,38,63,.03);
     box-shadow: 0 .75rem 1.5rem rgba(18,38,63,.03)
 }
@@ -524,7 +524,7 @@ body[data-layout=horizontal] .footer {
     }
 
     body.sidebar-enable .vertical-menu {
-        display: block
+        display: inline-block
     }
 }
 
@@ -675,7 +675,7 @@ body[data-layout=horizontal] .footer {
         }
 
 body[data-sidebar=dark] .vertical-menu {
-    background: #e32845
+    background: #9f2f31
 }
 
 body[data-sidebar=dark] #sidebar-menu ul li a {

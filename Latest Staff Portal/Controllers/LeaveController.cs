@@ -142,15 +142,15 @@ namespace Latest_Staff_Portal.Controllers
                 #region Campus List
                 List<Campus> Campuses = new List<Campus>();
                 string pageCampus = "DimValues?$select=Code,Name&$filter=Dimension_Code eq 'CAMPUS' and Blocked eq false&$format=json";
-
+                
                 HttpWebResponse httpResponseCampus = Credentials.GetOdataData(pageCampus);
                 using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
                 {
                     var result = streamReader.ReadToEnd();
-
+                
                     var details = JObject.Parse(result);
-
-
+                
+                
                     foreach (JObject config in details["value"])
                     {
                         Campus CmpList = new Campus();
@@ -343,7 +343,7 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                Credentials.ObjNav.HRCancelLeaveApplication_735371815(DocNo);
+                Credentials.ObjNav.HRCancelLeaveApplication(DocNo);
                 return Json(new { message = "Leave Application approval cancelled Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

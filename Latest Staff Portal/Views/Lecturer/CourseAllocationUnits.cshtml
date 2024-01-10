@@ -26,11 +26,12 @@
                 <th>Action</th>
                 <th>Code</th>
                 <th>Stage</th>
-                <th>Semester</th>
-                <th>Unit</th>
-                <th>Unit Name</th>
+                <th>Term</th>
+                <th>Subject</th>
+                <th>Subject Name</th>
                 <th>Campus</th>
                 <th>Settlement Type</th>
+                <th>Class</th>
             </tr>
         </thead>
         <tbody>
@@ -67,6 +68,9 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Student_Type)
                                     </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CourseClass)
+                                    </td>
                                 </tr>
                             }
                         }
@@ -74,7 +78,7 @@
                         {
                             <tr>
                                 <td colspan="7" style="color:red">
-                                    No lecturer Records Found
+                                    No teacher Records Found
                                 </td>
                             </tr>
                         }

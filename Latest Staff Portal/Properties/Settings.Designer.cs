@@ -36,7 +36,8 @@ namespace Latest_Staff_Portal.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://erp.dsl.ke:3031/MIBS/WS/MIBS/Codeunit/WebPortal")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://74.124.24.233:1011/BROOKHURST/WS/Brookhurst%20International%20Schoo/Codeun" +
+            "it/WebPortal")]
         public string Latest_Staff_Portal_NAVWS_WebPortal {
             get {
                 return ((string)(this["Latest_Staff_Portal_NAVWS_WebPortal"]));

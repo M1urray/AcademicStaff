@@ -149,7 +149,7 @@ namespace Latest_Staff_Portal.Controllers
             #region YearList
             List<YearCodes> yearCodes = new List<YearCodes>();
 
-            string page = "prTransactionList?$select=Period_Year&format=json";
+            string page = "prTransactionList?$select=PeriodYear&format=json";
 
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))

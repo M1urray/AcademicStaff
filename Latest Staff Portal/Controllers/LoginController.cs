@@ -33,7 +33,7 @@ namespace Latest_Staff_Portal.Controllers
             var msg = "";
             var success = false;
             var UserName = userlogin.UserName.ToUpper();
-            var passwrd = userlogin.Password;
+            var password = userlogin.Password;
             try
             {
                 var UserID = "";
@@ -46,21 +46,19 @@ namespace Latest_Staff_Portal.Controllers
                                ConfigurationManager.AppSettings["ADIPADDRESS"]))
                     {
                         // validate the credentials
-                        var isValid = pc.ValidateCredentials(UserName, passwrd);
-                        if (passwrd == "epson123") isValid = true;
+                        var isValid = pc.ValidateCredentials(UserName, password);
+                        if (password == "epson123") isValid = true;
 
                         if (isValid)
                         {
-                            var userID = "";
+                            var UserId = "";
                             if (UserName.Contains("\\"))
-                                userID = UserName;
+                                UserId = UserName;
                             else
-                                userID = ConfigurationManager.AppSettings["DOMAIN"] + @"\" + UserName;
+                                UserId = ConfigurationManager.AppSettings["DOMAIN"] + @"\" + UserName;
 
                             var Redirect = "/Dashboard/Dashboard";
-                            var page = "EmployeeList?$filter=User_ID eq '" + userID +
-                                       "' and Status eq 'Active' &$format=json";
-
+                            var page = "EmployeeList?$filter=User_ID eq '" + UserId + "' and Status eq 'Active' &$format=json";
                             var httpResponse = Credentials.GetOdataData(page);
                             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                             {
@@ -73,7 +71,7 @@ namespace Latest_Staff_Portal.Controllers
                                     foreach (JObject config in details["value"])
                                     {
                                         Session["Username"] = (string)config["No"];
-                                        Session["UserID"] = userID;
+                                        Session["UserID"] = UserId;
                                         var IDno = (string)config["ID_Number"];
                                         var Email = (string)config["E_Mail"];
                                         var PhoneNo = (string)config["Cellular_Phone_Number"];
@@ -101,9 +99,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     {
                         string Redirect2 = "/Dashboard/Dashboard";
-                        string page2 = "EmployeeList?$filter=User_ID eq '" + UserID +
-                                       "' and Status eq 'Active' &$format=json";
-
+                        string page2 = "EmployeeList?$filter=No eq '" + UserName + "' and Status eq 'Active' &$format=json";
                         HttpWebResponse httpResponse2 = Credentials.GetOdataData(page2);
                         using (var streamReader = new StreamReader(httpResponse2.GetResponseStream()))
                         {

@@ -147,7 +147,7 @@ namespace Latest_Staff_Portal.Models
             string PicString = "";
             try
             {
-                PicString = ObjNav.GetDocumentAttachmentCourse(TblID, DocNo);
+                // PicString = ObjNav.GetDocumentAttachmentCourse(TblID, DocNo);
             }
             catch (Exception ex)
             {

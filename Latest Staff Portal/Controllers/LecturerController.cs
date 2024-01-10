@@ -70,7 +70,7 @@ namespace Latest_Staff_Portal.Controllers
         {
             List<LecturerAssignedUnits> LectUnitAllocation = new List<LecturerAssignedUnits>();
             //string page = "LectAllocatedUnits?$filter=Lecturer eq '" + Lecturer + "' and Class ne ''&format=json";
-            string page = "LectAllocatedUnits?$filter=Lecturer eq '" + Lecturer + "'&$format=json";
+            string page = "LecturerUnitsAllocation?$filter=Lecturer eq '" + Lecturer + "'&$format=json";
 
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -82,16 +82,16 @@ namespace Latest_Staff_Portal.Controllers
                 foreach (JObject config in details["value"])
                 {
                     LecturerAssignedUnits Lec = new LecturerAssignedUnits();
-                    Lec.Code = (string)config["Code"];
+                    Lec.Code = (string)config["Programme"];
                     Lec.Stage = (string)config["Stage"];
                     Lec.Semester = (string)config["Semester"];
                     Lec.Unit = (string)config["Unit"];
                     Lec.Unit_Name = (string)config["Description"];
-                    Lec.Campus_Code = (string)config["Campus_Code"];
+                    Lec.Campus_Code = (string)config["CampusCode"];
                     Lec.Name = (string)config["Name"];
-                    Lec.Student_Type = (string)config["Student_Type"];
+                    Lec.Student_Type = (string)config["StudentType"];
                     Lec.LnNo = (string)config["Line_No"];
-                    //Lec.CourseClass = (string)config["Class"];
+                    Lec.CourseClass = (string)config["Class"];
                     LectUnitAllocation.Add(Lec);
                 }
             }
@@ -108,7 +108,7 @@ namespace Latest_Staff_Portal.Controllers
             {
                 string StaffNo = Session["Username"].ToString();
                 List<LecturerAssignedUnits> LectUnitAllocation = new List<LecturerAssignedUnits>();
-                string page = "LectAllocatedUnits?$filter=Lecturer eq '" + StaffNo + "'&$format=json";
+                string page = "LecturerUnitsAllocation?$filter=Lecturer eq '" + StaffNo + "'&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -120,16 +120,16 @@ namespace Latest_Staff_Portal.Controllers
                     foreach (JObject config in details["value"])
                     {
                         LecturerAssignedUnits Lec = new LecturerAssignedUnits();
-                        Lec.Code = (string)config["Code"];
+                        Lec.Code = (string)config["Programme"];
                         Lec.Stage = (string)config["Stage"];
                         Lec.Semester = (string)config["Semester"];
                         Lec.Unit = (string)config["Unit"];
                         Lec.Unit_Name = (string)config["Description"];
-                        Lec.Campus_Code = (string)config["Campus_Code"];
+                        Lec.Campus_Code = (string)config["CampusCode"];
                         Lec.Name = (string)config["Name"];
-                        Lec.Student_Type = (string)config["Student_Type"];
+                        Lec.Student_Type = (string)config["StudentType"];
                         Lec.LnNo = (string)config["Line_No"];
-                        //Lec.CourseClass = (string)config["Class"];
+                        Lec.CourseClass = (string)config["Class"];
                         LectUnitAllocation.Add(Lec);
                     }
                 }
@@ -424,12 +424,12 @@ namespace Latest_Staff_Portal.Controllers
 
                     if (ReportType == "CLATT")
                     {
-                        Credentials.ObjNav.PrintClassList("", Unit, Stage, Sem, ClassCode, Campus, SettlementType, "CLASSLIST-" + _filename + ".pdf");
+                        // Credentials.ObjNav.PrintClassList("", Unit, Stage, Sem, ClassCode, Campus, SettlementType, "CLASSLIST-" + _filename + ".pdf");
                         filename = "CLASSLIST-" + _filename + ".pdf";
                     }
                     if (ReportType == "EXAMATT")
                     {
-                        Credentials.ObjNav.GenerateExamAttendanceList("", Unit, Stage, Sem, "", Campus, SettlementType, "EXAMATTENDANCE-" + _filename + ".pdf");
+                        // Credentials.ObjNav.GenerateExamAttendanceList("", Unit, Stage, Sem, "", Campus, SettlementType, "EXAMATTENDANCE-" + _filename + ".pdf");
                         filename = "EXAMATTENDANCE-" + _filename + ".pdf";
                     }
 
@@ -1412,7 +1412,7 @@ namespace Latest_Staff_Portal.Controllers
                     }
                     else
                     {
-                        Code = Credentials.ObjNav.InserClassAtteHeader("", Unit, Sem, Wk, Lec, Campus, "", "", Convert.ToInt32(Lesson), SmT);
+                        // Code = Credentials.ObjNav.InserClassAtteHeader("", Unit, Sem, Wk, Lec, Campus, "", "", Convert.ToInt32(Lesson), SmT);
                     }
                     int RowCount = Rows.Count();
 
@@ -1423,7 +1423,7 @@ namespace Latest_Staff_Portal.Controllers
                         string studentNo = RowText[1].Trim();
                         string Attendance = RowText[3].Trim();
 
-                        Credentials.ObjNav.InsertClassListAttendance(Code, studentNo, Convert.ToInt32(Attendance), "", Unit, Sem, Wk, Lec, Campus, Convert.ToInt32(Lesson));
+                        // Credentials.ObjNav.InsertClassListAttendance(Code, studentNo, Convert.ToInt32(Attendance), "", Unit, Sem, Wk, Lec, Campus, Convert.ToInt32(Lesson));
                     }
                     return Json(new { message = "Class Attendance for week " + Wk + " saved Successfully", success = true, failed = false }, JsonRequestBehavior.AllowGet);
                 }
@@ -1456,20 +1456,6 @@ namespace Latest_Staff_Portal.Controllers
                     string Redirect = "/Lecturer/ClassAttendanceList";
                     return Json(new { message = Redirect, success = true, failed = true, redirect = true }, JsonRequestBehavior.AllowGet);
                 }
-            }
-            catch (Exception ex)
-            {
-                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
-            }
-        }
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult DeleteAttendance(string DocNo)
-        {
-            try
-            {
-                string Lec = Session["username"].ToString();
-                Credentials.ObjNav.DeleteAttendance(DocNo, Lec);
-                return Json(new { message = "Attendance deleted successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

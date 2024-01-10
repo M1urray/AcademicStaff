@@ -407,7 +407,7 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 if (ReportType == "SCORESHEET")
                 {
-                    Credentials.ObjNav.GenerateScoreSheet(Prog, Unit, Stage, Sem, "SCORESHEET-" + _filename + ".pdf");
+                    // Credentials.ObjNav.GenerateScoreSheet(Prog, Unit, Stage, Sem, "SCORESHEET-" + _filename + ".pdf");
                     filename = "SCORESHEET-" + _filename + ".pdf";
                 }
 
@@ -478,7 +478,7 @@ namespace Latest_Staff_Portal.Controllers
 
                 string _filename = (Prog + "-" + Unit).Replace(@"/", @"");
 
-                Credentials.ObjNav.GenerateScoreSheet(Prog, Unit, Stage, Sem, "SCORESHEET-" + _filename + ".pdf");
+                // Credentials.ObjNav.GenerateScoreSheet(Prog, Unit, Stage, Sem, "SCORESHEET-" + _filename + ".pdf");
                 filename = "SCORESHEET-" + _filename + ".pdf";
 
                 string DestPath = Server.MapPath("~/Downloads/");
