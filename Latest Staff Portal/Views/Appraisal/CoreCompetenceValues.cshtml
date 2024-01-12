@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.ScoreCardObjectives>
+<style>
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div class="pre-scrollable">
+    <table id="tableScoreCard" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th>Doc No</th>
+                <th>Core Competence and Values</th>
+                <th>Self Ratings</th>
+                <th>Supervisor Ratings</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    {
+                        if (Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DocumentNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Objective)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ratings)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SupervisorRating)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" style="color:red">
+                                    No Records Found
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-right">
+                    <input type="button" value="Add Core Competence and Value" class="btn btn-danger BtnPadding" onclick="AddCoreCompetenceVal();" />
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

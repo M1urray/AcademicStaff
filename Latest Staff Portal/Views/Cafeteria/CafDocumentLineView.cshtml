@@ -1,0 +1,68 @@
+﻿@model Latest_Staff_Portal.ViewModel.CafLinesList
+<div class="table-responsive">
+    <table class="table table-centered table-nowrap" id="CafLines">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Description</th>
+                <th style="text-align:center">Quantity</th>
+                <th style="text-align:center">Unit Cost</th>
+                <th style="text-align:center">Total Amount</th>
+                @if (Model.Status == "Open")
+                {
+                    <th style="text-align:right">Action</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.ListOfCafLines != null && Model.ListOfCafLines.Count() > 0)
+                {
+                    foreach (var item in Model.ListOfCafLines)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Item)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemName)
+                            </td>
+                            <td align="center">
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td align="center">
+                                @Html.DisplayFor(modelItem => item.UnitCost)
+                            </td>
+                            <td align="center">
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            @if (Model.Status == "Open")
+                            {
+                                <td style="text-align:right">
+                                    <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" onclick="EditItem('@item.No', '@item.LnNo');"><i class="mdi mdi-pencil font-size-16"></i></a>
+                                    <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="RemoveItem('@item.No', '@item.Item', '@item.LnNo');"><i class="mdi mdi-close font-size-16"></i></a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<hr />
+@if (Model.Status == "Open")
+{
+    <div align="right">
+        <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddCafLines();" />
+    </div>
+}
+

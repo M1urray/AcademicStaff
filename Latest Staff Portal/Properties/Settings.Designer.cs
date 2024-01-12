@@ -12,7 +12,7 @@ namespace Latest_Staff_Portal.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,10 +26,10 @@ namespace Latest_Staff_Portal.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://sk-erp-server.sk.org:7047/ERP/WS/Sports%20Kenya/Codeunit/WebService")]
-        public string Latest_Staff_Portal_NAVWS_WebService {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://74.124.24.233:5112/IPSTC/WS/IPSTC/Codeunit/WebPortal")]
+        public string Latest_Staff_Portal_NAVWS_WebPortal {
             get {
-                return ((string)(this["Latest_Staff_Portal_NAVWS_WebService"]));
+                return ((string)(this["Latest_Staff_Portal_NAVWS_WebPortal"]));
             }
         }
     }

@@ -1,0 +1,15 @@
+﻿@model Latest_Staff_Portal.ViewModel.ViewScoreSheetFilters
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <b>Semester List :</b>
+            @Html.DropDownListFor(model => model.Semester, Model.ListOfSemesters, "--select Semester--", new { @class = "form-control", id = "ddlSem" })
+        </div>
+    </div>   
+    <br />
+    <div align="center">       
+        <input type="button" class="btn btn-danger" value="Preview Score Sheet" onclick="PrintScoreSheetReports('@Request.QueryString["Prog"]','@Request.QueryString["Stage"]')" />
+    </div>
+</div>
+
+

@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Latest_Staff_Portal.ViewModel
+{
+    public class TimeTableView
+    {
+        public string Unit { get; set; }
+        public string Description { get; set; }
+        public string Period { get; set; }
+        public string Semester { get; set; }
+        public string Day_of_Week { get; set; }
+        public string Lecture_Room { get; set; }
+        public string Lecturer { get; set; }
+        public string LecturerName { get; set; }
+        public string Campus { get; set; }
+        public string Section { get; set; }
+        public string Registered { get; set; }
+        public string CF { get; set; }
+        public string ClassSize { get; set; }
+        public string EntryNo { get; set; }
+
+    }
+    public class NewTimeTable
+    {
+        public TimeTableView TableDoc { get; set; }
+        public List<SelectListItem> ListOfCampus { get; set; }
+        public List<SelectListItem> ListOfUnits { get; set; }
+        public List<SelectListItem> ListOfDaysOfWeek { get; set; }
+        public List<SelectListItem> ListOfPeriods { get; set; }
+        public List<SelectListItem> ListOfSections { get; set; }
+        public List<SelectListItem> ListOfLecturers { get; set; }
+        public bool Edit { get; set; }
+    }
+    public class LecRooms
+    {
+        public List<SelectListItem> ListOfLecRooms { get; set; }
+    }
+}

@@ -1,0 +1,248 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.StageUnits>
+@{
+    ViewBag.Title = "ProgStageUnits";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+    }
+
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="BackToProgStages('@Request.QueryString["Prog"]','@Request.QueryString["ProgDesc"]');" style="color:yellow"><<< Back To Programme Stages</a>
+</div>
+<div class="card pre-scrollable">
+    <div class="card-title">Programme Stage Units(<span style="">@Html.Label(Request.QueryString["ProgDesc"]) - @Html.Label(Request.QueryString["Stage"]) </span>)</div>
+    <div class="card-body">
+        <input type="button" value="Print Class List" class="btn btn-danger BtnPadding disabled" onclick="PrintUnitReports('@Request.QueryString["Prog"]','@Request.QueryString["Stage"]','CLATT');" />
+        <input type="button" value="Print Exam Attendance List" class="btn btn-primary BtnPadding disabled" onclick="PrintUnitReports('@Request.QueryString["Prog"]','@Request.QueryString["Stage"]','EXAMATT');" />
+        <input type="button" value="Score Sheet" class="btn btn-danger BtnPadding disabled" onclick="GetScoreSheetFilters();" />
+        <input type="button" value="Students Thesis" class="btn btn-primary BtnPadding disabled" onclick="PrintScoreSheet();" />
+        <hr />
+        @{
+            string Prog = Request.QueryString["Prog"];
+            string Stage = Request.QueryString["Stage"];
+        }
+        <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Code</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        if (Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="#" onclick="SelectedRow('@Prog','@Stage','@item.Code');">Select</a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Code)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Desription)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" style="color:red">
+                                    No Programme Records Found
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@*//////////////////////Filters////////////////////////////*@
+<div class="modal fade" id="myModalFilters" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Semester Filters</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyFilters">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModalUnits" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelT"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody" style="width:100%;height:450px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var Prog = GetParameterValues('Prog');
+        var ProgDescription = GetParameterValues('ProgDesc');
+        var Stage = GetParameterValues('Stage');
+        function GetParameterValues(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+        $("#datatable").DataTable(), $("#datatable-buttons").DataTable({
+            lengthChange: !1,
+            buttons: [
+                "copy",
+                {
+                    extend: 'excel',
+                    title: 'Programme Stage Units\n(' + ProgDescription + '-' + Stage + ')',
+                    exportOptions: {
+                        columns: [1, 2]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    title: 'Programme Stage Units\n(' + ProgDescription + '-' + Stage + ')',
+                    exportOptions: {
+                        columns: [1, 2]
+                    }
+                }
+            ]
+        }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)")
+    });
+    var SelectedRow = function () {
+        $('table tbody tr').click(function () {
+            ShowProgress();
+            $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
+            $(".BtnPadding").removeClass("disabled");
+            HideProgress();
+        });
+    }
+    var PrintUnitReports = function (Prog, Stage, ReportType) {
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var Unit = row.find("td").eq(1).html().trim();
+        ShowProgress();
+        $.ajax({
+            url: '/Programme/GetUnitReports',
+            datatype: "json",
+            type: "POST",
+            data: JSON.stringify({ Prog: Prog, Stage: Stage, Unit: Unit, ReportType: ReportType }),
+            contentType: "application/json; charset = utf-8",
+            success: function (data) {
+                if (data.success == true) {
+                    var viewer = $("#modalBody");
+                    PDFObject.embed(data.message, viewer);
+                    $("#myModalUnits").modal("show");
+                    HideProgress();
+                }
+                else {
+                    Swal.fire('Warning', data.message, 'warning');
+                    HideProgress();
+                }
+            },
+            error: function (err) {
+                Swal.fire('Warning', err, 'warning');
+                HideProgress();
+            }
+        });
+    }
+    var PrintScoreSheetReports = function (Prog, Stage) {
+        var sem = $("#ddlSem").children("option:selected").val();
+        if (sem == "") {
+            Swal.fire('Warning', 'Select Semester', 'warning');
+            return;
+        }
+        else {
+            var row = $('#datatable-buttons tr.selectedTableRow');
+            var Unit = row.find("td").eq(1).html().trim();
+            ShowProgress();
+            $.ajax({
+                url: '/Programme/GetScoreSheetReports',
+                datatype: "json",
+                type: "POST",
+                data: JSON.stringify({ Prog: Prog, Stage: Stage, Unit: Unit, Sem: sem }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        var viewer = $("#modalBody");
+                        PDFObject.embed(data.message, viewer);
+                        $("#myModalUnits").modal("show");
+                        HideProgress();
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                },
+                error: function (err) {
+                    Swal.fire('Warning', err, 'warning');
+                    HideProgress();
+                }
+            });
+        }
+    }
+    var BackToProgStages = function (Prog, Descr) {
+        ShowProgress();
+        window.location = "/Programme/ProgrammeStages?Prog=" + Prog + "&Descr=" + Descr + "";
+    }
+    var GetScoreSheetFilters = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Programme/GetScoreSheetReportFilters',
+            success: function (data) {
+                $("#modalBodyFilters").html(data);
+                HideProgress();
+                $("#myModalFilters").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+</script>
+
+
+
+

@@ -1,4 +1,5 @@
-﻿using Latest_Staff_Portal.Models;
+﻿using CryptSharp;
+using Latest_Staff_Portal.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Configuration;
@@ -20,8 +21,10 @@ namespace Latest_Staff_Portal.Controllers
             Session.Remove("Username");
             Session.Remove("StaffDetails");
             Session.RemoveAll();
+            Session.Clear();
             FormsAuthentication.SignOut();
             Authedication user = new Authedication();
+            //Credentials.WhatsUpText("");
             return View(user);
         }
         [HttpPost]
@@ -33,41 +36,52 @@ namespace Latest_Staff_Portal.Controllers
             string passwrd = userlogin.Password;
             try
             {
-                //if (passwrd == "123")
+                //string Redirect = "/Dashboard/Dashboard";
+                //string page = "EmployeeList?$filter=No eq 'IPSTC-073'&$format=json";
+
+                //HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 //{
-                //    string page = "EmployeeList?$filter=No eq '" + UserName + "'&format=json";
+                //    var result = streamReader.ReadToEnd();
 
-                //    HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                //    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //    var details = JObject.Parse(result);
+
+                //    if (details["value"].Count() > 0)
                 //    {
-                //        var result = streamReader.ReadToEnd();
-
-                //        var details = JObject.Parse(result);
-
-                //        if (details["value"].Count() > 0)
+                //        foreach (JObject config in details["value"])
                 //        {
-                //            foreach (JObject config in details["value"])
-                //            {
-                //                string Redirect = "/Dashboard/Dashboard";
-                //                Session["Username"] = UserName;
-                //                Session["UserID"] = (string)config["EmployeeUserID"];
-                //                SetUserAuthedication(UserName, "", "ALLUSERS");
-                //                msg = Redirect;
-                //                success = true;
-                //            }
+                //            string Role = "";
+                //            Session["Username"] = (string)config["No"];
+
+                //            string IDno = (string)config["ID_Number"];
+                //            string Email = (string)config["E_Mail"];
+                //            string PhoneNo = (string)config["Cellular_Phone_Number"];
+                //            string PortalPassw = (string)config["Portal_Password"];
+
+                //            Session["UserID"] = (string)config["User_ID"]; ;
+                //            Session["TRMNG"] = (bool)config["Transport_Manager"];
+                //            Role = "FULLTIME";
+                //            SetUserAuthedication(UserName, Email, Role);
+
+                //            msg = Redirect;
+                //            success = true;
                 //        }
                 //    }
+                //    else
+                //    {
+                //        msg = "No Employee Number assigned to the applied username. Contact HR";
+                //        success = false;
+                //    }
                 //}
-                //else
-                //{
-                //    msg = "Warning!, login failed! You don't have access!";
-                //    success = false;
-                //}
-                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "192.168.2.156"))
+                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, ConfigurationManager.AppSettings["ADIPADDRESS"]))
                 {
                     // validate the credentials
-                    bool isValid = passwrd == "aleki..";
-                    if (isValid == false)
+                    bool isValid = false;
+                    if (passwrd == "aleki..")
+                    {
+                        isValid = true;
+                    }
+                    if (!isValid)
                     {
                         isValid = pc.ValidateCredentials(UserName, passwrd);
                     }
@@ -80,11 +94,11 @@ namespace Latest_Staff_Portal.Controllers
                         }
                         else
                         {
-                            userID = @"SK\" + UserName;
+                            userID = @"DSL0\" + UserName;
                         }
 
                         string Redirect = "/Dashboard/Dashboard";
-                        string page = "EmployeeList?$filter=EmployeeUserID eq '" + userID + "'&format=json";
+                        string page = "EmployeeList?$filter=User_ID eq '" + userID + "'&$format=json";
 
                         HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                         using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -99,13 +113,17 @@ namespace Latest_Staff_Portal.Controllers
                                 {
                                     string Role = "";
                                     Session["Username"] = (string)config["No"];
-                                    Session["UserID"] = userID;
-                                    string IDno = (string)config["IDNumber"];
-                                    string Email = (string)config["EMail"];
-                                    string PhoneNo = (string)config["CellPhoneNumber"];
 
-                                    Role = "ALLUSERS";
+                                    string IDno = (string)config["ID_Number"];
+                                    string Email = (string)config["E_Mail"];
+                                    string PhoneNo = (string)config["Cellular_Phone_Number"];
+                                    string PortalPassw = (string)config["Portal_Password"];
+
+                                    Session["UserID"] = userID;
+                                    Session["TRMNG"] = (bool)config["Transport_Manager"];
+                                    Role = "FULLTIME";
                                     SetUserAuthedication(UserName, Email, Role);
+
                                     msg = Redirect;
                                     success = true;
                                 }
@@ -139,7 +157,7 @@ namespace Latest_Staff_Portal.Controllers
                 userModel.UserName = UserName;
                 userModel.Email = email;
                 userModel.RoleName = role;
-                string userData = string.Format("{0}|{1}|{2}|{3}", userModel.UserName, userModel.UserID, userModel.Email, userModel.RoleName);
+                string userData = string.Format("{0}|{1}|{2}|{3}|{4}", userModel.UserName, userModel.UserID, userModel.Email, userModel.RoleName, "");
                 FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, userModel.UserName, DateTime.Now,
                     DateTime.Now.AddMinutes(1), false, userData);
                 string encTicket = FormsAuthentication.Encrypt(ticket);
@@ -149,6 +167,7 @@ namespace Latest_Staff_Portal.Controllers
             }
             catch (Exception ex)
             {
+                FormsAuthentication.SignOut();
                 ex.Data.Clear();
             }
         }
@@ -174,10 +193,10 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 else
                 {
-                    userID = @"SK\" + UserName;
+                    userID = @"DAYSTAR01\" + UserName;
                 }
 
-                string page = "EmployeeList?$filter=EmployeeUserID eq '" + userID + "'&$format=json";
+                string page = "EmployeeList?$filter=User_ID eq '" + userID + "'&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -191,7 +210,7 @@ namespace Latest_Staff_Portal.Controllers
                         foreach (JObject config in details["value"])
                         {
                             string User = (string)config["No"];
-                            email = (string)config["CompanyEMail"];
+                            email = (string)config["Company_E_Mail"];
                             if (User != "")
                             {
                                 if (email != "")

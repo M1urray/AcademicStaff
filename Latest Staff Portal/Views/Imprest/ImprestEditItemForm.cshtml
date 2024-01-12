@@ -11,19 +11,8 @@
             @Html.DropDownListFor(model => model.ItemDetails.AdvanceType, Model.ListOfImprestTypes, "--select Imprest Type--", new { @class = "form-control", @id = "ddlImpType" })
         </div>
         <div class="col-md-6">
-            Quantity
-            <input type="text" class="form-control" id="txtQuanity" onkeypress="return functionDecimal(event,this.value)" />
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-md-6">
-            Unit Amount
-            <input type="text" class="form-control" id="txtAmount" onkeypress="return functionx(event);" />
-        </div>
-        <div class="col-md-6">
-            Unit of Measure
-            @Html.DropDownListFor(model => model.ItemDetails.DocNo, Model.ListOfUoM, "--select Unit of Measure--", new { @class = "form-control", @id = "ddlUoM" })
+            Amount
+            <input type="text" class="form-control" id="txtAmount" onkeypress="return functionDecimal(event,this.value)" />
         </div>
     </div>
     <hr />
@@ -35,19 +24,17 @@
     </div>
     <hr />
     <div align="center">
-        <input type="button" class="btn btn-primary waves-effect waves-light" value="Edit Line" onclick="UpdateLineItem('@Model.ItemDetails.DocNo', '@Model.ItemDetails.LnNo', '@Model.ItemDetails.Item');" />
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Update Line" onclick="UpdateLineItem('@Model.ItemDetails.LnNo');" />
     </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        document.getElementById("ddlImpType").disabled = true;
         $("#ddlImpType").select2({
-            width: '100%',
-            placeholder: 'Search...'
+            width: '100%'
         });
-        $('#txtQuanity').val(`@Model.ItemDetails.Quantity`);
-        $('#txtAmount').val(`@Model.ItemDetails.UnitAmount`);
+        $('#txtAmount').val(`@Model.ItemDetails.Amount`);
         $('#txtDescription').val(`@Model.ItemDetails.ItemDesc2`);
+        document.getElementById("ddlImpType").disabled = true;
     });
     function functionDecimal(evt, val) {
         try {
@@ -77,6 +64,4 @@
         }
     }
 </script>
-
-
 

@@ -1,0 +1,157 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewCafRequisition
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+
+    .NoRecords {
+        background-color: #dedbdb
+    }
+</style>
+<div class="card pre-scrollable">
+    <div class="card-body">
+        <b>Imprest Header</b>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Date required:", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <input type="datetime" class="form-control" placeholder="dd/mm/yyyy" id="dtPicker" onkeydown="return false;" autocomplete="off" />
+                        <div class='a'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Time Required", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <input type="time" class="form-control" id="txtTime" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Campus", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Campus, Model.ListOfCampus, "--select Campus--", new { @class = "form-control", @id = "ddlCampus", @onchange = "GetCafeteriaList()" })
+                        @Html.ValidationMessageFor(model => model.Campus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("School(Optional)", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.school, Model.ListOfSchool, "--select School--", new { @class = "form-control", @id = "ddlSchool" })
+                        @Html.ValidationMessageFor(model => model.school, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Department, Model.ListOfDepartment, "--select Department--", new { @class = "form-control", @id = "ddlDepartment" })
+                        @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
+                        @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Venue", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <input id="txtVenue" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Cafeteria", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <select class="form-control" id="ddlCaf" name="ddlCaf"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Label("Purpose:(150 Characters)", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <textarea id="txtRemarks" class="form-control" maxlength="150"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr style="border:1px solid black" />
+        <div align="center">
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitCafRequisition();" />
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dtPicker').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-0:+2',
+            showOtherMonths: true,
+            dateFormat: 'dd/mm/yy',
+            minDate: 0
+        });
+        $(window).resize(function () {
+            $('#dtPicker').datepicker('hide');
+            $('#dtPicker').blur();
+        });
+        $("#ddlCampus,#ddlSchool,#ddlDepartment,#ddlRespC,#ddlCaf").select2({
+            width: '100%'
+        });
+        $('#ddlCaf').empty().append('<option selected="selected" value="">--Select Cafeteria--</option>');
+        document.getElementById("ddlDepartment").disabled = true;
+        document.getElementById("ddlRespC").disabled = true;
+    });    
+    var GetCafeteriaList = function () {
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        if (Campus == "") {
+            $("#ddlCaf option").remove();
+            $('#ddlCaf').empty().append('<option selected="selected" value="">--Select Cafeteria--</option>');
+        }
+        else {
+            ShowProgress();
+            $("#ddlCaf option").remove();
+            $.getJSON("/Cafeteria/GetCafeteriaList", { Campus: Campus },
+                function (data) {
+                    $('#ddlCaf').empty().append('<option selected="selected" value="">--Select Cafeteria--</option>');
+                    $.each(data.ListOfddlData, function () {
+                        $("#ddlCaf").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    HideProgress();
+                });
+        }
+    }
+</script>
+

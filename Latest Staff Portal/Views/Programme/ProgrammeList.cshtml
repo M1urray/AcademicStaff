@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.Programme>
+
+@{
+    ViewBag.Title = "ProgrammeList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+</style>
+<div class="card pre-scrollable">
+    <div class="card-title">Programme List</div>
+    <hr />
+    <div class="card-body">
+        <table id="datatable-buttons" class="table table-bordered table-hover nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <caption>Programme List</caption>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        if (Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="#" onclick="GetProgStages('@item.Code','@item.Description');">@Html.DisplayFor(modelItem => item.Code)</a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" style="color:red">
+                                    No Programme Records Found
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#datatable").DataTable(), $("#datatable-buttons").DataTable({
+            lengthChange: !1,
+            buttons: [
+                "copy",
+                {
+                    extend: 'excel',
+                    title: 'Programme List'
+                },
+                {
+                    extend: 'pdf',
+                    title: 'Programme List'
+                }
+            ]
+        }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)")
+    });
+    var GetProgStages = function (Prog, Descr) {
+        ShowProgress();
+        window.location = "/Programme/ProgrammeStages?Prog=" + Prog + "&Descr=" + Descr + "";
+
+    }
+</script>
+
