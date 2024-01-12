@@ -16,7 +16,7 @@ namespace Latest_Staff_Portal.Controllers
     public class DocumentApprovalController : Controller
     {
         [CustomeAuthentication]
-        [CustomAuthorization(Role = "FULLTIME")]
+        [CustomAuthorization(Role = "ALLUSERS")]
         // GET: DocumentApproval       
         public ActionResult DocumentForApprovalSummery(string rn)
         {

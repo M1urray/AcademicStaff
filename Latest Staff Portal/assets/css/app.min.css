@@ -695,7 +695,7 @@ body[data-sidebar=dark] #sidebar-menu ul li a {
         }
 
 body[data-sidebar=dark] #sidebar-menu ul li ul.sub-menu li a {
-    color: #79829c
+    color: #000
 }
 
     body[data-sidebar=dark] #sidebar-menu ul li ul.sub-menu li a:hover {

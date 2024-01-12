@@ -15,7 +15,7 @@ using System.Web.Mvc;
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
-    [CustomAuthorization(Role = "FULLTIME")]
+    [CustomAuthorization(Role = "ALLUSERS")]
     public class PurchaseController : Controller
     {
         // GET: Purchase
