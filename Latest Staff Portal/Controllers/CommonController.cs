@@ -106,7 +106,7 @@ namespace Latest_Staff_Portal.Controllers
             {
                 #region Items List
                 List<DropdownList> ddlList = new List<DropdownList>();
-                string page = "FAPostingGroups?$select=Code,Description&$orderby=Description&$filter=Description ne ''&$format=json";
+                string page = "FixedAssetsList?$select=No,Description&$filter=Description ne ''&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -147,7 +147,7 @@ namespace Latest_Staff_Portal.Controllers
             {
                 #region Items List
                 List<DropdownList> ddlList = new List<DropdownList>();
-                string page = "FixedAssetsList?$select=No_,Description,Search_Description&$filter=Acquired eq false and Description ne '' and FA_Posting_Group  eq '" + PostingG + "'&$format=json";
+                string page = "FixedAssetsList?$select=No,Description,Search_Description&$filter=Acquired eq false and Description ne '' and FA_Posting_Group  eq '" + PostingG + "'&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
