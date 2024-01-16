@@ -119,11 +119,11 @@ namespace Latest_Staff_Portal.Models
                 {
                     UName = username.Trim();
                 }
-                string AdminAccountName = WebConfigurationManager.AppSettings["AD_USER"];
-                string AdminPassword = WebConfigurationManager.AppSettings["ADW_PWD"];
-                string Domain = WebConfigurationManager.AppSettings["AD_DOMAIN"];
+                string AdminAccountName = WebConfigurationManager.AppSettings["W_USER"];
+                string AdminPassword = WebConfigurationManager.AppSettings["W_PWD"];
+                string Domain = WebConfigurationManager.AppSettings["DC_DOMAIN"];
 
-                using (PrincipalContext pContext = new PrincipalContext(ContextType.Domain, "DaystarUniversity.local", AdminAccountName, AdminPassword))
+                using (PrincipalContext pContext = new PrincipalContext(ContextType.Domain, "@dsl0", AdminAccountName, AdminPassword))
                 {
                     UserPrincipal up = UserPrincipal.FindByIdentity(pContext, username);
                     if (up != null)
@@ -133,28 +133,6 @@ namespace Latest_Staff_Portal.Models
                         rval = "CHANGED";
                     }
                 }
-                //string AdminAccountName = WebConfigurationManager.AppSettings["W_USER"];
-                //string AdminPassword = WebConfigurationManager.AppSettings["W_PWD"];
-                //string Domain = WebConfigurationManager.AppSettings["DOMAIN"];
-
-
-
-                //SearchResult rs = null;
-                //rs = SearchUserExist(GetDirectorySearch(AdminAccountName, AdminPassword, Domain), UName);
-                //if (rs != null)
-                //{
-                //    try
-                //    {
-                //        DirectoryEntry user = rs.GetDirectoryEntry();
-                //        user.Invoke("SetPassword", new object[] { "" + newpass + "" });
-                //        user.CommitChanges();
-                //        rval = "CHANGED";
-                //    }
-                //    catch (DirectoryServicesCOMException ex)
-                //    {
-                //        rval = ex.InnerException.Message;
-                //    }
-                //}
             }
             catch (Exception ex)
             {

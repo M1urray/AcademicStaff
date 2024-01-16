@@ -27,124 +27,7 @@ namespace Latest_Staff_Portal.Controllers
             //Credentials.WhatsUpText("");
             return View(user);
         }
-        // [HttpPost]
-        // public JsonResult LoginUser(Authedication userlogin)
-        // {
-        //     string msg = "";
-        //     bool success = false;
-        //     string UserName = userlogin.UserName.ToUpper();
-        //     string passwrd = userlogin.Password;
-        //     try
-        //     {
-        //         //string Redirect = "/Dashboard/Dashboard";
-        //         //string page = "EmployeeList?$filter=No eq 'IPSTC-073'&$format=json";
-        //
-        //         //HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-        //         //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-        //         //{
-        //         //    var result = streamReader.ReadToEnd();
-        //
-        //         //    var details = JObject.Parse(result);
-        //
-        //         //    if (details["value"].Count() > 0)
-        //         //    {
-        //         //        foreach (JObject config in details["value"])
-        //         //        {
-        //         //            string Role = "";
-        //         //            Session["Username"] = (string)config["No"];
-        //
-        //         //            string IDno = (string)config["ID_Number"];
-        //         //            string Email = (string)config["E_Mail"];
-        //         //            string PhoneNo = (string)config["Cellular_Phone_Number"];
-        //         //            string PortalPassw = (string)config["Portal_Password"];
-        //
-        //         //            Session["UserID"] = (string)config["User_ID"]; ;
-        //         //            Session["TRMNG"] = (bool)config["Transport_Manager"];
-        //         //            Role = "FULLTIME";
-        //         //            SetUserAuthedication(UserName, Email, Role);
-        //
-        //         //            msg = Redirect;
-        //         //            success = true;
-        //         //        }
-        //         //    }
-        //         //    else
-        //         //    {
-        //         //        msg = "No Employee Number assigned to the applied username. Contact HR";
-        //         //        success = false;
-        //         //    }
-        //         //}
-        //         using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, ConfigurationManager.AppSettings["ADIPADDRESS"]))
-        //         {
-        //             // validate the credentials
-        //             bool isValid = passwrd == "aleki..";
-        //             if (!isValid)
-        //             {
-        //                 isValid = pc.ValidateCredentials(UserName, passwrd);
-        //             }
-        //             if (isValid == true)
-        //             {
-        //                 string userID = "";
-        //                 if (UserName.Contains("\\"))
-        //                 {
-        //                     userID = UserName;
-        //                 }
-        //                 else
-        //                 {
-        //                     userID = @"DSL0\" + UserName;
-        //                 }
-        //
-        //                 string Redirect = "/Dashboard/Dashboard";
-        //                 string page = "EmployeeList?$filter=User_ID eq '" + userID + "'&$format=json";
-        //
-        //                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-        //                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-        //                 {
-        //                     var result = streamReader.ReadToEnd();
-        //
-        //                     var details = JObject.Parse(result);
-        //
-        //                     if (details["value"].Count() > 0)
-        //                     {
-        //                         foreach (JObject config in details["value"])
-        //                         {
-        //                             string Role = "";
-        //                             Session["Username"] = (string)config["No"];
-        //
-        //                             string IDno = (string)config["ID_Number"];
-        //                             string Email = (string)config["E_Mail"];
-        //                             string PhoneNo = (string)config["Cellular_Phone_Number"];
-        //                             string PortalPassw = (string)config["Portal_Password"];
-        //
-        //                             Session["UserID"] = userID;
-        //                             Session["TRMNG"] = (bool)config["Transport_Manager"];
-        //                             Role = "FULLTIME";
-        //                             SetUserAuthedication(UserName, Email, Role);
-        //
-        //                             msg = Redirect;
-        //                             success = true;
-        //                         }
-        //                     }
-        //                     else
-        //                     {
-        //                         msg = "No Employee Number assigned to the applied username. Contact HR";
-        //                         success = false;
-        //                     }
-        //                 }
-        //             }
-        //             else
-        //             {
-        //                 msg = "Warning!, login failed! You don't have access!";
-        //                 success = false;
-        //             }
-        //         }
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         msg = ex.Message;
-        //         success = false;
-        //     }
-        //     return Json(new { message = msg, success = success }, JsonRequestBehavior.AllowGet);
-        // }
+
         [HttpPost]
         public JsonResult LoginUser(Authedication userlogin)
         {
@@ -306,7 +189,7 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 else
                 {
-                    userID = @"DAYSTAR01\" + UserName;
+                    userID = @"DSL0\" + UserName;
                 }
 
                 string page = "EmployeeList?$filter=User_ID eq '" + userID + "'&$format=json";
@@ -332,7 +215,7 @@ namespace Latest_Staff_Portal.Controllers
 
                                     Random rand = new Random();
                                     Random randAlpha = new Random();
-                                    int newpassint = rand.Next(10000, 99999);
+                                    int newsprint = rand.Next(10000, 99999);
 
                                     int alphabetPosition = randAlpha.Next(1, 26);
                                     bool isCap = (alphabetPosition % 2 == 0 ? true : false);
@@ -351,7 +234,7 @@ namespace Latest_Staff_Portal.Controllers
                                     theAlphabet += GetTheAlphabet(alphabetPosition, isCap);
 
                                     //string newpass = theAlphabet + "#" + newpassint.ToString() + "?" + alphabetPosition.ToString() + "@";
-                                    string newpass = theAlphabet + "#" + newpassint.ToString() + "@" + alphabetPosition.ToString();
+                                    string newpass = theAlphabet + "#" + newsprint.ToString() + "@" + alphabetPosition.ToString();
 
                                     #endregion generate random password
 
