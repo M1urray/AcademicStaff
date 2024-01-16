@@ -22,6 +22,13 @@ namespace Latest_Staff_Portal.ViewModel
         public int MemberBenefit { get; set; }
         public int EmployerBenefit { get; set; }
         public int EmployerBalance { get; set; }
+        public string  AccountName { get; set; }
+        public string BankName { get; set; }
+        public string BranchName { get; set; }
+        public string AccountNumber { get; set; }
+        public string EmailAddress { get; set; }
+        public string ClearPhoneNumber { get; set; }
+
     }
 
     public class StaffClearanceList

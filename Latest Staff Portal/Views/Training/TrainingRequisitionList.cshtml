@@ -1,0 +1,321 @@
+﻿
+@{
+    ViewBag.Title = "TrainingRequisitionList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 7px;
+        font-size: 12px;
+    }
+</style>
+<div class="card pre-scrollable">
+    <div class="card-title">Training Requisition List</div>
+    <div class="card-body">
+        <a href="#" onclick="NewTrainingRequisition();" class="btn btn-primary BtnPadding">New Training Request</a>
+        <hr />
+        <div id="divTrainingRegList"></div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">New Training Requisition</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal Links////////////////////////////*@
+<div class="modal fade" id="myModalLinks" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Actions</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyLinks">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadTrainingReqList();
+    });
+    var LoadTrainingReqList = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/Training/TrainingRequisitionListPartialView",
+            success: function (data) {
+                $("#divTrainingRegList").html(data);
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                alert("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var SelectedRow = function (DocNo, Status) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'TRAIN' }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/CommonActions',
+            success: function (data) {
+                $("#modalBodyLinks").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var NewTrainingRequisition = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Training/NewTrainingApplication',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SubmitTrainingRequest = function () {
+        var dim1 = $("#ddlDim1").children("option:selected").val();
+        var dim2 = $("#ddlDim2").children("option:selected").val();
+        var course = $("#ddlCourse").children("option:selected").val();
+        var trainingCat = $("#ddlCategory").children("option:selected").val();
+        var sponsor = $("#ddlSponsor").children("option:selected").val();
+        var startDate = $("#dtFrom").val();
+        var endDate = $("#dtTo").val();
+        var trainer = $("#ddlTrainer").children("option:selected").val();
+        var cost = $("#txtCost").val();
+        var purpose = $("#txtRemarks").val();
+        if (dim1 == "") {
+            Swal.fire('error', 'Select Region', 'error');
+            return;
+        }
+        else if (dim2 == "") {
+            Swal.fire('error', 'Select Station', 'error');
+            return;
+        }
+        else if (course == "") {
+            Swal.fire('error', 'Select Course', 'error');
+            return;
+        }
+        else if (trainingCat == "") {
+            Swal.fire('error', 'Select Training Category', 'error');
+            return;
+        }
+        else if (sponsor == "") {
+            Swal.fire('error', 'Select Sponsor', 'error');
+            return;
+        }
+        else if (startDate == "") {
+            Swal.fire('error', 'Select Start Date', 'error');
+            return;
+        }
+        else if (endDate == "") {
+            Swal.fire('error', 'Select End Date', 'error');
+            return;
+        }
+        else if (trainer == "") {
+            Swal.fire('error', 'Select Trainer', 'error');
+            return;
+        }
+        else if (cost == "") {
+            Swal.fire('error', 'Enter Cost of Training', 'error');
+            return;
+        }
+        else if (purpose == "") {
+            Swal.fire('error', 'Enter Purpose of the Trip', 'error');
+            return;
+        }
+        else {
+            var TrainingList = {};
+            TrainingList.Dim1 = dim1;
+            TrainingList.Dim2 = dim2;
+            TrainingList.CourseTitle = course;
+            TrainingList.TrainingCategory = trainingCat;
+            TrainingList.Sponsor = sponsor;
+            TrainingList.StartDate = startDate;
+            TrainingList.EndDate = endDate;
+            TrainingList.Trainer = trainer;
+            TrainingList.Cost = cost;
+            TrainingList.Purpose = purpose;
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: "/Training/SubmitTrainingDocument",
+                data: JSON.stringify({ NewApp: TrainingList }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        window.location = data.message;
+                        $("#myModal").modal("hide");
+                    }
+                    else {
+                        $("#myModal").modal("hide");
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    var ViewDoc = function (DocNo) {
+        ShowProgress();
+        window.location = "/Training/TrainingDocumentDetails?AppDoc=" + DocNo;
+    }
+    var SendDocForApproval = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, Redirect:'N' }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Training/SendDocAppForApproval',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadTransportReqList();                   
+                    $("#myModalLinks").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });        
+    }
+    var CancelDocForApproval = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Training/CancelTrainingAppForApproval',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadTrainingReqList();
+                    $("#myModalLinks").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewApprovalTrail = function (DocNo) {
+        $("#labelF").text("Document Approval Trail");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, RecID: "HR Training Applications: " + DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalTrail',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewDocComments = function (DocNo) {
+        $("#labelF").text("Document Comments");
+        ShowProgress();
+        var RecordID = "HR Training Applications: " + DocNo;
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ RecID: RecordID }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalComments',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+</script>
+

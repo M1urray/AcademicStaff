@@ -94,13 +94,24 @@
         var memberBenefit = $("#memberBenefits").val();
         var employerBenefit = $("#employerBenefitOption").val();
         var employerBalance = $("#employerBalanceOptionSelect").val();
+        var accountName = $("#txtAccountName").val();
+        var bankName = $("#txtBankName").val();
+        var branchName = $("#txtBranchName").val();
+        var accountNumber = $("#txtAccountNumber").val();
+        var emailAddress = $("#txtEmailAddress").val();
+        var phoneNumberClear = $("#txtPhoneNumber").val();
+        var otherReason = $("#txtOtherNature").val();
         if (remarks == "") {
-            Swal.fire('error', "Reason Cannot be empty ", 'warning');
+            Swal.fire('error', "Reason cannot be empty ", 'warning');
             return;
         } 
         else if (lastDateOfService == "") {
-            Swal.fire('error', "Last Date OF Service Cannot be Empty");
+            Swal.fire('error', "Last date of service cannot be empty");
             return;
+        }
+        else if (remarks == "Other")
+        {
+            remarks = otherReason;
         }
         else 
         {
@@ -114,6 +125,12 @@
             staffClearance.MemberBenefit = memberBenefit;
             staffClearance.EmployerBenefit = employerBenefit;
             staffClearance.EmployerBalance = employerBalance;
+            staffClearance.AccountName = accountName;
+            staffClearance.BankName = bankName;
+            staffClearance.BranchName = branchName;
+            staffClearance.AccountNumber = accountNumber;
+            staffClearance.EmailAddress = emailAddress;
+            staffClearance.ClearPhoneNumber = phoneNumberClear;
             ShowProgress();
             //Send the JSON array to Controller using AJAX.
             $.ajax({

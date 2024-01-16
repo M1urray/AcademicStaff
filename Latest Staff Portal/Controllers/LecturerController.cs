@@ -214,81 +214,96 @@ namespace Latest_Staff_Portal.Controllers
                 string StaffNo = Session["Username"].ToString();
                 List<LecturerAssignedUnits> LectUnitAllocation = new List<LecturerAssignedUnits>();
                 List<LecturerAssignedUnits> LectAssociateUnits = new List<LecturerAssignedUnits>();
-                string Sem = CommonClass.ExamSemester();
-                string page = "Timetable?$filter=Lecturer eq '" + StaffNo + "' and Semester eq '" + Sem + "'&$format=json";
+                //string Sem = CommonClass.ExamSemester();
+                string pageE = "SemesterList?$filter=ExamSemester eq true&$format=json";
 
-                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                HttpWebResponse httpResponseE = Credentials.GetOdataData(pageE);
+                using (var streamReaderE = new StreamReader(httpResponseE.GetResponseStream()))
                 {
-                    var result = streamReader.ReadToEnd();
+                    var resultE = streamReaderE.ReadToEnd();
 
-                    var details = JObject.Parse(result);
+                    var detailsE = JObject.Parse(resultE);
 
-                    foreach (JObject config in details["value"])
+                    foreach (JObject configE in detailsE["value"])
                     {
-                        LecturerAssignedUnits Lec = new LecturerAssignedUnits();
-                        //Lec.Code = (string)config["Code"];
-                        //Lec.Stage = (string)config["Stage"];
-                        Lec.Semester = (string)config["Semester"];
-                        Lec.Unit = (string)config["Unit"];
-                        Lec.Unit_Name = (string)config["Unit_Description"];
-                        Lec.Campus_Code = (string)config["Campus_Code"];
-                        Lec.Day = (string)config["DayofWeek"];
-                        Lec.Period = (string)config["Period"];
-                        Lec.Room = (string)config["Lecture_Room"];
-                        Lec.CourseClass = (string)config["Unit_Class"];
-                        Lec.stdCount = (string)config["Students_Count"];
-                        Lec.Has_Primary_Role = true;
-                        Lec.IsLecAssociate = false;
-                        LectUnitAllocation.Add(Lec);
-                    }
-                }
-                string pageLec = "UnitAssociateLecturers?$filter=Lecturer eq '" + StaffNo + "' and Semester eq '" + Sem + "'&$format=json";
+                        string Sem = (string)configE["Code"];
+                        string page = "Timetable?$filter=Lecturer eq '" + StaffNo + "' and Semester eq '" + Sem + "'&$format=json";
 
-                HttpWebResponse httpResponseLec = Credentials.GetOdataData(pageLec);
-                using (var streamReader = new StreamReader(httpResponseLec.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-                    foreach (JObject config in details["value"])
-                    {
-                        string pageT = "Timetable?$filter=Semester eq '" + Sem + "' and Unit eq '" + (string)config["Unit"] + "' and Campus_Code eq '" + (string)config["Campus_Code"] + "' and Unit_Class eq '" + (string)config["Unit_Class"] + "'&$format=json";
-
-                        HttpWebResponse httpResponseT = Credentials.GetOdataData(pageT);
-                        using (var streamReaderT = new StreamReader(httpResponseT.GetResponseStream()))
+                        HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                         {
-                            var resultT = streamReaderT.ReadToEnd();
+                            var result = streamReader.ReadToEnd();
 
-                            var detailsT = JObject.Parse(resultT);
+                            var details = JObject.Parse(result);
 
-                            foreach (JObject configT in detailsT["value"])
+                            foreach (JObject config in details["value"])
                             {
                                 LecturerAssignedUnits Lec = new LecturerAssignedUnits();
-                                Lec.Semester = (string)configT["Semester"];
-                                Lec.Unit = (string)configT["Unit"];
-                                Lec.Unit_Name = (string)configT["Unit_Description"];
-                                Lec.Campus_Code = (string)configT["Campus_Code"];
-                                Lec.Day = (string)configT["DayofWeek"];
-                                Lec.Period = (string)configT["Period"];
-                                Lec.Room = (string)configT["Lecture_Room"];
-                                Lec.CourseClass = (string)configT["Unit_Class"];
-                                Lec.stdCount = (string)configT["Students_Count"];
-                                if ((bool)config["Promoted"])
+                                //Lec.Code = (string)config["Code"];
+                                //Lec.Stage = (string)config["Stage"];
+                                Lec.Semester = (string)config["Semester"];
+                                Lec.Unit = (string)config["Unit"];
+                                Lec.Unit_Name = (string)config["Unit_Description"];
+                                Lec.Campus_Code = (string)config["Campus_Code"];
+                                Lec.Day = (string)config["DayofWeek"];
+                                Lec.Period = (string)config["Period"];
+                                Lec.Room = (string)config["Lecture_Room"];
+                                Lec.CourseClass = (string)config["Unit_Class"];
+                                Lec.stdCount = (string)config["Students_Count"];
+                                Lec.Has_Primary_Role = true;
+                                Lec.IsLecAssociate = false;
+                                LectUnitAllocation.Add(Lec);
+                            }
+                        }
+                        string pageLec = "UnitAssociateLecturers?$filter=Lecturer eq '" + StaffNo + "' and Semester eq '" + Sem + "'&$format=json";
+
+                        HttpWebResponse httpResponseLec = Credentials.GetOdataData(pageLec);
+                        using (var streamReader = new StreamReader(httpResponseLec.GetResponseStream()))
+                        {
+                            var result = streamReader.ReadToEnd();
+
+                            var details = JObject.Parse(result);
+
+                            foreach (JObject config in details["value"])
+                            {
+                                string pageT = "Timetable?$filter=Semester eq '" + Sem + "' and Unit eq '" + (string)config["Unit"] + "' and Campus_Code eq '" + (string)config["Campus_Code"] + "' and Unit_Class eq '" + (string)config["Unit_Class"] + "'&$format=json";
+
+                                HttpWebResponse httpResponseT = Credentials.GetOdataData(pageT);
+                                using (var streamReaderT = new StreamReader(httpResponseT.GetResponseStream()))
                                 {
-                                    Lec.Has_Primary_Role = true;
+                                    var resultT = streamReaderT.ReadToEnd();
+
+                                    var detailsT = JObject.Parse(resultT);
+
+                                    foreach (JObject configT in detailsT["value"])
+                                    {
+                                        LecturerAssignedUnits Lec = new LecturerAssignedUnits();
+                                        Lec.Semester = (string)configT["Semester"];
+                                        Lec.Unit = (string)configT["Unit"];
+                                        Lec.Unit_Name = (string)configT["Unit_Description"];
+                                        Lec.Campus_Code = (string)configT["Campus_Code"];
+                                        Lec.Day = (string)configT["DayofWeek"];
+                                        Lec.Period = (string)configT["Period"];
+                                        Lec.Room = (string)configT["Lecture_Room"];
+                                        Lec.CourseClass = (string)configT["Unit_Class"];
+                                        Lec.stdCount = (string)configT["Students_Count"];
+                                        if ((bool)config["Promoted"])
+                                        {
+                                            Lec.Has_Primary_Role = true;
+                                        }
+                                        else
+                                        {
+                                            Lec.Has_Primary_Role = false;
+                                        }
+                                        Lec.IsLecAssociate = true;
+                                        LectAssociateUnits.Add(Lec);
+                                    }
                                 }
-                                else
-                                {
-                                    Lec.Has_Primary_Role = false;
-                                }
-                                Lec.IsLecAssociate = true;
-                                LectAssociateUnits.Add(Lec);
                             }
                         }
                     }
                 }
+                
 
                 LecAssignedUnits LecUnits = new LecAssignedUnits
                 {

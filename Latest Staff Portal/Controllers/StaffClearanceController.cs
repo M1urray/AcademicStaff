@@ -2,15 +2,12 @@
 using Latest_Staff_Portal.Models;
 using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json.Linq;
-using Org.BouncyCastle.Bcpg;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Latest_Staff_Portal.Controllers
@@ -108,7 +105,8 @@ namespace Latest_Staff_Portal.Controllers
                     "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 string DocNo = Credentials.ObjNav.StaffClearanceRequest(staffClearance.StaffNo,
                     staffClearance.PhoneNumber, staffClearance.Email, staffClearance.Address,
-                    staffClearance.ReasonForClearing, LastDayOfService,staffClearance.MemberBenefit,staffClearance.EmployerBenefit,staffClearance.EmployerBalance);
+                    staffClearance.ReasonForClearing, LastDayOfService,
+                    0,0,0,"","","","","","");
                 if (DocNo != "")
                 {
                     return Json(

@@ -131,3 +131,7 @@ var ChangePasswordLink = function () {
     ShowProgress();
     window.location = "/Settings/ChangePassword";
 }
+var TrainingRequisitiontLink = function () {
+    ShowProgress();
+    window.location = "/Training/TrainingRequisitionList";
+}
