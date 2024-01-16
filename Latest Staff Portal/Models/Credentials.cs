@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Configuration;
 using System.Net;
-using System.Web.Mvc;
-using System.Web.Caching;
-using System.Web.UI;
 using System.IO;
 using Latest_Staff_Portal.NAVWS;
 using System.DirectoryServices;
@@ -18,7 +12,7 @@ namespace Latest_Staff_Portal.Models
     public class Credentials
     {
         private static DirectorySearcher dirSearch = null;
-        public static string fileSourcePath = ConfigurationManager.AppSettings["FILEPATH"];
+        public static string fileSourcePath = ConfigurationManager.AppSettings["FILE_SOURCE"];
         public static HttpWebResponse GetOdataData(string page)
         {
             HttpWebResponse httpResponse = null;

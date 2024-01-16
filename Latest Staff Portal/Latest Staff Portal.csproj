@@ -295,12 +295,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Attachments\" />
+    <Folder Include="Downloads\" />
+    <Folder Include="MarkSheets\" />
+    <Folder Include="Uploads\" />
     <Folder Include="Views\AssociateLecturer\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MarkSheets\ACC-112-Mark_Sheet_0394.pdf" />
-    <Content Include="Attachments\DBM-012-Mark_Sheet_0577.pdf" />
-    <Content Include="Downloads\ACS-114-Mark_Sheet_0809.pdf" />
     <Content Include="assets\fonts\boxicons.eot" />
     <Content Include="assets\fonts\boxicons.ttf" />
     <Content Include="assets\fonts\boxicons.woff" />
@@ -329,7 +330,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Uploads\PROFORMA-ECOSSP99-900221.pdf" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Appraisal\AddAppraisalObjectiveLine.cshtml" />

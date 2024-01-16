@@ -189,7 +189,7 @@ namespace Latest_Staff_Portal.Controllers
                 string filename = "";
                 bool success = false, view = false;
 
-                string StaffIDNo = "123";// CommonClass.GetEmployeeIDNo(StaffNo);
+                string StaffIDNo =  CommonClass.GetEmployeeIDNo(StaffNo);
                 if (StaffIDNo == "")
                 {
                     success = false;
