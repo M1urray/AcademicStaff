@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Latest_Staff_Portal_NAVWS_WebPortal" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://192.168.7.153:7047/ERP/WS/DAYSTAR%20UNI/Codeunit/WebPortal</Value>
+      <Value Profile="(Default)">http://108.181.199.151:9740/ANIU/WS/ANIU/Codeunit/WebPortal</Value>
     </Setting>
   </Settings>
 </SettingsFile>
