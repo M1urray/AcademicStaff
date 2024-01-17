@@ -103,10 +103,11 @@ namespace Latest_Staff_Portal.Controllers
 
                 DateTime LastDayOfService = DateTime.ParseExact(staffClearance.LastDateOfService.Replace("-", "/"),
                     "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                string DocNo = Credentials.ObjNav.StaffClearanceRequest(staffClearance.StaffNo,
-                    staffClearance.PhoneNumber, staffClearance.Email, staffClearance.Address,
-                    staffClearance.ReasonForClearing, LastDayOfService,
-                    0,0,0,"","","","","","");
+                string DocNo = "";
+                    // Credentials.ObjNav.StaffClearanceRequest(staffClearance.StaffNo,
+                    // staffClearance.PhoneNumber, staffClearance.Email, staffClearance.Address,
+                    // staffClearance.ReasonForClearing, LastDayOfService,
+                    // 0,0,0,"","","","","","");
                 if (DocNo != "")
                 {
                     return Json(

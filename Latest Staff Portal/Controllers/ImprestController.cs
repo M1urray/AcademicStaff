@@ -318,8 +318,9 @@ namespace Latest_Staff_Portal.Controllers
                 string UserID = Session["Username"].ToString();
 
                 DateTime DateRequired = DateTime.ParseExact(imprestHeader.DateNeeded.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                string DocNo = Credentials.ObjNav.ImprestRequisitionCreate(StaffNo, imprestHeader.Campus, DateRequired, imprestHeader.Department, School,
-                    imprestHeader.Remarks, imprestHeader.RespC, UserID, "", "");
+                string DocNo = "";
+                    // Credentials.ObjNav.ImprestRequisitionCreate(StaffNo, imprestHeader.Campus, DateRequired, imprestHeader.Department, School,
+                    // imprestHeader.Remarks, imprestHeader.RespC, UserID, "", "");
                 if (DocNo != "")
                 {
                     string Redirect = "/Imprest/ImprestDocumentView?DocNo=" + DocNo;

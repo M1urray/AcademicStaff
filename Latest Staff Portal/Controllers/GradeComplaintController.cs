@@ -136,7 +136,7 @@ namespace Latest_Staff_Portal.Controllers
                         {
                             OtherReason = "";
                         }
-                        Credentials.ObjNav.LecturerSubmitGradeCompain(DocNo, Convert.ToDecimal(Marks), Convert.ToInt32(Reason), OtherReason);
+                        // Credentials.ObjNav.LecturerSubmitGradeCompain(DocNo, Convert.ToDecimal(Marks), Convert.ToInt32(Reason), OtherReason);
 
                         string filePath = Server.MapPath("~/Uploads/" + fileName);
                         string s = Credentials.UploadDocumentAttachment(DocNo, base64Upload, filePath, TableID);

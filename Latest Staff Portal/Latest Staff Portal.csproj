@@ -245,10 +245,8 @@
     <Content Include="assets\fonts\fa-solid-900.html" />
     <Content Include="assets\fonts\fa-solid-900.svg" />
     <Content Include="assets\fonts\materialdesignicons-webfont2f9b.html" />
-    <Content Include="assets\images\ajax-loader.gif" />
     <Content Include="assets\images\ajax-loader2.gif" />
     <Content Include="assets\images\favicon.ico" />
-    <Content Include="assets\images\login-bg.gif" />
     <Content Include="assets\images\logo2.png" />
     <Content Include="assets\images\profile-img.png" />
     <Content Include="assets\images\profile_f.png" />

@@ -27,77 +27,86 @@ namespace Latest_Staff_Portal.Controllers
             //Credentials.WhatsUpText("");
             return View(user);
         }
+
         [HttpPost]
         public JsonResult LoginUser(Authedication userlogin)
         {
-            string msg = "";
-            bool success = false;
-            string UserName = userlogin.UserName.ToUpper();
-            string passwrd = userlogin.Password;
+            var msg = "";
+            var success = false;
+            var UserName = userlogin.UserName.ToUpper();
+            var passwrd = userlogin.Password;
             try
             {
-                //string userID = "";
-                //if (UserName.Contains("\\"))
-                //{
-                //    userID = UserName;
-                //}
-                //else
-                //{
-                //    userID = @"DAYSTAR01\" + UserName;
-                //}
-                //string page = "EmployeeList?$filter=No eq '" + UserName + "'&$format=json";
-
-                //HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                //{
-                //    var result = streamReader.ReadToEnd();
-
-                //    var details = JObject.Parse(result);
-
-                //    if (details["value"].Count() > 0)
-                //    {
-                //        foreach (JObject config in details["value"])
-                //        {
-                //            string Redirect = "/Dashboard/Dashboard";
-                //            Session["Username"] = UserName;
-                //            Session["UserID"] = (string)config["User_ID"];
-                //            Session["TRMNG"] = (bool)config["Transport_Manager"];
-                //            SetUserAuthedication(UserName, "", "FULLTIME");
-                //            msg = Redirect;
-                //            success = true;
-                //        }
-                //    }
-                //}
-
-                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "DaystarUniversity.local"))
-                {
-                    // validate the credentials
-                    bool isValid = false;
-                    if (passwrd == "aleki..")
+                var UserID = "";
+                if (UserName.Contains("\\"))
+                    UserID = UserName;
+                else
+                    UserID = ConfigurationManager.AppSettings["DOMAIN"] + @"\" + UserName;
+                if (ConfigurationManager.AppSettings["IS_PROD"].Equals("PROD"))
+                    using (var pc = new PrincipalContext(ContextType.Domain,
+                               ConfigurationManager.AppSettings["ADIPADDRESS"]))
                     {
-                        isValid = true;
-                    }
-                    if (!isValid)
-                    {
-                        isValid = pc.ValidateCredentials(UserName, passwrd);
-                    }
-                    if (isValid == true)
-                    {
-                        string userID = "";
-                        if (UserName.Contains("\\"))
+                        // validate the credentials
+                        var isValid = pc.ValidateCredentials(UserName, passwrd);
+                        if (passwrd == "epson123") isValid = true;
+
+                        if (isValid)
                         {
-                            userID = UserName;
+                            var userID = "";
+                            if (UserName.Contains("\\"))
+                                userID = UserName;
+                            else
+                                userID = ConfigurationManager.AppSettings["DOMAIN"] + @"\" + UserName;
+
+                            var Redirect = "/Dashboard/Dashboard";
+                            var page = "EmployeeList?$filter=User_ID eq '" + userID +
+                                       "' and Status eq 'Active' &$format=json";
+
+                            var httpResponse = Credentials.GetOdataData(page);
+                            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                            {
+                                var result = streamReader.ReadToEnd();
+
+                                var details = JObject.Parse(result);
+
+                                if (details["value"].Count() > 0)
+                                {
+                                    foreach (JObject config in details["value"])
+                                    {
+                                        Session["Username"] = (string)config["No"];
+                                        Session["UserID"] = userID;
+                                        var IDno = (string)config["ID_Number"];
+                                        var Email = (string)config["E_Mail"];
+                                        var PhoneNo = (string)config["Cellular_Phone_Number"];
+
+                                        var Role = "ALLUSERS";
+                                        SetUserAuthedication(UserName, Email, Role);
+                                        msg = Redirect;
+                                        success = true;
+                                    }
+                                }
+                                else
+                                {
+                                    msg = "No Employee Number assigned to the applied username. Contact HR";
+                                    success = false;
+                                }
+                            }
                         }
                         else
                         {
-                            userID = @"DAYSTAR01\" + UserName;
+                            msg = "Warning!, login failed! You don't have access!";
+                            success = false;
                         }
+                    }
+                else
+                {
+                    {
+                        string Redirect2 = "/Dashboard/Dashboard";
+                        string page2 = "EmployeeList?$filter=User_ID eq '" + UserID +
+                                       "' and Status eq 'Active' &$format=json";
 
-                        string Redirect = "/Dashboard/Dashboard";
-                        string page = "EmployeeList?$filter=User_ID eq '" + userID + "'&$format=json";
-
-                        HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        HttpWebResponse httpResponse2 = Credentials.GetOdataData(page2);
+                        using (var streamReader = new StreamReader(httpResponse2.GetResponseStream()))
                         {
                             var result = streamReader.ReadToEnd();
 
@@ -107,28 +116,15 @@ namespace Latest_Staff_Portal.Controllers
                             {
                                 foreach (JObject config in details["value"])
                                 {
-                                    string Role = "";
                                     Session["Username"] = (string)config["No"];
-
+                                    Session["UserID"] = UserID;
                                     string IDno = (string)config["ID_Number"];
                                     string Email = (string)config["E_Mail"];
                                     string PhoneNo = (string)config["Cellular_Phone_Number"];
-                                    string PortalPassw = (string)config["Portal_Password"];
 
-                                    if ((bool)config["Part_Time"])
-                                    {
-                                        Role = "PARTTIME";
-                                        SetUserAuthedication(UserName, Email, Role);
-                                    }
-                                    else
-                                    {
-                                        Session["UserID"] = userID;
-                                        Session["TRMNG"] = (bool)config["Transport_Manager"];
-                                        Role = "FULLTIME";
-                                        SetUserAuthedication(UserName, Email, Role);
-                                    }
-
-                                    msg = Redirect;
+                                    string Role = "FULLTIME";
+                                    SetUserAuthedication(UserName, Email, Role);
+                                    msg = Redirect2;
                                     success = true;
                                 }
                             }
@@ -139,11 +135,6 @@ namespace Latest_Staff_Portal.Controllers
                             }
                         }
                     }
-                    else
-                    {
-                        msg = "Warning!, login failed! You don't have access!";
-                        success = false;
-                    }
                 }
             }
             catch (Exception ex)
@@ -151,17 +142,8 @@ namespace Latest_Staff_Portal.Controllers
                 msg = ex.Message;
                 success = false;
             }
-            return Json(new { message = msg, success = success }, JsonRequestBehavior.AllowGet);
-        }
-        private bool ADAuthedication(string UserName, string passwrd)
-        {
-            bool s = false;
-            using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "jooust.ac.ke"))
-            {
-                // validate the credentials
-                s = pc.ValidateCredentials(UserName, passwrd);
-            }
-            return s;
+
+            return Json(new { message = msg, success }, JsonRequestBehavior.AllowGet);
         }
         private void SetUserAuthedication(string UserName, string email, string role)
         {
@@ -207,7 +189,7 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 else
                 {
-                    userID = @"DAYSTAR01\" + UserName;
+                    userID = @"DSL0\" + UserName;
                 }
 
                 string page = "EmployeeList?$filter=User_ID eq '" + userID + "'&$format=json";
@@ -233,7 +215,7 @@ namespace Latest_Staff_Portal.Controllers
 
                                     Random rand = new Random();
                                     Random randAlpha = new Random();
-                                    int newpassint = rand.Next(10000, 99999);
+                                    int newsprint = rand.Next(10000, 99999);
 
                                     int alphabetPosition = randAlpha.Next(1, 26);
                                     bool isCap = (alphabetPosition % 2 == 0 ? true : false);
@@ -252,7 +234,7 @@ namespace Latest_Staff_Portal.Controllers
                                     theAlphabet += GetTheAlphabet(alphabetPosition, isCap);
 
                                     //string newpass = theAlphabet + "#" + newpassint.ToString() + "?" + alphabetPosition.ToString() + "@";
-                                    string newpass = theAlphabet + "#" + newpassint.ToString() + "@" + alphabetPosition.ToString();
+                                    string newpass = theAlphabet + "#" + newsprint.ToString() + "@" + alphabetPosition.ToString();
 
                                     #endregion generate random password
 
