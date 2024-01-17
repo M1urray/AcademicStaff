@@ -196,20 +196,20 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     string _filename = (StaffNo).Replace(@"/", @"");
 
-                    string month = "";
-                    if (Month.Length == 1)
+                    int month = 0, year = 0;
+                    if (Month != null)
                     {
-                        month = "0" + Month;
+                        month = Convert.ToInt32(Month);
                     }
-                    else
+                    if (Year != null)
                     {
-                        month = Month;
+                        year = Convert.ToInt32(Year);
                     }
 
                     var period = month + "/01/" + Year;
                     //var period = "01/" + month + "/" + Year;
                     DateTime Periodfilter = DateTime.ParseExact(period, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    Credentials.ObjNav.GeneratePaySlipReport(StaffNo, Convert.ToDateTime(period), "OLDPAYSLIP-" + _filename + ".pdf");
+                    Credentials.ObjNav.GeneratePaySlipReport(StaffNo, month, year, "OLDPAYSLIP-" + _filename + ".pdf");
                     string OldPayslip = "OLDPAYSLIP-" + _filename + ".pdf";
                     filename = "PAYSLIP-" + _filename + ".pdf";
                     string FromPath = Credentials.fileSourcePath + OldPayslip;

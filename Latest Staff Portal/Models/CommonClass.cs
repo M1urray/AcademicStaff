@@ -89,13 +89,13 @@ namespace Latest_Staff_Portal.Models
             }
             return s;
         }
-        public static bool MoveFile(string FileName,string DestPath)
+        public static bool MoveFile(string FileName, string DestPath)
         {
             bool s = false;
             try
             {
                 string sourcefile = Credentials.fileSourcePath + FileName;
-                string destinationfile = DestPath + FileName; 
+                string destinationfile = DestPath + FileName;
                 if (System.IO.File.Exists(destinationfile) == true)
                 {
                     System.IO.File.Delete(destinationfile);
@@ -2134,10 +2134,10 @@ namespace Latest_Staff_Portal.Models
             }
             return count;
         }
-        public static bool BlockExamMarkEntry(string Category,string ExamType, string Semester)
+        public static bool BlockExamMarkEntry(string Cat, string ExamType, string Semester)
         {
             bool block = false;
-            string pageLine = "BlockExamMarkEntry?$filter=Semester eq '"+ Semester + "' and Exam_Type eq '"+ ExamType + "' and Category eq '"+ Category + "' &format=json";
+            string pageLine = "BlockExamMarkEntry?$filter=Semester eq '" + Semester + "' and Exam_Type eq '" + ExamType + "'&$format=json";
             HttpWebResponse httpResponse = Credentials.GetOdataData(pageLine);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
@@ -2148,45 +2148,45 @@ namespace Latest_Staff_Portal.Models
                 {
                     foreach (JObject config in details["value"])
                     {
-                        // string campus = (string)config["Campus"];
+                        string campus = (string)config["Campus"];
                         string category = (string)config["Category"];
                         string examType = (string)config["Exam_Type"];
                         string semester = (string)config["Semester"];
 
-                        if (Category == category && ExamType == examType && Semester == semester &&
-                            (bool)config["Block"])
+                        //if (Category == category && ExamType == examType && Semester == semester &&
+                        //    (bool)config["Block"])
+                        //{
+                        //    block = true;
+                        //}
+                        if ((category == Cat) && (bool)config["Block"])
                         {
                             block = true;
                         }
-                        //string Category = (string)config["Category"];
-                        // if (Category == Cat && (bool)config["Block"])
-                        // {
-                        //     block = true;
-                        // }
-                        // else if (Category == "" && (bool)config["Block"])
-                        // {
-                        //     block = true;
-                        // }
-                        // else
-                        // {
-                        //     block = false;
-                        //
-                        //     if ((Camp == Campus) && (bool)config["Block"])
-                        // {
-                        //     block = true;
-                        // }
-                        // else if (Camp == "" && (bool)config["Block"])
-                        // {
-                        //     block = true;
-                        // }
-                        // else
-                        // {
-                        //     block = false;
-                        // }
+                        else if (category == "" && (bool)config["Block"])
+                        {
+                            block = true;
+                        }
+                        else
+                        {
+                            block = false;
+
+                            //if ((Camp == Campus) && (bool)config["Block"])
+                            //{
+                            //    block = true;
+                            //}
+                            //else if (Camp == "" && (bool)config["Block"])
+                            //{
+                            //    block = true;
+                            //}
+                            //else
+                            //{
+                            //    block = false;
+                            //}
+                        }
                     }
                 }
+                return block;
             }
-            return block;
         }
     }
 }

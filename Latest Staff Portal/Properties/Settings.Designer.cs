@@ -12,7 +12,7 @@ namespace Latest_Staff_Portal.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -36,7 +36,7 @@ namespace Latest_Staff_Portal.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://erp.dsl.ke:3031/MIBS/WS/MIBS/Codeunit/WebPortal")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://dslclient:7047/BC180/WS/MIBS/Codeunit/WebPortal")]
         public string Latest_Staff_Portal_NAVWS_WebPortal {
             get {
                 return ((string)(this["Latest_Staff_Portal_NAVWS_WebPortal"]));
