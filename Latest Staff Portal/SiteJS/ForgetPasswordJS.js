@@ -9,7 +9,6 @@
             var Authedication = {};
             Authedication.Username = username;
             ShowProgress();
-            debugger
             $.ajax({
                 url: "/Login/ForgotPassword",
                 datatype: "json",
