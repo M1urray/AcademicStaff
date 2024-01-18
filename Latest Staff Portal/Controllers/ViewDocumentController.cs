@@ -209,8 +209,8 @@ namespace Latest_Staff_Portal.Controllers
                         month = Month;
                     }
 
-                    var period = month + "/01/" + Year;
-                    //var period = "01/" + month + "/" + Year;
+                    //var period = month + "/01/" + Year;
+                    var period = "01/" + month + "/" + Year;
                     DateTime Periodfilter = DateTime.ParseExact(period, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     Credentials.ObjNav.GeneratePaySlipReport(StaffNo, Convert.ToDateTime(period), "OLDPAYSLIP-" + _filename + ".pdf");
                     string OldPayslip = "OLDPAYSLIP-" + _filename + ".pdf";
