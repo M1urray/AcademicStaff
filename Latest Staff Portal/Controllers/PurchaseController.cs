@@ -309,8 +309,8 @@ namespace Latest_Staff_Portal.Controllers
             try
             {
                 string StaffNo = Session["Username"].ToString();
-                string DocNo = "";
-                    // Credentials.ObjNav.PurchaseRequisitionCreate(StaffNo, prvHeader.Campus, prvHeader.Department,"","", prvHeader.Remarks, prvHeader.RespC, "");
+                string UserId = Session["UserID"].ToString();
+                string DocNo = Credentials.ObjNav.PurchaseRequisitionCreate(StaffNo, prvHeader.Campus, prvHeader.Department, prvHeader.Remarks, prvHeader.RespC, UserId);
 
                 string Redirect = "/Purchase/PurchaseDocumentView?DocNo=" + DocNo;               
 
