@@ -123,7 +123,7 @@ namespace Latest_Staff_Portal.Models
                 string AdminPassword = WebConfigurationManager.AppSettings["W_PWD"];
                 string Domain = WebConfigurationManager.AppSettings["DOMAIN"];
 
-                using (PrincipalContext pContext = new PrincipalContext(ContextType.Domain, "dsk.ke", AdminAccountName, AdminPassword))
+                using (PrincipalContext pContext = new PrincipalContext(ContextType.Domain, "dsl0", AdminAccountName, AdminPassword))
                 {
                     UserPrincipal up = UserPrincipal.FindByIdentity(pContext, username);
                     if (up != null)
