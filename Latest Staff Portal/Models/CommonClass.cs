@@ -1,15 +1,10 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
-using Latest_Staff_Portal.ViewModel;
-using Newtonsoft.Json;
+﻿using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Script.Serialization;
 
 namespace Latest_Staff_Portal.Models
 {
