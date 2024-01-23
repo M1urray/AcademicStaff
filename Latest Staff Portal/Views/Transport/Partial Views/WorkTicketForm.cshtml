@@ -1,0 +1,60 @@
+﻿<style>
+    .ui-front {
+        z-index: 2000 !important;
+    }
+</style>
+<div class="bg-soft-dark" style="color:black">
+    <div class="row">
+        <div class="col-md-6">
+            <b>Start Odometer Reading</b>
+            <input type="text" class="form-control" id="txtOdometerStart" onkeypress="return functionDecimal(event,this.value)" />
+        </div>
+        <div class="col-md-6">
+            <b>End Odometer Reading</b>
+            <input type="text" class="form-control" id="txtOdometerEnd" onkeypress="return functionDecimal(event,this.value)" />
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <b>Total Distance(KMs)</b>
+            <input type="text" class="form-control" id="txtKMs" onkeypress="return functionDecimal(event,this.value)" />
+        </div>
+        <div class="col-md-6">
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit and Print Ticket" onclick="AddLineItem();" />
+    </div>
+</div>
+<script type="text/javascript">  
+    function functionDecimal(evt, val) {
+        try {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+
+            if (charCode == 46) {
+                if (!(val.indexOf(".") > -1)) {
+                    return true;
+                }
+                else {
+                    Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                }
+            }
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                return false;
+            }
+            return true;
+        } catch (w) {
+            Swal.fire(w);
+        }
+    }
+    function functionx(evt) {
+        if (evt.charCode > 31 && (evt.charCode < 48 || evt.charCode > 57)) {
+            Swal.fire("Error", "Please enter only numeric characters in the text box", "error");
+            return false;
+        }
+    }
+</script>
+

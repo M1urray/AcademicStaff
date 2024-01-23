@@ -14,11 +14,6 @@
         font-size: 12px;
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div class="card pre-scrollable">
     <div class="card-title">Imprest Requisition List</div>
     <hr />
@@ -73,7 +68,7 @@
             Swal.fire('Success', Successmsg, 'success', true);
             $.ajax({
                 type: "POST",
-                url: "/Common/NullibySessions"
+                url: '@Url.Action("NullibySessions", "Common")'
             });
         }
     });
@@ -85,7 +80,7 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: "/Imprest/ImprestRequisitionListPartialView",
+            url: '@Url.Action("ImprestRequisitionListPartialView", "Imprest")',
             success: function (data) {
                 $("#divRegList").html(data);
                 HideProgress();
@@ -104,7 +99,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: "/Imprest/NewImprestRequest",
+            url: '@Url.Action("NewImprestRequest", "Imprest")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -116,49 +111,61 @@
             }
         });
     }
-    var SubmitImprestRequisition = function (DiReg) {
+    var SubmitImprestRequisition = function () {
         var dateNeeded = $("#dtPicker").val();
         var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
-        var Directorate = $("#ddlDirectorate").children("option:selected").val();
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var School = $("#ddlSchool").children("option:selected").val();
         var Department = $("#ddlDepartment").children("option:selected").val();
+        var RespoC = $("#ddlRespC").children("option:selected").val();
+
         if (dateNeeded == "") {
             Swal.fire('Warning', "Select Date needed", 'warning');
             return;
         }
-        if (Remarks == "") {
+        else if (Remarks == "") {
             Swal.fire('Warning', "Enter Reason for the purchase", 'warning');
             return;
         }
-        if (Remarks.length > 150) {
+        else if (Remarks.length > 150) {
             Swal.fire('Warning', "Reason for purchase cannot exceed 150 characters", 'warning');
             return;
         }
-        else if (Directorate == "" && DiReg == false) {
-            Swal.fire('Warning', "Select Directorate", 'warning');
+        else if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
             return;
         }
         else if (Department == "") {
             Swal.fire('Warning', "Select Department", 'warning');
             return;
         }
+        else if (RespoC == "") {
+            Swal.fire('Warning', "Select Responsibility center", 'warning');
+            return;
+        }
         else {
+            if (School == "") {
+                School = "";
+            }
             var ImprestHeader = {};
             ImprestHeader.DateNeeded = dateNeeded;
             ImprestHeader.Remarks = Remarks;
-            ImprestHeader.Directorate = Directorate;
+            ImprestHeader.school = School;
+            ImprestHeader.Campus = Campus;
             ImprestHeader.Department = Department;
-            //ImprestHeader.Section = Section;
+            ImprestHeader.RespC = RespoC;
+
             ShowProgress();
             //Send the JSON array to Controller using AJAX.
             $.ajax({
                 type: "POST",
-                url: "/Imprest/SubmitImprestRequisition",
+                url: '@Url.Action("SubmitImprestRequisition", "Imprest")',
                 data: JSON.stringify({ imprestHeader: ImprestHeader }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
                     if (data.success) {
-                        window.location = data.message;
+                       c
                     }
                     else {
                         Swal.fire('Warning', data.message, 'warning');
@@ -181,7 +188,7 @@
             data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'IMP' }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/CommonActions',
+            url: '@Url.Action("CommonActions", "Common")',
             success: function (data) {
                 $("#modalBodyLinks").html(data);
                 HideProgress();
@@ -195,7 +202,7 @@
     }
     var ViewDoc = function (DocNo) {
         ShowProgress();
-        window.location = "/Imprest/ImprestDocumentView?DocNo=" + DocNo;
+        window.location = '@Url.Action("ImprestDocumentView", "Imprest")?DocNo=' + DocNo;
     }
     var SendDocForApproval = function (DocNo) {
         ShowProgress();
@@ -206,7 +213,7 @@
             data: JSON.stringify({ DocNo: DocNo, Redirect: "N" }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Imprest/SendImprestAppForApproval',
+            url: '@Url.Action("SendImprestAppForApproval", "Imprest")',
             success: function (data) {
                 if (data.LogOut == true) {
                     window.location = data.message;
@@ -239,7 +246,7 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Imprest/CancelImprestAppForApproval',
+            url: '@Url.Action("CancelImprestAppForApproval", "Imprest")',
             success: function (data) {
                 if (data.LogOut == false) {
                     window.location = data.message;
@@ -270,10 +277,10 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, RecID: "Imprest Header: " + DocNo }),
+            data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/DocumentApprovalTrail',
+            url: '@Url.Action("DocumentApprovalTrail", "Common")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -297,7 +304,7 @@
             data: JSON.stringify({ RecID: RecordID }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Common/DocumentApprovalComments',
+            url: '@Url.Action("DocumentApprovalComments", "Common")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();

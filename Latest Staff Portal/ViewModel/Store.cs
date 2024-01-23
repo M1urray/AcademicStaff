@@ -18,14 +18,16 @@ namespace Latest_Staff_Portal.ViewModel
     }
     public class NewStoreRequisition
     {
+        public string school { get; set; }
+        public string Campus { get; set; }
         public string Department { get; set; }
-        public string Directorate { get; set; }
         public string RespC { get; set; }
-        public bool DisDir { get; set; }
+        public string Store { get; set; }
+        public List<SelectListItem> ListOfSchool { get; set; }
+        public List<SelectListItem> ListOfCampus { get; set; }
         public List<SelectListItem> ListOfDepartment { get; set; }
-        public List<SelectListItem> ListOfDirectorate { get; set; }
-        public List<SelectListItem> ListOfSection { get; set; }
         public List<SelectListItem> ListOfResponsibility { get; set; }
+        public List<SelectListItem> ListOfLocation { get; set; }
     }
 
     public class StoretHeader
@@ -33,19 +35,16 @@ namespace Latest_Staff_Portal.ViewModel
         public string No { get; set; }
         public string DateRequested { get; set; }
         public string DateNeeded { get; set; }
-        public string Remarks { get; set; }        
+        public string Remarks { get; set; }
+        public string Campus { get; set; }
+        public string CampusName { get; set; }
         public string Department { get; set; }
-        public string Directorate { get; set; }
+        public string DepartmentName { get; set; }
         public string RespC { get; set; }
         public string IssuingStore { get; set; }
         public string Status { get; set; }
         public string RequestorNo { get; set; }
         public string RequestorName { get; set; }
-        public bool DisDir { get; set; }
-        public List<SelectListItem> ListOfDepartment { get; set; }
-        public List<SelectListItem> ListOfDirectorate { get; set; }
-        public List<SelectListItem> ListOfSection { get; set; }
-        public List<SelectListItem> ListOfResponsibility { get; set; }
     }
     public class StoreLines
     {

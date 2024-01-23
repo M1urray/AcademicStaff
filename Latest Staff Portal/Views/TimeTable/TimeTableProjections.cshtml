@@ -1,0 +1,311 @@
+﻿@{
+    ViewBag.Title = "TimeTableProjections";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div class="card pre-scrollable">
+    <div class="card-title">Timetable Projections</div>
+    <hr />
+    <div class="card-body">
+        <a href="#" onclick="NewProjection();" class="btn btn-primary BtnPadding">New Projection</a>
+        <hr />
+        <div id="divProjList"></div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadTimetableProjections();        
+    });
+    var LoadTimetableProjections = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/TimeTable/TimeTableProjectionList",
+            success: function (data) {
+                $("#divProjList").html(data);
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                alert("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var NewProjection = function () {
+        $("#labelF").text("New Projection Form");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/TimeTable/NewTimeTableProjection',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SubmitProjection = function () {
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var Unit = $("#ddlUnit").children("option:selected").val();
+        var DoW = $("#ddlDoW").children("option:selected").val();
+        var period = $("#ddlPeriod").children("option:selected").val();
+        var Section = $("#ddlSection").children("option:selected").val();
+        var LRoom = $("#ddlLecRoom").children("option:selected").val();
+        var Lec = $("#ddlLec").children("option:selected").val();
+        var ClassSize = $("#txtClassSize").val();
+
+        if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
+            return;
+        }
+        else if (Unit == "") {
+            Swal.fire('Warning', "Select Unit", 'warning');
+            return;
+        }
+        else if (DoW == "") {
+            Swal.fire('Warning', "Select Day of the Week", 'warning');
+            return;
+        }
+        else if (period == "") {
+            Swal.fire('Warning', "Select Period", 'warning');
+            return;
+        }
+        else if (Section == "") {
+            Swal.fire('Warning', "Select Section", 'warning');
+            return;
+        }
+        else if (ClassSize == "") {
+            Swal.fire('Warning', "State Class size", 'warning');
+            return;
+        }
+        else {
+            var TimeTableView = {};
+            TimeTableView.Unit = Unit;
+            TimeTableView.Period = period;
+            TimeTableView.Day_of_Week = DoW;
+            TimeTableView.Lecture_Room = LRoom;
+            TimeTableView.Section = Section;
+            TimeTableView.Lecturer = Lec;
+            TimeTableView.Campus = Campus;
+            TimeTableView.ClassSize = ClassSize;
+            ShowProgress();
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/TimeTable/SubmitTimeTableProjection",
+                //data: data,
+                data: JSON.stringify({ Tm: TimeTableView }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        HideProgress();
+                        LoadTimetableProjections();
+                        $("#myModal").modal("hide");
+                        Swal.fire('Success', "Projection Submitted successfully", 'success');                       
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    };
+    var EditProjection = function (Unit,Section,Campus,Sem,DoW,Period,Room,Lec,ClassSize,EntryNo) {
+        $("#labelF").text("Edit Projection Form");
+        var TimeTableView = {};
+        TimeTableView.Unit = Unit;
+        TimeTableView.Section = Section;
+        TimeTableView.Campus = Campus;
+        TimeTableView.Semester = Sem;
+        TimeTableView.Day_of_Week = DoW;
+        TimeTableView.Period = Period;
+        TimeTableView.Lecture_Room = Room;
+        TimeTableView.ClassSize = ClassSize;
+        TimeTableView.Lecturer = Lec;
+        TimeTableView.EntryNo = EntryNo;
+
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ TmV: TimeTableView }),
+            url: '/TimeTable/EditTimeTableProjection',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var UpdateProjection = function (EntryNo) {
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var Unit = $("#ddlUnit").children("option:selected").val();
+        var DoW = $("#ddlDoW").children("option:selected").val();
+        var period = $("#ddlPeriod").children("option:selected").val();
+        var Section = $("#ddlSection").children("option:selected").val();
+        var LRoom = $("#ddlLecRoom").children("option:selected").val();
+        var Lec = $("#ddlLec").children("option:selected").val();
+        var ClassSize = $("#txtClassSize").val();
+
+        if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
+            return;
+        }
+        else if (Unit == "") {
+            Swal.fire('Warning', "Select Unit", 'warning');
+            return;
+        }
+        else if (DoW == "") {
+            Swal.fire('Warning', "Select Day of the Week", 'warning');
+            return;
+        }
+        else if (period == "") {
+            Swal.fire('Warning', "Select Period", 'warning');
+            return;
+        }
+        else if (Section == "") {
+            Swal.fire('Warning', "Select Section", 'warning');
+            return;
+        }
+        else if (ClassSize == "") {
+            Swal.fire('Warning', "State Class size", 'warning');
+            return;
+        }
+        else {
+            var TimeTableView = {};
+            TimeTableView.Unit = Unit;
+            TimeTableView.Period = period;
+            TimeTableView.Day_of_Week = DoW;
+            TimeTableView.Lecture_Room = LRoom;
+            TimeTableView.Section = Section;
+            TimeTableView.Lecturer = Lec;
+            TimeTableView.Campus = Campus;
+            TimeTableView.ClassSize = ClassSize;
+            TimeTableView.EntryNo = EntryNo;
+            ShowProgress();
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/TimeTable/UpdateTimeTableProjection",
+                //data: data,
+                data: JSON.stringify({ Tm: TimeTableView }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        HideProgress();
+                        LoadTimetableProjections();
+                        $("#myModal").modal("hide");
+                        Swal.fire('Success', "Projection Submitted successfully", 'success');
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    };
+    var DeleteProjection = function (EntryNo) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                ShowProgress();
+                //Send the JSON array to Controller using AJAX.
+                $.ajax({
+                    type: "POST",
+                    url: "/TimeTable/DeleteTimeTableProjection",
+                    //data: data,
+                    data: JSON.stringify({ EntryNo: EntryNo }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            HideProgress();
+                            LoadTimetableProjections();
+                            $("#myModal").modal("hide");
+                            Swal.fire('Success', "Entry Deleted successfully", 'success');
+                        }
+                        else {
+                            Swal.fire('Warning', data.message, 'warning');
+                            HideProgress();
+                        }
+                    },
+                    error: function (err) {
+                        HideProgress();
+                        Swal.fire('Warning', err, 'warning');
+                    }
+                });
+            }
+            else {
+                Swal.fire('Cancelled', 'Entry line has not been deleted', 'error');
+            }
+        });       
+    };
+</script>

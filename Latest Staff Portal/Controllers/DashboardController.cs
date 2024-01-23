@@ -13,7 +13,7 @@ using System.Web.Mvc;
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
-    [CustomAuthorization(Role = "ALLUSERS")]
+    [CustomAuthorization(Role = "FULLTIME,PARTTIME")]
     public class DashboardController : Controller
     {
         // GET: Dashboard
@@ -25,62 +25,62 @@ namespace Latest_Staff_Portal.Controllers
             }
             else
             {
-                try
-                {
-                    string StaffNo = Session["Username"].ToString();
-                    EmployeeView EmpView = new EmployeeView();
-                    string page = "EmployeeList?$filter=No eq '" + StaffNo + "'&$format=json";
+                string StaffNo = Session["Username"].ToString();
+                EmployeeView EmpView = new EmployeeView();
+                string page = "EmployeeList?$filter=No eq '" + StaffNo + "'&format=json";
 
-                    HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                if (Session["CurrentSem"] == null || Session["CurrentSem"].ToString() == "")
+                {
+                    Session["CurrentSem"] = CommonClass.CurrentSemester();
+                }
+
+                string sem = Session["CurrentSem"].ToString();
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+                    foreach (JObject config in details["value"])
                     {
-                        var result = streamReader.ReadToEnd();
-
-                        var details = JObject.Parse(result);
-
-                        foreach (JObject config in details["value"])
-                        {
-                            EmpView.No = (string)config["No"];
-                            EmpView.Name = (string)config["FirstName"] + " " + (string)config["MiddleName"] + " " + (string)config["LastName"];
-                            EmpView.IDNo = (string)config["IDNumber"];
-                            EmpView.Gender = (string)config["Gender"];
-                            EmpView.MaritalStatus = (string)config["MaritalStatus"];
-                            EmpView.Nationality = (string)config["Citizenship"];
-                            EmpView.County = (string)config["CountyName"];
-                            EmpView.DoB = (string)config["DateOfBirth"];
-                            EmpView.Address1 = config["PostalAddress"].ToString();
-                            EmpView.City = config["City"].ToString();
-                            EmpView.PostalCode = config["PostCode"].ToString();
-                            EmpView.HomeTelNo = config["HomePhoneNumber"].ToString();
-                            EmpView.PhoneNo = config["CellPhoneNumber"].ToString();
-                            EmpView.CompanyEmail = config["CompanyEMail"].ToString();
-                            EmpView.PersonalEmail = config["EMail"].ToString();
-                            EmpView.JobTitle = config["JobTitle"].ToString();
-                            EmpView.EmpStatus = config["Status"].ToString();
-                            decimal[] s = CommonClass.GetLeaveBal(StaffNo, "ANNUAL");
-                            EmpView.AllocatedDays = s[0].ToString();
-                            EmpView.CarryForawrd = s[1].ToString();
-                            EmpView.LeaveTaken = s[2].ToString();
-                            // EmpView.EarnedLeaveDays = s[3].ToString();
-                            EmpView.ReimbDays = s[4].ToString();
-                            EmpView.LeaveBal = (s[1] + s[4] + s[0] - Math.Abs(s[2])).ToString();
-                            EmpView.PinNo = config["PINNo"].ToString();
-                            EmpView.NSSFNo = config["NSSFNo"].ToString();
-                            EmpView.NHIFNo = config["NHIFNo"].ToString();
-                            EmpView.Bank = config["Bank_Name"].ToString();
-                            EmpView.Branch = config["Branch_Name"].ToString();
-                            EmpView.AccountNo = config["Bank_Account_Number"].ToString();
-                        }
+                        EmpView.No = (string)config["No"];
+                        EmpView.Name = (string)config["First_Name"] + " " + (string)config["Middle_Name"] + " " + (string)config["Last_Name"];
+                        EmpView.IDNo = (string)config["ID_Number"];
+                        EmpView.Gender = (string)config["Gender"];
+                        EmpView.MaritalStatus = (string)config["Marital_Status"];
+                        EmpView.Nationality = (string)config["Citizenship"];
+                        EmpView.County = (string)config["County_Name"];
+                        EmpView.DoB = Convert.ToDateTime((string)config["Date_Of_Birth"]).ToString("dd/MM/yyyy");
+                        EmpView.DateOfJoin = Convert.ToDateTime((string)config["Date_Of_Join"]).ToString("dd/MM/yyyy");
+                        EmpView.Address1 = config["Postal_Address"].ToString();
+                        EmpView.City = config["City"].ToString();
+                        EmpView.PostalCode = config["Post_Code"].ToString();
+                        EmpView.HomeTelNo = config["Home_Phone_Number"].ToString();
+                        EmpView.PhoneNo = config["Cellular_Phone_Number"].ToString();
+                        EmpView.CompanyEmail = config["Company_E_Mail"].ToString();
+                        EmpView.PersonalEmail = config["E_Mail"].ToString();
+                        EmpView.JobTitle = config["Job_Title"].ToString();
+                        EmpView.EmpStatus = config["Status"].ToString();
+                        EmpView.Department = config["Department_Name"].ToString();
+                        EmpView.JobCat = config["Category"].ToString();
+                        EmpView.Campus = config["Campus"].ToString();
+                        EmpView.PinNo = config["PIN_Number"].ToString();
+                        EmpView.NSSFNo = config["NSSF_No"].ToString();
+                        EmpView.NHIFNo = config["NHIF_No"].ToString();
+                        EmpView.Bank = config["Main_Bank_Name"].ToString();
+                        EmpView.Branch = config["Branch_Bank_Name"].ToString();
+                        EmpView.AccountNo = config["Bank_Account_Number"].ToString();
+                        EmpView.Semester = sem;
+                        decimal[] s = CommonClass.GetLeaveBal(StaffNo, "ANNUAL");
+                        EmpView.AllocatedDays = s[0].ToString();
+                        EmpView.CarryForawrd = s[1].ToString();
+                        EmpView.ReimbDays = s[2].ToString();
+                        EmpView.LeaveTaken = s[3].ToString();                        
+                        EmpView.LeaveBal = s[4].ToString();
                     }
-
-                    return View(EmpView);
-                }
-                catch (Exception ex)
-                {
-                    Error erroMsg = new Error();
-                    erroMsg.Message = ex.Message;
-                    return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
-                }
+                }               
+                return View(EmpView);
             }
         }
         public PartialViewResult ProfilePicture(string gender)
@@ -107,11 +107,44 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 catch (Exception ex)
                 {
-                    msg = ex.Message.Replace("'","");
+                    msg = ex.Message;
                     successVal = false;
                 }
             }
             return Json(new { message = msg, success = successVal }, JsonRequestBehavior.AllowGet);
+        }
+        public PartialViewResult GetStaffQualifications()
+        {
+            try
+            {
+                string StaffNo = Session["Username"].ToString();
+                #region Qual Lines
+                List<Qualification> QualList = new List<Qualification>();
+                string pageLine = "EmployeeQualifications?$filter=EmployeeNo eq '" + StaffNo + "' and Description ne ''&$format=json";
+                HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
+                using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    foreach (JObject config in details["value"])
+                    {
+                        Qualification Qual = new Qualification();
+                        Qual.Qual = (string)config["Qualification"];
+                        Qual.Desc = (string)config["Description"];
+                        Qual.Institution = (string)config["InstitutionName"];
+                        QualList.Add(Qual);
+                    }
+                }
+                #endregion
+                return PartialView("~/Views/Dashboard/StaffQualification.cshtml", QualList);
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+            }
         }
     }
 }

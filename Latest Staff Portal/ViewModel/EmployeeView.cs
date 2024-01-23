@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Latest_Staff_Portal.ViewModel
 {
@@ -36,6 +37,7 @@ namespace Latest_Staff_Portal.ViewModel
         public string Bank { get; set; }
         public string Branch { get; set; }
         public string AccountNo { get; set; }
+        public string Semester { get; set; }
         public string PinNo { get; set; }
         public string NSSFNo { get; set; }
         public string NHIFNo { get; set; }
@@ -49,5 +51,26 @@ namespace Latest_Staff_Portal.ViewModel
     public class EmpInitial
     {
         public string Code { get; set; }
+    }
+    public class Qualification
+    {
+        public string Qual { get; set; }
+        public string Desc { get; set; }
+        public string Institution { get; set; }
+    }
+    public class EmployeeDesignation
+    {
+        public bool IsHOD { get; set; }
+        public bool IsDean { get; set; }
+        public bool IsDirector { get; set; }
+        public string EmpDepartment { get; set; }
+        public string EmpSchool { get; set; }
+    }
+    public class ClassStatus
+    {
+        public EmployeeDesignation Employee_Desig { get; set; }
+        public string Code { get; set; }
+        public List<SelectListItem> ListOfDepartment { get; set; }
+        public List<SelectListItem> ListOfSchool { get; set; }
     }
 }

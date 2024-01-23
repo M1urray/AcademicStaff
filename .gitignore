@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Latest Staff Portal/Uploads
+/Latest Staff Portal/MarkSheets
+/Latest Staff Portal/Downloads
+/Latest Staff Portal/Attachments

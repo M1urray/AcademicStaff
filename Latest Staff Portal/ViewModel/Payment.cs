@@ -43,13 +43,4 @@ namespace Latest_Staff_Portal.ViewModel
         public PaymentHeader DocHeader { get; set; }
         public List<PaymentLines> ListOfPaymentLines { get; set; }
     }
-    public class PayrollJournal
-    {
-        public string Posting_Date { get; set; }
-        public string DocNo { get; set; }
-        public string AccountNo { get; set; }
-        public string AccountName { get; set; }
-        public string Description { get; set; }
-        public string Amount { get; set; }
-    }
 }

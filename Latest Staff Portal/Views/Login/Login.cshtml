@@ -21,14 +21,10 @@
     }
 
     .card-body {
-        background-image: linear-gradient(to bottom,#228434,#DC143C);
+        background-image: linear-gradient(to bottom,#60c988,#60c988);
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
+
 <div class="p-2">
     <div class="form-group">
         <label for="username" class="lblClass">Username</label>
@@ -53,4 +49,71 @@
     </div>
 </div>
 <script src="~/assets/js/ShowProgression.js"></script>
-<script src="~/SiteJS/LoginJS.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnLogin").click(function () {
+            var username = $("#username").val();
+            var password = $("#userpassword").val();
+            if (username == "") {
+                Swal.fire('Warning', 'Enter Username', 'warning');
+                return;
+            }
+            else if (password == "") {
+                Swal.fire('Warning', 'Enter Your Password', 'warning');
+                return;
+            }
+            else {
+                var UserCred = {};
+                UserCred.Username = username;
+                UserCred.Password = password;
+                ShowProgress();
+                $.ajax({
+                    url: '@Url.Action("LoginUser", "Login")',
+                    datatype: "json",
+                    type: "POST",
+                    data: JSON.stringify({ userlogin: UserCred }),
+                    contentType: "application/json; charset = utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                            window.location = '@Url.Action("Dashboard", "Dashboard")';
+                        }
+                        else {
+                            HideProgress();
+                            Swal.fire('Warning', data.message, 'warning');
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+        });
+    });
+    $("#username").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#btnLogin").click();
+        }
+    });
+    $("#userpassword").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#btnLogin").click();
+        }
+    });
+    setInterval("getData()", 100);
+    function getData() {
+        var dt = new Date();
+        var time = dt.getHours();
+        var Greetings = "";
+        if ((time >= 0) && (time < 12)) {
+            Greetings = "Good Morning !";
+        }
+        else if ((time >= 12) && (time < 17)) {
+            Greetings = "Good Afternoon !";
+        }
+        else {
+            Greetings = "Good Evening !";
+        }
+        $("#h5").html(Greetings);
+    }
+</script>
+

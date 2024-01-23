@@ -14,7 +14,7 @@
     }
 
     .BtnPadding {
-        padding: 1px;
+        padding: 7px;
         font-size: 12px;
     }
 </style>
@@ -42,11 +42,11 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <b>@Model.ListOfDimcaption.Dim1_Caption</b>
+                <b>Directorate</b>
                 @Html.DropDownListFor(m => m.Dim1, new SelectList(Model.ListOfDirectorate, "Value", "Text", Model.Dim1), "--Select Directorate--", new { @id = "ddlDirectorate", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
             </div>
             <div class="col-md-6">
-                <b>@Model.ListOfDimcaption.Dim2_Caption</b>
+                <b>Department</b>
                 @Html.DropDownListFor(m => m.Dim2, new SelectList(Model.ListOfDepartment, "Value", "Text", Model.Dim2), "--Select Department--", new { @id = "ddlDepartment", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
             </div>
         </div>
@@ -67,10 +67,10 @@
             <hr />
             <div id="divLvPlannerLines"></div>
             <hr style="border:1px solid black" />
-            @*<div align="right" id="DivSendForApproval">
-                    <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval();" />
+            <div align="right" id="DivSendForApproval">
+                    <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval(`@Model.DocNo`);" />
                 </div>
-                <hr />*@
+                <hr />
         </div>
     </div>
 </div>
@@ -116,7 +116,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            data: JSON.stringify({ DocNo: DocNo }),
+            data: JSON.stringify({ DocNo: DocNo, Status: Status }),
             url: "/Leave/LoadLeavePlannerLinesList",
             success: function (data) {
                 $("#divLvPlannerLines").html(data);
@@ -199,7 +199,8 @@
                 success: function (data) {
                     if (data.success) {
                         HideProgress();
-                        LoadLeavePlannerDocumentLines(DocNo,"Open");
+                        LoadLeavePlannerDocumentLines(DocNo, `@Model.Status`);
+                        $("#myModal").modal("hide");
                         Swal.fire('Success', data.message, 'success');
                     }
                     else {
@@ -213,12 +214,15 @@
                 }
             });
             //Clear the TextBoxes.
-            txtNoOfDays.val("");
-            txtStartDate.val("");
-            txtRemarks.val("");
+            $("#ddlLeaveType").val("0");
+            $("#txtNoOfDays").val("");
+            $('#txtStartDate').val("");
+            $('#EndDate').html("");
+            $('#ReturnDate').html("");
+            $("#txtRemarks").val("");
         }
     }
-    var RemoveItem = function (DocNo, LnNo) {
+    var DeleteLeavePlannerLine = function (DocNo, LnNo) {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -232,15 +236,14 @@
                 ShowProgress();
                 $.ajax({
                     type: "POST",
-                    url: "/Imprest/RemoveImprestLine",
+                    url: "/Leave/RemoveLeavePlannerLine",
                     data: JSON.stringify({ DocNo: DocNo, LnNo: LnNo }),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
                         if (data.success) {
                             HideProgress();
-                            LoadImprestDocumentLines(DocNo, 'Pending');
-                            $("#txtNetAmount").val(data.NetAmout);
+                            LoadLeavePlannerDocumentLines(`@Model.DocNo`, `@Model.Status`);
                             Swal.fire('Success', data.message, 'success');
                         }
                         else {
@@ -259,5 +262,32 @@
             }
         });
     };
+    var SendDocForApproval = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Leave/SendLeavePlannerForApproval',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                     window.location = "/Leave/LeavePlannerList";
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+
+    }
 </script>
 

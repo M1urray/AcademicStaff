@@ -1,0 +1,213 @@
+﻿@model Latest_Staff_Portal.ViewModel.Online_App
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    hr {
+        margin: 4px;
+    }
+
+    .checkboxClass {
+        width: 20px;
+        height: 20px;
+        padding: 0px;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+<div>
+    @{
+        string imgSrc = "";
+        var base64 = Model.Pic;
+        if (base64 != "")
+        {
+            imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+        }
+
+        if (imgSrc != "")
+        {
+            <img src="@imgSrc" Height="115" Width="114" style="border-radius: 50% !important" />
+        }
+        else
+        {
+            if (Model.DocD.Gender == "Female")
+            {
+                <img src="~/assets/images/profile_f.png" Height="115" Width="114" style="border-radius: 50% !important" />
+            }
+            else
+            {
+                <img src="~/assets/images/profile_m.png" Height="115" Width="114" style="border-radius: 50% !important" />
+            }
+        }
+    }
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Document No</b>
+        @Html.TextBoxFor(m => m.DocD.Code, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Name</b>
+        @Html.TextBoxFor(m => m.DocD.Names, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Programme</b>
+        @Html.TextBoxFor(m => m.DocD.Programme, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Programme Level</b>
+        @Html.TextBoxFor(m => m.DocD.Programme_Level, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Campus</b>
+        @Html.TextBoxFor(m => m.DocD.Campus, new { @class = "form-control", @readonly = "readonly", @rows = 5 })
+    </div>
+    <div class="col-md-6">
+        <b>Intake</b>
+        @Html.TextBoxFor(m => m.DocD.Intake_Code, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Academic Year</b>
+        @Html.TextBoxFor(m => m.DocD.Academic_Year, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Mode of Study</b>
+        @Html.TextBoxFor(m => m.DocD.ModeOfStudy, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Index Number</b>
+        @Html.TextBoxFor(m => m.DocD.Index_No, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Date of Birth</b>
+        @Html.TextBoxFor(m => m.DocD.DoB, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Gender</b>
+        @Html.TextBoxFor(m => m.DocD.Gender, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Nationality</b>
+        @Html.TextBoxFor(m => m.DocD.Nationality, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <b>Phone Number</b>
+        @Html.TextBoxFor(m => m.DocD.Phone_No, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-md-6">
+        <b>Email</b>
+        @Html.TextBoxFor(m => m.DocD.Email, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<hr style="border:1px solid black" />
+<b>Qualifications</b>
+<hr />
+<div class="pre-scrollable">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Where Obtained</th>
+                <th>Award</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Graduation Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.Qual_List != null && Model.Qual_List.Count() > 0)
+                {
+                    foreach (var item in Model.Qual_List)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Where_Obtained)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Award)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.From)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.To)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Graduation_Year)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<hr style="border:1px solid black" />
+<b>Subjects</b>
+<hr />
+<div class="pre-scrollable">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.Subj_List != null && Model.Subj_List.Count() > 0)
+                {
+                    foreach (var item in Model.Subj_List)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Subject)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Grade)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+

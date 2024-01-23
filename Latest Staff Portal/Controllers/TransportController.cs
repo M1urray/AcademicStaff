@@ -31,7 +31,7 @@ namespace Latest_Staff_Portal.Controllers
             string StaffNo = Session["Username"].ToString();
             List<TransportReqList> TransportList = new List<TransportReqList>();
 
-            string page = "TransportReqList?$filter=Empoyee_No eq '" + StaffNo + "'&$format=json";
+            string page = "TransportReqList?$filter=Employee_No eq '" + StaffNo + "'&$format=json";
 
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -42,14 +42,14 @@ namespace Latest_Staff_Portal.Controllers
                 foreach (JObject config in details["value"])
                 {
                     TransportReqList TrList = new TransportReqList();
-                    TrList.No = (string)config["Transport_Requisition_No"];
-                    TrList.Commencement = (string)config["From"];
-                    TrList.Destination = (string)config["To"];
-                    TrList.Vehicle = (string)config["Vehicle_Allocated"];
-                    TrList.Driver = (string)config["Driver_Allocated"];
-                    TrList.DateRequested = Convert.ToDateTime((string)config["Date_of_Request"]).ToString("dd/MM/yyyy");
+                    TrList.No = (string)config["TransportRequisitionNo"];
+                    TrList.Commencement = (string)config["Commencement"];
+                    TrList.Destination = (string)config["Destination"];
+                    TrList.Vehicle = (string)config["VehicleAllocated"];
+                    TrList.Driver = (string)config["DriverAllocated"];
+                    TrList.DateRequested = Convert.ToDateTime((string)config["DateofRequest"]).ToString("dd/MM/yyyy");
                     TrList.DateOfTrip = Convert.ToDateTime((string)config["Date_of_Trip"]).ToString("dd/MM/yyyy");
-                    TrList.NoOfDays = (string)config["No_of_Days_Requested"];
+                    TrList.NoOfDays = (string)config["NoofDaysRequested"];
                     TrList.Status = (string)config["Status"];
                     TransportList.Add(TrList);
                 }
@@ -136,9 +136,9 @@ namespace Latest_Staff_Portal.Controllers
             {
                 DateTime DateTrip = DateTime.ParseExact(NewApp.DateTrip.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 string DocNo = Credentials.ObjNav.TransportRequisitionCreate(Session["username"].ToString(), NewApp.Destination, NewApp.Commencement, DateTrip,
-                    NewApp.Purpose, Convert.ToInt32(NewApp.NoOfDays), 0, 0, 0,0,new DateTime(0));
+                    NewApp.Purpose, Convert.ToInt32(NewApp.NoOfDays), Convert.ToInt32(NewApp.NoOfPassengers), 0, 0, Convert.ToDateTime(NewApp.TimeTrip));//, NewApp.RespC);
 
-                string Redirect = "/Transport/TransportDocumentDetails?AppDoc=" + DocNo;
+                string Redirect = DocNo;
 
                 return Json(new { message = Redirect, success = true }, JsonRequestBehavior.AllowGet);
             }
@@ -158,7 +158,7 @@ namespace Latest_Staff_Portal.Controllers
                 string StaffNo = Session["Username"].ToString();
                 TransportReqList TransDoc = new TransportReqList();
 
-                string page = "TransportReqList?$filter=Transport_Requisition_No eq '" + AppDoc + "'&$format=json";
+                string page = "TransportReqList?$filter=TransportRequisitionNo eq '" + AppDoc + "'&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -168,13 +168,15 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        TransDoc.No = (string)config["Transport_Requisition_No"];
-                        TransDoc.Commencement = (string)config["From"];
-                        TransDoc.Destination = (string)config["To"];
-                        TransDoc.Vehicle = (string)config["Vehicle_Allocated"];
-                        TransDoc.Driver = (string)config["Driver_Allocated"] + "(" + CommonClass.GetEmployeeName((string)config["Driver_Allocated"]) + ")";
+                        TransDoc.No = (string)config["TransportRequisitionNo"];
+                        TransDoc.Commencement = (string)config["Commencement"];
+                        TransDoc.Destination = (string)config["Destination"];
+                        TransDoc.Vehicle = (string)config["VehicleAllocated"];
+                        TransDoc.Driver = (string)config["DriverAllocated"] + "(" + CommonClass.GetEmployeeName((string)config["DriverAllocated"]) + ")";
                         TransDoc.DateOfTrip = Convert.ToDateTime((string)config["Date_of_Trip"]).ToString("dd/MM/yyyy");
-                        TransDoc.NoOfDays = (string)config["No_of_Days_Requested"];
+                        TransDoc.NoOfDays = (string)config["NoofDaysRequested"];
+                        TransDoc.NoOfPassngers = (string)config["No_of_Passengers"];
+                        TransDoc.respC = CommonClass.GetDimensionValue((string)config["Responsibility_Center"]);
                         TransDoc.Status = (string)config["Status"];
                     }
                 }
@@ -221,37 +223,78 @@ namespace Latest_Staff_Portal.Controllers
         }
         public PartialViewResult NewPassgerForm()
         {
-            string StaffNo = Session["Username"].ToString();
-            Passengers NewAppl = new Passengers();
-            #region Employee List
-            List<DropdownList> EmployeeList = new List<DropdownList>();
-            string page = "EmployeeList?$&format=json";
+            //string StaffNo = Session["Username"].ToString();
+            //Passengers NewAppl = new Passengers();
+            //#region Employee List
+            //List<DropdownList> EmployeeList = new List<DropdownList>();
+            //string page = "EmployeeList?$&format=json";
 
-            HttpWebResponse httpResponseCampus = Credentials.GetOdataData(page);
-            using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
+            //HttpWebResponse httpResponseCampus = Credentials.GetOdataData(page);
+            //using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
+            //{
+            //    var result = streamReader.ReadToEnd();
+
+            //    var details = JObject.Parse(result);
+
+
+            //    foreach (JObject config in details["value"])
+            //    {
+            //        DropdownList ddl = new DropdownList();
+            //        ddl.Value = (string)config["No"];
+            //        ddl.Text = (string)config["First_Name"] + " " + (string)config["Middle_Name"] + " " + (string)config["Last_Name"];
+            //        EmployeeList.Add(ddl);
+            //    }
+            //}
+            //#endregion
+
+            //NewAppl.ListOfEmployee = EmployeeList.Select(x =>
+            //                               new SelectListItem()
+            //                               {
+            //                                   Text = x.Text,
+            //                                   Value = x.Value
+            //                               }).ToList();
+            return PartialView("~/Views/Transport/Partial Views/PassengerForm.cshtml");
+        }
+        public JsonResult GetPassengerList()
+        {
+            try
             {
-                var result = streamReader.ReadToEnd();
+                string page = "";
 
-                var details = JObject.Parse(result);
+                #region Staff List
+                List<DropdownList> ddlList = new List<DropdownList>();
+                page = "EmployeeList?$select=No,First_Name,Middle_Name,Last_Name&$filter=Status eq 'Active'&$format=json";
 
-
-                foreach (JObject config in details["value"])
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
-                    DropdownList ddl = new DropdownList();
-                    ddl.Value = (string)config["No"];
-                    ddl.Text = (string)config["FirstName"] + " " + (string)config["MiddleName"] + " " + (string)config["LastName"];
-                    EmployeeList.Add(ddl);
-                }
-            }
-            #endregion
+                    var result = streamReader.ReadToEnd();
 
-            NewAppl.ListOfEmployee = EmployeeList.Select(x =>
-                                           new SelectListItem()
-                                           {
-                                               Text = x.Text,
-                                               Value = x.Value
-                                           }).ToList();
-            return PartialView("~/Views/Transport/Partial Views/PassengerForm.cshtml", NewAppl);
+                    var details = JObject.Parse(result);
+                    foreach (JObject config in details["value"])
+                    {
+                        DropdownList dll = new DropdownList();
+                        dll.Value = (string)config["No"];
+                        dll.Text = (string)config["First_Name"] + " " + (string)config["Middle_Name"] + " " + (string)config["Last_Name"];
+                        ddlList.Add(dll);
+                    }
+                    #endregion
+                }
+                DropdownListData DropDownData = new DropdownListData
+                {
+                    ListOfddlData = ddlList.Select(x =>
+                                     new SelectListItem()
+                                     {
+                                         Text = x.Text,
+                                         Value = x.Value
+                                     }).ToList()
+                };
+                return Json(new { DropDownData, success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
         }
         [HttpPost]
         public JsonResult SubmitPassengerLine(string DocNo, string PassengerType, string PassengerNo)
@@ -272,7 +315,7 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-               // Credentials.ObjNav.transp(DocNo, Convert.ToInt32(PassengerType), PassengerNo);
+                Credentials.ObjNav.RemoveTransportReqPassenger(DocNo, PassengerNo);
 
                 return Json(new { message = "Passenger removed successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
@@ -281,12 +324,17 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult SendDocAppForApproval(string DocNo)
+
+        public JsonResult SendDocAppForApproval(string DocNo, string Redirect)
         {
             try
             {
                 Credentials.ObjNav.TransportRequisitionApprovalRequest(DocNo);
-                return Json(new { message = "Transport Requisition send for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
+                if (Redirect == "Y")
+                {
+                    Session["SuccessMsg"] = "Transport Requisition, Document No " + DocNo + " send for approval Successfully";
+                }
+                return Json(new { message = "Transport Requisition,Document No " + DocNo + " send for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -304,6 +352,56 @@ namespace Latest_Staff_Portal.Controllers
             {
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
+        }
+        [AcceptVerbs(HttpVerbs.Get)]
+        public PartialViewResult FileUploadForm()
+        {
+            return PartialView("~/Views/Transport/Partial Views/FileAttachmentForm.cshtml");
+        }
+        public ActionResult DriverWorkTicket()
+        {
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        public PartialViewResult WorkTicketListlView()
+        {
+            string StaffNo = Session["Username"].ToString();
+            List<TransportReqList> TransportList = new List<TransportReqList>();
+
+            string page = "TransportReqList?$filter=DriverAllocated eq '" + StaffNo + "'&$format=json";
+
+            HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+                foreach (JObject config in details["value"])
+                {
+                    TransportReqList TrList = new TransportReqList();
+                    TrList.No = (string)config["TransportRequisitionNo"];
+                    TrList.Commencement = (string)config["Commencement"];
+                    TrList.Destination = (string)config["Destination"];
+                    TrList.Vehicle = (string)config["VehicleAllocated"];
+                    TrList.Driver = (string)config["DriverAllocated"];
+                    TrList.DateRequested = Convert.ToDateTime((string)config["DateofRequest"]).ToString("dd/MM/yyyy");
+                    TrList.DateOfTrip = Convert.ToDateTime((string)config["Date_of_Trip"]).ToString("dd/MM/yyyy");
+                    TrList.NoOfDays = (string)config["NoofDaysRequested"];
+                    TrList.Status = (string)config["Status"];
+                    TransportList.Add(TrList);
+                }
+            }
+            return PartialView("~/Views/Transport/Partial Views/DriverAssignedListView.cshtml", TransportList);
+        }
+        public PartialViewResult WorkTicketForm(string DocNo)
+        {
+            return PartialView("~/Views/Transport/Partial Views/WorkTicketForm.cshtml");
         }
     }
 }

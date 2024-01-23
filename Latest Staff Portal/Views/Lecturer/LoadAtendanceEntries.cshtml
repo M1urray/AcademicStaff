@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.ClassAttendanceEntries>
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+</style>
+<div class="card pre-scrollable">
+    <div class="card-title">Attendance Entry List</div>
+    <hr />
+    <div class="card-body">
+        <table id="TbAttendanceEntries" class="table table-bordered table-hover nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <thead>
+                <tr>
+                    <th>DocNo</th>
+                    <th style="text-align:center">Week</th>
+                    <th>Campus</th>
+                    <th style="text-align:center">Present Count</th>
+                    <th style="text-align:center">Absent Count</th>
+                    <th style="text-align:center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        {
+                            if (Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DocNo)
+                                        </td>
+                                        <td align="center">
+                                            @Html.DisplayFor(modelItem => item.Week)
+                                        </td>                                        
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Campus)
+                                        </td>
+                                        <td align="center">
+                                            @Html.DisplayFor(modelItem => item.PresentCount)
+                                        </td>
+                                        <td align="center">
+                                            @Html.DisplayFor(modelItem => item.AbsentCount)
+                                        </td>
+                                        <td align="center">
+                                            @if (item.Posted)
+                                            {
+                                                @Html.Label("Posted")
+                                            }
+                                            else
+                                            {
+                                                <a href="javascript:void(0);" class="mr-3 text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" onclick="NewAttendance('@item.DocNo');"><i class="mdi mdi-pencil font-size-16"></i></a>
+                                                <a href="#" onclick="PostAttendanceList('@item.DocNo', '@item.Week');" class="btn btn-sm btn-danger">Post</a>
+                                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="RemoveAttendance('@item.DocNo');"><i class="mdi mdi-close font-size-16"></i></a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4" style="color:red">
+                                        No Records Found
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    //$(document).ready(function () {
+    //    $("#TbAttendanceEntries").DataTable({
+    //        lengthChange: !1,
+    //        buttons: [
+    //            "copy",
+    //            {
+    //                extend: 'excel',
+    //                title: 'Lecturer List'
+    //            },
+    //            {
+    //                extend: 'pdf',
+    //                title: 'Lecturer List'
+    //            }
+    //        ]
+    //    }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)");
+    //});
+</script>

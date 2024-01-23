@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DiscoveryClientResultsFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Results>
-    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://sk-erp-server.sk.org:7047/ERP/WS/Sports Kenya/Codeunit/WebService" filename="WebService.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://192.168.0.6:7047/ERP/WS/Chuka University/Codeunit/WebPortal" filename="WebPortal.wsdl" />
   </Results>
 </DiscoveryClientResultsFile>

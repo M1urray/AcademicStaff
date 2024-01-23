@@ -1,4 +1,4 @@
-﻿@model Latest_Staff_Portal.ViewModel.AppraisalCardList
+﻿
 @{
     ViewBag.Title = "AppraisalScoreCard";
     Layout = "~/Views/Shared/Sitemaster.cshtml";
@@ -7,6 +7,17 @@
     thead {
         background-color: black;
         color: white;
+    }
+
+    .mb-1, .card-header {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .m-0 {
+        color: black
     }
 </style>
 <link href="~/assets/css/Loader.css" rel="stylesheet" />
@@ -21,7 +32,7 @@
             <div class="card mb-1 shadow-none">
                 <div class="card-header" id="headingOne" aria-controls="collapseOne" aria-expanded="true" data-toggle="collapse" href="#collapseOne">
                     <h6 class="m-0">
-                        <span class="fa fa-arrow-up"></span>Section 1 : Personal Particulars
+                        <span class="fa fa-arrow-up"></span>General Information
                     </h6>
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordion">
@@ -40,10 +51,10 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Appraisal Date</label>
+                                        <label style="font-size: 12px; font-weight: bold">User ID</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <span class="label label-warning">@Model.AppraisalDate</span>
+                                        <span class="label label-warning">@Model.UserID</span>
                                     </div>
                                 </div>
                             </div>
@@ -74,20 +85,20 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Evaluation Period Start Date</label>
+                                        <label style="font-size: 12px; font-weight: bold">Responsibility Center</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <span class="label label-warning">@Model.AppraisalStartDate</span>
+                                        <span class="label label-warning">@Model.RespCenter</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Evaluation Period End Date</label>
+                                        <label style="font-size: 12px; font-weight: bold">Apprisal Type</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <span class="label label-warning">@Model.AppraisalEndDate</span>
+                                        <span class="label label-warning">@Model.AppraisalType</span>
                                     </div>
                                 </div>
                             </div>
@@ -96,93 +107,49 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Appointment Date</label>
+                                        <label style="font-size: 12px; font-weight: bold">Apprisal Period</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <span class="label label-warning" id="AppPeriod">@Model.AppointmentDate</span>
+                                        <span class="label label-warning" id="AppPeriod">@Model.ApprisalPeriod</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Designation</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.Designation</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding: 2px">
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label style="font-size: 12px; font-weight: bold">Department</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <span class="label label-warning" id="AppPeriod">@Model.Department</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Appraisal Period</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.ApprisalPeriod</span>
+                                        <span class="label label-warning">@Model.Department</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Appraisal Stage</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning" id="AppPeriod">@Model.AppraisalStage</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingTwo" aria-expanded="false" aria-controls="collapseTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span> Target setting & Perfomance Measurements
+                    </h6>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                     data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divScoreCard"></div>
                     </div>
                 </div>
             </div>
             <div class="card mb-1 shadow-none">
                 <div class="card-header" id="headingThree" aria-expanded="false" aria-controls="collapseThree" data-toggle="collapse" href="#collapseThree">
                     <h6 class="m-0">
-                        <span class="fa fa-arrow-down"></span> Section 2 : Q1 Evaluation
+                        <span class="fa fa-arrow-down"></span> Quarter Two Performance Review
                     </h6>
                 </div>
                 <div id="collapseThree" class="collapse"
                      aria-labelledby="headingThree" data-parent="#accordion">
                     <div class="card-body">
-                        <p style="color:red">To be completed by the Appraisee in consultation with the Supervisor at the beginning of the appraisal period</p>
-                        <hr />
-                        <div id="divQ1Review"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-1 shadow-none">
-                <div class="card-header" id="headingThree1" aria-expanded="false" aria-controls="collapseThree1" data-toggle="collapse" href="#collapseThree1">
-                    <h6 class="m-0">
-                        <span class="fa fa-arrow-down"></span> Section 3 : Mid Year Evaluation
-                    </h6>
-                </div>
-                <div id="collapseThree1" class="collapse"
-                     aria-labelledby="headingThree1" data-parent="#accordion">
-                    <div class="card-body">
-                        <p style="color:red">
-                            To be completed by the Supervisor in consultation with the Appraisee at the end of the appraisal period
-                        </p>
-                        <hr />
                         <div id="divQ2Review"></div>
                     </div>
                 </div>
@@ -190,7 +157,7 @@
             <div class="card mb-1 shadow-none">
                 <div class="card-header" id="headingFour" aria-expanded="false" aria-controls="collapseFour" data-toggle="collapse" href="#collapseFour">
                     <h6 class="m-0">
-                        <span class="fa fa-arrow-down"></span> Section 4 : Q3 Evaluation
+                        <span class="fa fa-arrow-down"></span> Mid Year Performance Review
                     </h6>
                 </div>
                 <div id="collapseFour" class="collapse"
@@ -203,7 +170,7 @@
             <div class="card mb-1 shadow-none">
                 <div class="card-header" id="headingFive" aria-expanded="false" aria-controls="collapseFive" data-toggle="collapse" href="#collapseFive">
                     <h6 class="m-0">
-                        <span class="fa fa-arrow-down"></span> Section 5 : End Year Evaluation
+                        <span class="fa fa-arrow-down"></span> End Year Performance Review
                     </h6>
                 </div>
                 <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
@@ -213,32 +180,83 @@
                 </div>
             </div>
             <div class="card mb-1 shadow-none">
-                <div class="card-header" id="headingSeven" aria-expanded="false" aria-controls="collapseSeven" data-toggle="collapse" href="#collapseSeven">
+                <div class="card-header" id="headingR" aria-expanded="false" aria-controls="collapseR" data-toggle="collapse" href="#collapseR">
                     <h6 class="m-0">
-                        <span class="fa fa-arrow-down"></span> Section 6 : Training and Development Plan
+                        <span class="fa fa-arrow-down"></span> Apprisal Ratings
                     </h6>
                 </div>
-                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                <div id="collapseR" class="collapse" aria-labelledby="headingR" data-parent="#accordion">
                     <div class="card-body">
-                        <div id="divTrainDevmpt"></div>
+                        <div id="divAppRatings"></div>
                     </div>
                 </div>
             </div>
             <div class="card mb-1 shadow-none">
                 <div class="card-header" id="headingSix" aria-expanded="false" aria-controls="collapseSix" data-toggle="collapse" href="#collapseSix">
                     <h6 class="m-0">
-                        <span class="fa fa-arrow-down"></span> Section 7 : General Comments
+                        <span class="fa fa-arrow-down"></span>Core Competencies and Values
                     </h6>
                 </div>
                 <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
                     <div class="card-body">
-                        <div id="divGenComments"></div>
+                        <div id="divCoreCompVal"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingSeven" aria-expanded="false" aria-controls="collapseSeven" data-toggle="collapse" href="#collapseSeven">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>Performance Improvement Plan
+                    </h6>
+                </div>
+                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divPImpPlan"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingEight" aria-expanded="false" aria-controls="collapseEight" data-toggle="collapse" href="#collapseEight">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>Learning and Development
+                    </h6>
+                </div>
+                <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="divLearningDev"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-1 shadow-none">
+                <div class="card-header" id="headingNine" aria-expanded="false" aria-controls="collapseNine" data-toggle="collapse" href="#collapseNine">
+                    <h6 class="m-0">
+                        <span class="fa fa-arrow-down"></span>General Comments
+                    </h6>
+                </div>
+                <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>Apprisee Comments</b>
+                                <textarea id="AppraiseeComments" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b>Supervisor Comments</b>
+                                <textarea id="SupervisorComments" class="form-control" disabled></textarea>
+                            </div>
+                        </div>
+                        <hr />
+                        <div align="center">
+                            <input type="button" value="Save Comments" class="btn btn-primary" onclick="SaveGeneralComments();" />
+                        </div>
                     </div>
                 </div>
             </div>
             <hr />
             <div align="right">
-                <input type="button" value="Send To Supervisor >>>" class="btn btn-primary" id="btnApp" onclick="SendDocTo();" />
+                <input type="button" value="Send To Supervisor >>>" class="btn btn-primary" onclick="SaveGeneralComments();" />
             </div>
         </div>
     </div>
@@ -264,76 +282,110 @@
 <script src="~/assets/js/ShowProgression.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        var DocNo = $("#DocNo").html();
+        LoadScoreCard(DocNo);
+
+        LoadAppraisalReview(DocNo, 'divQ2Review', 'Q1');
+        LoadAppraisalReview(DocNo, 'divQ3Review', 'Q2');
+        LoadAppraisalReview(DocNo, 'divQ4Review', 'Q3');
+
+        LoadCoreCompValues(DocNo);
+        LoadPImprPlan(DocNo);
+        LoadLearningDec(DocNo);
+
+
+
         $('.shadow-none').on('shown.bs.collapse', function () {
             $(this).find('.fa-arrow-down').removeClass('fa-arrow-down').addClass('fa-arrow-up');
         }).on('hidden.bs.collapse', function () {
             $(this).find('.fa-arrow-up').removeClass('fa-arrow-up').addClass('fa-arrow-down');
         });
-        LoadSectionData();
     });
-    var LoadSectionData = function () {
-        ShowProgress();
-        var DocNo = $("#DocNo").html();
-        LoadEvaluationLines(DocNo,'Q1');
-        LoadEvaluationLines(DocNo,'Q2');
-        LoadEvaluationLines(DocNo,'Q3');
-        LoadEvaluationLines(DocNo,'Q4');
-        //LoadPerformanceIndicatorReview(DocNo);
-        LoadTrainingDevelopment(DocNo);
-        HideProgress();
-    };   
-    var LoadEvaluationLines = function (DocNo,Qs) {
-        $.ajax({
-            async: true,
-            type: "post",
-            contentType: "application/json; charset = utf-8",
-            data: JSON.stringify({ AppDoc: DocNo, Qs: Qs, Level: "A" }),
-            url: "/Appraisal/LoadEvaluationLines",
-            success: function (data) {
-                if (Qs == "Q1") {
-                    $("#divQ1Review").html(data);
-                }
-                if (Qs == "Q2") {
-                    $("#divQ2Review").html(data);
-                }
-                if (Qs == "Q3") {
-                    $("#divQ3Review").html(data);
-                }
-                if (Qs == "Q4") {
-                    $("#divQ4Review").html(data);
-                }
-            },
-            error: function () {
-                Swal.fire("There is some problem to process your request. Please try after some time");
-            }
-        });
-    }    
-    var LoadTrainingDevelopment = function (DocNo) {
+    var LoadScoreCard = function (DocNo) {
         $.ajax({
             async: true,
             type: "post",
             contentType: "application/json; charset = utf-8",
             data: JSON.stringify({ AppDoc: DocNo }),
-            url: "/Appraisal/LoadTrainingDev",
+            url: "/Appraisal/LoadScoreCardData",
             success: function (data) {
-                $("#divTrainDevmpt").html(data);
+                $("#divScoreCard").html(data);
             },
             error: function () {
                 Swal.fire("There is some problem to process your request. Please try after some time");
             }
         });
     }
-    var EvaluateEvaluationLine = function (EntryNo) {
-        var DocNo = $("#DocNo").html();
+    var LoadAppraisalReview = function (DocNo, divQRev, QReview) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: "/Appraisal/LoadAppraisalReviews",
+            success: function (data) {
+                $("#" + divQRev).html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadCoreCompValues = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: "/Appraisal/LoadCoreCompetenceValues",
+            success: function (data) {
+                $("#divCoreCompVal").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadPImprPlan = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: "/Appraisal/LoadPImprovementPlan",
+            success: function (data) {
+                $("#divPImpPlan").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var LoadLearningDec = function (DocNo) {
+        $.ajax({
+            async: true,
+            type: "post",
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ AppDoc: DocNo }),
+            url: "/Appraisal/LoadLearningDevelopments",
+            success: function (data) {
+                $("#divLearningDev").html(data);
+            },
+            error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var NewObjectiveLine = function () {
+        $("#labelF").text("New Objective Line");
         ShowProgress();
         $.ajax({
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, LnNo: EntryNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Appraisal/AppraisalEvaluationForm',
+            url: '/Appraisal/NewObjectiveLine',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -344,473 +396,149 @@
                 Swal.fire('Warning', err, 'warning');
             }
         });
-    };
-    //var LoadValuesCompe = function (DocNo) {
-    //    $.ajax({
-    //        async: true,
-    //        type: "post",
-    //        contentType: "application/json; charset = utf-8",
-    //        data: JSON.stringify({ AppDoc: DocNo }),
-    //        url: "/Appraisal/LoadCoreCompetenceValues",
-    //        success: function (data) {
-    //            $("#divValuesCompe").html(data);
-    //        },
-    //        error: function () {
-    //            Swal.fire("There is some problem to process your request. Please try after some time");
-    //        }
-    //    });
-    //}
-    //var LoadMGRValuesCompe = function (DocNo) {
-    //    $.ajax({
-    //        async: true,
-    //        type: "post",
-    //        contentType: "application/json; charset = utf-8",
-    //        data: JSON.stringify({ AppDoc: DocNo }),
-    //        url: "/Appraisal/LoadMGRCoreCompetenceValues",
-    //        success: function (data) {
-    //            $("#divMgrCoreCompVal").html(data);
-    //        },
-    //        error: function () {
-    //            Swal.fire("There is some problem to process your request. Please try after some time");
-    //        }
-    //    });
-    //}
-    //var AddAKPI = function () {
-    //    $("#labelF").text("KPI Form");
-    //    ShowProgress();
-    //    $.ajax({
-    //        async: true,
-    //        type: "POST",
-    //        datatype: "json",
-    //        contentType: "application/json; charset = utf-8",
-    //        processData: false,
-    //        url: '/Appraisal/KPIForm',
-    //        success: function (data) {
-    //            $("#modalBody").html(data);
-    //            HideProgress();
-    //            $("#myModal").modal("show");
-    //        },
-    //        error: function (err) {
-    //            HideProgress();
-    //            Swal.fire('Warning', err, 'warning');
-    //        }
-    //    });
-    //}
-    //var AddTrainingDev = function () {
-    //    $("#labelF").text("Training & Development Form");
-    //    ShowProgress();
-    //    $.ajax({
-    //        async: true,
-    //        type: "POST",
-    //        datatype: "json",
-    //        contentType: "application/json; charset = utf-8",
-    //        processData: false,
-    //        url: '/Appraisal/TrainingDevForm',
-    //        success: function (data) {
-    //            $("#modalBody").html(data);
-    //            HideProgress();
-    //            $("#myModal").modal("show");
-    //        },
-    //        error: function (err) {
-    //            HideProgress();
-    //            Swal.fire('Warning', err, 'warning');
-    //        }
-    //    });
-    //}
-    //var SaveKPIRecord = function () {
-    //    var DocNo = $("#DocNo").html();
-    //    var AggreedKPI = $("#txtAgrredKPI").val();
-    //    var KPIIndicator = $("#txtKPIIndicator").val();
-    //    var remarks = $("#txtComments").val();
-
-    //    if (DocNo == "") {
-    //        Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
-    //        return;
-    //    }
-    //    else if (AggreedKPI == "") {
-    //        Swal.fire('error', 'enter KIP', 'error');
-    //        return;
-    //    }
-    //    else if (KPIIndicator == "") {
-    //        Swal.fire('error', 'Enter KPI Indicator', 'error');
-    //        return;
-    //    }
-    //    else {
-    //        var PerformanceIndicator = {};
-    //        PerformanceIndicator.Appraisal_No = DocNo;
-    //        PerformanceIndicator.Agreed_Performance_Targets = AggreedKPI;
-    //        PerformanceIndicator.Key_Performance_Indicator = KPIIndicator;
-    //        PerformanceIndicator.Appraisee_Comments = remarks;
-
-    //        ShowProgress();
-    //        $.ajax({
-    //            type: "post",
-    //            url: "/Appraisal/SubmitKPIs",
-    //            data: JSON.stringify({ kpi: PerformanceIndicator }),
-    //            contentType: "application/json; charset = utf-8",
-    //            success: function (data) {
-    //                if (data.success == true) {
-    //                    Swal.fire('Success', data.message, 'success');
-    //                    LoadPerformanceIndicator(DocNo);
-    //                    LoadPerformanceIndicatorReview(DocNo);
-    //                    $("#myModal").modal("hide");
-    //                    HideProgress();
-    //                }
-    //                else {
-    //                    HideProgress();
-    //                    Swal.fire('error', data.message, 'error');
-    //                }
-    //            },
-    //            error: function () {
-    //                HideProgress();
-    //                Swal.fire('error', data.message, 'error');
-    //            }
-    //        });
-    //    }
-    //}
-    //var DropKPIRecord = function (DocNo, LnNo) {
-    //    if (DocNo == "") {
-    //        Swal.fire('error', 'Appraisal Document No cannot be empty', 'error');
-    //        return;
-    //    }
-    //    else if (LnNo == "") {
-    //        Swal.fire('error', 'Record Line Number cannot be Empty', 'error');
-    //        return;
-    //    }
-    //    else {
-    //        ShowProgress();
-    //        $.ajax({
-    //            type: "post",
-    //            url: "/Appraisal/DropKPIs",
-    //            data: JSON.stringify({ DocNo: DocNo, LnNo: LnNo }),
-    //            contentType: "application/json; charset = utf-8",
-    //            success: function (data) {
-    //                if (data.success == true) {
-    //                    Swal.fire('Success', data.message, 'success');
-    //                    LoadPerformanceIndicator(DocNo);
-    //                    LoadPerformanceIndicatorReview(DocNo);
-    //                    $("#myModal").modal("hide");
-    //                    HideProgress();
-    //                }
-    //                else {
-    //                    HideProgress();
-    //                    Swal.fire('error', data.message, 'error');
-    //                }
-    //            },
-    //            error: function () {
-    //                HideProgress();
-    //                Swal.fire('error', data.message, 'error');
-    //            }
-    //        });
-    //    }
-    //}
-    //var EvalKPIItem = function (DocNo, LnNo, Level) {
-    //    $("#labelF").text("KPI Evaluation Form");
-    //    ShowProgress();
-    //    $.ajax({
-    //        async: true,
-    //        type: "POST",
-    //        datatype: "json",
-    //        contentType: "application/json; charset = utf-8",
-    //        processData: false,
-    //        data: JSON.stringify({ DocNo: DocNo, LnNo: LnNo, Level: Level }),
-    //        url: '/Appraisal/KPIEvaluationForm',
-    //        success: function (data) {
-    //            $("#modalBody").html(data);
-    //            HideProgress();
-    //            $("#myModal").modal("show");
-    //        },
-    //        error: function (err) {
-    //            HideProgress();
-    //            Swal.fire('Warning', err, 'warning');
-    //        }
-    //    });
-    //}
-    //var SaveKPIReviewRecord = function (DocNo, LnNo) {
-    //    var ResultsAchvd = $("#txtResultsAchved").val();
-    //    var SelfAssessment = $("#ddlSelfAssessment").children("option:selected").val();
-    //    var remarks = $("#txtAppComments").val();
-
-    //    if (DocNo == "") {
-    //        Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
-    //        return;
-    //    }
-    //    if (LnNo == "") {
-    //        Swal.fire('error', 'Appraisal Record Line Number Cannot be empty', 'error');
-    //        return;
-    //    }
-    //    else if (ResultsAchvd == "") {
-    //        Swal.fire('error', 'enter KIP Results Achieved', 'error');
-    //        return;
-    //    }
-    //    else if (SelfAssessment == "") {
-    //        Swal.fire('error', 'Choose your assessment', 'error');
-    //        return;
-    //    }
-    //    else {
-    //        var PerformanceIndicator = {};
-    //        PerformanceIndicator.Appraisal_No = DocNo;
-    //        PerformanceIndicator.Line_No = LnNo;
-    //        PerformanceIndicator.Key_Result_Areas_Output = ResultsAchvd;
-    //        PerformanceIndicator.Self_Assesment = SelfAssessment;
-    //        PerformanceIndicator.Appraisee_Comments = remarks;
-
-    //        ShowProgress();
-    //        $.ajax({
-    //            type: "post",
-    //            url: "/Appraisal/SubmitKPIsEvaluation",
-    //            data: JSON.stringify({ kpi: PerformanceIndicator }),
-    //            contentType: "application/json; charset = utf-8",
-    //            success: function (data) {
-    //                if (data.success == true) {
-    //                    Swal.fire('Success', data.message, 'success');
-    //                    LoadPerformanceIndicatorReview(DocNo);
-    //                    $("#myModal").modal("hide");
-    //                    HideProgress();
-    //                }
-    //                else {
-    //                    HideProgress();
-    //                    Swal.fire('error', data.message, 'error');
-    //                }
-    //            },
-    //            error: function () {
-    //                HideProgress();
-    //                Swal.fire('error', data.message, 'error');
-    //            }
-    //        });
-    //    }
-    //}
-    //var SaveTrainingDevRecord = function () {
-    //    var DocNo = $("#DocNo").html();
-    //    var CourseName = $("#CourseName").val();
-    //    var duration = $("#txtDuration").val();
-    //    var ddlDuration = $("#ddlDuration").children("option:selected").val();
-    //    var startDate = $("#txtStartDate").val();
-    //    var reaction = $("#txtReaction").val();
-    //    var LnObtained = $("#txtLearningObtained").val();
-    //    var behChange = $("#txtBeahavoiurChange").val();
-    //    var results = $("#txtResults").val();
-    //    var Reamrks = $("#txtComments").val();
-
-    //    if (DocNo == "") {
-    //        Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
-    //        return;
-    //    }
-    //    else if (CourseName == "") {
-    //        Swal.fire('error', 'Enter Name of the Course', 'error');
-    //        return;
-    //    }
-    //    else if (duration == "") {
-    //        Swal.fire('error', 'Enter Duration', 'error');
-    //        return;
-    //    }
-    //    else if (ddlDuration == "") {
-    //        Swal.fire('error', 'Select Duration', 'error');
-    //        return;
-    //    }
-    //    else if (startDate == "") {
-    //        Swal.fire('error', 'Select Start date', 'error');
-    //        return;
-    //    }
-    //    else if (reaction == "") {
-    //        Swal.fire('error', 'Enter reaction of the Training', 'error');
-    //        return;
-    //    }
-    //    else if (LnObtained == "") {
-    //        Swal.fire('error', 'Enter Results Obtained', 'error');
-    //        return;
-    //    }
-    //    else if (behChange == "") {
-    //        Swal.fire('error', 'Enter Behaviour Change after Training', 'error');
-    //        return;
-    //    }
-    //    else if (results == "") {
-    //        Swal.fire('error', 'Enter Results of the Training', 'error');
-    //        return;
-    //    }
-    //    else if (Reamrks == "") {
-    //        Swal.fire('error', 'Enter Remarks', 'error');
-    //        return;
-    //    }
-    //    else {
-    //        var TrainingDev = {};
-    //        TrainingDev.Appraisal_No = DocNo;
-    //        TrainingDev.Name_of_the_Course = CourseName;
-    //        TrainingDev.Duration_of_Course = duration + ddlDuration;
-    //        TrainingDev.Expected_Start_Date = startDate;
-    //        TrainingDev.Reaction = reaction;
-    //        TrainingDev.Learning_Obtained = LnObtained;
-    //        TrainingDev.Behavior_Changes_Adopted = behChange;
-    //        TrainingDev.Results_Obtained = results;
-    //        TrainingDev.Remarks_Appraisee = Reamrks;
-
-    //        ShowProgress();
-    //        $.ajax({
-    //            type: "post",
-    //            url: "/Appraisal/SaveTrainingDev",
-    //            data: JSON.stringify({ trDev: TrainingDev }),
-    //            contentType: "application/json; charset = utf-8",
-    //            success: function (data) {
-    //                if (data.success == true) {
-    //                    Swal.fire('Success', data.message, 'success');
-    //                    LoadTrainingDevelopment(DocNo);
-    //                    $("#myModal").modal("hide");
-    //                    HideProgress();
-    //                }
-    //                else {
-    //                    HideProgress();
-    //                    Swal.fire('error', data.message, 'error');
-    //                }
-    //            },
-    //            error: function () {
-    //                HideProgress();
-    //                Swal.fire('error', data.message, 'error');
-    //            }
-    //        });
-    //    }
-    //}
-    //var DropTrainingDevRecord = function (DocNo, LnNo) {
-    //    if (DocNo == "") {
-    //        Swal.fire('error', 'Appraisal Document No cannot be empty', 'error');
-    //        return;
-    //    }
-    //    else if (LnNo == "") {
-    //        Swal.fire('error', 'Record Line Number cannot be Empty', 'error');
-    //        return;
-    //    }
-    //    else {
-    //        ShowProgress();
-    //        $.ajax({
-    //            type: "post",
-    //            url: "/Appraisal/DropTrainingDev",
-    //            data: JSON.stringify({ DocNo: DocNo, LnNo: LnNo }),
-    //            contentType: "application/json; charset = utf-8",
-    //            success: function (data) {
-    //                if (data.success == true) {
-    //                    Swal.fire('Success', data.message, 'success');
-    //                    LoadTrainingDevelopment(DocNo);
-    //                    $("#myModal").modal("hide");
-    //                    HideProgress();
-    //                }
-    //                else {
-    //                    HideProgress();
-    //                    Swal.fire('error', data.message, 'error');
-    //                }
-    //            },
-    //            error: function () {
-    //                HideProgress();
-    //                Swal.fire('error', data.message, 'error');
-    //            }
-    //        });
-    //    }
-    //}
-    //var EvalCompValueItem = function (DocNo, LnNo, Level) {
-    //    $("#labelF").text("Value & Competence Evaluation Form");
-    //    ShowProgress();
-    //    $.ajax({
-    //        async: true,
-    //        type: "POST",
-    //        datatype: "json",
-    //        contentType: "application/json; charset = utf-8",
-    //        processData: false,
-    //        data: JSON.stringify({ DocNo: DocNo, LnNo: LnNo, Level: Level }),
-    //        url: '/Appraisal/CompValueEvaluationForm',
-    //        success: function (data) {
-    //            $("#modalBody").html(data);
-    //            HideProgress();
-    //            $("#myModal").modal("show");
-    //        },
-    //        error: function (err) {
-    //            HideProgress();
-    //            Swal.fire('Warning', err, 'warning');
-    //        }
-    //    });
-    //}
-    //var SaveCompValueReviewRecord = function (DocNo, LnNo, Level) {
-    //    var AppAssessment = $("#txtApprAssessment").val();
-    //    var SelfAssessment = $("#ddlScore").children("option:selected").val();
-
-    //    if (DocNo == "") {
-    //        Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
-    //        return;
-    //    }
-    //    if (LnNo == "") {
-    //        Swal.fire('error', 'Appraisal Record Line Number Cannot be empty', 'error');
-    //        return;
-    //    }
-    //    else if (AppAssessment == "") {
-    //        Swal.fire('error', 'enter Appraisal Assessment', 'error');
-    //        return;
-    //    }
-    //    else if (SelfAssessment == "") {
-    //        Swal.fire('error', 'Choose your assessment', 'error');
-    //        return;
-    //    }
-    //    else {
-    //        var CompetenceValues = {};
-    //        CompetenceValues.Appraisal_No = DocNo;
-    //        CompetenceValues.Line_No = LnNo;
-    //        CompetenceValues.Appraisal_Assesment = AppAssessment;
-    //        CompetenceValues.Score = SelfAssessment;
-
-    //        ShowProgress();
-    //        $.ajax({
-    //            type: "post",
-    //            url: "/Appraisal/SubmitCompValueEvaluation",
-    //            data: JSON.stringify({ CValues: CompetenceValues }),
-    //            contentType: "application/json; charset = utf-8",
-    //            success: function (data) {
-    //                if (data.success == true) {
-    //                    Swal.fire('Success', data.message, 'success');
-    //                    if (Level == "1") {
-    //                        LoadValuesCompe(DocNo);
-    //                    }
-    //                    else {
-    //                        LoadMGRValuesCompe(DocNo);
-    //                    }
-
-    //                    $("#myModal").modal("hide");
-    //                    HideProgress();
-    //                }
-    //                else {
-    //                    HideProgress();
-    //                    Swal.fire('error', data.message, 'error');
-    //                }
-    //            },
-    //            error: function () {
-    //                HideProgress();
-    //                Swal.fire('error', data.message, 'error');
-    //            }
-    //        });
-    //    }
-    //}
-    var SendDocTo = function () {
+    }
+    var SaveObjectiveRecord = function () {
         var DocNo = $("#DocNo").html();
+        var AppPeriod = $("#AppPeriod").html();
+        var Obj = $('#txtObj').val();
+        var KeyP = $('#txtPerIndicator').val();
+        var achvmnt = $('#txtPerIndicator').val();
+        var Target = $('#txtTarget').val();
+        var TimeLines = $("#ddlTimeLine").children("option:selected").val();
+        if (DocNo == "") {
+            Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
+            return;
+        }
+        else if (AppPeriod == "") {
+            Swal.fire('error', 'Appraisal period cannot be empty', 'error');
+            return;
+        }
+        else if (Obj == "") {
+            Swal.fire('error', 'Enter Objective', 'error');
+            return;
+        }
+        else if (KeyP == "") {
+            Swal.fire('error', 'Enter Key Performance Indicator', 'error');
+            return;
+        }
+        else if (Target == "") {
+            Swal.fire('error', 'Enter Target', 'error');
+            return;
+        }
+        else if (TimeLines == "") {
+            Swal.fire('error', 'Select Timelin', 'error');
+            return;
+        }
+        else {
+            var ApprisalObjective = {};
+            ApprisalObjective.DocNo = DocNo;
+            ApprisalObjective.Objective = Obj;
+            ApprisalObjective.KeyPerformance = KeyP;
+            ApprisalObjective.Achievement = "";
+            ApprisalObjective.AppraisalPeriod = AppPeriod;
+            ApprisalObjective.Target = Target;
+            ApprisalObjective.TimeLines = TimeLines;
+            ApprisalObjective.Section = "1";
+
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: "/Appraisal/SubmitAppraisalObjectiveLine",
+                data: JSON.stringify({ AppObjective: ApprisalObjective }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        Swal.fire('Success', data.message, 'success');
+                        LoadScoreCard(DocNo);
+                        $("#myModal").modal("hide");
+                        HideProgress();
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    var AddCoreCompetenceVal = function () {
+        $("#labelF").text("Core Competence and Value");
         ShowProgress();
         $.ajax({
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, SendTo: "1" }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Appraisal/SendDocumentTo',
+            url: '/Appraisal/NewCoreCompetenceValue',
             success: function (data) {
-                if (data.success == true) {
-                    HideProgress();
-                    LoadSectionData();
-                    $("#btnApp").hide();
-                    Swal.fire('Success', data.message, 'success');
-                }
-                else {
-                    HideProgress();
-                    Swal.fire('Error', data.message, 'error');
-                }
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
             },
             error: function (err) {
+                HideProgress();
                 Swal.fire('Warning', err, 'warning');
             }
         });
+    }
+    var SaveCoreCompetenceValueLine = function () {
+        var DocNo = $("#DocNo").html();
+        var AppPeriod = $("#AppPeriod").html();
+        var Obj = $('#txtObj').val();
+
+        if (DocNo == "") {
+            Swal.fire('error', 'Appraisal Doc No cannot be empty', 'error');
+            return;
+        }
+        else if (AppPeriod == "") {
+            Swal.fire('error', 'Appraisal period cannot be empty', 'error');
+            return;
+        }
+        else if (Obj == "") {
+            Swal.fire('error', 'Enter Objective', 'error');
+            return;
+        }
+
+        else {
+            var ApprisalObjective = {};
+            ApprisalObjective.DocNo = DocNo;
+            ApprisalObjective.Objective = Obj;
+            ApprisalObjective.KeyPerformance = "";
+            ApprisalObjective.Achievement = "";
+            ApprisalObjective.AppraisalPeriod = AppPeriod;
+            ApprisalObjective.Target = "";
+            ApprisalObjective.TimeLines = "0";
+            ApprisalObjective.Section = "1";
+
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: "/Appraisal/SubmitCoreCompetenceValue",
+                data: JSON.stringify({ AppObjective: ApprisalObjective }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        Swal.fire('Success', data.message, 'success');
+                        LoadCoreCompValues(DocNo);
+                        $("#myModal").modal("hide");
+                        HideProgress();
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
     }
 </script>
 

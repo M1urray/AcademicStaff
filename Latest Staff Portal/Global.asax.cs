@@ -12,6 +12,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Script.Serialization;
 using System.Web.Security;
+using webApp;
 
 namespace Latest_Staff_Portal
 {
@@ -22,7 +23,7 @@ namespace Latest_Staff_Portal
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
             JsonValueProviderFactory jsonValueProviderFactory = null;
 
             foreach (var factory in ValueProviderFactories.Factories)

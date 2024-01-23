@@ -9,5 +9,6 @@ namespace Latest_Staff_Portal.ViewModel
     {
         public string Code { get; set; }
         public string Desription { get; set; }
+        public string Reg_Count { get; set; }
     }
 }
