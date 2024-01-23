@@ -457,7 +457,7 @@ namespace Latest_Staff_Portal.Controllers
 
                     if (ReportType == "CLATT")
                     {
-                        Credentials.ObjNav.PrintClassList(Prog, Unit, Stage, Sem, ClassCode, Campus, "CLASSLIST-" + _filename + ".pdf");
+                        Credentials.ObjNav.PrintClassList(Prog, Unit, Stage, Sem, ClassCode, Campus, 1, "CLASSLIST-" + _filename + ".pdf");
                         filename = "CLASSLIST-" + _filename + ".pdf";
                     }
                     if (ReportType == "EXAMATT")
@@ -1389,7 +1389,7 @@ namespace Latest_Staff_Portal.Controllers
                     }
                     else
                     {
-                        Code = Credentials.ObjNav.InserClassAtteHeader("", Unit, Sem, Wk, Lec, Campus, "", "");
+                        Code = Credentials.ObjNav.InserClassAtteHeader(Prog, Stage, Unit, Sem, Wk, Lec, Campus, "", "");
                     }
                     int RowCount = Rows.Count();
 

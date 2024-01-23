@@ -461,7 +461,7 @@ namespace Latest_Staff_Portal.Controllers
 
                 if (ReportType == "CLATT")
                 {
-                    Credentials.ObjNav.PrintClassList(Prog, Unit, "", Sem, "", Campus, "CLASSLIST-" + _filename + ".pdf");
+                    Credentials.ObjNav.PrintClassList(Prog, Unit, "", Sem, "", Campus, 1, "CLASSLIST-" + _filename + ".pdf");
                     filename = "CLASSLIST-" + _filename + ".pdf";
                 }
                 if (ReportType == "EXAMATT")
