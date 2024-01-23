@@ -535,7 +535,7 @@ namespace Latest_Staff_Portal.Controllers
             try
             {
                 Credentials.ObjNav.DeleteDocumentAttachment(DocNo, tblID, DocID);
-                return Json(new { message = "Attachmet file deleted successfully", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = "Attachment file deleted successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
