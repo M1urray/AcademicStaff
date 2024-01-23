@@ -108,7 +108,7 @@ namespace Latest_Staff_Portal.Controllers
                     "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 string DocNo = Credentials.ObjNav.StaffClearanceRequest(staffClearance.StaffNo,
                     staffClearance.PhoneNumber, staffClearance.Email, staffClearance.Address,
-                    staffClearance.ReasonForClearing, LastDayOfService,staffClearance.MemberBenefit,staffClearance.EmployerBenefit,staffClearance.EmployerBalance);
+                    staffClearance.ReasonForClearing, LastDayOfService);
                 if (DocNo != "")
                 {
                     return Json(

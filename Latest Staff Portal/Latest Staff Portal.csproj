@@ -139,6 +139,7 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DocumentApprovalController.cs" />
+    <Compile Include="Controllers\ExitInterviewController.cs" />
     <Compile Include="Controllers\ICTController.cs" />
     <Compile Include="Controllers\ImprestController.cs" />
     <Compile Include="Controllers\ImprestSurrenderController.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="ViewModel\Student.cs" />
     <Compile Include="ViewModel\SubmitLecAssignedUnit.cs" />
     <Compile Include="ViewModel\TimeTable.cs" />
+    <Compile Include="ViewModel\Training.cs" />
     <Compile Include="ViewModel\TransferOrder.cs" />
     <Compile Include="ViewModel\Transport.cs" />
     <Compile Include="ViewModel\UnitAllocationDropdownList.cs" />
@@ -471,6 +473,26 @@
     <Content Include="Views\Leave\LeavePlannerList.cshtml" />
     <Content Include="Views\Leave\LeavePlannerListPartialView.cshtml" />
     <Content Include="Views\Leave\NewLeavePlanForm.cshtml" />
+    <Content Include="Views\Training\Partial Views\FileAttachmentForm.cshtml" />
+    <Content Include="Views\Training\Partial Views\NewTrainingRequisition.cshtml" />
+    <Content Include="Views\Training\Partial Views\ParticipantForm.cshtml" />
+    <Content Include="Views\Training\Partial Views\ParticipantList.cshtml" />
+    <Content Include="Views\Training\Partial Views\TRListView.cshtml" />
+    <Content Include="Views\Training\TrainingDocumentDetails.cshtml" />
+    <Content Include="Views\Training\TrainingRequisitionList.cshtml" />
+    <Content Include="Views\StaffClearance\StaffClearanceRequestList.cshtml" />
+    <Content Include="Views\StaffClearance\StaffClearanceListPartialView.cshtml" />
+    <Content Include="Views\StaffClearance\StaffClearanceDocumentView.cshtml" />
+    <Content Include="Views\StaffClearance\NewStaffClearanceRequest.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewDocumentLineView.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewDocumentView.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewForm.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewListPartialView.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewQuestionLineView.cshtml" />
+    <Content Include="Views\ExitInterview\ExitInterviewRequisitionList.cshtml" />
+    <Content Include="Views\ExitInterview\ExitReasonsForm.cshtml" />
+    <Content Include="Views\ExitInterview\FileAttachmentForm.cshtml" />
+    <Content Include="Views\ExitInterview\NewExitInterviewRequest.cshtml" />
     <None Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
