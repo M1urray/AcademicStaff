@@ -157,6 +157,7 @@
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TimeTableController.cs" />
+    <Compile Include="Controllers\TrainingController.cs" />
     <Compile Include="Controllers\TransportController.cs" />
     <Compile Include="Controllers\ViewDocumentController.cs" />
     <Compile Include="Controllers\ViewDocumentsController.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="ViewModel\Student.cs" />
     <Compile Include="ViewModel\SubmitLecAssignedUnit.cs" />
     <Compile Include="ViewModel\TimeTable.cs" />
+    <Compile Include="ViewModel\Training.cs" />
     <Compile Include="ViewModel\TransferOrder.cs" />
     <Compile Include="ViewModel\Transport.cs" />
     <Compile Include="ViewModel\UnitAllocationDropdownList.cs" />
@@ -506,6 +508,12 @@
     <Content Include="Views\Separation\SeparationRequestList.cshtml" />
     <Content Include="Views\Separation\SeparationRequestListPartialView.cshtml" />
     <Content Include="Views\Separation\NewSeparationRequest.cshtml" />
+    <Content Include="Views\Training\Partial Views\NewTrainingRequisition.cshtml" />
+    <Content Include="Views\Training\Partial Views\ParticipantForm.cshtml" />
+    <Content Include="Views\Training\Partial Views\ParticipantList.cshtml" />
+    <Content Include="Views\Training\Partial Views\TRListView.cshtml" />
+    <Content Include="Views\Training\TrainingDocumentDetails.cshtml" />
+    <Content Include="Views\Training\TrainingRequisitionList.cshtml" />
     <None Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

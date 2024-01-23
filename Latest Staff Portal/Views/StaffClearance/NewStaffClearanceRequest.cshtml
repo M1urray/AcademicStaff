@@ -19,7 +19,7 @@
 </style>
 <div class="card pre-scrollable">
     <div class="card-body">
-        <b >Staff Clearance Form</b>
+        <b>Staff Clearance Form</b>
         <hr />
         <div class="row">
             <div class="col-md-6">
@@ -114,27 +114,35 @@
 
         <div class="row">
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group">
                     @Html.Label("Reason for Clearing", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
-                        <select id="txtReason" class="form-control">
+                        <select id="txtReason" class="form-control" onchange="showHideExitNatureOption()">
                             <option value="">Select an option</option>
                             <option value="Resignation">Resignation</option>
                             <option value="Termination">Termination</option>
                             <option value="Dismissal">Dismissal</option>
                             <option value="Retirement">Retirement</option>
+                            <option value="Other">Any Other</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row" id="exitNature">
+            <div class="col-md-12">
+                Please Elaborate
+                <textarea id="txtOtherNature" class="form-control" maxlength="150"></textarea>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    @Html.Label("Hand-Over Report(Optional)", htmlAttributes: new { @class = "control-label col-md-12" })
+                    @Html.Label("Relevant Documents ie Hand Over Report,Provident Fund Form", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
-                        <input type="file" class="form-control" id="fileAttachment" multiple/>
+                        <input type="file" class="form-control" id="fileAttachment" multiple />
                     </div>
                 </div>
             </div>
@@ -142,14 +150,17 @@
         </div>
 
 
-        <b style="font-size:medium">Provident Fund </b>
+
+
+
+        <!--<b style="font-size:large">Provident Fund </b>
         <div class="row">
 
-            <div class="col-md-6">
-                <div class="form-grou
-                    @Html.Label("Member’s benefits (please tick)", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Label("Member’s benefits (please select whichever is applicable)", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
-                        <select id="memberBenefits" name="member_benefits">
+                        <select style="font-size:medium" id="memberBenefits" name="member_benefits">
                             <option value="0">Select an option</option>
                             <option value="1">Full cash surrender</option>
                             <option value="2">Retain my accumulated contributions in the scheme until further notice</option>
@@ -161,13 +172,13 @@
             </div>
         </div>
         <div class="row" id="txtBenefitOption">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group">
                     @Html.Label("Employer’s Benefits (please select whichever is applicable)", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
-                        <select id="employerBenefitOption" name="employer_benefit_option" onchange="showHideEmployerBalanceOption()">
+                        <select id="employerBenefitOption" name="employer_benefit_option" onchange="showHideEmployerBalanceOption()">-->
                             <!-- ... options ... -->
-                            <option>------</option>
+                            <!--<option style="">Select an option</option>
                             <option value="1">Immediate payment of fifty percent (50%) of your employer’s contributions and the investment income accrued thereon;</option>
                             <option value="2">
                                 Preserve one hundred percent (100%) of the employer’s contributions together with investment in accrued thereon until normal retirement age/earlier at age 50
@@ -178,28 +189,82 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group" id="txtOptionSelect">
                     @Html.Label("The fifty percent (50%) balance of the employer portion of the member’s entitlement would either be", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
-                        <select id="employerBalanceOptionSelect" name="employer_benefit_option">
+                        <select id="employerBalanceOptionSelect" name="employer_benefit_option">-->
                             <!-- ... options ... -->
-                            <option value="1">Retain in scheme until normal retirement age / earlier at age 50</option>
+                            <!--<option value="1">Retain in scheme until normal retirement age / earlier at age 50</option>
                             <option value="2">Transfer to: New employer’s scheme Pension Plan</option>
                             <option value="3">Transfer to: Personal Pension Plan</option>
-                            
+
                         </select>
                     </div>
                 </div>
             </div>
         </div>
-        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Account Name", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <textarea id="txtAccountName" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Name of Bank", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <textarea id="txtBankName" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Name of Branch", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <textarea id="txtBranchName" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Account Number", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <textarea id="txtAccountNumber" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Member’s Email Address", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <textarea id="txtEmailAddress" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Member’s Phone Number", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <textarea id="txtPhoneNumber" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />-->
 
         <div align="center">
             <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Clearance" onclick="SubmitClearanceRequest();" />
         </div>
     </div>
-</div>
+    </div>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#txtLastDateOfService,#txtAppointDate').datepicker({
@@ -219,6 +284,7 @@
         document.getElementById("txtEmail").disabled = true;
         document.getElementById("txtAddress").disabled = true;
         $("#txtOptionSelect").hide();
+        $("#exitNature").hide();
     });
     function showHideEmployerBalanceOption() {
         var selectedOption = $("#employerBenefitOption").children("option:selected").val();
@@ -227,6 +293,15 @@
         }
         else {
             $("#txtOptionSelect").hide();
+        }
+    }
+    function showHideExitNatureOption() {
+        var selectedOption = $("#txtReason").children("option:selected").val();
+        if (selectedOption == "Other") {
+            $("#exitNature").show();
+        }
+        else {
+            $("#exitNature").hide();
         }
     }
 </script>

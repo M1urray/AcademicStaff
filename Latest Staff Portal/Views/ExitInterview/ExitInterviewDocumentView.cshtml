@@ -228,11 +228,19 @@
     var SubmitQuestions = function(docNo) {
         ShowProgress();
         var exitNature = $("#exitNatureSelect").children("option:selected").val();
+        var otherNature = $("#txtOtherNature").val();
         var reasons = $("#txtReasons").val();
         var exitReasons = $("#exitReasonsSelect").children("option:selected").val();
+        var otherReason = $("#txtOtherReason").val();
         var suggest =$("#txtSuggest").val();
         var liked = $("#txtLike").val();
         var recommendation = $("#txtRecommendation").val();
+        if (exitNature == "Other") {
+            exitNature = otherNature;
+        }
+        else if (exitReasons == "Other") {
+            exitReasons = otherReason;
+        }
         var questionAnswers = [
             { Question: "What is the nature of your exit?", Answer: exitNature, QuizNo:1 },
             { Question: "What reasons have made you leave your current work?", Answer: reasons, QuizNo: 2 },

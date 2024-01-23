@@ -8,19 +8,28 @@
     <div class="row">
         <div class="col-md-6">
             1.	What is the nature of your exit? ( Please select as appropriate)
-            <select id="exitNatureSelect" class="form-control">
+            <select id="exitNatureSelect" class="form-control" onchange="showHideExitNatureOption()">
                 <option value="">Select an option</option>
                 <option value="Resignation">Resignation</option>
                 <option value="Termination">Termination</option>
                 <option value="Dismissal">Dismissal</option>
                 <option value="Retirement">Retirement</option>
+                <option value="Other">Any other</option>
             </select>
         </div>
     </div>
     <hr />
+    <div class="row" id="exitNature">
+        <div class="col-md-12">
+            Please Elaborate
+            <textarea id="txtOtherNature" class="form-control" maxlength="150"></textarea>
+        </div>
+    </div>
+    <hr />
+    <hr />
     <div class="row">
         <div class="col-md-12">
-            2.	What reasons have made you leave your current work? (Please respond truthfully
+            2.	What reasons have made you leave your current work? (Please respond truthfully)
             <textarea id="txtReasons" class="form-control" maxlength="150"></textarea>
         </div>
     </div>
@@ -28,16 +37,28 @@
     <div class="row">
         <div class="col-md-12">
             3.	Could your exit also be linked to any of the following reasons? ( Please select as appropriate)
-            <select id="exitReasonsSelect" class="form-control">
+            <select id="exitReasonsSelect" class="form-control" onchange="showHideExitOption()">
                 <option value="">Select an option</option>
                 <option value="Remuneration">Remuneration</option>
                 <option value="Promotion">Promotion</option>
                 <option value="Provident fund">Provident fund</option>
                 <option value="Training">Training</option>
+                <option value="Working environment">Working environment</option>
+                <option value="Supervision">Supervision</option>
+                <option value="Harassment">Harassment</option>
+                <option value="Other">Any other</option>
                 <!-- Add more options for other reasons -->
             </select>
         </div>
     </div>
+    <hr />
+    <div class="row" id="otherReason">
+        <div class="col-md-12">
+            Please elaborate
+            <textarea id="txtOtherReason" class="form-control" maxlength="150"></textarea>
+        </div>
+    </div>
+    <hr />
     <hr />
     <div class="row">
         <div class="col-md-12">
@@ -64,4 +85,27 @@
         <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Questionnare" onclick="SubmitQuestions(`@Model.No`);" />
     </div>
 </div>
-
+<script>
+    $(document).ready(function () {
+        $("#otherReason").hide();
+        $("#exitNature").hide();
+    });
+    function showHideExitOption() {
+        var selectedOption = $("#exitReasonsSelect").children("option:selected").val();
+        if (selectedOption == "Other") {
+            $("#otherReason").show();
+        }
+        else {
+            $("#otherReason").hide();
+        }
+    }
+    function showHideExitNatureOption() {
+        var selectedOption = $("#exitNatureSelect").children("option:selected").val();
+        if (selectedOption == "Other") {
+            $("#exitNature").show();
+        }
+        else {
+            $("#exitNature").hide();
+        }
+    }
+</script>

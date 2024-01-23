@@ -1626,6 +1626,12 @@
             <element minOccurs="1" maxOccurs="1" name="memberBenefit" type="int" />
             <element minOccurs="1" maxOccurs="1" name="employerBenefit" type="int" />
             <element minOccurs="1" maxOccurs="1" name="employerBalance" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="accountNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="memberPhoneNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="memberEmail" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="branchName" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="bankName" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="accountName" type="string" />
           </sequence>
         </complexType>
       </element>

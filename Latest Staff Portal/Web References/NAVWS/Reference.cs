@@ -6348,7 +6348,7 @@ namespace Latest_Staff_Portal.NAVWS {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:StaffClearanceRequest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="StaffClearanceRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string StaffClearanceRequest(string staffNo, string phoneNo, string email, string address, string reason, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime effectiveDate, int memberBenefit, int employerBenefit, int employerBalance) {
+        public string StaffClearanceRequest(string staffNo, string phoneNo, string email, string address, string reason, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime effectiveDate, int memberBenefit, int employerBenefit, int employerBalance, string accountNo, string memberPhoneNo, string memberEmail, string branchName, string bankName, string accountName) {
             object[] results = this.Invoke("StaffClearanceRequest", new object[] {
                         staffNo,
                         phoneNo,
@@ -6358,17 +6358,39 @@ namespace Latest_Staff_Portal.NAVWS {
                         effectiveDate,
                         memberBenefit,
                         employerBenefit,
-                        employerBalance});
+                        employerBalance,
+                        accountNo,
+                        memberPhoneNo,
+                        memberEmail,
+                        branchName,
+                        bankName,
+                        accountName});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void StaffClearanceRequestAsync(string staffNo, string phoneNo, string email, string address, string reason, System.DateTime effectiveDate, int memberBenefit, int employerBenefit, int employerBalance) {
-            this.StaffClearanceRequestAsync(staffNo, phoneNo, email, address, reason, effectiveDate, memberBenefit, employerBenefit, employerBalance, null);
+        public void StaffClearanceRequestAsync(string staffNo, string phoneNo, string email, string address, string reason, System.DateTime effectiveDate, int memberBenefit, int employerBenefit, int employerBalance, string accountNo, string memberPhoneNo, string memberEmail, string branchName, string bankName, string accountName) {
+            this.StaffClearanceRequestAsync(staffNo, phoneNo, email, address, reason, effectiveDate, memberBenefit, employerBenefit, employerBalance, accountNo, memberPhoneNo, memberEmail, branchName, bankName, accountName, null);
         }
         
         /// <remarks/>
-        public void StaffClearanceRequestAsync(string staffNo, string phoneNo, string email, string address, string reason, System.DateTime effectiveDate, int memberBenefit, int employerBenefit, int employerBalance, object userState) {
+        public void StaffClearanceRequestAsync(
+                    string staffNo, 
+                    string phoneNo, 
+                    string email, 
+                    string address, 
+                    string reason, 
+                    System.DateTime effectiveDate, 
+                    int memberBenefit, 
+                    int employerBenefit, 
+                    int employerBalance, 
+                    string accountNo, 
+                    string memberPhoneNo, 
+                    string memberEmail, 
+                    string branchName, 
+                    string bankName, 
+                    string accountName, 
+                    object userState) {
             if ((this.StaffClearanceRequestOperationCompleted == null)) {
                 this.StaffClearanceRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStaffClearanceRequestOperationCompleted);
             }
@@ -6381,7 +6403,13 @@ namespace Latest_Staff_Portal.NAVWS {
                         effectiveDate,
                         memberBenefit,
                         employerBenefit,
-                        employerBalance}, this.StaffClearanceRequestOperationCompleted, userState);
+                        employerBalance,
+                        accountNo,
+                        memberPhoneNo,
+                        memberEmail,
+                        branchName,
+                        bankName,
+                        accountName}, this.StaffClearanceRequestOperationCompleted, userState);
         }
         
         private void OnStaffClearanceRequestOperationCompleted(object arg) {
