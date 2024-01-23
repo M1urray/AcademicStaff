@@ -1,0 +1,482 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewExitHeader
+@{
+    ViewBag.Title = "ExitInterviewDocumentView";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    hr {
+        margin: 4px;
+    }
+
+    .BtnPadding {
+        padding: 7px;
+        font-size: 12px;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="ExitInterviewRequisitionLink();" style="color:yellow"><<< Back To Exit Interview Requisition List</a>
+</div>
+<div class="card">
+    <div class="card-title">Exit Interview Document Details(@Model.No)</div>
+    <hr />
+    <div style="text-align:right" id="HideEditButton">
+        <input type="button" class="btn btn-danger BtnPadding" id="btnEdit" value="Edit Header" onclick="EditDocument();" />
+        <hr />
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <b>Document No</b>
+                @Html.TextBoxFor(m => m.No, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+            </div>
+            <div class="col-md-6">
+                <b>Employee Number</b>
+                @Html.TextBoxFor(m => m.EmployeeNumber, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtEmployeeName", @onkeydown = "return false;", @autocomplete = "off" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Employee Name</b>
+                @Html.TextBoxFor(m => m.EmployeeName, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtEmployeeName" })
+            </div>
+            <div class="col-md-6">
+                <b>Length Of Service</b>
+                @Html.TextBoxFor(m => m.LengthOfService, new { @class = "form-control ", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtLengthOfService" })
+                
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Employee Category</b>
+                @Html.TextBoxFor(m => m.EmployeeCategory, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtEmpCategory" })
+                
+            </div>
+            <div class="col-md-6">
+                <b>Leaving Date</b>
+                @Html.TextBoxFor(m => m.LeavingDate, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtLeavingDate" })
+               
+            </div>
+        </div>
+        <hr />
+        <div align="center" id="DivUpdateButton">
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Update Header" onclick="UpdateExitHeader();" />
+        </div>
+        <div id="DivExitLines">
+            <hr style="border:1px solid black" />
+            <b>Exit Reason Lines</b>
+            <hr />
+            <div id="divExitReasons"></div>
+            <hr style="border:1px solid black" />
+            <b>Exit Question Lines</b>
+            <hr />
+            <div id="divExitQuestions"></div>
+            <hr style="border:1px solid black" />
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Attachments</b>
+                    <div id="divAttachDocs"></div>
+                </div>
+            </div>
+            <hr style="border:1px solid black" />
+            <div align="right" id="DivSendForApproval">
+                <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval();" />
+            </div>
+            <hr />
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" ke aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">New Exit Reason Line</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal View Doc////////////////////////////*@
+<div class="modal fade" id="myModalAttachment" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Attachment</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalAttachmentBody" style="width:100%;height:450px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadExitInterViewReasons(`@Model.No`);
+        LoadExitInterviewQuestions(`@Model.No`);
+    });
+    var LoadExitInterViewReasons = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo }),
+            url: "/ExitInterview/ReasonDocumentLines",
+            success: function (data) {
+                $("#divExitReasons").html(data);
+                HideProgress();
+                GetDocumentAttachments();
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var LoadExitInterviewQuestions = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo }),
+            url: "/ExitInterview/ExitQuestions",
+            success: function (data) {
+                $("#divExitQuestions").html(data);
+                HideProgress();
+                GetDocumentAttachments();
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var AddLeavingReason = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo }),
+            url: "/ExitInterview/NewReasonLine",
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var SubmitReasons = function (DocNo) {
+        ShowProgress();
+        var reason = $("#txtReasons").val();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo,Reason:reason }),
+            url: "/ExitInterview/SubmitExitReason",
+            success: function (data) {
+                if (data.success) {
+                    LoadExitInterViewReasons(`@Model.No`);
+                    $("#myModal").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                } else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var SubmitQuestions = function(docNo) {
+        ShowProgress();
+        var exitNature = $("#exitNatureSelect").children("option:selected").val();
+        var reasons = $("#txtReasons").val();
+        var exitReasons = $("#exitReasonsSelect").children("option:selected").val();
+        var suggest =$("#txtSuggest").val();
+        var liked = $("#txtLike").val();
+        var recommendation = $("#txtRecommendation").val();
+        var questionAnswers = [
+            { Question: "What is the nature of your exit?", Answer: exitNature, QuizNo:1 },
+            { Question: "What reasons have made you leave your current work?", Answer: reasons, QuizNo: 2 },
+            { Question: "Could your exit also be linked to any of the following reasons?", Answer: exitReasons, QuizNo: 3 },
+            { Question: "What would you suggest to be done to address the problems noted in No. 3", Answer: suggest, QuizNo: 4 },
+            { Question: "What did you like about Daystar University for the period you served?", Answer: liked, QuizNo: 5 },
+            { Question: "Any recommendation for improvement either for the department or the University in general", Answer: recommendation, QuizNo: 6 }
+        ];
+        $.ajax({
+                async: true,
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                processData: false,
+                data: JSON.stringify({
+                    DocNo: docNo,
+                    QuestionAnswers: questionAnswers
+                    // Pass the array to the server
+                }),
+                url: "/ExitInterview/SumbitInterviewQuestionnare",
+            success: function (data) {
+                if (data.success) {
+                    HideProgress();
+                    LoadExitInterviewQuestions(`@Model.No`);
+                    $("#myModal").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                } else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+            },
+                error: function () {
+                    // Handle the error response if needed
+                    HideProgress();
+                    Swal.fire("There is some problem to process your request. Please try again later.");
+                }
+            });
+    }
+    var GetDocumentAttachments = function () {
+        ShowProgress();
+        var Status = `Active`;
+        var DocNo = `@Model.No`;
+        var tableId = '70135469';
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo, TableID: tableId, Status: Status }),
+            url: "/Common/DocumentAttachments",
+            success: function (data) {
+                HideProgress();
+                $("#divAttachDocs").html(data);
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var ExitInterviewList = function () {
+        ShowProgress();
+        window.location = "/ExitInterview/ExitInterviewRequisitionLisst";
+    };
+    var AnswerQuestions = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo }),
+            url: "/ExitInterview/NewQuestionLine",
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var ExitInterviewRequisitionLink = function () {
+        ShowProgress();
+        window.location = "/ExitInterview/ExitInterviewRequisitionList";
+    }
+    var AddAttachment = function () {
+        $("#lblTitl").text("File Upload");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            datatype: "html",
+            url: '/ExitInterview/FileUploadForm',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    };
+    var SaveAttachmentFile = function () {
+    var DocNo = `@Model.No`;
+    var filename; var base64String; var filetype;
+        var files = document.getElementById('ImprestfileAttachment').files;
+    if (files.length) {
+        var file = files[0];
+        var blob = file.slice();
+        filetype = file.type;
+        filename = file.name;
+        var reader = new FileReader();
+        reader.onloadend = function (evt) {
+            if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+                var cont = evt.target.result
+                base64String = getB64Str(cont);
+                ShowProgress();
+                //Send the JSON array to Controller using AJAX.
+                $.ajax({
+                    type: "POST",
+                    url: "/Common/SaveAttachedFile",
+                    data: JSON.stringify({ DocNo: DocNo, base64Upload: base64String, fileName: filename, Extn: filetype, TableID: 70135469 }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            HideProgress();
+                            GetDocumentAttachments();
+                            $("#myModal").modal("hide");
+                            Swal.fire('Success', data.message, 'success');
+                        }
+                        else {
+                            Swal.fire('Warning', data.message, 'warning');
+                            HideProgress();
+                        }
+                    },
+                    error: function (err) {
+                        HideProgress();
+                        Swal.fire('Warning', err, 'warning');
+                    }
+                });
+            }
+        };
+        reader.readAsArrayBuffer(blob);
+    }
+    };
+    function getB64Str(buffer) {
+    var binary = '';
+    var bytes = new Uint8Array(buffer);
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+    }
+    var ViewAttachment = function (tbl, No, Id,fName, ext) {
+        $.ajaxSetup({ cache: false });
+        ShowProgress();
+        $.ajax({
+            cache: false,
+            url: '/Common/DocumentAttachmentview',
+            type: "POST",
+            datatype: "json",
+            cache: false,
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ tblID: tbl, No: No, ID: Id, fileName: fName, ext: ext }),
+            success: function (data) {
+                if (data.success == true) {
+                    if (data.view == true) {
+                        var viewer = $("#modalAttachmentBody");
+                        if (ext == "pdf") {
+                            PDFObject.embed("data:application/" + ext + ";base64," + data.message + "", viewer);
+                        }
+                        if (ext == "png" || ext == "jpg") {
+                            PDFObject.embed("data:image/" + ext + ";base64," + data.message + "", viewer);
+                        }
+                        $("#myModalAttachment").modal("show");
+                        HideProgress();
+                    }
+                    else {
+                        window.location = '/Common/AttachmentDownload?fileName=' + data.message;
+                        Swal.fire('Success', 'Document Downloaded successfully', 'success');
+                        HideProgress();
+                    }
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    };
+    var DeleteAttachment = function (tbl, No, Id) {
+    $.ajaxSetup({ cache: false });
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+            ShowProgress();
+            $.ajax({
+                cache: false,
+                url: '/Common/DeleteAttachedDocument',
+                datatype: "json",
+                type: "POST",
+                data: JSON.stringify({ DocNo: No, tblID: tbl, DocID: Id}),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        HideProgress();
+                        GetDocumentAttachments();
+                        Swal.fire('Success', 'File Deleted Successfully', 'success');
+                    }
+                    else {
+                        HideProgress();
+                        Swal.fire('Warning', data.message, 'warning');
+                    }
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+        else {
+            Swal.fire('Cancelled', 'Attachment File has not been deleted', 'error');
+        }
+    });
+    };
+</script>

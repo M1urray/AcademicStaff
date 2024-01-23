@@ -219,7 +219,7 @@
         </div>
         <hr />
         <div align="center">
-            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitPurchaseRequisition();" />
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitExitInterview();" />
         </div>
     </div>
 </div>
@@ -234,5 +234,24 @@
             dateFormat: 'dd/mm/yy'
         });
     });
+    var SubmitExitInterview = function (){
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/StaffClearance/ExitInterview",
+            success: function (data) {
+                $("#divRegList").html(data);
+//                HideProgress();
+            },
+            error: function () {
+//                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+
+    }
 </script>
 

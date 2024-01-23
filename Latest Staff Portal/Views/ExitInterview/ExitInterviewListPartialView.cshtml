@@ -1,13 +1,14 @@
-﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.TrainingList>
+﻿@model IEnumerable<Latest_Staff_Portal.ViewModel.NewExitHeader>
 <div class="pre-scrollable">
     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
         <thead style="background-color:black;color:white">
             <tr>
-                <th></th>
+                <th>Action</th>
                 <th>No</th>
-                <th>Training Category</th>
-                <th>Course Title</th>
-                <th>Status</th>
+                <th>Staff Name</th>
+                <th>Clearance Date</th>
+                <th>Length Of Service</th>
+                <th>Date Of Leaving</th>
             </tr>
         </thead>
         <tbody>
@@ -18,19 +19,22 @@
                     {
                         <tr>
                             <td>
-                                <input type="button" onclick="SelectedRow('@item.ApplicationNo','@item.Status');" class="btn btn-sm btn-danger" value="Select" />
+                                <input type="button" onclick="SelectedRow('@item.No','Active');" class="btn btn-sm btn-danger" value="Select" />
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ApplicationNo)
+                                @Html.DisplayFor(modelItem => item.No)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.TrainingCategory)
+                                @Html.DisplayFor(modelItem => item.EmployeeNumber)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.CourseTitle)
+                                @Html.DisplayFor(modelItem => item.ClearanceDate)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Status)
+                                @Html.DisplayFor(modelItem => item.LengthOfService)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LeavingDate)
                             </td>
                         </tr>
                     }
@@ -38,7 +42,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="5" style="color:red">
+                        <td colspan="9" style="color:red">
                             No Records Found
                         </td>
                     </tr>
@@ -47,6 +51,4 @@
         </tbody>
     </table>
 </div>
-
-
 

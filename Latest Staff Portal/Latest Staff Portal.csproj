@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Latest_Staff_Portal</RootNamespace>
     <AssemblyName>Latest Staff Portal</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -153,6 +153,7 @@
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TimeTableController.cs" />
+    <Compile Include="Controllers\TrainingController.cs" />
     <Compile Include="Controllers\TransportController.cs" />
     <Compile Include="Controllers\ViewDocumentController.cs" />
     <Compile Include="Controllers\ViewDocumentsController.cs" />
@@ -290,6 +291,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Attachments\" />
+    <Folder Include="Downloads\" />
+    <Folder Include="MarkSheets\" />
     <Folder Include="Views\AssociateLecturer\" />
   </ItemGroup>
   <ItemGroup>
@@ -316,9 +320,6 @@
     <Content Include="assets\fonts\materialdesignicons-webfont2f9b.ttf" />
     <Content Include="assets\fonts\materialdesignicons-webfont2f9b.woff" />
     <Content Include="assets\fonts\materialdesignicons-webfontd41d.eot" />
-    <Content Include="Attachments\DBM-012-Mark_Sheet_0577.pdf" />
-    <Content Include="MarkSheets\DBM-012-Mark_Sheet_0577.pdf" />
-    <Content Include="Downloads\PUHE 482-Mark_Sheet_0665.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

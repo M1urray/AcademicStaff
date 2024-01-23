@@ -7,8 +7,8 @@
 <div class="bg-soft-dark" style="color:black">
     <div class="row">
         <div class="col-md-12">
-            <span style="font-weight: bold">Participant Name</span>
-            @Html.DropDownListFor(m => m.No, new SelectList(Model.ListOfEmployee, "Value", "Text", Model.No), "--Select Employee--", new { @id = "ddlParticipant", @class = "form-control" })
+            <span style="font-weight: bold;" >Participant Name</span>
+            @Html.DropDownListFor(m => m.No, new SelectList(Model.ListOfEmployee, "Value", "Text", Model.No), "--Select Employee--", new { @id = "ddlParticipant", @class = "form-control" ,@style = "color:black" })
         </div>
     </div>
     <hr />
@@ -19,7 +19,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#ddlParticipant").select2({
-            width: '100%'
+            width: '100%',
+            color:'black'
         });
     });
 </script>

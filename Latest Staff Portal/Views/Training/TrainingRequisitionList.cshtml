@@ -10,15 +10,10 @@
     }
 
     .BtnPadding {
-        padding: 1px;
+        padding: 7px;
         font-size: 12px;
     }
 </style>
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div class="card pre-scrollable">
     <div class="card-title">Training Requisition List</div>
     <div class="card-body">
@@ -129,62 +124,68 @@
         });
     }
     var SubmitTrainingRequest = function () {
-        var Directorate = $("#ddlDirectorate").children("option:selected").val();
-        var Department = $("#ddlDepartment").children("option:selected").val();
-       // var Section = $("#ddlSection").children("option:selected").val();
-        var Course = $("#ddlCourse").children("option:selected").val();
-        var TrainingCat = $("#ddlCategory").children("option:selected").val();
-        var Sponsor = $("#ddlSponsor").children("option:selected").val();
-        var Startdate = $("#dtFrom").val();
-        var EndDate = $("#dtTo").val();
-        var Trainer = $("#ddlTrainer").children("option:selected").val();
-        var Cost = $("#txtCost").val();
-        var Purpose = $("#txtRemarks").val();
-        if (Course == "") {
+        var dim1 = $("#ddlDim1").children("option:selected").val();
+        var dim2 = $("#ddlDim2").children("option:selected").val();
+        var course = $("#ddlCourse").children("option:selected").val();
+        var trainingCat = $("#ddlCategory").children("option:selected").val();
+        var sponsor = $("#ddlSponsor").children("option:selected").val();
+        var startDate = $("#dtFrom").val();
+        var endDate = $("#dtTo").val();
+        var trainer = $("#ddlTrainer").children("option:selected").val();
+        var cost = $("#txtCost").val();
+        var purpose = $("#txtRemarks").val();
+        if (dim1 == "") {
+            Swal.fire('error', 'Select Region', 'error');
+            return;
+        }
+        else if (dim2 == "") {
+            Swal.fire('error', 'Select Station', 'error');
+            return;
+        }
+        else if (course == "") {
             Swal.fire('error', 'Select Course', 'error');
             return;
         }
-        else if (TrainingCat == "") {
+        else if (trainingCat == "") {
             Swal.fire('error', 'Select Training Category', 'error');
             return;
         }
-        else if (Sponsor == "") {
+        else if (sponsor == "") {
             Swal.fire('error', 'Select Sponsor', 'error');
             return;
         }
-        else if (Startdate == "") {
+        else if (startDate == "") {
             Swal.fire('error', 'Select Start Date', 'error');
             return;
         }
-        else if (EndDate == "") {
+        else if (endDate == "") {
             Swal.fire('error', 'Select End Date', 'error');
             return;
         }
-        else if (Trainer == "") {
+        else if (trainer == "") {
             Swal.fire('error', 'Select Trainer', 'error');
             return;
         }
-        else if (Cost == "") {
+        else if (cost == "") {
             Swal.fire('error', 'Enter Cost of Training', 'error');
             return;
         }
-        else if (Purpose == "") {
+        else if (purpose == "") {
             Swal.fire('error', 'Enter Purpose of the Trip', 'error');
             return;
         }
         else {
             var TrainingList = {};
-            TrainingList.Directorate = Directorate;
-            TrainingList.Department = Department;
-            //TrainingList.Section = Section;
-            TrainingList.Course_Title = Course;
-            TrainingList.Training_Category = TrainingCat;
-            TrainingList.Sponsor = Sponsor;
-            TrainingList.StartDate = Startdate;
-            TrainingList.EndDate = EndDate;
-            TrainingList.Trainer = Trainer;
-            TrainingList.Cost = Cost;
-            TrainingList.Purpose = Purpose;
+            TrainingList.Dim1 = dim1;
+            TrainingList.Dim2 = dim2;
+            TrainingList.CourseTitle = course;
+            TrainingList.TrainingCategory = trainingCat;
+            TrainingList.Sponsor = sponsor;
+            TrainingList.StartDate = startDate;
+            TrainingList.EndDate = endDate;
+            TrainingList.Trainer = trainer;
+            TrainingList.Cost = cost;
+            TrainingList.Purpose = purpose;
             ShowProgress();
             $.ajax({
                 type: "post",
@@ -219,7 +220,7 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo, Redirect: "N" }),
+            data: JSON.stringify({ DocNo: DocNo, Redirect:'N' }),
             contentType: "application/json; charset = utf-8",
             processData: false,
             url: '/Training/SendDocAppForApproval',
@@ -250,11 +251,11 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Transport/CancelTransportAppForApproval',
+            url: '/Training/CancelTrainingAppForApproval',
             success: function (data) {
                 if (data.success == true) {
                     HideProgress();
-                    LoadTransportReqList();
+                    LoadTrainingReqList();
                     $("#myModalLinks").modal("hide");
                     Swal.fire('Success', data.message, 'success');
                 }

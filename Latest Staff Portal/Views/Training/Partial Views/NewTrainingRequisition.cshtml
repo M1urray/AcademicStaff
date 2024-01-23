@@ -2,20 +2,20 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            @Html.Label("Directorate", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.Label("Region", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                @Html.DropDownListFor(m => m.Directorate, new SelectList(Model.ListOfDirectorate, "Value", "Text", Model.Directorate), "--Select Directorate--", new { @id = "ddlDirectorate", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
-                @Html.ValidationMessageFor(model => model.Directorate, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.Dim1, new SelectList(Model.ListOfDim1, "Value", "Text", Model.Dim1), "--Select Region--", new { @id = "ddlDim1", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                @Html.ValidationMessageFor(model => model.Dim1, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
             <div class="form-group">
-                @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
+                @Html.Label("Station", htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-12">
-                    @Html.DropDownListFor(m => m.Department, new SelectList(Model.ListOfDepartment, "Value", "Text", Model.Department), "--Select Department--", new { @id = "ddlDepartment", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
-                    @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(m => m.Dim2, new SelectList(Model.ListOfDim2, "Value", "Text", Model.Dim2), "--Select Station--", new { @id = "ddlDim2", @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+                    @Html.ValidationMessageFor(model => model.Dim2, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -93,7 +93,7 @@
         <div class="form-group">
             @Html.Label("Cost of Training", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                <input type="text" class="form-control" id="txtCost" onkeypress="return functionDecimal(event,this.value)" />
+                <input type="text" class="form-control" id="txtCost" />
             </div>
         </div>
     </div>
@@ -128,39 +128,12 @@
                 of: $(this)
             });
         });
-        $("#ddlDirectorate,#ddlDepartment,#ddlCourse,#ddlTrainer").select2({
+        $("#ddlDim1,#ddlDim2,#ddlCourse,#ddlTrainer").select2({
             width: '100%'
         });
-        document.getElementById("ddlDirectorate").disabled = true;
-        document.getElementById("ddlDepartment").disabled = true;
+        document.getElementById("ddlDim1").disabled = true;
+        document.getElementById("ddlDim2").disabled = true;
     });
-    function functionDecimal(evt, val) {
-        try {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
-
-            if (charCode == 46) {
-                if (!(val.indexOf(".") > -1)) {
-                    return true;
-                }
-                else {
-                    Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
-                }
-            }
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
-                return false;
-            }
-            return true;
-        } catch (w) {
-            Swal.fire(w);
-        }
-    }
-    function functionx(evt) {
-        if (evt.charCode > 31 && (evt.charCode < 48 || evt.charCode > 57)) {
-            Swal.fire("Error", "Please enter only numeric characters in the text box", "error");
-            return false;
-        }
-    }
 </script>
 
 
