@@ -140,61 +140,7 @@
             </div>
             <div class="col-md-6"></div>
         </div>
-
-
-        <b style="font-size:medium">Provident Fund </b>
-        <div class="row">
-
-            <div class="col-md-6">
-                <div class="form-grou
-                    @Html.Label("Member’s benefits (please tick)", htmlAttributes: new { @class = "control-label col-md-12" })
-                    <div class="col-md-12">
-                        <select id="memberBenefits" name="member_benefits">
-                            <option value="0">Select an option</option>
-                            <option value="1">Full cash surrender</option>
-                            <option value="2">Retain my accumulated contributions in the scheme until further notice</option>
-                            <option value="3">Transfer to: New employer’s scheme Pension Plan</option>
-                            <option value="4">Transfer to: Personal Pension Plan</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="txtBenefitOption">
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.Label("Employer’s Benefits (please select whichever is applicable)", htmlAttributes: new { @class = "control-label col-md-12" })
-                    <div class="col-md-12">
-                        <select id="employerBenefitOption" name="employer_benefit_option" onchange="showHideEmployerBalanceOption()">
-                            <!-- ... options ... -->
-                            <option>------</option>
-                            <option value="1">Immediate payment of fifty percent (50%) of your employer’s contributions and the investment income accrued thereon;</option>
-                            <option value="2">
-                                Preserve one hundred percent (100%) of the employer’s contributions together with investment in accrued thereon until normal retirement age/earlier at age 50
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group" id="txtOptionSelect">
-                    @Html.Label("The fifty percent (50%) balance of the employer portion of the member’s entitlement would either be", htmlAttributes: new { @class = "control-label col-md-12" })
-                    <div class="col-md-12">
-                        <select id="employerBalanceOptionSelect" name="employer_benefit_option">
-                            <!-- ... options ... -->
-                            <option value="1">Retain in scheme until normal retirement age / earlier at age 50</option>
-                            <option value="2">Transfer to: New employer’s scheme Pension Plan</option>
-                            <option value="3">Transfer to: Personal Pension Plan</option>
-                            
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
         <hr />
-
         <div align="center">
             <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Clearance" onclick="SubmitClearanceRequest();" />
         </div>

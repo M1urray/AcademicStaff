@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Latest_Staff_Portal</RootNamespace>
     <AssemblyName>Latest Staff Portal</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -293,9 +293,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Attachments\" />
-    <Folder Include="Downloads\" />
-    <Folder Include="MarkSheets\" />
     <Folder Include="Views\AssociateLecturer\" />
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +319,9 @@
     <Content Include="assets\fonts\materialdesignicons-webfont2f9b.ttf" />
     <Content Include="assets\fonts\materialdesignicons-webfont2f9b.woff" />
     <Content Include="assets\fonts\materialdesignicons-webfontd41d.eot" />
+    <Content Include="Attachments\DBM-012-Mark_Sheet_0577.pdf" />
+    <Content Include="MarkSheets\DBM-012-Mark_Sheet_0577.pdf" />
+    <Content Include="Downloads\PUHE 482-Mark_Sheet_0665.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -409,8 +409,6 @@
     <Content Include="Views\StaffClaim\StaffClaimItemForm.cshtml" />
     <Content Include="Views\StaffClaim\StaffClaimReqListView.cshtml" />
     <Content Include="Views\StaffClaim\StaffClaimRequisitionList.cshtml" />
-    <Content Include="Views\StaffClearance\ExitInterview.cshtml" />
-    <Content Include="Views\StaffClearance\StaffClearance.cshtml" />
     <Content Include="Views\Store\NewStoreRequest.cshtml" />
     <Content Include="Views\Store\StoreDocumentLineView.cshtml" />
     <Content Include="Views\Store\StoreDocumentView.cshtml" />
@@ -480,10 +478,6 @@
     <Content Include="Views\Training\Partial Views\TRListView.cshtml" />
     <Content Include="Views\Training\TrainingDocumentDetails.cshtml" />
     <Content Include="Views\Training\TrainingRequisitionList.cshtml" />
-    <Content Include="Views\StaffClearance\StaffClearanceRequestList.cshtml" />
-    <Content Include="Views\StaffClearance\StaffClearanceListPartialView.cshtml" />
-    <Content Include="Views\StaffClearance\StaffClearanceDocumentView.cshtml" />
-    <Content Include="Views\StaffClearance\NewStaffClearanceRequest.cshtml" />
     <Content Include="Views\ExitInterview\ExitInterviewDocumentLineView.cshtml" />
     <Content Include="Views\ExitInterview\ExitInterviewDocumentView.cshtml" />
     <Content Include="Views\ExitInterview\ExitInterviewForm.cshtml" />
@@ -493,6 +487,10 @@
     <Content Include="Views\ExitInterview\ExitReasonsForm.cshtml" />
     <Content Include="Views\ExitInterview\FileAttachmentForm.cshtml" />
     <Content Include="Views\ExitInterview\NewExitInterviewRequest.cshtml" />
+    <Content Include="Views\StaffClearance\NewStaffClearanceRequest.cshtml" />
+    <Content Include="Views\StaffClearance\StaffClearanceDocumentView.cshtml" />
+    <Content Include="Views\StaffClearance\StaffClearanceListPartialView.cshtml" />
+    <Content Include="Views\StaffClearance\StaffClearanceRequestList.cshtml" />
     <None Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

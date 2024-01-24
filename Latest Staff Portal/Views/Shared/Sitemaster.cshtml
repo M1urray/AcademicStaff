@@ -472,7 +472,7 @@
         var TimetableProjectionLink = function () {
             ShowProgress();
             window.location = '@Url.Action("TimeTableProjections", "TimeTable")';
-        }        
+        }
         var LeavePannerLink = function () {
             ShowProgress();
             window.location = '@Url.Action("LeavePlannerList", "Leave")';
@@ -529,14 +529,6 @@
             ShowProgress();
             window.location = '@Url.Action("ICTRequisitionList", "ICT")';
         }
-        var ExitInterviewlink = function () {
-            ShowProgress();
-            window.location = '@Url.Action("ExitInterview", "StaffClearance")';
-        }
-        var StaffClearancelink = function () {
-            ShowProgress();
-            window.location = '@Url.Action("StaffClearance", "StaffClearance")';
-        }
         var PayslipViewLink = function () {
             ShowProgress();
             window.location = '@Url.Action("DocumentViewPayslip", "ViewDocument")';
@@ -560,6 +552,20 @@
         var ChangePasswordLink = function () {
             ShowProgress();
             window.location = '@Url.Action("ChangePassword", "Settings")';
+        }
+        var TrainingRequisitiontLink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("TrainingRequisitionList", "Training")';
+
+        }
+        var StaffClearancelink = function () {
+            ShowProgress();
+            window.location = '@Url.Action("StaffClearanceRequestList", "StaffClearance")';
+
+        }
+        var ExitInterviewlink = function () {
+            ShowProgress();
+            window.location ='@Url.Action("ExitInterviewRequisitionList", "ExitInterview")';
         }
     </script>
 </body>
