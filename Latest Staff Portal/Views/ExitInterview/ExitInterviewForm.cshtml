@@ -7,12 +7,21 @@
 <div class="bg-soft-dark" style="color:black">
     <div class="row">
         <div class="col-md-6">
-            1.	What is the nature of your exit? ( Please select as appropriate)
+            1.	Reasons for resignation: Please tell us the reasons why you decided to exit from Chuka university –please tick where appropriate
             <select id="exitNatureSelect" class="form-control">
                 <option value="">Select an option</option>
-                <option value="Resignation">Resignation</option>
-                <option value="Termination">Termination</option>
-                <option value="Dismissal">Dismissal</option>
+                <option value="Salary">Salary not commensurate with responsibilities</option>
+                <option value="Family">Family Responsibilities</option>
+                <option value="Lack">Lack of career progression</option>
+                <option value="Conflicts">Conflicts with </option>
+                <option value="Sexual">Sexual harassment</option>
+                <option value="Job">Job Advancement </option>
+                <option value="Dissatisfied">Dissatisfied/Management</option>
+                <option value="Personal">Personal Benefits</option>
+                <option value="Return">Return to School</option>
+                <option value="Job">Job Elimination</option>
+                <option value="Health">Health related issues</option>
+                <option value="Relocation">Relocation</option>
                 <option value="Retirement">Retirement</option>
             </select>
         </div>
@@ -20,20 +29,25 @@
     <hr />
     <div class="row">
         <div class="col-md-12">
-            2.	What reasons have made you leave your current work? (Please respond truthfully
-            <textarea id="txtReasons" class="form-control" maxlength="150"></textarea>
+            2.	For how long have you been thinking about exiting Chuka University employment
+                <select id="exitthinking" class="form-control">
+                    <option value="0">Select an option</option>
+                    <option value="1">Never, just an opportunity that come on my way………………...</option>
+                    <option value="2">1-2 months</option>
+                    <option value="3">3-4 months</option>
+                    <option value="4">5-6 months </option>
+                    <option value="5">Over 6 months</option>
+                </select>
         </div>
     </div>
     <hr />
     <div class="row">
         <div class="col-md-12">
-            3.	Could your exit also be linked to any of the following reasons? ( Please select as appropriate)
-            <select id="exitReasonsSelect" class="form-control">
-                <option value="">Select an option</option>
-                <option value="Remuneration">Remuneration</option>
-                <option value="Promotion">Promotion</option>
-                <option value="Provident fund">Provident fund</option>
-                <option value="Training">Training</option>
+            3.	Have you ever discussed your thought about exiting the employment with anyone in the University?
+            <select id="exitdiscussed" class="form-control">
+                <option value="0">Select an option</option>
+                <option value="1">Yes</option>
+                <option value="2">No</option>
                 <!-- Add more options for other reasons -->
             </select>
         </div>
@@ -41,25 +55,60 @@
     <hr />
     <div class="row">
         <div class="col-md-12">
-            4.	What would you suggest to be done to address the problems noted in No. 3
-            <textarea id="txtSuggest" class="form-control" maxlength="150"></textarea>
+            4.	Did you encounter any problems in your current job position?
+            <select id="exitproblems" class="form-control">
+                <option value="0">Select an option</option>
+                <option value="1">Yes</option>
+                <option value="2">No</option>
+                <!-- Add more options for other reasons -->
+            </select>
         </div>
     </div>
     <hr />
     <div class="row">
         <div class="col-md-12">
-            5.	What did you like about Daystar University for the period you served?
+            5.	What did you enjoy most about your employment with Chuka university?
             <textarea id="txtLike" class="form-control" maxlength="150"></textarea>
         </div>
     </div>
     <hr />
     <div class="row">
         <div class="col-md-12">
-            6.	Any recommendation for improvement either for the department or the University in general
-            <textarea id="txtRecommendation" class="form-control" maxlength="150"></textarea>
+            6.	What did you enjoy least about your employment with Chuka university?
+            <textarea id="txtleast" class="form-control" maxlength="150"></textarea>
         </div>
     </div>
     <hr />
+    <div class="row">
+        <div class="col-md-12">
+            3.	Based upon your experiences here, would you recommend Chuka university as a potential employer for your friends, relatives, etc?
+            <select id="exitExperiences" class="form-control">
+                <option value="0">Select an option</option>
+                <option value="1">Yes</option>
+                <option value="2">No</option>
+                <!-- Add more options for other reasons -->
+            </select>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            3.	Would you reapply to Chuka university if a future opportunity arises?
+            <select id="exitreapply" class="form-control">
+                <option value="0">Select an option</option>
+                <option value="1">Yes</option>
+                <option value="2">No</option>
+                <!-- Add more options for other reasons -->
+            </select>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            3.	If you have any other information that can help us improve our university human resource process, please feel free to comment
+            <textarea id="txtFreeComment" class="form-control" maxlength="150"></textarea>
+        </div>
+    </div>
     <div align="center">
         <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Questionnare" onclick="SubmitQuestions(`@Model.No`);" />
     </div>
