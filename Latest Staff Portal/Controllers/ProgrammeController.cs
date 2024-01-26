@@ -289,7 +289,7 @@ namespace Latest_Staff_Portal.Controllers
                 bool iSDeviceMobile = Request.Browser.IsMobileDevice;
                 if (Filters.ReportType == "CONSLMSHT")
                 {
-                    //Credentials.ObjNav.GenerateConsolidatedMarks(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), Campus, "CONS MARKSHEET-" + _filename + extn);
+                    Credentials.ObjNav.GenerateConsolidatedMarks(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, "",Convert.ToInt32(Filters.DocType), Campus, "CONS MARKSHEET-" + _filename + extn);
 
                     filename = "CONS MARKSHEET-" + _filename + extn;
                     string fileDestinationPath = Server.MapPath("~/Downloads/");
@@ -316,7 +316,7 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 if (Filters.ReportType == "PASSLIST")
                 {
-                    //Credentials.ObjNav.GenerateSenateSummary(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "SENATEREPORT-" + _filename + extn);
+                    Credentials.ObjNav.GenerateSenateSummary(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "SENATEREPORT-" + _filename + extn);
                     filename = "SENATEREPORT-" + _filename + extn;
                     string fileDestinationPath = Server.MapPath("~/Downloads/");
                     CommonClass.MoveFile(filename, fileDestinationPath);
@@ -342,7 +342,7 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 if (Filters.ReportType == "CLASSIFICATION")
                 {
-                    //Credentials.ObjNav.GenerateClassifications(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "CLASSIFICATION-" + _filename + extn);
+                    Credentials.ObjNav.GenerateClassifications(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "CLASSIFICATION-" + _filename + extn);
                     filename = "CLASSIFICATION-" + _filename + extn;
                     string fileDestinationPath = Server.MapPath("~/Downloads/");
                     CommonClass.MoveFile(filename, fileDestinationPath);
@@ -368,7 +368,7 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 if (Filters.ReportType == "AWARD")
                 {
-                    //Credentials.ObjNav.GenerateAwardList(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "AWARD-" + _filename + extn);
+                    Credentials.ObjNav.GenerateAwardList(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "AWARD-" + _filename + extn);
                     filename = "AWARD-" + _filename + extn;
                     string fileDestinationPath = Server.MapPath("~/Downloads/");
                     CommonClass.MoveFile(filename, fileDestinationPath);
@@ -540,7 +540,7 @@ namespace Latest_Staff_Portal.Controllers
 
                 string _filename = (Prog + "-" + Unit).Replace(@"/", @"");
 
-                //Credentials.ObjNav.GenerateScoreSheet(Prog, Unit, Stage, Sem, "SCORESHEET-" + _filename + ".pdf");
+                Credentials.ObjNav.GenerateScoreSheet(Prog, Unit, Stage, Sem,"","", "SCORESHEET-" + _filename + ".pdf");
                 filename = "SCORESHEET-" + _filename + ".pdf";
                 string fileDestinationPath = Server.MapPath("~/Downloads/");
                 CommonClass.MoveFile(filename, fileDestinationPath);
