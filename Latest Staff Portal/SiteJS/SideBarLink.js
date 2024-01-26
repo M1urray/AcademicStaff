@@ -6,6 +6,10 @@ var ProgrammeListLink = function () {
     ShowProgress();
     window.location = "/Programme/ProgrammeList";
 }
+var ClassStatusListLink = function () {
+    ShowProgress();
+    window.location = "/Programme/ClassStatusList";
+}
 var LecturerListLink = function () {
     ShowProgress();
     window.location = "/Lecturer/LecturerList";
@@ -18,13 +22,25 @@ var CourseAllocationLink = function () {
     ShowProgress();
     window.location = "/Lecturer/CourseAllocationUnits";
 }
+var MarkEntryLink = function () {
+    ShowProgress();
+    window.location = "/Lecturer/MarkEntryAllocationUnits";
+}
+var CourseEvalLink = function () {
+    ShowProgress();
+    window.location = "/Lecturer/CourseEvaluationReports";
+}
+var PartTimeReqLink = function () {
+    ShowProgress();
+    window.location = "/Lecturer/PartTimeClaimRequisitionList";
+}
 var VoteBookBalanceLink = function () {
     ShowProgress();
     window.location = "/ViewDocuments/ViewDocuments?DocT=VOTEBOOK";
 }
-var LeavePlannerRequisitionLink = function () {
+var TimetableProjectionLink = function () {
     ShowProgress();
-    window.location = "/Leave/LeavePlannerList";
+    window.location = "/TimeTable/TimeTableProjections";
 }
 var LeaveRequisitionLink = function () {
     ShowProgress();
@@ -50,73 +66,37 @@ var StaffClaimRequisitiontLink = function () {
     ShowProgress();
     window.location = "/StaffClaim/StaffClaimRequisitionList";
 }
-var IndividualWKPlanLink = function () {
-    ShowProgress();
-    window.location = "/IndividualWorkPlan/IndividualWorkPlanList";
-}
-var SupervisorIndividualWKPlanReviewLink = function () {
-    ShowProgress();
-    window.location = "/IndividualWorkPlan/IndividualWorkPlanReviewList";
-}
-var AppraisalPreambleLink = function () {
-    ShowProgress();
-    window.location = "/Appraisal/AppraisalPreamble";
-}
 var AppraisalRequisitiontLink = function () {
     ShowProgress();
     window.location = "/Appraisal/MyAppraisalList";
-}
-var SupervisorRequisitiontReviewLink = function () {
-    ShowProgress();
-    window.location = "/Appraisal/MyReviewAppraisalList";
 }
 var TransportRequisitiontLink = function () {
     ShowProgress();
     window.location = "/Transport/TransportRequisitionList";
 }
-var TrainingRequisitiontLink = function () {
+var CafFoodRequisitionLink = function () {
     ShowProgress();
-    window.location = "/Training/TrainingRequisitionList";
+    window.location = "/Cafeteria/CafeteriaRequest";
+}
+var SponsorshipRequisitionLink = function () {
+    ShowProgress();
+    window.location = "/Sponsorship/ConceptApplicationList";
+}
+var ProposalEthicalReviewlink = function () {
+    ShowProgress();
+    window.location = "/Sponsorship/ProposalEthicalReview";
 }
 var ICTRequisitionlink = function () {
     ShowProgress();
     window.location = "/ICT/ICTRequisitionList";
 }
-var ICTAssetRequisitionlink = function () {
+var ExitInterviewlink = function () {
     ShowProgress();
-    window.location = "/ICT/ICTAssetTransferList";
+    window.location = "/StaffClearance/ExitInterview";
 }
-var ICTAssetServicing_Maintancelink = function () {
+var StaffClearancelink = function () {
     ShowProgress();
-    window.location = "/ICT/ICTServMntList";
-}
-var NewVisitorLink = function () {
-    ShowProgress();
-    window.location = "/Visitors/NewVisitorsList";
-}
-var ActiveVisitorsLink = function () {
-    ShowProgress();
-    window.location = "/Visitors/ActiveVisitorsList";
-}
-var ClearedVisitorsLink = function () {
-    ShowProgress();
-    window.location = "/Visitors/ClearedVisitorsList";
-}
-var GatePassLink = function () {
-    ShowProgress();
-    window.location = "/GatePass/GatePassList";
-}
-var ApprovedGatePassLink = function () {
-    ShowProgress();
-    window.location = "/GatePass/ApprovedGatePassList";
-}
-var AssignedAssetLink = function () {
-    ShowProgress();
-    window.location = "/Asset/AssignedAssetList";
-}
-var AssetTransferLink = function () {
-    ShowProgress();
-    window.location = "/Asset/AssetTransferList";
+    window.location = "/StaffClearance/StaffClearance";
 }
 var PayslipViewLink = function () {
     ShowProgress();
@@ -126,35 +106,19 @@ var P9ViewLink = function () {
     ShowProgress();
     window.location = "/ViewDocument/DocumentViewp9";
 }
-var LeaveStatementLink = function () {
-    ShowProgress();
-    window.location = "/ViewDocument/GetLeaveStatementReport";
-}
 var DocumentApprovalSummeryLink = function () {
     ShowProgress();
     window.location.href = "/DocumentApproval/DocumentForApprovalSummery?rn=Open";
 }
 var ApprovedDocLink = function () {
     ShowProgress();
-    window.location = "/DocumentApproval/DocumentForApprovalSummery?rn=Approved";
+    window.location = "/DocumentApproval/DocumentForApprovalSummery?rn=Approved";//"/DocumentApproval/ApprovedDocuments";
 }
 var RejectedDocLink = function () {
     ShowProgress();
-    window.location = "/DocumentApproval/DocumentForApprovalSummery?rn=Rejected";
+    window.location = "/DocumentApproval/DocumentForApprovalSummery?rn=Rejected";//"/DocumentApproval/RejectedDocuments";
 }
 var ChangePasswordLink = function () {
     ShowProgress();
     window.location = "/Settings/ChangePassword";
-}
-var StandingImprestLink = function () {
-    ShowProgress();
-    window.location = "/StandingImprest/StandingImprestRequisitionList";
-}
-var StandingImpReimbursementLink = function () {
-    ShowProgress();
-    window.location = "/StandingImpReimbursement/ReimbursementList";
-}
-var StandingImpSurrenderLink = function () {
-    ShowProgress();
-    window.location = "/StandingImprestSurrender/SISurrenderList";
 }

@@ -13,5 +13,7 @@ namespace Latest_Staff_Portal.Models
         public string Sem { get; set; }
         public string Unit { get; set; }
         public string Campus { get; set; }
+        public string CourseClass { get; set; }
+        public string LineNo { get; set; }
     }
 }

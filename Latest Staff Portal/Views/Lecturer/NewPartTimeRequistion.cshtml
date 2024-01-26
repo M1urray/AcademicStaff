@@ -1,0 +1,446 @@
+﻿@model Latest_Staff_Portal.ViewModel.ParttimeView
+
+@{
+    ViewBag.Title = "PartTimeRequistion";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    .control-label {
+        color: black;
+    }
+
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="PartTimeLink();" style="color:yellow"><<< Back To Requisition List</a>
+</div>
+<h2>Part-Time Requistion</h2>
+<hr />
+<h4>General Information</h4>
+<div style="background-color:#d7d7d7">
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("ID Number", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.ID_Number, new { htmlAttributes = new { @class = "form-control", @id = "txtIDNo" } })
+                    @Html.ValidationMessageFor(model => model.ID_Number, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("First Name", new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.firstName, new { htmlAttributes = new { @class = "form-control", @id = "txtFname" } })
+                    @Html.ValidationMessageFor(model => model.firstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Middle Name(Optional)", new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Middle_Name, new { htmlAttributes = new { @class = "form-control", @id = "txtMName" } })
+                    @Html.ValidationMessageFor(model => model.Middle_Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Last Name", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Last_Name, new { htmlAttributes = new { @class = "form-control", @id = "txtLName" } })
+                    @Html.ValidationMessageFor(model => model.Last_Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.Title, Model.ListOfHREmpInitials, "--select Title--", new { @class = "form-control", id = "ddlTitle" })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Campus", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.Campus_Code, Model.ListOfCampus, "--select Campus--", new { @class = "form-control", id = "ddlCampus" })
+                    @Html.ValidationMessageFor(model => model.Campus_Code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("School(Optional)", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.School_Code, Model.ListOfSchool, "--select School--", new { @class = "form-control", id = "ddlSchool" })
+                    @Html.ValidationMessageFor(model => model.School_Code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.Department_Code, Model.ListOfDepartment, "--select Department--", new { @class = "form-control", id = "ddlDepartment" })
+                    @Html.ValidationMessageFor(model => model.Department_Code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Gender", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    <select class="form-control" id="ddlgender" name="ddlgender">
+                        <option value="">--Select Gender--</option>
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Remarks", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control", @id = "txtRemarks" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<h4>Line Units</h4>
+<div style="margin-bottom:40px">
+    <div class="row">
+        <table id="tableUnits" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <thead>
+                <tr>
+                    <th>Programme</th>
+                    <th>Stage</th>
+                    <th>Unit</th>
+                    <th>Unit Name</th>
+                    <th style="text-align:right">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                <tr class="NoRecords">
+                    <td colspan="4">
+                        <span style="color:red" id="NoRecords">No Units</span>
+                    </td>
+                    <td class="text-right" colspan="1">
+                        <input type="button" value="Add Unit" class="btn btn-danger BtnPadding" onclick="AddNewUnit();" />
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<hr />
+<div align="center">
+    <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Requisition" onclick="SubmitRequisition();" />
+</div>
+<hr />
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModalUnits" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Part-Time Lecturer Unit</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    var AddNewUnit = function () {
+        var IdNo = $("#txtIDNo").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var FName = $("#txtFname").val().replace(/(\r\n|\n|\r)/gm, " ");        
+        var LName = $("#txtLName").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var Title = $("#ddlTitle").children("option:selected").val();
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+        var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var gender = $("#ddlgender").children("option:selected").val();
+        if (IdNo == "") {
+            Swal.fire('Warning', "Enter ID Number", 'warning');
+            return;
+        }
+        else if (FName == "") {
+            Swal.fire('Warning', "Enter First Name", 'warning');
+            return;
+        }
+        else if (LName == "") {
+            Swal.fire('Warning', "Enter Last Name", 'warning');
+            return;
+        }
+        else if (Title == "") {
+            Swal.fire('Warning', "Select Title", 'warning');
+            return;
+        }
+        else if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
+            return;
+        }
+        else if (Department == "") {
+            Swal.fire('Warning', "Select Department", 'warning');
+            return;
+        }
+        else if (gender == "") {
+            Swal.fire('Warning', "Select gender", 'warning');
+            return;
+        }
+        else if (Remarks == "") {
+            Swal.fire('Warning', "Give Remarks", 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            $.ajax({
+                url: "/Lecturer/PartTimeNewUnit",
+                datatype: "json",
+                type: "POST",
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    $("#modalBody").html(data);
+                    $("#myModalUnits").modal("show");
+                    HideProgress();
+                },
+                error: function () {
+                    HideProgress();
+                    swal('Warning', 'Problem encountered while reading Units', 'warning');
+                }
+            });
+        }
+    }
+    var AddSelectedUnit = function () {
+        var prog = $("#ddlProgramme").children("option:selected").val();
+        var stage = $("#ddlStage").children("option:selected").val();
+        var unit = $("#ddlUnit").children("option:selected").val();
+        var unitName = $("#ddlUnit").children("option:selected").text();
+
+        if (prog == "0") {
+            Swal.fire('Warning', 'Select Programme', 'warning');
+            return;
+        }
+        else if (stage == "0") {
+            Swal.fire('Warning', 'Select Stage', 'warning');
+            return;
+        }
+        else if (unit == "0") {
+            Swal.fire('Warning', 'Select Unit', 'warning');
+            return;
+        }
+        else {
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#tableUnits > TBODY")[0];
+
+            //Add Row.
+            var row = tBody.insertRow(-1);
+
+            //Add Item.
+            var cell = $(row.insertCell(-1));
+            cell.html(prog);
+
+            //Add Item.
+            var cell = $(row.insertCell(-1));
+            cell.html(stage);
+
+            //Add Item Desc.
+            var cell = $(row.insertCell(-1));
+            cell.html(unit);
+
+            //Add Description.
+            cell = $(row.insertCell(-1));
+            cell.html(unitName);
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            cell.attr("align", "right");
+            var btnRemove = $("<input />");
+            btnRemove.attr("type", "button");
+            btnRemove.addClass("btn btn-primary BtnPadding");
+            btnRemove.attr("onclick", "Remove(this);");
+            btnRemove.val("Remove");
+            cell.append(btnRemove);
+
+            DetermineNoOfRows();
+            $("#myModalUnits").modal("hide");
+            Swal.fire('Success', "Unit added successfully", 'success');
+            //Clear the TextBoxes.
+            //txtName.val("");
+            //txtCountry.val("");
+
+        }
+    }
+    var DetermineNoOfRows = function () {
+        var totalRowCount = $("#tableUnits TBODY tr").length;
+        if (totalRowCount > 0) {
+            $("#NoRecords").hide();
+        }
+        else {
+            $("#NoRecords").show();
+        }
+    }
+    function Remove(button) {
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var Unit = $("TD", row).eq(2).html();
+        var UnitName = $("TD", row).eq(3).html();
+        $.ajaxSetup({ cache: false });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to remove: " + Unit + "~" + UnitName,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Remove it!'
+        }).then((result) => {
+            if (result.value) {
+                //Get the reference of the Table.
+                var table = $("#tableUnits")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+            else {
+                Swal.fire('Cancelled', 'Line has not been removed!', 'error');
+            }
+            DetermineNoOfRows();
+        });
+    };
+    var SubmitRequisition = function () {
+        var IdNo = $("#txtIDNo").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var FName = $("#txtFname").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var MName = $("#txtMName").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var LName = $("#txtLName").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var Title = $("#ddlTitle").children("option:selected").val();
+        var School = $("#ddlSchool").children("option:selected").val();
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+        var gender = $("#ddlgender").children("option:selected").val();
+        var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+        if (IdNo == "") {
+            Swal.fire('Warning', "Enter ID Number", 'warning');
+            return;
+        }
+        else if (FName == "") {
+            Swal.fire('Warning', "Enter First Name", 'warning');
+            return;
+        }
+        else if (LName == "") {
+            Swal.fire('Warning', "Enter Last Name", 'warning');
+            return;
+        }
+        else if (Title == "") {
+            Swal.fire('Warning', "Select Title", 'warning');
+            return;
+        }
+        else if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
+            return;
+        }
+        else if (Department == "") {
+            Swal.fire('Warning', "Select Department", 'warning');
+            return;
+        }
+        else if (gender == "") {
+            Swal.fire('Warning', "Select gender", 'warning');
+            return;
+        }
+        else if (Remarks == "") {
+            Swal.fire('Warning', "Give Remarks", 'warning');
+            return;
+        }
+        else {
+            //Loop through the Table rows and build a JSON array.
+            var UnitLines = new Array();
+            $("#tableUnits TBODY TR").each(function () {
+                var row = $(this);
+                var UnitLine = {};
+                UnitLine.Prog = row.find("TD").eq(0).html();
+                UnitLine.Stage = row.find("TD").eq(1).html();
+                UnitLine.Unit = row.find("TD").eq(2).html();
+                UnitLine.UnitName = row.find("TD").eq(3).html();
+                UnitLines.push(UnitLine);
+            });
+            if (UnitLines.length < 1) {
+                Swal.fire('Warning', 'You have not Added any Unit line(s)', 'warning');
+                return;
+            }            
+            else {
+                var PartTimeLecturerDetails = {};
+                PartTimeLecturerDetails.IDNo = IdNo;
+                PartTimeLecturerDetails.Firstname = FName;
+                PartTimeLecturerDetails.MiddelName = MName;
+                PartTimeLecturerDetails.LastName = LName;
+                PartTimeLecturerDetails.Campus = Campus;
+                PartTimeLecturerDetails.School = School;
+                PartTimeLecturerDetails.Department = Department;
+                PartTimeLecturerDetails.Gender = gender;
+                PartTimeLecturerDetails.Remarks = Remarks;
+
+                ShowProgress();
+                //Send the JSON array to Controller using AJAX.
+                $.ajax({
+                    type: "POST",
+                    url: "/Lecturer/SubmitPartTimeRequisition",
+                    //data: data,
+                    data: JSON.stringify({ PHeader: PartTimeLecturerDetails, ULines: UnitLines }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            window.location = data.message;
+                        }
+                        else {
+                            Swal.fire('Warning', data.message, 'warning');
+                            HideProgress();
+                        }
+                    },
+                    error: function (err) {
+                        HideProgress();
+                        Swal.fire('Warning', err, 'warning');
+                    }
+                });
+            }            
+        }
+    };
+    var PartTimeLink = function () {
+        ShowProgress();
+        window.location = "/Lecturer/PartTimeRequistionList";
+    }
+</script>

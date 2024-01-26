@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -15,17 +14,17 @@ using System.Web.UI;
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
-    [CustomAuthorization(Role = "ALLUSERS")]
+    [CustomAuthorization(Role = "FULLTIME,PARTTIME")]
     public class CommonController : Controller
     {
-        // GET: Common        
+        // GET: Common
         public JsonResult GetServiceList()
         {
             try
             {
                 #region Service List
                 List<DropdownList> ddlList = new List<DropdownList>();
-                string page = "Item_Service?$select=No,Name&$filter=Gen_Prod_Posting_Group eq 'SERVICES' and Account_Type eq 'Posting' and Direct_Posting eq true&format=json";
+                string page = "Item_Service?$select=No,Name&$filter=Gen_Prod_Posting_Group eq 'SERVICES' and Account_Type eq 'Posting' and Direct_Posting eq true&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -101,13 +100,13 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult GetFixedAssetList()
+        public JsonResult GetFAPostingGroups()
         {
             try
             {
                 #region Items List
                 List<DropdownList> ddlList = new List<DropdownList>();
-                string page = "FixedAssetsList?$&orderby=Description&$format=json";
+                string page = "FAPostingGroups?$select=Code,Description&$orderby=Description&$filter=Description ne ''&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -120,7 +119,48 @@ namespace Latest_Staff_Portal.Controllers
                     foreach (JObject config in details["value"])
                     {
                         DropdownList dll = new DropdownList();
-                        dll.Value = (string)config["No"];
+                        dll.Value = (string)config["Code"];
+                        dll.Text = (string)config["Description"];
+                        ddlList.Add(dll);
+                    }
+                }
+                #endregion
+                DropdownListData DropDownData = new DropdownListData
+                {
+                    ListOfddlData = ddlList.Select(x =>
+                                     new SelectListItem()
+                                     {
+                                         Text = x.Text,
+                                         Value = x.Value
+                                     }).ToList()
+                };
+                return Json(new { DropDownData, success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult GetFixedAssetList(string PostingG)
+        {
+            try
+            {
+                #region Items List
+                List<DropdownList> ddlList = new List<DropdownList>();
+                string page = "FixedAssetsList?$select=No_,Description,Search_Description&$filter=Acquired eq false and Description ne '' and FA_Posting_Group  eq '" + PostingG + "'&$format=json";
+
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+
+                    foreach (JObject config in details["value"])
+                    {
+                        DropdownList dll = new DropdownList();
+                        dll.Value = (string)config["No_"];
                         dll.Text = (string)config["Description"] + "~" + (string)config["Search_Description"];
                         ddlList.Add(dll);
                     }
@@ -147,12 +187,12 @@ namespace Latest_Staff_Portal.Controllers
             Session["SuccessMsg"] = null;
             Session["ErrorMsg"] = null;
         }
-        public PartialViewResult DocumentApprovalTrail(string DocNo, string RecID)
+        public PartialViewResult DocumentApprovalTrail(string DocNo)
         {
             string StaffNo = Session["Username"].ToString();
             List<ApprovalEntries> ApprovalTrail = new List<ApprovalEntries>();
 
-            string page = "ApprovalEntries?$filter=Record_ID_to_Approve eq '" + RecID + "' and Status ne 'Canceled' and Status ne 'Rejected'&$format=json";
+            string page = "ApprovalEntries?select=Approver_ID,Date_Time_Sent_for_Approval,Due_Date,Status,Sequence_No,ApproverNames&$filter=Document_No eq '" + DocNo + "' and Status ne 'Canceled' and Status ne 'Rejected'&format=json";
 
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -164,187 +204,196 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     ApprovalEntries AppTra = new ApprovalEntries();
                     AppTra.DocNo = DocNo;
-                    AppTra.UserID = (string)config["ApproverNames"];
-                    AppTra.DateSendForApproval = ((DateTime)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
-                    AppTra.DueDate = ((DateTime)config["Due_Date"]).ToString("dd/MM/yyyy");
+                    string EmplName = (string)config["ApproverNames"];
+                    if (EmplName != null)
+                    {
+                        AppTra.UserID = EmplName;
+                    }
+                    else
+                    {
+                        AppTra.UserID = (string)config["Approver_ID"];
+                    }
+
+                    AppTra.DateSendForApproval = Convert.ToDateTime((string)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
+                    AppTra.DueDate = Convert.ToDateTime((string)config["Due_Date"]).ToString("dd/MM/yyyy");
                     AppTra.Status = (string)config["Status"];
                     AppTra.Sequence = Convert.ToInt32((string)config["Sequence_No"]);
                     ApprovalTrail.Add(AppTra);
                 }
             }
-            return PartialView("~/Views/Shared/Partial Views/ApprovalTrail.cshtml", ApprovalTrail.OrderBy(x => x.Sequence).ToList());
-        }
-        string UrlEncode(string url)
-        {
-            Dictionary<string, string> toBeEncoded = new Dictionary<string, string>() { { "%", "%25" }, { "!", "%21" }, { "#", "%23" }, { " ", "%20" },
-            { "$", "%24" }, { "&", "%26" }, { "'", "%27" }, { "(", "%28" }, { ")", "%29" }, { "*", "%2A" }, { "+", "%2B" }, { ",", "%2C" },
-            { "/", "%2F" }, { ":", "%3A" }, { ";", "%3B" }, { "=", "%3D" }, { "?", "%3F" }, { "@", "%40" }, { "[", "%5B" }, { "]", "%5D" } };
-            Regex replaceRegex = new Regex(@"[%!# $&'()*+,/:;=?@\[\]]");
-            MatchEvaluator matchEval = match => toBeEncoded[match.Value];
-            string encoded = replaceRegex.Replace(url, matchEval);
-            return encoded;
+            return PartialView("~/Views/Shared/Partial Views/ApprovalTrail.cshtml", ApprovalTrail.OrderBy(x => x.Sequence));
         }
         [AcceptVerbs(HttpVerbs.Get)]
         public PartialViewResult FileUploadForm()
         {
             return PartialView("~/Views/Shared/Partial Views/FileAttachmentForm.cshtml");
         }
-        //[AcceptVerbs(HttpVerbs.Get)]
-        //public JsonResult GetCommonDropdwnListData()
-        //{
-        //    try
-        //    {
-        //        #region Campus List
-        //        List<DimensionValues> Campuses = new List<DimensionValues>();
-        //        string pageCampus = "DimensionValues?$filter=Global_Dimension_No_ eq 1&$format=json";
-
-        //        HttpWebResponse httpResponseCampus = Credentials.GetOdataData(pageCampus);
-        //        using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
-        //        {
-        //            var result = streamReader.ReadToEnd();
-
-        //            var details = JObject.Parse(result);
-
-
-        //            foreach (JObject config in details["value"])
-        //            {
-        //                DimensionValues CmpList = new DimensionValues();
-        //                CmpList.Code = (string)config["Code"];
-        //                CmpList.Name = (string)config["Name"];
-        //                Campuses.Add(CmpList);
-        //            }
-        //        }
-        //        #endregion
-        //        #region School
-        //        List<DimensionValues> School = new List<DimensionValues>();
-        //        string pageSchool = "DimensionValues?$filter=Global_Dimension_No_ eq 3&$format=json";
-
-        //        HttpWebResponse httpResponseSchool = Credentials.GetOdataData(pageSchool);
-        //        using (var streamReader = new StreamReader(httpResponseSchool.GetResponseStream()))
-        //        {
-        //            var result = streamReader.ReadToEnd();
-
-        //            var details = JObject.Parse(result);
-
-
-        //            foreach (JObject config in details["value"])
-        //            {
-        //                DimensionValues SchoolList = new DimensionValues();
-        //                SchoolList.Code = (string)config["Code"];
-        //                SchoolList.Name = (string)config["Name"];
-        //                School.Add(SchoolList);
-        //            }
-        //        }
-        //        #endregion
-        //        #region Department List
-        //        List<DimensionValues> Department = new List<DimensionValues>();
-        //        string pageDepartment = "DimensionValues?$filter=Global_Dimension_No_ eq 2&$format=json";
-
-        //        HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDepartment);
-        //        using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
-        //        {
-        //            var result = streamReader.ReadToEnd();
-
-        //            var details = JObject.Parse(result);
-
-
-        //            foreach (JObject config in details["value"])
-        //            {
-        //                DimensionValues DepartmentList = new DimensionValues();
-        //                DepartmentList.Code = (string)config["Code"];
-        //                DepartmentList.Name = (string)config["Name"];
-        //                Department.Add(DepartmentList);
-        //            }
-        //        }
-        //        #endregion
-        //        #region Responsibility
-        //        List<RespCenter> RespCList = new List<RespCenter>();
-        //        string pageResC = "ResponsibilityCenters?$format=json";
-
-        //        HttpWebResponse httpResponseResC = Credentials.GetOdataData(pageResC);
-        //        using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
-        //        {
-        //            var result = streamReader.ReadToEnd();
-
-        //            var details = JObject.Parse(result);
-
-
-        //            foreach (JObject config in details["value"])
-        //            {
-        //                RespCenter RCList = new RespCenter();
-        //                RCList.Code = (string)config["Code"];
-        //                RCList.Name = (string)config["Name"];
-        //                RespCList.Add(RCList);
-        //            }
-        //        }
-        //        #endregion
-        //        CommonDropDownList DropDownData = new CommonDropDownList
-        //        {
-        //            ListOfSchools = School.Select(x =>
-        //                             new SelectListItem()
-        //                             {
-        //                                 Text = x.Name,
-        //                                 Value = x.Code
-        //                             }).ToList(),
-        //            ListOfDepartments = Department.Select(x =>
-        //                            new SelectListItem()
-        //                            {
-        //                                Text = x.Name,
-        //                                Value = x.Code
-        //                            }).ToList(),
-        //            ListOfCampus = Campuses.Select(x =>
-        //                               new SelectListItem()
-        //                               {
-        //                                   Text = x.Name,
-        //                                   Value = x.Code
-        //                               }).ToList(),
-        //            ListOfRespC = RespCList.Select(x =>
-        //                               new SelectListItem()
-        //                               {
-        //                                   Text = x.Name,
-        //                                   Value = x.Code
-        //                               }).ToList()
-        //        };
-        //        return Json(new { DropDownData, success = true }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
-        public PartialViewResult DocumentAttachments(string DocNo, int TableID, string Status)
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetCommonDropdwnListData()
         {
-            #region Document Attachment
-            List<DocumentAttachment> DocAttachment = new List<DocumentAttachment>();
-            string page = "DocumentAttachment?$filter=Table_ID eq " + TableID + " and No eq '" + DocNo + "'&format=json";
-
-            HttpWebResponse httpResponseResC = Credentials.GetOdataData(page);
-            using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
+            try
             {
-                var result = streamReader.ReadToEnd();
+                #region Campus List
+                List<DimensionValues> Campuses = new List<DimensionValues>();
+                string pageCampus = "DimensionValues?$filter=Global_Dimension_No_ eq 1&$format=json";
 
-                var details = JObject.Parse(result);
-
-                foreach (JObject config in details["value"])
+                HttpWebResponse httpResponseCampus = Credentials.GetOdataData(pageCampus);
+                using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
                 {
-                    DocumentAttachment docAttList = new DocumentAttachment();
-                    docAttList.TabelID = (string)config["Table_ID"];
-                    docAttList.No = (string)config["No"];
-                    docAttList.FileName = (string)config["Name"];
-                    docAttList.FileExt = (string)config["File_Extension"];
-                    docAttList.ID = (int)config["ID"];
-                    docAttList.LineNo = (string)config["Line_No"];
-                    docAttList.DocType = (string)config["Document_Type"];
-                    DocAttachment.Add(docAttList);
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+
+                    foreach (JObject config in details["value"])
+                    {
+                        DimensionValues CmpList = new DimensionValues();
+                        CmpList.Code = (string)config["Code"];
+                        CmpList.Name = (string)config["Name"];
+                        Campuses.Add(CmpList);
+                    }
                 }
+                #endregion
+                #region School
+                List<DimensionValues> School = new List<DimensionValues>();
+                string pageSchool = "DimensionValues?$filter=Global_Dimension_No_ eq 3&$format=json";
+
+                HttpWebResponse httpResponseSchool = Credentials.GetOdataData(pageSchool);
+                using (var streamReader = new StreamReader(httpResponseSchool.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+
+                    foreach (JObject config in details["value"])
+                    {
+                        DimensionValues SchoolList = new DimensionValues();
+                        SchoolList.Code = (string)config["Code"];
+                        SchoolList.Name = (string)config["Name"];
+                        School.Add(SchoolList);
+                    }
+                }
+                #endregion
+                #region Department List
+                List<DimensionValues> Department = new List<DimensionValues>();
+                string pageDepartment = "DimensionValues?$filter=Global_Dimension_No_ eq 2&$format=json";
+
+                HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDepartment);
+                using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+
+                    foreach (JObject config in details["value"])
+                    {
+                        DimensionValues DepartmentList = new DimensionValues();
+                        DepartmentList.Code = (string)config["Code"];
+                        DepartmentList.Name = (string)config["Name"];
+                        Department.Add(DepartmentList);
+                    }
+                }
+                #endregion
+                #region Responsibility
+                List<RespCenter> RespCList = new List<RespCenter>();
+                string pageResC = "ResponsibilityCenters?$format=json";
+
+                HttpWebResponse httpResponseResC = Credentials.GetOdataData(pageResC);
+                using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+
+                    foreach (JObject config in details["value"])
+                    {
+                        RespCenter RCList = new RespCenter();
+                        RCList.Code = (string)config["Code"];
+                        RCList.Name = (string)config["Name"];
+                        RespCList.Add(RCList);
+                    }
+                }
+                #endregion
+                CommonDropDownList DropDownData = new CommonDropDownList
+                {
+                    ListOfSchools = School.Select(x =>
+                                     new SelectListItem()
+                                     {
+                                         Text = x.Name,
+                                         Value = x.Code
+                                     }).ToList(),
+                    ListOfDepartments = Department.Select(x =>
+                                    new SelectListItem()
+                                    {
+                                        Text = x.Name,
+                                        Value = x.Code
+                                    }).ToList(),
+                    ListOfCampus = Campuses.Select(x =>
+                                       new SelectListItem()
+                                       {
+                                           Text = x.Name,
+                                           Value = x.Code
+                                       }).ToList(),
+                    ListOfRespC = RespCList.Select(x =>
+                                       new SelectListItem()
+                                       {
+                                           Text = x.Name,
+                                           Value = x.Code
+                                       }).ToList()
+                };
+                return Json(new { DropDownData, success = true }, JsonRequestBehavior.AllowGet);
             }
-            #endregion
-            DocumentAttachmentList DocumentList = new DocumentAttachmentList
+            catch (Exception ex)
             {
-                Status = Status,
-                DocList = DocAttachment
-            };
-            return PartialView("~/Views/Shared/Partial Views/ImportantDocs.cshtml", DocumentList);
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public PartialViewResult DocumentAttachments(string DocNo, string TableID, string Status)
+        {
+            try
+            {
+                int tableID = Convert.ToInt32(TableID);
+                #region Document Attachment
+                List<DocumentAttachment> DocAttachment = new List<DocumentAttachment>();
+                string page = "DocumentAttachment?$filter=Table_ID eq " + tableID + " and No eq '" + DocNo + "'&format=json";
+
+                HttpWebResponse httpResponseResC = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+                    foreach (JObject config in details["value"])
+                    {
+                        DocumentAttachment docAttList = new DocumentAttachment();
+                        docAttList.TabelID = (int)config["Table_ID"];
+                        docAttList.No = (string)config["No"];
+                        docAttList.FileName = (string)config["File_Name"];
+                        docAttList.FileExt = (string)config["File_Extension"];
+                        docAttList.ID = (int)config["ID"];
+                        docAttList.LineNo = (string)config["Line_No"];
+                        docAttList.DocType = (string)config["Document_Type"];
+                        DocAttachment.Add(docAttList);
+                    }
+                }
+                #endregion
+                DocumentAttachmentList DocumentList = new DocumentAttachmentList
+                {
+                    Status = Status,
+                    DocList = DocAttachment
+                };
+                return PartialView("~/Views/Shared/Partial Views/ImportantDocs.cshtml", DocumentList);
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+            }
         }
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult SaveAttachedFile(string DocNo, string base64Upload, string fileName, string Extn, int TableID)
@@ -391,40 +440,49 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
         }
+        public JsonResult getData(string superlargedata)
+        {
+            var jsonResult = Json(superlargedata, JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+        }
         public PartialViewResult DocumentAttachmentsToApprove(string DocNo, int TableID)
         {
-            #region Document Attachment
-            List<DocumentAttachment> DocAttachment = new List<DocumentAttachment>();
-            string page = "DocumentAttachment?$filter=Table_ID eq " + TableID + " and No eq '" + DocNo + "'&$format=json";
-
-            HttpWebResponse httpResponseResC = Credentials.GetOdataData(page);
-            using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
+            try
             {
-                var result = streamReader.ReadToEnd();
+                #region Document Attachment
+                List<DocumentAttachment> DocAttachment = new List<DocumentAttachment>();
+                string page = "DocumentAttachment?$filter=Table_ID eq " + TableID + " and No eq '" + DocNo + "'&format=json";
 
-                var details = JObject.Parse(result);
-
-                foreach (JObject config in details["value"])
+                HttpWebResponse httpResponseResC = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
                 {
-                    DocumentAttachment docAttList = new DocumentAttachment();
-                    docAttList.TabelID = (string)config["Table_ID"];
-                    docAttList.No = (string)config["No"];
-                    docAttList.FileName = (string)config["Name"];
-                    docAttList.FileExt = (string)config["File_Extension"];
-                    docAttList.ID = (int)config["ID"];
-                    docAttList.LineNo = (string)config["Line_No"];
-                    docAttList.DocType = (string)config["Document_Type"];
-                    DocAttachment.Add(docAttList);
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+                    foreach (JObject config in details["value"])
+                    {
+                        DocumentAttachment docAttList = new DocumentAttachment();
+                        docAttList.TabelID = (int)config["Table_ID"];
+                        docAttList.No = (string)config["No"];
+                        docAttList.FileName = (string)config["File_Name"];
+                        docAttList.FileExt = (string)config["File_Extension"];
+                        docAttList.ID = (int)config["ID"];
+                        docAttList.LineNo = (string)config["Line_No"];
+                        docAttList.DocType = (string)config["Document_Type"];
+                        DocAttachment.Add(docAttList);
+                    }
                 }
+                #endregion
+                return PartialView("~/Views/Shared/Partial Views/ImportantDocsToApprove.cshtml", DocAttachment);
             }
-            #endregion
-            return PartialView("~/Views/Shared/Partial Views/ImportantDocsToApprove.cshtml", DocAttachment);
-        }
-        [HttpGet]
-        public virtual ActionResult AttachmentDownload(string fileName)
-        {
-            string fullPath = Server.MapPath("~/Uploads/" + fileName);
-            return File(fullPath, "application/octet-stream", fileName);
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+            }
         }
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult DocumentAttachmentview(int tblID, string No, int ID, string fileName, string ext)
@@ -476,7 +534,7 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                Credentials.ObjNav.DeleteDocumentAttachment(DocNo, tblID, DocID);
+                //Credentials.ObjNav.DeleteDocumentAttachment(DocNo, tblID, DocID);
                 return Json(new { message = "Attachmet file deleted successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -484,77 +542,11 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        public PartialViewResult MyDocumentComments(string DocNo)
+        [HttpGet]
+        public virtual ActionResult AttachmentDownload(string fileName)
         {
-            try
-            {
-                string userID = Session["UserID"].ToString();
-                List<DocComments> docComments = new List<DocComments>();
-
-                string page = "ApprovalComments?select=Comment&$filter=Document_No eq '" + DocNo + "' and User_ID eq '" + userID + "'&$format=json";
-
-                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-                    foreach (JObject config in details["value"])
-                    {
-                        DocComments comment = new DocComments();
-                        comment.Comment = config["Comment"].ToString();
-                        docComments.Add(comment);
-                    }
-                }
-                return PartialView("~/Views/DocumentApproval/Document Approval Views/DocumentComments.cshtml", docComments);
-            }
-            catch (Exception ex)
-            {
-                Error erroMsg = new Error();
-                erroMsg.Message = ex.Message;
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
-            }
-        }
-        public PartialViewResult DocumentComments(string DocNo)
-        {
-            try
-            {
-                string userID = Session["UserID"].ToString();
-                List<DocComments> docComments = new List<DocComments>();
-
-                string page = "ApprovalComments?select=Comment,User_ID&$filter=Document_No eq '" + DocNo + "'&$format=json";
-
-                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-                    foreach (JObject config in details["value"])
-                    {
-                        DocComments comment = new DocComments();
-                        comment.Comment = config["Comment"].ToString();
-                        string[] s = config["User_ID"].ToString().Split('\\');
-                        string EmplName = CommonClass.GetEmployeeName(s[1]);
-                        if (EmplName != null)
-                        {
-                            comment.CommentBy = EmplName;
-                        }
-                        else
-                        {
-                            comment.CommentBy = (string)config["User_ID"];
-                        }
-                        docComments.Add(comment);
-                    }
-                }
-                return PartialView("~/Views/Shared/Partial Views/ApprovalTrail.cshtml", docComments);
-            }
-            catch (Exception ex)
-            {
-                Error erroMsg = new Error();
-                erroMsg.Message = ex.Message;
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
-            }
+            string fullPath = Server.MapPath("~/Uploads/" + fileName);
+            return File(fullPath, "application/octet-stream", fileName);
         }
         public ActionResult ErrorMessange()
         {
@@ -563,39 +555,6 @@ namespace Latest_Staff_Portal.Controllers
         public ActionResult Unauthorized()
         {
             return View();
-        }
-        [AcceptVerbs(HttpVerbs.Get)]
-        public JsonResult GetEmployeeList()
-        {
-            try
-            {
-                #region Employee List
-                List<DropdownList> EmployeeList = new List<DropdownList>();
-                string page = "EmployeeList?$&format=json";
-
-                HttpWebResponse httpResponseCampus = Credentials.GetOdataData(page);
-                using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DropdownList ddl = new DropdownList();
-                        ddl.Value = (string)config["No"];
-                        ddl.Text = (string)config["FirstName"] + " " + (string)config["MiddleName"] + " " + (string)config["LastName"];
-                        EmployeeList.Add(ddl);
-                    }
-                }
-                #endregion
-                return Json(new { ddlList = EmployeeList, success = true }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
-            }
         }
         public PartialViewResult DocumentApprovalComments(string RecID)
         {
@@ -638,7 +597,7 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        public PartialViewResult CommonActions(string DocNo,string Status,string DocType)
+        public PartialViewResult CommonActions(string DocNo, string Status, string DocType)
         {
             try
             {
@@ -655,22 +614,33 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        public PartialViewResult WorkPlanActionLinks(string DocNo, string Obj,string EntryNo)
+        public PartialViewResult GetAcademicCalender(string Sem)
         {
-            try
+            List<Academic_Calender> calenderList = new List<Academic_Calender>();
+            string pageLine = "AcademicCalender?$filter=Semester eq '" + Sem + "'&$format=json";
+            HttpWebResponse httpResponse = Credentials.GetOdataData(pageLine);
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
-                IndividualObjectives docNo = new IndividualObjectives();
-                docNo.Code = DocNo;
-                docNo.Obj = Obj;
-                docNo.EntryNo = EntryNo;
-                return PartialView("~/Views/Common/WorkPlanActionLinks.cshtml", docNo);
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+                foreach (JObject config in details["value"])
+                {
+                    Academic_Calender c = new Academic_Calender();
+                    c.Event = (string)config["Event_Name"];
+                    c.SD = (DateTime)config["Start_Date"];
+                    c.StartDate = ((DateTime)config["Start_Date"]).ToString("dd/MM/yyyy");
+                    c.EndDate = ((DateTime)config["End_Date"]).ToString("dd/MM/yyyy");
+                    calenderList.Add(c);
+                }
             }
-            catch (Exception ex)
-            {
-                Error erroMsg = new Error();
-                erroMsg.Message = ex.Message;
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
-            }
+            return PartialView("~/Views/Common/AcademicCalender.cshtml", calenderList.OrderBy(x => x.SD).ToList());
+        }
+        public ActionResult ReportTypeForm(string Rep)
+        {
+            ValueText newStrng = new ValueText();
+            newStrng.value = Rep;
+            return PartialView("~/Views/Common/ReportType.cshtml", newStrng);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Latest_Staff_Portal.ViewModel
 {
     public class DocumentAttachment
     {
-        public string TabelID { get; set; }
+        public int TabelID { get; set; }
         public string No { get; set; }
         public string FileName { get; set; }
         public string FileExt { get; set; }

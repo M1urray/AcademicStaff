@@ -1,0 +1,213 @@
+﻿<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="col-md-12" style="background-color: white;font-size:11px">
+    <div class="row">
+        <div class="col-md-6">
+            <span style="font-weight: bold">Category</span>
+            <select class="form-control" id="Category" name="Category" onchange="ToAddMoreEntriess()">
+                <option value="0">--Select Category--</option>
+                <option value="ASS">Assignments</option>
+                <option value="CAT">CAT</option>
+                <option value="EXAM">EXAM</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <div id="divTotalNo">
+                <span style="font-weight: bold">Total Number</span>
+                <input type="text" class="form-control" id="txtTotal" onkeypress="return functionx(event)" />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Add" onclick="AddSetup();" />
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover" id="ExamSetLines">
+                <thead>
+                    <tr>
+                        <th width="30%">Type</th>
+                        <th width="30%">Max. Score</th>
+                        <th width="30%">Weight(%)</th>
+                        <th width="30%">Order</th>
+                        <th style="text-align:right" width="10%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                    <tr class="NoRecords">
+                        <td colspan="4">
+                            <span style="color:red" id="NoRecords">No Lines Added</span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<div align="center">
+    <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit" onclick="SubmitExamEntrySetup();" />
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    var ToAddMoreEntriess = function () {
+        var Category = $("#Category").children("option:selected").text();
+        if (Category.includes('EXAM')) {
+            $("#divTotalNo").hide();
+        }
+        else {
+            $("#divTotalNo").show();
+        }
+    }
+    var AddSetup = function () {
+        var Category = $("#Category").children("option:selected").val();
+        var TotalNo = $("#txtTotal").val();
+        if (Category == "0") {
+            Swal.fire('Warning', "Category", 'warning');
+            return;
+        }
+        else if (TotalNo == "" && !Category.includes('EXAM')) {
+            Swal.fire('Warning', "Enter Total Number of entries for the selected category", 'warning');
+            return;
+        }
+        else {
+            delete_row(Category);
+            if (parseInt(TotalNo) > 1) {
+                for (i = 1; i <= parseInt(TotalNo); i++) {
+                    var tBody = $("#ExamSetLines > TBODY")[0];
+
+                    //Add Row.
+                    var row = tBody.insertRow(-1);
+
+                    //Add Item.
+                    var cell = $(row.insertCell(-1));
+                    cell.html(Category + ' ' + i);
+
+                    cell = $(row.insertCell(-1));
+                    var txtMax = $("<input />");
+                    txtMax.attr("type", "text");
+                    txtMax.attr("onkeypress", "return functionx(event)");
+                    txtMax.css({ 'width': 60 });
+                    txtMax.addClass("form-control");
+                    txtMax.uniqueId("txtMax");
+                    cell.attr("align", "center");
+                    cell.append(txtMax);
+
+                    cell = $(row.insertCell(-1));
+                    var txtContr = $("<input />");
+                    txtContr.attr("type", "text");
+                    txtContr.attr("onkeypress", "return functionx(event)");
+                    txtContr.css({ 'width': 60 });
+                    txtContr.addClass("form-control");
+                    txtContr.uniqueId("txtWght");
+                    cell.attr("align", "center");
+                    cell.append(txtContr);
+
+                    //Add Button cell.
+                    cell = $(row.insertCell(-1));
+                    cell.attr("align", "right");
+                    var btnRemove = $("<input />");
+                    btnRemove.attr("type", "button");
+                    btnRemove.addClass("btn btn-primary BtnPadding");
+                    btnRemove.attr("onclick", "Remove(this);");
+                    btnRemove.val("Remove");
+                    cell.append(btnRemove);
+                }
+            }
+            else {
+                var tBody = $("#ExamSetLines > TBODY")[0];
+
+                //Add Row.
+                var row = tBody.insertRow(-1);
+
+                //Add Item.
+                var cell = $(row.insertCell(-1));
+                cell.html(Category);
+
+                cell = $(row.insertCell(-1));
+                var txtMax = $("<input />");
+                txtMax.attr("type", "text");
+                txtMax.attr("onkeypress", "return functionx(event)");
+                txtMax.css({ 'width': 60 });
+                txtMax.addClass("form-control");
+                txtMax.uniqueId("txtMax");
+                cell.attr("align", "center");
+                cell.append(txtMax);
+
+                cell = $(row.insertCell(-1));
+                var txtContr = $("<input />");
+                txtContr.attr("type", "text");
+                txtContr.attr("onkeypress", "return functionx(event)");
+                txtContr.css({ 'width': 60 });
+                txtContr.addClass("form-control");
+                txtContr.uniqueId("txtWght");
+                cell.attr("align", "center");
+                cell.append(txtContr);
+
+                //Add Button cell.
+                cell = $(row.insertCell(-1));
+                cell.attr("align", "right");
+                var btnRemove = $("<input />");
+                btnRemove.attr("type", "button");
+                btnRemove.addClass("btn btn-primary BtnPadding");
+                btnRemove.attr("onclick", "Remove(this);");
+                btnRemove.val("Remove");
+                cell.append(btnRemove);
+            }
+        }
+        $("#txtTotal").val("");
+        $('#Category').val('0');
+        DetermineNoOfRows();
+    };
+    function delete_row(given_value) {
+        $('#ExamSetLines tbody tr').each(function () {
+            var tableData = $(this).find('td');
+            if (tableData.length > 0) {
+                tableData.each(function () {
+                    if ($(this).text().includes(given_value)) {
+                        $($(this).closest("tr")).remove();
+                        return;
+                    }
+                });
+            }
+        });
+    }
+    function Remove(button) {
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to remove this entry?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                //ShowProgress();
+                //Get the reference of the Table.
+                var table = $("#ExamSetLines")[0];
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+                //HideProgress();
+            }
+            else {
+                Swal.fire('Cancelled', 'Entry has not been removed', 'error');
+            }
+        });
+        DetermineNoOfRows();        
+    };
+    function functionx(evt) {
+        if (evt.charCode > 31 && (evt.charCode < 48 || evt.charCode > 57)) {
+            Swal.fire("Error", "Please enter only numeric characters in the text box", "error");
+            return false;
+        }
+    }
+</script>

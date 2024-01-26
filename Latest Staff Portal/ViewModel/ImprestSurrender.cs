@@ -29,15 +29,12 @@ namespace Latest_Staff_Portal.ViewModel
         public string AccountName { get; set; }
         public string ImprestNo { get; set; }
         public string ImpIssueDate { get; set; }
-        public string Department { get; set; }
-        public string Directorate { get; set; }
+        public string CampusName { get; set; }
+        public string DepartmentName { get; set; }
         public string RespC { get; set; }
         public string Status { get; set; }
         public string TotalAmount { get; set; }
         public string ImpPurpose { get; set; }
-        public List<SelectListItem> ListOfDepartment { get; set; }
-        public List<SelectListItem> ListOfDirectorate { get; set; }
-        public List<SelectListItem> ListOfResponsibility { get; set; }
     }
     public class ImprestSurrenderLines
     {
@@ -48,7 +45,7 @@ namespace Latest_Staff_Portal.ViewModel
         public string ActaulSpend { get; set; }
         public string ReceiptNo { get; set; }
         public string ReceiptAmount { get; set; }
-        public string EntryNo { get; set; }
+        public string LnNo { get; set; }
     }
     public class ImprestSurrenderLinesList
     {
@@ -63,7 +60,7 @@ namespace Latest_Staff_Portal.ViewModel
         public string AccountNo { get; set; }
         public string Amount { get; set; }
         public string ActaulAmount { get; set; }
-        public string EntryNo { get; set; }
+        public string LnNo { get; set; }
     }
     public class ImprestSurrenderDocument
     {

@@ -18,13 +18,11 @@ namespace Latest_Staff_Portal.Models
     public class Credentials
     {
         private static DirectorySearcher dirSearch = null;
-        public static string fileSourcePath = @"C:\DBs\Portal Reports\";
-        public static string fileDestinationPath = @"C:\PORTAL\Live\Downloads\";
-        public static string fileUploadsPath = @"\\192.168.1.148\Document Uploads\";
+        public static string fileSourcePath = ConfigurationManager.AppSettings["FILEPATH"];
         public static HttpWebResponse GetOdataData(string page)
         {
             HttpWebResponse httpResponse = null;
-            string Url = ConfigurationManager.AppSettings["W_PWD"];
+
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["ODATA_URI"] + page);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "GET";
@@ -37,11 +35,27 @@ namespace Latest_Staff_Portal.Models
 
             return httpResponse;
         }
-        public static WebService ObjNav
+        public static HttpWebResponse WhatsUpText(string text)
+        {
+            HttpWebResponse httpResponse = null;
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.whatsapp.com/send?phone=+254714562578&text=Alexander");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["W_USER"],
+                        ConfigurationManager.AppSettings["W_PWD"], ConfigurationManager.AppSettings["DOMAIN"]);
+
+            httpWebRequest.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+
+            httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            return httpResponse;
+        }
+        public static Webportal ObjNav
         {
             get
             {
-                var ws = new WebService();
+                var ws = new Webportal();
 
                 try
                 {
@@ -57,6 +71,62 @@ namespace Latest_Staff_Portal.Models
                     ex.Data.Clear();
                 }
                 return ws;
+            }
+        }
+        //public static PortalService ObjNav1
+        //{
+        //    get
+        //    {
+        //        var ws = new PortalService();
+
+        //        try
+        //        {
+        //            var credentials = new NetworkCredential(ConfigurationManager.AppSettings["W_USER"],
+        //                ConfigurationManager.AppSettings["W_PWD"], ConfigurationManager.AppSettings["DOMAIN"]);
+
+        //            ws.Credentials = credentials;
+        //            ws.PreAuthenticate = true;
+
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ex.Data.Clear();
+        //        }
+        //        return ws;
+        //    }
+        //}
+        private static SearchResult SearchUserExist(DirectorySearcher ds, string UserName)
+        {
+            ds.Filter = string.Format("(&(objectCategory=Person)(sAMAccountName={0}))", UserName);
+
+            SearchResult userObject = ds.FindOne();
+            if (userObject != null)
+            {
+                return userObject;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        private static DirectorySearcher GetDirectorySearch(string username, string password, string domain)
+        {
+            if (dirSearch == null)
+            {
+                try
+                {
+                    dirSearch = new DirectorySearcher(new DirectoryEntry("LDAP://dc=DaystarUniversity,dc=local", username, password));
+                }
+                catch (DirectoryServicesCOMException ex)
+                {
+                    ex.Data.Clear();
+                    //cSite.Messaging.ShowAlert("Connection Credentials is wrong. Reason: " + ex.Message.ToString());
+                }
+                return dirSearch;
+            }
+            else
+            {
+                return dirSearch;
             }
         }
         public static string ResetPassword(string username, string newpass)
@@ -81,7 +151,7 @@ namespace Latest_Staff_Portal.Models
                 string AdminPassword = WebConfigurationManager.AppSettings["ADW_PWD"];
                 string Domain = WebConfigurationManager.AppSettings["AD_DOMAIN"];
 
-                using (PrincipalContext pContext = new PrincipalContext(ContextType.Domain, "192.168.2.156", AdminAccountName, AdminPassword))
+                using (PrincipalContext pContext = new PrincipalContext(ContextType.Domain, "DaystarUniversity.local", AdminAccountName, AdminPassword))
                 {
                     UserPrincipal up = UserPrincipal.FindByIdentity(pContext, username);
                     if (up != null)
@@ -91,6 +161,28 @@ namespace Latest_Staff_Portal.Models
                         rval = "CHANGED";
                     }
                 }
+                //string AdminAccountName = WebConfigurationManager.AppSettings["W_USER"];
+                //string AdminPassword = WebConfigurationManager.AppSettings["W_PWD"];
+                //string Domain = WebConfigurationManager.AppSettings["DOMAIN"];
+
+
+
+                //SearchResult rs = null;
+                //rs = SearchUserExist(GetDirectorySearch(AdminAccountName, AdminPassword, Domain), UName);
+                //if (rs != null)
+                //{
+                //    try
+                //    {
+                //        DirectoryEntry user = rs.GetDirectoryEntry();
+                //        user.Invoke("SetPassword", new object[] { "" + newpass + "" });
+                //        user.CommitChanges();
+                //        rval = "CHANGED";
+                //    }
+                //    catch (DirectoryServicesCOMException ex)
+                //    {
+                //        rval = ex.InnerException.Message;
+                //    }
+                //}
             }
             catch (Exception ex)
             {
@@ -103,11 +195,9 @@ namespace Latest_Staff_Portal.Models
             bool Uploaded = false;
             try
             {
-                File.WriteAllBytes(filePath, Convert.FromBase64String(base64String));
-                if (CommonClass.IfFileExists(filePath))
-                {
-                    ObjNav.ImportStaffProfilePicture(StaffNo, filePath, fileName);
-                }
+                CommonClass.MoveUploadedFile(base64String, filePath, fileName);
+                string UploadFilePath = "";// Credentials.fileUploadsPath + fileName;
+                //ObjNav.ImportStaffProfilePicture(StaffNo, UploadFilePath, fileName);
                 Uploaded = true;
             }
             catch (Exception ex)
@@ -123,11 +213,7 @@ namespace Latest_Staff_Portal.Models
             {
                 File.WriteAllBytes(filePath, Convert.FromBase64String(base64String));
 
-                if (CommonClass.IfFileExists(filePath))
-                {
-                    ObjNav.UploadAttachedDocument(DocNo, filePath, base64String, TableID);
-                }
-               
+                //ObjNav.UploadAttachedDocument(DocNo, filePath, base64String, TableID);
                 Uploaded = "SUCCESS";
             }
             catch (Exception ex)
@@ -141,7 +227,7 @@ namespace Latest_Staff_Portal.Models
             string PicString = "";
             try
             {
-                PicString = ObjNav.GetDocumentAttachment(TblID, DocNo, Id);
+                //PicString = ObjNav.GetDocumentAttachment(TblID, DocNo, Id);
             }
             catch (Exception ex)
             {

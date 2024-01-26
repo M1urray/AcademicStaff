@@ -1,0 +1,90 @@
+﻿@model Latest_Staff_Portal.ViewModel.ClassStatus
+@{
+    ViewBag.Title = "ClassStatusList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+</style>
+@if (Model.Employee_Desig.IsDirector)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <b>School List</b>
+            @Html.DropDownListFor(model => model.Code, Model.ListOfSchool, "--select School--", new { @class = "form-control", @id = "ddlSchool", @onchange = "GetClassStatus();" })
+            <hr />
+        </div>
+    </div>
+}
+@if (Model.Employee_Desig.IsDean || Model.Employee_Desig.IsDirector)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <b>Department List</b>
+            @Html.DropDownListFor(model => model.Code, Model.ListOfDepartment, "--select Department--", new { @class = "form-control", @id = "ddlDepartment", @onchange = "GetClassStatus();" })
+            <hr />
+        </div>
+    </div>
+}
+<div class="card pre-scrollable">
+    <div class="card-title">Class Status List</div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div id="divClassStatusList"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        GetClassStatus();
+        $("#ddlSchool,#ddlDepartment").select2({
+            width: '100%',
+            placeholder: 'Search...'
+        });
+    });
+    var GetClassStatus = function () {
+        ShowProgress();
+        debugger
+        var School = $("#ddlSchool").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+
+        var EmployeeDesignation = {};
+        if (School != "" && School != "undefined" && School != null) {
+            EmployeeDesignation.EmpSchool = School;
+        }
+        else {
+            EmployeeDesignation.EmpSchool = '@Model.Employee_Desig.EmpSchool';
+        }
+        if (Department != "" && Department != "undefined" && Department != null) {
+            EmployeeDesignation.EmpDepartment = Department;
+        }
+        else {
+            EmployeeDesignation.EmpDepartment = '@Model.Employee_Desig.EmpDepartment';
+        }
+        EmployeeDesignation.IsDirector = '@Model.Employee_Desig.IsDirector';
+        EmployeeDesignation.IsDean = '@Model.Employee_Desig.IsDean';
+        EmployeeDesignation.IsHOD = '@Model.Employee_Desig.IsHOD';
+        $.ajax({
+            type: "POST",
+            dataType: 'HTML',
+            contentType: "application/json; charset = utf-8",
+            data: JSON.stringify({ EmpDes: EmployeeDesignation }),
+            url: "/Programme/GetClassStatusList",
+            success: function (data) {
+                $("#divClassStatusList").html(data);
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                alert("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+</script>
+
+

@@ -1,0 +1,98 @@
+﻿@model Latest_Staff_Portal.ViewModel.DocumentsForApprovalList
+<style>
+    div.dataTables_wrapper div.dataTables_processing {
+        background-color: green;
+        color: white
+    }
+</style>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <button class="btn btn-primary" onclick="LoadData('1')">Pending Clearance Requests</button>
+    </div>
+    <div class="col-md-6">
+        <button class="btn btn-danger" onclick="LoadData('2')">Rejected Clearance Requests</button>
+    </div>
+</div>
+<hr />
+<table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+    <thead style="background-color:black;color:white">
+        <tr>
+            <th>Action</th>
+            <th>Doc No.</th>
+            <th>Reg No.</th>
+            <th>Student Name</th>
+            <th>Requisition Type</th>
+            <th>Date Sent for Approval</th>
+        </tr>
+    </thead>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadData("1");
+    });
+    var LoadData = function (Type) {
+        var TableID = '@Model.TableID';
+        var Status = '@Model.Status';
+        var DocT = '@Model.DocType';
+        $("#datatable").DataTable(), $("#datatable-buttons").DataTable({
+            lengthChange: !1,
+            "ajax": {
+                "url": "/DocumentApproval/GetStudentClearanceDataForApprovalList",
+                "type": "POST",
+                "dataType": "json",
+                "data": {
+                    "TbID": TableID, "Status": Status, "Type": Type, "RegType": DocT
+                }
+            },
+            "columns": [
+                {
+                    render: function (data, type, row, meta) {
+                        return '<a href="#" onclick=ViewDoc("' + row.TabelID + '","' + row.Document_No + '","' + row.Sequence + '","' + row.Entry_No + '")>View Document</a>'
+                    }
+                },
+                { "data": "Document_No", "name": "Document_No" },
+                { "data": "Sender", "name": "Sender" },
+                { "data": "Sender_Name", "name": "Sender_Name" },
+                { "data": "ReqType", "name": "ReqType" },
+                { "data": "DateSend", "name": "DateSend" }
+            ],
+            rowCallback: function (row, data, index) {
+                if (data.TabelID == "70135455") {
+                    if (data.CommentFound == true) {
+                        $(row).css('background-color', "Red");
+                    }
+                    else {
+                        $(row).css('background-color', "White");
+                    }
+                }
+            },
+            "serverSide": "true",
+            "order": [0, "asc"],
+            "processing": "true",
+            "language": {
+                "processing": "Processing...Please wait....",
+                "sSearch": "Search with Reg. No"
+            },
+            "bDestroy": "true",
+            buttons: [
+                "copy",
+                {
+                    extend: 'excel',
+                    title: 'Pending Approval Documents',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4]
+                    }
+               },
+                {
+                    extend: 'pdf',
+                    title: 'Pending Approval Documents',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4]
+                    }
+                }
+            ]
+        }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)");
+    };
+</script>
+

@@ -26,208 +26,30 @@ namespace Latest_Staff_Portal.NAVWS {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Web.Services.WebServiceBindingAttribute(Name="WebService_Binding", Namespace="urn:microsoft-dynamics-schemas/codeunit/WebService")]
-    public partial class WebService : System.Web.Services.Protocols.SoapHttpClientProtocol {
+    [System.Web.Services.WebServiceBindingAttribute(Name="Webportal_Binding", Namespace="urn:microsoft-dynamics-schemas/codeunit/Webportal")]
+    public partial class Webportal : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
-        private System.Threading.SendOrPostCallback PurchaseRequisitionApprovalRequestOperationCompleted;
+        private System.Threading.SendOrPostCallback AllowAutobillingOperationCompleted;
         
-        private System.Threading.SendOrPostCallback PurchaseRequisitionCreateOperationCompleted;
+        private System.Threading.SendOrPostCallback ApproveStudentRequisitionLinesOperationCompleted;
         
-        private System.Threading.SendOrPostCallback PurchaseRequisitionLinesOperationCompleted;
+        private System.Threading.SendOrPostCallback AssignLecturerUnitOperationCompleted;
         
-        private System.Threading.SendOrPostCallback PurchaseRequistionLineUpdateOperationCompleted;
+        private System.Threading.SendOrPostCallback AuthenticateStudentEmailOperationCompleted;
         
-        private System.Threading.SendOrPostCallback PurchaseRequsitionRemoveLineOperationCompleted;
+        private System.Threading.SendOrPostCallback ChargeStudentRequestOperationCompleted;
         
-        private System.Threading.SendOrPostCallback PurchasesLinesExistsOperationCompleted;
+        private System.Threading.SendOrPostCallback CustomApprovalEntryAdditionOperationCompleted;
         
-        private System.Threading.SendOrPostCallback RaiseStaffClaimFromImprestOperationCompleted;
+        private System.Threading.SendOrPostCallback CustomApprovalEntryClearance2OperationCompleted;
         
-        private System.Threading.SendOrPostCallback RemoveHRTrainingParticipantsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback RemoveTransportReqPassengerOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ReturnAmountInWordsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ReturnUnitCostOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SaveCompetenceValuesReviewsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SaveKPIsReviewsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SaveKPIsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SaveTrainingDevPlanOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SendApprovalEmailAlertOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SendAssetTransferforApprovalOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SendEmailOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SendImpSurrenderForApprovalOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SendTNAforApprovalOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StaffClaimRemoveLineOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StaffClaimRequisitionApprovalRequestOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StaffClaimRequisitionLinesInsertOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StaffClaimRequisitionLinesUpdateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StaffClaimUpdateLineOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StockLevelOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StoreLinesExistsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StoreRequisitionApprovalRequestOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StoreRequisitionCreateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StoreRequisitionLinesOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StoreRequistionLineUpdateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback StoreRequsitionRemoveLineOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SubmitEvalLinesReviewOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SubmitICTAssetMovement2OperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SubmitICTAssetMovementOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SubmitICTService_mainRequestOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback TrainingRequisitionApprovalRequestOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback TrainingRequisitionCreateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback TransportLinesExistsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback TransportRequisitionApprovalRequestOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback TransportRequisitionCreateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback TransportRequisitionUpdateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpateKPIsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateAssetTransferedOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateAssignedTicketOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateEvalLinesTimeFrameOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateICTAssetMovementOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateICTService_mainRequestOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateImprestHeaderOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateKPITimeFrameOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateNewVisitorInfOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateProcurementMethodsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdatePurchaseItemGLBudgetOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdatePurchaseRequisitionOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateStaffClaimsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateStoreRequisitionOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateWorkPlanObjectiveTargetActivityOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateWorkPlanObjectiveTargetOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdateWorkPlanObjectiveOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UploadAttachedDocumentOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback checkLegalOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback createAppraisalDocumentOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback fnImprestSurrenderLineUpdateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback fnImprestSurrenderOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback AllowedToConfirmOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback AllowedToRecruitOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback AppraisalRequisitionOpenToOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback AppraiseeStatementsOnApprisalOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback AssetServiceConfirmOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback AssetTranferRequestOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback AssignExternalDriverOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback AssignTransportRequisitionDriverOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CalcEndDateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CalcReturnDateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CanClearVisitorsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CanceTransportRequisitionOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CancelAssetTransferApprovalOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CancelICTRequisitionCreateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CancelImpSurrenderApprovalOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CancelTNAApprovalOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ChangeEvalLinesTimeFrameOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ChangeLeaveStatusOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ChangeTaskAllocationStatusToPendingOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ChangeVisitorStatusOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CheckAssetAvailabiilityOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CheckTransportApprovalsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ClaimLinesExistsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ClearActiveVisitiorOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ConfirmClosureOfICTRequisitionOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ConfirmRecruitOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ConfirmSurrenderDocLineAmountsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CreateLeavePlannerHeaderOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CustomHRCancelPurchaseRequisitionOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback CustomPurchaseRequisitionApprovalRequestOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback DeleteAppraisalExatraInformationOperationCompleted;
+        private System.Threading.SendOrPostCallback CustomApprovalEntryClearanceOperationCompleted;
         
         private System.Threading.SendOrPostCallback DeleteDocumentAttachmentOperationCompleted;
         
-        private System.Threading.SendOrPostCallback DeleteWorkPlanObjectiveTargetActivityOperationCompleted;
+        private System.Threading.SendOrPostCallback DeleteLecturerUnitOperationCompleted;
         
-        private System.Threading.SendOrPostCallback DeleteWorkPlanObjectiveTargetOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback DeleteWorkPlanObjectiveOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback DetermineIfIsNonWorkingOperationCompleted;
+        private System.Threading.SendOrPostCallback DeleteSubmittedUnitsOperationCompleted;
         
         private System.Threading.SendOrPostCallback DocumentApprovalsOperationCompleted;
         
@@ -235,177 +57,97 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback DocumentRejectionsOperationCompleted;
         
-        private System.Threading.SendOrPostCallback DropKPIsOperationCompleted;
+        private System.Threading.SendOrPostCallback DropStudentUnitsOperationCompleted;
         
-        private System.Threading.SendOrPostCallback DropTrainingDevPlanOperationCompleted;
+        private System.Threading.SendOrPostCallback DropUnitBasketOperationCompleted;
         
-        private System.Threading.SendOrPostCallback FuelRechargeCardOperationCompleted;
+        private System.Threading.SendOrPostCallback EditLecturerUnitOperationCompleted;
         
-        private System.Threading.SendOrPostCallback FuelRequisitionOperationCompleted;
+        private System.Threading.SendOrPostCallback EnterRowMarksOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GatePassApprovalOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateReceiptsOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GatePassCancelApprovalOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateScoreSheetOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GenerateEarningAndDeductionReportOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateStudentAuditOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GenerateGatePassOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateStudentChargesOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GeneratePNineReportOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateStudentExamCardsOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GeneratePayRollPaymtntAndDeductionReportOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateStudentProformaInvoicesOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GeneratePayRollSummeryReportOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateStudentReportCardByProgOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GeneratePaySlipReport1OperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateStudentReportCardOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GeneratePaySlipReportOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateStudentResultSlipOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GenerateTNAFormOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateStudentResultsOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetAllowedCollegeToConfirmOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateStudentSemesterInvoiceOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetDocumentAttachmentOperationCompleted;
+        private System.Threading.SendOrPostCallback GenerateStudentStatementOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetEndReturnDateOperationCompleted;
+        private System.Threading.SendOrPostCallback GetExamCategoryOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetLeaveBalances2OperationCompleted;
+        private System.Threading.SendOrPostCallback GetProfilePictureStudentOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetLeaveBalancesOperationCompleted;
+        private System.Threading.SendOrPostCallback InserClassAtteHeaderOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetProfilePictureOperationCompleted;
+        private System.Threading.SendOrPostCallback InsertClassListAttendanceOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetRecruitmentCenterOperationCompleted;
+        private System.Threading.SendOrPostCallback InsertStudentPaymentPlanOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRAppraisalApprovalRequestOperationCompleted;
+        private System.Threading.SendOrPostCallback OnlineClearanceOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRCanceImprestRequisitionOperationCompleted;
+        private System.Threading.SendOrPostCallback PostAttendanceListOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRCanceStaffClaimRequisitionOperationCompleted;
+        private System.Threading.SendOrPostCallback PostStudentChargeOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRCancelFuelRechrageCardApplicationOperationCompleted;
+        private System.Threading.SendOrPostCallback PostStudentChargesOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRCancelLeaveApplicationOperationCompleted;
+        private System.Threading.SendOrPostCallback PostTransferChargeOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRCancelPurchaseRequisitionOperationCompleted;
+        private System.Threading.SendOrPostCallback Post_RegisterStudentUnitsOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRCancelStoreRequisitionOperationCompleted;
+        private System.Threading.SendOrPostCallback PrintClassListOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRCancelTrainingRequisitionOperationCompleted;
+        private System.Threading.SendOrPostCallback PrintCourseStatementOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRFuelRechargeCardApprovalRequestOperationCompleted;
+        private System.Threading.SendOrPostCallback RefreshPaymentPlanOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRLeaveApplicationOperationCompleted;
+        private System.Threading.SendOrPostCallback RefreshStudentAuditOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRLeaveApprovalRequestOperationCompleted;
+        private System.Threading.SendOrPostCallback RegisterStudentUnitBasketOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRTrainingParticipantsExistsOperationCompleted;
+        private System.Threading.SendOrPostCallback RegisterStudentUnitsOperationCompleted;
         
-        private System.Threading.SendOrPostCallback HRUpdateLeaveApplicationOperationCompleted;
+        private System.Threading.SendOrPostCallback SendEmailOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ICTRequisitionCreateOperationCompleted;
+        private System.Threading.SendOrPostCallback SendStudentRegBacthApprovalOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ImportStaffProfilePictureOperationCompleted;
+        private System.Threading.SendOrPostCallback StudentRequisitionApprovalRequestOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ImportStudentProfilePictureOperationCompleted;
+        private System.Threading.SendOrPostCallback StudentRequisitionCreateOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ImprestLinesExistsOperationCompleted;
+        private System.Threading.SendOrPostCallback StudentRequisitionLinesCreateOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ImprestMemoLinesCreateOperationCompleted;
+        private System.Threading.SendOrPostCallback StudentRequisitionLinesInsertCreateDocOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ImprestRequisitionApprovalRequestOperationCompleted;
+        private System.Threading.SendOrPostCallback StudentSelfPromotionOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ImprestRequisitionCreateOperationCompleted;
+        private System.Threading.SendOrPostCallback TestRegistrationStartDateOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ImprestRequisitionLinesCreate2OperationCompleted;
+        private System.Threading.SendOrPostCallback UploadAttachedDocumentOperationCompleted;
         
-        private System.Threading.SendOrPostCallback ImprestRequisitionLinesCreateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ImprestRequisitionLinesUpdateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ImprestRequsitionRemoveLineOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertAdmissionHeaderOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertAppraisalDepartmentalObjectivesOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertAppraisalExatraInformationOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertBestEmpOfYearOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertEmplRatingCompetenceOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertExternalPassengersOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertGatePassOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertHRTrainingParticipantsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertICTRequisitionLinesOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertImprestMemoOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertIndividualWorkPlanCommentsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertIndividualWorkplanOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertLeavePlannerLinesOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertLegalAdvisoryOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertNewVisitorOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertRecruitmentCenterCommentsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertRegistrationInformationOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertStaffAdvanceOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertStaffClaimsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertStaffValueCompetenceOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertStandingImprestOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertTNAConferenceSeminarOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertTNAQuestionHODOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertTNAQuestionSupervisorOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertTrainingNeedsAnalysisOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertTrainingNeedsLinesOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertTrainingNeedsQuestionnareOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertTransportReqPassengerOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertVisitorItemsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertWorkPlanObjectiveRemarksOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertWorkPlanObjectiveTargetActivityOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertWorkPlanObjectiveTargetOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback InsertWorkPlanObjectiveOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback LeaveStatementOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback MaintenanceRequestOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback OpenIndividualWorkPlanToOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ParamilitaryAcademyToConfirmOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PostForcedUnApplyVendorOperationCompleted;
+        private System.Threading.SendOrPostCallback fnSaveGraduationOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
-        public WebService() {
-            this.Url = global::Latest_Staff_Portal.Properties.Settings.Default.Latest_Staff_Portal_NAVWS_WebService;
+        public Webportal() {
+            this.Url = global::Latest_Staff_Portal.Properties.Settings.Default.Latest_Staff_Portal_NAVWS_Webportal;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
@@ -440,304 +182,37 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        public event PurchaseRequisitionApprovalRequestCompletedEventHandler PurchaseRequisitionApprovalRequestCompleted;
+        public event AllowAutobillingCompletedEventHandler AllowAutobillingCompleted;
         
         /// <remarks/>
-        public event PurchaseRequisitionCreateCompletedEventHandler PurchaseRequisitionCreateCompleted;
+        public event ApproveStudentRequisitionLinesCompletedEventHandler ApproveStudentRequisitionLinesCompleted;
         
         /// <remarks/>
-        public event PurchaseRequisitionLinesCompletedEventHandler PurchaseRequisitionLinesCompleted;
+        public event AssignLecturerUnitCompletedEventHandler AssignLecturerUnitCompleted;
         
         /// <remarks/>
-        public event PurchaseRequistionLineUpdateCompletedEventHandler PurchaseRequistionLineUpdateCompleted;
+        public event AuthenticateStudentEmailCompletedEventHandler AuthenticateStudentEmailCompleted;
         
         /// <remarks/>
-        public event PurchaseRequsitionRemoveLineCompletedEventHandler PurchaseRequsitionRemoveLineCompleted;
+        public event ChargeStudentRequestCompletedEventHandler ChargeStudentRequestCompleted;
         
         /// <remarks/>
-        public event PurchasesLinesExistsCompletedEventHandler PurchasesLinesExistsCompleted;
+        public event CustomApprovalEntryAdditionCompletedEventHandler CustomApprovalEntryAdditionCompleted;
         
         /// <remarks/>
-        public event RaiseStaffClaimFromImprestCompletedEventHandler RaiseStaffClaimFromImprestCompleted;
+        public event CustomApprovalEntryClearance2CompletedEventHandler CustomApprovalEntryClearance2Completed;
         
         /// <remarks/>
-        public event RemoveHRTrainingParticipantsCompletedEventHandler RemoveHRTrainingParticipantsCompleted;
-        
-        /// <remarks/>
-        public event RemoveTransportReqPassengerCompletedEventHandler RemoveTransportReqPassengerCompleted;
-        
-        /// <remarks/>
-        public event ReturnAmountInWordsCompletedEventHandler ReturnAmountInWordsCompleted;
-        
-        /// <remarks/>
-        public event ReturnUnitCostCompletedEventHandler ReturnUnitCostCompleted;
-        
-        /// <remarks/>
-        public event SaveCompetenceValuesReviewsCompletedEventHandler SaveCompetenceValuesReviewsCompleted;
-        
-        /// <remarks/>
-        public event SaveKPIsReviewsCompletedEventHandler SaveKPIsReviewsCompleted;
-        
-        /// <remarks/>
-        public event SaveKPIsCompletedEventHandler SaveKPIsCompleted;
-        
-        /// <remarks/>
-        public event SaveTrainingDevPlanCompletedEventHandler SaveTrainingDevPlanCompleted;
-        
-        /// <remarks/>
-        public event SendApprovalEmailAlertCompletedEventHandler SendApprovalEmailAlertCompleted;
-        
-        /// <remarks/>
-        public event SendAssetTransferforApprovalCompletedEventHandler SendAssetTransferforApprovalCompleted;
-        
-        /// <remarks/>
-        public event SendEmailCompletedEventHandler SendEmailCompleted;
-        
-        /// <remarks/>
-        public event SendImpSurrenderForApprovalCompletedEventHandler SendImpSurrenderForApprovalCompleted;
-        
-        /// <remarks/>
-        public event SendTNAforApprovalCompletedEventHandler SendTNAforApprovalCompleted;
-        
-        /// <remarks/>
-        public event StaffClaimRemoveLineCompletedEventHandler StaffClaimRemoveLineCompleted;
-        
-        /// <remarks/>
-        public event StaffClaimRequisitionApprovalRequestCompletedEventHandler StaffClaimRequisitionApprovalRequestCompleted;
-        
-        /// <remarks/>
-        public event StaffClaimRequisitionLinesInsertCompletedEventHandler StaffClaimRequisitionLinesInsertCompleted;
-        
-        /// <remarks/>
-        public event StaffClaimRequisitionLinesUpdateCompletedEventHandler StaffClaimRequisitionLinesUpdateCompleted;
-        
-        /// <remarks/>
-        public event StaffClaimUpdateLineCompletedEventHandler StaffClaimUpdateLineCompleted;
-        
-        /// <remarks/>
-        public event StockLevelCompletedEventHandler StockLevelCompleted;
-        
-        /// <remarks/>
-        public event StoreLinesExistsCompletedEventHandler StoreLinesExistsCompleted;
-        
-        /// <remarks/>
-        public event StoreRequisitionApprovalRequestCompletedEventHandler StoreRequisitionApprovalRequestCompleted;
-        
-        /// <remarks/>
-        public event StoreRequisitionCreateCompletedEventHandler StoreRequisitionCreateCompleted;
-        
-        /// <remarks/>
-        public event StoreRequisitionLinesCompletedEventHandler StoreRequisitionLinesCompleted;
-        
-        /// <remarks/>
-        public event StoreRequistionLineUpdateCompletedEventHandler StoreRequistionLineUpdateCompleted;
-        
-        /// <remarks/>
-        public event StoreRequsitionRemoveLineCompletedEventHandler StoreRequsitionRemoveLineCompleted;
-        
-        /// <remarks/>
-        public event SubmitEvalLinesReviewCompletedEventHandler SubmitEvalLinesReviewCompleted;
-        
-        /// <remarks/>
-        public event SubmitICTAssetMovement2CompletedEventHandler SubmitICTAssetMovement2Completed;
-        
-        /// <remarks/>
-        public event SubmitICTAssetMovementCompletedEventHandler SubmitICTAssetMovementCompleted;
-        
-        /// <remarks/>
-        public event SubmitICTService_mainRequestCompletedEventHandler SubmitICTService_mainRequestCompleted;
-        
-        /// <remarks/>
-        public event TrainingRequisitionApprovalRequestCompletedEventHandler TrainingRequisitionApprovalRequestCompleted;
-        
-        /// <remarks/>
-        public event TrainingRequisitionCreateCompletedEventHandler TrainingRequisitionCreateCompleted;
-        
-        /// <remarks/>
-        public event TransportLinesExistsCompletedEventHandler TransportLinesExistsCompleted;
-        
-        /// <remarks/>
-        public event TransportRequisitionApprovalRequestCompletedEventHandler TransportRequisitionApprovalRequestCompleted;
-        
-        /// <remarks/>
-        public event TransportRequisitionCreateCompletedEventHandler TransportRequisitionCreateCompleted;
-        
-        /// <remarks/>
-        public event TransportRequisitionUpdateCompletedEventHandler TransportRequisitionUpdateCompleted;
-        
-        /// <remarks/>
-        public event UpateKPIsCompletedEventHandler UpateKPIsCompleted;
-        
-        /// <remarks/>
-        public event UpdateAssetTransferedCompletedEventHandler UpdateAssetTransferedCompleted;
-        
-        /// <remarks/>
-        public event UpdateAssignedTicketCompletedEventHandler UpdateAssignedTicketCompleted;
-        
-        /// <remarks/>
-        public event UpdateEvalLinesTimeFrameCompletedEventHandler UpdateEvalLinesTimeFrameCompleted;
-        
-        /// <remarks/>
-        public event UpdateICTAssetMovementCompletedEventHandler UpdateICTAssetMovementCompleted;
-        
-        /// <remarks/>
-        public event UpdateICTService_mainRequestCompletedEventHandler UpdateICTService_mainRequestCompleted;
-        
-        /// <remarks/>
-        public event UpdateImprestHeaderCompletedEventHandler UpdateImprestHeaderCompleted;
-        
-        /// <remarks/>
-        public event UpdateKPITimeFrameCompletedEventHandler UpdateKPITimeFrameCompleted;
-        
-        /// <remarks/>
-        public event UpdateNewVisitorInfCompletedEventHandler UpdateNewVisitorInfCompleted;
-        
-        /// <remarks/>
-        public event UpdateProcurementMethodsCompletedEventHandler UpdateProcurementMethodsCompleted;
-        
-        /// <remarks/>
-        public event UpdatePurchaseItemGLBudgetCompletedEventHandler UpdatePurchaseItemGLBudgetCompleted;
-        
-        /// <remarks/>
-        public event UpdatePurchaseRequisitionCompletedEventHandler UpdatePurchaseRequisitionCompleted;
-        
-        /// <remarks/>
-        public event UpdateStaffClaimsCompletedEventHandler UpdateStaffClaimsCompleted;
-        
-        /// <remarks/>
-        public event UpdateStoreRequisitionCompletedEventHandler UpdateStoreRequisitionCompleted;
-        
-        /// <remarks/>
-        public event UpdateWorkPlanObjectiveTargetActivityCompletedEventHandler UpdateWorkPlanObjectiveTargetActivityCompleted;
-        
-        /// <remarks/>
-        public event UpdateWorkPlanObjectiveTargetCompletedEventHandler UpdateWorkPlanObjectiveTargetCompleted;
-        
-        /// <remarks/>
-        public event UpdateWorkPlanObjectiveCompletedEventHandler UpdateWorkPlanObjectiveCompleted;
-        
-        /// <remarks/>
-        public event UploadAttachedDocumentCompletedEventHandler UploadAttachedDocumentCompleted;
-        
-        /// <remarks/>
-        public event checkLegalCompletedEventHandler checkLegalCompleted;
-        
-        /// <remarks/>
-        public event createAppraisalDocumentCompletedEventHandler createAppraisalDocumentCompleted;
-        
-        /// <remarks/>
-        public event fnImprestSurrenderLineUpdateCompletedEventHandler fnImprestSurrenderLineUpdateCompleted;
-        
-        /// <remarks/>
-        public event fnImprestSurrenderCompletedEventHandler fnImprestSurrenderCompleted;
-        
-        /// <remarks/>
-        public event AllowedToConfirmCompletedEventHandler AllowedToConfirmCompleted;
-        
-        /// <remarks/>
-        public event AllowedToRecruitCompletedEventHandler AllowedToRecruitCompleted;
-        
-        /// <remarks/>
-        public event AppraisalRequisitionOpenToCompletedEventHandler AppraisalRequisitionOpenToCompleted;
-        
-        /// <remarks/>
-        public event AppraiseeStatementsOnApprisalCompletedEventHandler AppraiseeStatementsOnApprisalCompleted;
-        
-        /// <remarks/>
-        public event AssetServiceConfirmCompletedEventHandler AssetServiceConfirmCompleted;
-        
-        /// <remarks/>
-        public event AssetTranferRequestCompletedEventHandler AssetTranferRequestCompleted;
-        
-        /// <remarks/>
-        public event AssignExternalDriverCompletedEventHandler AssignExternalDriverCompleted;
-        
-        /// <remarks/>
-        public event AssignTransportRequisitionDriverCompletedEventHandler AssignTransportRequisitionDriverCompleted;
-        
-        /// <remarks/>
-        public event CalcEndDateCompletedEventHandler CalcEndDateCompleted;
-        
-        /// <remarks/>
-        public event CalcReturnDateCompletedEventHandler CalcReturnDateCompleted;
-        
-        /// <remarks/>
-        public event CanClearVisitorsCompletedEventHandler CanClearVisitorsCompleted;
-        
-        /// <remarks/>
-        public event CanceTransportRequisitionCompletedEventHandler CanceTransportRequisitionCompleted;
-        
-        /// <remarks/>
-        public event CancelAssetTransferApprovalCompletedEventHandler CancelAssetTransferApprovalCompleted;
-        
-        /// <remarks/>
-        public event CancelICTRequisitionCreateCompletedEventHandler CancelICTRequisitionCreateCompleted;
-        
-        /// <remarks/>
-        public event CancelImpSurrenderApprovalCompletedEventHandler CancelImpSurrenderApprovalCompleted;
-        
-        /// <remarks/>
-        public event CancelTNAApprovalCompletedEventHandler CancelTNAApprovalCompleted;
-        
-        /// <remarks/>
-        public event ChangeEvalLinesTimeFrameCompletedEventHandler ChangeEvalLinesTimeFrameCompleted;
-        
-        /// <remarks/>
-        public event ChangeLeaveStatusCompletedEventHandler ChangeLeaveStatusCompleted;
-        
-        /// <remarks/>
-        public event ChangeTaskAllocationStatusToPendingCompletedEventHandler ChangeTaskAllocationStatusToPendingCompleted;
-        
-        /// <remarks/>
-        public event ChangeVisitorStatusCompletedEventHandler ChangeVisitorStatusCompleted;
-        
-        /// <remarks/>
-        public event CheckAssetAvailabiilityCompletedEventHandler CheckAssetAvailabiilityCompleted;
-        
-        /// <remarks/>
-        public event CheckTransportApprovalsCompletedEventHandler CheckTransportApprovalsCompleted;
-        
-        /// <remarks/>
-        public event ClaimLinesExistsCompletedEventHandler ClaimLinesExistsCompleted;
-        
-        /// <remarks/>
-        public event ClearActiveVisitiorCompletedEventHandler ClearActiveVisitiorCompleted;
-        
-        /// <remarks/>
-        public event ConfirmClosureOfICTRequisitionCompletedEventHandler ConfirmClosureOfICTRequisitionCompleted;
-        
-        /// <remarks/>
-        public event ConfirmRecruitCompletedEventHandler ConfirmRecruitCompleted;
-        
-        /// <remarks/>
-        public event ConfirmSurrenderDocLineAmountsCompletedEventHandler ConfirmSurrenderDocLineAmountsCompleted;
-        
-        /// <remarks/>
-        public event CreateLeavePlannerHeaderCompletedEventHandler CreateLeavePlannerHeaderCompleted;
-        
-        /// <remarks/>
-        public event CustomHRCancelPurchaseRequisitionCompletedEventHandler CustomHRCancelPurchaseRequisitionCompleted;
-        
-        /// <remarks/>
-        public event CustomPurchaseRequisitionApprovalRequestCompletedEventHandler CustomPurchaseRequisitionApprovalRequestCompleted;
-        
-        /// <remarks/>
-        public event DeleteAppraisalExatraInformationCompletedEventHandler DeleteAppraisalExatraInformationCompleted;
+        public event CustomApprovalEntryClearanceCompletedEventHandler CustomApprovalEntryClearanceCompleted;
         
         /// <remarks/>
         public event DeleteDocumentAttachmentCompletedEventHandler DeleteDocumentAttachmentCompleted;
         
         /// <remarks/>
-        public event DeleteWorkPlanObjectiveTargetActivityCompletedEventHandler DeleteWorkPlanObjectiveTargetActivityCompleted;
+        public event DeleteLecturerUnitCompletedEventHandler DeleteLecturerUnitCompleted;
         
         /// <remarks/>
-        public event DeleteWorkPlanObjectiveTargetCompletedEventHandler DeleteWorkPlanObjectiveTargetCompleted;
-        
-        /// <remarks/>
-        public event DeleteWorkPlanObjectiveCompletedEventHandler DeleteWorkPlanObjectiveCompleted;
-        
-        /// <remarks/>
-        public event DetermineIfIsNonWorkingCompletedEventHandler DetermineIfIsNonWorkingCompleted;
+        public event DeleteSubmittedUnitsCompletedEventHandler DeleteSubmittedUnitsCompleted;
         
         /// <remarks/>
         public event DocumentApprovalsCompletedEventHandler DocumentApprovalsCompleted;
@@ -749,3491 +224,434 @@ namespace Latest_Staff_Portal.NAVWS {
         public event DocumentRejectionsCompletedEventHandler DocumentRejectionsCompleted;
         
         /// <remarks/>
-        public event DropKPIsCompletedEventHandler DropKPIsCompleted;
+        public event DropStudentUnitsCompletedEventHandler DropStudentUnitsCompleted;
         
         /// <remarks/>
-        public event DropTrainingDevPlanCompletedEventHandler DropTrainingDevPlanCompleted;
+        public event DropUnitBasketCompletedEventHandler DropUnitBasketCompleted;
         
         /// <remarks/>
-        public event FuelRechargeCardCompletedEventHandler FuelRechargeCardCompleted;
+        public event EditLecturerUnitCompletedEventHandler EditLecturerUnitCompleted;
         
         /// <remarks/>
-        public event FuelRequisitionCompletedEventHandler FuelRequisitionCompleted;
+        public event EnterRowMarksCompletedEventHandler EnterRowMarksCompleted;
         
         /// <remarks/>
-        public event GatePassApprovalCompletedEventHandler GatePassApprovalCompleted;
+        public event GenerateReceiptsCompletedEventHandler GenerateReceiptsCompleted;
         
         /// <remarks/>
-        public event GatePassCancelApprovalCompletedEventHandler GatePassCancelApprovalCompleted;
+        public event GenerateScoreSheetCompletedEventHandler GenerateScoreSheetCompleted;
         
         /// <remarks/>
-        public event GenerateEarningAndDeductionReportCompletedEventHandler GenerateEarningAndDeductionReportCompleted;
+        public event GenerateStudentAuditCompletedEventHandler GenerateStudentAuditCompleted;
         
         /// <remarks/>
-        public event GenerateGatePassCompletedEventHandler GenerateGatePassCompleted;
+        public event GenerateStudentChargesCompletedEventHandler GenerateStudentChargesCompleted;
         
         /// <remarks/>
-        public event GeneratePNineReportCompletedEventHandler GeneratePNineReportCompleted;
+        public event GenerateStudentExamCardsCompletedEventHandler GenerateStudentExamCardsCompleted;
         
         /// <remarks/>
-        public event GeneratePayRollPaymtntAndDeductionReportCompletedEventHandler GeneratePayRollPaymtntAndDeductionReportCompleted;
+        public event GenerateStudentProformaInvoicesCompletedEventHandler GenerateStudentProformaInvoicesCompleted;
         
         /// <remarks/>
-        public event GeneratePayRollSummeryReportCompletedEventHandler GeneratePayRollSummeryReportCompleted;
+        public event GenerateStudentReportCardByProgCompletedEventHandler GenerateStudentReportCardByProgCompleted;
         
         /// <remarks/>
-        public event GeneratePaySlipReport1CompletedEventHandler GeneratePaySlipReport1Completed;
+        public event GenerateStudentReportCardCompletedEventHandler GenerateStudentReportCardCompleted;
         
         /// <remarks/>
-        public event GeneratePaySlipReportCompletedEventHandler GeneratePaySlipReportCompleted;
+        public event GenerateStudentResultSlipCompletedEventHandler GenerateStudentResultSlipCompleted;
         
         /// <remarks/>
-        public event GenerateTNAFormCompletedEventHandler GenerateTNAFormCompleted;
+        public event GenerateStudentResultsCompletedEventHandler GenerateStudentResultsCompleted;
         
         /// <remarks/>
-        public event GetAllowedCollegeToConfirmCompletedEventHandler GetAllowedCollegeToConfirmCompleted;
+        public event GenerateStudentSemesterInvoiceCompletedEventHandler GenerateStudentSemesterInvoiceCompleted;
         
         /// <remarks/>
-        public event GetDocumentAttachmentCompletedEventHandler GetDocumentAttachmentCompleted;
+        public event GenerateStudentStatementCompletedEventHandler GenerateStudentStatementCompleted;
         
         /// <remarks/>
-        public event GetEndReturnDateCompletedEventHandler GetEndReturnDateCompleted;
+        public event GetExamCategoryCompletedEventHandler GetExamCategoryCompleted;
         
         /// <remarks/>
-        public event GetLeaveBalances2CompletedEventHandler GetLeaveBalances2Completed;
+        public event GetProfilePictureStudentCompletedEventHandler GetProfilePictureStudentCompleted;
         
         /// <remarks/>
-        public event GetLeaveBalancesCompletedEventHandler GetLeaveBalancesCompleted;
+        public event InserClassAtteHeaderCompletedEventHandler InserClassAtteHeaderCompleted;
         
         /// <remarks/>
-        public event GetProfilePictureCompletedEventHandler GetProfilePictureCompleted;
+        public event InsertClassListAttendanceCompletedEventHandler InsertClassListAttendanceCompleted;
         
         /// <remarks/>
-        public event GetRecruitmentCenterCompletedEventHandler GetRecruitmentCenterCompleted;
+        public event InsertStudentPaymentPlanCompletedEventHandler InsertStudentPaymentPlanCompleted;
         
         /// <remarks/>
-        public event HRAppraisalApprovalRequestCompletedEventHandler HRAppraisalApprovalRequestCompleted;
+        public event OnlineClearanceCompletedEventHandler OnlineClearanceCompleted;
         
         /// <remarks/>
-        public event HRCanceImprestRequisitionCompletedEventHandler HRCanceImprestRequisitionCompleted;
+        public event PostAttendanceListCompletedEventHandler PostAttendanceListCompleted;
         
         /// <remarks/>
-        public event HRCanceStaffClaimRequisitionCompletedEventHandler HRCanceStaffClaimRequisitionCompleted;
+        public event PostStudentChargeCompletedEventHandler PostStudentChargeCompleted;
         
         /// <remarks/>
-        public event HRCancelFuelRechrageCardApplicationCompletedEventHandler HRCancelFuelRechrageCardApplicationCompleted;
+        public event PostStudentChargesCompletedEventHandler PostStudentChargesCompleted;
         
         /// <remarks/>
-        public event HRCancelLeaveApplicationCompletedEventHandler HRCancelLeaveApplicationCompleted;
+        public event PostTransferChargeCompletedEventHandler PostTransferChargeCompleted;
         
         /// <remarks/>
-        public event HRCancelPurchaseRequisitionCompletedEventHandler HRCancelPurchaseRequisitionCompleted;
+        public event Post_RegisterStudentUnitsCompletedEventHandler Post_RegisterStudentUnitsCompleted;
         
         /// <remarks/>
-        public event HRCancelStoreRequisitionCompletedEventHandler HRCancelStoreRequisitionCompleted;
+        public event PrintClassListCompletedEventHandler PrintClassListCompleted;
         
         /// <remarks/>
-        public event HRCancelTrainingRequisitionCompletedEventHandler HRCancelTrainingRequisitionCompleted;
+        public event PrintCourseStatementCompletedEventHandler PrintCourseStatementCompleted;
         
         /// <remarks/>
-        public event HRFuelRechargeCardApprovalRequestCompletedEventHandler HRFuelRechargeCardApprovalRequestCompleted;
+        public event RefreshPaymentPlanCompletedEventHandler RefreshPaymentPlanCompleted;
         
         /// <remarks/>
-        public event HRLeaveApplicationCompletedEventHandler HRLeaveApplicationCompleted;
+        public event RefreshStudentAuditCompletedEventHandler RefreshStudentAuditCompleted;
         
         /// <remarks/>
-        public event HRLeaveApprovalRequestCompletedEventHandler HRLeaveApprovalRequestCompleted;
+        public event RegisterStudentUnitBasketCompletedEventHandler RegisterStudentUnitBasketCompleted;
         
         /// <remarks/>
-        public event HRTrainingParticipantsExistsCompletedEventHandler HRTrainingParticipantsExistsCompleted;
+        public event RegisterStudentUnitsCompletedEventHandler RegisterStudentUnitsCompleted;
         
         /// <remarks/>
-        public event HRUpdateLeaveApplicationCompletedEventHandler HRUpdateLeaveApplicationCompleted;
+        public event SendEmailCompletedEventHandler SendEmailCompleted;
         
         /// <remarks/>
-        public event ICTRequisitionCreateCompletedEventHandler ICTRequisitionCreateCompleted;
+        public event SendStudentRegBacthApprovalCompletedEventHandler SendStudentRegBacthApprovalCompleted;
         
         /// <remarks/>
-        public event ImportStaffProfilePictureCompletedEventHandler ImportStaffProfilePictureCompleted;
+        public event StudentRequisitionApprovalRequestCompletedEventHandler StudentRequisitionApprovalRequestCompleted;
         
         /// <remarks/>
-        public event ImportStudentProfilePictureCompletedEventHandler ImportStudentProfilePictureCompleted;
+        public event StudentRequisitionCreateCompletedEventHandler StudentRequisitionCreateCompleted;
         
         /// <remarks/>
-        public event ImprestLinesExistsCompletedEventHandler ImprestLinesExistsCompleted;
+        public event StudentRequisitionLinesCreateCompletedEventHandler StudentRequisitionLinesCreateCompleted;
         
         /// <remarks/>
-        public event ImprestMemoLinesCreateCompletedEventHandler ImprestMemoLinesCreateCompleted;
+        public event StudentRequisitionLinesInsertCreateDocCompletedEventHandler StudentRequisitionLinesInsertCreateDocCompleted;
         
         /// <remarks/>
-        public event ImprestRequisitionApprovalRequestCompletedEventHandler ImprestRequisitionApprovalRequestCompleted;
+        public event StudentSelfPromotionCompletedEventHandler StudentSelfPromotionCompleted;
         
         /// <remarks/>
-        public event ImprestRequisitionCreateCompletedEventHandler ImprestRequisitionCreateCompleted;
+        public event TestRegistrationStartDateCompletedEventHandler TestRegistrationStartDateCompleted;
         
         /// <remarks/>
-        public event ImprestRequisitionLinesCreate2CompletedEventHandler ImprestRequisitionLinesCreate2Completed;
+        public event UploadAttachedDocumentCompletedEventHandler UploadAttachedDocumentCompleted;
         
         /// <remarks/>
-        public event ImprestRequisitionLinesCreateCompletedEventHandler ImprestRequisitionLinesCreateCompleted;
+        public event fnSaveGraduationCompletedEventHandler fnSaveGraduationCompleted;
         
         /// <remarks/>
-        public event ImprestRequisitionLinesUpdateCompletedEventHandler ImprestRequisitionLinesUpdateCompleted;
-        
-        /// <remarks/>
-        public event ImprestRequsitionRemoveLineCompletedEventHandler ImprestRequsitionRemoveLineCompleted;
-        
-        /// <remarks/>
-        public event InsertAdmissionHeaderCompletedEventHandler InsertAdmissionHeaderCompleted;
-        
-        /// <remarks/>
-        public event InsertAppraisalDepartmentalObjectivesCompletedEventHandler InsertAppraisalDepartmentalObjectivesCompleted;
-        
-        /// <remarks/>
-        public event InsertAppraisalExatraInformationCompletedEventHandler InsertAppraisalExatraInformationCompleted;
-        
-        /// <remarks/>
-        public event InsertBestEmpOfYearCompletedEventHandler InsertBestEmpOfYearCompleted;
-        
-        /// <remarks/>
-        public event InsertEmplRatingCompetenceCompletedEventHandler InsertEmplRatingCompetenceCompleted;
-        
-        /// <remarks/>
-        public event InsertExternalPassengersCompletedEventHandler InsertExternalPassengersCompleted;
-        
-        /// <remarks/>
-        public event InsertGatePassCompletedEventHandler InsertGatePassCompleted;
-        
-        /// <remarks/>
-        public event InsertHRTrainingParticipantsCompletedEventHandler InsertHRTrainingParticipantsCompleted;
-        
-        /// <remarks/>
-        public event InsertICTRequisitionLinesCompletedEventHandler InsertICTRequisitionLinesCompleted;
-        
-        /// <remarks/>
-        public event InsertImprestMemoCompletedEventHandler InsertImprestMemoCompleted;
-        
-        /// <remarks/>
-        public event InsertIndividualWorkPlanCommentsCompletedEventHandler InsertIndividualWorkPlanCommentsCompleted;
-        
-        /// <remarks/>
-        public event InsertIndividualWorkplanCompletedEventHandler InsertIndividualWorkplanCompleted;
-        
-        /// <remarks/>
-        public event InsertLeavePlannerLinesCompletedEventHandler InsertLeavePlannerLinesCompleted;
-        
-        /// <remarks/>
-        public event InsertLegalAdvisoryCompletedEventHandler InsertLegalAdvisoryCompleted;
-        
-        /// <remarks/>
-        public event InsertNewVisitorCompletedEventHandler InsertNewVisitorCompleted;
-        
-        /// <remarks/>
-        public event InsertRecruitmentCenterCommentsCompletedEventHandler InsertRecruitmentCenterCommentsCompleted;
-        
-        /// <remarks/>
-        public event InsertRegistrationInformationCompletedEventHandler InsertRegistrationInformationCompleted;
-        
-        /// <remarks/>
-        public event InsertStaffAdvanceCompletedEventHandler InsertStaffAdvanceCompleted;
-        
-        /// <remarks/>
-        public event InsertStaffClaimsCompletedEventHandler InsertStaffClaimsCompleted;
-        
-        /// <remarks/>
-        public event InsertStaffValueCompetenceCompletedEventHandler InsertStaffValueCompetenceCompleted;
-        
-        /// <remarks/>
-        public event InsertStandingImprestCompletedEventHandler InsertStandingImprestCompleted;
-        
-        /// <remarks/>
-        public event InsertTNAConferenceSeminarCompletedEventHandler InsertTNAConferenceSeminarCompleted;
-        
-        /// <remarks/>
-        public event InsertTNAQuestionHODCompletedEventHandler InsertTNAQuestionHODCompleted;
-        
-        /// <remarks/>
-        public event InsertTNAQuestionSupervisorCompletedEventHandler InsertTNAQuestionSupervisorCompleted;
-        
-        /// <remarks/>
-        public event InsertTrainingNeedsAnalysisCompletedEventHandler InsertTrainingNeedsAnalysisCompleted;
-        
-        /// <remarks/>
-        public event InsertTrainingNeedsLinesCompletedEventHandler InsertTrainingNeedsLinesCompleted;
-        
-        /// <remarks/>
-        public event InsertTrainingNeedsQuestionnareCompletedEventHandler InsertTrainingNeedsQuestionnareCompleted;
-        
-        /// <remarks/>
-        public event InsertTransportReqPassengerCompletedEventHandler InsertTransportReqPassengerCompleted;
-        
-        /// <remarks/>
-        public event InsertVisitorItemsCompletedEventHandler InsertVisitorItemsCompleted;
-        
-        /// <remarks/>
-        public event InsertWorkPlanObjectiveRemarksCompletedEventHandler InsertWorkPlanObjectiveRemarksCompleted;
-        
-        /// <remarks/>
-        public event InsertWorkPlanObjectiveTargetActivityCompletedEventHandler InsertWorkPlanObjectiveTargetActivityCompleted;
-        
-        /// <remarks/>
-        public event InsertWorkPlanObjectiveTargetCompletedEventHandler InsertWorkPlanObjectiveTargetCompleted;
-        
-        /// <remarks/>
-        public event InsertWorkPlanObjectiveCompletedEventHandler InsertWorkPlanObjectiveCompleted;
-        
-        /// <remarks/>
-        public event LeaveStatementCompletedEventHandler LeaveStatementCompleted;
-        
-        /// <remarks/>
-        public event MaintenanceRequestCompletedEventHandler MaintenanceRequestCompleted;
-        
-        /// <remarks/>
-        public event OpenIndividualWorkPlanToCompletedEventHandler OpenIndividualWorkPlanToCompleted;
-        
-        /// <remarks/>
-        public event ParamilitaryAcademyToConfirmCompletedEventHandler ParamilitaryAcademyToConfirmCompleted;
-        
-        /// <remarks/>
-        public event PostForcedUnApplyVendorCompletedEventHandler PostForcedUnApplyVendorCompleted;
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:PurchaseRequisitionApprovalReq" +
-            "uest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="PurchaseRequisitionApprovalRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void PurchaseRequisitionApprovalRequest(string reqNo) {
-            this.Invoke("PurchaseRequisitionApprovalRequest", new object[] {
-                        reqNo});
-        }
-        
-        /// <remarks/>
-        public void PurchaseRequisitionApprovalRequestAsync(string reqNo) {
-            this.PurchaseRequisitionApprovalRequestAsync(reqNo, null);
-        }
-        
-        /// <remarks/>
-        public void PurchaseRequisitionApprovalRequestAsync(string reqNo, object userState) {
-            if ((this.PurchaseRequisitionApprovalRequestOperationCompleted == null)) {
-                this.PurchaseRequisitionApprovalRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPurchaseRequisitionApprovalRequestOperationCompleted);
-            }
-            this.InvokeAsync("PurchaseRequisitionApprovalRequest", new object[] {
-                        reqNo}, this.PurchaseRequisitionApprovalRequestOperationCompleted, userState);
-        }
-        
-        private void OnPurchaseRequisitionApprovalRequestOperationCompleted(object arg) {
-            if ((this.PurchaseRequisitionApprovalRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PurchaseRequisitionApprovalRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:PurchaseRequisitionCreate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="PurchaseRequisitionCreate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:AllowAutobilling", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="AllowAutobilling_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string PurchaseRequisitionCreate(string employee_No, string dim1, string dim2, string dim3, string description, string responsiblityCenter, string userID) {
-            object[] results = this.Invoke("PurchaseRequisitionCreate", new object[] {
-                        employee_No,
-                        dim1,
-                        dim2,
-                        dim3,
-                        description,
-                        responsiblityCenter,
-                        userID});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PurchaseRequisitionCreateAsync(string employee_No, string dim1, string dim2, string dim3, string description, string responsiblityCenter, string userID) {
-            this.PurchaseRequisitionCreateAsync(employee_No, dim1, dim2, dim3, description, responsiblityCenter, userID, null);
-        }
-        
-        /// <remarks/>
-        public void PurchaseRequisitionCreateAsync(string employee_No, string dim1, string dim2, string dim3, string description, string responsiblityCenter, string userID, object userState) {
-            if ((this.PurchaseRequisitionCreateOperationCompleted == null)) {
-                this.PurchaseRequisitionCreateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPurchaseRequisitionCreateOperationCompleted);
-            }
-            this.InvokeAsync("PurchaseRequisitionCreate", new object[] {
-                        employee_No,
-                        dim1,
-                        dim2,
-                        dim3,
-                        description,
-                        responsiblityCenter,
-                        userID}, this.PurchaseRequisitionCreateOperationCompleted, userState);
-        }
-        
-        private void OnPurchaseRequisitionCreateOperationCompleted(object arg) {
-            if ((this.PurchaseRequisitionCreateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PurchaseRequisitionCreateCompleted(this, new PurchaseRequisitionCreateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:PurchaseRequisitionLines", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="PurchaseRequisitionLines_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void PurchaseRequisitionLines(string requisition_No, string itemNo, decimal qnty, decimal amount, string description, int lineType, string location) {
-            this.Invoke("PurchaseRequisitionLines", new object[] {
-                        requisition_No,
-                        itemNo,
-                        qnty,
-                        amount,
-                        description,
-                        lineType,
-                        location});
-        }
-        
-        /// <remarks/>
-        public void PurchaseRequisitionLinesAsync(string requisition_No, string itemNo, decimal qnty, decimal amount, string description, int lineType, string location) {
-            this.PurchaseRequisitionLinesAsync(requisition_No, itemNo, qnty, amount, description, lineType, location, null);
-        }
-        
-        /// <remarks/>
-        public void PurchaseRequisitionLinesAsync(string requisition_No, string itemNo, decimal qnty, decimal amount, string description, int lineType, string location, object userState) {
-            if ((this.PurchaseRequisitionLinesOperationCompleted == null)) {
-                this.PurchaseRequisitionLinesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPurchaseRequisitionLinesOperationCompleted);
-            }
-            this.InvokeAsync("PurchaseRequisitionLines", new object[] {
-                        requisition_No,
-                        itemNo,
-                        qnty,
-                        amount,
-                        description,
-                        lineType,
-                        location}, this.PurchaseRequisitionLinesOperationCompleted, userState);
-        }
-        
-        private void OnPurchaseRequisitionLinesOperationCompleted(object arg) {
-            if ((this.PurchaseRequisitionLinesCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PurchaseRequisitionLinesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:PurchaseRequistionLineUpdate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="PurchaseRequistionLineUpdate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void PurchaseRequistionLineUpdate(int lineNo, decimal qnty, decimal amount, string docNo, string desc) {
-            this.Invoke("PurchaseRequistionLineUpdate", new object[] {
-                        lineNo,
-                        qnty,
-                        amount,
-                        docNo,
-                        desc});
-        }
-        
-        /// <remarks/>
-        public void PurchaseRequistionLineUpdateAsync(int lineNo, decimal qnty, decimal amount, string docNo, string desc) {
-            this.PurchaseRequistionLineUpdateAsync(lineNo, qnty, amount, docNo, desc, null);
-        }
-        
-        /// <remarks/>
-        public void PurchaseRequistionLineUpdateAsync(int lineNo, decimal qnty, decimal amount, string docNo, string desc, object userState) {
-            if ((this.PurchaseRequistionLineUpdateOperationCompleted == null)) {
-                this.PurchaseRequistionLineUpdateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPurchaseRequistionLineUpdateOperationCompleted);
-            }
-            this.InvokeAsync("PurchaseRequistionLineUpdate", new object[] {
-                        lineNo,
-                        qnty,
-                        amount,
-                        docNo,
-                        desc}, this.PurchaseRequistionLineUpdateOperationCompleted, userState);
-        }
-        
-        private void OnPurchaseRequistionLineUpdateOperationCompleted(object arg) {
-            if ((this.PurchaseRequistionLineUpdateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PurchaseRequistionLineUpdateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:PurchaseRequsitionRemoveLine", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="PurchaseRequsitionRemoveLine_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void PurchaseRequsitionRemoveLine(int lineNo, string docNo) {
-            this.Invoke("PurchaseRequsitionRemoveLine", new object[] {
-                        lineNo,
-                        docNo});
-        }
-        
-        /// <remarks/>
-        public void PurchaseRequsitionRemoveLineAsync(int lineNo, string docNo) {
-            this.PurchaseRequsitionRemoveLineAsync(lineNo, docNo, null);
-        }
-        
-        /// <remarks/>
-        public void PurchaseRequsitionRemoveLineAsync(int lineNo, string docNo, object userState) {
-            if ((this.PurchaseRequsitionRemoveLineOperationCompleted == null)) {
-                this.PurchaseRequsitionRemoveLineOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPurchaseRequsitionRemoveLineOperationCompleted);
-            }
-            this.InvokeAsync("PurchaseRequsitionRemoveLine", new object[] {
-                        lineNo,
-                        docNo}, this.PurchaseRequsitionRemoveLineOperationCompleted, userState);
-        }
-        
-        private void OnPurchaseRequsitionRemoveLineOperationCompleted(object arg) {
-            if ((this.PurchaseRequsitionRemoveLineCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PurchaseRequsitionRemoveLineCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:PurchasesLinesExists", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="PurchasesLinesExists_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool PurchasesLinesExists(string noa46) {
-            object[] results = this.Invoke("PurchasesLinesExists", new object[] {
-                        noa46});
+        public bool AllowAutobilling(string stdNo, string sem, bool backOfficeUser) {
+            object[] results = this.Invoke("AllowAutobilling", new object[] {
+                        stdNo,
+                        sem,
+                        backOfficeUser});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void PurchasesLinesExistsAsync(string noa46) {
-            this.PurchasesLinesExistsAsync(noa46, null);
+        public void AllowAutobillingAsync(string stdNo, string sem, bool backOfficeUser) {
+            this.AllowAutobillingAsync(stdNo, sem, backOfficeUser, null);
         }
         
         /// <remarks/>
-        public void PurchasesLinesExistsAsync(string noa46, object userState) {
-            if ((this.PurchasesLinesExistsOperationCompleted == null)) {
-                this.PurchasesLinesExistsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPurchasesLinesExistsOperationCompleted);
+        public void AllowAutobillingAsync(string stdNo, string sem, bool backOfficeUser, object userState) {
+            if ((this.AllowAutobillingOperationCompleted == null)) {
+                this.AllowAutobillingOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAllowAutobillingOperationCompleted);
             }
-            this.InvokeAsync("PurchasesLinesExists", new object[] {
-                        noa46}, this.PurchasesLinesExistsOperationCompleted, userState);
+            this.InvokeAsync("AllowAutobilling", new object[] {
+                        stdNo,
+                        sem,
+                        backOfficeUser}, this.AllowAutobillingOperationCompleted, userState);
         }
         
-        private void OnPurchasesLinesExistsOperationCompleted(object arg) {
-            if ((this.PurchasesLinesExistsCompleted != null)) {
+        private void OnAllowAutobillingOperationCompleted(object arg) {
+            if ((this.AllowAutobillingCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PurchasesLinesExistsCompleted(this, new PurchasesLinesExistsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.AllowAutobillingCompleted(this, new AllowAutobillingCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:RaiseStaffClaimFromImprest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="RaiseStaffClaimFromImprest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:ApproveStudentRequisitionLines", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="ApproveStudentRequisitionLines_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void ApproveStudentRequisitionLines(string requisition_No, string unit_Code, int lineNo, bool appvd, bool chargeUnit) {
+            this.Invoke("ApproveStudentRequisitionLines", new object[] {
+                        requisition_No,
+                        unit_Code,
+                        lineNo,
+                        appvd,
+                        chargeUnit});
+        }
+        
+        /// <remarks/>
+        public void ApproveStudentRequisitionLinesAsync(string requisition_No, string unit_Code, int lineNo, bool appvd, bool chargeUnit) {
+            this.ApproveStudentRequisitionLinesAsync(requisition_No, unit_Code, lineNo, appvd, chargeUnit, null);
+        }
+        
+        /// <remarks/>
+        public void ApproveStudentRequisitionLinesAsync(string requisition_No, string unit_Code, int lineNo, bool appvd, bool chargeUnit, object userState) {
+            if ((this.ApproveStudentRequisitionLinesOperationCompleted == null)) {
+                this.ApproveStudentRequisitionLinesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnApproveStudentRequisitionLinesOperationCompleted);
+            }
+            this.InvokeAsync("ApproveStudentRequisitionLines", new object[] {
+                        requisition_No,
+                        unit_Code,
+                        lineNo,
+                        appvd,
+                        chargeUnit}, this.ApproveStudentRequisitionLinesOperationCompleted, userState);
+        }
+        
+        private void OnApproveStudentRequisitionLinesOperationCompleted(object arg) {
+            if ((this.ApproveStudentRequisitionLinesCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ApproveStudentRequisitionLinesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:AssignLecturerUnit", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="AssignLecturerUnit_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void AssignLecturerUnit(string lect, string prog, string stage, string semester, string unit, string campus, string studyMode, string _Class, int classSize, bool assLec) {
+            this.Invoke("AssignLecturerUnit", new object[] {
+                        lect,
+                        prog,
+                        stage,
+                        semester,
+                        unit,
+                        campus,
+                        studyMode,
+                        _Class,
+                        classSize,
+                        assLec});
+        }
+        
+        /// <remarks/>
+        public void AssignLecturerUnitAsync(string lect, string prog, string stage, string semester, string unit, string campus, string studyMode, string _Class, int classSize, bool assLec) {
+            this.AssignLecturerUnitAsync(lect, prog, stage, semester, unit, campus, studyMode, _Class, classSize, assLec, null);
+        }
+        
+        /// <remarks/>
+        public void AssignLecturerUnitAsync(string lect, string prog, string stage, string semester, string unit, string campus, string studyMode, string _Class, int classSize, bool assLec, object userState) {
+            if ((this.AssignLecturerUnitOperationCompleted == null)) {
+                this.AssignLecturerUnitOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAssignLecturerUnitOperationCompleted);
+            }
+            this.InvokeAsync("AssignLecturerUnit", new object[] {
+                        lect,
+                        prog,
+                        stage,
+                        semester,
+                        unit,
+                        campus,
+                        studyMode,
+                        _Class,
+                        classSize,
+                        assLec}, this.AssignLecturerUnitOperationCompleted, userState);
+        }
+        
+        private void OnAssignLecturerUnitOperationCompleted(object arg) {
+            if ((this.AssignLecturerUnitCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.AssignLecturerUnitCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:AuthenticateStudentEmail", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="AuthenticateStudentEmail_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string RaiseStaffClaimFromImprest(string docNo, string remarks) {
-            object[] results = this.Invoke("RaiseStaffClaimFromImprest", new object[] {
-                        docNo,
-                        remarks});
+        public string AuthenticateStudentEmail(string email) {
+            object[] results = this.Invoke("AuthenticateStudentEmail", new object[] {
+                        email});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void RaiseStaffClaimFromImprestAsync(string docNo, string remarks) {
-            this.RaiseStaffClaimFromImprestAsync(docNo, remarks, null);
+        public void AuthenticateStudentEmailAsync(string email) {
+            this.AuthenticateStudentEmailAsync(email, null);
         }
         
         /// <remarks/>
-        public void RaiseStaffClaimFromImprestAsync(string docNo, string remarks, object userState) {
-            if ((this.RaiseStaffClaimFromImprestOperationCompleted == null)) {
-                this.RaiseStaffClaimFromImprestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRaiseStaffClaimFromImprestOperationCompleted);
+        public void AuthenticateStudentEmailAsync(string email, object userState) {
+            if ((this.AuthenticateStudentEmailOperationCompleted == null)) {
+                this.AuthenticateStudentEmailOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAuthenticateStudentEmailOperationCompleted);
             }
-            this.InvokeAsync("RaiseStaffClaimFromImprest", new object[] {
-                        docNo,
-                        remarks}, this.RaiseStaffClaimFromImprestOperationCompleted, userState);
+            this.InvokeAsync("AuthenticateStudentEmail", new object[] {
+                        email}, this.AuthenticateStudentEmailOperationCompleted, userState);
         }
         
-        private void OnRaiseStaffClaimFromImprestOperationCompleted(object arg) {
-            if ((this.RaiseStaffClaimFromImprestCompleted != null)) {
+        private void OnAuthenticateStudentEmailOperationCompleted(object arg) {
+            if ((this.AuthenticateStudentEmailCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.RaiseStaffClaimFromImprestCompleted(this, new RaiseStaffClaimFromImprestCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.AuthenticateStudentEmailCompleted(this, new AuthenticateStudentEmailCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:RemoveHRTrainingParticipants", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="RemoveHRTrainingParticipants_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void RemoveHRTrainingParticipants(string document_No, string empNo) {
-            this.Invoke("RemoveHRTrainingParticipants", new object[] {
-                        document_No,
-                        empNo});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:ChargeStudentRequest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="ChargeStudentRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void ChargeStudentRequest(string requisition_No, int chargeApp) {
+            this.Invoke("ChargeStudentRequest", new object[] {
+                        requisition_No,
+                        chargeApp});
         }
         
         /// <remarks/>
-        public void RemoveHRTrainingParticipantsAsync(string document_No, string empNo) {
-            this.RemoveHRTrainingParticipantsAsync(document_No, empNo, null);
+        public void ChargeStudentRequestAsync(string requisition_No, int chargeApp) {
+            this.ChargeStudentRequestAsync(requisition_No, chargeApp, null);
         }
         
         /// <remarks/>
-        public void RemoveHRTrainingParticipantsAsync(string document_No, string empNo, object userState) {
-            if ((this.RemoveHRTrainingParticipantsOperationCompleted == null)) {
-                this.RemoveHRTrainingParticipantsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRemoveHRTrainingParticipantsOperationCompleted);
+        public void ChargeStudentRequestAsync(string requisition_No, int chargeApp, object userState) {
+            if ((this.ChargeStudentRequestOperationCompleted == null)) {
+                this.ChargeStudentRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnChargeStudentRequestOperationCompleted);
             }
-            this.InvokeAsync("RemoveHRTrainingParticipants", new object[] {
-                        document_No,
-                        empNo}, this.RemoveHRTrainingParticipantsOperationCompleted, userState);
+            this.InvokeAsync("ChargeStudentRequest", new object[] {
+                        requisition_No,
+                        chargeApp}, this.ChargeStudentRequestOperationCompleted, userState);
         }
         
-        private void OnRemoveHRTrainingParticipantsOperationCompleted(object arg) {
-            if ((this.RemoveHRTrainingParticipantsCompleted != null)) {
+        private void OnChargeStudentRequestOperationCompleted(object arg) {
+            if ((this.ChargeStudentRequestCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.RemoveHRTrainingParticipantsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.ChargeStudentRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:RemoveTransportReqPassenger", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="RemoveTransportReqPassenger_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void RemoveTransportReqPassenger(string docNo, string passNo) {
-            this.Invoke("RemoveTransportReqPassenger", new object[] {
-                        docNo,
-                        passNo});
-        }
-        
-        /// <remarks/>
-        public void RemoveTransportReqPassengerAsync(string docNo, string passNo) {
-            this.RemoveTransportReqPassengerAsync(docNo, passNo, null);
-        }
-        
-        /// <remarks/>
-        public void RemoveTransportReqPassengerAsync(string docNo, string passNo, object userState) {
-            if ((this.RemoveTransportReqPassengerOperationCompleted == null)) {
-                this.RemoveTransportReqPassengerOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRemoveTransportReqPassengerOperationCompleted);
-            }
-            this.InvokeAsync("RemoveTransportReqPassenger", new object[] {
-                        docNo,
-                        passNo}, this.RemoveTransportReqPassengerOperationCompleted, userState);
-        }
-        
-        private void OnRemoveTransportReqPassengerOperationCompleted(object arg) {
-            if ((this.RemoveTransportReqPassengerCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.RemoveTransportReqPassengerCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ReturnAmountInWords", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ReturnAmountInWords_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string ReturnAmountInWords(decimal amount) {
-            object[] results = this.Invoke("ReturnAmountInWords", new object[] {
-                        amount});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void ReturnAmountInWordsAsync(decimal amount) {
-            this.ReturnAmountInWordsAsync(amount, null);
-        }
-        
-        /// <remarks/>
-        public void ReturnAmountInWordsAsync(decimal amount, object userState) {
-            if ((this.ReturnAmountInWordsOperationCompleted == null)) {
-                this.ReturnAmountInWordsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnReturnAmountInWordsOperationCompleted);
-            }
-            this.InvokeAsync("ReturnAmountInWords", new object[] {
-                        amount}, this.ReturnAmountInWordsOperationCompleted, userState);
-        }
-        
-        private void OnReturnAmountInWordsOperationCompleted(object arg) {
-            if ((this.ReturnAmountInWordsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ReturnAmountInWordsCompleted(this, new ReturnAmountInWordsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ReturnUnitCost", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ReturnUnitCost_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public decimal ReturnUnitCost(string itemNo) {
-            object[] results = this.Invoke("ReturnUnitCost", new object[] {
-                        itemNo});
-            return ((decimal)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void ReturnUnitCostAsync(string itemNo) {
-            this.ReturnUnitCostAsync(itemNo, null);
-        }
-        
-        /// <remarks/>
-        public void ReturnUnitCostAsync(string itemNo, object userState) {
-            if ((this.ReturnUnitCostOperationCompleted == null)) {
-                this.ReturnUnitCostOperationCompleted = new System.Threading.SendOrPostCallback(this.OnReturnUnitCostOperationCompleted);
-            }
-            this.InvokeAsync("ReturnUnitCost", new object[] {
-                        itemNo}, this.ReturnUnitCostOperationCompleted, userState);
-        }
-        
-        private void OnReturnUnitCostOperationCompleted(object arg) {
-            if ((this.ReturnUnitCostCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ReturnUnitCostCompleted(this, new ReturnUnitCostCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SaveCompetenceValuesReviews", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SaveCompetenceValuesReviews_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SaveCompetenceValuesReviews(string appNo, int lnNo, string code, int cat, string assessment, int resultsAchieved, int from) {
-            this.Invoke("SaveCompetenceValuesReviews", new object[] {
-                        appNo,
-                        lnNo,
-                        code,
-                        cat,
-                        assessment,
-                        resultsAchieved,
-                        from});
-        }
-        
-        /// <remarks/>
-        public void SaveCompetenceValuesReviewsAsync(string appNo, int lnNo, string code, int cat, string assessment, int resultsAchieved, int from) {
-            this.SaveCompetenceValuesReviewsAsync(appNo, lnNo, code, cat, assessment, resultsAchieved, from, null);
-        }
-        
-        /// <remarks/>
-        public void SaveCompetenceValuesReviewsAsync(string appNo, int lnNo, string code, int cat, string assessment, int resultsAchieved, int from, object userState) {
-            if ((this.SaveCompetenceValuesReviewsOperationCompleted == null)) {
-                this.SaveCompetenceValuesReviewsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveCompetenceValuesReviewsOperationCompleted);
-            }
-            this.InvokeAsync("SaveCompetenceValuesReviews", new object[] {
-                        appNo,
-                        lnNo,
-                        code,
-                        cat,
-                        assessment,
-                        resultsAchieved,
-                        from}, this.SaveCompetenceValuesReviewsOperationCompleted, userState);
-        }
-        
-        private void OnSaveCompetenceValuesReviewsOperationCompleted(object arg) {
-            if ((this.SaveCompetenceValuesReviewsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SaveCompetenceValuesReviewsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SaveKPIsReviews", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SaveKPIsReviews_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SaveKPIsReviews(string appNo, int lnNo, string resultAreas, int resultsAchieved, string comments, int from) {
-            this.Invoke("SaveKPIsReviews", new object[] {
-                        appNo,
-                        lnNo,
-                        resultAreas,
-                        resultsAchieved,
-                        comments,
-                        from});
-        }
-        
-        /// <remarks/>
-        public void SaveKPIsReviewsAsync(string appNo, int lnNo, string resultAreas, int resultsAchieved, string comments, int from) {
-            this.SaveKPIsReviewsAsync(appNo, lnNo, resultAreas, resultsAchieved, comments, from, null);
-        }
-        
-        /// <remarks/>
-        public void SaveKPIsReviewsAsync(string appNo, int lnNo, string resultAreas, int resultsAchieved, string comments, int from, object userState) {
-            if ((this.SaveKPIsReviewsOperationCompleted == null)) {
-                this.SaveKPIsReviewsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveKPIsReviewsOperationCompleted);
-            }
-            this.InvokeAsync("SaveKPIsReviews", new object[] {
-                        appNo,
-                        lnNo,
-                        resultAreas,
-                        resultsAchieved,
-                        comments,
-                        from}, this.SaveKPIsReviewsOperationCompleted, userState);
-        }
-        
-        private void OnSaveKPIsReviewsOperationCompleted(object arg) {
-            if ((this.SaveKPIsReviewsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SaveKPIsReviewsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SaveKPIs", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SaveKPIs_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SaveKPIs(string appNo, string agreeP, string keyInd, string comments, decimal weight, string unit, int timeFrame) {
-            this.Invoke("SaveKPIs", new object[] {
-                        appNo,
-                        agreeP,
-                        keyInd,
-                        comments,
-                        weight,
-                        unit,
-                        timeFrame});
-        }
-        
-        /// <remarks/>
-        public void SaveKPIsAsync(string appNo, string agreeP, string keyInd, string comments, decimal weight, string unit, int timeFrame) {
-            this.SaveKPIsAsync(appNo, agreeP, keyInd, comments, weight, unit, timeFrame, null);
-        }
-        
-        /// <remarks/>
-        public void SaveKPIsAsync(string appNo, string agreeP, string keyInd, string comments, decimal weight, string unit, int timeFrame, object userState) {
-            if ((this.SaveKPIsOperationCompleted == null)) {
-                this.SaveKPIsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveKPIsOperationCompleted);
-            }
-            this.InvokeAsync("SaveKPIs", new object[] {
-                        appNo,
-                        agreeP,
-                        keyInd,
-                        comments,
-                        weight,
-                        unit,
-                        timeFrame}, this.SaveKPIsOperationCompleted, userState);
-        }
-        
-        private void OnSaveKPIsOperationCompleted(object arg) {
-            if ((this.SaveKPIsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SaveKPIsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SaveTrainingDevPlan", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SaveTrainingDevPlan_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SaveTrainingDevPlan(string appNo, string courseName, string courseDuration, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime startDate, string reaction, string learningObtained, string behavourCjange, string resultsObtained, string remarks) {
-            this.Invoke("SaveTrainingDevPlan", new object[] {
-                        appNo,
-                        courseName,
-                        courseDuration,
-                        startDate,
-                        reaction,
-                        learningObtained,
-                        behavourCjange,
-                        resultsObtained,
-                        remarks});
-        }
-        
-        /// <remarks/>
-        public void SaveTrainingDevPlanAsync(string appNo, string courseName, string courseDuration, System.DateTime startDate, string reaction, string learningObtained, string behavourCjange, string resultsObtained, string remarks) {
-            this.SaveTrainingDevPlanAsync(appNo, courseName, courseDuration, startDate, reaction, learningObtained, behavourCjange, resultsObtained, remarks, null);
-        }
-        
-        /// <remarks/>
-        public void SaveTrainingDevPlanAsync(string appNo, string courseName, string courseDuration, System.DateTime startDate, string reaction, string learningObtained, string behavourCjange, string resultsObtained, string remarks, object userState) {
-            if ((this.SaveTrainingDevPlanOperationCompleted == null)) {
-                this.SaveTrainingDevPlanOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveTrainingDevPlanOperationCompleted);
-            }
-            this.InvokeAsync("SaveTrainingDevPlan", new object[] {
-                        appNo,
-                        courseName,
-                        courseDuration,
-                        startDate,
-                        reaction,
-                        learningObtained,
-                        behavourCjange,
-                        resultsObtained,
-                        remarks}, this.SaveTrainingDevPlanOperationCompleted, userState);
-        }
-        
-        private void OnSaveTrainingDevPlanOperationCompleted(object arg) {
-            if ((this.SaveTrainingDevPlanCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SaveTrainingDevPlanCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SendApprovalEmailAlert", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SendApprovalEmailAlert_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SendApprovalEmailAlert(string docNumber, int tableID, string userID) {
-            this.Invoke("SendApprovalEmailAlert", new object[] {
-                        docNumber,
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:CustomApprovalEntryAddition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="CustomApprovalEntryAddition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void CustomApprovalEntryAddition(string documentNo, string sender, string approvalCode, string approver, int tableID, int sequence, string studentNo, int status) {
+            this.Invoke("CustomApprovalEntryAddition", new object[] {
+                        documentNo,
+                        sender,
+                        approvalCode,
+                        approver,
                         tableID,
-                        userID});
-        }
-        
-        /// <remarks/>
-        public void SendApprovalEmailAlertAsync(string docNumber, int tableID, string userID) {
-            this.SendApprovalEmailAlertAsync(docNumber, tableID, userID, null);
-        }
-        
-        /// <remarks/>
-        public void SendApprovalEmailAlertAsync(string docNumber, int tableID, string userID, object userState) {
-            if ((this.SendApprovalEmailAlertOperationCompleted == null)) {
-                this.SendApprovalEmailAlertOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendApprovalEmailAlertOperationCompleted);
-            }
-            this.InvokeAsync("SendApprovalEmailAlert", new object[] {
-                        docNumber,
-                        tableID,
-                        userID}, this.SendApprovalEmailAlertOperationCompleted, userState);
-        }
-        
-        private void OnSendApprovalEmailAlertOperationCompleted(object arg) {
-            if ((this.SendApprovalEmailAlertCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SendApprovalEmailAlertCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SendAssetTransferforApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SendAssetTransferforApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SendAssetTransferforApproval(string docNo) {
-            this.Invoke("SendAssetTransferforApproval", new object[] {
-                        docNo});
-        }
-        
-        /// <remarks/>
-        public void SendAssetTransferforApprovalAsync(string docNo) {
-            this.SendAssetTransferforApprovalAsync(docNo, null);
-        }
-        
-        /// <remarks/>
-        public void SendAssetTransferforApprovalAsync(string docNo, object userState) {
-            if ((this.SendAssetTransferforApprovalOperationCompleted == null)) {
-                this.SendAssetTransferforApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendAssetTransferforApprovalOperationCompleted);
-            }
-            this.InvokeAsync("SendAssetTransferforApproval", new object[] {
-                        docNo}, this.SendAssetTransferforApprovalOperationCompleted, userState);
-        }
-        
-        private void OnSendAssetTransferforApprovalOperationCompleted(object arg) {
-            if ((this.SendAssetTransferforApprovalCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SendAssetTransferforApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SendEmail", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SendEmail_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool SendEmail(string receiver, string subject, string message) {
-            object[] results = this.Invoke("SendEmail", new object[] {
-                        receiver,
-                        subject,
-                        message});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void SendEmailAsync(string receiver, string subject, string message) {
-            this.SendEmailAsync(receiver, subject, message, null);
-        }
-        
-        /// <remarks/>
-        public void SendEmailAsync(string receiver, string subject, string message, object userState) {
-            if ((this.SendEmailOperationCompleted == null)) {
-                this.SendEmailOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendEmailOperationCompleted);
-            }
-            this.InvokeAsync("SendEmail", new object[] {
-                        receiver,
-                        subject,
-                        message}, this.SendEmailOperationCompleted, userState);
-        }
-        
-        private void OnSendEmailOperationCompleted(object arg) {
-            if ((this.SendEmailCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SendEmailCompleted(this, new SendEmailCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SendImpSurrenderForApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SendImpSurrenderForApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SendImpSurrenderForApproval(string reqNo) {
-            this.Invoke("SendImpSurrenderForApproval", new object[] {
-                        reqNo});
-        }
-        
-        /// <remarks/>
-        public void SendImpSurrenderForApprovalAsync(string reqNo) {
-            this.SendImpSurrenderForApprovalAsync(reqNo, null);
-        }
-        
-        /// <remarks/>
-        public void SendImpSurrenderForApprovalAsync(string reqNo, object userState) {
-            if ((this.SendImpSurrenderForApprovalOperationCompleted == null)) {
-                this.SendImpSurrenderForApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendImpSurrenderForApprovalOperationCompleted);
-            }
-            this.InvokeAsync("SendImpSurrenderForApproval", new object[] {
-                        reqNo}, this.SendImpSurrenderForApprovalOperationCompleted, userState);
-        }
-        
-        private void OnSendImpSurrenderForApprovalOperationCompleted(object arg) {
-            if ((this.SendImpSurrenderForApprovalCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SendImpSurrenderForApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SendTNAforApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SendTNAforApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SendTNAforApproval(string docNo) {
-            this.Invoke("SendTNAforApproval", new object[] {
-                        docNo});
-        }
-        
-        /// <remarks/>
-        public void SendTNAforApprovalAsync(string docNo) {
-            this.SendTNAforApprovalAsync(docNo, null);
-        }
-        
-        /// <remarks/>
-        public void SendTNAforApprovalAsync(string docNo, object userState) {
-            if ((this.SendTNAforApprovalOperationCompleted == null)) {
-                this.SendTNAforApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendTNAforApprovalOperationCompleted);
-            }
-            this.InvokeAsync("SendTNAforApproval", new object[] {
-                        docNo}, this.SendTNAforApprovalOperationCompleted, userState);
-        }
-        
-        private void OnSendTNAforApprovalOperationCompleted(object arg) {
-            if ((this.SendTNAforApprovalCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SendTNAforApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StaffClaimRemoveLine", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StaffClaimRemoveLine_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void StaffClaimRemoveLine(int lineNo, string docNo, string itmNo) {
-            this.Invoke("StaffClaimRemoveLine", new object[] {
-                        lineNo,
-                        docNo,
-                        itmNo});
-        }
-        
-        /// <remarks/>
-        public void StaffClaimRemoveLineAsync(int lineNo, string docNo, string itmNo) {
-            this.StaffClaimRemoveLineAsync(lineNo, docNo, itmNo, null);
-        }
-        
-        /// <remarks/>
-        public void StaffClaimRemoveLineAsync(int lineNo, string docNo, string itmNo, object userState) {
-            if ((this.StaffClaimRemoveLineOperationCompleted == null)) {
-                this.StaffClaimRemoveLineOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStaffClaimRemoveLineOperationCompleted);
-            }
-            this.InvokeAsync("StaffClaimRemoveLine", new object[] {
-                        lineNo,
-                        docNo,
-                        itmNo}, this.StaffClaimRemoveLineOperationCompleted, userState);
-        }
-        
-        private void OnStaffClaimRemoveLineOperationCompleted(object arg) {
-            if ((this.StaffClaimRemoveLineCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StaffClaimRemoveLineCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StaffClaimRequisitionApprovalR" +
-            "equest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StaffClaimRequisitionApprovalRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void StaffClaimRequisitionApprovalRequest(string reqNo) {
-            this.Invoke("StaffClaimRequisitionApprovalRequest", new object[] {
-                        reqNo});
-        }
-        
-        /// <remarks/>
-        public void StaffClaimRequisitionApprovalRequestAsync(string reqNo) {
-            this.StaffClaimRequisitionApprovalRequestAsync(reqNo, null);
-        }
-        
-        /// <remarks/>
-        public void StaffClaimRequisitionApprovalRequestAsync(string reqNo, object userState) {
-            if ((this.StaffClaimRequisitionApprovalRequestOperationCompleted == null)) {
-                this.StaffClaimRequisitionApprovalRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStaffClaimRequisitionApprovalRequestOperationCompleted);
-            }
-            this.InvokeAsync("StaffClaimRequisitionApprovalRequest", new object[] {
-                        reqNo}, this.StaffClaimRequisitionApprovalRequestOperationCompleted, userState);
-        }
-        
-        private void OnStaffClaimRequisitionApprovalRequestOperationCompleted(object arg) {
-            if ((this.StaffClaimRequisitionApprovalRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StaffClaimRequisitionApprovalRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StaffClaimRequisitionLinesInse" +
-            "rt", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StaffClaimRequisitionLinesInsert_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void StaffClaimRequisitionLinesInsert(string requisition_No, string itemNo, decimal reqAmount, string employee_No, string desc, bool claimFromImprest) {
-            this.Invoke("StaffClaimRequisitionLinesInsert", new object[] {
-                        requisition_No,
-                        itemNo,
-                        reqAmount,
-                        employee_No,
-                        desc,
-                        claimFromImprest});
-        }
-        
-        /// <remarks/>
-        public void StaffClaimRequisitionLinesInsertAsync(string requisition_No, string itemNo, decimal reqAmount, string employee_No, string desc, bool claimFromImprest) {
-            this.StaffClaimRequisitionLinesInsertAsync(requisition_No, itemNo, reqAmount, employee_No, desc, claimFromImprest, null);
-        }
-        
-        /// <remarks/>
-        public void StaffClaimRequisitionLinesInsertAsync(string requisition_No, string itemNo, decimal reqAmount, string employee_No, string desc, bool claimFromImprest, object userState) {
-            if ((this.StaffClaimRequisitionLinesInsertOperationCompleted == null)) {
-                this.StaffClaimRequisitionLinesInsertOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStaffClaimRequisitionLinesInsertOperationCompleted);
-            }
-            this.InvokeAsync("StaffClaimRequisitionLinesInsert", new object[] {
-                        requisition_No,
-                        itemNo,
-                        reqAmount,
-                        employee_No,
-                        desc,
-                        claimFromImprest}, this.StaffClaimRequisitionLinesInsertOperationCompleted, userState);
-        }
-        
-        private void OnStaffClaimRequisitionLinesInsertOperationCompleted(object arg) {
-            if ((this.StaffClaimRequisitionLinesInsertCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StaffClaimRequisitionLinesInsertCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StaffClaimRequisitionLinesUpda" +
-            "te", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StaffClaimRequisitionLinesUpdate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void StaffClaimRequisitionLinesUpdate(int lineNo, string itemNo, decimal reqAmount, string desc) {
-            this.Invoke("StaffClaimRequisitionLinesUpdate", new object[] {
-                        lineNo,
-                        itemNo,
-                        reqAmount,
-                        desc});
-        }
-        
-        /// <remarks/>
-        public void StaffClaimRequisitionLinesUpdateAsync(int lineNo, string itemNo, decimal reqAmount, string desc) {
-            this.StaffClaimRequisitionLinesUpdateAsync(lineNo, itemNo, reqAmount, desc, null);
-        }
-        
-        /// <remarks/>
-        public void StaffClaimRequisitionLinesUpdateAsync(int lineNo, string itemNo, decimal reqAmount, string desc, object userState) {
-            if ((this.StaffClaimRequisitionLinesUpdateOperationCompleted == null)) {
-                this.StaffClaimRequisitionLinesUpdateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStaffClaimRequisitionLinesUpdateOperationCompleted);
-            }
-            this.InvokeAsync("StaffClaimRequisitionLinesUpdate", new object[] {
-                        lineNo,
-                        itemNo,
-                        reqAmount,
-                        desc}, this.StaffClaimRequisitionLinesUpdateOperationCompleted, userState);
-        }
-        
-        private void OnStaffClaimRequisitionLinesUpdateOperationCompleted(object arg) {
-            if ((this.StaffClaimRequisitionLinesUpdateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StaffClaimRequisitionLinesUpdateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StaffClaimUpdateLine", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StaffClaimUpdateLine_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void StaffClaimUpdateLine(int lineNo, string docNo, string itemNo, decimal amount, string descr) {
-            this.Invoke("StaffClaimUpdateLine", new object[] {
-                        lineNo,
-                        docNo,
-                        itemNo,
-                        amount,
-                        descr});
-        }
-        
-        /// <remarks/>
-        public void StaffClaimUpdateLineAsync(int lineNo, string docNo, string itemNo, decimal amount, string descr) {
-            this.StaffClaimUpdateLineAsync(lineNo, docNo, itemNo, amount, descr, null);
-        }
-        
-        /// <remarks/>
-        public void StaffClaimUpdateLineAsync(int lineNo, string docNo, string itemNo, decimal amount, string descr, object userState) {
-            if ((this.StaffClaimUpdateLineOperationCompleted == null)) {
-                this.StaffClaimUpdateLineOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStaffClaimUpdateLineOperationCompleted);
-            }
-            this.InvokeAsync("StaffClaimUpdateLine", new object[] {
-                        lineNo,
-                        docNo,
-                        itemNo,
-                        amount,
-                        descr}, this.StaffClaimUpdateLineOperationCompleted, userState);
-        }
-        
-        private void OnStaffClaimUpdateLineOperationCompleted(object arg) {
-            if ((this.StaffClaimUpdateLineCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StaffClaimUpdateLineCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StockLevel", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StockLevel_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public decimal StockLevel(string itemNo, int quantity, string location) {
-            object[] results = this.Invoke("StockLevel", new object[] {
-                        itemNo,
-                        quantity,
-                        location});
-            return ((decimal)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void StockLevelAsync(string itemNo, int quantity, string location) {
-            this.StockLevelAsync(itemNo, quantity, location, null);
-        }
-        
-        /// <remarks/>
-        public void StockLevelAsync(string itemNo, int quantity, string location, object userState) {
-            if ((this.StockLevelOperationCompleted == null)) {
-                this.StockLevelOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStockLevelOperationCompleted);
-            }
-            this.InvokeAsync("StockLevel", new object[] {
-                        itemNo,
-                        quantity,
-                        location}, this.StockLevelOperationCompleted, userState);
-        }
-        
-        private void OnStockLevelOperationCompleted(object arg) {
-            if ((this.StockLevelCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StockLevelCompleted(this, new StockLevelCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StoreLinesExists", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StoreLinesExists_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool StoreLinesExists(string noa46) {
-            object[] results = this.Invoke("StoreLinesExists", new object[] {
-                        noa46});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void StoreLinesExistsAsync(string noa46) {
-            this.StoreLinesExistsAsync(noa46, null);
-        }
-        
-        /// <remarks/>
-        public void StoreLinesExistsAsync(string noa46, object userState) {
-            if ((this.StoreLinesExistsOperationCompleted == null)) {
-                this.StoreLinesExistsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStoreLinesExistsOperationCompleted);
-            }
-            this.InvokeAsync("StoreLinesExists", new object[] {
-                        noa46}, this.StoreLinesExistsOperationCompleted, userState);
-        }
-        
-        private void OnStoreLinesExistsOperationCompleted(object arg) {
-            if ((this.StoreLinesExistsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StoreLinesExistsCompleted(this, new StoreLinesExistsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StoreRequisitionApprovalReques" +
-            "t", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StoreRequisitionApprovalRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool StoreRequisitionApprovalRequest(string reqNo) {
-            object[] results = this.Invoke("StoreRequisitionApprovalRequest", new object[] {
-                        reqNo});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void StoreRequisitionApprovalRequestAsync(string reqNo) {
-            this.StoreRequisitionApprovalRequestAsync(reqNo, null);
-        }
-        
-        /// <remarks/>
-        public void StoreRequisitionApprovalRequestAsync(string reqNo, object userState) {
-            if ((this.StoreRequisitionApprovalRequestOperationCompleted == null)) {
-                this.StoreRequisitionApprovalRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStoreRequisitionApprovalRequestOperationCompleted);
-            }
-            this.InvokeAsync("StoreRequisitionApprovalRequest", new object[] {
-                        reqNo}, this.StoreRequisitionApprovalRequestOperationCompleted, userState);
-        }
-        
-        private void OnStoreRequisitionApprovalRequestOperationCompleted(object arg) {
-            if ((this.StoreRequisitionApprovalRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StoreRequisitionApprovalRequestCompleted(this, new StoreRequisitionApprovalRequestCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StoreRequisitionCreate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StoreRequisitionCreate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string StoreRequisitionCreate(string employee_No, int requestType, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_Required, string dim1, string dim2, string dim3, string description, string responsiblityCenter, string userID) {
-            object[] results = this.Invoke("StoreRequisitionCreate", new object[] {
-                        employee_No,
-                        requestType,
-                        date_Required,
-                        dim1,
-                        dim2,
-                        dim3,
-                        description,
-                        responsiblityCenter,
-                        userID});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void StoreRequisitionCreateAsync(string employee_No, int requestType, System.DateTime date_Required, string dim1, string dim2, string dim3, string description, string responsiblityCenter, string userID) {
-            this.StoreRequisitionCreateAsync(employee_No, requestType, date_Required, dim1, dim2, dim3, description, responsiblityCenter, userID, null);
-        }
-        
-        /// <remarks/>
-        public void StoreRequisitionCreateAsync(string employee_No, int requestType, System.DateTime date_Required, string dim1, string dim2, string dim3, string description, string responsiblityCenter, string userID, object userState) {
-            if ((this.StoreRequisitionCreateOperationCompleted == null)) {
-                this.StoreRequisitionCreateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStoreRequisitionCreateOperationCompleted);
-            }
-            this.InvokeAsync("StoreRequisitionCreate", new object[] {
-                        employee_No,
-                        requestType,
-                        date_Required,
-                        dim1,
-                        dim2,
-                        dim3,
-                        description,
-                        responsiblityCenter,
-                        userID}, this.StoreRequisitionCreateOperationCompleted, userState);
-        }
-        
-        private void OnStoreRequisitionCreateOperationCompleted(object arg) {
-            if ((this.StoreRequisitionCreateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StoreRequisitionCreateCompleted(this, new StoreRequisitionCreateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StoreRequisitionLines", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StoreRequisitionLines_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void StoreRequisitionLines(string requisition_No, string itemNo, decimal qnty, string description, string location, string itemM) {
-            this.Invoke("StoreRequisitionLines", new object[] {
-                        requisition_No,
-                        itemNo,
-                        qnty,
-                        description,
-                        location,
-                        itemM});
-        }
-        
-        /// <remarks/>
-        public void StoreRequisitionLinesAsync(string requisition_No, string itemNo, decimal qnty, string description, string location, string itemM) {
-            this.StoreRequisitionLinesAsync(requisition_No, itemNo, qnty, description, location, itemM, null);
-        }
-        
-        /// <remarks/>
-        public void StoreRequisitionLinesAsync(string requisition_No, string itemNo, decimal qnty, string description, string location, string itemM, object userState) {
-            if ((this.StoreRequisitionLinesOperationCompleted == null)) {
-                this.StoreRequisitionLinesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStoreRequisitionLinesOperationCompleted);
-            }
-            this.InvokeAsync("StoreRequisitionLines", new object[] {
-                        requisition_No,
-                        itemNo,
-                        qnty,
-                        description,
-                        location,
-                        itemM}, this.StoreRequisitionLinesOperationCompleted, userState);
-        }
-        
-        private void OnStoreRequisitionLinesOperationCompleted(object arg) {
-            if ((this.StoreRequisitionLinesCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StoreRequisitionLinesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StoreRequistionLineUpdate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StoreRequistionLineUpdate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void StoreRequistionLineUpdate(int lineNo, decimal qnty, string docNo, string desc, string itemNo) {
-            this.Invoke("StoreRequistionLineUpdate", new object[] {
-                        lineNo,
-                        qnty,
-                        docNo,
-                        desc,
-                        itemNo});
-        }
-        
-        /// <remarks/>
-        public void StoreRequistionLineUpdateAsync(int lineNo, decimal qnty, string docNo, string desc, string itemNo) {
-            this.StoreRequistionLineUpdateAsync(lineNo, qnty, docNo, desc, itemNo, null);
-        }
-        
-        /// <remarks/>
-        public void StoreRequistionLineUpdateAsync(int lineNo, decimal qnty, string docNo, string desc, string itemNo, object userState) {
-            if ((this.StoreRequistionLineUpdateOperationCompleted == null)) {
-                this.StoreRequistionLineUpdateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStoreRequistionLineUpdateOperationCompleted);
-            }
-            this.InvokeAsync("StoreRequistionLineUpdate", new object[] {
-                        lineNo,
-                        qnty,
-                        docNo,
-                        desc,
-                        itemNo}, this.StoreRequistionLineUpdateOperationCompleted, userState);
-        }
-        
-        private void OnStoreRequistionLineUpdateOperationCompleted(object arg) {
-            if ((this.StoreRequistionLineUpdateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StoreRequistionLineUpdateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:StoreRequsitionRemoveLine", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="StoreRequsitionRemoveLine_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void StoreRequsitionRemoveLine(int lineNo, string docNo, string itemNo) {
-            this.Invoke("StoreRequsitionRemoveLine", new object[] {
-                        lineNo,
-                        docNo,
-                        itemNo});
-        }
-        
-        /// <remarks/>
-        public void StoreRequsitionRemoveLineAsync(int lineNo, string docNo, string itemNo) {
-            this.StoreRequsitionRemoveLineAsync(lineNo, docNo, itemNo, null);
-        }
-        
-        /// <remarks/>
-        public void StoreRequsitionRemoveLineAsync(int lineNo, string docNo, string itemNo, object userState) {
-            if ((this.StoreRequsitionRemoveLineOperationCompleted == null)) {
-                this.StoreRequsitionRemoveLineOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStoreRequsitionRemoveLineOperationCompleted);
-            }
-            this.InvokeAsync("StoreRequsitionRemoveLine", new object[] {
-                        lineNo,
-                        docNo,
-                        itemNo}, this.StoreRequsitionRemoveLineOperationCompleted, userState);
-        }
-        
-        private void OnStoreRequsitionRemoveLineOperationCompleted(object arg) {
-            if ((this.StoreRequsitionRemoveLineCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.StoreRequsitionRemoveLineCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SubmitEvalLinesReview", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SubmitEvalLinesReview_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void SubmitEvalLinesReview(string appNo, int lnNo, int qts, decimal score, decimal agreedScore, int from) {
-            this.Invoke("SubmitEvalLinesReview", new object[] {
-                        appNo,
-                        lnNo,
-                        qts,
-                        score,
-                        agreedScore,
-                        from});
-        }
-        
-        /// <remarks/>
-        public void SubmitEvalLinesReviewAsync(string appNo, int lnNo, int qts, decimal score, decimal agreedScore, int from) {
-            this.SubmitEvalLinesReviewAsync(appNo, lnNo, qts, score, agreedScore, from, null);
-        }
-        
-        /// <remarks/>
-        public void SubmitEvalLinesReviewAsync(string appNo, int lnNo, int qts, decimal score, decimal agreedScore, int from, object userState) {
-            if ((this.SubmitEvalLinesReviewOperationCompleted == null)) {
-                this.SubmitEvalLinesReviewOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSubmitEvalLinesReviewOperationCompleted);
-            }
-            this.InvokeAsync("SubmitEvalLinesReview", new object[] {
-                        appNo,
-                        lnNo,
-                        qts,
-                        score,
-                        agreedScore,
-                        from}, this.SubmitEvalLinesReviewOperationCompleted, userState);
-        }
-        
-        private void OnSubmitEvalLinesReviewOperationCompleted(object arg) {
-            if ((this.SubmitEvalLinesReviewCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SubmitEvalLinesReviewCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SubmitICTAssetMovement2", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SubmitICTAssetMovement2_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string SubmitICTAssetMovement2(string requestor, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime dateNeeded, string remarks, string reason, int itemType) {
-            object[] results = this.Invoke("SubmitICTAssetMovement2", new object[] {
-                        requestor,
-                        dateNeeded,
-                        remarks,
-                        reason,
-                        itemType});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void SubmitICTAssetMovement2Async(string requestor, System.DateTime dateNeeded, string remarks, string reason, int itemType) {
-            this.SubmitICTAssetMovement2Async(requestor, dateNeeded, remarks, reason, itemType, null);
-        }
-        
-        /// <remarks/>
-        public void SubmitICTAssetMovement2Async(string requestor, System.DateTime dateNeeded, string remarks, string reason, int itemType, object userState) {
-            if ((this.SubmitICTAssetMovement2OperationCompleted == null)) {
-                this.SubmitICTAssetMovement2OperationCompleted = new System.Threading.SendOrPostCallback(this.OnSubmitICTAssetMovement2OperationCompleted);
-            }
-            this.InvokeAsync("SubmitICTAssetMovement2", new object[] {
-                        requestor,
-                        dateNeeded,
-                        remarks,
-                        reason,
-                        itemType}, this.SubmitICTAssetMovement2OperationCompleted, userState);
-        }
-        
-        private void OnSubmitICTAssetMovement2OperationCompleted(object arg) {
-            if ((this.SubmitICTAssetMovement2Completed != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SubmitICTAssetMovement2Completed(this, new SubmitICTAssetMovement2CompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SubmitICTAssetMovement", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SubmitICTAssetMovement_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string SubmitICTAssetMovement(string requestor, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime dateNeeded, string remarks, string reason) {
-            object[] results = this.Invoke("SubmitICTAssetMovement", new object[] {
-                        requestor,
-                        dateNeeded,
-                        remarks,
-                        reason});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void SubmitICTAssetMovementAsync(string requestor, System.DateTime dateNeeded, string remarks, string reason) {
-            this.SubmitICTAssetMovementAsync(requestor, dateNeeded, remarks, reason, null);
-        }
-        
-        /// <remarks/>
-        public void SubmitICTAssetMovementAsync(string requestor, System.DateTime dateNeeded, string remarks, string reason, object userState) {
-            if ((this.SubmitICTAssetMovementOperationCompleted == null)) {
-                this.SubmitICTAssetMovementOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSubmitICTAssetMovementOperationCompleted);
-            }
-            this.InvokeAsync("SubmitICTAssetMovement", new object[] {
-                        requestor,
-                        dateNeeded,
-                        remarks,
-                        reason}, this.SubmitICTAssetMovementOperationCompleted, userState);
-        }
-        
-        private void OnSubmitICTAssetMovementOperationCompleted(object arg) {
-            if ((this.SubmitICTAssetMovementCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SubmitICTAssetMovementCompleted(this, new SubmitICTAssetMovementCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:SubmitICTService_mainRequest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="SubmitICTService_mainRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string SubmitICTService_mainRequest(string raisedBy, string asset, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime serviceDate, int category, string remarks) {
-            object[] results = this.Invoke("SubmitICTService_mainRequest", new object[] {
-                        raisedBy,
-                        asset,
-                        serviceDate,
-                        category,
-                        remarks});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void SubmitICTService_mainRequestAsync(string raisedBy, string asset, System.DateTime serviceDate, int category, string remarks) {
-            this.SubmitICTService_mainRequestAsync(raisedBy, asset, serviceDate, category, remarks, null);
-        }
-        
-        /// <remarks/>
-        public void SubmitICTService_mainRequestAsync(string raisedBy, string asset, System.DateTime serviceDate, int category, string remarks, object userState) {
-            if ((this.SubmitICTService_mainRequestOperationCompleted == null)) {
-                this.SubmitICTService_mainRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSubmitICTService_mainRequestOperationCompleted);
-            }
-            this.InvokeAsync("SubmitICTService_mainRequest", new object[] {
-                        raisedBy,
-                        asset,
-                        serviceDate,
-                        category,
-                        remarks}, this.SubmitICTService_mainRequestOperationCompleted, userState);
-        }
-        
-        private void OnSubmitICTService_mainRequestOperationCompleted(object arg) {
-            if ((this.SubmitICTService_mainRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SubmitICTService_mainRequestCompleted(this, new SubmitICTService_mainRequestCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:TrainingRequisitionApprovalReq" +
-            "uest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="TrainingRequisitionApprovalRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void TrainingRequisitionApprovalRequest(string reqNo) {
-            this.Invoke("TrainingRequisitionApprovalRequest", new object[] {
-                        reqNo});
-        }
-        
-        /// <remarks/>
-        public void TrainingRequisitionApprovalRequestAsync(string reqNo) {
-            this.TrainingRequisitionApprovalRequestAsync(reqNo, null);
-        }
-        
-        /// <remarks/>
-        public void TrainingRequisitionApprovalRequestAsync(string reqNo, object userState) {
-            if ((this.TrainingRequisitionApprovalRequestOperationCompleted == null)) {
-                this.TrainingRequisitionApprovalRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTrainingRequisitionApprovalRequestOperationCompleted);
-            }
-            this.InvokeAsync("TrainingRequisitionApprovalRequest", new object[] {
-                        reqNo}, this.TrainingRequisitionApprovalRequestOperationCompleted, userState);
-        }
-        
-        private void OnTrainingRequisitionApprovalRequestOperationCompleted(object arg) {
-            if ((this.TrainingRequisitionApprovalRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.TrainingRequisitionApprovalRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:TrainingRequisitionCreate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="TrainingRequisitionCreate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string TrainingRequisitionCreate(string employee_No, string dim1, string dim2, string dim3, string course, string courseDesc, int category, int sponsor, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime startDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime endDate, string trainer, string trainerName, decimal cost, string purpose) {
-            object[] results = this.Invoke("TrainingRequisitionCreate", new object[] {
-                        employee_No,
-                        dim1,
-                        dim2,
-                        dim3,
-                        course,
-                        courseDesc,
-                        category,
-                        sponsor,
-                        startDate,
-                        endDate,
-                        trainer,
-                        trainerName,
-                        cost,
-                        purpose});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void TrainingRequisitionCreateAsync(string employee_No, string dim1, string dim2, string dim3, string course, string courseDesc, int category, int sponsor, System.DateTime startDate, System.DateTime endDate, string trainer, string trainerName, decimal cost, string purpose) {
-            this.TrainingRequisitionCreateAsync(employee_No, dim1, dim2, dim3, course, courseDesc, category, sponsor, startDate, endDate, trainer, trainerName, cost, purpose, null);
-        }
-        
-        /// <remarks/>
-        public void TrainingRequisitionCreateAsync(string employee_No, string dim1, string dim2, string dim3, string course, string courseDesc, int category, int sponsor, System.DateTime startDate, System.DateTime endDate, string trainer, string trainerName, decimal cost, string purpose, object userState) {
-            if ((this.TrainingRequisitionCreateOperationCompleted == null)) {
-                this.TrainingRequisitionCreateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTrainingRequisitionCreateOperationCompleted);
-            }
-            this.InvokeAsync("TrainingRequisitionCreate", new object[] {
-                        employee_No,
-                        dim1,
-                        dim2,
-                        dim3,
-                        course,
-                        courseDesc,
-                        category,
-                        sponsor,
-                        startDate,
-                        endDate,
-                        trainer,
-                        trainerName,
-                        cost,
-                        purpose}, this.TrainingRequisitionCreateOperationCompleted, userState);
-        }
-        
-        private void OnTrainingRequisitionCreateOperationCompleted(object arg) {
-            if ((this.TrainingRequisitionCreateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.TrainingRequisitionCreateCompleted(this, new TrainingRequisitionCreateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:TransportLinesExists", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="TransportLinesExists_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool TransportLinesExists(string noa46) {
-            object[] results = this.Invoke("TransportLinesExists", new object[] {
-                        noa46});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void TransportLinesExistsAsync(string noa46) {
-            this.TransportLinesExistsAsync(noa46, null);
-        }
-        
-        /// <remarks/>
-        public void TransportLinesExistsAsync(string noa46, object userState) {
-            if ((this.TransportLinesExistsOperationCompleted == null)) {
-                this.TransportLinesExistsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTransportLinesExistsOperationCompleted);
-            }
-            this.InvokeAsync("TransportLinesExists", new object[] {
-                        noa46}, this.TransportLinesExistsOperationCompleted, userState);
-        }
-        
-        private void OnTransportLinesExistsOperationCompleted(object arg) {
-            if ((this.TransportLinesExistsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.TransportLinesExistsCompleted(this, new TransportLinesExistsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:TransportRequisitionApprovalRe" +
-            "quest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="TransportRequisitionApprovalRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void TransportRequisitionApprovalRequest(string reqNo) {
-            this.Invoke("TransportRequisitionApprovalRequest", new object[] {
-                        reqNo});
-        }
-        
-        /// <remarks/>
-        public void TransportRequisitionApprovalRequestAsync(string reqNo) {
-            this.TransportRequisitionApprovalRequestAsync(reqNo, null);
-        }
-        
-        /// <remarks/>
-        public void TransportRequisitionApprovalRequestAsync(string reqNo, object userState) {
-            if ((this.TransportRequisitionApprovalRequestOperationCompleted == null)) {
-                this.TransportRequisitionApprovalRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTransportRequisitionApprovalRequestOperationCompleted);
-            }
-            this.InvokeAsync("TransportRequisitionApprovalRequest", new object[] {
-                        reqNo}, this.TransportRequisitionApprovalRequestOperationCompleted, userState);
-        }
-        
-        private void OnTransportRequisitionApprovalRequestOperationCompleted(object arg) {
-            if ((this.TransportRequisitionApprovalRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.TransportRequisitionApprovalRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:TransportRequisitionCreate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="TransportRequisitionCreate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string TransportRequisitionCreate(string employee_No, string destination, string commenceFrom, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_of_Trip, string purpose, int no_of_Days, int no_of_Passengers, int request_Type, int travel_Type, int noExtPass, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime returnDate) {
-            object[] results = this.Invoke("TransportRequisitionCreate", new object[] {
-                        employee_No,
-                        destination,
-                        commenceFrom,
-                        date_of_Trip,
-                        purpose,
-                        no_of_Days,
-                        no_of_Passengers,
-                        request_Type,
-                        travel_Type,
-                        noExtPass,
-                        returnDate});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void TransportRequisitionCreateAsync(string employee_No, string destination, string commenceFrom, System.DateTime date_of_Trip, string purpose, int no_of_Days, int no_of_Passengers, int request_Type, int travel_Type, int noExtPass, System.DateTime returnDate) {
-            this.TransportRequisitionCreateAsync(employee_No, destination, commenceFrom, date_of_Trip, purpose, no_of_Days, no_of_Passengers, request_Type, travel_Type, noExtPass, returnDate, null);
-        }
-        
-        /// <remarks/>
-        public void TransportRequisitionCreateAsync(string employee_No, string destination, string commenceFrom, System.DateTime date_of_Trip, string purpose, int no_of_Days, int no_of_Passengers, int request_Type, int travel_Type, int noExtPass, System.DateTime returnDate, object userState) {
-            if ((this.TransportRequisitionCreateOperationCompleted == null)) {
-                this.TransportRequisitionCreateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTransportRequisitionCreateOperationCompleted);
-            }
-            this.InvokeAsync("TransportRequisitionCreate", new object[] {
-                        employee_No,
-                        destination,
-                        commenceFrom,
-                        date_of_Trip,
-                        purpose,
-                        no_of_Days,
-                        no_of_Passengers,
-                        request_Type,
-                        travel_Type,
-                        noExtPass,
-                        returnDate}, this.TransportRequisitionCreateOperationCompleted, userState);
-        }
-        
-        private void OnTransportRequisitionCreateOperationCompleted(object arg) {
-            if ((this.TransportRequisitionCreateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.TransportRequisitionCreateCompleted(this, new TransportRequisitionCreateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:TransportRequisitionUpdate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="TransportRequisitionUpdate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void TransportRequisitionUpdate(string docNo, string destination, string commenceFrom, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_of_Trip, string purpose, int no_of_Days, int no_of_Passengers, int noExtPass) {
-            this.Invoke("TransportRequisitionUpdate", new object[] {
-                        docNo,
-                        destination,
-                        commenceFrom,
-                        date_of_Trip,
-                        purpose,
-                        no_of_Days,
-                        no_of_Passengers,
-                        noExtPass});
-        }
-        
-        /// <remarks/>
-        public void TransportRequisitionUpdateAsync(string docNo, string destination, string commenceFrom, System.DateTime date_of_Trip, string purpose, int no_of_Days, int no_of_Passengers, int noExtPass) {
-            this.TransportRequisitionUpdateAsync(docNo, destination, commenceFrom, date_of_Trip, purpose, no_of_Days, no_of_Passengers, noExtPass, null);
-        }
-        
-        /// <remarks/>
-        public void TransportRequisitionUpdateAsync(string docNo, string destination, string commenceFrom, System.DateTime date_of_Trip, string purpose, int no_of_Days, int no_of_Passengers, int noExtPass, object userState) {
-            if ((this.TransportRequisitionUpdateOperationCompleted == null)) {
-                this.TransportRequisitionUpdateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTransportRequisitionUpdateOperationCompleted);
-            }
-            this.InvokeAsync("TransportRequisitionUpdate", new object[] {
-                        docNo,
-                        destination,
-                        commenceFrom,
-                        date_of_Trip,
-                        purpose,
-                        no_of_Days,
-                        no_of_Passengers,
-                        noExtPass}, this.TransportRequisitionUpdateOperationCompleted, userState);
-        }
-        
-        private void OnTransportRequisitionUpdateOperationCompleted(object arg) {
-            if ((this.TransportRequisitionUpdateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.TransportRequisitionUpdateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpateKPIs", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpateKPIs_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpateKPIs(string appNo, string agreeP, string keyInd, string comments, decimal weight, string unit, int timeFrame, int lnNo) {
-            this.Invoke("UpateKPIs", new object[] {
-                        appNo,
-                        agreeP,
-                        keyInd,
-                        comments,
-                        weight,
-                        unit,
-                        timeFrame,
-                        lnNo});
-        }
-        
-        /// <remarks/>
-        public void UpateKPIsAsync(string appNo, string agreeP, string keyInd, string comments, decimal weight, string unit, int timeFrame, int lnNo) {
-            this.UpateKPIsAsync(appNo, agreeP, keyInd, comments, weight, unit, timeFrame, lnNo, null);
-        }
-        
-        /// <remarks/>
-        public void UpateKPIsAsync(string appNo, string agreeP, string keyInd, string comments, decimal weight, string unit, int timeFrame, int lnNo, object userState) {
-            if ((this.UpateKPIsOperationCompleted == null)) {
-                this.UpateKPIsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpateKPIsOperationCompleted);
-            }
-            this.InvokeAsync("UpateKPIs", new object[] {
-                        appNo,
-                        agreeP,
-                        keyInd,
-                        comments,
-                        weight,
-                        unit,
-                        timeFrame,
-                        lnNo}, this.UpateKPIsOperationCompleted, userState);
-        }
-        
-        private void OnUpateKPIsOperationCompleted(object arg) {
-            if ((this.UpateKPIsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpateKPIsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateAssetTransfered", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateAssetTransfered_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateAssetTransfered(string docNo) {
-            this.Invoke("UpdateAssetTransfered", new object[] {
-                        docNo});
-        }
-        
-        /// <remarks/>
-        public void UpdateAssetTransferedAsync(string docNo) {
-            this.UpdateAssetTransferedAsync(docNo, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateAssetTransferedAsync(string docNo, object userState) {
-            if ((this.UpdateAssetTransferedOperationCompleted == null)) {
-                this.UpdateAssetTransferedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateAssetTransferedOperationCompleted);
-            }
-            this.InvokeAsync("UpdateAssetTransfered", new object[] {
-                        docNo}, this.UpdateAssetTransferedOperationCompleted, userState);
-        }
-        
-        private void OnUpdateAssetTransferedOperationCompleted(object arg) {
-            if ((this.UpdateAssetTransferedCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateAssetTransferedCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateAssignedTicket", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateAssignedTicket_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateAssignedTicket(string projNo, string staffNo, int lineNo, string remarks, int solType) {
-            this.Invoke("UpdateAssignedTicket", new object[] {
-                        projNo,
-                        staffNo,
-                        lineNo,
-                        remarks,
-                        solType});
-        }
-        
-        /// <remarks/>
-        public void UpdateAssignedTicketAsync(string projNo, string staffNo, int lineNo, string remarks, int solType) {
-            this.UpdateAssignedTicketAsync(projNo, staffNo, lineNo, remarks, solType, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateAssignedTicketAsync(string projNo, string staffNo, int lineNo, string remarks, int solType, object userState) {
-            if ((this.UpdateAssignedTicketOperationCompleted == null)) {
-                this.UpdateAssignedTicketOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateAssignedTicketOperationCompleted);
-            }
-            this.InvokeAsync("UpdateAssignedTicket", new object[] {
-                        projNo,
-                        staffNo,
-                        lineNo,
-                        remarks,
-                        solType}, this.UpdateAssignedTicketOperationCompleted, userState);
-        }
-        
-        private void OnUpdateAssignedTicketOperationCompleted(object arg) {
-            if ((this.UpdateAssignedTicketCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateAssignedTicketCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateEvalLinesTimeFrame", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateEvalLinesTimeFrame_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateEvalLinesTimeFrame(string appNo, int lnNo, int timeF) {
-            this.Invoke("UpdateEvalLinesTimeFrame", new object[] {
-                        appNo,
-                        lnNo,
-                        timeF});
-        }
-        
-        /// <remarks/>
-        public void UpdateEvalLinesTimeFrameAsync(string appNo, int lnNo, int timeF) {
-            this.UpdateEvalLinesTimeFrameAsync(appNo, lnNo, timeF, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateEvalLinesTimeFrameAsync(string appNo, int lnNo, int timeF, object userState) {
-            if ((this.UpdateEvalLinesTimeFrameOperationCompleted == null)) {
-                this.UpdateEvalLinesTimeFrameOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateEvalLinesTimeFrameOperationCompleted);
-            }
-            this.InvokeAsync("UpdateEvalLinesTimeFrame", new object[] {
-                        appNo,
-                        lnNo,
-                        timeF}, this.UpdateEvalLinesTimeFrameOperationCompleted, userState);
-        }
-        
-        private void OnUpdateEvalLinesTimeFrameOperationCompleted(object arg) {
-            if ((this.UpdateEvalLinesTimeFrameCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateEvalLinesTimeFrameCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateICTAssetMovement", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateICTAssetMovement_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateICTAssetMovement(string docNo, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime dateNeeded, string remarks) {
-            this.Invoke("UpdateICTAssetMovement", new object[] {
-                        docNo,
-                        dateNeeded,
-                        remarks});
-        }
-        
-        /// <remarks/>
-        public void UpdateICTAssetMovementAsync(string docNo, System.DateTime dateNeeded, string remarks) {
-            this.UpdateICTAssetMovementAsync(docNo, dateNeeded, remarks, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateICTAssetMovementAsync(string docNo, System.DateTime dateNeeded, string remarks, object userState) {
-            if ((this.UpdateICTAssetMovementOperationCompleted == null)) {
-                this.UpdateICTAssetMovementOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateICTAssetMovementOperationCompleted);
-            }
-            this.InvokeAsync("UpdateICTAssetMovement", new object[] {
-                        docNo,
-                        dateNeeded,
-                        remarks}, this.UpdateICTAssetMovementOperationCompleted, userState);
-        }
-        
-        private void OnUpdateICTAssetMovementOperationCompleted(object arg) {
-            if ((this.UpdateICTAssetMovementCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateICTAssetMovementCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateICTService_mainRequest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateICTService_mainRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateICTService_mainRequest(string docNo, string asset, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime serviceDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime nextSerDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime lastSerDate) {
-            this.Invoke("UpdateICTService_mainRequest", new object[] {
-                        docNo,
-                        asset,
-                        serviceDate,
-                        nextSerDate,
-                        lastSerDate});
-        }
-        
-        /// <remarks/>
-        public void UpdateICTService_mainRequestAsync(string docNo, string asset, System.DateTime serviceDate, System.DateTime nextSerDate, System.DateTime lastSerDate) {
-            this.UpdateICTService_mainRequestAsync(docNo, asset, serviceDate, nextSerDate, lastSerDate, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateICTService_mainRequestAsync(string docNo, string asset, System.DateTime serviceDate, System.DateTime nextSerDate, System.DateTime lastSerDate, object userState) {
-            if ((this.UpdateICTService_mainRequestOperationCompleted == null)) {
-                this.UpdateICTService_mainRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateICTService_mainRequestOperationCompleted);
-            }
-            this.InvokeAsync("UpdateICTService_mainRequest", new object[] {
-                        docNo,
-                        asset,
-                        serviceDate,
-                        nextSerDate,
-                        lastSerDate}, this.UpdateICTService_mainRequestOperationCompleted, userState);
-        }
-        
-        private void OnUpdateICTService_mainRequestOperationCompleted(object arg) {
-            if ((this.UpdateICTService_mainRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateICTService_mainRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateImprestHeader", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateImprestHeader_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateImprestHeader(string docNo, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime dateNeeded, string dim1, string dim2, string dim3, string dim4, string dim5, string respC, string purpose) {
-            this.Invoke("UpdateImprestHeader", new object[] {
-                        docNo,
-                        dateNeeded,
-                        dim1,
-                        dim2,
-                        dim3,
-                        dim4,
-                        dim5,
-                        respC,
-                        purpose});
-        }
-        
-        /// <remarks/>
-        public void UpdateImprestHeaderAsync(string docNo, System.DateTime dateNeeded, string dim1, string dim2, string dim3, string dim4, string dim5, string respC, string purpose) {
-            this.UpdateImprestHeaderAsync(docNo, dateNeeded, dim1, dim2, dim3, dim4, dim5, respC, purpose, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateImprestHeaderAsync(string docNo, System.DateTime dateNeeded, string dim1, string dim2, string dim3, string dim4, string dim5, string respC, string purpose, object userState) {
-            if ((this.UpdateImprestHeaderOperationCompleted == null)) {
-                this.UpdateImprestHeaderOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateImprestHeaderOperationCompleted);
-            }
-            this.InvokeAsync("UpdateImprestHeader", new object[] {
-                        docNo,
-                        dateNeeded,
-                        dim1,
-                        dim2,
-                        dim3,
-                        dim4,
-                        dim5,
-                        respC,
-                        purpose}, this.UpdateImprestHeaderOperationCompleted, userState);
-        }
-        
-        private void OnUpdateImprestHeaderOperationCompleted(object arg) {
-            if ((this.UpdateImprestHeaderCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateImprestHeaderCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateKPITimeFrame", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateKPITimeFrame_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateKPITimeFrame(string appNo, int lnNo, int timeF) {
-            this.Invoke("UpdateKPITimeFrame", new object[] {
-                        appNo,
-                        lnNo,
-                        timeF});
-        }
-        
-        /// <remarks/>
-        public void UpdateKPITimeFrameAsync(string appNo, int lnNo, int timeF) {
-            this.UpdateKPITimeFrameAsync(appNo, lnNo, timeF, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateKPITimeFrameAsync(string appNo, int lnNo, int timeF, object userState) {
-            if ((this.UpdateKPITimeFrameOperationCompleted == null)) {
-                this.UpdateKPITimeFrameOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateKPITimeFrameOperationCompleted);
-            }
-            this.InvokeAsync("UpdateKPITimeFrame", new object[] {
-                        appNo,
-                        lnNo,
-                        timeF}, this.UpdateKPITimeFrameOperationCompleted, userState);
-        }
-        
-        private void OnUpdateKPITimeFrameOperationCompleted(object arg) {
-            if ((this.UpdateKPITimeFrameCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateKPITimeFrameCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateNewVisitorInf", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateNewVisitorInf_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateNewVisitorInf(string docNo, int visitorCat, string purpose, string idNo, string phoneNo, string carRegNo, string visitorsNo, string visitorsName, string personToSee, string department, string passNo, string userID) {
-            this.Invoke("UpdateNewVisitorInf", new object[] {
-                        docNo,
-                        visitorCat,
-                        purpose,
-                        idNo,
-                        phoneNo,
-                        carRegNo,
-                        visitorsNo,
-                        visitorsName,
-                        personToSee,
-                        department,
-                        passNo,
-                        userID});
-        }
-        
-        /// <remarks/>
-        public void UpdateNewVisitorInfAsync(string docNo, int visitorCat, string purpose, string idNo, string phoneNo, string carRegNo, string visitorsNo, string visitorsName, string personToSee, string department, string passNo, string userID) {
-            this.UpdateNewVisitorInfAsync(docNo, visitorCat, purpose, idNo, phoneNo, carRegNo, visitorsNo, visitorsName, personToSee, department, passNo, userID, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateNewVisitorInfAsync(string docNo, int visitorCat, string purpose, string idNo, string phoneNo, string carRegNo, string visitorsNo, string visitorsName, string personToSee, string department, string passNo, string userID, object userState) {
-            if ((this.UpdateNewVisitorInfOperationCompleted == null)) {
-                this.UpdateNewVisitorInfOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateNewVisitorInfOperationCompleted);
-            }
-            this.InvokeAsync("UpdateNewVisitorInf", new object[] {
-                        docNo,
-                        visitorCat,
-                        purpose,
-                        idNo,
-                        phoneNo,
-                        carRegNo,
-                        visitorsNo,
-                        visitorsName,
-                        personToSee,
-                        department,
-                        passNo,
-                        userID}, this.UpdateNewVisitorInfOperationCompleted, userState);
-        }
-        
-        private void OnUpdateNewVisitorInfOperationCompleted(object arg) {
-            if ((this.UpdateNewVisitorInfCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateNewVisitorInfCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateProcurementMethods", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateProcurementMethods_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateProcurementMethods(string docNo, string procurementMethod, string procurementOfficer) {
-            this.Invoke("UpdateProcurementMethods", new object[] {
-                        docNo,
-                        procurementMethod,
-                        procurementOfficer});
-        }
-        
-        /// <remarks/>
-        public void UpdateProcurementMethodsAsync(string docNo, string procurementMethod, string procurementOfficer) {
-            this.UpdateProcurementMethodsAsync(docNo, procurementMethod, procurementOfficer, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateProcurementMethodsAsync(string docNo, string procurementMethod, string procurementOfficer, object userState) {
-            if ((this.UpdateProcurementMethodsOperationCompleted == null)) {
-                this.UpdateProcurementMethodsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateProcurementMethodsOperationCompleted);
-            }
-            this.InvokeAsync("UpdateProcurementMethods", new object[] {
-                        docNo,
-                        procurementMethod,
-                        procurementOfficer}, this.UpdateProcurementMethodsOperationCompleted, userState);
-        }
-        
-        private void OnUpdateProcurementMethodsOperationCompleted(object arg) {
-            if ((this.UpdateProcurementMethodsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateProcurementMethodsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdatePurchaseItemGLBudget", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdatePurchaseItemGLBudget_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdatePurchaseItemGLBudget(string docNo, string itmNo, string glBudgetAc) {
-            this.Invoke("UpdatePurchaseItemGLBudget", new object[] {
-                        docNo,
-                        itmNo,
-                        glBudgetAc});
-        }
-        
-        /// <remarks/>
-        public void UpdatePurchaseItemGLBudgetAsync(string docNo, string itmNo, string glBudgetAc) {
-            this.UpdatePurchaseItemGLBudgetAsync(docNo, itmNo, glBudgetAc, null);
-        }
-        
-        /// <remarks/>
-        public void UpdatePurchaseItemGLBudgetAsync(string docNo, string itmNo, string glBudgetAc, object userState) {
-            if ((this.UpdatePurchaseItemGLBudgetOperationCompleted == null)) {
-                this.UpdatePurchaseItemGLBudgetOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdatePurchaseItemGLBudgetOperationCompleted);
-            }
-            this.InvokeAsync("UpdatePurchaseItemGLBudget", new object[] {
-                        docNo,
-                        itmNo,
-                        glBudgetAc}, this.UpdatePurchaseItemGLBudgetOperationCompleted, userState);
-        }
-        
-        private void OnUpdatePurchaseItemGLBudgetOperationCompleted(object arg) {
-            if ((this.UpdatePurchaseItemGLBudgetCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdatePurchaseItemGLBudgetCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdatePurchaseRequisition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdatePurchaseRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdatePurchaseRequisition(string docNo, string dim1, string dim2, string dim3, string respC, string purpose) {
-            this.Invoke("UpdatePurchaseRequisition", new object[] {
-                        docNo,
-                        dim1,
-                        dim2,
-                        dim3,
-                        respC,
-                        purpose});
-        }
-        
-        /// <remarks/>
-        public void UpdatePurchaseRequisitionAsync(string docNo, string dim1, string dim2, string dim3, string respC, string purpose) {
-            this.UpdatePurchaseRequisitionAsync(docNo, dim1, dim2, dim3, respC, purpose, null);
-        }
-        
-        /// <remarks/>
-        public void UpdatePurchaseRequisitionAsync(string docNo, string dim1, string dim2, string dim3, string respC, string purpose, object userState) {
-            if ((this.UpdatePurchaseRequisitionOperationCompleted == null)) {
-                this.UpdatePurchaseRequisitionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdatePurchaseRequisitionOperationCompleted);
-            }
-            this.InvokeAsync("UpdatePurchaseRequisition", new object[] {
-                        docNo,
-                        dim1,
-                        dim2,
-                        dim3,
-                        respC,
-                        purpose}, this.UpdatePurchaseRequisitionOperationCompleted, userState);
-        }
-        
-        private void OnUpdatePurchaseRequisitionOperationCompleted(object arg) {
-            if ((this.UpdatePurchaseRequisitionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdatePurchaseRequisitionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateStaffClaims", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateStaffClaims_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateStaffClaims(string docNo, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime dateNeeded, string dim1, string dim2, string dim3, string dim4, string dim5, string purpose) {
-            this.Invoke("UpdateStaffClaims", new object[] {
-                        docNo,
-                        dateNeeded,
-                        dim1,
-                        dim2,
-                        dim3,
-                        dim4,
-                        dim5,
-                        purpose});
-        }
-        
-        /// <remarks/>
-        public void UpdateStaffClaimsAsync(string docNo, System.DateTime dateNeeded, string dim1, string dim2, string dim3, string dim4, string dim5, string purpose) {
-            this.UpdateStaffClaimsAsync(docNo, dateNeeded, dim1, dim2, dim3, dim4, dim5, purpose, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateStaffClaimsAsync(string docNo, System.DateTime dateNeeded, string dim1, string dim2, string dim3, string dim4, string dim5, string purpose, object userState) {
-            if ((this.UpdateStaffClaimsOperationCompleted == null)) {
-                this.UpdateStaffClaimsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateStaffClaimsOperationCompleted);
-            }
-            this.InvokeAsync("UpdateStaffClaims", new object[] {
-                        docNo,
-                        dateNeeded,
-                        dim1,
-                        dim2,
-                        dim3,
-                        dim4,
-                        dim5,
-                        purpose}, this.UpdateStaffClaimsOperationCompleted, userState);
-        }
-        
-        private void OnUpdateStaffClaimsOperationCompleted(object arg) {
-            if ((this.UpdateStaffClaimsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateStaffClaimsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateStoreRequisition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateStoreRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateStoreRequisition(string docNo, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime dateNeeded, string dim1, string dim2, string dim3, string respC, string purpose) {
-            this.Invoke("UpdateStoreRequisition", new object[] {
-                        docNo,
-                        dateNeeded,
-                        dim1,
-                        dim2,
-                        dim3,
-                        respC,
-                        purpose});
-        }
-        
-        /// <remarks/>
-        public void UpdateStoreRequisitionAsync(string docNo, System.DateTime dateNeeded, string dim1, string dim2, string dim3, string respC, string purpose) {
-            this.UpdateStoreRequisitionAsync(docNo, dateNeeded, dim1, dim2, dim3, respC, purpose, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateStoreRequisitionAsync(string docNo, System.DateTime dateNeeded, string dim1, string dim2, string dim3, string respC, string purpose, object userState) {
-            if ((this.UpdateStoreRequisitionOperationCompleted == null)) {
-                this.UpdateStoreRequisitionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateStoreRequisitionOperationCompleted);
-            }
-            this.InvokeAsync("UpdateStoreRequisition", new object[] {
-                        docNo,
-                        dateNeeded,
-                        dim1,
-                        dim2,
-                        dim3,
-                        respC,
-                        purpose}, this.UpdateStoreRequisitionOperationCompleted, userState);
-        }
-        
-        private void OnUpdateStoreRequisitionOperationCompleted(object arg) {
-            if ((this.UpdateStoreRequisitionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateStoreRequisitionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateWorkPlanObjectiveTargetA" +
-            "ctivity", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateWorkPlanObjectiveTargetActivity_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateWorkPlanObjectiveTargetActivity(string code, int entryNo, string activity, string resourceReq, string expctedResults, int timeFrame, string perfInd) {
-            this.Invoke("UpdateWorkPlanObjectiveTargetActivity", new object[] {
-                        code,
-                        entryNo,
-                        activity,
-                        resourceReq,
-                        expctedResults,
-                        timeFrame,
-                        perfInd});
-        }
-        
-        /// <remarks/>
-        public void UpdateWorkPlanObjectiveTargetActivityAsync(string code, int entryNo, string activity, string resourceReq, string expctedResults, int timeFrame, string perfInd) {
-            this.UpdateWorkPlanObjectiveTargetActivityAsync(code, entryNo, activity, resourceReq, expctedResults, timeFrame, perfInd, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateWorkPlanObjectiveTargetActivityAsync(string code, int entryNo, string activity, string resourceReq, string expctedResults, int timeFrame, string perfInd, object userState) {
-            if ((this.UpdateWorkPlanObjectiveTargetActivityOperationCompleted == null)) {
-                this.UpdateWorkPlanObjectiveTargetActivityOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateWorkPlanObjectiveTargetActivityOperationCompleted);
-            }
-            this.InvokeAsync("UpdateWorkPlanObjectiveTargetActivity", new object[] {
-                        code,
-                        entryNo,
-                        activity,
-                        resourceReq,
-                        expctedResults,
-                        timeFrame,
-                        perfInd}, this.UpdateWorkPlanObjectiveTargetActivityOperationCompleted, userState);
-        }
-        
-        private void OnUpdateWorkPlanObjectiveTargetActivityOperationCompleted(object arg) {
-            if ((this.UpdateWorkPlanObjectiveTargetActivityCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateWorkPlanObjectiveTargetActivityCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateWorkPlanObjectiveTarget", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateWorkPlanObjectiveTarget_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateWorkPlanObjectiveTarget(string code, int entryNo, string target) {
-            this.Invoke("UpdateWorkPlanObjectiveTarget", new object[] {
-                        code,
-                        entryNo,
-                        target});
-        }
-        
-        /// <remarks/>
-        public void UpdateWorkPlanObjectiveTargetAsync(string code, int entryNo, string target) {
-            this.UpdateWorkPlanObjectiveTargetAsync(code, entryNo, target, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateWorkPlanObjectiveTargetAsync(string code, int entryNo, string target, object userState) {
-            if ((this.UpdateWorkPlanObjectiveTargetOperationCompleted == null)) {
-                this.UpdateWorkPlanObjectiveTargetOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateWorkPlanObjectiveTargetOperationCompleted);
-            }
-            this.InvokeAsync("UpdateWorkPlanObjectiveTarget", new object[] {
-                        code,
-                        entryNo,
-                        target}, this.UpdateWorkPlanObjectiveTargetOperationCompleted, userState);
-        }
-        
-        private void OnUpdateWorkPlanObjectiveTargetOperationCompleted(object arg) {
-            if ((this.UpdateWorkPlanObjectiveTargetCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateWorkPlanObjectiveTargetCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UpdateWorkPlanObjective", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UpdateWorkPlanObjective_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateWorkPlanObjective(string code, int entryNo, string objective) {
-            this.Invoke("UpdateWorkPlanObjective", new object[] {
-                        code,
-                        entryNo,
-                        objective});
-        }
-        
-        /// <remarks/>
-        public void UpdateWorkPlanObjectiveAsync(string code, int entryNo, string objective) {
-            this.UpdateWorkPlanObjectiveAsync(code, entryNo, objective, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateWorkPlanObjectiveAsync(string code, int entryNo, string objective, object userState) {
-            if ((this.UpdateWorkPlanObjectiveOperationCompleted == null)) {
-                this.UpdateWorkPlanObjectiveOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateWorkPlanObjectiveOperationCompleted);
-            }
-            this.InvokeAsync("UpdateWorkPlanObjective", new object[] {
-                        code,
-                        entryNo,
-                        objective}, this.UpdateWorkPlanObjectiveOperationCompleted, userState);
-        }
-        
-        private void OnUpdateWorkPlanObjectiveOperationCompleted(object arg) {
-            if ((this.UpdateWorkPlanObjectiveCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateWorkPlanObjectiveCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:UploadAttachedDocument", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="UploadAttachedDocument_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UploadAttachedDocument(string docNo, string fileName, string attachment, int tableID) {
-            this.Invoke("UploadAttachedDocument", new object[] {
-                        docNo,
-                        fileName,
-                        attachment,
-                        tableID});
-        }
-        
-        /// <remarks/>
-        public void UploadAttachedDocumentAsync(string docNo, string fileName, string attachment, int tableID) {
-            this.UploadAttachedDocumentAsync(docNo, fileName, attachment, tableID, null);
-        }
-        
-        /// <remarks/>
-        public void UploadAttachedDocumentAsync(string docNo, string fileName, string attachment, int tableID, object userState) {
-            if ((this.UploadAttachedDocumentOperationCompleted == null)) {
-                this.UploadAttachedDocumentOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUploadAttachedDocumentOperationCompleted);
-            }
-            this.InvokeAsync("UploadAttachedDocument", new object[] {
-                        docNo,
-                        fileName,
-                        attachment,
-                        tableID}, this.UploadAttachedDocumentOperationCompleted, userState);
-        }
-        
-        private void OnUploadAttachedDocumentOperationCompleted(object arg) {
-            if ((this.UploadAttachedDocumentCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UploadAttachedDocumentCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:checkLegal", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="checkLegal_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool checkLegal(string userId) {
-            object[] results = this.Invoke("checkLegal", new object[] {
-                        userId});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void checkLegalAsync(string userId) {
-            this.checkLegalAsync(userId, null);
-        }
-        
-        /// <remarks/>
-        public void checkLegalAsync(string userId, object userState) {
-            if ((this.checkLegalOperationCompleted == null)) {
-                this.checkLegalOperationCompleted = new System.Threading.SendOrPostCallback(this.OncheckLegalOperationCompleted);
-            }
-            this.InvokeAsync("checkLegal", new object[] {
-                        userId}, this.checkLegalOperationCompleted, userState);
-        }
-        
-        private void OncheckLegalOperationCompleted(object arg) {
-            if ((this.checkLegalCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.checkLegalCompleted(this, new checkLegalCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:createAppraisalDocument", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="createAppraisalDocument_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string createAppraisalDocument(string staffNo, string appPeriod, string supNo, int appType) {
-            object[] results = this.Invoke("createAppraisalDocument", new object[] {
-                        staffNo,
-                        appPeriod,
-                        supNo,
-                        appType});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void createAppraisalDocumentAsync(string staffNo, string appPeriod, string supNo, int appType) {
-            this.createAppraisalDocumentAsync(staffNo, appPeriod, supNo, appType, null);
-        }
-        
-        /// <remarks/>
-        public void createAppraisalDocumentAsync(string staffNo, string appPeriod, string supNo, int appType, object userState) {
-            if ((this.createAppraisalDocumentOperationCompleted == null)) {
-                this.createAppraisalDocumentOperationCompleted = new System.Threading.SendOrPostCallback(this.OncreateAppraisalDocumentOperationCompleted);
-            }
-            this.InvokeAsync("createAppraisalDocument", new object[] {
-                        staffNo,
-                        appPeriod,
-                        supNo,
-                        appType}, this.createAppraisalDocumentOperationCompleted, userState);
-        }
-        
-        private void OncreateAppraisalDocumentOperationCompleted(object arg) {
-            if ((this.createAppraisalDocumentCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.createAppraisalDocumentCompleted(this, new createAppraisalDocumentCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:fnImprestSurrenderLineUpdate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="fnImprestSurrenderLineUpdate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void fnImprestSurrenderLineUpdate(string surrender_No, string accountNo, decimal actualSpend, string receiptNo, int entryNo) {
-            this.Invoke("fnImprestSurrenderLineUpdate", new object[] {
-                        surrender_No,
-                        accountNo,
-                        actualSpend,
-                        receiptNo,
-                        entryNo});
-        }
-        
-        /// <remarks/>
-        public void fnImprestSurrenderLineUpdateAsync(string surrender_No, string accountNo, decimal actualSpend, string receiptNo, int entryNo) {
-            this.fnImprestSurrenderLineUpdateAsync(surrender_No, accountNo, actualSpend, receiptNo, entryNo, null);
-        }
-        
-        /// <remarks/>
-        public void fnImprestSurrenderLineUpdateAsync(string surrender_No, string accountNo, decimal actualSpend, string receiptNo, int entryNo, object userState) {
-            if ((this.fnImprestSurrenderLineUpdateOperationCompleted == null)) {
-                this.fnImprestSurrenderLineUpdateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnfnImprestSurrenderLineUpdateOperationCompleted);
-            }
-            this.InvokeAsync("fnImprestSurrenderLineUpdate", new object[] {
-                        surrender_No,
-                        accountNo,
-                        actualSpend,
-                        receiptNo,
-                        entryNo}, this.fnImprestSurrenderLineUpdateOperationCompleted, userState);
-        }
-        
-        private void OnfnImprestSurrenderLineUpdateOperationCompleted(object arg) {
-            if ((this.fnImprestSurrenderLineUpdateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.fnImprestSurrenderLineUpdateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:fnImprestSurrender", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="fnImprestSurrender_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string fnImprestSurrender(string imprest_No, string staffNo, string userID) {
-            object[] results = this.Invoke("fnImprestSurrender", new object[] {
-                        imprest_No,
-                        staffNo,
-                        userID});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void fnImprestSurrenderAsync(string imprest_No, string staffNo, string userID) {
-            this.fnImprestSurrenderAsync(imprest_No, staffNo, userID, null);
-        }
-        
-        /// <remarks/>
-        public void fnImprestSurrenderAsync(string imprest_No, string staffNo, string userID, object userState) {
-            if ((this.fnImprestSurrenderOperationCompleted == null)) {
-                this.fnImprestSurrenderOperationCompleted = new System.Threading.SendOrPostCallback(this.OnfnImprestSurrenderOperationCompleted);
-            }
-            this.InvokeAsync("fnImprestSurrender", new object[] {
-                        imprest_No,
-                        staffNo,
-                        userID}, this.fnImprestSurrenderOperationCompleted, userState);
-        }
-        
-        private void OnfnImprestSurrenderOperationCompleted(object arg) {
-            if ((this.fnImprestSurrenderCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.fnImprestSurrenderCompleted(this, new fnImprestSurrenderCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:AllowedToConfirm", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="AllowedToConfirm_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool AllowedToConfirm(string staff) {
-            object[] results = this.Invoke("AllowedToConfirm", new object[] {
-                        staff});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void AllowedToConfirmAsync(string staff) {
-            this.AllowedToConfirmAsync(staff, null);
-        }
-        
-        /// <remarks/>
-        public void AllowedToConfirmAsync(string staff, object userState) {
-            if ((this.AllowedToConfirmOperationCompleted == null)) {
-                this.AllowedToConfirmOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAllowedToConfirmOperationCompleted);
-            }
-            this.InvokeAsync("AllowedToConfirm", new object[] {
-                        staff}, this.AllowedToConfirmOperationCompleted, userState);
-        }
-        
-        private void OnAllowedToConfirmOperationCompleted(object arg) {
-            if ((this.AllowedToConfirmCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.AllowedToConfirmCompleted(this, new AllowedToConfirmCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:AllowedToRecruit", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="AllowedToRecruit_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool AllowedToRecruit(string staff) {
-            object[] results = this.Invoke("AllowedToRecruit", new object[] {
-                        staff});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void AllowedToRecruitAsync(string staff) {
-            this.AllowedToRecruitAsync(staff, null);
-        }
-        
-        /// <remarks/>
-        public void AllowedToRecruitAsync(string staff, object userState) {
-            if ((this.AllowedToRecruitOperationCompleted == null)) {
-                this.AllowedToRecruitOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAllowedToRecruitOperationCompleted);
-            }
-            this.InvokeAsync("AllowedToRecruit", new object[] {
-                        staff}, this.AllowedToRecruitOperationCompleted, userState);
-        }
-        
-        private void OnAllowedToRecruitOperationCompleted(object arg) {
-            if ((this.AllowedToRecruitCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.AllowedToRecruitCompleted(this, new AllowedToRecruitCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:AppraisalRequisitionOpenTo", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="AppraisalRequisitionOpenTo_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void AppraisalRequisitionOpenTo(string appNo, int sendTo) {
-            this.Invoke("AppraisalRequisitionOpenTo", new object[] {
-                        appNo,
-                        sendTo});
-        }
-        
-        /// <remarks/>
-        public void AppraisalRequisitionOpenToAsync(string appNo, int sendTo) {
-            this.AppraisalRequisitionOpenToAsync(appNo, sendTo, null);
-        }
-        
-        /// <remarks/>
-        public void AppraisalRequisitionOpenToAsync(string appNo, int sendTo, object userState) {
-            if ((this.AppraisalRequisitionOpenToOperationCompleted == null)) {
-                this.AppraisalRequisitionOpenToOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAppraisalRequisitionOpenToOperationCompleted);
-            }
-            this.InvokeAsync("AppraisalRequisitionOpenTo", new object[] {
-                        appNo,
-                        sendTo}, this.AppraisalRequisitionOpenToOperationCompleted, userState);
-        }
-        
-        private void OnAppraisalRequisitionOpenToOperationCompleted(object arg) {
-            if ((this.AppraisalRequisitionOpenToCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.AppraisalRequisitionOpenToCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:AppraiseeStatementsOnApprisal", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="AppraiseeStatementsOnApprisal_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void AppraiseeStatementsOnApprisal(string reqNo, int answ, string reason, int period) {
-            this.Invoke("AppraiseeStatementsOnApprisal", new object[] {
-                        reqNo,
-                        answ,
-                        reason,
-                        period});
-        }
-        
-        /// <remarks/>
-        public void AppraiseeStatementsOnApprisalAsync(string reqNo, int answ, string reason, int period) {
-            this.AppraiseeStatementsOnApprisalAsync(reqNo, answ, reason, period, null);
-        }
-        
-        /// <remarks/>
-        public void AppraiseeStatementsOnApprisalAsync(string reqNo, int answ, string reason, int period, object userState) {
-            if ((this.AppraiseeStatementsOnApprisalOperationCompleted == null)) {
-                this.AppraiseeStatementsOnApprisalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAppraiseeStatementsOnApprisalOperationCompleted);
-            }
-            this.InvokeAsync("AppraiseeStatementsOnApprisal", new object[] {
-                        reqNo,
-                        answ,
-                        reason,
-                        period}, this.AppraiseeStatementsOnApprisalOperationCompleted, userState);
-        }
-        
-        private void OnAppraiseeStatementsOnApprisalOperationCompleted(object arg) {
-            if ((this.AppraiseeStatementsOnApprisalCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.AppraiseeStatementsOnApprisalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:AssetServiceConfirm", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="AssetServiceConfirm_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void AssetServiceConfirm(string docNo) {
-            this.Invoke("AssetServiceConfirm", new object[] {
-                        docNo});
-        }
-        
-        /// <remarks/>
-        public void AssetServiceConfirmAsync(string docNo) {
-            this.AssetServiceConfirmAsync(docNo, null);
-        }
-        
-        /// <remarks/>
-        public void AssetServiceConfirmAsync(string docNo, object userState) {
-            if ((this.AssetServiceConfirmOperationCompleted == null)) {
-                this.AssetServiceConfirmOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAssetServiceConfirmOperationCompleted);
-            }
-            this.InvokeAsync("AssetServiceConfirm", new object[] {
-                        docNo}, this.AssetServiceConfirmOperationCompleted, userState);
-        }
-        
-        private void OnAssetServiceConfirmOperationCompleted(object arg) {
-            if ((this.AssetServiceConfirmCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.AssetServiceConfirmCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:AssetTranferRequest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="AssetTranferRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string AssetTranferRequest(string raisedBy, int tranferType, int assetType, string assetNo, string comments, string tranferFrom, string departFrom, string divisionFrom, string empNo, string tranferTo, string departTo, string divisionTo, string empNoTo) {
-            object[] results = this.Invoke("AssetTranferRequest", new object[] {
-                        raisedBy,
-                        tranferType,
-                        assetType,
-                        assetNo,
-                        comments,
-                        tranferFrom,
-                        departFrom,
-                        divisionFrom,
-                        empNo,
-                        tranferTo,
-                        departTo,
-                        divisionTo,
-                        empNoTo});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void AssetTranferRequestAsync(string raisedBy, int tranferType, int assetType, string assetNo, string comments, string tranferFrom, string departFrom, string divisionFrom, string empNo, string tranferTo, string departTo, string divisionTo, string empNoTo) {
-            this.AssetTranferRequestAsync(raisedBy, tranferType, assetType, assetNo, comments, tranferFrom, departFrom, divisionFrom, empNo, tranferTo, departTo, divisionTo, empNoTo, null);
-        }
-        
-        /// <remarks/>
-        public void AssetTranferRequestAsync(string raisedBy, int tranferType, int assetType, string assetNo, string comments, string tranferFrom, string departFrom, string divisionFrom, string empNo, string tranferTo, string departTo, string divisionTo, string empNoTo, object userState) {
-            if ((this.AssetTranferRequestOperationCompleted == null)) {
-                this.AssetTranferRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAssetTranferRequestOperationCompleted);
-            }
-            this.InvokeAsync("AssetTranferRequest", new object[] {
-                        raisedBy,
-                        tranferType,
-                        assetType,
-                        assetNo,
-                        comments,
-                        tranferFrom,
-                        departFrom,
-                        divisionFrom,
-                        empNo,
-                        tranferTo,
-                        departTo,
-                        divisionTo,
-                        empNoTo}, this.AssetTranferRequestOperationCompleted, userState);
-        }
-        
-        private void OnAssetTranferRequestOperationCompleted(object arg) {
-            if ((this.AssetTranferRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.AssetTranferRequestCompleted(this, new AssetTranferRequestCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:AssignExternalDriver", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="AssignExternalDriver_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void AssignExternalDriver(string docNo, string driver, string vehicle, string allocatedby) {
-            this.Invoke("AssignExternalDriver", new object[] {
-                        docNo,
-                        driver,
-                        vehicle,
-                        allocatedby});
-        }
-        
-        /// <remarks/>
-        public void AssignExternalDriverAsync(string docNo, string driver, string vehicle, string allocatedby) {
-            this.AssignExternalDriverAsync(docNo, driver, vehicle, allocatedby, null);
-        }
-        
-        /// <remarks/>
-        public void AssignExternalDriverAsync(string docNo, string driver, string vehicle, string allocatedby, object userState) {
-            if ((this.AssignExternalDriverOperationCompleted == null)) {
-                this.AssignExternalDriverOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAssignExternalDriverOperationCompleted);
-            }
-            this.InvokeAsync("AssignExternalDriver", new object[] {
-                        docNo,
-                        driver,
-                        vehicle,
-                        allocatedby}, this.AssignExternalDriverOperationCompleted, userState);
-        }
-        
-        private void OnAssignExternalDriverOperationCompleted(object arg) {
-            if ((this.AssignExternalDriverCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.AssignExternalDriverCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:AssignTransportRequisitionDriv" +
-            "er", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="AssignTransportRequisitionDriver_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void AssignTransportRequisitionDriver(string docNo, string driver, string vehicle, string allocatedby) {
-            this.Invoke("AssignTransportRequisitionDriver", new object[] {
-                        docNo,
-                        driver,
-                        vehicle,
-                        allocatedby});
-        }
-        
-        /// <remarks/>
-        public void AssignTransportRequisitionDriverAsync(string docNo, string driver, string vehicle, string allocatedby) {
-            this.AssignTransportRequisitionDriverAsync(docNo, driver, vehicle, allocatedby, null);
-        }
-        
-        /// <remarks/>
-        public void AssignTransportRequisitionDriverAsync(string docNo, string driver, string vehicle, string allocatedby, object userState) {
-            if ((this.AssignTransportRequisitionDriverOperationCompleted == null)) {
-                this.AssignTransportRequisitionDriverOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAssignTransportRequisitionDriverOperationCompleted);
-            }
-            this.InvokeAsync("AssignTransportRequisitionDriver", new object[] {
-                        docNo,
-                        driver,
-                        vehicle,
-                        allocatedby}, this.AssignTransportRequisitionDriverOperationCompleted, userState);
-        }
-        
-        private void OnAssignTransportRequisitionDriverOperationCompleted(object arg) {
-            if ((this.AssignTransportRequisitionDriverCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.AssignTransportRequisitionDriverCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CalcEndDate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CalcEndDate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value", DataType="date")]
-        public System.DateTime CalcEndDate([System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime sDate, int lDays, string leave_Type) {
-            object[] results = this.Invoke("CalcEndDate", new object[] {
-                        sDate,
-                        lDays,
-                        leave_Type});
-            return ((System.DateTime)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void CalcEndDateAsync(System.DateTime sDate, int lDays, string leave_Type) {
-            this.CalcEndDateAsync(sDate, lDays, leave_Type, null);
-        }
-        
-        /// <remarks/>
-        public void CalcEndDateAsync(System.DateTime sDate, int lDays, string leave_Type, object userState) {
-            if ((this.CalcEndDateOperationCompleted == null)) {
-                this.CalcEndDateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCalcEndDateOperationCompleted);
-            }
-            this.InvokeAsync("CalcEndDate", new object[] {
-                        sDate,
-                        lDays,
-                        leave_Type}, this.CalcEndDateOperationCompleted, userState);
-        }
-        
-        private void OnCalcEndDateOperationCompleted(object arg) {
-            if ((this.CalcEndDateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CalcEndDateCompleted(this, new CalcEndDateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CalcReturnDate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CalcReturnDate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value", DataType="date")]
-        public System.DateTime CalcReturnDate([System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime endDate, string leave_Type) {
-            object[] results = this.Invoke("CalcReturnDate", new object[] {
-                        endDate,
-                        leave_Type});
-            return ((System.DateTime)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void CalcReturnDateAsync(System.DateTime endDate, string leave_Type) {
-            this.CalcReturnDateAsync(endDate, leave_Type, null);
-        }
-        
-        /// <remarks/>
-        public void CalcReturnDateAsync(System.DateTime endDate, string leave_Type, object userState) {
-            if ((this.CalcReturnDateOperationCompleted == null)) {
-                this.CalcReturnDateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCalcReturnDateOperationCompleted);
-            }
-            this.InvokeAsync("CalcReturnDate", new object[] {
-                        endDate,
-                        leave_Type}, this.CalcReturnDateOperationCompleted, userState);
-        }
-        
-        private void OnCalcReturnDateOperationCompleted(object arg) {
-            if ((this.CalcReturnDateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CalcReturnDateCompleted(this, new CalcReturnDateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CanClearVisitors", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CanClearVisitors_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool CanClearVisitors(string staffNo) {
-            object[] results = this.Invoke("CanClearVisitors", new object[] {
-                        staffNo});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void CanClearVisitorsAsync(string staffNo) {
-            this.CanClearVisitorsAsync(staffNo, null);
-        }
-        
-        /// <remarks/>
-        public void CanClearVisitorsAsync(string staffNo, object userState) {
-            if ((this.CanClearVisitorsOperationCompleted == null)) {
-                this.CanClearVisitorsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCanClearVisitorsOperationCompleted);
-            }
-            this.InvokeAsync("CanClearVisitors", new object[] {
-                        staffNo}, this.CanClearVisitorsOperationCompleted, userState);
-        }
-        
-        private void OnCanClearVisitorsOperationCompleted(object arg) {
-            if ((this.CanClearVisitorsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CanClearVisitorsCompleted(this, new CanClearVisitorsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CanceTransportRequisition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CanceTransportRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void CanceTransportRequisition(string appNo) {
-            this.Invoke("CanceTransportRequisition", new object[] {
-                        appNo});
-        }
-        
-        /// <remarks/>
-        public void CanceTransportRequisitionAsync(string appNo) {
-            this.CanceTransportRequisitionAsync(appNo, null);
-        }
-        
-        /// <remarks/>
-        public void CanceTransportRequisitionAsync(string appNo, object userState) {
-            if ((this.CanceTransportRequisitionOperationCompleted == null)) {
-                this.CanceTransportRequisitionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCanceTransportRequisitionOperationCompleted);
-            }
-            this.InvokeAsync("CanceTransportRequisition", new object[] {
-                        appNo}, this.CanceTransportRequisitionOperationCompleted, userState);
-        }
-        
-        private void OnCanceTransportRequisitionOperationCompleted(object arg) {
-            if ((this.CanceTransportRequisitionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CanceTransportRequisitionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CancelAssetTransferApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CancelAssetTransferApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void CancelAssetTransferApproval(string appNo) {
-            this.Invoke("CancelAssetTransferApproval", new object[] {
-                        appNo});
-        }
-        
-        /// <remarks/>
-        public void CancelAssetTransferApprovalAsync(string appNo) {
-            this.CancelAssetTransferApprovalAsync(appNo, null);
-        }
-        
-        /// <remarks/>
-        public void CancelAssetTransferApprovalAsync(string appNo, object userState) {
-            if ((this.CancelAssetTransferApprovalOperationCompleted == null)) {
-                this.CancelAssetTransferApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCancelAssetTransferApprovalOperationCompleted);
-            }
-            this.InvokeAsync("CancelAssetTransferApproval", new object[] {
-                        appNo}, this.CancelAssetTransferApprovalOperationCompleted, userState);
-        }
-        
-        private void OnCancelAssetTransferApprovalOperationCompleted(object arg) {
-            if ((this.CancelAssetTransferApprovalCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CancelAssetTransferApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CancelICTRequisitionCreate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CancelICTRequisitionCreate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void CancelICTRequisitionCreate(string docNo, string cancelRemarks) {
-            this.Invoke("CancelICTRequisitionCreate", new object[] {
-                        docNo,
-                        cancelRemarks});
-        }
-        
-        /// <remarks/>
-        public void CancelICTRequisitionCreateAsync(string docNo, string cancelRemarks) {
-            this.CancelICTRequisitionCreateAsync(docNo, cancelRemarks, null);
-        }
-        
-        /// <remarks/>
-        public void CancelICTRequisitionCreateAsync(string docNo, string cancelRemarks, object userState) {
-            if ((this.CancelICTRequisitionCreateOperationCompleted == null)) {
-                this.CancelICTRequisitionCreateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCancelICTRequisitionCreateOperationCompleted);
-            }
-            this.InvokeAsync("CancelICTRequisitionCreate", new object[] {
-                        docNo,
-                        cancelRemarks}, this.CancelICTRequisitionCreateOperationCompleted, userState);
-        }
-        
-        private void OnCancelICTRequisitionCreateOperationCompleted(object arg) {
-            if ((this.CancelICTRequisitionCreateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CancelICTRequisitionCreateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CancelImpSurrenderApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CancelImpSurrenderApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void CancelImpSurrenderApproval(string appNo) {
-            this.Invoke("CancelImpSurrenderApproval", new object[] {
-                        appNo});
-        }
-        
-        /// <remarks/>
-        public void CancelImpSurrenderApprovalAsync(string appNo) {
-            this.CancelImpSurrenderApprovalAsync(appNo, null);
-        }
-        
-        /// <remarks/>
-        public void CancelImpSurrenderApprovalAsync(string appNo, object userState) {
-            if ((this.CancelImpSurrenderApprovalOperationCompleted == null)) {
-                this.CancelImpSurrenderApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCancelImpSurrenderApprovalOperationCompleted);
-            }
-            this.InvokeAsync("CancelImpSurrenderApproval", new object[] {
-                        appNo}, this.CancelImpSurrenderApprovalOperationCompleted, userState);
-        }
-        
-        private void OnCancelImpSurrenderApprovalOperationCompleted(object arg) {
-            if ((this.CancelImpSurrenderApprovalCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CancelImpSurrenderApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CancelTNAApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CancelTNAApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void CancelTNAApproval(string appNo) {
-            this.Invoke("CancelTNAApproval", new object[] {
-                        appNo});
-        }
-        
-        /// <remarks/>
-        public void CancelTNAApprovalAsync(string appNo) {
-            this.CancelTNAApprovalAsync(appNo, null);
-        }
-        
-        /// <remarks/>
-        public void CancelTNAApprovalAsync(string appNo, object userState) {
-            if ((this.CancelTNAApprovalOperationCompleted == null)) {
-                this.CancelTNAApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCancelTNAApprovalOperationCompleted);
-            }
-            this.InvokeAsync("CancelTNAApproval", new object[] {
-                        appNo}, this.CancelTNAApprovalOperationCompleted, userState);
-        }
-        
-        private void OnCancelTNAApprovalOperationCompleted(object arg) {
-            if ((this.CancelTNAApprovalCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CancelTNAApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ChangeEvalLinesTimeFrame", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ChangeEvalLinesTimeFrame_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ChangeEvalLinesTimeFrame(string appNo, int lnNo, int tmF) {
-            this.Invoke("ChangeEvalLinesTimeFrame", new object[] {
-                        appNo,
-                        lnNo,
-                        tmF});
-        }
-        
-        /// <remarks/>
-        public void ChangeEvalLinesTimeFrameAsync(string appNo, int lnNo, int tmF) {
-            this.ChangeEvalLinesTimeFrameAsync(appNo, lnNo, tmF, null);
-        }
-        
-        /// <remarks/>
-        public void ChangeEvalLinesTimeFrameAsync(string appNo, int lnNo, int tmF, object userState) {
-            if ((this.ChangeEvalLinesTimeFrameOperationCompleted == null)) {
-                this.ChangeEvalLinesTimeFrameOperationCompleted = new System.Threading.SendOrPostCallback(this.OnChangeEvalLinesTimeFrameOperationCompleted);
-            }
-            this.InvokeAsync("ChangeEvalLinesTimeFrame", new object[] {
-                        appNo,
-                        lnNo,
-                        tmF}, this.ChangeEvalLinesTimeFrameOperationCompleted, userState);
-        }
-        
-        private void OnChangeEvalLinesTimeFrameOperationCompleted(object arg) {
-            if ((this.ChangeEvalLinesTimeFrameCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ChangeEvalLinesTimeFrameCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ChangeLeaveStatus", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ChangeLeaveStatus_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ChangeLeaveStatus(string appNo, bool recalled, bool cancelled) {
-            this.Invoke("ChangeLeaveStatus", new object[] {
-                        appNo,
-                        recalled,
-                        cancelled});
-        }
-        
-        /// <remarks/>
-        public void ChangeLeaveStatusAsync(string appNo, bool recalled, bool cancelled) {
-            this.ChangeLeaveStatusAsync(appNo, recalled, cancelled, null);
-        }
-        
-        /// <remarks/>
-        public void ChangeLeaveStatusAsync(string appNo, bool recalled, bool cancelled, object userState) {
-            if ((this.ChangeLeaveStatusOperationCompleted == null)) {
-                this.ChangeLeaveStatusOperationCompleted = new System.Threading.SendOrPostCallback(this.OnChangeLeaveStatusOperationCompleted);
-            }
-            this.InvokeAsync("ChangeLeaveStatus", new object[] {
-                        appNo,
-                        recalled,
-                        cancelled}, this.ChangeLeaveStatusOperationCompleted, userState);
-        }
-        
-        private void OnChangeLeaveStatusOperationCompleted(object arg) {
-            if ((this.ChangeLeaveStatusCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ChangeLeaveStatusCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ChangeTaskAllocationStatusToPe" +
-            "nding", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ChangeTaskAllocationStatusToPending_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ChangeTaskAllocationStatusToPending(string projNo, int entryNo) {
-            this.Invoke("ChangeTaskAllocationStatusToPending", new object[] {
-                        projNo,
-                        entryNo});
-        }
-        
-        /// <remarks/>
-        public void ChangeTaskAllocationStatusToPendingAsync(string projNo, int entryNo) {
-            this.ChangeTaskAllocationStatusToPendingAsync(projNo, entryNo, null);
-        }
-        
-        /// <remarks/>
-        public void ChangeTaskAllocationStatusToPendingAsync(string projNo, int entryNo, object userState) {
-            if ((this.ChangeTaskAllocationStatusToPendingOperationCompleted == null)) {
-                this.ChangeTaskAllocationStatusToPendingOperationCompleted = new System.Threading.SendOrPostCallback(this.OnChangeTaskAllocationStatusToPendingOperationCompleted);
-            }
-            this.InvokeAsync("ChangeTaskAllocationStatusToPending", new object[] {
-                        projNo,
-                        entryNo}, this.ChangeTaskAllocationStatusToPendingOperationCompleted, userState);
-        }
-        
-        private void OnChangeTaskAllocationStatusToPendingOperationCompleted(object arg) {
-            if ((this.ChangeTaskAllocationStatusToPendingCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ChangeTaskAllocationStatusToPendingCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ChangeVisitorStatus", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ChangeVisitorStatus_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ChangeVisitorStatus(string docNo, int status) {
-            this.Invoke("ChangeVisitorStatus", new object[] {
-                        docNo,
+                        sequence,
+                        studentNo,
                         status});
         }
         
         /// <remarks/>
-        public void ChangeVisitorStatusAsync(string docNo, int status) {
-            this.ChangeVisitorStatusAsync(docNo, status, null);
+        public void CustomApprovalEntryAdditionAsync(string documentNo, string sender, string approvalCode, string approver, int tableID, int sequence, string studentNo, int status) {
+            this.CustomApprovalEntryAdditionAsync(documentNo, sender, approvalCode, approver, tableID, sequence, studentNo, status, null);
         }
         
         /// <remarks/>
-        public void ChangeVisitorStatusAsync(string docNo, int status, object userState) {
-            if ((this.ChangeVisitorStatusOperationCompleted == null)) {
-                this.ChangeVisitorStatusOperationCompleted = new System.Threading.SendOrPostCallback(this.OnChangeVisitorStatusOperationCompleted);
+        public void CustomApprovalEntryAdditionAsync(string documentNo, string sender, string approvalCode, string approver, int tableID, int sequence, string studentNo, int status, object userState) {
+            if ((this.CustomApprovalEntryAdditionOperationCompleted == null)) {
+                this.CustomApprovalEntryAdditionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCustomApprovalEntryAdditionOperationCompleted);
             }
-            this.InvokeAsync("ChangeVisitorStatus", new object[] {
-                        docNo,
-                        status}, this.ChangeVisitorStatusOperationCompleted, userState);
+            this.InvokeAsync("CustomApprovalEntryAddition", new object[] {
+                        documentNo,
+                        sender,
+                        approvalCode,
+                        approver,
+                        tableID,
+                        sequence,
+                        studentNo,
+                        status}, this.CustomApprovalEntryAdditionOperationCompleted, userState);
         }
         
-        private void OnChangeVisitorStatusOperationCompleted(object arg) {
-            if ((this.ChangeVisitorStatusCompleted != null)) {
+        private void OnCustomApprovalEntryAdditionOperationCompleted(object arg) {
+            if ((this.CustomApprovalEntryAdditionCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ChangeVisitorStatusCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.CustomApprovalEntryAdditionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CheckAssetAvailabiility", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CheckAssetAvailabiility_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool CheckAssetAvailabiility(int assetCategory) {
-            object[] results = this.Invoke("CheckAssetAvailabiility", new object[] {
-                        assetCategory});
-            return ((bool)(results[0]));
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:CustomApprovalEntryClearance2", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="CustomApprovalEntryClearance2_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void CustomApprovalEntryClearance2(string documentNo, string sender, string approvalCode, string approver, int tableID, int sequence, string studentNo) {
+            this.Invoke("CustomApprovalEntryClearance2", new object[] {
+                        documentNo,
+                        sender,
+                        approvalCode,
+                        approver,
+                        tableID,
+                        sequence,
+                        studentNo});
         }
         
         /// <remarks/>
-        public void CheckAssetAvailabiilityAsync(int assetCategory) {
-            this.CheckAssetAvailabiilityAsync(assetCategory, null);
+        public void CustomApprovalEntryClearance2Async(string documentNo, string sender, string approvalCode, string approver, int tableID, int sequence, string studentNo) {
+            this.CustomApprovalEntryClearance2Async(documentNo, sender, approvalCode, approver, tableID, sequence, studentNo, null);
         }
         
         /// <remarks/>
-        public void CheckAssetAvailabiilityAsync(int assetCategory, object userState) {
-            if ((this.CheckAssetAvailabiilityOperationCompleted == null)) {
-                this.CheckAssetAvailabiilityOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCheckAssetAvailabiilityOperationCompleted);
+        public void CustomApprovalEntryClearance2Async(string documentNo, string sender, string approvalCode, string approver, int tableID, int sequence, string studentNo, object userState) {
+            if ((this.CustomApprovalEntryClearance2OperationCompleted == null)) {
+                this.CustomApprovalEntryClearance2OperationCompleted = new System.Threading.SendOrPostCallback(this.OnCustomApprovalEntryClearance2OperationCompleted);
             }
-            this.InvokeAsync("CheckAssetAvailabiility", new object[] {
-                        assetCategory}, this.CheckAssetAvailabiilityOperationCompleted, userState);
+            this.InvokeAsync("CustomApprovalEntryClearance2", new object[] {
+                        documentNo,
+                        sender,
+                        approvalCode,
+                        approver,
+                        tableID,
+                        sequence,
+                        studentNo}, this.CustomApprovalEntryClearance2OperationCompleted, userState);
         }
         
-        private void OnCheckAssetAvailabiilityOperationCompleted(object arg) {
-            if ((this.CheckAssetAvailabiilityCompleted != null)) {
+        private void OnCustomApprovalEntryClearance2OperationCompleted(object arg) {
+            if ((this.CustomApprovalEntryClearance2Completed != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CheckAssetAvailabiilityCompleted(this, new CheckAssetAvailabiilityCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.CustomApprovalEntryClearance2Completed(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CheckTransportApprovals", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CheckTransportApprovals_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public int CheckTransportApprovals(string docNo) {
-            object[] results = this.Invoke("CheckTransportApprovals", new object[] {
-                        docNo});
-            return ((int)(results[0]));
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:CustomApprovalEntryClearance", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="CustomApprovalEntryClearance_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void CustomApprovalEntryClearance(string documentNo, string sender, string approvalCode, string approver, int tableID, int sequence, string studentNo) {
+            this.Invoke("CustomApprovalEntryClearance", new object[] {
+                        documentNo,
+                        sender,
+                        approvalCode,
+                        approver,
+                        tableID,
+                        sequence,
+                        studentNo});
         }
         
         /// <remarks/>
-        public void CheckTransportApprovalsAsync(string docNo) {
-            this.CheckTransportApprovalsAsync(docNo, null);
+        public void CustomApprovalEntryClearanceAsync(string documentNo, string sender, string approvalCode, string approver, int tableID, int sequence, string studentNo) {
+            this.CustomApprovalEntryClearanceAsync(documentNo, sender, approvalCode, approver, tableID, sequence, studentNo, null);
         }
         
         /// <remarks/>
-        public void CheckTransportApprovalsAsync(string docNo, object userState) {
-            if ((this.CheckTransportApprovalsOperationCompleted == null)) {
-                this.CheckTransportApprovalsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCheckTransportApprovalsOperationCompleted);
+        public void CustomApprovalEntryClearanceAsync(string documentNo, string sender, string approvalCode, string approver, int tableID, int sequence, string studentNo, object userState) {
+            if ((this.CustomApprovalEntryClearanceOperationCompleted == null)) {
+                this.CustomApprovalEntryClearanceOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCustomApprovalEntryClearanceOperationCompleted);
             }
-            this.InvokeAsync("CheckTransportApprovals", new object[] {
-                        docNo}, this.CheckTransportApprovalsOperationCompleted, userState);
+            this.InvokeAsync("CustomApprovalEntryClearance", new object[] {
+                        documentNo,
+                        sender,
+                        approvalCode,
+                        approver,
+                        tableID,
+                        sequence,
+                        studentNo}, this.CustomApprovalEntryClearanceOperationCompleted, userState);
         }
         
-        private void OnCheckTransportApprovalsOperationCompleted(object arg) {
-            if ((this.CheckTransportApprovalsCompleted != null)) {
+        private void OnCustomApprovalEntryClearanceOperationCompleted(object arg) {
+            if ((this.CustomApprovalEntryClearanceCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CheckTransportApprovalsCompleted(this, new CheckTransportApprovalsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.CustomApprovalEntryClearanceCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ClaimLinesExists", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ClaimLinesExists_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool ClaimLinesExists(string noa46) {
-            object[] results = this.Invoke("ClaimLinesExists", new object[] {
-                        noa46});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void ClaimLinesExistsAsync(string noa46) {
-            this.ClaimLinesExistsAsync(noa46, null);
-        }
-        
-        /// <remarks/>
-        public void ClaimLinesExistsAsync(string noa46, object userState) {
-            if ((this.ClaimLinesExistsOperationCompleted == null)) {
-                this.ClaimLinesExistsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnClaimLinesExistsOperationCompleted);
-            }
-            this.InvokeAsync("ClaimLinesExists", new object[] {
-                        noa46}, this.ClaimLinesExistsOperationCompleted, userState);
-        }
-        
-        private void OnClaimLinesExistsOperationCompleted(object arg) {
-            if ((this.ClaimLinesExistsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ClaimLinesExistsCompleted(this, new ClaimLinesExistsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ClearActiveVisitior", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ClearActiveVisitior_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool ClearActiveVisitior(string docNo, string user_ID) {
-            object[] results = this.Invoke("ClearActiveVisitior", new object[] {
-                        docNo,
-                        user_ID});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void ClearActiveVisitiorAsync(string docNo, string user_ID) {
-            this.ClearActiveVisitiorAsync(docNo, user_ID, null);
-        }
-        
-        /// <remarks/>
-        public void ClearActiveVisitiorAsync(string docNo, string user_ID, object userState) {
-            if ((this.ClearActiveVisitiorOperationCompleted == null)) {
-                this.ClearActiveVisitiorOperationCompleted = new System.Threading.SendOrPostCallback(this.OnClearActiveVisitiorOperationCompleted);
-            }
-            this.InvokeAsync("ClearActiveVisitior", new object[] {
-                        docNo,
-                        user_ID}, this.ClearActiveVisitiorOperationCompleted, userState);
-        }
-        
-        private void OnClearActiveVisitiorOperationCompleted(object arg) {
-            if ((this.ClearActiveVisitiorCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ClearActiveVisitiorCompleted(this, new ClearActiveVisitiorCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ConfirmClosureOfICTRequisition" +
-            "", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ConfirmClosureOfICTRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ConfirmClosureOfICTRequisition(string docNo, string remarks) {
-            this.Invoke("ConfirmClosureOfICTRequisition", new object[] {
-                        docNo,
-                        remarks});
-        }
-        
-        /// <remarks/>
-        public void ConfirmClosureOfICTRequisitionAsync(string docNo, string remarks) {
-            this.ConfirmClosureOfICTRequisitionAsync(docNo, remarks, null);
-        }
-        
-        /// <remarks/>
-        public void ConfirmClosureOfICTRequisitionAsync(string docNo, string remarks, object userState) {
-            if ((this.ConfirmClosureOfICTRequisitionOperationCompleted == null)) {
-                this.ConfirmClosureOfICTRequisitionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnConfirmClosureOfICTRequisitionOperationCompleted);
-            }
-            this.InvokeAsync("ConfirmClosureOfICTRequisition", new object[] {
-                        docNo,
-                        remarks}, this.ConfirmClosureOfICTRequisitionOperationCompleted, userState);
-        }
-        
-        private void OnConfirmClosureOfICTRequisitionOperationCompleted(object arg) {
-            if ((this.ConfirmClosureOfICTRequisitionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ConfirmClosureOfICTRequisitionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ConfirmRecruit", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ConfirmRecruit_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string ConfirmRecruit(string serialNo) {
-            object[] results = this.Invoke("ConfirmRecruit", new object[] {
-                        serialNo});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void ConfirmRecruitAsync(string serialNo) {
-            this.ConfirmRecruitAsync(serialNo, null);
-        }
-        
-        /// <remarks/>
-        public void ConfirmRecruitAsync(string serialNo, object userState) {
-            if ((this.ConfirmRecruitOperationCompleted == null)) {
-                this.ConfirmRecruitOperationCompleted = new System.Threading.SendOrPostCallback(this.OnConfirmRecruitOperationCompleted);
-            }
-            this.InvokeAsync("ConfirmRecruit", new object[] {
-                        serialNo}, this.ConfirmRecruitOperationCompleted, userState);
-        }
-        
-        private void OnConfirmRecruitOperationCompleted(object arg) {
-            if ((this.ConfirmRecruitCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ConfirmRecruitCompleted(this, new ConfirmRecruitCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ConfirmSurrenderDocLineAmounts" +
-            "", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ConfirmSurrenderDocLineAmounts_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ConfirmSurrenderDocLineAmounts(string noa46) {
-            this.Invoke("ConfirmSurrenderDocLineAmounts", new object[] {
-                        noa46});
-        }
-        
-        /// <remarks/>
-        public void ConfirmSurrenderDocLineAmountsAsync(string noa46) {
-            this.ConfirmSurrenderDocLineAmountsAsync(noa46, null);
-        }
-        
-        /// <remarks/>
-        public void ConfirmSurrenderDocLineAmountsAsync(string noa46, object userState) {
-            if ((this.ConfirmSurrenderDocLineAmountsOperationCompleted == null)) {
-                this.ConfirmSurrenderDocLineAmountsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnConfirmSurrenderDocLineAmountsOperationCompleted);
-            }
-            this.InvokeAsync("ConfirmSurrenderDocLineAmounts", new object[] {
-                        noa46}, this.ConfirmSurrenderDocLineAmountsOperationCompleted, userState);
-        }
-        
-        private void OnConfirmSurrenderDocLineAmountsOperationCompleted(object arg) {
-            if ((this.ConfirmSurrenderDocLineAmountsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ConfirmSurrenderDocLineAmountsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CreateLeavePlannerHeader", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CreateLeavePlannerHeader_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string CreateLeavePlannerHeader(string staffNo) {
-            object[] results = this.Invoke("CreateLeavePlannerHeader", new object[] {
-                        staffNo});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void CreateLeavePlannerHeaderAsync(string staffNo) {
-            this.CreateLeavePlannerHeaderAsync(staffNo, null);
-        }
-        
-        /// <remarks/>
-        public void CreateLeavePlannerHeaderAsync(string staffNo, object userState) {
-            if ((this.CreateLeavePlannerHeaderOperationCompleted == null)) {
-                this.CreateLeavePlannerHeaderOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCreateLeavePlannerHeaderOperationCompleted);
-            }
-            this.InvokeAsync("CreateLeavePlannerHeader", new object[] {
-                        staffNo}, this.CreateLeavePlannerHeaderOperationCompleted, userState);
-        }
-        
-        private void OnCreateLeavePlannerHeaderOperationCompleted(object arg) {
-            if ((this.CreateLeavePlannerHeaderCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CreateLeavePlannerHeaderCompleted(this, new CreateLeavePlannerHeaderCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CustomHRCancelPurchaseRequisit" +
-            "ion", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CustomHRCancelPurchaseRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void CustomHRCancelPurchaseRequisition(string appNo) {
-            this.Invoke("CustomHRCancelPurchaseRequisition", new object[] {
-                        appNo});
-        }
-        
-        /// <remarks/>
-        public void CustomHRCancelPurchaseRequisitionAsync(string appNo) {
-            this.CustomHRCancelPurchaseRequisitionAsync(appNo, null);
-        }
-        
-        /// <remarks/>
-        public void CustomHRCancelPurchaseRequisitionAsync(string appNo, object userState) {
-            if ((this.CustomHRCancelPurchaseRequisitionOperationCompleted == null)) {
-                this.CustomHRCancelPurchaseRequisitionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCustomHRCancelPurchaseRequisitionOperationCompleted);
-            }
-            this.InvokeAsync("CustomHRCancelPurchaseRequisition", new object[] {
-                        appNo}, this.CustomHRCancelPurchaseRequisitionOperationCompleted, userState);
-        }
-        
-        private void OnCustomHRCancelPurchaseRequisitionOperationCompleted(object arg) {
-            if ((this.CustomHRCancelPurchaseRequisitionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CustomHRCancelPurchaseRequisitionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:CustomPurchaseRequisitionAppro" +
-            "valRequest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="CustomPurchaseRequisitionApprovalRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void CustomPurchaseRequisitionApprovalRequest(string reqNo) {
-            this.Invoke("CustomPurchaseRequisitionApprovalRequest", new object[] {
-                        reqNo});
-        }
-        
-        /// <remarks/>
-        public void CustomPurchaseRequisitionApprovalRequestAsync(string reqNo) {
-            this.CustomPurchaseRequisitionApprovalRequestAsync(reqNo, null);
-        }
-        
-        /// <remarks/>
-        public void CustomPurchaseRequisitionApprovalRequestAsync(string reqNo, object userState) {
-            if ((this.CustomPurchaseRequisitionApprovalRequestOperationCompleted == null)) {
-                this.CustomPurchaseRequisitionApprovalRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCustomPurchaseRequisitionApprovalRequestOperationCompleted);
-            }
-            this.InvokeAsync("CustomPurchaseRequisitionApprovalRequest", new object[] {
-                        reqNo}, this.CustomPurchaseRequisitionApprovalRequestOperationCompleted, userState);
-        }
-        
-        private void OnCustomPurchaseRequisitionApprovalRequestOperationCompleted(object arg) {
-            if ((this.CustomPurchaseRequisitionApprovalRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.CustomPurchaseRequisitionApprovalRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:DeleteAppraisalExatraInformati" +
-            "on", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="DeleteAppraisalExatraInformation_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void DeleteAppraisalExatraInformation(string appNo, int lineNo) {
-            this.Invoke("DeleteAppraisalExatraInformation", new object[] {
-                        appNo,
-                        lineNo});
-        }
-        
-        /// <remarks/>
-        public void DeleteAppraisalExatraInformationAsync(string appNo, int lineNo) {
-            this.DeleteAppraisalExatraInformationAsync(appNo, lineNo, null);
-        }
-        
-        /// <remarks/>
-        public void DeleteAppraisalExatraInformationAsync(string appNo, int lineNo, object userState) {
-            if ((this.DeleteAppraisalExatraInformationOperationCompleted == null)) {
-                this.DeleteAppraisalExatraInformationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteAppraisalExatraInformationOperationCompleted);
-            }
-            this.InvokeAsync("DeleteAppraisalExatraInformation", new object[] {
-                        appNo,
-                        lineNo}, this.DeleteAppraisalExatraInformationOperationCompleted, userState);
-        }
-        
-        private void OnDeleteAppraisalExatraInformationOperationCompleted(object arg) {
-            if ((this.DeleteAppraisalExatraInformationCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DeleteAppraisalExatraInformationCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:DeleteDocumentAttachment", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="DeleteDocumentAttachment_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:DeleteDocumentAttachment", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="DeleteDocumentAttachment_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public void DeleteDocumentAttachment(string docNo, int tableID, int docID) {
             this.Invoke("DeleteDocumentAttachment", new object[] {
                         docNo,
@@ -4265,152 +683,101 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:DeleteWorkPlanObjectiveTargetA" +
-            "ctivity", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="DeleteWorkPlanObjectiveTargetActivity_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void DeleteWorkPlanObjectiveTargetActivity(string code, int entryNo) {
-            this.Invoke("DeleteWorkPlanObjectiveTargetActivity", new object[] {
-                        code,
-                        entryNo});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:DeleteLecturerUnit", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="DeleteLecturerUnit_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void DeleteLecturerUnit(string lect, string oldProg, string oldStage, string oldSemester, string oldUnit, string oldCampus, string oldStudyMode, int lineNo) {
+            this.Invoke("DeleteLecturerUnit", new object[] {
+                        lect,
+                        oldProg,
+                        oldStage,
+                        oldSemester,
+                        oldUnit,
+                        oldCampus,
+                        oldStudyMode,
+                        lineNo});
         }
         
         /// <remarks/>
-        public void DeleteWorkPlanObjectiveTargetActivityAsync(string code, int entryNo) {
-            this.DeleteWorkPlanObjectiveTargetActivityAsync(code, entryNo, null);
+        public void DeleteLecturerUnitAsync(string lect, string oldProg, string oldStage, string oldSemester, string oldUnit, string oldCampus, string oldStudyMode, int lineNo) {
+            this.DeleteLecturerUnitAsync(lect, oldProg, oldStage, oldSemester, oldUnit, oldCampus, oldStudyMode, lineNo, null);
         }
         
         /// <remarks/>
-        public void DeleteWorkPlanObjectiveTargetActivityAsync(string code, int entryNo, object userState) {
-            if ((this.DeleteWorkPlanObjectiveTargetActivityOperationCompleted == null)) {
-                this.DeleteWorkPlanObjectiveTargetActivityOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteWorkPlanObjectiveTargetActivityOperationCompleted);
+        public void DeleteLecturerUnitAsync(string lect, string oldProg, string oldStage, string oldSemester, string oldUnit, string oldCampus, string oldStudyMode, int lineNo, object userState) {
+            if ((this.DeleteLecturerUnitOperationCompleted == null)) {
+                this.DeleteLecturerUnitOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteLecturerUnitOperationCompleted);
             }
-            this.InvokeAsync("DeleteWorkPlanObjectiveTargetActivity", new object[] {
-                        code,
-                        entryNo}, this.DeleteWorkPlanObjectiveTargetActivityOperationCompleted, userState);
+            this.InvokeAsync("DeleteLecturerUnit", new object[] {
+                        lect,
+                        oldProg,
+                        oldStage,
+                        oldSemester,
+                        oldUnit,
+                        oldCampus,
+                        oldStudyMode,
+                        lineNo}, this.DeleteLecturerUnitOperationCompleted, userState);
         }
         
-        private void OnDeleteWorkPlanObjectiveTargetActivityOperationCompleted(object arg) {
-            if ((this.DeleteWorkPlanObjectiveTargetActivityCompleted != null)) {
+        private void OnDeleteLecturerUnitOperationCompleted(object arg) {
+            if ((this.DeleteLecturerUnitCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DeleteWorkPlanObjectiveTargetActivityCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.DeleteLecturerUnitCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:DeleteWorkPlanObjectiveTarget", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="DeleteWorkPlanObjectiveTarget_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void DeleteWorkPlanObjectiveTarget(string code, int entryNo) {
-            this.Invoke("DeleteWorkPlanObjectiveTarget", new object[] {
-                        code,
-                        entryNo});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:DeleteSubmittedUnits", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="DeleteSubmittedUnits_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void DeleteSubmittedUnits(string studentNo, string semester) {
+            this.Invoke("DeleteSubmittedUnits", new object[] {
+                        studentNo,
+                        semester});
         }
         
         /// <remarks/>
-        public void DeleteWorkPlanObjectiveTargetAsync(string code, int entryNo) {
-            this.DeleteWorkPlanObjectiveTargetAsync(code, entryNo, null);
+        public void DeleteSubmittedUnitsAsync(string studentNo, string semester) {
+            this.DeleteSubmittedUnitsAsync(studentNo, semester, null);
         }
         
         /// <remarks/>
-        public void DeleteWorkPlanObjectiveTargetAsync(string code, int entryNo, object userState) {
-            if ((this.DeleteWorkPlanObjectiveTargetOperationCompleted == null)) {
-                this.DeleteWorkPlanObjectiveTargetOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteWorkPlanObjectiveTargetOperationCompleted);
+        public void DeleteSubmittedUnitsAsync(string studentNo, string semester, object userState) {
+            if ((this.DeleteSubmittedUnitsOperationCompleted == null)) {
+                this.DeleteSubmittedUnitsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteSubmittedUnitsOperationCompleted);
             }
-            this.InvokeAsync("DeleteWorkPlanObjectiveTarget", new object[] {
-                        code,
-                        entryNo}, this.DeleteWorkPlanObjectiveTargetOperationCompleted, userState);
+            this.InvokeAsync("DeleteSubmittedUnits", new object[] {
+                        studentNo,
+                        semester}, this.DeleteSubmittedUnitsOperationCompleted, userState);
         }
         
-        private void OnDeleteWorkPlanObjectiveTargetOperationCompleted(object arg) {
-            if ((this.DeleteWorkPlanObjectiveTargetCompleted != null)) {
+        private void OnDeleteSubmittedUnitsOperationCompleted(object arg) {
+            if ((this.DeleteSubmittedUnitsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DeleteWorkPlanObjectiveTargetCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.DeleteSubmittedUnitsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:DeleteWorkPlanObjective", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="DeleteWorkPlanObjective_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void DeleteWorkPlanObjective(string code, int objEntryNo) {
-            this.Invoke("DeleteWorkPlanObjective", new object[] {
-                        code,
-                        objEntryNo});
-        }
-        
-        /// <remarks/>
-        public void DeleteWorkPlanObjectiveAsync(string code, int objEntryNo) {
-            this.DeleteWorkPlanObjectiveAsync(code, objEntryNo, null);
-        }
-        
-        /// <remarks/>
-        public void DeleteWorkPlanObjectiveAsync(string code, int objEntryNo, object userState) {
-            if ((this.DeleteWorkPlanObjectiveOperationCompleted == null)) {
-                this.DeleteWorkPlanObjectiveOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteWorkPlanObjectiveOperationCompleted);
-            }
-            this.InvokeAsync("DeleteWorkPlanObjective", new object[] {
-                        code,
-                        objEntryNo}, this.DeleteWorkPlanObjectiveOperationCompleted, userState);
-        }
-        
-        private void OnDeleteWorkPlanObjectiveOperationCompleted(object arg) {
-            if ((this.DeleteWorkPlanObjectiveCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DeleteWorkPlanObjectiveCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:DetermineIfIsNonWorking", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="DetermineIfIsNonWorking_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:DocumentApprovals", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="DocumentApprovals_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool DetermineIfIsNonWorking([System.Xml.Serialization.XmlElementAttribute(DataType="date")] ref System.DateTime bcDate, ref string leave_Type) {
-            object[] results = this.Invoke("DetermineIfIsNonWorking", new object[] {
-                        bcDate,
-                        leave_Type});
-            bcDate = ((System.DateTime)(results[1]));
-            leave_Type = ((string)(results[2]));
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void DetermineIfIsNonWorkingAsync(System.DateTime bcDate, string leave_Type) {
-            this.DetermineIfIsNonWorkingAsync(bcDate, leave_Type, null);
-        }
-        
-        /// <remarks/>
-        public void DetermineIfIsNonWorkingAsync(System.DateTime bcDate, string leave_Type, object userState) {
-            if ((this.DetermineIfIsNonWorkingOperationCompleted == null)) {
-                this.DetermineIfIsNonWorkingOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDetermineIfIsNonWorkingOperationCompleted);
-            }
-            this.InvokeAsync("DetermineIfIsNonWorking", new object[] {
-                        bcDate,
-                        leave_Type}, this.DetermineIfIsNonWorkingOperationCompleted, userState);
-        }
-        
-        private void OnDetermineIfIsNonWorkingOperationCompleted(object arg) {
-            if ((this.DetermineIfIsNonWorkingCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DetermineIfIsNonWorkingCompleted(this, new DetermineIfIsNonWorkingCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:DocumentApprovals", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="DocumentApprovals_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool DocumentApprovals(int lineNo, string userID) {
+        public bool DocumentApprovals(int entryNo, string document_No, string userID) {
             object[] results = this.Invoke("DocumentApprovals", new object[] {
-                        lineNo,
+                        entryNo,
+                        document_No,
                         userID});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void DocumentApprovalsAsync(int lineNo, string userID) {
-            this.DocumentApprovalsAsync(lineNo, userID, null);
+        public void DocumentApprovalsAsync(int entryNo, string document_No, string userID) {
+            this.DocumentApprovalsAsync(entryNo, document_No, userID, null);
         }
         
         /// <remarks/>
-        public void DocumentApprovalsAsync(int lineNo, string userID, object userState) {
+        public void DocumentApprovalsAsync(int entryNo, string document_No, string userID, object userState) {
             if ((this.DocumentApprovalsOperationCompleted == null)) {
                 this.DocumentApprovalsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDocumentApprovalsOperationCompleted);
             }
             this.InvokeAsync("DocumentApprovals", new object[] {
-                        lineNo,
+                        entryNo,
+                        document_No,
                         userID}, this.DocumentApprovalsOperationCompleted, userState);
         }
         
@@ -4422,7 +789,7 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:DocumentRejectionCommentLine", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="DocumentRejectionCommentLine_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:DocumentRejectionCommentLine", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="DocumentRejectionCommentLine_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public void DocumentRejectionCommentLine(string documentNo, string commentLineText, string webUser, int documentType, string recID, int table_ID, int seqenceNo) {
             this.Invoke("DocumentRejectionCommentLine", new object[] {
                         documentNo,
@@ -4462,7 +829,7 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:DocumentRejections", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="DocumentRejections_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:DocumentRejections", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="DocumentRejections_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public void DocumentRejections(int entryNo, string document_No, string userID, string commentLineText, int table_ID, int seqenceNo) {
             this.Invoke("DocumentRejections", new object[] {
                         entryNo,
@@ -4500,3110 +867,1549 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:DropKPIs", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="DropKPIs_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void DropKPIs(string appNo, int lnNo) {
-            this.Invoke("DropKPIs", new object[] {
-                        appNo,
-                        lnNo});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:DropStudentUnits", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="DropStudentUnits_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void DropStudentUnits(string studentNo, string semester, string stage, string program, string unit, bool backOfficeUser) {
+            this.Invoke("DropStudentUnits", new object[] {
+                        studentNo,
+                        semester,
+                        stage,
+                        program,
+                        unit,
+                        backOfficeUser});
         }
         
         /// <remarks/>
-        public void DropKPIsAsync(string appNo, int lnNo) {
-            this.DropKPIsAsync(appNo, lnNo, null);
+        public void DropStudentUnitsAsync(string studentNo, string semester, string stage, string program, string unit, bool backOfficeUser) {
+            this.DropStudentUnitsAsync(studentNo, semester, stage, program, unit, backOfficeUser, null);
         }
         
         /// <remarks/>
-        public void DropKPIsAsync(string appNo, int lnNo, object userState) {
-            if ((this.DropKPIsOperationCompleted == null)) {
-                this.DropKPIsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDropKPIsOperationCompleted);
+        public void DropStudentUnitsAsync(string studentNo, string semester, string stage, string program, string unit, bool backOfficeUser, object userState) {
+            if ((this.DropStudentUnitsOperationCompleted == null)) {
+                this.DropStudentUnitsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDropStudentUnitsOperationCompleted);
             }
-            this.InvokeAsync("DropKPIs", new object[] {
-                        appNo,
-                        lnNo}, this.DropKPIsOperationCompleted, userState);
+            this.InvokeAsync("DropStudentUnits", new object[] {
+                        studentNo,
+                        semester,
+                        stage,
+                        program,
+                        unit,
+                        backOfficeUser}, this.DropStudentUnitsOperationCompleted, userState);
         }
         
-        private void OnDropKPIsOperationCompleted(object arg) {
-            if ((this.DropKPIsCompleted != null)) {
+        private void OnDropStudentUnitsOperationCompleted(object arg) {
+            if ((this.DropStudentUnitsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DropKPIsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.DropStudentUnitsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:DropTrainingDevPlan", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="DropTrainingDevPlan_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void DropTrainingDevPlan(string appNo, int lnNo) {
-            this.Invoke("DropTrainingDevPlan", new object[] {
-                        appNo,
-                        lnNo});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:DropUnitBasket", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="DropUnitBasket_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void DropUnitBasket(string studentNo, string unit, string semester) {
+            this.Invoke("DropUnitBasket", new object[] {
+                        studentNo,
+                        unit,
+                        semester});
         }
         
         /// <remarks/>
-        public void DropTrainingDevPlanAsync(string appNo, int lnNo) {
-            this.DropTrainingDevPlanAsync(appNo, lnNo, null);
+        public void DropUnitBasketAsync(string studentNo, string unit, string semester) {
+            this.DropUnitBasketAsync(studentNo, unit, semester, null);
         }
         
         /// <remarks/>
-        public void DropTrainingDevPlanAsync(string appNo, int lnNo, object userState) {
-            if ((this.DropTrainingDevPlanOperationCompleted == null)) {
-                this.DropTrainingDevPlanOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDropTrainingDevPlanOperationCompleted);
+        public void DropUnitBasketAsync(string studentNo, string unit, string semester, object userState) {
+            if ((this.DropUnitBasketOperationCompleted == null)) {
+                this.DropUnitBasketOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDropUnitBasketOperationCompleted);
             }
-            this.InvokeAsync("DropTrainingDevPlan", new object[] {
-                        appNo,
-                        lnNo}, this.DropTrainingDevPlanOperationCompleted, userState);
+            this.InvokeAsync("DropUnitBasket", new object[] {
+                        studentNo,
+                        unit,
+                        semester}, this.DropUnitBasketOperationCompleted, userState);
         }
         
-        private void OnDropTrainingDevPlanOperationCompleted(object arg) {
-            if ((this.DropTrainingDevPlanCompleted != null)) {
+        private void OnDropUnitBasketOperationCompleted(object arg) {
+            if ((this.DropUnitBasketCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DropTrainingDevPlanCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.DropUnitBasketCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:FuelRechargeCard", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="FuelRechargeCard_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:EditLecturerUnit", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="EditLecturerUnit_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void EditLecturerUnit(string lect, string prog, string stage, string semester, string unit, string campus, string studyMode, string oldProg, string oldStage, string oldSemester, string oldUnit, string oldCampus, string oldStudyMode, int lineNo, string _Class) {
+            this.Invoke("EditLecturerUnit", new object[] {
+                        lect,
+                        prog,
+                        stage,
+                        semester,
+                        unit,
+                        campus,
+                        studyMode,
+                        oldProg,
+                        oldStage,
+                        oldSemester,
+                        oldUnit,
+                        oldCampus,
+                        oldStudyMode,
+                        lineNo,
+                        _Class});
+        }
+        
+        /// <remarks/>
+        public void EditLecturerUnitAsync(string lect, string prog, string stage, string semester, string unit, string campus, string studyMode, string oldProg, string oldStage, string oldSemester, string oldUnit, string oldCampus, string oldStudyMode, int lineNo, string _Class) {
+            this.EditLecturerUnitAsync(lect, prog, stage, semester, unit, campus, studyMode, oldProg, oldStage, oldSemester, oldUnit, oldCampus, oldStudyMode, lineNo, _Class, null);
+        }
+        
+        /// <remarks/>
+        public void EditLecturerUnitAsync(
+                    string lect, 
+                    string prog, 
+                    string stage, 
+                    string semester, 
+                    string unit, 
+                    string campus, 
+                    string studyMode, 
+                    string oldProg, 
+                    string oldStage, 
+                    string oldSemester, 
+                    string oldUnit, 
+                    string oldCampus, 
+                    string oldStudyMode, 
+                    int lineNo, 
+                    string _Class, 
+                    object userState) {
+            if ((this.EditLecturerUnitOperationCompleted == null)) {
+                this.EditLecturerUnitOperationCompleted = new System.Threading.SendOrPostCallback(this.OnEditLecturerUnitOperationCompleted);
+            }
+            this.InvokeAsync("EditLecturerUnit", new object[] {
+                        lect,
+                        prog,
+                        stage,
+                        semester,
+                        unit,
+                        campus,
+                        studyMode,
+                        oldProg,
+                        oldStage,
+                        oldSemester,
+                        oldUnit,
+                        oldCampus,
+                        oldStudyMode,
+                        lineNo,
+                        _Class}, this.EditLecturerUnitOperationCompleted, userState);
+        }
+        
+        private void OnEditLecturerUnitOperationCompleted(object arg) {
+            if ((this.EditLecturerUnitCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.EditLecturerUnitCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:EnterRowMarks", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="EnterRowMarks_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void EnterRowMarks(string prog, string stage, string unit, string sem, decimal score, decimal contrib, string stdNo, string lecturer, string examType) {
+            this.Invoke("EnterRowMarks", new object[] {
+                        prog,
+                        stage,
+                        unit,
+                        sem,
+                        score,
+                        contrib,
+                        stdNo,
+                        lecturer,
+                        examType});
+        }
+        
+        /// <remarks/>
+        public void EnterRowMarksAsync(string prog, string stage, string unit, string sem, decimal score, decimal contrib, string stdNo, string lecturer, string examType) {
+            this.EnterRowMarksAsync(prog, stage, unit, sem, score, contrib, stdNo, lecturer, examType, null);
+        }
+        
+        /// <remarks/>
+        public void EnterRowMarksAsync(string prog, string stage, string unit, string sem, decimal score, decimal contrib, string stdNo, string lecturer, string examType, object userState) {
+            if ((this.EnterRowMarksOperationCompleted == null)) {
+                this.EnterRowMarksOperationCompleted = new System.Threading.SendOrPostCallback(this.OnEnterRowMarksOperationCompleted);
+            }
+            this.InvokeAsync("EnterRowMarks", new object[] {
+                        prog,
+                        stage,
+                        unit,
+                        sem,
+                        score,
+                        contrib,
+                        stdNo,
+                        lecturer,
+                        examType}, this.EnterRowMarksOperationCompleted, userState);
+        }
+        
+        private void OnEnterRowMarksOperationCompleted(object arg) {
+            if ((this.EnterRowMarksCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.EnterRowMarksCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateReceipts", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateReceipts_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateReceipts(string receipt_No, string filenameFromApp) {
+            this.Invoke("GenerateReceipts", new object[] {
+                        receipt_No,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void GenerateReceiptsAsync(string receipt_No, string filenameFromApp) {
+            this.GenerateReceiptsAsync(receipt_No, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateReceiptsAsync(string receipt_No, string filenameFromApp, object userState) {
+            if ((this.GenerateReceiptsOperationCompleted == null)) {
+                this.GenerateReceiptsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateReceiptsOperationCompleted);
+            }
+            this.InvokeAsync("GenerateReceipts", new object[] {
+                        receipt_No,
+                        filenameFromApp}, this.GenerateReceiptsOperationCompleted, userState);
+        }
+        
+        private void OnGenerateReceiptsOperationCompleted(object arg) {
+            if ((this.GenerateReceiptsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateReceiptsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateScoreSheet", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateScoreSheet_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateScoreSheet(string prog, string unit, string stage, string sem, string classCode, string campus, string filenameFromApp) {
+            this.Invoke("GenerateScoreSheet", new object[] {
+                        prog,
+                        unit,
+                        stage,
+                        sem,
+                        classCode,
+                        campus,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void GenerateScoreSheetAsync(string prog, string unit, string stage, string sem, string classCode, string campus, string filenameFromApp) {
+            this.GenerateScoreSheetAsync(prog, unit, stage, sem, classCode, campus, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateScoreSheetAsync(string prog, string unit, string stage, string sem, string classCode, string campus, string filenameFromApp, object userState) {
+            if ((this.GenerateScoreSheetOperationCompleted == null)) {
+                this.GenerateScoreSheetOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateScoreSheetOperationCompleted);
+            }
+            this.InvokeAsync("GenerateScoreSheet", new object[] {
+                        prog,
+                        unit,
+                        stage,
+                        sem,
+                        classCode,
+                        campus,
+                        filenameFromApp}, this.GenerateScoreSheetOperationCompleted, userState);
+        }
+        
+        private void OnGenerateScoreSheetOperationCompleted(object arg) {
+            if ((this.GenerateScoreSheetCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateScoreSheetCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentAudit", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentAudit_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateStudentAudit(string student_No, string prog, string filenameFromApp) {
+            this.Invoke("GenerateStudentAudit", new object[] {
+                        student_No,
+                        prog,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentAuditAsync(string student_No, string prog, string filenameFromApp) {
+            this.GenerateStudentAuditAsync(student_No, prog, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentAuditAsync(string student_No, string prog, string filenameFromApp, object userState) {
+            if ((this.GenerateStudentAuditOperationCompleted == null)) {
+                this.GenerateStudentAuditOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateStudentAuditOperationCompleted);
+            }
+            this.InvokeAsync("GenerateStudentAudit", new object[] {
+                        student_No,
+                        prog,
+                        filenameFromApp}, this.GenerateStudentAuditOperationCompleted, userState);
+        }
+        
+        private void OnGenerateStudentAuditOperationCompleted(object arg) {
+            if ((this.GenerateStudentAuditCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateStudentAuditCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentCharges", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentCharges_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateStudentCharges(string stdNo, string sem) {
+            this.Invoke("GenerateStudentCharges", new object[] {
+                        stdNo,
+                        sem});
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentChargesAsync(string stdNo, string sem) {
+            this.GenerateStudentChargesAsync(stdNo, sem, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentChargesAsync(string stdNo, string sem, object userState) {
+            if ((this.GenerateStudentChargesOperationCompleted == null)) {
+                this.GenerateStudentChargesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateStudentChargesOperationCompleted);
+            }
+            this.InvokeAsync("GenerateStudentCharges", new object[] {
+                        stdNo,
+                        sem}, this.GenerateStudentChargesOperationCompleted, userState);
+        }
+        
+        private void OnGenerateStudentChargesOperationCompleted(object arg) {
+            if ((this.GenerateStudentChargesCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateStudentChargesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentExamCards", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentExamCards_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateStudentExamCards(string student_No, string sem, string filenameFromApp) {
+            this.Invoke("GenerateStudentExamCards", new object[] {
+                        student_No,
+                        sem,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentExamCardsAsync(string student_No, string sem, string filenameFromApp) {
+            this.GenerateStudentExamCardsAsync(student_No, sem, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentExamCardsAsync(string student_No, string sem, string filenameFromApp, object userState) {
+            if ((this.GenerateStudentExamCardsOperationCompleted == null)) {
+                this.GenerateStudentExamCardsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateStudentExamCardsOperationCompleted);
+            }
+            this.InvokeAsync("GenerateStudentExamCards", new object[] {
+                        student_No,
+                        sem,
+                        filenameFromApp}, this.GenerateStudentExamCardsOperationCompleted, userState);
+        }
+        
+        private void OnGenerateStudentExamCardsOperationCompleted(object arg) {
+            if ((this.GenerateStudentExamCardsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateStudentExamCardsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentProformaInvoices" +
+            "", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentProformaInvoices_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateStudentProformaInvoices(string studentNo, string semester, string filenameFromApp) {
+            this.Invoke("GenerateStudentProformaInvoices", new object[] {
+                        studentNo,
+                        semester,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentProformaInvoicesAsync(string studentNo, string semester, string filenameFromApp) {
+            this.GenerateStudentProformaInvoicesAsync(studentNo, semester, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentProformaInvoicesAsync(string studentNo, string semester, string filenameFromApp, object userState) {
+            if ((this.GenerateStudentProformaInvoicesOperationCompleted == null)) {
+                this.GenerateStudentProformaInvoicesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateStudentProformaInvoicesOperationCompleted);
+            }
+            this.InvokeAsync("GenerateStudentProformaInvoices", new object[] {
+                        studentNo,
+                        semester,
+                        filenameFromApp}, this.GenerateStudentProformaInvoicesOperationCompleted, userState);
+        }
+        
+        private void OnGenerateStudentProformaInvoicesOperationCompleted(object arg) {
+            if ((this.GenerateStudentProformaInvoicesCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateStudentProformaInvoicesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentReportCardByProg" +
+            "", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentReportCardByProg_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateStudentReportCardByProg(string student_No, string progm, string filenameFromApp) {
+            this.Invoke("GenerateStudentReportCardByProg", new object[] {
+                        student_No,
+                        progm,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentReportCardByProgAsync(string student_No, string progm, string filenameFromApp) {
+            this.GenerateStudentReportCardByProgAsync(student_No, progm, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentReportCardByProgAsync(string student_No, string progm, string filenameFromApp, object userState) {
+            if ((this.GenerateStudentReportCardByProgOperationCompleted == null)) {
+                this.GenerateStudentReportCardByProgOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateStudentReportCardByProgOperationCompleted);
+            }
+            this.InvokeAsync("GenerateStudentReportCardByProg", new object[] {
+                        student_No,
+                        progm,
+                        filenameFromApp}, this.GenerateStudentReportCardByProgOperationCompleted, userState);
+        }
+        
+        private void OnGenerateStudentReportCardByProgOperationCompleted(object arg) {
+            if ((this.GenerateStudentReportCardByProgCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateStudentReportCardByProgCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentReportCard", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentReportCard_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateStudentReportCard(string student_No, string filenameFromApp) {
+            this.Invoke("GenerateStudentReportCard", new object[] {
+                        student_No,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentReportCardAsync(string student_No, string filenameFromApp) {
+            this.GenerateStudentReportCardAsync(student_No, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentReportCardAsync(string student_No, string filenameFromApp, object userState) {
+            if ((this.GenerateStudentReportCardOperationCompleted == null)) {
+                this.GenerateStudentReportCardOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateStudentReportCardOperationCompleted);
+            }
+            this.InvokeAsync("GenerateStudentReportCard", new object[] {
+                        student_No,
+                        filenameFromApp}, this.GenerateStudentReportCardOperationCompleted, userState);
+        }
+        
+        private void OnGenerateStudentReportCardOperationCompleted(object arg) {
+            if ((this.GenerateStudentReportCardCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateStudentReportCardCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentResultSlip", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentResultSlip_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateStudentResultSlip(string stdNo, string filenameFromApp) {
+            this.Invoke("GenerateStudentResultSlip", new object[] {
+                        stdNo,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentResultSlipAsync(string stdNo, string filenameFromApp) {
+            this.GenerateStudentResultSlipAsync(stdNo, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentResultSlipAsync(string stdNo, string filenameFromApp, object userState) {
+            if ((this.GenerateStudentResultSlipOperationCompleted == null)) {
+                this.GenerateStudentResultSlipOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateStudentResultSlipOperationCompleted);
+            }
+            this.InvokeAsync("GenerateStudentResultSlip", new object[] {
+                        stdNo,
+                        filenameFromApp}, this.GenerateStudentResultSlipOperationCompleted, userState);
+        }
+        
+        private void OnGenerateStudentResultSlipOperationCompleted(object arg) {
+            if ((this.GenerateStudentResultSlipCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateStudentResultSlipCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentResults", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentResults_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateStudentResults(string stdNo, string filenameFromApp) {
+            this.Invoke("GenerateStudentResults", new object[] {
+                        stdNo,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentResultsAsync(string stdNo, string filenameFromApp) {
+            this.GenerateStudentResultsAsync(stdNo, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentResultsAsync(string stdNo, string filenameFromApp, object userState) {
+            if ((this.GenerateStudentResultsOperationCompleted == null)) {
+                this.GenerateStudentResultsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateStudentResultsOperationCompleted);
+            }
+            this.InvokeAsync("GenerateStudentResults", new object[] {
+                        stdNo,
+                        filenameFromApp}, this.GenerateStudentResultsOperationCompleted, userState);
+        }
+        
+        private void OnGenerateStudentResultsOperationCompleted(object arg) {
+            if ((this.GenerateStudentResultsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateStudentResultsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentSemesterInvoice", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentSemesterInvoice_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateStudentSemesterInvoice(string student_No, string sem, string filenameFromApp) {
+            this.Invoke("GenerateStudentSemesterInvoice", new object[] {
+                        student_No,
+                        sem,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentSemesterInvoiceAsync(string student_No, string sem, string filenameFromApp) {
+            this.GenerateStudentSemesterInvoiceAsync(student_No, sem, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentSemesterInvoiceAsync(string student_No, string sem, string filenameFromApp, object userState) {
+            if ((this.GenerateStudentSemesterInvoiceOperationCompleted == null)) {
+                this.GenerateStudentSemesterInvoiceOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateStudentSemesterInvoiceOperationCompleted);
+            }
+            this.InvokeAsync("GenerateStudentSemesterInvoice", new object[] {
+                        student_No,
+                        sem,
+                        filenameFromApp}, this.GenerateStudentSemesterInvoiceOperationCompleted, userState);
+        }
+        
+        private void OnGenerateStudentSemesterInvoiceOperationCompleted(object arg) {
+            if ((this.GenerateStudentSemesterInvoiceCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateStudentSemesterInvoiceCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentStatement", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentStatement_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GenerateStudentStatement(string student_No, string filenameFromApp) {
+            this.Invoke("GenerateStudentStatement", new object[] {
+                        student_No,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentStatementAsync(string student_No, string filenameFromApp) {
+            this.GenerateStudentStatementAsync(student_No, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void GenerateStudentStatementAsync(string student_No, string filenameFromApp, object userState) {
+            if ((this.GenerateStudentStatementOperationCompleted == null)) {
+                this.GenerateStudentStatementOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateStudentStatementOperationCompleted);
+            }
+            this.InvokeAsync("GenerateStudentStatement", new object[] {
+                        student_No,
+                        filenameFromApp}, this.GenerateStudentStatementOperationCompleted, userState);
+        }
+        
+        private void OnGenerateStudentStatementOperationCompleted(object arg) {
+            if ((this.GenerateStudentStatementCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenerateStudentStatementCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GetExamCategory", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GetExamCategory_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string FuelRechargeCard(string driver, string vehicle, decimal amountConsumed) {
-            object[] results = this.Invoke("FuelRechargeCard", new object[] {
-                        driver,
-                        vehicle,
-                        amountConsumed});
+        public string GetExamCategory(string unit, string progCode) {
+            object[] results = this.Invoke("GetExamCategory", new object[] {
+                        unit,
+                        progCode});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void FuelRechargeCardAsync(string driver, string vehicle, decimal amountConsumed) {
-            this.FuelRechargeCardAsync(driver, vehicle, amountConsumed, null);
+        public void GetExamCategoryAsync(string unit, string progCode) {
+            this.GetExamCategoryAsync(unit, progCode, null);
         }
         
         /// <remarks/>
-        public void FuelRechargeCardAsync(string driver, string vehicle, decimal amountConsumed, object userState) {
-            if ((this.FuelRechargeCardOperationCompleted == null)) {
-                this.FuelRechargeCardOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFuelRechargeCardOperationCompleted);
+        public void GetExamCategoryAsync(string unit, string progCode, object userState) {
+            if ((this.GetExamCategoryOperationCompleted == null)) {
+                this.GetExamCategoryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetExamCategoryOperationCompleted);
             }
-            this.InvokeAsync("FuelRechargeCard", new object[] {
-                        driver,
-                        vehicle,
-                        amountConsumed}, this.FuelRechargeCardOperationCompleted, userState);
+            this.InvokeAsync("GetExamCategory", new object[] {
+                        unit,
+                        progCode}, this.GetExamCategoryOperationCompleted, userState);
         }
         
-        private void OnFuelRechargeCardOperationCompleted(object arg) {
-            if ((this.FuelRechargeCardCompleted != null)) {
+        private void OnGetExamCategoryOperationCompleted(object arg) {
+            if ((this.GetExamCategoryCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.FuelRechargeCardCompleted(this, new FuelRechargeCardCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GetExamCategoryCompleted(this, new GetExamCategoryCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:FuelRequisition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="FuelRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GetProfilePictureStudent", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GetProfilePictureStudent_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string FuelRequisition(int requisitionType, string vehicle, string vendor, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime dateTaken, int fuelType, decimal fuelQuantity, decimal price, string department, string respCenter, string station, decimal odometerRead, string employeeNo, string description, string driver) {
-            object[] results = this.Invoke("FuelRequisition", new object[] {
-                        requisitionType,
-                        vehicle,
-                        vendor,
-                        dateTaken,
-                        fuelType,
-                        fuelQuantity,
-                        price,
-                        department,
-                        respCenter,
-                        station,
-                        odometerRead,
-                        employeeNo,
+        public string GetProfilePictureStudent(string studentNo) {
+            object[] results = this.Invoke("GetProfilePictureStudent", new object[] {
+                        studentNo});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetProfilePictureStudentAsync(string studentNo) {
+            this.GetProfilePictureStudentAsync(studentNo, null);
+        }
+        
+        /// <remarks/>
+        public void GetProfilePictureStudentAsync(string studentNo, object userState) {
+            if ((this.GetProfilePictureStudentOperationCompleted == null)) {
+                this.GetProfilePictureStudentOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetProfilePictureStudentOperationCompleted);
+            }
+            this.InvokeAsync("GetProfilePictureStudent", new object[] {
+                        studentNo}, this.GetProfilePictureStudentOperationCompleted, userState);
+        }
+        
+        private void OnGetProfilePictureStudentOperationCompleted(object arg) {
+            if ((this.GetProfilePictureStudentCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetProfilePictureStudentCompleted(this, new GetProfilePictureStudentCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:InserClassAtteHeader", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="InserClassAtteHeader_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public string InserClassAtteHeader(string progra, string unit, string semester, string wkCode, string lecturer, string campus, string dayCode, string section) {
+            object[] results = this.Invoke("InserClassAtteHeader", new object[] {
+                        progra,
+                        unit,
+                        semester,
+                        wkCode,
+                        lecturer,
+                        campus,
+                        dayCode,
+                        section});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void InserClassAtteHeaderAsync(string progra, string unit, string semester, string wkCode, string lecturer, string campus, string dayCode, string section) {
+            this.InserClassAtteHeaderAsync(progra, unit, semester, wkCode, lecturer, campus, dayCode, section, null);
+        }
+        
+        /// <remarks/>
+        public void InserClassAtteHeaderAsync(string progra, string unit, string semester, string wkCode, string lecturer, string campus, string dayCode, string section, object userState) {
+            if ((this.InserClassAtteHeaderOperationCompleted == null)) {
+                this.InserClassAtteHeaderOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInserClassAtteHeaderOperationCompleted);
+            }
+            this.InvokeAsync("InserClassAtteHeader", new object[] {
+                        progra,
+                        unit,
+                        semester,
+                        wkCode,
+                        lecturer,
+                        campus,
+                        dayCode,
+                        section}, this.InserClassAtteHeaderOperationCompleted, userState);
+        }
+        
+        private void OnInserClassAtteHeaderOperationCompleted(object arg) {
+            if ((this.InserClassAtteHeaderCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.InserClassAtteHeaderCompleted(this, new InserClassAtteHeaderCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:InsertClassListAttendance", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="InsertClassListAttendance_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void InsertClassListAttendance(string docNo, string studentNo, int attendance, string prog, string unit, string semester, string wkCode, string lecturer, string campus) {
+            this.Invoke("InsertClassListAttendance", new object[] {
+                        docNo,
+                        studentNo,
+                        attendance,
+                        prog,
+                        unit,
+                        semester,
+                        wkCode,
+                        lecturer,
+                        campus});
+        }
+        
+        /// <remarks/>
+        public void InsertClassListAttendanceAsync(string docNo, string studentNo, int attendance, string prog, string unit, string semester, string wkCode, string lecturer, string campus) {
+            this.InsertClassListAttendanceAsync(docNo, studentNo, attendance, prog, unit, semester, wkCode, lecturer, campus, null);
+        }
+        
+        /// <remarks/>
+        public void InsertClassListAttendanceAsync(string docNo, string studentNo, int attendance, string prog, string unit, string semester, string wkCode, string lecturer, string campus, object userState) {
+            if ((this.InsertClassListAttendanceOperationCompleted == null)) {
+                this.InsertClassListAttendanceOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertClassListAttendanceOperationCompleted);
+            }
+            this.InvokeAsync("InsertClassListAttendance", new object[] {
+                        docNo,
+                        studentNo,
+                        attendance,
+                        prog,
+                        unit,
+                        semester,
+                        wkCode,
+                        lecturer,
+                        campus}, this.InsertClassListAttendanceOperationCompleted, userState);
+        }
+        
+        private void OnInsertClassListAttendanceOperationCompleted(object arg) {
+            if ((this.InsertClassListAttendanceCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.InsertClassListAttendanceCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:InsertStudentPaymentPlan", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="InsertStudentPaymentPlan_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void InsertStudentPaymentPlan(string studentNo, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime byDate, string semester, string istallmntNo, decimal perc, decimal amountDue) {
+            this.Invoke("InsertStudentPaymentPlan", new object[] {
+                        studentNo,
+                        byDate,
+                        semester,
+                        istallmntNo,
+                        perc,
+                        amountDue});
+        }
+        
+        /// <remarks/>
+        public void InsertStudentPaymentPlanAsync(string studentNo, System.DateTime byDate, string semester, string istallmntNo, decimal perc, decimal amountDue) {
+            this.InsertStudentPaymentPlanAsync(studentNo, byDate, semester, istallmntNo, perc, amountDue, null);
+        }
+        
+        /// <remarks/>
+        public void InsertStudentPaymentPlanAsync(string studentNo, System.DateTime byDate, string semester, string istallmntNo, decimal perc, decimal amountDue, object userState) {
+            if ((this.InsertStudentPaymentPlanOperationCompleted == null)) {
+                this.InsertStudentPaymentPlanOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertStudentPaymentPlanOperationCompleted);
+            }
+            this.InvokeAsync("InsertStudentPaymentPlan", new object[] {
+                        studentNo,
+                        byDate,
+                        semester,
+                        istallmntNo,
+                        perc,
+                        amountDue}, this.InsertStudentPaymentPlanOperationCompleted, userState);
+        }
+        
+        private void OnInsertStudentPaymentPlanOperationCompleted(object arg) {
+            if ((this.InsertStudentPaymentPlanCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.InsertStudentPaymentPlanCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:OnlineClearance", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="OnlineClearance_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void OnlineClearance(string studentNo, string reqNo, string studentProg) {
+            this.Invoke("OnlineClearance", new object[] {
+                        studentNo,
+                        reqNo,
+                        studentProg});
+        }
+        
+        /// <remarks/>
+        public void OnlineClearanceAsync(string studentNo, string reqNo, string studentProg) {
+            this.OnlineClearanceAsync(studentNo, reqNo, studentProg, null);
+        }
+        
+        /// <remarks/>
+        public void OnlineClearanceAsync(string studentNo, string reqNo, string studentProg, object userState) {
+            if ((this.OnlineClearanceOperationCompleted == null)) {
+                this.OnlineClearanceOperationCompleted = new System.Threading.SendOrPostCallback(this.OnOnlineClearanceOperationCompleted);
+            }
+            this.InvokeAsync("OnlineClearance", new object[] {
+                        studentNo,
+                        reqNo,
+                        studentProg}, this.OnlineClearanceOperationCompleted, userState);
+        }
+        
+        private void OnOnlineClearanceOperationCompleted(object arg) {
+            if ((this.OnlineClearanceCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.OnlineClearanceCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:PostAttendanceList", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="PostAttendanceList_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PostAttendanceList(string docNo, string lec) {
+            this.Invoke("PostAttendanceList", new object[] {
+                        docNo,
+                        lec});
+        }
+        
+        /// <remarks/>
+        public void PostAttendanceListAsync(string docNo, string lec) {
+            this.PostAttendanceListAsync(docNo, lec, null);
+        }
+        
+        /// <remarks/>
+        public void PostAttendanceListAsync(string docNo, string lec, object userState) {
+            if ((this.PostAttendanceListOperationCompleted == null)) {
+                this.PostAttendanceListOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPostAttendanceListOperationCompleted);
+            }
+            this.InvokeAsync("PostAttendanceList", new object[] {
+                        docNo,
+                        lec}, this.PostAttendanceListOperationCompleted, userState);
+        }
+        
+        private void OnPostAttendanceListOperationCompleted(object arg) {
+            if ((this.PostAttendanceListCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PostAttendanceListCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:PostStudentCharge", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="PostStudentCharge_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PostStudentCharge(string documentNo, string stdNo, string description, string balAcc, decimal amount, string dim1, string dim2, string dim3, string dim4, string dim5) {
+            this.Invoke("PostStudentCharge", new object[] {
+                        documentNo,
+                        stdNo,
                         description,
-                        driver});
-            return ((string)(results[0]));
+                        balAcc,
+                        amount,
+                        dim1,
+                        dim2,
+                        dim3,
+                        dim4,
+                        dim5});
         }
         
         /// <remarks/>
-        public void FuelRequisitionAsync(int requisitionType, string vehicle, string vendor, System.DateTime dateTaken, int fuelType, decimal fuelQuantity, decimal price, string department, string respCenter, string station, decimal odometerRead, string employeeNo, string description, string driver) {
-            this.FuelRequisitionAsync(requisitionType, vehicle, vendor, dateTaken, fuelType, fuelQuantity, price, department, respCenter, station, odometerRead, employeeNo, description, driver, null);
+        public void PostStudentChargeAsync(string documentNo, string stdNo, string description, string balAcc, decimal amount, string dim1, string dim2, string dim3, string dim4, string dim5) {
+            this.PostStudentChargeAsync(documentNo, stdNo, description, balAcc, amount, dim1, dim2, dim3, dim4, dim5, null);
         }
         
         /// <remarks/>
-        public void FuelRequisitionAsync(int requisitionType, string vehicle, string vendor, System.DateTime dateTaken, int fuelType, decimal fuelQuantity, decimal price, string department, string respCenter, string station, decimal odometerRead, string employeeNo, string description, string driver, object userState) {
-            if ((this.FuelRequisitionOperationCompleted == null)) {
-                this.FuelRequisitionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFuelRequisitionOperationCompleted);
+        public void PostStudentChargeAsync(string documentNo, string stdNo, string description, string balAcc, decimal amount, string dim1, string dim2, string dim3, string dim4, string dim5, object userState) {
+            if ((this.PostStudentChargeOperationCompleted == null)) {
+                this.PostStudentChargeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPostStudentChargeOperationCompleted);
             }
-            this.InvokeAsync("FuelRequisition", new object[] {
-                        requisitionType,
-                        vehicle,
-                        vendor,
-                        dateTaken,
-                        fuelType,
-                        fuelQuantity,
-                        price,
-                        department,
-                        respCenter,
-                        station,
-                        odometerRead,
-                        employeeNo,
+            this.InvokeAsync("PostStudentCharge", new object[] {
+                        documentNo,
+                        stdNo,
                         description,
-                        driver}, this.FuelRequisitionOperationCompleted, userState);
+                        balAcc,
+                        amount,
+                        dim1,
+                        dim2,
+                        dim3,
+                        dim4,
+                        dim5}, this.PostStudentChargeOperationCompleted, userState);
         }
         
-        private void OnFuelRequisitionOperationCompleted(object arg) {
-            if ((this.FuelRequisitionCompleted != null)) {
+        private void OnPostStudentChargeOperationCompleted(object arg) {
+            if ((this.PostStudentChargeCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.FuelRequisitionCompleted(this, new FuelRequisitionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.PostStudentChargeCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GatePassApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GatePassApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GatePassApproval(string gateNo) {
-            this.Invoke("GatePassApproval", new object[] {
-                        gateNo});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:PostStudentCharges", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="PostStudentCharges_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PostStudentCharges(string studentNo, string chargeCode) {
+            this.Invoke("PostStudentCharges", new object[] {
+                        studentNo,
+                        chargeCode});
         }
         
         /// <remarks/>
-        public void GatePassApprovalAsync(string gateNo) {
-            this.GatePassApprovalAsync(gateNo, null);
+        public void PostStudentChargesAsync(string studentNo, string chargeCode) {
+            this.PostStudentChargesAsync(studentNo, chargeCode, null);
         }
         
         /// <remarks/>
-        public void GatePassApprovalAsync(string gateNo, object userState) {
-            if ((this.GatePassApprovalOperationCompleted == null)) {
-                this.GatePassApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGatePassApprovalOperationCompleted);
+        public void PostStudentChargesAsync(string studentNo, string chargeCode, object userState) {
+            if ((this.PostStudentChargesOperationCompleted == null)) {
+                this.PostStudentChargesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPostStudentChargesOperationCompleted);
             }
-            this.InvokeAsync("GatePassApproval", new object[] {
-                        gateNo}, this.GatePassApprovalOperationCompleted, userState);
+            this.InvokeAsync("PostStudentCharges", new object[] {
+                        studentNo,
+                        chargeCode}, this.PostStudentChargesOperationCompleted, userState);
         }
         
-        private void OnGatePassApprovalOperationCompleted(object arg) {
-            if ((this.GatePassApprovalCompleted != null)) {
+        private void OnPostStudentChargesOperationCompleted(object arg) {
+            if ((this.PostStudentChargesCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GatePassApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.PostStudentChargesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GatePassCancelApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GatePassCancelApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GatePassCancelApproval(string gateNo) {
-            this.Invoke("GatePassCancelApproval", new object[] {
-                        gateNo});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:PostTransferCharge", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="PostTransferCharge_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PostTransferCharge(string studentNo, string semester, decimal chargeAmt, string chargeCode) {
+            this.Invoke("PostTransferCharge", new object[] {
+                        studentNo,
+                        semester,
+                        chargeAmt,
+                        chargeCode});
         }
         
         /// <remarks/>
-        public void GatePassCancelApprovalAsync(string gateNo) {
-            this.GatePassCancelApprovalAsync(gateNo, null);
+        public void PostTransferChargeAsync(string studentNo, string semester, decimal chargeAmt, string chargeCode) {
+            this.PostTransferChargeAsync(studentNo, semester, chargeAmt, chargeCode, null);
         }
         
         /// <remarks/>
-        public void GatePassCancelApprovalAsync(string gateNo, object userState) {
-            if ((this.GatePassCancelApprovalOperationCompleted == null)) {
-                this.GatePassCancelApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGatePassCancelApprovalOperationCompleted);
+        public void PostTransferChargeAsync(string studentNo, string semester, decimal chargeAmt, string chargeCode, object userState) {
+            if ((this.PostTransferChargeOperationCompleted == null)) {
+                this.PostTransferChargeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPostTransferChargeOperationCompleted);
             }
-            this.InvokeAsync("GatePassCancelApproval", new object[] {
-                        gateNo}, this.GatePassCancelApprovalOperationCompleted, userState);
+            this.InvokeAsync("PostTransferCharge", new object[] {
+                        studentNo,
+                        semester,
+                        chargeAmt,
+                        chargeCode}, this.PostTransferChargeOperationCompleted, userState);
         }
         
-        private void OnGatePassCancelApprovalOperationCompleted(object arg) {
-            if ((this.GatePassCancelApprovalCompleted != null)) {
+        private void OnPostTransferChargeOperationCompleted(object arg) {
+            if ((this.PostTransferChargeCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GatePassCancelApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.PostTransferChargeCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GenerateEarningAndDeductionRep" +
-            "ort", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GenerateEarningAndDeductionReport_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GenerateEarningAndDeductionReport(string filenameFromApp) {
-            this.Invoke("GenerateEarningAndDeductionReport", new object[] {
-                        filenameFromApp});
-        }
-        
-        /// <remarks/>
-        public void GenerateEarningAndDeductionReportAsync(string filenameFromApp) {
-            this.GenerateEarningAndDeductionReportAsync(filenameFromApp, null);
-        }
-        
-        /// <remarks/>
-        public void GenerateEarningAndDeductionReportAsync(string filenameFromApp, object userState) {
-            if ((this.GenerateEarningAndDeductionReportOperationCompleted == null)) {
-                this.GenerateEarningAndDeductionReportOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateEarningAndDeductionReportOperationCompleted);
-            }
-            this.InvokeAsync("GenerateEarningAndDeductionReport", new object[] {
-                        filenameFromApp}, this.GenerateEarningAndDeductionReportOperationCompleted, userState);
-        }
-        
-        private void OnGenerateEarningAndDeductionReportOperationCompleted(object arg) {
-            if ((this.GenerateEarningAndDeductionReportCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GenerateEarningAndDeductionReportCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GenerateGatePass", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GenerateGatePass_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GenerateGatePass(string gateNo, string filenameFromApp) {
-            this.Invoke("GenerateGatePass", new object[] {
-                        gateNo,
-                        filenameFromApp});
-        }
-        
-        /// <remarks/>
-        public void GenerateGatePassAsync(string gateNo, string filenameFromApp) {
-            this.GenerateGatePassAsync(gateNo, filenameFromApp, null);
-        }
-        
-        /// <remarks/>
-        public void GenerateGatePassAsync(string gateNo, string filenameFromApp, object userState) {
-            if ((this.GenerateGatePassOperationCompleted == null)) {
-                this.GenerateGatePassOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateGatePassOperationCompleted);
-            }
-            this.InvokeAsync("GenerateGatePass", new object[] {
-                        gateNo,
-                        filenameFromApp}, this.GenerateGatePassOperationCompleted, userState);
-        }
-        
-        private void OnGenerateGatePassOperationCompleted(object arg) {
-            if ((this.GenerateGatePassCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GenerateGatePassCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GeneratePNineReport", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GeneratePNineReport_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GeneratePNineReport(string employeeNo, int period, string filenameFromApp) {
-            this.Invoke("GeneratePNineReport", new object[] {
-                        employeeNo,
-                        period,
-                        filenameFromApp});
-        }
-        
-        /// <remarks/>
-        public void GeneratePNineReportAsync(string employeeNo, int period, string filenameFromApp) {
-            this.GeneratePNineReportAsync(employeeNo, period, filenameFromApp, null);
-        }
-        
-        /// <remarks/>
-        public void GeneratePNineReportAsync(string employeeNo, int period, string filenameFromApp, object userState) {
-            if ((this.GeneratePNineReportOperationCompleted == null)) {
-                this.GeneratePNineReportOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGeneratePNineReportOperationCompleted);
-            }
-            this.InvokeAsync("GeneratePNineReport", new object[] {
-                        employeeNo,
-                        period,
-                        filenameFromApp}, this.GeneratePNineReportOperationCompleted, userState);
-        }
-        
-        private void OnGeneratePNineReportOperationCompleted(object arg) {
-            if ((this.GeneratePNineReportCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GeneratePNineReportCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GeneratePayRollPaymtntAndDeduc" +
-            "tionReport", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GeneratePayRollPaymtntAndDeductionReport_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GeneratePayRollPaymtntAndDeductionReport(string filenameFromApp) {
-            this.Invoke("GeneratePayRollPaymtntAndDeductionReport", new object[] {
-                        filenameFromApp});
-        }
-        
-        /// <remarks/>
-        public void GeneratePayRollPaymtntAndDeductionReportAsync(string filenameFromApp) {
-            this.GeneratePayRollPaymtntAndDeductionReportAsync(filenameFromApp, null);
-        }
-        
-        /// <remarks/>
-        public void GeneratePayRollPaymtntAndDeductionReportAsync(string filenameFromApp, object userState) {
-            if ((this.GeneratePayRollPaymtntAndDeductionReportOperationCompleted == null)) {
-                this.GeneratePayRollPaymtntAndDeductionReportOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGeneratePayRollPaymtntAndDeductionReportOperationCompleted);
-            }
-            this.InvokeAsync("GeneratePayRollPaymtntAndDeductionReport", new object[] {
-                        filenameFromApp}, this.GeneratePayRollPaymtntAndDeductionReportOperationCompleted, userState);
-        }
-        
-        private void OnGeneratePayRollPaymtntAndDeductionReportOperationCompleted(object arg) {
-            if ((this.GeneratePayRollPaymtntAndDeductionReportCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GeneratePayRollPaymtntAndDeductionReportCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GeneratePayRollSummeryReport", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GeneratePayRollSummeryReport_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GeneratePayRollSummeryReport(string filenameFromApp) {
-            this.Invoke("GeneratePayRollSummeryReport", new object[] {
-                        filenameFromApp});
-        }
-        
-        /// <remarks/>
-        public void GeneratePayRollSummeryReportAsync(string filenameFromApp) {
-            this.GeneratePayRollSummeryReportAsync(filenameFromApp, null);
-        }
-        
-        /// <remarks/>
-        public void GeneratePayRollSummeryReportAsync(string filenameFromApp, object userState) {
-            if ((this.GeneratePayRollSummeryReportOperationCompleted == null)) {
-                this.GeneratePayRollSummeryReportOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGeneratePayRollSummeryReportOperationCompleted);
-            }
-            this.InvokeAsync("GeneratePayRollSummeryReport", new object[] {
-                        filenameFromApp}, this.GeneratePayRollSummeryReportOperationCompleted, userState);
-        }
-        
-        private void OnGeneratePayRollSummeryReportOperationCompleted(object arg) {
-            if ((this.GeneratePayRollSummeryReportCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GeneratePayRollSummeryReportCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GeneratePaySlipReport1", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GeneratePaySlipReport1_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GeneratePaySlipReport1(string employeeNo, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime period, string filenameFromApp) {
-            this.Invoke("GeneratePaySlipReport1", new object[] {
-                        employeeNo,
-                        period,
-                        filenameFromApp});
-        }
-        
-        /// <remarks/>
-        public void GeneratePaySlipReport1Async(string employeeNo, System.DateTime period, string filenameFromApp) {
-            this.GeneratePaySlipReport1Async(employeeNo, period, filenameFromApp, null);
-        }
-        
-        /// <remarks/>
-        public void GeneratePaySlipReport1Async(string employeeNo, System.DateTime period, string filenameFromApp, object userState) {
-            if ((this.GeneratePaySlipReport1OperationCompleted == null)) {
-                this.GeneratePaySlipReport1OperationCompleted = new System.Threading.SendOrPostCallback(this.OnGeneratePaySlipReport1OperationCompleted);
-            }
-            this.InvokeAsync("GeneratePaySlipReport1", new object[] {
-                        employeeNo,
-                        period,
-                        filenameFromApp}, this.GeneratePaySlipReport1OperationCompleted, userState);
-        }
-        
-        private void OnGeneratePaySlipReport1OperationCompleted(object arg) {
-            if ((this.GeneratePaySlipReport1Completed != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GeneratePaySlipReport1Completed(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GeneratePaySlipReport", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GeneratePaySlipReport_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GeneratePaySlipReport(string employeeNo, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime period, string filenameFromApp) {
-            this.Invoke("GeneratePaySlipReport", new object[] {
-                        employeeNo,
-                        period,
-                        filenameFromApp});
-        }
-        
-        /// <remarks/>
-        public void GeneratePaySlipReportAsync(string employeeNo, System.DateTime period, string filenameFromApp) {
-            this.GeneratePaySlipReportAsync(employeeNo, period, filenameFromApp, null);
-        }
-        
-        /// <remarks/>
-        public void GeneratePaySlipReportAsync(string employeeNo, System.DateTime period, string filenameFromApp, object userState) {
-            if ((this.GeneratePaySlipReportOperationCompleted == null)) {
-                this.GeneratePaySlipReportOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGeneratePaySlipReportOperationCompleted);
-            }
-            this.InvokeAsync("GeneratePaySlipReport", new object[] {
-                        employeeNo,
-                        period,
-                        filenameFromApp}, this.GeneratePaySlipReportOperationCompleted, userState);
-        }
-        
-        private void OnGeneratePaySlipReportOperationCompleted(object arg) {
-            if ((this.GeneratePaySlipReportCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GeneratePaySlipReportCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GenerateTNAForm", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GenerateTNAForm_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GenerateTNAForm(string trainNo, string filenameFromApp) {
-            this.Invoke("GenerateTNAForm", new object[] {
-                        trainNo,
-                        filenameFromApp});
-        }
-        
-        /// <remarks/>
-        public void GenerateTNAFormAsync(string trainNo, string filenameFromApp) {
-            this.GenerateTNAFormAsync(trainNo, filenameFromApp, null);
-        }
-        
-        /// <remarks/>
-        public void GenerateTNAFormAsync(string trainNo, string filenameFromApp, object userState) {
-            if ((this.GenerateTNAFormOperationCompleted == null)) {
-                this.GenerateTNAFormOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateTNAFormOperationCompleted);
-            }
-            this.InvokeAsync("GenerateTNAForm", new object[] {
-                        trainNo,
-                        filenameFromApp}, this.GenerateTNAFormOperationCompleted, userState);
-        }
-        
-        private void OnGenerateTNAFormOperationCompleted(object arg) {
-            if ((this.GenerateTNAFormCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GenerateTNAFormCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GetAllowedCollegeToConfirm", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GetAllowedCollegeToConfirm_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:Post_RegisterStudentUnits", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="Post_RegisterStudentUnits_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string GetAllowedCollegeToConfirm(string staff) {
-            object[] results = this.Invoke("GetAllowedCollegeToConfirm", new object[] {
-                        staff});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetAllowedCollegeToConfirmAsync(string staff) {
-            this.GetAllowedCollegeToConfirmAsync(staff, null);
-        }
-        
-        /// <remarks/>
-        public void GetAllowedCollegeToConfirmAsync(string staff, object userState) {
-            if ((this.GetAllowedCollegeToConfirmOperationCompleted == null)) {
-                this.GetAllowedCollegeToConfirmOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetAllowedCollegeToConfirmOperationCompleted);
-            }
-            this.InvokeAsync("GetAllowedCollegeToConfirm", new object[] {
-                        staff}, this.GetAllowedCollegeToConfirmOperationCompleted, userState);
-        }
-        
-        private void OnGetAllowedCollegeToConfirmOperationCompleted(object arg) {
-            if ((this.GetAllowedCollegeToConfirmCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetAllowedCollegeToConfirmCompleted(this, new GetAllowedCollegeToConfirmCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GetDocumentAttachment", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GetDocumentAttachment_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string GetDocumentAttachment(int tableId, string no, int recID) {
-            object[] results = this.Invoke("GetDocumentAttachment", new object[] {
-                        tableId,
-                        no,
-                        recID});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetDocumentAttachmentAsync(int tableId, string no, int recID) {
-            this.GetDocumentAttachmentAsync(tableId, no, recID, null);
-        }
-        
-        /// <remarks/>
-        public void GetDocumentAttachmentAsync(int tableId, string no, int recID, object userState) {
-            if ((this.GetDocumentAttachmentOperationCompleted == null)) {
-                this.GetDocumentAttachmentOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetDocumentAttachmentOperationCompleted);
-            }
-            this.InvokeAsync("GetDocumentAttachment", new object[] {
-                        tableId,
-                        no,
-                        recID}, this.GetDocumentAttachmentOperationCompleted, userState);
-        }
-        
-        private void OnGetDocumentAttachmentOperationCompleted(object arg) {
-            if ((this.GetDocumentAttachmentCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetDocumentAttachmentCompleted(this, new GetDocumentAttachmentCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GetEndReturnDate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GetEndReturnDate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value", DataType="date")]
-        public System.DateTime[] GetEndReturnDate([System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime sDate, decimal lDays, string leave_Type) {
-            object[] results = this.Invoke("GetEndReturnDate", new object[] {
-                        sDate,
-                        lDays,
-                        leave_Type});
-            return ((System.DateTime[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetEndReturnDateAsync(System.DateTime sDate, decimal lDays, string leave_Type) {
-            this.GetEndReturnDateAsync(sDate, lDays, leave_Type, null);
-        }
-        
-        /// <remarks/>
-        public void GetEndReturnDateAsync(System.DateTime sDate, decimal lDays, string leave_Type, object userState) {
-            if ((this.GetEndReturnDateOperationCompleted == null)) {
-                this.GetEndReturnDateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetEndReturnDateOperationCompleted);
-            }
-            this.InvokeAsync("GetEndReturnDate", new object[] {
-                        sDate,
-                        lDays,
-                        leave_Type}, this.GetEndReturnDateOperationCompleted, userState);
-        }
-        
-        private void OnGetEndReturnDateOperationCompleted(object arg) {
-            if ((this.GetEndReturnDateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetEndReturnDateCompleted(this, new GetEndReturnDateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GetLeaveBalances2", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GetLeaveBalances2_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public decimal[] GetLeaveBalances2(string staffNoFilter, string leavevTypeFilter) {
-            object[] results = this.Invoke("GetLeaveBalances2", new object[] {
-                        staffNoFilter,
-                        leavevTypeFilter});
-            return ((decimal[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetLeaveBalances2Async(string staffNoFilter, string leavevTypeFilter) {
-            this.GetLeaveBalances2Async(staffNoFilter, leavevTypeFilter, null);
-        }
-        
-        /// <remarks/>
-        public void GetLeaveBalances2Async(string staffNoFilter, string leavevTypeFilter, object userState) {
-            if ((this.GetLeaveBalances2OperationCompleted == null)) {
-                this.GetLeaveBalances2OperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetLeaveBalances2OperationCompleted);
-            }
-            this.InvokeAsync("GetLeaveBalances2", new object[] {
-                        staffNoFilter,
-                        leavevTypeFilter}, this.GetLeaveBalances2OperationCompleted, userState);
-        }
-        
-        private void OnGetLeaveBalances2OperationCompleted(object arg) {
-            if ((this.GetLeaveBalances2Completed != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetLeaveBalances2Completed(this, new GetLeaveBalances2CompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GetLeaveBalances", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GetLeaveBalances_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public decimal[] GetLeaveBalances(string staffNoFilter, string leavevTypeFilter) {
-            object[] results = this.Invoke("GetLeaveBalances", new object[] {
-                        staffNoFilter,
-                        leavevTypeFilter});
-            return ((decimal[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetLeaveBalancesAsync(string staffNoFilter, string leavevTypeFilter) {
-            this.GetLeaveBalancesAsync(staffNoFilter, leavevTypeFilter, null);
-        }
-        
-        /// <remarks/>
-        public void GetLeaveBalancesAsync(string staffNoFilter, string leavevTypeFilter, object userState) {
-            if ((this.GetLeaveBalancesOperationCompleted == null)) {
-                this.GetLeaveBalancesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetLeaveBalancesOperationCompleted);
-            }
-            this.InvokeAsync("GetLeaveBalances", new object[] {
-                        staffNoFilter,
-                        leavevTypeFilter}, this.GetLeaveBalancesOperationCompleted, userState);
-        }
-        
-        private void OnGetLeaveBalancesOperationCompleted(object arg) {
-            if ((this.GetLeaveBalancesCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetLeaveBalancesCompleted(this, new GetLeaveBalancesCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GetProfilePicture", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GetProfilePicture_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string GetProfilePicture(string staffNo) {
-            object[] results = this.Invoke("GetProfilePicture", new object[] {
-                        staffNo});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetProfilePictureAsync(string staffNo) {
-            this.GetProfilePictureAsync(staffNo, null);
-        }
-        
-        /// <remarks/>
-        public void GetProfilePictureAsync(string staffNo, object userState) {
-            if ((this.GetProfilePictureOperationCompleted == null)) {
-                this.GetProfilePictureOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetProfilePictureOperationCompleted);
-            }
-            this.InvokeAsync("GetProfilePicture", new object[] {
-                        staffNo}, this.GetProfilePictureOperationCompleted, userState);
-        }
-        
-        private void OnGetProfilePictureOperationCompleted(object arg) {
-            if ((this.GetProfilePictureCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetProfilePictureCompleted(this, new GetProfilePictureCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:GetRecruitmentCenter", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="GetRecruitmentCenter_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string GetRecruitmentCenter(string staff) {
-            object[] results = this.Invoke("GetRecruitmentCenter", new object[] {
-                        staff});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetRecruitmentCenterAsync(string staff) {
-            this.GetRecruitmentCenterAsync(staff, null);
-        }
-        
-        /// <remarks/>
-        public void GetRecruitmentCenterAsync(string staff, object userState) {
-            if ((this.GetRecruitmentCenterOperationCompleted == null)) {
-                this.GetRecruitmentCenterOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetRecruitmentCenterOperationCompleted);
-            }
-            this.InvokeAsync("GetRecruitmentCenter", new object[] {
-                        staff}, this.GetRecruitmentCenterOperationCompleted, userState);
-        }
-        
-        private void OnGetRecruitmentCenterOperationCompleted(object arg) {
-            if ((this.GetRecruitmentCenterCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetRecruitmentCenterCompleted(this, new GetRecruitmentCenterCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRAppraisalApprovalRequest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRAppraisalApprovalRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void HRAppraisalApprovalRequest(string reqNo) {
-            this.Invoke("HRAppraisalApprovalRequest", new object[] {
-                        reqNo});
-        }
-        
-        /// <remarks/>
-        public void HRAppraisalApprovalRequestAsync(string reqNo) {
-            this.HRAppraisalApprovalRequestAsync(reqNo, null);
-        }
-        
-        /// <remarks/>
-        public void HRAppraisalApprovalRequestAsync(string reqNo, object userState) {
-            if ((this.HRAppraisalApprovalRequestOperationCompleted == null)) {
-                this.HRAppraisalApprovalRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRAppraisalApprovalRequestOperationCompleted);
-            }
-            this.InvokeAsync("HRAppraisalApprovalRequest", new object[] {
-                        reqNo}, this.HRAppraisalApprovalRequestOperationCompleted, userState);
-        }
-        
-        private void OnHRAppraisalApprovalRequestOperationCompleted(object arg) {
-            if ((this.HRAppraisalApprovalRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRAppraisalApprovalRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRCanceImprestRequisition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRCanceImprestRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void HRCanceImprestRequisition(string appNo) {
-            this.Invoke("HRCanceImprestRequisition", new object[] {
-                        appNo});
-        }
-        
-        /// <remarks/>
-        public void HRCanceImprestRequisitionAsync(string appNo) {
-            this.HRCanceImprestRequisitionAsync(appNo, null);
-        }
-        
-        /// <remarks/>
-        public void HRCanceImprestRequisitionAsync(string appNo, object userState) {
-            if ((this.HRCanceImprestRequisitionOperationCompleted == null)) {
-                this.HRCanceImprestRequisitionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRCanceImprestRequisitionOperationCompleted);
-            }
-            this.InvokeAsync("HRCanceImprestRequisition", new object[] {
-                        appNo}, this.HRCanceImprestRequisitionOperationCompleted, userState);
-        }
-        
-        private void OnHRCanceImprestRequisitionOperationCompleted(object arg) {
-            if ((this.HRCanceImprestRequisitionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRCanceImprestRequisitionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRCanceStaffClaimRequisition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRCanceStaffClaimRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void HRCanceStaffClaimRequisition(string appNo) {
-            this.Invoke("HRCanceStaffClaimRequisition", new object[] {
-                        appNo});
-        }
-        
-        /// <remarks/>
-        public void HRCanceStaffClaimRequisitionAsync(string appNo) {
-            this.HRCanceStaffClaimRequisitionAsync(appNo, null);
-        }
-        
-        /// <remarks/>
-        public void HRCanceStaffClaimRequisitionAsync(string appNo, object userState) {
-            if ((this.HRCanceStaffClaimRequisitionOperationCompleted == null)) {
-                this.HRCanceStaffClaimRequisitionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRCanceStaffClaimRequisitionOperationCompleted);
-            }
-            this.InvokeAsync("HRCanceStaffClaimRequisition", new object[] {
-                        appNo}, this.HRCanceStaffClaimRequisitionOperationCompleted, userState);
-        }
-        
-        private void OnHRCanceStaffClaimRequisitionOperationCompleted(object arg) {
-            if ((this.HRCanceStaffClaimRequisitionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRCanceStaffClaimRequisitionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRCancelFuelRechrageCardApplic" +
-            "ation", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRCancelFuelRechrageCardApplication_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void HRCancelFuelRechrageCardApplication(string appNo) {
-            this.Invoke("HRCancelFuelRechrageCardApplication", new object[] {
-                        appNo});
-        }
-        
-        /// <remarks/>
-        public void HRCancelFuelRechrageCardApplicationAsync(string appNo) {
-            this.HRCancelFuelRechrageCardApplicationAsync(appNo, null);
-        }
-        
-        /// <remarks/>
-        public void HRCancelFuelRechrageCardApplicationAsync(string appNo, object userState) {
-            if ((this.HRCancelFuelRechrageCardApplicationOperationCompleted == null)) {
-                this.HRCancelFuelRechrageCardApplicationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRCancelFuelRechrageCardApplicationOperationCompleted);
-            }
-            this.InvokeAsync("HRCancelFuelRechrageCardApplication", new object[] {
-                        appNo}, this.HRCancelFuelRechrageCardApplicationOperationCompleted, userState);
-        }
-        
-        private void OnHRCancelFuelRechrageCardApplicationOperationCompleted(object arg) {
-            if ((this.HRCancelFuelRechrageCardApplicationCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRCancelFuelRechrageCardApplicationCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRCancelLeaveApplication", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRCancelLeaveApplication_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void HRCancelLeaveApplication(string appNo, bool recalled, bool cancelled) {
-            this.Invoke("HRCancelLeaveApplication", new object[] {
-                        appNo,
-                        recalled,
-                        cancelled});
-        }
-        
-        /// <remarks/>
-        public void HRCancelLeaveApplicationAsync(string appNo, bool recalled, bool cancelled) {
-            this.HRCancelLeaveApplicationAsync(appNo, recalled, cancelled, null);
-        }
-        
-        /// <remarks/>
-        public void HRCancelLeaveApplicationAsync(string appNo, bool recalled, bool cancelled, object userState) {
-            if ((this.HRCancelLeaveApplicationOperationCompleted == null)) {
-                this.HRCancelLeaveApplicationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRCancelLeaveApplicationOperationCompleted);
-            }
-            this.InvokeAsync("HRCancelLeaveApplication", new object[] {
-                        appNo,
-                        recalled,
-                        cancelled}, this.HRCancelLeaveApplicationOperationCompleted, userState);
-        }
-        
-        private void OnHRCancelLeaveApplicationOperationCompleted(object arg) {
-            if ((this.HRCancelLeaveApplicationCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRCancelLeaveApplicationCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRCancelPurchaseRequisition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRCancelPurchaseRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void HRCancelPurchaseRequisition(string appNo) {
-            this.Invoke("HRCancelPurchaseRequisition", new object[] {
-                        appNo});
-        }
-        
-        /// <remarks/>
-        public void HRCancelPurchaseRequisitionAsync(string appNo) {
-            this.HRCancelPurchaseRequisitionAsync(appNo, null);
-        }
-        
-        /// <remarks/>
-        public void HRCancelPurchaseRequisitionAsync(string appNo, object userState) {
-            if ((this.HRCancelPurchaseRequisitionOperationCompleted == null)) {
-                this.HRCancelPurchaseRequisitionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRCancelPurchaseRequisitionOperationCompleted);
-            }
-            this.InvokeAsync("HRCancelPurchaseRequisition", new object[] {
-                        appNo}, this.HRCancelPurchaseRequisitionOperationCompleted, userState);
-        }
-        
-        private void OnHRCancelPurchaseRequisitionOperationCompleted(object arg) {
-            if ((this.HRCancelPurchaseRequisitionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRCancelPurchaseRequisitionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRCancelStoreRequisition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRCancelStoreRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void HRCancelStoreRequisition(string appNo) {
-            this.Invoke("HRCancelStoreRequisition", new object[] {
-                        appNo});
-        }
-        
-        /// <remarks/>
-        public void HRCancelStoreRequisitionAsync(string appNo) {
-            this.HRCancelStoreRequisitionAsync(appNo, null);
-        }
-        
-        /// <remarks/>
-        public void HRCancelStoreRequisitionAsync(string appNo, object userState) {
-            if ((this.HRCancelStoreRequisitionOperationCompleted == null)) {
-                this.HRCancelStoreRequisitionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRCancelStoreRequisitionOperationCompleted);
-            }
-            this.InvokeAsync("HRCancelStoreRequisition", new object[] {
-                        appNo}, this.HRCancelStoreRequisitionOperationCompleted, userState);
-        }
-        
-        private void OnHRCancelStoreRequisitionOperationCompleted(object arg) {
-            if ((this.HRCancelStoreRequisitionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRCancelStoreRequisitionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRCancelTrainingRequisition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRCancelTrainingRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void HRCancelTrainingRequisition(string appNo) {
-            this.Invoke("HRCancelTrainingRequisition", new object[] {
-                        appNo});
-        }
-        
-        /// <remarks/>
-        public void HRCancelTrainingRequisitionAsync(string appNo) {
-            this.HRCancelTrainingRequisitionAsync(appNo, null);
-        }
-        
-        /// <remarks/>
-        public void HRCancelTrainingRequisitionAsync(string appNo, object userState) {
-            if ((this.HRCancelTrainingRequisitionOperationCompleted == null)) {
-                this.HRCancelTrainingRequisitionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRCancelTrainingRequisitionOperationCompleted);
-            }
-            this.InvokeAsync("HRCancelTrainingRequisition", new object[] {
-                        appNo}, this.HRCancelTrainingRequisitionOperationCompleted, userState);
-        }
-        
-        private void OnHRCancelTrainingRequisitionOperationCompleted(object arg) {
-            if ((this.HRCancelTrainingRequisitionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRCancelTrainingRequisitionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRFuelRechargeCardApprovalRequ" +
-            "est", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRFuelRechargeCardApprovalRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void HRFuelRechargeCardApprovalRequest(string reqNo) {
-            this.Invoke("HRFuelRechargeCardApprovalRequest", new object[] {
-                        reqNo});
-        }
-        
-        /// <remarks/>
-        public void HRFuelRechargeCardApprovalRequestAsync(string reqNo) {
-            this.HRFuelRechargeCardApprovalRequestAsync(reqNo, null);
-        }
-        
-        /// <remarks/>
-        public void HRFuelRechargeCardApprovalRequestAsync(string reqNo, object userState) {
-            if ((this.HRFuelRechargeCardApprovalRequestOperationCompleted == null)) {
-                this.HRFuelRechargeCardApprovalRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRFuelRechargeCardApprovalRequestOperationCompleted);
-            }
-            this.InvokeAsync("HRFuelRechargeCardApprovalRequest", new object[] {
-                        reqNo}, this.HRFuelRechargeCardApprovalRequestOperationCompleted, userState);
-        }
-        
-        private void OnHRFuelRechargeCardApprovalRequestOperationCompleted(object arg) {
-            if ((this.HRFuelRechargeCardApprovalRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRFuelRechargeCardApprovalRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRLeaveApplication", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRLeaveApplication_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string HRLeaveApplication(string employeeNo, string leaveType, decimal appliedDays, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime startDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime endDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime returnDate, string senderComments, string reliever_No, string responsibilityCenter, string userID) {
-            object[] results = this.Invoke("HRLeaveApplication", new object[] {
-                        employeeNo,
-                        leaveType,
-                        appliedDays,
-                        startDate,
-                        endDate,
-                        returnDate,
-                        senderComments,
-                        reliever_No,
-                        responsibilityCenter,
-                        userID});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void HRLeaveApplicationAsync(string employeeNo, string leaveType, decimal appliedDays, System.DateTime startDate, System.DateTime endDate, System.DateTime returnDate, string senderComments, string reliever_No, string responsibilityCenter, string userID) {
-            this.HRLeaveApplicationAsync(employeeNo, leaveType, appliedDays, startDate, endDate, returnDate, senderComments, reliever_No, responsibilityCenter, userID, null);
-        }
-        
-        /// <remarks/>
-        public void HRLeaveApplicationAsync(string employeeNo, string leaveType, decimal appliedDays, System.DateTime startDate, System.DateTime endDate, System.DateTime returnDate, string senderComments, string reliever_No, string responsibilityCenter, string userID, object userState) {
-            if ((this.HRLeaveApplicationOperationCompleted == null)) {
-                this.HRLeaveApplicationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRLeaveApplicationOperationCompleted);
-            }
-            this.InvokeAsync("HRLeaveApplication", new object[] {
-                        employeeNo,
-                        leaveType,
-                        appliedDays,
-                        startDate,
-                        endDate,
-                        returnDate,
-                        senderComments,
-                        reliever_No,
-                        responsibilityCenter,
-                        userID}, this.HRLeaveApplicationOperationCompleted, userState);
-        }
-        
-        private void OnHRLeaveApplicationOperationCompleted(object arg) {
-            if ((this.HRLeaveApplicationCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRLeaveApplicationCompleted(this, new HRLeaveApplicationCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRLeaveApprovalRequest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRLeaveApprovalRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void HRLeaveApprovalRequest(string reqNo) {
-            this.Invoke("HRLeaveApprovalRequest", new object[] {
-                        reqNo});
-        }
-        
-        /// <remarks/>
-        public void HRLeaveApprovalRequestAsync(string reqNo) {
-            this.HRLeaveApprovalRequestAsync(reqNo, null);
-        }
-        
-        /// <remarks/>
-        public void HRLeaveApprovalRequestAsync(string reqNo, object userState) {
-            if ((this.HRLeaveApprovalRequestOperationCompleted == null)) {
-                this.HRLeaveApprovalRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRLeaveApprovalRequestOperationCompleted);
-            }
-            this.InvokeAsync("HRLeaveApprovalRequest", new object[] {
-                        reqNo}, this.HRLeaveApprovalRequestOperationCompleted, userState);
-        }
-        
-        private void OnHRLeaveApprovalRequestOperationCompleted(object arg) {
-            if ((this.HRLeaveApprovalRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRLeaveApprovalRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRTrainingParticipantsExists", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRTrainingParticipantsExists_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool HRTrainingParticipantsExists(string noa46) {
-            object[] results = this.Invoke("HRTrainingParticipantsExists", new object[] {
-                        noa46});
+        public bool Post_RegisterStudentUnits(string studentNo, string semester, string stage, string program, int reg_Type, bool backOfficeUser) {
+            object[] results = this.Invoke("Post_RegisterStudentUnits", new object[] {
+                        studentNo,
+                        semester,
+                        stage,
+                        program,
+                        reg_Type,
+                        backOfficeUser});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void HRTrainingParticipantsExistsAsync(string noa46) {
-            this.HRTrainingParticipantsExistsAsync(noa46, null);
+        public void Post_RegisterStudentUnitsAsync(string studentNo, string semester, string stage, string program, int reg_Type, bool backOfficeUser) {
+            this.Post_RegisterStudentUnitsAsync(studentNo, semester, stage, program, reg_Type, backOfficeUser, null);
         }
         
         /// <remarks/>
-        public void HRTrainingParticipantsExistsAsync(string noa46, object userState) {
-            if ((this.HRTrainingParticipantsExistsOperationCompleted == null)) {
-                this.HRTrainingParticipantsExistsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRTrainingParticipantsExistsOperationCompleted);
+        public void Post_RegisterStudentUnitsAsync(string studentNo, string semester, string stage, string program, int reg_Type, bool backOfficeUser, object userState) {
+            if ((this.Post_RegisterStudentUnitsOperationCompleted == null)) {
+                this.Post_RegisterStudentUnitsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPost_RegisterStudentUnitsOperationCompleted);
             }
-            this.InvokeAsync("HRTrainingParticipantsExists", new object[] {
-                        noa46}, this.HRTrainingParticipantsExistsOperationCompleted, userState);
-        }
-        
-        private void OnHRTrainingParticipantsExistsOperationCompleted(object arg) {
-            if ((this.HRTrainingParticipantsExistsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRTrainingParticipantsExistsCompleted(this, new HRTrainingParticipantsExistsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:HRUpdateLeaveApplication", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="HRUpdateLeaveApplication_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void HRUpdateLeaveApplication(string document_No, string reliever_No, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime startDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime endDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime returnDate, string senderComments, decimal approvedDays) {
-            this.Invoke("HRUpdateLeaveApplication", new object[] {
-                        document_No,
-                        reliever_No,
-                        startDate,
-                        endDate,
-                        returnDate,
-                        senderComments,
-                        approvedDays});
-        }
-        
-        /// <remarks/>
-        public void HRUpdateLeaveApplicationAsync(string document_No, string reliever_No, System.DateTime startDate, System.DateTime endDate, System.DateTime returnDate, string senderComments, decimal approvedDays) {
-            this.HRUpdateLeaveApplicationAsync(document_No, reliever_No, startDate, endDate, returnDate, senderComments, approvedDays, null);
-        }
-        
-        /// <remarks/>
-        public void HRUpdateLeaveApplicationAsync(string document_No, string reliever_No, System.DateTime startDate, System.DateTime endDate, System.DateTime returnDate, string senderComments, decimal approvedDays, object userState) {
-            if ((this.HRUpdateLeaveApplicationOperationCompleted == null)) {
-                this.HRUpdateLeaveApplicationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHRUpdateLeaveApplicationOperationCompleted);
-            }
-            this.InvokeAsync("HRUpdateLeaveApplication", new object[] {
-                        document_No,
-                        reliever_No,
-                        startDate,
-                        endDate,
-                        returnDate,
-                        senderComments,
-                        approvedDays}, this.HRUpdateLeaveApplicationOperationCompleted, userState);
-        }
-        
-        private void OnHRUpdateLeaveApplicationOperationCompleted(object arg) {
-            if ((this.HRUpdateLeaveApplicationCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HRUpdateLeaveApplicationCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ICTRequisitionCreate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ICTRequisitionCreate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string ICTRequisitionCreate(string employeeNo, string dim1, string dim2, int urgencyPriority, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime requiredDate, string description, string requisition_Category) {
-            object[] results = this.Invoke("ICTRequisitionCreate", new object[] {
-                        employeeNo,
-                        dim1,
-                        dim2,
-                        urgencyPriority,
-                        requiredDate,
-                        description,
-                        requisition_Category});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void ICTRequisitionCreateAsync(string employeeNo, string dim1, string dim2, int urgencyPriority, System.DateTime requiredDate, string description, string requisition_Category) {
-            this.ICTRequisitionCreateAsync(employeeNo, dim1, dim2, urgencyPriority, requiredDate, description, requisition_Category, null);
-        }
-        
-        /// <remarks/>
-        public void ICTRequisitionCreateAsync(string employeeNo, string dim1, string dim2, int urgencyPriority, System.DateTime requiredDate, string description, string requisition_Category, object userState) {
-            if ((this.ICTRequisitionCreateOperationCompleted == null)) {
-                this.ICTRequisitionCreateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnICTRequisitionCreateOperationCompleted);
-            }
-            this.InvokeAsync("ICTRequisitionCreate", new object[] {
-                        employeeNo,
-                        dim1,
-                        dim2,
-                        urgencyPriority,
-                        requiredDate,
-                        description,
-                        requisition_Category}, this.ICTRequisitionCreateOperationCompleted, userState);
-        }
-        
-        private void OnICTRequisitionCreateOperationCompleted(object arg) {
-            if ((this.ICTRequisitionCreateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ICTRequisitionCreateCompleted(this, new ICTRequisitionCreateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ImportStaffProfilePicture", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ImportStaffProfilePicture_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ImportStaffProfilePicture(string empNo, string fileName, string clientFileName) {
-            this.Invoke("ImportStaffProfilePicture", new object[] {
-                        empNo,
-                        fileName,
-                        clientFileName});
-        }
-        
-        /// <remarks/>
-        public void ImportStaffProfilePictureAsync(string empNo, string fileName, string clientFileName) {
-            this.ImportStaffProfilePictureAsync(empNo, fileName, clientFileName, null);
-        }
-        
-        /// <remarks/>
-        public void ImportStaffProfilePictureAsync(string empNo, string fileName, string clientFileName, object userState) {
-            if ((this.ImportStaffProfilePictureOperationCompleted == null)) {
-                this.ImportStaffProfilePictureOperationCompleted = new System.Threading.SendOrPostCallback(this.OnImportStaffProfilePictureOperationCompleted);
-            }
-            this.InvokeAsync("ImportStaffProfilePicture", new object[] {
-                        empNo,
-                        fileName,
-                        clientFileName}, this.ImportStaffProfilePictureOperationCompleted, userState);
-        }
-        
-        private void OnImportStaffProfilePictureOperationCompleted(object arg) {
-            if ((this.ImportStaffProfilePictureCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ImportStaffProfilePictureCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ImportStudentProfilePicture", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ImportStudentProfilePicture_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ImportStudentProfilePicture(string studentNo, string fileName, string clientFileName) {
-            this.Invoke("ImportStudentProfilePicture", new object[] {
+            this.InvokeAsync("Post_RegisterStudentUnits", new object[] {
                         studentNo,
-                        fileName,
-                        clientFileName});
+                        semester,
+                        stage,
+                        program,
+                        reg_Type,
+                        backOfficeUser}, this.Post_RegisterStudentUnitsOperationCompleted, userState);
         }
         
-        /// <remarks/>
-        public void ImportStudentProfilePictureAsync(string studentNo, string fileName, string clientFileName) {
-            this.ImportStudentProfilePictureAsync(studentNo, fileName, clientFileName, null);
-        }
-        
-        /// <remarks/>
-        public void ImportStudentProfilePictureAsync(string studentNo, string fileName, string clientFileName, object userState) {
-            if ((this.ImportStudentProfilePictureOperationCompleted == null)) {
-                this.ImportStudentProfilePictureOperationCompleted = new System.Threading.SendOrPostCallback(this.OnImportStudentProfilePictureOperationCompleted);
-            }
-            this.InvokeAsync("ImportStudentProfilePicture", new object[] {
-                        studentNo,
-                        fileName,
-                        clientFileName}, this.ImportStudentProfilePictureOperationCompleted, userState);
-        }
-        
-        private void OnImportStudentProfilePictureOperationCompleted(object arg) {
-            if ((this.ImportStudentProfilePictureCompleted != null)) {
+        private void OnPost_RegisterStudentUnitsOperationCompleted(object arg) {
+            if ((this.Post_RegisterStudentUnitsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ImportStudentProfilePictureCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.Post_RegisterStudentUnitsCompleted(this, new Post_RegisterStudentUnitsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ImprestLinesExists", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ImprestLinesExists_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool ImprestLinesExists(string noa46) {
-            object[] results = this.Invoke("ImprestLinesExists", new object[] {
-                        noa46});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void ImprestLinesExistsAsync(string noa46) {
-            this.ImprestLinesExistsAsync(noa46, null);
-        }
-        
-        /// <remarks/>
-        public void ImprestLinesExistsAsync(string noa46, object userState) {
-            if ((this.ImprestLinesExistsOperationCompleted == null)) {
-                this.ImprestLinesExistsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnImprestLinesExistsOperationCompleted);
-            }
-            this.InvokeAsync("ImprestLinesExists", new object[] {
-                        noa46}, this.ImprestLinesExistsOperationCompleted, userState);
-        }
-        
-        private void OnImprestLinesExistsOperationCompleted(object arg) {
-            if ((this.ImprestLinesExistsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ImprestLinesExistsCompleted(this, new ImprestLinesExistsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ImprestMemoLinesCreate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ImprestMemoLinesCreate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ImprestMemoLinesCreate(string requisition_No, string itemNo, decimal reqAmount, string employee_No, decimal qnty, string uoM, string desc, string destination, int noDays, string jobG) {
-            this.Invoke("ImprestMemoLinesCreate", new object[] {
-                        requisition_No,
-                        itemNo,
-                        reqAmount,
-                        employee_No,
-                        qnty,
-                        uoM,
-                        desc,
-                        destination,
-                        noDays,
-                        jobG});
-        }
-        
-        /// <remarks/>
-        public void ImprestMemoLinesCreateAsync(string requisition_No, string itemNo, decimal reqAmount, string employee_No, decimal qnty, string uoM, string desc, string destination, int noDays, string jobG) {
-            this.ImprestMemoLinesCreateAsync(requisition_No, itemNo, reqAmount, employee_No, qnty, uoM, desc, destination, noDays, jobG, null);
-        }
-        
-        /// <remarks/>
-        public void ImprestMemoLinesCreateAsync(string requisition_No, string itemNo, decimal reqAmount, string employee_No, decimal qnty, string uoM, string desc, string destination, int noDays, string jobG, object userState) {
-            if ((this.ImprestMemoLinesCreateOperationCompleted == null)) {
-                this.ImprestMemoLinesCreateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnImprestMemoLinesCreateOperationCompleted);
-            }
-            this.InvokeAsync("ImprestMemoLinesCreate", new object[] {
-                        requisition_No,
-                        itemNo,
-                        reqAmount,
-                        employee_No,
-                        qnty,
-                        uoM,
-                        desc,
-                        destination,
-                        noDays,
-                        jobG}, this.ImprestMemoLinesCreateOperationCompleted, userState);
-        }
-        
-        private void OnImprestMemoLinesCreateOperationCompleted(object arg) {
-            if ((this.ImprestMemoLinesCreateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ImprestMemoLinesCreateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ImprestRequisitionApprovalRequ" +
-            "est", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ImprestRequisitionApprovalRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ImprestRequisitionApprovalRequest(string reqNo) {
-            this.Invoke("ImprestRequisitionApprovalRequest", new object[] {
-                        reqNo});
-        }
-        
-        /// <remarks/>
-        public void ImprestRequisitionApprovalRequestAsync(string reqNo) {
-            this.ImprestRequisitionApprovalRequestAsync(reqNo, null);
-        }
-        
-        /// <remarks/>
-        public void ImprestRequisitionApprovalRequestAsync(string reqNo, object userState) {
-            if ((this.ImprestRequisitionApprovalRequestOperationCompleted == null)) {
-                this.ImprestRequisitionApprovalRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnImprestRequisitionApprovalRequestOperationCompleted);
-            }
-            this.InvokeAsync("ImprestRequisitionApprovalRequest", new object[] {
-                        reqNo}, this.ImprestRequisitionApprovalRequestOperationCompleted, userState);
-        }
-        
-        private void OnImprestRequisitionApprovalRequestOperationCompleted(object arg) {
-            if ((this.ImprestRequisitionApprovalRequestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ImprestRequisitionApprovalRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ImprestRequisitionCreate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ImprestRequisitionCreate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string ImprestRequisitionCreate(string employee_No, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_Required, string dim1, string dim2, string dim3, string dim4, string dim5, string respC, string description, string userID, string imprestType, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime travelDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime returnDate) {
-            object[] results = this.Invoke("ImprestRequisitionCreate", new object[] {
-                        employee_No,
-                        date_Required,
-                        dim1,
-                        dim2,
-                        dim3,
-                        dim4,
-                        dim5,
-                        respC,
-                        description,
-                        userID,
-                        imprestType,
-                        travelDate,
-                        returnDate});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void ImprestRequisitionCreateAsync(string employee_No, System.DateTime date_Required, string dim1, string dim2, string dim3, string dim4, string dim5, string respC, string description, string userID, string imprestType, System.DateTime travelDate, System.DateTime returnDate) {
-            this.ImprestRequisitionCreateAsync(employee_No, date_Required, dim1, dim2, dim3, dim4, dim5, respC, description, userID, imprestType, travelDate, returnDate, null);
-        }
-        
-        /// <remarks/>
-        public void ImprestRequisitionCreateAsync(string employee_No, System.DateTime date_Required, string dim1, string dim2, string dim3, string dim4, string dim5, string respC, string description, string userID, string imprestType, System.DateTime travelDate, System.DateTime returnDate, object userState) {
-            if ((this.ImprestRequisitionCreateOperationCompleted == null)) {
-                this.ImprestRequisitionCreateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnImprestRequisitionCreateOperationCompleted);
-            }
-            this.InvokeAsync("ImprestRequisitionCreate", new object[] {
-                        employee_No,
-                        date_Required,
-                        dim1,
-                        dim2,
-                        dim3,
-                        dim4,
-                        dim5,
-                        respC,
-                        description,
-                        userID,
-                        imprestType,
-                        travelDate,
-                        returnDate}, this.ImprestRequisitionCreateOperationCompleted, userState);
-        }
-        
-        private void OnImprestRequisitionCreateOperationCompleted(object arg) {
-            if ((this.ImprestRequisitionCreateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ImprestRequisitionCreateCompleted(this, new ImprestRequisitionCreateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ImprestRequisitionLinesCreate2" +
-            "", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ImprestRequisitionLinesCreate2_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ImprestRequisitionLinesCreate2(string requisition_No, string itemNo, decimal reqAmount, string employee_No, decimal qnty, string uoM, string desc, string destination, int noDays, string jobG) {
-            this.Invoke("ImprestRequisitionLinesCreate2", new object[] {
-                        requisition_No,
-                        itemNo,
-                        reqAmount,
-                        employee_No,
-                        qnty,
-                        uoM,
-                        desc,
-                        destination,
-                        noDays,
-                        jobG});
-        }
-        
-        /// <remarks/>
-        public void ImprestRequisitionLinesCreate2Async(string requisition_No, string itemNo, decimal reqAmount, string employee_No, decimal qnty, string uoM, string desc, string destination, int noDays, string jobG) {
-            this.ImprestRequisitionLinesCreate2Async(requisition_No, itemNo, reqAmount, employee_No, qnty, uoM, desc, destination, noDays, jobG, null);
-        }
-        
-        /// <remarks/>
-        public void ImprestRequisitionLinesCreate2Async(string requisition_No, string itemNo, decimal reqAmount, string employee_No, decimal qnty, string uoM, string desc, string destination, int noDays, string jobG, object userState) {
-            if ((this.ImprestRequisitionLinesCreate2OperationCompleted == null)) {
-                this.ImprestRequisitionLinesCreate2OperationCompleted = new System.Threading.SendOrPostCallback(this.OnImprestRequisitionLinesCreate2OperationCompleted);
-            }
-            this.InvokeAsync("ImprestRequisitionLinesCreate2", new object[] {
-                        requisition_No,
-                        itemNo,
-                        reqAmount,
-                        employee_No,
-                        qnty,
-                        uoM,
-                        desc,
-                        destination,
-                        noDays,
-                        jobG}, this.ImprestRequisitionLinesCreate2OperationCompleted, userState);
-        }
-        
-        private void OnImprestRequisitionLinesCreate2OperationCompleted(object arg) {
-            if ((this.ImprestRequisitionLinesCreate2Completed != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ImprestRequisitionLinesCreate2Completed(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ImprestRequisitionLinesCreate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ImprestRequisitionLinesCreate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ImprestRequisitionLinesCreate(string requisition_No, string itemNo, decimal reqAmount, string employee_No, decimal qnty, string uoM, string desc, string destination, int noDays, string jobG) {
-            this.Invoke("ImprestRequisitionLinesCreate", new object[] {
-                        requisition_No,
-                        itemNo,
-                        reqAmount,
-                        employee_No,
-                        qnty ,
-                        uoM,
-                        desc,
-                        destination,
-                        noDays,
-                        jobG});
-        }
-        
-        /// <remarks/>
-        public void ImprestRequisitionLinesCreateAsync(string requisition_No, string itemNo, decimal reqAmount, string employee_No, decimal qnty, string uoM, string desc, string destination, int noDays, string jobG) {
-            this.ImprestRequisitionLinesCreateAsync(requisition_No, itemNo, reqAmount, employee_No, qnty, uoM, desc, destination, noDays, jobG, null);
-        }
-        
-        /// <remarks/>
-        public void ImprestRequisitionLinesCreateAsync(string requisition_No, string itemNo, decimal reqAmount, string employee_No, decimal qnty, string uoM, string desc, string destination, int noDays, string jobG, object userState) {
-            if ((this.ImprestRequisitionLinesCreateOperationCompleted == null)) {
-                this.ImprestRequisitionLinesCreateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnImprestRequisitionLinesCreateOperationCompleted);
-            }
-            this.InvokeAsync("ImprestRequisitionLinesCreate", new object[] {
-                        requisition_No,
-                        itemNo,
-                        reqAmount,
-                        employee_No,
-                        qnty,
-                        uoM,
-                        desc,
-                        destination,
-                        noDays,
-                        jobG}, this.ImprestRequisitionLinesCreateOperationCompleted, userState);
-        }
-        
-        private void OnImprestRequisitionLinesCreateOperationCompleted(object arg) {
-            if ((this.ImprestRequisitionLinesCreateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ImprestRequisitionLinesCreateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ImprestRequisitionLinesUpdate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ImprestRequisitionLinesUpdate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ImprestRequisitionLinesUpdate(string requisition_No, int lineNo, decimal reqAmount, decimal qnty, string desc, int noDays) {
-            this.Invoke("ImprestRequisitionLinesUpdate", new object[] {
-                        requisition_No,
-                        lineNo,
-                        reqAmount,
-                        qnty,
-                        desc,
-                        noDays});
-        }
-        
-        /// <remarks/>
-        public void ImprestRequisitionLinesUpdateAsync(string requisition_No, int lineNo, decimal reqAmount, decimal qnty, string desc, int noDays) {
-            this.ImprestRequisitionLinesUpdateAsync(requisition_No, lineNo, reqAmount, qnty, desc, noDays, null);
-        }
-        
-        /// <remarks/>
-        public void ImprestRequisitionLinesUpdateAsync(string requisition_No, int lineNo, decimal reqAmount, decimal qnty, string desc, int noDays, object userState) {
-            if ((this.ImprestRequisitionLinesUpdateOperationCompleted == null)) {
-                this.ImprestRequisitionLinesUpdateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnImprestRequisitionLinesUpdateOperationCompleted);
-            }
-            this.InvokeAsync("ImprestRequisitionLinesUpdate", new object[] {
-                        requisition_No,
-                        lineNo,
-                        reqAmount,
-                        qnty,
-                        desc,
-                        noDays}, this.ImprestRequisitionLinesUpdateOperationCompleted, userState);
-        }
-        
-        private void OnImprestRequisitionLinesUpdateOperationCompleted(object arg) {
-            if ((this.ImprestRequisitionLinesUpdateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ImprestRequisitionLinesUpdateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ImprestRequsitionRemoveLine", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ImprestRequsitionRemoveLine_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void ImprestRequsitionRemoveLine(int lineNo, string docNo) {
-            this.Invoke("ImprestRequsitionRemoveLine", new object[] {
-                        lineNo,
-                        docNo});
-        }
-        
-        /// <remarks/>
-        public void ImprestRequsitionRemoveLineAsync(int lineNo, string docNo) {
-            this.ImprestRequsitionRemoveLineAsync(lineNo, docNo, null);
-        }
-        
-        /// <remarks/>
-        public void ImprestRequsitionRemoveLineAsync(int lineNo, string docNo, object userState) {
-            if ((this.ImprestRequsitionRemoveLineOperationCompleted == null)) {
-                this.ImprestRequsitionRemoveLineOperationCompleted = new System.Threading.SendOrPostCallback(this.OnImprestRequsitionRemoveLineOperationCompleted);
-            }
-            this.InvokeAsync("ImprestRequsitionRemoveLine", new object[] {
-                        lineNo,
-                        docNo}, this.ImprestRequsitionRemoveLineOperationCompleted, userState);
-        }
-        
-        private void OnImprestRequsitionRemoveLineOperationCompleted(object arg) {
-            if ((this.ImprestRequsitionRemoveLineCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ImprestRequsitionRemoveLineCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertAdmissionHeader", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertAdmissionHeader_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertAdmissionHeader(string surname, string names, string programme, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime dOB, int gender, string email, string county, string intake, string address, string phoneNo) {
-            this.Invoke("InsertAdmissionHeader", new object[] {
-                        surname,
-                        names,
-                        programme,
-                        dOB,
-                        gender,
-                        email,
-                        county,
-                        intake,
-                        address,
-                        phoneNo});
-        }
-        
-        /// <remarks/>
-        public void InsertAdmissionHeaderAsync(string surname, string names, string programme, System.DateTime dOB, int gender, string email, string county, string intake, string address, string phoneNo) {
-            this.InsertAdmissionHeaderAsync(surname, names, programme, dOB, gender, email, county, intake, address, phoneNo, null);
-        }
-        
-        /// <remarks/>
-        public void InsertAdmissionHeaderAsync(string surname, string names, string programme, System.DateTime dOB, int gender, string email, string county, string intake, string address, string phoneNo, object userState) {
-            if ((this.InsertAdmissionHeaderOperationCompleted == null)) {
-                this.InsertAdmissionHeaderOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertAdmissionHeaderOperationCompleted);
-            }
-            this.InvokeAsync("InsertAdmissionHeader", new object[] {
-                        surname,
-                        names,
-                        programme,
-                        dOB,
-                        gender,
-                        email,
-                        county,
-                        intake,
-                        address,
-                        phoneNo}, this.InsertAdmissionHeaderOperationCompleted, userState);
-        }
-        
-        private void OnInsertAdmissionHeaderOperationCompleted(object arg) {
-            if ((this.InsertAdmissionHeaderCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertAdmissionHeaderCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertAppraisalDepartmentalObj" +
-            "ectives", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertAppraisalDepartmentalObjectives_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertAppraisalDepartmentalObjectives(string docNo, string staffNo) {
-            this.Invoke("InsertAppraisalDepartmentalObjectives", new object[] {
-                        docNo,
-                        staffNo});
-        }
-        
-        /// <remarks/>
-        public void InsertAppraisalDepartmentalObjectivesAsync(string docNo, string staffNo) {
-            this.InsertAppraisalDepartmentalObjectivesAsync(docNo, staffNo, null);
-        }
-        
-        /// <remarks/>
-        public void InsertAppraisalDepartmentalObjectivesAsync(string docNo, string staffNo, object userState) {
-            if ((this.InsertAppraisalDepartmentalObjectivesOperationCompleted == null)) {
-                this.InsertAppraisalDepartmentalObjectivesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertAppraisalDepartmentalObjectivesOperationCompleted);
-            }
-            this.InvokeAsync("InsertAppraisalDepartmentalObjectives", new object[] {
-                        docNo,
-                        staffNo}, this.InsertAppraisalDepartmentalObjectivesOperationCompleted, userState);
-        }
-        
-        private void OnInsertAppraisalDepartmentalObjectivesOperationCompleted(object arg) {
-            if ((this.InsertAppraisalDepartmentalObjectivesCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertAppraisalDepartmentalObjectivesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertAppraisalExatraInformati" +
-            "on", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertAppraisalExatraInformation_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertAppraisalExatraInformation(string appNo, string data, int entryType) {
-            this.Invoke("InsertAppraisalExatraInformation", new object[] {
-                        appNo,
-                        data,
-                        entryType});
-        }
-        
-        /// <remarks/>
-        public void InsertAppraisalExatraInformationAsync(string appNo, string data, int entryType) {
-            this.InsertAppraisalExatraInformationAsync(appNo, data, entryType, null);
-        }
-        
-        /// <remarks/>
-        public void InsertAppraisalExatraInformationAsync(string appNo, string data, int entryType, object userState) {
-            if ((this.InsertAppraisalExatraInformationOperationCompleted == null)) {
-                this.InsertAppraisalExatraInformationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertAppraisalExatraInformationOperationCompleted);
-            }
-            this.InvokeAsync("InsertAppraisalExatraInformation", new object[] {
-                        appNo,
-                        data,
-                        entryType}, this.InsertAppraisalExatraInformationOperationCompleted, userState);
-        }
-        
-        private void OnInsertAppraisalExatraInformationOperationCompleted(object arg) {
-            if ((this.InsertAppraisalExatraInformationCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertAppraisalExatraInformationCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertBestEmpOfYear", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertBestEmpOfYear_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertBestEmpOfYear(string staffNo, string year, string bestEmp, string dep, string description, int score) {
-            this.Invoke("InsertBestEmpOfYear", new object[] {
-                        staffNo,
-                        year,
-                        bestEmp,
-                        dep,
-                        description,
-                        score});
-        }
-        
-        /// <remarks/>
-        public void InsertBestEmpOfYearAsync(string staffNo, string year, string bestEmp, string dep, string description, int score) {
-            this.InsertBestEmpOfYearAsync(staffNo, year, bestEmp, dep, description, score, null);
-        }
-        
-        /// <remarks/>
-        public void InsertBestEmpOfYearAsync(string staffNo, string year, string bestEmp, string dep, string description, int score, object userState) {
-            if ((this.InsertBestEmpOfYearOperationCompleted == null)) {
-                this.InsertBestEmpOfYearOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertBestEmpOfYearOperationCompleted);
-            }
-            this.InvokeAsync("InsertBestEmpOfYear", new object[] {
-                        staffNo,
-                        year,
-                        bestEmp,
-                        dep,
-                        description,
-                        score}, this.InsertBestEmpOfYearOperationCompleted, userState);
-        }
-        
-        private void OnInsertBestEmpOfYearOperationCompleted(object arg) {
-            if ((this.InsertBestEmpOfYearCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertBestEmpOfYearCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertEmplRatingCompetence", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertEmplRatingCompetence_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertEmplRatingCompetence(string docNo, string description, int score) {
-            this.Invoke("InsertEmplRatingCompetence", new object[] {
-                        docNo,
-                        description,
-                        score});
-        }
-        
-        /// <remarks/>
-        public void InsertEmplRatingCompetenceAsync(string docNo, string description, int score) {
-            this.InsertEmplRatingCompetenceAsync(docNo, description, score, null);
-        }
-        
-        /// <remarks/>
-        public void InsertEmplRatingCompetenceAsync(string docNo, string description, int score, object userState) {
-            if ((this.InsertEmplRatingCompetenceOperationCompleted == null)) {
-                this.InsertEmplRatingCompetenceOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertEmplRatingCompetenceOperationCompleted);
-            }
-            this.InvokeAsync("InsertEmplRatingCompetence", new object[] {
-                        docNo,
-                        description,
-                        score}, this.InsertEmplRatingCompetenceOperationCompleted, userState);
-        }
-        
-        private void OnInsertEmplRatingCompetenceOperationCompleted(object arg) {
-            if ((this.InsertEmplRatingCompetenceCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertEmplRatingCompetenceCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertExternalPassengers", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertExternalPassengers_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertExternalPassengers(string transportNo, string passengerNames, string organization) {
-            this.Invoke("InsertExternalPassengers", new object[] {
-                        transportNo,
-                        passengerNames,
-                        organization});
-        }
-        
-        /// <remarks/>
-        public void InsertExternalPassengersAsync(string transportNo, string passengerNames, string organization) {
-            this.InsertExternalPassengersAsync(transportNo, passengerNames, organization, null);
-        }
-        
-        /// <remarks/>
-        public void InsertExternalPassengersAsync(string transportNo, string passengerNames, string organization, object userState) {
-            if ((this.InsertExternalPassengersOperationCompleted == null)) {
-                this.InsertExternalPassengersOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertExternalPassengersOperationCompleted);
-            }
-            this.InvokeAsync("InsertExternalPassengers", new object[] {
-                        transportNo,
-                        passengerNames,
-                        organization}, this.InsertExternalPassengersOperationCompleted, userState);
-        }
-        
-        private void OnInsertExternalPassengersOperationCompleted(object arg) {
-            if ((this.InsertExternalPassengersCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertExternalPassengersCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertGatePass", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertGatePass_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string InsertGatePass(string empNo, string assetNo, int tBReturned) {
-            object[] results = this.Invoke("InsertGatePass", new object[] {
-                        empNo,
-                        assetNo,
-                        tBReturned});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void InsertGatePassAsync(string empNo, string assetNo, int tBReturned) {
-            this.InsertGatePassAsync(empNo, assetNo, tBReturned, null);
-        }
-        
-        /// <remarks/>
-        public void InsertGatePassAsync(string empNo, string assetNo, int tBReturned, object userState) {
-            if ((this.InsertGatePassOperationCompleted == null)) {
-                this.InsertGatePassOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertGatePassOperationCompleted);
-            }
-            this.InvokeAsync("InsertGatePass", new object[] {
-                        empNo,
-                        assetNo,
-                        tBReturned}, this.InsertGatePassOperationCompleted, userState);
-        }
-        
-        private void OnInsertGatePassOperationCompleted(object arg) {
-            if ((this.InsertGatePassCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertGatePassCompleted(this, new InsertGatePassCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertHRTrainingParticipants", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertHRTrainingParticipants_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertHRTrainingParticipants(string document_No, string empNo) {
-            this.Invoke("InsertHRTrainingParticipants", new object[] {
-                        document_No,
-                        empNo});
-        }
-        
-        /// <remarks/>
-        public void InsertHRTrainingParticipantsAsync(string document_No, string empNo) {
-            this.InsertHRTrainingParticipantsAsync(document_No, empNo, null);
-        }
-        
-        /// <remarks/>
-        public void InsertHRTrainingParticipantsAsync(string document_No, string empNo, object userState) {
-            if ((this.InsertHRTrainingParticipantsOperationCompleted == null)) {
-                this.InsertHRTrainingParticipantsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertHRTrainingParticipantsOperationCompleted);
-            }
-            this.InvokeAsync("InsertHRTrainingParticipants", new object[] {
-                        document_No,
-                        empNo}, this.InsertHRTrainingParticipantsOperationCompleted, userState);
-        }
-        
-        private void OnInsertHRTrainingParticipantsOperationCompleted(object arg) {
-            if ((this.InsertHRTrainingParticipantsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertHRTrainingParticipantsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertICTRequisitionLines", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertICTRequisitionLines_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertICTRequisitionLines(string docNo, string desc, int qnt) {
-            this.Invoke("InsertICTRequisitionLines", new object[] {
-                        docNo,
-                        desc,
-                        qnt});
-        }
-        
-        /// <remarks/>
-        public void InsertICTRequisitionLinesAsync(string docNo, string desc, int qnt) {
-            this.InsertICTRequisitionLinesAsync(docNo, desc, qnt, null);
-        }
-        
-        /// <remarks/>
-        public void InsertICTRequisitionLinesAsync(string docNo, string desc, int qnt, object userState) {
-            if ((this.InsertICTRequisitionLinesOperationCompleted == null)) {
-                this.InsertICTRequisitionLinesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertICTRequisitionLinesOperationCompleted);
-            }
-            this.InvokeAsync("InsertICTRequisitionLines", new object[] {
-                        docNo,
-                        desc,
-                        qnt}, this.InsertICTRequisitionLinesOperationCompleted, userState);
-        }
-        
-        private void OnInsertICTRequisitionLinesOperationCompleted(object arg) {
-            if ((this.InsertICTRequisitionLinesCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertICTRequisitionLinesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertImprestMemo", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertImprestMemo_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string InsertImprestMemo(
-                    string employee_No, 
-                    [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime date_Required, 
-                    string dim1, 
-                    string dim2, 
-                    string dim3, 
-                    string dim4, 
-                    string dim5, 
-                    string respC, 
-                    string description, 
-                    string userID, 
-                    string imprestType, 
-                    string memoFrom, 
-                    string memoTo, 
-                    string subject, 
-                    string body1, 
-                    string body2, 
-                    string body3, 
-                    string body4, 
-                    string body5, 
-                    string body6, 
-                    string body7, 
-                    string body8, 
-                    string body9, 
-                    string body10) {
-            object[] results = this.Invoke("InsertImprestMemo", new object[] {
-                        employee_No,
-                        date_Required,
-                        dim1,
-                        dim2,
-                        dim3,
-                        dim4,
-                        dim5,
-                        respC,
-                        description,
-                        userID,
-                        imprestType,
-                        memoFrom,
-                        memoTo,
-                        subject,
-                        body1,
-                        body2,
-                        body3,
-                        body4,
-                        body5,
-                        body6,
-                        body7,
-                        body8,
-                        body9,
-                        body10});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void InsertImprestMemoAsync(
-                    string employee_No, 
-                    System.DateTime date_Required, 
-                    string dim1, 
-                    string dim2, 
-                    string dim3, 
-                    string dim4, 
-                    string dim5, 
-                    string respC, 
-                    string description, 
-                    string userID, 
-                    string imprestType, 
-                    string memoFrom, 
-                    string memoTo, 
-                    string subject, 
-                    string body1, 
-                    string body2, 
-                    string body3, 
-                    string body4, 
-                    string body5, 
-                    string body6, 
-                    string body7, 
-                    string body8, 
-                    string body9, 
-                    string body10) {
-            this.InsertImprestMemoAsync(employee_No, date_Required, dim1, dim2, dim3, dim4, dim5, respC, description, userID, imprestType, memoFrom, memoTo, subject, body1, body2, body3, body4, body5, body6, body7, body8, body9, body10, null);
-        }
-        
-        /// <remarks/>
-        public void InsertImprestMemoAsync(
-                    string employee_No, 
-                    System.DateTime date_Required, 
-                    string dim1, 
-                    string dim2, 
-                    string dim3, 
-                    string dim4, 
-                    string dim5, 
-                    string respC, 
-                    string description, 
-                    string userID, 
-                    string imprestType, 
-                    string memoFrom, 
-                    string memoTo, 
-                    string subject, 
-                    string body1, 
-                    string body2, 
-                    string body3, 
-                    string body4, 
-                    string body5, 
-                    string body6, 
-                    string body7, 
-                    string body8, 
-                    string body9, 
-                    string body10, 
-                    object userState) {
-            if ((this.InsertImprestMemoOperationCompleted == null)) {
-                this.InsertImprestMemoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertImprestMemoOperationCompleted);
-            }
-            this.InvokeAsync("InsertImprestMemo", new object[] {
-                        employee_No,
-                        date_Required,
-                        dim1,
-                        dim2,
-                        dim3,
-                        dim4,
-                        dim5,
-                        respC,
-                        description,
-                        userID,
-                        imprestType,
-                        memoFrom,
-                        memoTo,
-                        subject,
-                        body1,
-                        body2,
-                        body3,
-                        body4,
-                        body5,
-                        body6,
-                        body7,
-                        body8,
-                        body9,
-                        body10}, this.InsertImprestMemoOperationCompleted, userState);
-        }
-        
-        private void OnInsertImprestMemoOperationCompleted(object arg) {
-            if ((this.InsertImprestMemoCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertImprestMemoCompleted(this, new InsertImprestMemoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertIndividualWorkPlanCommen" +
-            "ts", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertIndividualWorkPlanComments_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertIndividualWorkPlanComments(string code, int comments_For, string remarks) {
-            this.Invoke("InsertIndividualWorkPlanComments", new object[] {
-                        code,
-                        comments_For,
-                        remarks});
-        }
-        
-        /// <remarks/>
-        public void InsertIndividualWorkPlanCommentsAsync(string code, int comments_For, string remarks) {
-            this.InsertIndividualWorkPlanCommentsAsync(code, comments_For, remarks, null);
-        }
-        
-        /// <remarks/>
-        public void InsertIndividualWorkPlanCommentsAsync(string code, int comments_For, string remarks, object userState) {
-            if ((this.InsertIndividualWorkPlanCommentsOperationCompleted == null)) {
-                this.InsertIndividualWorkPlanCommentsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertIndividualWorkPlanCommentsOperationCompleted);
-            }
-            this.InvokeAsync("InsertIndividualWorkPlanComments", new object[] {
-                        code,
-                        comments_For,
-                        remarks}, this.InsertIndividualWorkPlanCommentsOperationCompleted, userState);
-        }
-        
-        private void OnInsertIndividualWorkPlanCommentsOperationCompleted(object arg) {
-            if ((this.InsertIndividualWorkPlanCommentsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertIndividualWorkPlanCommentsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertIndividualWorkplan", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertIndividualWorkplan_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string InsertIndividualWorkplan(string staffNo, string supNo, string appraisalPeriod) {
-            object[] results = this.Invoke("InsertIndividualWorkplan", new object[] {
-                        staffNo,
-                        supNo,
-                        appraisalPeriod});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void InsertIndividualWorkplanAsync(string staffNo, string supNo, string appraisalPeriod) {
-            this.InsertIndividualWorkplanAsync(staffNo, supNo, appraisalPeriod, null);
-        }
-        
-        /// <remarks/>
-        public void InsertIndividualWorkplanAsync(string staffNo, string supNo, string appraisalPeriod, object userState) {
-            if ((this.InsertIndividualWorkplanOperationCompleted == null)) {
-                this.InsertIndividualWorkplanOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertIndividualWorkplanOperationCompleted);
-            }
-            this.InvokeAsync("InsertIndividualWorkplan", new object[] {
-                        staffNo,
-                        supNo,
-                        appraisalPeriod}, this.InsertIndividualWorkplanOperationCompleted, userState);
-        }
-        
-        private void OnInsertIndividualWorkplanOperationCompleted(object arg) {
-            if ((this.InsertIndividualWorkplanCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertIndividualWorkplanCompleted(this, new InsertIndividualWorkplanCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertLeavePlannerLines", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertLeavePlannerLines_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertLeavePlannerLines(string docNo, string leaveT, decimal nodays, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime startDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime enddate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime returnDate, string remarks) {
-            this.Invoke("InsertLeavePlannerLines", new object[] {
-                        docNo,
-                        leaveT,
-                        nodays,
-                        startDate,
-                        enddate,
-                        returnDate,
-                        remarks});
-        }
-        
-        /// <remarks/>
-        public void InsertLeavePlannerLinesAsync(string docNo, string leaveT, decimal nodays, System.DateTime startDate, System.DateTime enddate, System.DateTime returnDate, string remarks) {
-            this.InsertLeavePlannerLinesAsync(docNo, leaveT, nodays, startDate, enddate, returnDate, remarks, null);
-        }
-        
-        /// <remarks/>
-        public void InsertLeavePlannerLinesAsync(string docNo, string leaveT, decimal nodays, System.DateTime startDate, System.DateTime enddate, System.DateTime returnDate, string remarks, object userState) {
-            if ((this.InsertLeavePlannerLinesOperationCompleted == null)) {
-                this.InsertLeavePlannerLinesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertLeavePlannerLinesOperationCompleted);
-            }
-            this.InvokeAsync("InsertLeavePlannerLines", new object[] {
-                        docNo,
-                        leaveT,
-                        nodays,
-                        startDate,
-                        enddate,
-                        returnDate,
-                        remarks}, this.InsertLeavePlannerLinesOperationCompleted, userState);
-        }
-        
-        private void OnInsertLeavePlannerLinesOperationCompleted(object arg) {
-            if ((this.InsertLeavePlannerLinesCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertLeavePlannerLinesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertLegalAdvisory", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertLegalAdvisory_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string InsertLegalAdvisory(string employeeNo, int requestCategory, string purpose) {
-            object[] results = this.Invoke("InsertLegalAdvisory", new object[] {
-                        employeeNo,
-                        requestCategory,
-                        purpose});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void InsertLegalAdvisoryAsync(string employeeNo, int requestCategory, string purpose) {
-            this.InsertLegalAdvisoryAsync(employeeNo, requestCategory, purpose, null);
-        }
-        
-        /// <remarks/>
-        public void InsertLegalAdvisoryAsync(string employeeNo, int requestCategory, string purpose, object userState) {
-            if ((this.InsertLegalAdvisoryOperationCompleted == null)) {
-                this.InsertLegalAdvisoryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertLegalAdvisoryOperationCompleted);
-            }
-            this.InvokeAsync("InsertLegalAdvisory", new object[] {
-                        employeeNo,
-                        requestCategory,
-                        purpose}, this.InsertLegalAdvisoryOperationCompleted, userState);
-        }
-        
-        private void OnInsertLegalAdvisoryOperationCompleted(object arg) {
-            if ((this.InsertLegalAdvisoryCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertLegalAdvisoryCompleted(this, new InsertLegalAdvisoryCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertNewVisitor", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertNewVisitor_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string InsertNewVisitor(int visitorCat, string purpose, string idNo, string phoneNo, string carRegNo, string visitorsNo, string visitorsName, string personToSee, string department, string passNo, string userID) {
-            object[] results = this.Invoke("InsertNewVisitor", new object[] {
-                        visitorCat,
-                        purpose,
-                        idNo,
-                        phoneNo,
-                        carRegNo,
-                        visitorsNo,
-                        visitorsName,
-                        personToSee,
-                        department,
-                        passNo,
-                        userID});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void InsertNewVisitorAsync(int visitorCat, string purpose, string idNo, string phoneNo, string carRegNo, string visitorsNo, string visitorsName, string personToSee, string department, string passNo, string userID) {
-            this.InsertNewVisitorAsync(visitorCat, purpose, idNo, phoneNo, carRegNo, visitorsNo, visitorsName, personToSee, department, passNo, userID, null);
-        }
-        
-        /// <remarks/>
-        public void InsertNewVisitorAsync(int visitorCat, string purpose, string idNo, string phoneNo, string carRegNo, string visitorsNo, string visitorsName, string personToSee, string department, string passNo, string userID, object userState) {
-            if ((this.InsertNewVisitorOperationCompleted == null)) {
-                this.InsertNewVisitorOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertNewVisitorOperationCompleted);
-            }
-            this.InvokeAsync("InsertNewVisitor", new object[] {
-                        visitorCat,
-                        purpose,
-                        idNo,
-                        phoneNo,
-                        carRegNo,
-                        visitorsNo,
-                        visitorsName,
-                        personToSee,
-                        department,
-                        passNo,
-                        userID}, this.InsertNewVisitorOperationCompleted, userState);
-        }
-        
-        private void OnInsertNewVisitorOperationCompleted(object arg) {
-            if ((this.InsertNewVisitorCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertNewVisitorCompleted(this, new InsertNewVisitorCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertRecruitmentCenterComment" +
-            "s", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertRecruitmentCenterComments_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertRecruitmentCenterComments(string officer, int quizT, string comments) {
-            this.Invoke("InsertRecruitmentCenterComments", new object[] {
-                        officer,
-                        quizT,
-                        comments});
-        }
-        
-        /// <remarks/>
-        public void InsertRecruitmentCenterCommentsAsync(string officer, int quizT, string comments) {
-            this.InsertRecruitmentCenterCommentsAsync(officer, quizT, comments, null);
-        }
-        
-        /// <remarks/>
-        public void InsertRecruitmentCenterCommentsAsync(string officer, int quizT, string comments, object userState) {
-            if ((this.InsertRecruitmentCenterCommentsOperationCompleted == null)) {
-                this.InsertRecruitmentCenterCommentsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertRecruitmentCenterCommentsOperationCompleted);
-            }
-            this.InvokeAsync("InsertRecruitmentCenterComments", new object[] {
-                        officer,
-                        quizT,
-                        comments}, this.InsertRecruitmentCenterCommentsOperationCompleted, userState);
-        }
-        
-        private void OnInsertRecruitmentCenterCommentsOperationCompleted(object arg) {
-            if ((this.InsertRecruitmentCenterCommentsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertRecruitmentCenterCommentsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertRegistrationInformation", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertRegistrationInformation_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string InsertRegistrationInformation(
-                    string fullName, 
-                    int gender, 
-                    string county, 
-                    string subCounty, 
-                    string tribe, 
-                    string meanG, 
-                    string callingletter, 
-                    string iDNo, 
-                    bool isDiable, 
-                    string disabilitydetails, 
-                    [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime doB, 
-                    decimal bootSize, 
-                    string paramilitaryAcademy, 
-                    string nBU, 
-                    string otherQual, 
-                    string officer) {
-            object[] results = this.Invoke("InsertRegistrationInformation", new object[] {
-                        fullName,
-                        gender,
-                        county,
-                        subCounty,
-                        tribe,
-                        meanG,
-                        callingletter,
-                        iDNo,
-                        isDiable,
-                        disabilitydetails,
-                        doB,
-                        bootSize,
-                        paramilitaryAcademy,
-                        nBU,
-                        otherQual,
-                        officer});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void InsertRegistrationInformationAsync(
-                    string fullName, 
-                    int gender, 
-                    string county, 
-                    string subCounty, 
-                    string tribe, 
-                    string meanG, 
-                    string callingletter, 
-                    string iDNo, 
-                    bool isDiable, 
-                    string disabilitydetails, 
-                    System.DateTime doB, 
-                    decimal bootSize, 
-                    string paramilitaryAcademy, 
-                    string nBU, 
-                    string otherQual, 
-                    string officer) {
-            this.InsertRegistrationInformationAsync(fullName, gender, county, subCounty, tribe, meanG, callingletter, iDNo, isDiable, disabilitydetails, doB, bootSize, paramilitaryAcademy, nBU, otherQual, officer, null);
-        }
-        
-        /// <remarks/>
-        public void InsertRegistrationInformationAsync(
-                    string fullName, 
-                    int gender, 
-                    string county, 
-                    string subCounty, 
-                    string tribe, 
-                    string meanG, 
-                    string callingletter, 
-                    string iDNo, 
-                    bool isDiable, 
-                    string disabilitydetails, 
-                    System.DateTime doB, 
-                    decimal bootSize, 
-                    string paramilitaryAcademy, 
-                    string nBU, 
-                    string otherQual, 
-                    string officer, 
-                    object userState) {
-            if ((this.InsertRegistrationInformationOperationCompleted == null)) {
-                this.InsertRegistrationInformationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertRegistrationInformationOperationCompleted);
-            }
-            this.InvokeAsync("InsertRegistrationInformation", new object[] {
-                        fullName,
-                        gender,
-                        county,
-                        subCounty,
-                        tribe,
-                        meanG,
-                        callingletter,
-                        iDNo,
-                        isDiable,
-                        disabilitydetails,
-                        doB,
-                        bootSize,
-                        paramilitaryAcademy,
-                        nBU,
-                        otherQual,
-                        officer}, this.InsertRegistrationInformationOperationCompleted, userState);
-        }
-        
-        private void OnInsertRegistrationInformationOperationCompleted(object arg) {
-            if ((this.InsertRegistrationInformationCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertRegistrationInformationCompleted(this, new InsertRegistrationInformationCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertStaffAdvance", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertStaffAdvance_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertStaffAdvance(string staffNo, decimal amount, string userID) {
-            this.Invoke("InsertStaffAdvance", new object[] {
-                        staffNo,
-                        amount,
-                        userID});
-        }
-        
-        /// <remarks/>
-        public void InsertStaffAdvanceAsync(string staffNo, decimal amount, string userID) {
-            this.InsertStaffAdvanceAsync(staffNo, amount, userID, null);
-        }
-        
-        /// <remarks/>
-        public void InsertStaffAdvanceAsync(string staffNo, decimal amount, string userID, object userState) {
-            if ((this.InsertStaffAdvanceOperationCompleted == null)) {
-                this.InsertStaffAdvanceOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertStaffAdvanceOperationCompleted);
-            }
-            this.InvokeAsync("InsertStaffAdvance", new object[] {
-                        staffNo,
-                        amount,
-                        userID}, this.InsertStaffAdvanceOperationCompleted, userState);
-        }
-        
-        private void OnInsertStaffAdvanceOperationCompleted(object arg) {
-            if ((this.InsertStaffAdvanceCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertStaffAdvanceCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertStaffClaims", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertStaffClaims_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string InsertStaffClaims(string employeeNo, string dim1, string dim2, string dim3, string dim4, string dim5, string purpose, bool claimFromImprest, string imprestNo) {
-            object[] results = this.Invoke("InsertStaffClaims", new object[] {
-                        employeeNo,
-                        dim1,
-                        dim2,
-                        dim3,
-                        dim4,
-                        dim5,
-                        purpose,
-                        claimFromImprest,
-                        imprestNo});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void InsertStaffClaimsAsync(string employeeNo, string dim1, string dim2, string dim3, string dim4, string dim5, string purpose, bool claimFromImprest, string imprestNo) {
-            this.InsertStaffClaimsAsync(employeeNo, dim1, dim2, dim3, dim4, dim5, purpose, claimFromImprest, imprestNo, null);
-        }
-        
-        /// <remarks/>
-        public void InsertStaffClaimsAsync(string employeeNo, string dim1, string dim2, string dim3, string dim4, string dim5, string purpose, bool claimFromImprest, string imprestNo, object userState) {
-            if ((this.InsertStaffClaimsOperationCompleted == null)) {
-                this.InsertStaffClaimsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertStaffClaimsOperationCompleted);
-            }
-            this.InvokeAsync("InsertStaffClaims", new object[] {
-                        employeeNo,
-                        dim1,
-                        dim2,
-                        dim3,
-                        dim4,
-                        dim5,
-                        purpose,
-                        claimFromImprest,
-                        imprestNo}, this.InsertStaffClaimsOperationCompleted, userState);
-        }
-        
-        private void OnInsertStaffClaimsOperationCompleted(object arg) {
-            if ((this.InsertStaffClaimsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertStaffClaimsCompleted(this, new InsertStaffClaimsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertStaffValueCompetence", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertStaffValueCompetence_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertStaffValueCompetence(string docNo, int cat) {
-            this.Invoke("InsertStaffValueCompetence", new object[] {
-                        docNo,
-                        cat});
-        }
-        
-        /// <remarks/>
-        public void InsertStaffValueCompetenceAsync(string docNo, int cat) {
-            this.InsertStaffValueCompetenceAsync(docNo, cat, null);
-        }
-        
-        /// <remarks/>
-        public void InsertStaffValueCompetenceAsync(string docNo, int cat, object userState) {
-            if ((this.InsertStaffValueCompetenceOperationCompleted == null)) {
-                this.InsertStaffValueCompetenceOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertStaffValueCompetenceOperationCompleted);
-            }
-            this.InvokeAsync("InsertStaffValueCompetence", new object[] {
-                        docNo,
-                        cat}, this.InsertStaffValueCompetenceOperationCompleted, userState);
-        }
-        
-        private void OnInsertStaffValueCompetenceOperationCompleted(object arg) {
-            if ((this.InsertStaffValueCompetenceCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertStaffValueCompetenceCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertStandingImprest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertStandingImprest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertStandingImprest(string code, int objEntryNo, string target) {
-            this.Invoke("InsertStandingImprest", new object[] {
-                        code,
-                        objEntryNo,
-                        target});
-        }
-        
-        /// <remarks/>
-        public void InsertStandingImprestAsync(string code, int objEntryNo, string target) {
-            this.InsertStandingImprestAsync(code, objEntryNo, target, null);
-        }
-        
-        /// <remarks/>
-        public void InsertStandingImprestAsync(string code, int objEntryNo, string target, object userState) {
-            if ((this.InsertStandingImprestOperationCompleted == null)) {
-                this.InsertStandingImprestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertStandingImprestOperationCompleted);
-            }
-            this.InvokeAsync("InsertStandingImprest", new object[] {
-                        code,
-                        objEntryNo,
-                        target}, this.InsertStandingImprestOperationCompleted, userState);
-        }
-        
-        private void OnInsertStandingImprestOperationCompleted(object arg) {
-            if ((this.InsertStandingImprestCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertStandingImprestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertTNAConferenceSeminar", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertTNAConferenceSeminar_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertTNAConferenceSeminar(string docNo, string conferenceWorkshops, string profBodyOffering, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime projStartDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime projEndDate, decimal feesCharged, decimal otherCost) {
-            this.Invoke("InsertTNAConferenceSeminar", new object[] {
-                        docNo,
-                        conferenceWorkshops,
-                        profBodyOffering,
-                        projStartDate,
-                        projEndDate,
-                        feesCharged,
-                        otherCost});
-        }
-        
-        /// <remarks/>
-        public void InsertTNAConferenceSeminarAsync(string docNo, string conferenceWorkshops, string profBodyOffering, System.DateTime projStartDate, System.DateTime projEndDate, decimal feesCharged, decimal otherCost) {
-            this.InsertTNAConferenceSeminarAsync(docNo, conferenceWorkshops, profBodyOffering, projStartDate, projEndDate, feesCharged, otherCost, null);
-        }
-        
-        /// <remarks/>
-        public void InsertTNAConferenceSeminarAsync(string docNo, string conferenceWorkshops, string profBodyOffering, System.DateTime projStartDate, System.DateTime projEndDate, decimal feesCharged, decimal otherCost, object userState) {
-            if ((this.InsertTNAConferenceSeminarOperationCompleted == null)) {
-                this.InsertTNAConferenceSeminarOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertTNAConferenceSeminarOperationCompleted);
-            }
-            this.InvokeAsync("InsertTNAConferenceSeminar", new object[] {
-                        docNo,
-                        conferenceWorkshops,
-                        profBodyOffering,
-                        projStartDate,
-                        projEndDate,
-                        feesCharged,
-                        otherCost}, this.InsertTNAConferenceSeminarOperationCompleted, userState);
-        }
-        
-        private void OnInsertTNAConferenceSeminarOperationCompleted(object arg) {
-            if ((this.InsertTNAConferenceSeminarCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertTNAConferenceSeminarCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertTNAQuestionHOD", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertTNAQuestionHOD_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertTNAQuestionHOD(string docNo, int lineNo, string hODRecommedation, int hODApproval, string hOD) {
-            this.Invoke("InsertTNAQuestionHOD", new object[] {
-                        docNo,
-                        lineNo,
-                        hODRecommedation,
-                        hODApproval,
-                        hOD});
-        }
-        
-        /// <remarks/>
-        public void InsertTNAQuestionHODAsync(string docNo, int lineNo, string hODRecommedation, int hODApproval, string hOD) {
-            this.InsertTNAQuestionHODAsync(docNo, lineNo, hODRecommedation, hODApproval, hOD, null);
-        }
-        
-        /// <remarks/>
-        public void InsertTNAQuestionHODAsync(string docNo, int lineNo, string hODRecommedation, int hODApproval, string hOD, object userState) {
-            if ((this.InsertTNAQuestionHODOperationCompleted == null)) {
-                this.InsertTNAQuestionHODOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertTNAQuestionHODOperationCompleted);
-            }
-            this.InvokeAsync("InsertTNAQuestionHOD", new object[] {
-                        docNo,
-                        lineNo,
-                        hODRecommedation,
-                        hODApproval,
-                        hOD}, this.InsertTNAQuestionHODOperationCompleted, userState);
-        }
-        
-        private void OnInsertTNAQuestionHODOperationCompleted(object arg) {
-            if ((this.InsertTNAQuestionHODCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertTNAQuestionHODCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertTNAQuestionSupervisor", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertTNAQuestionSupervisor_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertTNAQuestionSupervisor(string docNo, int lineNo, string recommendedTraining, string recommendedProgram, string supervisor) {
-            this.Invoke("InsertTNAQuestionSupervisor", new object[] {
-                        docNo,
-                        lineNo,
-                        recommendedTraining,
-                        recommendedProgram,
-                        supervisor});
-        }
-        
-        /// <remarks/>
-        public void InsertTNAQuestionSupervisorAsync(string docNo, int lineNo, string recommendedTraining, string recommendedProgram, string supervisor) {
-            this.InsertTNAQuestionSupervisorAsync(docNo, lineNo, recommendedTraining, recommendedProgram, supervisor, null);
-        }
-        
-        /// <remarks/>
-        public void InsertTNAQuestionSupervisorAsync(string docNo, int lineNo, string recommendedTraining, string recommendedProgram, string supervisor, object userState) {
-            if ((this.InsertTNAQuestionSupervisorOperationCompleted == null)) {
-                this.InsertTNAQuestionSupervisorOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertTNAQuestionSupervisorOperationCompleted);
-            }
-            this.InvokeAsync("InsertTNAQuestionSupervisor", new object[] {
-                        docNo,
-                        lineNo,
-                        recommendedTraining,
-                        recommendedProgram,
-                        supervisor}, this.InsertTNAQuestionSupervisorOperationCompleted, userState);
-        }
-        
-        private void OnInsertTNAQuestionSupervisorOperationCompleted(object arg) {
-            if ((this.InsertTNAQuestionSupervisorCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertTNAQuestionSupervisorCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertTrainingNeedsAnalysis", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertTrainingNeedsAnalysis_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string InsertTrainingNeedsAnalysis(string employeeNo, string briefDescription, int neeedSource, int trainingCategory) {
-            object[] results = this.Invoke("InsertTrainingNeedsAnalysis", new object[] {
-                        employeeNo,
-                        briefDescription,
-                        neeedSource,
-                        trainingCategory});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void InsertTrainingNeedsAnalysisAsync(string employeeNo, string briefDescription, int neeedSource, int trainingCategory) {
-            this.InsertTrainingNeedsAnalysisAsync(employeeNo, briefDescription, neeedSource, trainingCategory, null);
-        }
-        
-        /// <remarks/>
-        public void InsertTrainingNeedsAnalysisAsync(string employeeNo, string briefDescription, int neeedSource, int trainingCategory, object userState) {
-            if ((this.InsertTrainingNeedsAnalysisOperationCompleted == null)) {
-                this.InsertTrainingNeedsAnalysisOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertTrainingNeedsAnalysisOperationCompleted);
-            }
-            this.InvokeAsync("InsertTrainingNeedsAnalysis", new object[] {
-                        employeeNo,
-                        briefDescription,
-                        neeedSource,
-                        trainingCategory}, this.InsertTrainingNeedsAnalysisOperationCompleted, userState);
-        }
-        
-        private void OnInsertTrainingNeedsAnalysisOperationCompleted(object arg) {
-            if ((this.InsertTrainingNeedsAnalysisCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertTrainingNeedsAnalysisCompleted(this, new InsertTrainingNeedsAnalysisCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertTrainingNeedsLines", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertTrainingNeedsLines_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertTrainingNeedsLines(string docNo, string majorTasks, bool trainingRequired, string trainingNeed, string proposedIntervention, string trainer, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime startDate, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime endDate, decimal trainingCost, decimal otherCost, decimal travelCost) {
-            this.Invoke("InsertTrainingNeedsLines", new object[] {
-                        docNo,
-                        majorTasks,
-                        trainingRequired,
-                        trainingNeed,
-                        proposedIntervention,
-                        trainer,
-                        startDate,
-                        endDate,
-                        trainingCost,
-                        otherCost,
-                        travelCost});
-        }
-        
-        /// <remarks/>
-        public void InsertTrainingNeedsLinesAsync(string docNo, string majorTasks, bool trainingRequired, string trainingNeed, string proposedIntervention, string trainer, System.DateTime startDate, System.DateTime endDate, decimal trainingCost, decimal otherCost, decimal travelCost) {
-            this.InsertTrainingNeedsLinesAsync(docNo, majorTasks, trainingRequired, trainingNeed, proposedIntervention, trainer, startDate, endDate, trainingCost, otherCost, travelCost, null);
-        }
-        
-        /// <remarks/>
-        public void InsertTrainingNeedsLinesAsync(string docNo, string majorTasks, bool trainingRequired, string trainingNeed, string proposedIntervention, string trainer, System.DateTime startDate, System.DateTime endDate, decimal trainingCost, decimal otherCost, decimal travelCost, object userState) {
-            if ((this.InsertTrainingNeedsLinesOperationCompleted == null)) {
-                this.InsertTrainingNeedsLinesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertTrainingNeedsLinesOperationCompleted);
-            }
-            this.InvokeAsync("InsertTrainingNeedsLines", new object[] {
-                        docNo,
-                        majorTasks,
-                        trainingRequired,
-                        trainingNeed,
-                        proposedIntervention,
-                        trainer,
-                        startDate,
-                        endDate,
-                        trainingCost,
-                        otherCost,
-                        travelCost}, this.InsertTrainingNeedsLinesOperationCompleted, userState);
-        }
-        
-        private void OnInsertTrainingNeedsLinesOperationCompleted(object arg) {
-            if ((this.InsertTrainingNeedsLinesCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertTrainingNeedsLinesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertTrainingNeedsQuestionnar" +
-            "e", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertTrainingNeedsQuestionnare_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertTrainingNeedsQuestionnare(string docNo, string developmentProgramsAttended, string impactedperformance, string opportunitytoSkills, string areasBenefit, string careerGoals, string personalDevPlans, string proffessionalMemBody) {
-            this.Invoke("InsertTrainingNeedsQuestionnare", new object[] {
-                        docNo,
-                        developmentProgramsAttended,
-                        impactedperformance,
-                        opportunitytoSkills,
-                        areasBenefit,
-                        careerGoals,
-                        personalDevPlans,
-                        proffessionalMemBody});
-        }
-        
-        /// <remarks/>
-        public void InsertTrainingNeedsQuestionnareAsync(string docNo, string developmentProgramsAttended, string impactedperformance, string opportunitytoSkills, string areasBenefit, string careerGoals, string personalDevPlans, string proffessionalMemBody) {
-            this.InsertTrainingNeedsQuestionnareAsync(docNo, developmentProgramsAttended, impactedperformance, opportunitytoSkills, areasBenefit, careerGoals, personalDevPlans, proffessionalMemBody, null);
-        }
-        
-        /// <remarks/>
-        public void InsertTrainingNeedsQuestionnareAsync(string docNo, string developmentProgramsAttended, string impactedperformance, string opportunitytoSkills, string areasBenefit, string careerGoals, string personalDevPlans, string proffessionalMemBody, object userState) {
-            if ((this.InsertTrainingNeedsQuestionnareOperationCompleted == null)) {
-                this.InsertTrainingNeedsQuestionnareOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertTrainingNeedsQuestionnareOperationCompleted);
-            }
-            this.InvokeAsync("InsertTrainingNeedsQuestionnare", new object[] {
-                        docNo,
-                        developmentProgramsAttended,
-                        impactedperformance,
-                        opportunitytoSkills,
-                        areasBenefit,
-                        careerGoals,
-                        personalDevPlans,
-                        proffessionalMemBody}, this.InsertTrainingNeedsQuestionnareOperationCompleted, userState);
-        }
-        
-        private void OnInsertTrainingNeedsQuestionnareOperationCompleted(object arg) {
-            if ((this.InsertTrainingNeedsQuestionnareCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertTrainingNeedsQuestionnareCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertTransportReqPassenger", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertTransportReqPassenger_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertTransportReqPassenger(string docNo, int passType, string passNo) {
-            this.Invoke("InsertTransportReqPassenger", new object[] {
-                        docNo,
-                        passType,
-                        passNo});
-        }
-        
-        /// <remarks/>
-        public void InsertTransportReqPassengerAsync(string docNo, int passType, string passNo) {
-            this.InsertTransportReqPassengerAsync(docNo, passType, passNo, null);
-        }
-        
-        /// <remarks/>
-        public void InsertTransportReqPassengerAsync(string docNo, int passType, string passNo, object userState) {
-            if ((this.InsertTransportReqPassengerOperationCompleted == null)) {
-                this.InsertTransportReqPassengerOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertTransportReqPassengerOperationCompleted);
-            }
-            this.InvokeAsync("InsertTransportReqPassenger", new object[] {
-                        docNo,
-                        passType,
-                        passNo}, this.InsertTransportReqPassengerOperationCompleted, userState);
-        }
-        
-        private void OnInsertTransportReqPassengerOperationCompleted(object arg) {
-            if ((this.InsertTransportReqPassengerCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertTransportReqPassengerCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertVisitorItems", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertVisitorItems_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertVisitorItems(string docNo, string itemDescr, int itemCat) {
-            this.Invoke("InsertVisitorItems", new object[] {
-                        docNo,
-                        itemDescr,
-                        itemCat});
-        }
-        
-        /// <remarks/>
-        public void InsertVisitorItemsAsync(string docNo, string itemDescr, int itemCat) {
-            this.InsertVisitorItemsAsync(docNo, itemDescr, itemCat, null);
-        }
-        
-        /// <remarks/>
-        public void InsertVisitorItemsAsync(string docNo, string itemDescr, int itemCat, object userState) {
-            if ((this.InsertVisitorItemsOperationCompleted == null)) {
-                this.InsertVisitorItemsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertVisitorItemsOperationCompleted);
-            }
-            this.InvokeAsync("InsertVisitorItems", new object[] {
-                        docNo,
-                        itemDescr,
-                        itemCat}, this.InsertVisitorItemsOperationCompleted, userState);
-        }
-        
-        private void OnInsertVisitorItemsOperationCompleted(object arg) {
-            if ((this.InsertVisitorItemsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertVisitorItemsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertWorkPlanObjectiveRemarks" +
-            "", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertWorkPlanObjectiveRemarks_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertWorkPlanObjectiveRemarks(string code, int entryNo, string remarks) {
-            this.Invoke("InsertWorkPlanObjectiveRemarks", new object[] {
-                        code,
-                        entryNo,
-                        remarks});
-        }
-        
-        /// <remarks/>
-        public void InsertWorkPlanObjectiveRemarksAsync(string code, int entryNo, string remarks) {
-            this.InsertWorkPlanObjectiveRemarksAsync(code, entryNo, remarks, null);
-        }
-        
-        /// <remarks/>
-        public void InsertWorkPlanObjectiveRemarksAsync(string code, int entryNo, string remarks, object userState) {
-            if ((this.InsertWorkPlanObjectiveRemarksOperationCompleted == null)) {
-                this.InsertWorkPlanObjectiveRemarksOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertWorkPlanObjectiveRemarksOperationCompleted);
-            }
-            this.InvokeAsync("InsertWorkPlanObjectiveRemarks", new object[] {
-                        code,
-                        entryNo,
-                        remarks}, this.InsertWorkPlanObjectiveRemarksOperationCompleted, userState);
-        }
-        
-        private void OnInsertWorkPlanObjectiveRemarksOperationCompleted(object arg) {
-            if ((this.InsertWorkPlanObjectiveRemarksCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertWorkPlanObjectiveRemarksCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertWorkPlanObjectiveTargetA" +
-            "ctivity", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertWorkPlanObjectiveTargetActivity_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertWorkPlanObjectiveTargetActivity(string code, int objEntryNo, int targetEntrNo, string activity, string resourceReq, string expctedResults, int timeFrame, string perfInd) {
-            this.Invoke("InsertWorkPlanObjectiveTargetActivity", new object[] {
-                        code,
-                        objEntryNo,
-                        targetEntrNo,
-                        activity,
-                        resourceReq,
-                        expctedResults,
-                        timeFrame,
-                        perfInd});
-        }
-        
-        /// <remarks/>
-        public void InsertWorkPlanObjectiveTargetActivityAsync(string code, int objEntryNo, int targetEntrNo, string activity, string resourceReq, string expctedResults, int timeFrame, string perfInd) {
-            this.InsertWorkPlanObjectiveTargetActivityAsync(code, objEntryNo, targetEntrNo, activity, resourceReq, expctedResults, timeFrame, perfInd, null);
-        }
-        
-        /// <remarks/>
-        public void InsertWorkPlanObjectiveTargetActivityAsync(string code, int objEntryNo, int targetEntrNo, string activity, string resourceReq, string expctedResults, int timeFrame, string perfInd, object userState) {
-            if ((this.InsertWorkPlanObjectiveTargetActivityOperationCompleted == null)) {
-                this.InsertWorkPlanObjectiveTargetActivityOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertWorkPlanObjectiveTargetActivityOperationCompleted);
-            }
-            this.InvokeAsync("InsertWorkPlanObjectiveTargetActivity", new object[] {
-                        code,
-                        objEntryNo,
-                        targetEntrNo,
-                        activity,
-                        resourceReq,
-                        expctedResults,
-                        timeFrame,
-                        perfInd}, this.InsertWorkPlanObjectiveTargetActivityOperationCompleted, userState);
-        }
-        
-        private void OnInsertWorkPlanObjectiveTargetActivityOperationCompleted(object arg) {
-            if ((this.InsertWorkPlanObjectiveTargetActivityCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertWorkPlanObjectiveTargetActivityCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertWorkPlanObjectiveTarget", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertWorkPlanObjectiveTarget_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertWorkPlanObjectiveTarget(string code, int objEntryNo, string target) {
-            this.Invoke("InsertWorkPlanObjectiveTarget", new object[] {
-                        code,
-                        objEntryNo,
-                        target});
-        }
-        
-        /// <remarks/>
-        public void InsertWorkPlanObjectiveTargetAsync(string code, int objEntryNo, string target) {
-            this.InsertWorkPlanObjectiveTargetAsync(code, objEntryNo, target, null);
-        }
-        
-        /// <remarks/>
-        public void InsertWorkPlanObjectiveTargetAsync(string code, int objEntryNo, string target, object userState) {
-            if ((this.InsertWorkPlanObjectiveTargetOperationCompleted == null)) {
-                this.InsertWorkPlanObjectiveTargetOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertWorkPlanObjectiveTargetOperationCompleted);
-            }
-            this.InvokeAsync("InsertWorkPlanObjectiveTarget", new object[] {
-                        code,
-                        objEntryNo,
-                        target}, this.InsertWorkPlanObjectiveTargetOperationCompleted, userState);
-        }
-        
-        private void OnInsertWorkPlanObjectiveTargetOperationCompleted(object arg) {
-            if ((this.InsertWorkPlanObjectiveTargetCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertWorkPlanObjectiveTargetCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:InsertWorkPlanObjective", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="InsertWorkPlanObjective_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void InsertWorkPlanObjective(string code, string objective) {
-            this.Invoke("InsertWorkPlanObjective", new object[] {
-                        code,
-                        objective});
-        }
-        
-        /// <remarks/>
-        public void InsertWorkPlanObjectiveAsync(string code, string objective) {
-            this.InsertWorkPlanObjectiveAsync(code, objective, null);
-        }
-        
-        /// <remarks/>
-        public void InsertWorkPlanObjectiveAsync(string code, string objective, object userState) {
-            if ((this.InsertWorkPlanObjectiveOperationCompleted == null)) {
-                this.InsertWorkPlanObjectiveOperationCompleted = new System.Threading.SendOrPostCallback(this.OnInsertWorkPlanObjectiveOperationCompleted);
-            }
-            this.InvokeAsync("InsertWorkPlanObjective", new object[] {
-                        code,
-                        objective}, this.InsertWorkPlanObjectiveOperationCompleted, userState);
-        }
-        
-        private void OnInsertWorkPlanObjectiveOperationCompleted(object arg) {
-            if ((this.InsertWorkPlanObjectiveCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.InsertWorkPlanObjectiveCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:LeaveStatement", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="LeaveStatement_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void LeaveStatement(string employeeNo, string filenameFromApp) {
-            this.Invoke("LeaveStatement", new object[] {
-                        employeeNo,
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:PrintClassList", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="PrintClassList_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PrintClassList(string prog, string unit, string stage, string sem, string classCode, string campus, int docType, string filenameFromApp) {
+            this.Invoke("PrintClassList", new object[] {
+                        prog,
+                        unit,
+                        stage,
+                        sem,
+                        classCode,
+                        campus,
+                        docType,
                         filenameFromApp});
         }
         
         /// <remarks/>
-        public void LeaveStatementAsync(string employeeNo, string filenameFromApp) {
-            this.LeaveStatementAsync(employeeNo, filenameFromApp, null);
+        public void PrintClassListAsync(string prog, string unit, string stage, string sem, string classCode, string campus, int docType, string filenameFromApp) {
+            this.PrintClassListAsync(prog, unit, stage, sem, classCode, campus, docType, filenameFromApp, null);
         }
         
         /// <remarks/>
-        public void LeaveStatementAsync(string employeeNo, string filenameFromApp, object userState) {
-            if ((this.LeaveStatementOperationCompleted == null)) {
-                this.LeaveStatementOperationCompleted = new System.Threading.SendOrPostCallback(this.OnLeaveStatementOperationCompleted);
+        public void PrintClassListAsync(string prog, string unit, string stage, string sem, string classCode, string campus, int docType, string filenameFromApp, object userState) {
+            if ((this.PrintClassListOperationCompleted == null)) {
+                this.PrintClassListOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPrintClassListOperationCompleted);
             }
-            this.InvokeAsync("LeaveStatement", new object[] {
-                        employeeNo,
-                        filenameFromApp}, this.LeaveStatementOperationCompleted, userState);
+            this.InvokeAsync("PrintClassList", new object[] {
+                        prog,
+                        unit,
+                        stage,
+                        sem,
+                        classCode,
+                        campus,
+                        docType,
+                        filenameFromApp}, this.PrintClassListOperationCompleted, userState);
         }
         
-        private void OnLeaveStatementOperationCompleted(object arg) {
-            if ((this.LeaveStatementCompleted != null)) {
+        private void OnPrintClassListOperationCompleted(object arg) {
+            if ((this.PrintClassListCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.LeaveStatementCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.PrintClassListCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:MaintenanceRequest", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="MaintenanceRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:PrintCourseStatement", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="PrintCourseStatement_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PrintCourseStatement(string stdNo, string sem, string filenameFromApp) {
+            this.Invoke("PrintCourseStatement", new object[] {
+                        stdNo,
+                        sem,
+                        filenameFromApp});
+        }
+        
+        /// <remarks/>
+        public void PrintCourseStatementAsync(string stdNo, string sem, string filenameFromApp) {
+            this.PrintCourseStatementAsync(stdNo, sem, filenameFromApp, null);
+        }
+        
+        /// <remarks/>
+        public void PrintCourseStatementAsync(string stdNo, string sem, string filenameFromApp, object userState) {
+            if ((this.PrintCourseStatementOperationCompleted == null)) {
+                this.PrintCourseStatementOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPrintCourseStatementOperationCompleted);
+            }
+            this.InvokeAsync("PrintCourseStatement", new object[] {
+                        stdNo,
+                        sem,
+                        filenameFromApp}, this.PrintCourseStatementOperationCompleted, userState);
+        }
+        
+        private void OnPrintCourseStatementOperationCompleted(object arg) {
+            if ((this.PrintCourseStatementCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PrintCourseStatementCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:RefreshPaymentPlan", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="RefreshPaymentPlan_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void RefreshPaymentPlan(string stdNo) {
+            this.Invoke("RefreshPaymentPlan", new object[] {
+                        stdNo});
+        }
+        
+        /// <remarks/>
+        public void RefreshPaymentPlanAsync(string stdNo) {
+            this.RefreshPaymentPlanAsync(stdNo, null);
+        }
+        
+        /// <remarks/>
+        public void RefreshPaymentPlanAsync(string stdNo, object userState) {
+            if ((this.RefreshPaymentPlanOperationCompleted == null)) {
+                this.RefreshPaymentPlanOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRefreshPaymentPlanOperationCompleted);
+            }
+            this.InvokeAsync("RefreshPaymentPlan", new object[] {
+                        stdNo}, this.RefreshPaymentPlanOperationCompleted, userState);
+        }
+        
+        private void OnRefreshPaymentPlanOperationCompleted(object arg) {
+            if ((this.RefreshPaymentPlanCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.RefreshPaymentPlanCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:RefreshStudentAudit", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="RefreshStudentAudit_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void RefreshStudentAudit(string stdNo) {
+            this.Invoke("RefreshStudentAudit", new object[] {
+                        stdNo});
+        }
+        
+        /// <remarks/>
+        public void RefreshStudentAuditAsync(string stdNo) {
+            this.RefreshStudentAuditAsync(stdNo, null);
+        }
+        
+        /// <remarks/>
+        public void RefreshStudentAuditAsync(string stdNo, object userState) {
+            if ((this.RefreshStudentAuditOperationCompleted == null)) {
+                this.RefreshStudentAuditOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRefreshStudentAuditOperationCompleted);
+            }
+            this.InvokeAsync("RefreshStudentAudit", new object[] {
+                        stdNo}, this.RefreshStudentAuditOperationCompleted, userState);
+        }
+        
+        private void OnRefreshStudentAuditOperationCompleted(object arg) {
+            if ((this.RefreshStudentAuditCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.RefreshStudentAuditCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:RegisterStudentUnitBasket", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="RegisterStudentUnitBasket_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void RegisterStudentUnitBasket(string studentNo, string mySem, string myStage, string prog, string unit, int regType, string classCode, string campus, string dayCode, string period) {
+            this.Invoke("RegisterStudentUnitBasket", new object[] {
+                        studentNo,
+                        mySem,
+                        myStage,
+                        prog,
+                        unit,
+                        regType,
+                        classCode,
+                        campus,
+                        dayCode,
+                        period});
+        }
+        
+        /// <remarks/>
+        public void RegisterStudentUnitBasketAsync(string studentNo, string mySem, string myStage, string prog, string unit, int regType, string classCode, string campus, string dayCode, string period) {
+            this.RegisterStudentUnitBasketAsync(studentNo, mySem, myStage, prog, unit, regType, classCode, campus, dayCode, period, null);
+        }
+        
+        /// <remarks/>
+        public void RegisterStudentUnitBasketAsync(string studentNo, string mySem, string myStage, string prog, string unit, int regType, string classCode, string campus, string dayCode, string period, object userState) {
+            if ((this.RegisterStudentUnitBasketOperationCompleted == null)) {
+                this.RegisterStudentUnitBasketOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRegisterStudentUnitBasketOperationCompleted);
+            }
+            this.InvokeAsync("RegisterStudentUnitBasket", new object[] {
+                        studentNo,
+                        mySem,
+                        myStage,
+                        prog,
+                        unit,
+                        regType,
+                        classCode,
+                        campus,
+                        dayCode,
+                        period}, this.RegisterStudentUnitBasketOperationCompleted, userState);
+        }
+        
+        private void OnRegisterStudentUnitBasketOperationCompleted(object arg) {
+            if ((this.RegisterStudentUnitBasketCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.RegisterStudentUnitBasketCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:RegisterStudentUnits", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="RegisterStudentUnits_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string MaintenanceRequest(
-                    int maintenanceType, 
-                    string vehicle, 
-                    string vendor, 
-                    [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime dateTaken, 
-                    int fuelType, 
-                    decimal fuelQuantity, 
-                    decimal price, 
-                    string department, 
-                    string respCenter, 
-                    string station, 
-                    decimal odometerRead, 
-                    string employeeNo, 
-                    string maintenanceDescription, 
-                    string driver, 
-                    decimal coolant, 
-                    decimal batterywater, 
-                    decimal wheelBalancing, 
-                    decimal wheelAlignment) {
-            object[] results = this.Invoke("MaintenanceRequest", new object[] {
-                        maintenanceType,
-                        vehicle,
-                        vendor,
-                        dateTaken,
-                        fuelType,
-                        fuelQuantity,
-                        price,
-                        department,
-                        respCenter,
-                        station,
-                        odometerRead,
-                        employeeNo,
-                        maintenanceDescription,
-                        driver,
-                        coolant,
-                        batterywater,
-                        wheelBalancing,
-                        wheelAlignment});
+        public bool RegisterStudentUnits(string studentNo, string semester, string stage, string program, int reg_Type, bool backOfficeUser) {
+            object[] results = this.Invoke("RegisterStudentUnits", new object[] {
+                        studentNo,
+                        semester,
+                        stage,
+                        program,
+                        reg_Type,
+                        backOfficeUser});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void RegisterStudentUnitsAsync(string studentNo, string semester, string stage, string program, int reg_Type, bool backOfficeUser) {
+            this.RegisterStudentUnitsAsync(studentNo, semester, stage, program, reg_Type, backOfficeUser, null);
+        }
+        
+        /// <remarks/>
+        public void RegisterStudentUnitsAsync(string studentNo, string semester, string stage, string program, int reg_Type, bool backOfficeUser, object userState) {
+            if ((this.RegisterStudentUnitsOperationCompleted == null)) {
+                this.RegisterStudentUnitsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRegisterStudentUnitsOperationCompleted);
+            }
+            this.InvokeAsync("RegisterStudentUnits", new object[] {
+                        studentNo,
+                        semester,
+                        stage,
+                        program,
+                        reg_Type,
+                        backOfficeUser}, this.RegisterStudentUnitsOperationCompleted, userState);
+        }
+        
+        private void OnRegisterStudentUnitsOperationCompleted(object arg) {
+            if ((this.RegisterStudentUnitsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.RegisterStudentUnitsCompleted(this, new RegisterStudentUnitsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:SendEmail", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="SendEmail_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public bool SendEmail(ref string receiver, string subject, string message) {
+            object[] results = this.Invoke("SendEmail", new object[] {
+                        receiver,
+                        subject,
+                        message});
+            receiver = ((string)(results[1]));
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SendEmailAsync(string receiver, string subject, string message) {
+            this.SendEmailAsync(receiver, subject, message, null);
+        }
+        
+        /// <remarks/>
+        public void SendEmailAsync(string receiver, string subject, string message, object userState) {
+            if ((this.SendEmailOperationCompleted == null)) {
+                this.SendEmailOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendEmailOperationCompleted);
+            }
+            this.InvokeAsync("SendEmail", new object[] {
+                        receiver,
+                        subject,
+                        message}, this.SendEmailOperationCompleted, userState);
+        }
+        
+        private void OnSendEmailOperationCompleted(object arg) {
+            if ((this.SendEmailCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SendEmailCompleted(this, new SendEmailCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:SendStudentRegBacthApproval", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="SendStudentRegBacthApproval_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void SendStudentRegBacthApproval(string studentNo, string semester, int regT) {
+            this.Invoke("SendStudentRegBacthApproval", new object[] {
+                        studentNo,
+                        semester,
+                        regT});
+        }
+        
+        /// <remarks/>
+        public void SendStudentRegBacthApprovalAsync(string studentNo, string semester, int regT) {
+            this.SendStudentRegBacthApprovalAsync(studentNo, semester, regT, null);
+        }
+        
+        /// <remarks/>
+        public void SendStudentRegBacthApprovalAsync(string studentNo, string semester, int regT, object userState) {
+            if ((this.SendStudentRegBacthApprovalOperationCompleted == null)) {
+                this.SendStudentRegBacthApprovalOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendStudentRegBacthApprovalOperationCompleted);
+            }
+            this.InvokeAsync("SendStudentRegBacthApproval", new object[] {
+                        studentNo,
+                        semester,
+                        regT}, this.SendStudentRegBacthApprovalOperationCompleted, userState);
+        }
+        
+        private void OnSendStudentRegBacthApprovalOperationCompleted(object arg) {
+            if ((this.SendStudentRegBacthApprovalCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SendStudentRegBacthApprovalCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:StudentRequisitionApprovalReque" +
+            "st", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="StudentRequisitionApprovalRequest_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void StudentRequisitionApprovalRequest(string reqNo) {
+            this.Invoke("StudentRequisitionApprovalRequest", new object[] {
+                        reqNo});
+        }
+        
+        /// <remarks/>
+        public void StudentRequisitionApprovalRequestAsync(string reqNo) {
+            this.StudentRequisitionApprovalRequestAsync(reqNo, null);
+        }
+        
+        /// <remarks/>
+        public void StudentRequisitionApprovalRequestAsync(string reqNo, object userState) {
+            if ((this.StudentRequisitionApprovalRequestOperationCompleted == null)) {
+                this.StudentRequisitionApprovalRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStudentRequisitionApprovalRequestOperationCompleted);
+            }
+            this.InvokeAsync("StudentRequisitionApprovalRequest", new object[] {
+                        reqNo}, this.StudentRequisitionApprovalRequestOperationCompleted, userState);
+        }
+        
+        private void OnStudentRequisitionApprovalRequestOperationCompleted(object arg) {
+            if ((this.StudentRequisitionApprovalRequestCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.StudentRequisitionApprovalRequestCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:StudentRequisitionCreate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="StudentRequisitionCreate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public string StudentRequisitionCreate(string student_No, int requisition_Type, string remarks, string programme, string stage, string semester, string campus, decimal weightedMean, string concentration, bool sendFApproval, int noOfCopies) {
+            object[] results = this.Invoke("StudentRequisitionCreate", new object[] {
+                        student_No,
+                        requisition_Type,
+                        remarks,
+                        programme,
+                        stage,
+                        semester,
+                        campus,
+                        weightedMean,
+                        concentration,
+                        sendFApproval,
+                        noOfCopies});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void MaintenanceRequestAsync(
-                    int maintenanceType, 
-                    string vehicle, 
-                    string vendor, 
-                    System.DateTime dateTaken, 
-                    int fuelType, 
-                    decimal fuelQuantity, 
-                    decimal price, 
-                    string department, 
-                    string respCenter, 
-                    string station, 
-                    decimal odometerRead, 
-                    string employeeNo, 
-                    string maintenanceDescription, 
-                    string driver, 
-                    decimal coolant, 
-                    decimal batterywater, 
-                    decimal wheelBalancing, 
-                    decimal wheelAlignment) {
-            this.MaintenanceRequestAsync(maintenanceType, vehicle, vendor, dateTaken, fuelType, fuelQuantity, price, department, respCenter, station, odometerRead, employeeNo, maintenanceDescription, driver, coolant, batterywater, wheelBalancing, wheelAlignment, null);
+        public void StudentRequisitionCreateAsync(string student_No, int requisition_Type, string remarks, string programme, string stage, string semester, string campus, decimal weightedMean, string concentration, bool sendFApproval, int noOfCopies) {
+            this.StudentRequisitionCreateAsync(student_No, requisition_Type, remarks, programme, stage, semester, campus, weightedMean, concentration, sendFApproval, noOfCopies, null);
         }
         
         /// <remarks/>
-        public void MaintenanceRequestAsync(
-                    int maintenanceType, 
-                    string vehicle, 
-                    string vendor, 
-                    System.DateTime dateTaken, 
-                    int fuelType, 
-                    decimal fuelQuantity, 
-                    decimal price, 
-                    string department, 
-                    string respCenter, 
-                    string station, 
-                    decimal odometerRead, 
-                    string employeeNo, 
-                    string maintenanceDescription, 
-                    string driver, 
-                    decimal coolant, 
-                    decimal batterywater, 
-                    decimal wheelBalancing, 
-                    decimal wheelAlignment, 
-                    object userState) {
-            if ((this.MaintenanceRequestOperationCompleted == null)) {
-                this.MaintenanceRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnMaintenanceRequestOperationCompleted);
+        public void StudentRequisitionCreateAsync(string student_No, int requisition_Type, string remarks, string programme, string stage, string semester, string campus, decimal weightedMean, string concentration, bool sendFApproval, int noOfCopies, object userState) {
+            if ((this.StudentRequisitionCreateOperationCompleted == null)) {
+                this.StudentRequisitionCreateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStudentRequisitionCreateOperationCompleted);
             }
-            this.InvokeAsync("MaintenanceRequest", new object[] {
-                        maintenanceType,
-                        vehicle,
-                        vendor,
-                        dateTaken,
-                        fuelType,
-                        fuelQuantity,
-                        price,
-                        department,
-                        respCenter,
-                        station,
-                        odometerRead,
-                        employeeNo,
-                        maintenanceDescription,
-                        driver,
-                        coolant,
-                        batterywater,
-                        wheelBalancing,
-                        wheelAlignment}, this.MaintenanceRequestOperationCompleted, userState);
+            this.InvokeAsync("StudentRequisitionCreate", new object[] {
+                        student_No,
+                        requisition_Type,
+                        remarks,
+                        programme,
+                        stage,
+                        semester,
+                        campus,
+                        weightedMean,
+                        concentration,
+                        sendFApproval,
+                        noOfCopies}, this.StudentRequisitionCreateOperationCompleted, userState);
         }
         
-        private void OnMaintenanceRequestOperationCompleted(object arg) {
-            if ((this.MaintenanceRequestCompleted != null)) {
+        private void OnStudentRequisitionCreateOperationCompleted(object arg) {
+            if ((this.StudentRequisitionCreateCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.MaintenanceRequestCompleted(this, new MaintenanceRequestCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.StudentRequisitionCreateCompleted(this, new StudentRequisitionCreateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:OpenIndividualWorkPlanTo", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="OpenIndividualWorkPlanTo_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void OpenIndividualWorkPlanTo(string code, int open_To) {
-            this.Invoke("OpenIndividualWorkPlanTo", new object[] {
-                        code,
-                        open_To});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:StudentRequisitionLinesCreate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="StudentRequisitionLinesCreate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void StudentRequisitionLinesCreate(string requisition_No, string unit_Code, string unit_Title, string reason, string equivUnit) {
+            this.Invoke("StudentRequisitionLinesCreate", new object[] {
+                        requisition_No,
+                        unit_Code,
+                        unit_Title,
+                        reason,
+                        equivUnit});
         }
         
         /// <remarks/>
-        public void OpenIndividualWorkPlanToAsync(string code, int open_To) {
-            this.OpenIndividualWorkPlanToAsync(code, open_To, null);
+        public void StudentRequisitionLinesCreateAsync(string requisition_No, string unit_Code, string unit_Title, string reason, string equivUnit) {
+            this.StudentRequisitionLinesCreateAsync(requisition_No, unit_Code, unit_Title, reason, equivUnit, null);
         }
         
         /// <remarks/>
-        public void OpenIndividualWorkPlanToAsync(string code, int open_To, object userState) {
-            if ((this.OpenIndividualWorkPlanToOperationCompleted == null)) {
-                this.OpenIndividualWorkPlanToOperationCompleted = new System.Threading.SendOrPostCallback(this.OnOpenIndividualWorkPlanToOperationCompleted);
+        public void StudentRequisitionLinesCreateAsync(string requisition_No, string unit_Code, string unit_Title, string reason, string equivUnit, object userState) {
+            if ((this.StudentRequisitionLinesCreateOperationCompleted == null)) {
+                this.StudentRequisitionLinesCreateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStudentRequisitionLinesCreateOperationCompleted);
             }
-            this.InvokeAsync("OpenIndividualWorkPlanTo", new object[] {
-                        code,
-                        open_To}, this.OpenIndividualWorkPlanToOperationCompleted, userState);
+            this.InvokeAsync("StudentRequisitionLinesCreate", new object[] {
+                        requisition_No,
+                        unit_Code,
+                        unit_Title,
+                        reason,
+                        equivUnit}, this.StudentRequisitionLinesCreateOperationCompleted, userState);
         }
         
-        private void OnOpenIndividualWorkPlanToOperationCompleted(object arg) {
-            if ((this.OpenIndividualWorkPlanToCompleted != null)) {
+        private void OnStudentRequisitionLinesCreateOperationCompleted(object arg) {
+            if ((this.StudentRequisitionLinesCreateCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.OpenIndividualWorkPlanToCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.StudentRequisitionLinesCreateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:ParamilitaryAcademyToConfirm", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="ParamilitaryAcademyToConfirm_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:StudentRequisitionLinesInsertCr" +
+            "eateDoc", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="StudentRequisitionLinesInsertCreateDoc_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void StudentRequisitionLinesInsertCreateDoc(string studentNo, string semester, string unit_Code, string unit_Title, string reason, int regT, string equivUnit) {
+            this.Invoke("StudentRequisitionLinesInsertCreateDoc", new object[] {
+                        studentNo,
+                        semester,
+                        unit_Code,
+                        unit_Title,
+                        reason,
+                        regT,
+                        equivUnit});
+        }
+        
+        /// <remarks/>
+        public void StudentRequisitionLinesInsertCreateDocAsync(string studentNo, string semester, string unit_Code, string unit_Title, string reason, int regT, string equivUnit) {
+            this.StudentRequisitionLinesInsertCreateDocAsync(studentNo, semester, unit_Code, unit_Title, reason, regT, equivUnit, null);
+        }
+        
+        /// <remarks/>
+        public void StudentRequisitionLinesInsertCreateDocAsync(string studentNo, string semester, string unit_Code, string unit_Title, string reason, int regT, string equivUnit, object userState) {
+            if ((this.StudentRequisitionLinesInsertCreateDocOperationCompleted == null)) {
+                this.StudentRequisitionLinesInsertCreateDocOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStudentRequisitionLinesInsertCreateDocOperationCompleted);
+            }
+            this.InvokeAsync("StudentRequisitionLinesInsertCreateDoc", new object[] {
+                        studentNo,
+                        semester,
+                        unit_Code,
+                        unit_Title,
+                        reason,
+                        regT,
+                        equivUnit}, this.StudentRequisitionLinesInsertCreateDocOperationCompleted, userState);
+        }
+        
+        private void OnStudentRequisitionLinesInsertCreateDocOperationCompleted(object arg) {
+            if ((this.StudentRequisitionLinesInsertCreateDocCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.StudentRequisitionLinesInsertCreateDocCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:StudentSelfPromotion", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="StudentSelfPromotion_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string ParamilitaryAcademyToConfirm(string staff) {
-            object[] results = this.Invoke("ParamilitaryAcademyToConfirm", new object[] {
-                        staff});
+        public bool StudentSelfPromotion(string stdNo, string studProg) {
+            object[] results = this.Invoke("StudentSelfPromotion", new object[] {
+                        stdNo,
+                        studProg});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void StudentSelfPromotionAsync(string stdNo, string studProg) {
+            this.StudentSelfPromotionAsync(stdNo, studProg, null);
+        }
+        
+        /// <remarks/>
+        public void StudentSelfPromotionAsync(string stdNo, string studProg, object userState) {
+            if ((this.StudentSelfPromotionOperationCompleted == null)) {
+                this.StudentSelfPromotionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStudentSelfPromotionOperationCompleted);
+            }
+            this.InvokeAsync("StudentSelfPromotion", new object[] {
+                        stdNo,
+                        studProg}, this.StudentSelfPromotionOperationCompleted, userState);
+        }
+        
+        private void OnStudentSelfPromotionOperationCompleted(object arg) {
+            if ((this.StudentSelfPromotionCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.StudentSelfPromotionCompleted(this, new StudentSelfPromotionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:TestRegistrationStartDate", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="TestRegistrationStartDate_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void TestRegistrationStartDate(string stdNo, string sem) {
+            this.Invoke("TestRegistrationStartDate", new object[] {
+                        stdNo,
+                        sem});
+        }
+        
+        /// <remarks/>
+        public void TestRegistrationStartDateAsync(string stdNo, string sem) {
+            this.TestRegistrationStartDateAsync(stdNo, sem, null);
+        }
+        
+        /// <remarks/>
+        public void TestRegistrationStartDateAsync(string stdNo, string sem, object userState) {
+            if ((this.TestRegistrationStartDateOperationCompleted == null)) {
+                this.TestRegistrationStartDateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTestRegistrationStartDateOperationCompleted);
+            }
+            this.InvokeAsync("TestRegistrationStartDate", new object[] {
+                        stdNo,
+                        sem}, this.TestRegistrationStartDateOperationCompleted, userState);
+        }
+        
+        private void OnTestRegistrationStartDateOperationCompleted(object arg) {
+            if ((this.TestRegistrationStartDateCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.TestRegistrationStartDateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:UploadAttachedDocument", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="UploadAttachedDocument_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void UploadAttachedDocument(string docNo, string fileName, string attachment, int tableID) {
+            this.Invoke("UploadAttachedDocument", new object[] {
+                        docNo,
+                        fileName,
+                        attachment,
+                        tableID});
+        }
+        
+        /// <remarks/>
+        public void UploadAttachedDocumentAsync(string docNo, string fileName, string attachment, int tableID) {
+            this.UploadAttachedDocumentAsync(docNo, fileName, attachment, tableID, null);
+        }
+        
+        /// <remarks/>
+        public void UploadAttachedDocumentAsync(string docNo, string fileName, string attachment, int tableID, object userState) {
+            if ((this.UploadAttachedDocumentOperationCompleted == null)) {
+                this.UploadAttachedDocumentOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUploadAttachedDocumentOperationCompleted);
+            }
+            this.InvokeAsync("UploadAttachedDocument", new object[] {
+                        docNo,
+                        fileName,
+                        attachment,
+                        tableID}, this.UploadAttachedDocumentOperationCompleted, userState);
+        }
+        
+        private void OnUploadAttachedDocumentOperationCompleted(object arg) {
+            if ((this.UploadAttachedDocumentCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UploadAttachedDocumentCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:fnSaveGraduation", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="fnSaveGraduation_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public string fnSaveGraduation(string studentNo, string persEmail, string currProf, string company, string currPNo, bool gownRequired, string collectionCampus, string correctName) {
+            object[] results = this.Invoke("fnSaveGraduation", new object[] {
+                        studentNo,
+                        persEmail,
+                        currProf,
+                        company,
+                        currPNo,
+                        gownRequired,
+                        collectionCampus,
+                        correctName});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void ParamilitaryAcademyToConfirmAsync(string staff) {
-            this.ParamilitaryAcademyToConfirmAsync(staff, null);
+        public void fnSaveGraduationAsync(string studentNo, string persEmail, string currProf, string company, string currPNo, bool gownRequired, string collectionCampus, string correctName) {
+            this.fnSaveGraduationAsync(studentNo, persEmail, currProf, company, currPNo, gownRequired, collectionCampus, correctName, null);
         }
         
         /// <remarks/>
-        public void ParamilitaryAcademyToConfirmAsync(string staff, object userState) {
-            if ((this.ParamilitaryAcademyToConfirmOperationCompleted == null)) {
-                this.ParamilitaryAcademyToConfirmOperationCompleted = new System.Threading.SendOrPostCallback(this.OnParamilitaryAcademyToConfirmOperationCompleted);
+        public void fnSaveGraduationAsync(string studentNo, string persEmail, string currProf, string company, string currPNo, bool gownRequired, string collectionCampus, string correctName, object userState) {
+            if ((this.fnSaveGraduationOperationCompleted == null)) {
+                this.fnSaveGraduationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnfnSaveGraduationOperationCompleted);
             }
-            this.InvokeAsync("ParamilitaryAcademyToConfirm", new object[] {
-                        staff}, this.ParamilitaryAcademyToConfirmOperationCompleted, userState);
+            this.InvokeAsync("fnSaveGraduation", new object[] {
+                        studentNo,
+                        persEmail,
+                        currProf,
+                        company,
+                        currPNo,
+                        gownRequired,
+                        collectionCampus,
+                        correctName}, this.fnSaveGraduationOperationCompleted, userState);
         }
         
-        private void OnParamilitaryAcademyToConfirmOperationCompleted(object arg) {
-            if ((this.ParamilitaryAcademyToConfirmCompleted != null)) {
+        private void OnfnSaveGraduationOperationCompleted(object arg) {
+            if ((this.fnSaveGraduationCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ParamilitaryAcademyToConfirmCompleted(this, new ParamilitaryAcademyToConfirmCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebService:PostForcedUnApplyVendor", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", ResponseElementName="PostForcedUnApplyVendor_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebService", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void PostForcedUnApplyVendor(string docNo) {
-            this.Invoke("PostForcedUnApplyVendor", new object[] {
-                        docNo});
-        }
-        
-        /// <remarks/>
-        public void PostForcedUnApplyVendorAsync(string docNo) {
-            this.PostForcedUnApplyVendorAsync(docNo, null);
-        }
-        
-        /// <remarks/>
-        public void PostForcedUnApplyVendorAsync(string docNo, object userState) {
-            if ((this.PostForcedUnApplyVendorOperationCompleted == null)) {
-                this.PostForcedUnApplyVendorOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPostForcedUnApplyVendorOperationCompleted);
-            }
-            this.InvokeAsync("PostForcedUnApplyVendor", new object[] {
-                        docNo}, this.PostForcedUnApplyVendorOperationCompleted, userState);
-        }
-        
-        private void OnPostForcedUnApplyVendorOperationCompleted(object arg) {
-            if ((this.PostForcedUnApplyVendorCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PostForcedUnApplyVendorCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.fnSaveGraduationCompleted(this, new fnSaveGraduationCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -7628,59 +2434,17 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void PurchaseRequisitionApprovalRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void PurchaseRequisitionCreateCompletedEventHandler(object sender, PurchaseRequisitionCreateCompletedEventArgs e);
+    public delegate void AllowAutobillingCompletedEventHandler(object sender, AllowAutobillingCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PurchaseRequisitionCreateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class AllowAutobillingCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal PurchaseRequisitionCreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void PurchaseRequisitionLinesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void PurchaseRequistionLineUpdateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void PurchaseRequsitionRemoveLineCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void PurchasesLinesExistsCompletedEventHandler(object sender, PurchasesLinesExistsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PurchasesLinesExistsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PurchasesLinesExistsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal AllowAutobillingCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -7696,17 +2460,25 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void RaiseStaffClaimFromImprestCompletedEventHandler(object sender, RaiseStaffClaimFromImprestCompletedEventArgs e);
+    public delegate void ApproveStudentRequisitionLinesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void AssignLecturerUnitCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void AuthenticateStudentEmailCompletedEventHandler(object sender, AuthenticateStudentEmailCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class RaiseStaffClaimFromImprestCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class AuthenticateStudentEmailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal RaiseStaffClaimFromImprestCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal AuthenticateStudentEmailCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -7722,971 +2494,19 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void RemoveHRTrainingParticipantsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void ChargeStudentRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void RemoveTransportReqPassengerCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void CustomApprovalEntryAdditionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ReturnAmountInWordsCompletedEventHandler(object sender, ReturnAmountInWordsCompletedEventArgs e);
+    public delegate void CustomApprovalEntryClearance2CompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ReturnAmountInWordsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal ReturnAmountInWordsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ReturnUnitCostCompletedEventHandler(object sender, ReturnUnitCostCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ReturnUnitCostCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal ReturnUnitCostCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public decimal Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((decimal)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SaveCompetenceValuesReviewsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SaveKPIsReviewsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SaveKPIsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SaveTrainingDevPlanCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SendApprovalEmailAlertCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SendAssetTransferforApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SendEmailCompletedEventHandler(object sender, SendEmailCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class SendEmailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal SendEmailCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SendImpSurrenderForApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SendTNAforApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StaffClaimRemoveLineCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StaffClaimRequisitionApprovalRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StaffClaimRequisitionLinesInsertCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StaffClaimRequisitionLinesUpdateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StaffClaimUpdateLineCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StockLevelCompletedEventHandler(object sender, StockLevelCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class StockLevelCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal StockLevelCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public decimal Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((decimal)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StoreLinesExistsCompletedEventHandler(object sender, StoreLinesExistsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class StoreLinesExistsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal StoreLinesExistsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StoreRequisitionApprovalRequestCompletedEventHandler(object sender, StoreRequisitionApprovalRequestCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class StoreRequisitionApprovalRequestCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal StoreRequisitionApprovalRequestCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StoreRequisitionCreateCompletedEventHandler(object sender, StoreRequisitionCreateCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class StoreRequisitionCreateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal StoreRequisitionCreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StoreRequisitionLinesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StoreRequistionLineUpdateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void StoreRequsitionRemoveLineCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SubmitEvalLinesReviewCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SubmitICTAssetMovement2CompletedEventHandler(object sender, SubmitICTAssetMovement2CompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class SubmitICTAssetMovement2CompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal SubmitICTAssetMovement2CompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SubmitICTAssetMovementCompletedEventHandler(object sender, SubmitICTAssetMovementCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class SubmitICTAssetMovementCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal SubmitICTAssetMovementCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void SubmitICTService_mainRequestCompletedEventHandler(object sender, SubmitICTService_mainRequestCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class SubmitICTService_mainRequestCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal SubmitICTService_mainRequestCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void TrainingRequisitionApprovalRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void TrainingRequisitionCreateCompletedEventHandler(object sender, TrainingRequisitionCreateCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class TrainingRequisitionCreateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal TrainingRequisitionCreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void TransportLinesExistsCompletedEventHandler(object sender, TransportLinesExistsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class TransportLinesExistsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal TransportLinesExistsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void TransportRequisitionApprovalRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void TransportRequisitionCreateCompletedEventHandler(object sender, TransportRequisitionCreateCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class TransportRequisitionCreateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal TransportRequisitionCreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void TransportRequisitionUpdateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpateKPIsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateAssetTransferedCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateAssignedTicketCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateEvalLinesTimeFrameCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateICTAssetMovementCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateICTService_mainRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateImprestHeaderCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateKPITimeFrameCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateNewVisitorInfCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateProcurementMethodsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdatePurchaseItemGLBudgetCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdatePurchaseRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateStaffClaimsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateStoreRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateWorkPlanObjectiveTargetActivityCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateWorkPlanObjectiveTargetCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UpdateWorkPlanObjectiveCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void UploadAttachedDocumentCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void checkLegalCompletedEventHandler(object sender, checkLegalCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class checkLegalCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal checkLegalCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void createAppraisalDocumentCompletedEventHandler(object sender, createAppraisalDocumentCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class createAppraisalDocumentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal createAppraisalDocumentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void fnImprestSurrenderLineUpdateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void fnImprestSurrenderCompletedEventHandler(object sender, fnImprestSurrenderCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class fnImprestSurrenderCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal fnImprestSurrenderCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void AllowedToConfirmCompletedEventHandler(object sender, AllowedToConfirmCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class AllowedToConfirmCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal AllowedToConfirmCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void AllowedToRecruitCompletedEventHandler(object sender, AllowedToRecruitCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class AllowedToRecruitCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal AllowedToRecruitCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void AppraisalRequisitionOpenToCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void AppraiseeStatementsOnApprisalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void AssetServiceConfirmCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void AssetTranferRequestCompletedEventHandler(object sender, AssetTranferRequestCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class AssetTranferRequestCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal AssetTranferRequestCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void AssignExternalDriverCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void AssignTransportRequisitionDriverCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CalcEndDateCompletedEventHandler(object sender, CalcEndDateCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class CalcEndDateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal CalcEndDateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public System.DateTime Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((System.DateTime)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CalcReturnDateCompletedEventHandler(object sender, CalcReturnDateCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class CalcReturnDateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal CalcReturnDateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public System.DateTime Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((System.DateTime)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CanClearVisitorsCompletedEventHandler(object sender, CanClearVisitorsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class CanClearVisitorsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal CanClearVisitorsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CanceTransportRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CancelAssetTransferApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CancelICTRequisitionCreateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CancelImpSurrenderApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CancelTNAApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ChangeEvalLinesTimeFrameCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ChangeLeaveStatusCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ChangeTaskAllocationStatusToPendingCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ChangeVisitorStatusCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CheckAssetAvailabiilityCompletedEventHandler(object sender, CheckAssetAvailabiilityCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class CheckAssetAvailabiilityCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal CheckAssetAvailabiilityCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CheckTransportApprovalsCompletedEventHandler(object sender, CheckTransportApprovalsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class CheckTransportApprovalsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal CheckTransportApprovalsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public int Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((int)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ClaimLinesExistsCompletedEventHandler(object sender, ClaimLinesExistsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ClaimLinesExistsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal ClaimLinesExistsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ClearActiveVisitiorCompletedEventHandler(object sender, ClearActiveVisitiorCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ClearActiveVisitiorCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal ClearActiveVisitiorCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ConfirmClosureOfICTRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ConfirmRecruitCompletedEventHandler(object sender, ConfirmRecruitCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ConfirmRecruitCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal ConfirmRecruitCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ConfirmSurrenderDocLineAmountsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CreateLeavePlannerHeaderCompletedEventHandler(object sender, CreateLeavePlannerHeaderCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class CreateLeavePlannerHeaderCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal CreateLeavePlannerHeaderCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CustomHRCancelPurchaseRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void CustomPurchaseRequisitionApprovalRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void DeleteAppraisalExatraInformationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void CustomApprovalEntryClearanceCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
@@ -8694,57 +2514,11 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void DeleteWorkPlanObjectiveTargetActivityCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void DeleteLecturerUnitCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void DeleteWorkPlanObjectiveTargetCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void DeleteWorkPlanObjectiveCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void DetermineIfIsNonWorkingCompletedEventHandler(object sender, DetermineIfIsNonWorkingCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class DetermineIfIsNonWorkingCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal DetermineIfIsNonWorkingCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-        
-        /// <remarks/>
-        public System.DateTime bcDate {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((System.DateTime)(this.results[1]));
-            }
-        }
-        
-        /// <remarks/>
-        public string leave_Type {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[2]));
-            }
-        }
-    }
+    public delegate void DeleteSubmittedUnitsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
@@ -8782,25 +2556,81 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void DropKPIsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void DropStudentUnitsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void DropTrainingDevPlanCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void DropUnitBasketCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void FuelRechargeCardCompletedEventHandler(object sender, FuelRechargeCardCompletedEventArgs e);
+    public delegate void EditLecturerUnitCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void EnterRowMarksCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateReceiptsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateScoreSheetCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateStudentAuditCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateStudentChargesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateStudentExamCardsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateStudentProformaInvoicesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateStudentReportCardByProgCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateStudentReportCardCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateStudentResultSlipCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateStudentResultsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateStudentSemesterInvoiceCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GenerateStudentStatementCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void GetExamCategoryCompletedEventHandler(object sender, GetExamCategoryCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class FuelRechargeCardCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetExamCategoryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal FuelRechargeCardCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal GetExamCategoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -8816,17 +2646,17 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void FuelRequisitionCompletedEventHandler(object sender, FuelRequisitionCompletedEventArgs e);
+    public delegate void GetProfilePictureStudentCompletedEventHandler(object sender, GetProfilePictureStudentCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class FuelRequisitionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetProfilePictureStudentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal FuelRequisitionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal GetProfilePictureStudentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -8842,57 +2672,17 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GatePassApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GatePassCancelApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GenerateEarningAndDeductionReportCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GenerateGatePassCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GeneratePNineReportCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GeneratePayRollPaymtntAndDeductionReportCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GeneratePayRollSummeryReportCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GeneratePaySlipReport1CompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GeneratePaySlipReportCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GenerateTNAFormCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GetAllowedCollegeToConfirmCompletedEventHandler(object sender, GetAllowedCollegeToConfirmCompletedEventArgs e);
+    public delegate void InserClassAtteHeaderCompletedEventHandler(object sender, InserClassAtteHeaderCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetAllowedCollegeToConfirmCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class InserClassAtteHeaderCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal GetAllowedCollegeToConfirmCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal InserClassAtteHeaderCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -8908,239 +2698,45 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GetDocumentAttachmentCompletedEventHandler(object sender, GetDocumentAttachmentCompletedEventArgs e);
+    public delegate void InsertClassListAttendanceCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void InsertStudentPaymentPlanCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void OnlineClearanceCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void PostAttendanceListCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void PostStudentChargeCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void PostStudentChargesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void PostTransferChargeCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void Post_RegisterStudentUnitsCompletedEventHandler(object sender, Post_RegisterStudentUnitsCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetDocumentAttachmentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class Post_RegisterStudentUnitsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal GetDocumentAttachmentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GetEndReturnDateCompletedEventHandler(object sender, GetEndReturnDateCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetEndReturnDateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetEndReturnDateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public System.DateTime[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((System.DateTime[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GetLeaveBalances2CompletedEventHandler(object sender, GetLeaveBalances2CompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetLeaveBalances2CompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetLeaveBalances2CompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public decimal[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((decimal[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GetLeaveBalancesCompletedEventHandler(object sender, GetLeaveBalancesCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetLeaveBalancesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetLeaveBalancesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public decimal[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((decimal[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GetProfilePictureCompletedEventHandler(object sender, GetProfilePictureCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetProfilePictureCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetProfilePictureCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GetRecruitmentCenterCompletedEventHandler(object sender, GetRecruitmentCenterCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetRecruitmentCenterCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetRecruitmentCenterCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRAppraisalApprovalRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRCanceImprestRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRCanceStaffClaimRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRCancelFuelRechrageCardApplicationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRCancelLeaveApplicationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRCancelPurchaseRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRCancelStoreRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRCancelTrainingRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRFuelRechargeCardApprovalRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRLeaveApplicationCompletedEventHandler(object sender, HRLeaveApplicationCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class HRLeaveApplicationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal HRLeaveApplicationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRLeaveApprovalRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRTrainingParticipantsExistsCompletedEventHandler(object sender, HRTrainingParticipantsExistsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class HRTrainingParticipantsExistsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal HRTrainingParticipantsExistsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal Post_RegisterStudentUnitsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -9156,55 +2752,37 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void HRUpdateLeaveApplicationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void PrintClassListCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ICTRequisitionCreateCompletedEventHandler(object sender, ICTRequisitionCreateCompletedEventArgs e);
+    public delegate void PrintCourseStatementCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ICTRequisitionCreateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal ICTRequisitionCreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
+    public delegate void RefreshPaymentPlanCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ImportStaffProfilePictureCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void RefreshStudentAuditCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ImportStudentProfilePictureCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void RegisterStudentUnitBasketCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ImprestLinesExistsCompletedEventHandler(object sender, ImprestLinesExistsCompletedEventArgs e);
+    public delegate void RegisterStudentUnitsCompletedEventHandler(object sender, RegisterStudentUnitsCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ImprestLinesExistsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class RegisterStudentUnitsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal ImprestLinesExistsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal RegisterStudentUnitsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -9220,25 +2798,59 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ImprestMemoLinesCreateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ImprestRequisitionApprovalRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ImprestRequisitionCreateCompletedEventHandler(object sender, ImprestRequisitionCreateCompletedEventArgs e);
+    public delegate void SendEmailCompletedEventHandler(object sender, SendEmailCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ImprestRequisitionCreateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class SendEmailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal ImprestRequisitionCreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal SendEmailCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+        
+        /// <remarks/>
+        public string receiver {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[1]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void SendStudentRegBacthApprovalCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void StudentRequisitionApprovalRequestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void StudentRequisitionCreateCompletedEventHandler(object sender, StudentRequisitionCreateCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class StudentRequisitionCreateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal StudentRequisitionCreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -9254,57 +2866,59 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ImprestRequisitionLinesCreate2CompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void StudentRequisitionLinesCreateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ImprestRequisitionLinesCreateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void StudentRequisitionLinesInsertCreateDocCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ImprestRequisitionLinesUpdateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ImprestRequsitionRemoveLineCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertAdmissionHeaderCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertAppraisalDepartmentalObjectivesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertAppraisalExatraInformationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertBestEmpOfYearCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertEmplRatingCompetenceCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertExternalPassengersCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertGatePassCompletedEventHandler(object sender, InsertGatePassCompletedEventArgs e);
+    public delegate void StudentSelfPromotionCompletedEventHandler(object sender, StudentSelfPromotionCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class InsertGatePassCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class StudentSelfPromotionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal InsertGatePassCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal StudentSelfPromotionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void TestRegistrationStartDateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void UploadAttachedDocumentCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    public delegate void fnSaveGraduationCompletedEventHandler(object sender, fnSaveGraduationCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class fnSaveGraduationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal fnSaveGraduationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -9317,328 +2931,6 @@ namespace Latest_Staff_Portal.NAVWS {
             }
         }
     }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertHRTrainingParticipantsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertICTRequisitionLinesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertImprestMemoCompletedEventHandler(object sender, InsertImprestMemoCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class InsertImprestMemoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal InsertImprestMemoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertIndividualWorkPlanCommentsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertIndividualWorkplanCompletedEventHandler(object sender, InsertIndividualWorkplanCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class InsertIndividualWorkplanCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal InsertIndividualWorkplanCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertLeavePlannerLinesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertLegalAdvisoryCompletedEventHandler(object sender, InsertLegalAdvisoryCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class InsertLegalAdvisoryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal InsertLegalAdvisoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertNewVisitorCompletedEventHandler(object sender, InsertNewVisitorCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class InsertNewVisitorCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal InsertNewVisitorCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertRecruitmentCenterCommentsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertRegistrationInformationCompletedEventHandler(object sender, InsertRegistrationInformationCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class InsertRegistrationInformationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal InsertRegistrationInformationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertStaffAdvanceCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertStaffClaimsCompletedEventHandler(object sender, InsertStaffClaimsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class InsertStaffClaimsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal InsertStaffClaimsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertStaffValueCompetenceCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertStandingImprestCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertTNAConferenceSeminarCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertTNAQuestionHODCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertTNAQuestionSupervisorCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertTrainingNeedsAnalysisCompletedEventHandler(object sender, InsertTrainingNeedsAnalysisCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class InsertTrainingNeedsAnalysisCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal InsertTrainingNeedsAnalysisCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertTrainingNeedsLinesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertTrainingNeedsQuestionnareCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertTransportReqPassengerCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertVisitorItemsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertWorkPlanObjectiveRemarksCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertWorkPlanObjectiveTargetActivityCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertWorkPlanObjectiveTargetCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void InsertWorkPlanObjectiveCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void LeaveStatementCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void MaintenanceRequestCompletedEventHandler(object sender, MaintenanceRequestCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class MaintenanceRequestCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal MaintenanceRequestCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void OpenIndividualWorkPlanToCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void ParamilitaryAcademyToConfirmCompletedEventHandler(object sender, ParamilitaryAcademyToConfirmCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ParamilitaryAcademyToConfirmCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal ParamilitaryAcademyToConfirmCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void PostForcedUnApplyVendorCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
 }
 
 #pragma warning restore 1591

@@ -39,42 +39,25 @@
         padding: 1px;
         font-size: 12px;
     }
+
+    .m-0 {
+        color: black
+    }
 </style>
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
-<link href="~/assets/css/Loader.css" rel="stylesheet" />
-<div class="loading" align="center" id="divLoader">
-    <br />
-    <img src="~/assets/images/ajax-loader.gif" alt="" />
-</div>
 <div class="row">
     <div class="col-md-2">
         <div id="divProfPic"></div>
-        @*<hr />
-        <button type="button" class="btn btn-primary BtnPadding" data-toggle="modal" data-target="#myModalProfile">
-            Upload Profile Picture
-        </button>*@
     </div>
     <div class="col-md-6">
-        <div style="border-left: solid 2px red;border-right: solid 2px red;padding: 5px;
+        <div style="border-left: solid 2px green;border-right: solid 2px green;padding: 5px;
         height: 100%">
-            <hr />
             <b>Staff No :</b>  @Model.No<br />
-            <b>Name : </b>  @Model.Name
-            <hr />
+            <b>Name : </b>  @Model.Name<br />
         </div>
-    </div>
-    <div class="col-md-4">
-        <hr />
-        <b>Annual Leave Entitlement :</b> @Model.AllocatedDays<br />
-        <b>Leave carried forward from previous Year : </b>  @Model.CarryForawrd<br />
-        <b>Reimbursed Days : </b>  @Model.ReimbDays<br />
-        <b>Leave Taken : </b>  @Model.LeaveTaken<br />
-        @* <b>Earned Days : </b>  @Model.EarnedLeaveDays<br /> *@
-        <b>Leave Balance : </b>  @Model.LeaveBal
-        <hr />
-    </div>
+    </div>    
 </div>
 <hr />
 <div class="card">
@@ -236,28 +219,6 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Postal Code</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.PostalCode</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Nationality</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.Nationality</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
                                         <label style="font-size: 12px; font-weight: bold">Home Telephone</label>
                                     </div>
                                     <div class="col-md-8">
@@ -314,198 +275,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card mb-1 shadow-none">
-                <div class="card-header" id="headingThree" aria-expanded="false" aria-controls="collapseThree" data-toggle="collapse" href="#collapseThree">
-                    <h6 class="m-0">
-                        <span class="fa fa-arrow-down"></span> Job Details
-                    </h6>
-                </div>
-                <div id="collapseThree" class="collapse"
-                     aria-labelledby="headingThree" data-parent="#accordion">
-                    <div class="card-body">
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label style="font-size: 12px; font-weight: bold">Joined Date</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="label label-warning">@Model.DateOfJoin</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label style="font-size: 12px; font-weight: bold">Probation Date</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="label label-warning">@Model.ProbationDate</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label style="font-size: 12px; font-weight: bold">Pension Scheme Join Date</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="label label-warning">@Model.PenSchemeJoinDate</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label style="font-size: 12px; font-weight: bold">Job Title</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="label label-warning">@Model.JobTitle</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label style="font-size: 12px; font-weight: bold">Employment Status</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="label label-warning">@Model.EmpStatus</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label style="font-size: 12px; font-weight: bold">Job Category</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="label label-warning">@Model.JobCat</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label style="font-size: 12px; font-weight: bold">Department</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="label label-warning">@Model.Department</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label style="font-size: 12px; font-weight: bold">Campus</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="label label-warning">@Model.Campus</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-1 shadow-none">
-                <div class="card-header" id="headingFour" aria-expanded="false" aria-controls="collapseFour" data-toggle="collapse" href="#collapseFour">
-                    <h6 class="m-0">
-                        <span class="fa fa-arrow-down"></span> Payroll Details
-                    </h6>
-                </div>
-                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-                    <div class="card-body">
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Bank Name</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.Bank</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Branch</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.Branch</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Account Number</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.AccountNo</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">PIN Number</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.PinNo</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">NSSF Number</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.NSSFNo</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">NHIF Number</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@Model.NHIFNo</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding: 2px">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label style="font-size: 12px; font-weight: bold">Imprest Balance</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <span class="label label-warning">@CustBal</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div>           
         </div>
     </div>
 </div>
@@ -524,6 +294,24 @@
                 <input type="file" class="form-control-file" id="fileAttachment" />
                 <hr />
                 <input type="button" class="btn btn-primary BtnPadding" value="Upload Profile Picture" onclick="UploadProfilePic();" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModalUnits" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelT"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
@@ -616,5 +404,32 @@
         }
         return window.btoa(binary);
     }
+    var AcademicCalender = function (Sem) {
+        if (Sem == "" || Sem == null) {
+            Swal.fire('Warning', 'Current Semester not set', 'warning');
+            return;
+        }
+        else {
+            var x = document.getElementById("labelT");
+            x.innerHTML = 'Academic Calender';
+            ShowProgress();
+            $.ajax({
+                type: "POST",
+                dataType: 'HTML',
+                contentType: "application/json; charset = utf-8",
+                data: JSON.stringify({ Sem: Sem }),
+                url: '@Url.Action("GetAcademicCalender", "Common")',
+                success: function (data) {
+                    HideProgress();
+                    $("#modalBody").html(data);
+                    $("#myModalUnits").modal("show");
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('Warning', 'There is some problem to process your request. Please try after some time', 'warning');
+                }
+            });
+        }
+    };
 </script>
 
