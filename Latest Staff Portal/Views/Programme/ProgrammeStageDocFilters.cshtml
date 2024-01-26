@@ -1,15 +1,15 @@
 ﻿@model Latest_Staff_Portal.ViewModel.ViewProgrammeStageDocFilters
 <div class="container">
-    <div class="row">
+    <div class="row" id="DivOption" runat="server">
         <div class="col-md-12">
-            <b>Academic Year :</b>
-            @Html.DropDownListFor(model => model.AcademicYear, Model.ListOfAcademicYear, "--select Academic Year--", new { @class = "form-control", id = "ddlAcademicYear" })
+            <b>Semester :</b>
+            @Html.DropDownListFor(model => model.Semester, Model.ListOfSemester, "--Select Semester--", new { @class = "form-control", id = "ddlAcademicYear" })
         </div>
     </div>
     <div class="row" id="DivOption" runat="server">
         <div class="col-md-12">
-            <b>Programme Option :</b>
-            @Html.DropDownListFor(model => model.ProgrammeOption, Model.ListOfProgrammeOption, "--select Programme Option--", new { @class = "form-control", id = "ddlOption" })
+            <b>Mode Of Study :</b>
+            @Html.DropDownListFor(model => model.ProgrammeOption, Model.ListOfProgrammeOption, "--Select Mode Of Study--", new { @class = "form-control", id = "ddlAcademicYear" })
         </div>
     </div>
     <div class="row" id="Div1" runat="server">

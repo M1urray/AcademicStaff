@@ -139,7 +139,7 @@ namespace Latest_Staff_Portal.Controllers
                         {
                             StageUnits StgUnit = new StageUnits();
                             StgUnit.Code = (string)config["Code"];
-                            StgUnit.Desription = (string)config["Desription"];
+                            StgUnit.Desription = (string)config["Description"];
                             PStagesUnits.Add(StgUnit);
                         }
                     }
@@ -158,12 +158,12 @@ namespace Latest_Staff_Portal.Controllers
             try
             {
                 ViewProgrammeStageDocFilters Filters = new ViewProgrammeStageDocFilters();
-                #region AcademicYear
-                List<AcademicYearList> AcademicYrList = new List<AcademicYearList>();
-                string page = "AcademicYear?$format=json";
+                #region Semesters
+                List<SemesterList> SemList = new List<SemesterList>();
+                string pageSem = "SemesterList?$format=json";
 
-                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                HttpWebResponse httpResponseSem = Credentials.GetOdataData(pageSem);
+                using (var streamReader = new StreamReader(httpResponseSem.GetResponseStream()))
                 {
                     var result = streamReader.ReadToEnd();
 
@@ -172,16 +172,16 @@ namespace Latest_Staff_Portal.Controllers
 
                     foreach (JObject config in details["value"])
                     {
-                        AcademicYearList AcYrList = new AcademicYearList();
-                        AcYrList.Code = (string)config["Code"];
-                        AcademicYrList.Add(AcYrList);
+                        SemesterList SList = new SemesterList();
+                        SList.Code = (string)config["Code"];
+                        SList.Name = (string)config["Code"];
+                        SemList.Add(SList);
                     }
                 }
                 #endregion
-
-                #region Programme Option List
-                List<ProgOptionList> progOpList = new List<ProgOptionList>();
-                string pageOption = "ProgrammeOption?$filter=ProgrammeCode eq '" + Prog + "'&$format=json";
+                #region Study Mode
+                List<StudyModes> progOpList = new List<StudyModes>();
+                string pageOption = "Programme_Study_Modes?$filter=Code eq '" + Prog + "'&$format=json";
 
                 HttpWebResponse httpResponseOption = Credentials.GetOdataData(pageOption);
                 using (var streamReader = new StreamReader(httpResponseOption.GetResponseStream()))
@@ -193,9 +193,9 @@ namespace Latest_Staff_Portal.Controllers
 
                     foreach (JObject config in details["value"])
                     {
-                        ProgOptionList OptionList = new ProgOptionList();
+                        StudyModes OptionList = new StudyModes();
                         OptionList.Code = (string)config["Code"];
-                        OptionList.Desription = (string)config["Code"];
+                        OptionList.Description = (string)config["Student_Type"];
                         progOpList.Add(OptionList);
                     }
                 }
@@ -203,7 +203,7 @@ namespace Latest_Staff_Portal.Controllers
 
                 #region Campus List
                 List<DimensionValues> Campuses = new List<DimensionValues>();
-                string pageCampus = "DimensionValues?$filter=Global_Dimension_No_ eq 1 and Blocked eq false&$format=json";
+                string pageCampus = "DimensionValues?$filter=Global_Dimension_No_ eq 3 and Blocked eq false&$format=json";
 
                 HttpWebResponse httpResponseCampus = Credentials.GetOdataData(pageCampus);
                 using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
@@ -227,18 +227,18 @@ namespace Latest_Staff_Portal.Controllers
                     Prog = Prog,
                     Stage = Stage,
                     ReportType = ReportType,
-                    ListOfAcademicYear = AcademicYrList.Select(x =>
-                                         new SelectListItem()
-                                         {
-                                             Text = x.Code,
-                                             Value = x.Code
-                                         }).ToList(),
                     ListOfProgrammeOption = progOpList.Select(x =>
                                           new SelectListItem()
                                           {
-                                              Text = x.Desription,
+                                              Text = x.Description,
                                               Value = x.Code
                                           }).ToList(),
+                    ListOfSemester = SemList.Select(x =>
+                        new SelectListItem()
+                        {
+                            Text = x.Name,
+                            Value = x.Code
+                        }).ToList(),
                     ListOfCampus = Campuses.Select(x =>
                                            new SelectListItem()
                                            {
@@ -289,107 +289,90 @@ namespace Latest_Staff_Portal.Controllers
                 bool iSDeviceMobile = Request.Browser.IsMobileDevice;
                 if (Filters.ReportType == "CONSLMSHT")
                 {
-                    //Credentials.ObjNav.GenerateConsolidatedMarks(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), Campus, "CONS MARKSHEET-" + _filename + extn);
-
+                    //message =Credentials.ObjNav.GenerateConsolidatedMarks(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), Campus, "CONS MARKSHEET-" + _filename + extn);
+                    string filePath = Server.MapPath("~/Downloads/"); 
                     filename = "CONS MARKSHEET-" + _filename + extn;
-                    string fileDestinationPath = Server.MapPath("~/Downloads/");
-                    CommonClass.MoveFile(filename, fileDestinationPath);
-                    string DestinationPath = fileDestinationPath + filename;
-                    System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
+                    Credentials.SaveBase64DocumentAttachment(message, filePath + filename);
+                    string DestinationPath = filePath + filename;
+                    FileInfo file = new FileInfo(DestinationPath);
                     if (file.Exists)
                     {
-                        if (Filters.DocType == "1")
-                        {
-                            view = true;
-                        }
-                        else
-                        {
-                            view = false;
-                        }
                         success = true;
                     }
                     else
                     {
                         success = false;
                         message = "File Not Found";
+                    }
+                    if (success)
+                    {
+                        message = @"/Downloads/" + filename;
                     }
                 }
                 if (Filters.ReportType == "PASSLIST")
                 {
-                    //Credentials.ObjNav.GenerateSenateSummary(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "SENATEREPORT-" + _filename + extn);
+                    //message=Credentials.ObjNav.GenerateSenateSummary(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "SENATEREPORT-" + _filename + extn);
+                    string filePath = Server.MapPath("~/Downloads/");
                     filename = "SENATEREPORT-" + _filename + extn;
-                    string fileDestinationPath = Server.MapPath("~/Downloads/");
-                    CommonClass.MoveFile(filename, fileDestinationPath);
-                    string DestinationPath = fileDestinationPath + filename;
-                    System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
+                    Credentials.SaveBase64DocumentAttachment(message, filePath + filename);
+                    string DestinationPath = filePath + filename;
+                    FileInfo file = new FileInfo(DestinationPath);
                     if (file.Exists)
                     {
-                        if (Filters.DocType == "1")
-                        {
-                            view = true;
-                        }
-                        else
-                        {
-                            view = false;
-                        }
                         success = true;
                     }
                     else
                     {
                         success = false;
                         message = "File Not Found";
+                    }
+                    if (success)
+                    {
+                        message = @"/Downloads/" + filename;
                     }
                 }
                 if (Filters.ReportType == "CLASSIFICATION")
                 {
-                    //Credentials.ObjNav.GenerateClassifications(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "CLASSIFICATION-" + _filename + extn);
+                    //message= Credentials.ObjNav.GenerateClassifications(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "CLASSIFICATION-" + _filename + extn);
+                    string filePath = Server.MapPath("~/Downloads/");
                     filename = "CLASSIFICATION-" + _filename + extn;
-                    string fileDestinationPath = Server.MapPath("~/Downloads/");
-                    CommonClass.MoveFile(filename, fileDestinationPath);
-                    string DestinationPath = fileDestinationPath + filename;
-                    System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
+                    Credentials.SaveBase64DocumentAttachment(message, filePath + filename);
+                    string DestinationPath = filePath + filename;
+                    FileInfo file = new FileInfo(DestinationPath);
                     if (file.Exists)
                     {
-                        if (Filters.DocType == "1")
-                        {
-                            view = true;
-                        }
-                        else
-                        {
-                            view = false;
-                        }
                         success = true;
                     }
                     else
                     {
                         success = false;
                         message = "File Not Found";
+                    }
+                    if (success)
+                    {
+                        message = @"/Downloads/" + filename;
                     }
                 }
                 if (Filters.ReportType == "AWARD")
                 {
                     //Credentials.ObjNav.GenerateAwardList(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "AWARD-" + _filename + extn);
+                    string filePath = Server.MapPath("~/Downloads/");
                     filename = "AWARD-" + _filename + extn;
-                    string fileDestinationPath = Server.MapPath("~/Downloads/");
-                    CommonClass.MoveFile(filename, fileDestinationPath);
-                    string DestinationPath = fileDestinationPath + filename;
-                    System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
+                    Credentials.SaveBase64DocumentAttachment(message, filePath + filename);
+                    string DestinationPath = filePath + filename;
+                    FileInfo file = new FileInfo(DestinationPath);
                     if (file.Exists)
                     {
-                        if (Filters.DocType == "1")
-                        {
-                            view = true;
-                        }
-                        else
-                        {
-                            view = false;
-                        }
                         success = true;
                     }
                     else
                     {
                         success = false;
                         message = "File Not Found";
+                    }
+                    if (success)
+                    {
+                        message = @"/Downloads/" + filename;
                     }
                 }
                 if (success)

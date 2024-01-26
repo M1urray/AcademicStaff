@@ -20,9 +20,13 @@ namespace Latest_Staff_Portal.ViewModel
         public string Prog { get; set; }
         public string Stage { get; set; }
         public string ReportType { get; set; }
+        public string Semester { get; set; }
+
         public List<SelectListItem> ListOfAcademicYear { get; set; }
         public List<SelectListItem> ListOfProgrammeOption { get; set; }
         public List<SelectListItem> ListOfCampus { get; set; }
+        public List<SelectListItem> ListOfSemester { get; set; }
+
     }
     public class ProgrammeStageDocFilters
     {
@@ -38,6 +42,11 @@ namespace Latest_Staff_Portal.ViewModel
     {
         public string Code { get; set; }
         public string Desription { get; set; }
+    }
+    public class StudyModes
+    {
+        public string Code { get; set; }
+        public string Description { get; set; }
     }
     public class ViewScoreSheetFilters
     {

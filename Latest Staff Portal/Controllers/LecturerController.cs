@@ -900,7 +900,7 @@ namespace Latest_Staff_Portal.Controllers
                     {
                         StageUnits SUnitList = new StageUnits();
                         SUnitList.Code = (string)config["Code"];
-                        SUnitList.Desription = (string)config["Code"] + "-" + (string)config["Desription"];
+                        SUnitList.Desription = (string)config["Code"] + "-" + (string)config["Description"];
                         StageUnitList.Add(SUnitList);
                     }
                 }
@@ -1129,7 +1129,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     string Prog = Session["Prog"].ToString();
                     string Unit = Session["Unit"].ToString();
-                    //string Stage = Session["Stage"].ToString();
+                    // string Stage = Session["Stage"].ToString();
                     string Sem = Session["Sem"].ToString();
                     string Lec = Session["Username"].ToString();
 
@@ -1169,7 +1169,7 @@ namespace Latest_Staff_Portal.Controllers
                                 ProgC = Session["ProgCate"].ToString();
                             }
 
-                            string[] s = CommonClass.UploadStudentMarks("", Unit, "", Sem, Lec, ProgC, strFilename);
+                            string[] s = CommonClass.UploadStudentMarks(Prog, Unit, "", Sem, Lec, ProgC, strFilename);
                             if (s[1] == "T")
                             {
                                 msg = s[0];
@@ -1201,7 +1201,7 @@ namespace Latest_Staff_Portal.Controllers
                 if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null)
                 {
                     string Lec = Session["Username"].ToString();
-                    //string Prog = Session["Prog"].ToString();
+                    string Prog = Session["Prog"].ToString();
                     //string Stage = Session["Stage"].ToString();
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
@@ -1213,7 +1213,7 @@ namespace Latest_Staff_Portal.Controllers
                     string rptpath = Server.MapPath("~/Downloads/");
                     string ImagePath = Server.MapPath("~/assets/images");
 
-                    Error success = CommonClass.StartMarkSheettReport(Lec, "", Sem, Unit, UnitName, "", "", ImagePath, rptpath);
+                    Error success = CommonClass.StartMarkSheettReport(Lec, Prog, Sem, Unit, UnitName, "", "", ImagePath, rptpath);
                     if (success.success)
                     {
                         string DestinationPath = rptpath + success.Message;

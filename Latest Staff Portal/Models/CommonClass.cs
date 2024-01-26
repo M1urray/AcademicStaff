@@ -623,7 +623,7 @@ namespace Latest_Staff_Portal.Models
             {
                 string fileName = Unit.Replace("/", "_") + "-" + String.Format("Mark_Sheet_{0}.pdf", Lec.Replace("/", "_"));
                 string filenamePath = String.Format("{0}{1}", rptpath, fileName);
-                Credentials.ObjNav.GenerateScoreSheet("", Unit, "", Sem, "", "", fileName);
+                Credentials.ObjNav.GenerateScoreSheet(Prog, Unit, "", Sem, "", "", fileName);
                 CommonClass.MoveFile(fileName, rptpath);
                 error.success = true;
                 error.Message = fileName;
