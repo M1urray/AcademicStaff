@@ -289,90 +289,107 @@ namespace Latest_Staff_Portal.Controllers
                 bool iSDeviceMobile = Request.Browser.IsMobileDevice;
                 if (Filters.ReportType == "CONSLMSHT")
                 {
-                    //message =Credentials.ObjNav.GenerateConsolidatedMarks(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), Campus, "CONS MARKSHEET-" + _filename + extn);
-                    string filePath = Server.MapPath("~/Downloads/"); 
+                    //Credentials.ObjNav.GenerateConsolidatedMarks(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), Campus, "CONS MARKSHEET-" + _filename + extn);
+
                     filename = "CONS MARKSHEET-" + _filename + extn;
-                    Credentials.SaveBase64DocumentAttachment(message, filePath + filename);
-                    string DestinationPath = filePath + filename;
-                    FileInfo file = new FileInfo(DestinationPath);
+                    string fileDestinationPath = Server.MapPath("~/Downloads/");
+                    CommonClass.MoveFile(filename, fileDestinationPath);
+                    string DestinationPath = fileDestinationPath + filename;
+                    System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
                     if (file.Exists)
                     {
+                        if (Filters.DocType == "1")
+                        {
+                            view = true;
+                        }
+                        else
+                        {
+                            view = false;
+                        }
                         success = true;
                     }
                     else
                     {
                         success = false;
                         message = "File Not Found";
-                    }
-                    if (success)
-                    {
-                        message = @"/Downloads/" + filename;
                     }
                 }
                 if (Filters.ReportType == "PASSLIST")
                 {
-                    //message=Credentials.ObjNav.GenerateSenateSummary(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "SENATEREPORT-" + _filename + extn);
-                    string filePath = Server.MapPath("~/Downloads/");
+                    //Credentials.ObjNav.GenerateSenateSummary(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "SENATEREPORT-" + _filename + extn);
                     filename = "SENATEREPORT-" + _filename + extn;
-                    Credentials.SaveBase64DocumentAttachment(message, filePath + filename);
-                    string DestinationPath = filePath + filename;
-                    FileInfo file = new FileInfo(DestinationPath);
+                    string fileDestinationPath = Server.MapPath("~/Downloads/");
+                    CommonClass.MoveFile(filename, fileDestinationPath);
+                    string DestinationPath = fileDestinationPath + filename;
+                    System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
                     if (file.Exists)
                     {
+                        if (Filters.DocType == "1")
+                        {
+                            view = true;
+                        }
+                        else
+                        {
+                            view = false;
+                        }
                         success = true;
                     }
                     else
                     {
                         success = false;
                         message = "File Not Found";
-                    }
-                    if (success)
-                    {
-                        message = @"/Downloads/" + filename;
                     }
                 }
                 if (Filters.ReportType == "CLASSIFICATION")
                 {
-                    //message= Credentials.ObjNav.GenerateClassifications(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "CLASSIFICATION-" + _filename + extn);
-                    string filePath = Server.MapPath("~/Downloads/");
+                    //Credentials.ObjNav.GenerateClassifications(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "CLASSIFICATION-" + _filename + extn);
                     filename = "CLASSIFICATION-" + _filename + extn;
-                    Credentials.SaveBase64DocumentAttachment(message, filePath + filename);
-                    string DestinationPath = filePath + filename;
-                    FileInfo file = new FileInfo(DestinationPath);
+                    string fileDestinationPath = Server.MapPath("~/Downloads/");
+                    CommonClass.MoveFile(filename, fileDestinationPath);
+                    string DestinationPath = fileDestinationPath + filename;
+                    System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
                     if (file.Exists)
                     {
+                        if (Filters.DocType == "1")
+                        {
+                            view = true;
+                        }
+                        else
+                        {
+                            view = false;
+                        }
                         success = true;
                     }
                     else
                     {
                         success = false;
                         message = "File Not Found";
-                    }
-                    if (success)
-                    {
-                        message = @"/Downloads/" + filename;
                     }
                 }
                 if (Filters.ReportType == "AWARD")
                 {
                     //Credentials.ObjNav.GenerateAwardList(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, Convert.ToInt32(Filters.DocType), "AWARD-" + _filename + extn);
-                    string filePath = Server.MapPath("~/Downloads/");
                     filename = "AWARD-" + _filename + extn;
-                    Credentials.SaveBase64DocumentAttachment(message, filePath + filename);
-                    string DestinationPath = filePath + filename;
-                    FileInfo file = new FileInfo(DestinationPath);
+                    string fileDestinationPath = Server.MapPath("~/Downloads/");
+                    CommonClass.MoveFile(filename, fileDestinationPath);
+                    string DestinationPath = fileDestinationPath + filename;
+                    System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
                     if (file.Exists)
                     {
+                        if (Filters.DocType == "1")
+                        {
+                            view = true;
+                        }
+                        else
+                        {
+                            view = false;
+                        }
                         success = true;
                     }
                     else
                     {
                         success = false;
                         message = "File Not Found";
-                    }
-                    if (success)
-                    {
-                        message = @"/Downloads/" + filename;
                     }
                 }
                 if (success)
