@@ -626,7 +626,7 @@ namespace Latest_Staff_Portal.Controllers
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    string ClassCode = Session["ClassCode"].ToString();
+                    // string ClassCode = Session["ClassCode"].ToString();
                     string extn = "";
 
                     if (RType == "1")
@@ -641,11 +641,11 @@ namespace Latest_Staff_Portal.Controllers
                     {
                         extn = ".doc";
                     }
-                    string _filename = Unit.Replace(@"/", @"") + "-" + ClassCode.Replace(@"/", @"");
+                    string _filename = Unit.Replace(@"/", @"") + "-" + Unit.Replace(@"/", @"");
 
                     if (ReportType == "CLATT")
                     {
-                        Credentials.ObjNav.PrintClassList("", Unit, "", Sem, ClassCode, Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
+                        Credentials.ObjNav.PrintClassList("", Unit, "", Sem, "", Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
                         filename = "CLASSLIST-" + _filename + extn;
                     }
                     if (ReportType == "EXAMATT")

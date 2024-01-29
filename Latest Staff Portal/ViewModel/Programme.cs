@@ -21,7 +21,8 @@ namespace Latest_Staff_Portal.ViewModel
         public string Stage { get; set; }
         public string ReportType { get; set; }
         public string Semester { get; set; }
-
+        public string Intake { get; set; }
+        public List<SelectListItem> ListOfIntakes { get; set; }
         public List<SelectListItem> ListOfAcademicYear { get; set; }
         public List<SelectListItem> ListOfProgrammeOption { get; set; }
         public List<SelectListItem> ListOfCampus { get; set; }
@@ -37,6 +38,7 @@ namespace Latest_Staff_Portal.ViewModel
         public string Campus { get; set; }
         public string DocType { get; set; }
         public string ReportType { get; set; }
+        public string  Intake { get; set; }
     }
     public class ProgOptionList
     {
@@ -44,6 +46,11 @@ namespace Latest_Staff_Portal.ViewModel
         public string Desription { get; set; }
     }
     public class StudyModes
+    {
+        public string Code { get; set; }
+        public string Description { get; set; }
+    }
+    public class Intakes
     {
         public string Code { get; set; }
         public string Description { get; set; }

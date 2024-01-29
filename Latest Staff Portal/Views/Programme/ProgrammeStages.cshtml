@@ -10,7 +10,7 @@
     }
 
     .btnSize {
-        padding: 1px;
+        padding: 7px;
         font-size: 12px;
     }
 
@@ -137,9 +137,9 @@
 <script src="~/assets/js/pdfobject.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        var Prog = GetParameterValues('Prog');
-        var ProgDescription = GetParameterValues('Descr');
-        function GetParameterValues(name) {
+        var prog = getParameterValues('Prog');
+        var progDescription = getParameterValues('Descr');
+        function getParameterValues(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
             var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
             var results = regex.exec(location.search);
@@ -151,14 +151,14 @@
                 "copy",
                 {
                     extend: 'excel',
-                    title: 'Programme Stages\n(' + Prog + ' - ' + ProgDescription + ')',
+                    title: 'Programme Stages\n(' + prog + ' - ' + progDescription + ')',
                     exportOptions: {
                         columns: [1, 2]
                     }
                 },
                 {
                     extend: 'pdf',
-                    title: 'Programme Stages\n(' + Prog + ' - ' + ProgDescription + ')',
+                    title: 'Programme Stages\n(' + prog + ' - ' + progDescription + ')',
                     exportOptions: {
                         columns: [1, 2]
                     }
@@ -166,17 +166,17 @@
             ]
         }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)")
     });
-    var GetFilters = function (Prog, Stage, ReportT) {
-        if (ReportT == "CONSLMSHT") {
+    var GetFilters = function (prog, stage, reportT) {
+        if (reportT == "CONSLMSHT") {
             $("#labelF").text("Cons. Marksheet");
         }
-        if (ReportT == "PASSLIST") {
+        if (reportT == "PASSLIST") {
             $("#labelF").text("Pass List");
         }
-        if (ReportT == "CLASSIFICATION") {
+        if (reportT == "CLASSIFICATION") {
             $("#labelF").text("Classification");
         }
-        if (ReportT == "AWARD") {
+        if (reportT == "AWARD") {
             $("#labelF").text("Award List");
         }
         ShowProgress();
@@ -186,7 +186,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            data: JSON.stringify({ Prog: Prog, Stage: Stage, ReportType: ReportT }),
+            data: JSON.stringify({ Prog: prog, Stage: stage, ReportType: reportT }),
             url: '/Programme/GetReportFilters',
             success: function (data) {
                 $("#modalBodyFilters").html(data);
@@ -199,30 +199,36 @@
             }
         });
     }
-    var GenerateReport = function (Prog, Stage, ReportType) {
-        var AcademicYear = $("#ddlAcademicYear").children("option:selected").val();
-        var ProgOption = $("#ddlOption").children("option:selected").val();
-        var DocType = $("#ddlDocType").children("option:selected").val();
-        var Campus = $("#ddlCammpus").children("option:selected").val();
-        if (AcademicYear == "") {
+    var GenerateReport = function (prog, stage, reportType) {
+        var academicYear = $("#ddlAcademicYear").children("option:selected").val();
+        var progOption = $("#ddlOption").children("option:selected").val();
+        var docType = $("#ddlDocType").children("option:selected").val();
+        var campus = $("#ddlCammpus").children("option:selected").val();
+        var intake = $("#ddlIntake").children("option:selected").val();
+        if (academicYear == "") {
             Swal.fire('Warning', 'Select Academic Year', 'warning');
             return;
         }
+        if (intake == "") {
+            Swal.fire('Warning', 'Select Intake', 'warning');
+            return;
+        }
         else {
-            var DocFilters = {};
-            DocFilters.AcademicYear = AcademicYear;
-            DocFilters.ProgrammeOption = ProgOption;
-            DocFilters.Campus = Campus;
-            DocFilters.DocType = DocType;
-            DocFilters.Prog = Prog;
-            DocFilters.Stage = Stage;
-            DocFilters.ReportType = ReportType;
+            var docFilters = {};
+            docFilters.AcademicYear = academicYear;
+            docFilters.ProgrammeOption = progOption;
+            docFilters.Campus = campus;
+            docFilters.DocType = docType;
+            docFilters.Prog = prog;
+            docFilters.Stage = stage;
+            docFilters.ReportType = reportType;
+            docFilters.Intake = intake;
             ShowProgress();
             $.ajax({
                 url: '/Programme/GetProgrammeStageReport',
                 datatype: "json",
                 type: "POST",
-                data: JSON.stringify({ Filters: DocFilters }),
+                data: JSON.stringify({ Filters: docFilters }),
                 contentType: "application/json; charset = utf-8",
                 success: function (data) {
                     if (data.success == true) {
@@ -253,8 +259,8 @@
         ShowProgress();
         window.location = "/Programme/ProgrammeList";
     }
-    var GetProgStageUnits = function (Prog, Stage, ProgDesc) {
+    var GetProgStageUnits = function (prog, stage, progDesc) {
         ShowProgress();
-        window.location = "/Programme/ProgStageUnits?Prog=" + Prog + "&Stage=" + Stage + "&ProgDesc=" + ProgDesc + "";
+        window.location = "/Programme/ProgStageUnits?Prog=" + prog + "&Stage=" + stage + "&ProgDesc=" + progDesc + "";
     }
 </script>

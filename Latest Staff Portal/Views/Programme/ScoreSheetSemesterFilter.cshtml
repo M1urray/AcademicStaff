@@ -11,5 +11,10 @@
         <input type="button" class="btn btn-danger" value="Preview Score Sheet" onclick="PrintScoreSheetReports('@Request.QueryString["Prog"]','@Request.QueryString["Stage"]')" />
     </div>
 </div>
-
+<script>
+    $("#ddlSem").select2({
+        width: '100%',
+        placeholder: 'Search...'
+    });
+</script>
 

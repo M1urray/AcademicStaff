@@ -857,7 +857,7 @@ namespace Latest_Staff_Portal.Models
             bool allow = false;
             try
             {
-                string page = "SemesterList?$filter=Code eq '" + Sem + "' and Allow_Lec_Eva_Online eq true&format=json";
+                string page = "SemesterList?$filter=Code eq '" + Sem + "' and Allow_Lecturer_Evaluation eq true&format=json";
 
                 HttpWebResponse httpResponseResC = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))

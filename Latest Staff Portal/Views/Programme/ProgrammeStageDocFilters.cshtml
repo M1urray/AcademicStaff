@@ -6,10 +6,22 @@
             @Html.DropDownListFor(model => model.Semester, Model.ListOfSemester, "--Select Semester--", new { @class = "form-control", id = "ddlAcademicYear" })
         </div>
     </div>
-    <div class="row" id="DivOption" runat="server">
+    <div class="row" id="DivMode" runat="server">
         <div class="col-md-12">
             <b>Mode Of Study :</b>
             @Html.DropDownListFor(model => model.ProgrammeOption, Model.ListOfProgrammeOption, "--Select Mode Of Study--", new { @class = "form-control", id = "ddlOption" })
+        </div>
+    </div>
+    <div class="row" id="divIntake" runat="server">
+        <div class="col-md-12">
+            <b>Intake :</b>
+            @Html.DropDownListFor(model => model.Intake, Model.ListOfIntakes, "--Select Intake--", new { @class = "form-control", id = "ddlIntake" })
+        </div>
+    </div>
+    <div class="row" id="DivCampus" runat="server" visible="false">
+        <div class="col-md-12">
+            <b>Campus :</b>
+            @Html.DropDownListFor(model => model.Campus, Model.ListOfCampus, "--select Campus--", new { @class = "form-control", id = "ddlCammpus" })
         </div>
     </div>
     <div class="row" id="Div1" runat="server">
@@ -22,12 +34,7 @@
             </select>
         </div>
     </div>
-    <div class="row" id="DivCampus" runat="server" visible="false">
-        <div class="col-md-12">
-            <b>Campus :</b>
-            @Html.DropDownListFor(model => model.Campus, Model.ListOfCampus, "--select Campus--", new { @class = "form-control", id = "ddlCammpus" })
-        </div>
-    </div>
+    
     <br />
     <div align="center">
         @{
@@ -52,4 +59,9 @@
         <input type="button" class="btn btn-danger" value="@ValueText" onclick="GenerateReport('@Model.Prog','@Model.Stage','@Model.ReportType')" />
     </div>
 </div>
-
+<script>
+    $("#ddlAcademicYear,#ddlIntake").select2({
+        width: '100%',
+        placeholder: 'Search...'
+    });
+</script>

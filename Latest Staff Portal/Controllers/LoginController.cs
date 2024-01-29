@@ -1,9 +1,7 @@
-﻿using CryptSharp;
-using Latest_Staff_Portal.Models;
+﻿using Latest_Staff_Portal.Models;
 using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Configuration;
 using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Linq;
@@ -57,7 +55,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     isValid = ADAuthedication(UserName, passwrd);
                 }
-                if (isValid == true)
+                if (isValid)
                 {
                     string userID = "";
                     if (UserName.Contains("\\"))

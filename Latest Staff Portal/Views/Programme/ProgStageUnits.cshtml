@@ -116,10 +116,10 @@
 <script src="~/assets/js/pdfobject.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        var Prog = GetParameterValues('Prog');
-        var ProgDescription = GetParameterValues('ProgDesc');
-        var Stage = GetParameterValues('Stage');
-        function GetParameterValues(name) {
+        var prog = getParameterValues('Prog');
+        var progDescription = getParameterValues('ProgDesc');
+        var stage = getParameterValues('Stage');
+        function getParameterValues(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
             var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
             var results = regex.exec(location.search);
@@ -131,14 +131,14 @@
                 "copy",
                 {
                     extend: 'excel',
-                    title: 'Programme Stage Units\n(' + ProgDescription + '-' + Stage + ')',
+                    title: 'Programme Stage Units\n(' + progDescription + '-' + stage + ')',
                     exportOptions: {
                         columns: [1, 2]
                     }
                 },
                 {
                     extend: 'pdf',
-                    title: 'Programme Stage Units\n(' + ProgDescription + '-' + Stage + ')',
+                    title: 'Programme Stage Units\n(' + progDescription + '-' + stage + ')',
                     exportOptions: {
                         columns: [1, 2]
                     }
@@ -154,15 +154,15 @@
             HideProgress();
         });
     }
-    var PrintUnitReports = function (Prog, Stage, ReportType) {
+    var PrintUnitReports = function (prog, stage, reportType) {
         var row = $('#datatable-buttons tr.selectedTableRow');
-        var Unit = row.find("td").eq(1).html().trim();
+        var unit = row.find("td").eq(1).html().trim();
         ShowProgress();
         $.ajax({
             url: '/Programme/GetUnitReports',
             datatype: "json",
             type: "POST",
-            data: JSON.stringify({ Prog: Prog, Stage: Stage, Unit: Unit, ReportType: ReportType }),
+            data: JSON.stringify({ Prog: prog, Stage: stage, Unit: unit, ReportType: reportType }),
             contentType: "application/json; charset = utf-8",
             success: function (data) {
                 if (data.success == true) {
@@ -182,7 +182,7 @@
             }
         });
     }
-    var PrintScoreSheetReports = function (Prog, Stage) {
+    var PrintScoreSheetReports = function (prog, stage) {
         var sem = $("#ddlSem").children("option:selected").val();
         if (sem == "") {
             Swal.fire('Warning', 'Select Semester', 'warning');
@@ -190,13 +190,13 @@
         }
         else {
             var row = $('#datatable-buttons tr.selectedTableRow');
-            var Unit = row.find("td").eq(1).html().trim();
+            var unit = row.find("td").eq(1).html().trim();
             ShowProgress();
             $.ajax({
                 url: '/Programme/GetScoreSheetReports',
                 datatype: "json",
                 type: "POST",
-                data: JSON.stringify({ Prog: Prog, Stage: Stage, Unit: Unit, Sem: sem }),
+                data: JSON.stringify({ Prog: prog, Stage: stage, Unit: unit, Sem: sem }),
                 contentType: "application/json; charset = utf-8",
                 success: function (data) {
                     if (data.success == true) {
@@ -217,9 +217,9 @@
             });
         }
     }
-    var BackToProgStages = function (Prog, Descr) {
+    var BackToProgStages = function (prog, descr) {
         ShowProgress();
-        window.location = "/Programme/ProgrammeStages?Prog=" + Prog + "&Descr=" + Descr + "";
+        window.location = "/Programme/ProgrammeStages?Prog=" + prog + "&Descr=" + descr + "";
     }
     var GetScoreSheetFilters = function () {
         ShowProgress();

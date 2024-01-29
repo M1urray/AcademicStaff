@@ -28,23 +28,10 @@ namespace Latest_Staff_Portal.Controllers
                 else
                 {
                     string StaffNo = Session["Username"].ToString();
-                    EmployeeDesignation EmpDes = new EmployeeDesignation();// CommonClass.EmployeeDesignation(StaffNo);
+                    EmployeeDesignation EmpDes = new EmployeeDesignation();
 
                     string page = "";
                     List<Programme> PList = new List<Programme>();
-
-                    //if (EmpDes.IsHOD)
-                    //{
-                    //     page = "ProgrammeList?$select=Code,Description&$filter=OldCarriculum eq false and DepartmentCode eq '"+ EmpDes.EmpDepartment + "'&$format=json";
-                    //}
-                    //if (EmpDes.IsDean)
-                    //{
-                    //    page = "ProgrammeList?$select=Code,Description&$filter=OldCarriculum eq false and School eq '" + EmpDes.EmpSchool + "'&$format=json";
-                    //}
-                    //if (EmpDes.IsDirector)
-                    //{
-                    //    page = "ProgrammeList?$select=Code,Description&$filter=OldCarriculum eq false&$format=json";
-                    //}
                     page = "ProgrammeList?$select=Code,Description&$filter=OldCarriculum eq false and Short_Course eq false&$format=json";
                     HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -200,7 +187,29 @@ namespace Latest_Staff_Portal.Controllers
                     }
                 }
                 #endregion
+                #region Intake
+                List<Intakes> IntakesList = new List<Intakes>();
+                string pageIntakes = "DimensionValues?$filter=Global_Dimension_No_ eq 3 and Blocked eq false&$format=json";
 
+                HttpWebResponse HttpResponseIntakesData = Credentials.GetOdataData(pageIntakes);
+                using (var streamReader = new StreamReader(HttpResponseIntakesData.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+
+                    foreach (JObject config in details["value"])
+                    {
+                        Intakes Intakes = new Intakes
+                        {
+                            Code = (string)config["Code"],
+                            Description = (string)config["Name"]
+                        };
+                        IntakesList.Add(Intakes);
+                    }
+                }
+                #endregion
                 #region Campus List
                 List<DimensionValues> Campuses = new List<DimensionValues>();
                 string pageCampus = "DimensionValues?$filter=Global_Dimension_No_ eq 3 and Blocked eq false&$format=json";
@@ -233,6 +242,12 @@ namespace Latest_Staff_Portal.Controllers
                                               Text = x.Description,
                                               Value = x.Code
                                           }).ToList(),
+                    ListOfIntakes = IntakesList.Select(x =>
+                        new SelectListItem()
+                        {
+                            Text = x.Description,
+                            Value = x.Code
+                        }).ToList(),
                     ListOfSemester = SemList.Select(x =>
                         new SelectListItem()
                         {
@@ -452,17 +467,17 @@ namespace Latest_Staff_Portal.Controllers
 
                 if (ReportType == "CLATT")
                 {
-                    //Credentials.ObjNav.PrintClassList(Prog, Unit, Stage, Sem, ClassCode, Campus,1, "CLASSLIST-" + _filename + ".pdf");
+                    Credentials.ObjNav.PrintClassList(Prog, Unit, Stage, Sem, "", "",1, "CLASSLIST-" + _filename + ".pdf");
                     filename = "CLASSLIST-" + _filename + ".pdf";
                 }
                 if (ReportType == "EXAMATT")
                 {
-                    //Credentials.ObjNav.GenerateExamAttendanceList(Prog, Unit, Stage, Sem, ClassCode, Campus,1, "EXAMATTENDANCE-" + _filename + ".pdf");
+                    // Credentials.ObjNav.GenerateExamAttendanceList(Prog, Unit, Stage, Sem, ClassCode, Campus,1, "EXAMATTENDANCE-" + _filename + ".pdf");
                     filename = "EXAMATTENDANCE-" + _filename + ".pdf";
                 }
                 if (ReportType == "SCORESHEET")
                 {
-                    //Credentials.ObjNav.GenerateScoreSheet(Prog, Unit, Stage, Sem, "SCORESHEET-" + _filename + ".pdf");
+                    Credentials.ObjNav.GenerateScoreSheet(Prog, Unit, Stage, Sem, "","","SCORESHEET-" + _filename + ".pdf");
                     filename = "SCORESHEET-" + _filename + ".pdf";
                 }
                 string fileDestinationPath = Server.MapPath("~/Downloads/");
