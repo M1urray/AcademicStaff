@@ -364,7 +364,7 @@ namespace Latest_Staff_Portal.Controllers
         {
             if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null)
             {
-                // string Prog = Session["Prog"].ToString();
+                 string Prog = Session["Prog"].ToString();
                 //string Stage = Session["Stage"].ToString();
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
@@ -375,7 +375,7 @@ namespace Latest_Staff_Portal.Controllers
                 List<CustomerList> studentlist = new List<CustomerList>();
                 //string page = "StudentUnits?$filter=Programme eq '" + Prog + "' and Stage eq '" + Stage + "' and Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Global_Dimension_1_Code eq '" + Campus + "'&$format=json";
                 //string page = "StudentUnits?$filter=Programme eq '" + Prog + "' and Stage eq '" + Stage + "' and Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Class_Code eq '" + classCode + "' and Class_Code ne ''&format=json";
-                string page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "'&$format=json";
+                string page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "'and Programme eq '" + Prog + "'&$format=json";
                 //string page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "'&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
