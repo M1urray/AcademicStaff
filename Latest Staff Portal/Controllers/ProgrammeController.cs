@@ -189,7 +189,7 @@ namespace Latest_Staff_Portal.Controllers
                 #endregion
                 #region Intake
                 List<Intakes> IntakesList = new List<Intakes>();
-                string pageIntakes = "DimensionValues?$filter=Global_Dimension_No_ eq 3 and Blocked eq false&$format=json";
+                string pageIntakes = "QyIntake?$format=json";
 
                 HttpWebResponse HttpResponseIntakesData = Credentials.GetOdataData(pageIntakes);
                 using (var streamReader = new StreamReader(HttpResponseIntakesData.GetResponseStream()))
@@ -204,7 +204,7 @@ namespace Latest_Staff_Portal.Controllers
                         Intakes Intakes = new Intakes
                         {
                             Code = (string)config["Code"],
-                            Description = (string)config["Name"]
+                            Description = (string)config["Description"]
                         };
                         IntakesList.Add(Intakes);
                     }

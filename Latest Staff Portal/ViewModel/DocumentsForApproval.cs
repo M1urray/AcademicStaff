@@ -58,11 +58,14 @@ namespace Latest_Staff_Portal.ViewModel
         public int ExemptionConcCount { get; set; }
         public int ExamChlngConcCount { get; set; }
         public int ClearanceCount { get; set; }
+        public int SpecialExamCount { get; set; }
+        public int SuppCount { get; set; }
     }
     public class DocumentApprovalCount
     {
         public DocumentCount DocCount { get; set; }
         public StdDocumentCount StdCount { get; set; }
+
     }
     public class DocumentRejectionComment
     {

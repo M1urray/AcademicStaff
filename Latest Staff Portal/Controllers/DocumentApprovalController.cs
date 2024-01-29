@@ -34,13 +34,16 @@ namespace Latest_Staff_Portal.Controllers
                     }
                     else
                     {
-                        string userID = Session["UserID"].ToString();
+                        string UserId = Session["UserID"].ToString();
+                        string EscapedApproverId = Uri.EscapeDataString(UserId);
                         #region Student requisitions
                         StdDocumentCount StdCount = new StdDocumentCount();
 
                         StdCount.ClearanceCount = 0;
+                        StdCount.SpecialExamCount = 0;
+                        StdCount.SuppCount = 0;
 
-                        string stdpage = "StudentReqApprovalList?$filter=Approver_ID eq '" + userID + "' and Status eq '" + rn + "'&$format=json";
+                        string stdpage = "StudentReqApprovalList?$filter=Approver_ID eq '" + EscapedApproverId + "' and Status eq '" + rn + "'&$format=json";
                         HttpWebResponse httpResponsestd = Credentials.GetOdataData(stdpage);
                         using (var streamReader = new StreamReader(httpResponsestd.GetResponseStream()))
                         {
@@ -51,7 +54,15 @@ namespace Latest_Staff_Portal.Controllers
                             {
                                 if ((string)config["ReqType"] == "Clearance")
                                 {
-                                    StdCount.ClearanceCount = StdCount.ClearanceCount + 1;
+                                    StdCount.ClearanceCount += 1;
+                                }
+                                if ((string)config["ReqType"] == "Special Exams")
+                                {
+                                    StdCount.SpecialExamCount += 1;
+                                }
+                                if ((string)config["ReqType"] == "Clearance")
+                                {
+                                    StdCount.SuppCount += 1;
                                 }
                             }
                             StdCount.Status = rn;
