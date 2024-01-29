@@ -5105,8 +5105,8 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .card-header {
     padding: .75rem 1.25rem;
     margin-bottom: 0;
-    background-color: #A3DDF0;
-    border-bottom: 0 solid #A3DDF0
+    background-color: #d21034;
+    border-bottom: 0 solid #D21034
 }
 
     .card-header:first-child {
