@@ -30,6 +30,7 @@
                     <th>Unit Name</th>
                     <th>Semester</th>
                     <th>Campus</th>
+                    <th>Count</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,26 +42,29 @@
                             {
                                 foreach (var item in Model.ListOfAssignedUnits)
                                 {
-                                    <tr>
-                                        <td>
-                                            <button onclick="SelectedRow(`@item.Code`, `@item.Semester`, `@item.Unit`, `@item.Unit_Name`, `@item.Campus_Code`)" class="btn btn-sm btn-danger">Select</button>
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Code)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Unit)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Unit_Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Semester)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Campus_Code)
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        <button onclick="SelectedRow(`@item.Code`, `@item.Semester`, `@item.Unit`, `@item.Unit_Name`, `@item.Campus_Code`)" class="btn btn-sm btn-danger">Select</button>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Code)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Unit)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Unit_Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Semester)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Campus_Code)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.stdCount)
+                                    </td>
+                                </tr>
                                 }
                             }
                             else

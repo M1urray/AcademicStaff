@@ -181,7 +181,7 @@ namespace Latest_Staff_Portal.Controllers
                     foreach (JObject config in details["value"])
                     {
                         StudyModes OptionList = new StudyModes();
-                        OptionList.Code = (string)config["Code"];
+                        OptionList.Code = (string)config["Student_Type"];
                         OptionList.Description = (string)config["Student_Type"];
                         progOpList.Add(OptionList);
                     }
@@ -304,7 +304,7 @@ namespace Latest_Staff_Portal.Controllers
                 bool iSDeviceMobile = Request.Browser.IsMobileDevice;
                 if (Filters.ReportType == "CONSLMSHT")
                 {
-                    Credentials.ObjNav.GenerateConsolidatedMarks(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, "",Convert.ToInt32(Filters.DocType), Campus, "CONS MARKSHEET-" + _filename + extn);
+                    Credentials.ObjNav.GenerateConsolidatedMarks(Filters.Prog, Filters.AcademicYear, Filters.Stage, ProgOption, "",Convert.ToInt32(Filters.DocType), Campus, "CONS MARKSHEET-" + _filename + extn,Filters.Intake);
 
                     filename = "CONS MARKSHEET-" + _filename + extn;
                     string fileDestinationPath = Server.MapPath("~/Downloads/");

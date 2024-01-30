@@ -60,7 +60,7 @@ namespace Latest_Staff_Portal.Controllers
                                 {
                                     StdCount.SpecialExamCount += 1;
                                 }
-                                if ((string)config["ReqType"] == "Clearance")
+                                if ((string)config["ReqType"] == "")
                                 {
                                     StdCount.SuppCount += 1;
                                 }
@@ -1072,27 +1072,24 @@ namespace Latest_Staff_Portal.Controllers
                     }
                 }
                 #endregion
+                #region Doc Lines
+                string pageLn = "StudentRequisitionLines?$count=true&$filter=Application_No eq '" + DocNo + "'&$format=json";
+                HttpWebResponse httpResponseLn = Credentials.GetOdataData(pageLn);
+                using (var streamReader = new StreamReader(httpResponseLn.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
 
-                //#region Doc Lines
-                //List<StudentReqLines> DocLines = new List<StudentReqLines>();
-                //string pageLn = "StudentRequisitionLines?$filter=Application_No eq '" + DocNo + "'&$format=json";
-                //HttpWebResponse httpResponseLn = Credentials.GetOdataData(pageLn);
-                //using (var streamReader = new StreamReader(httpResponseLn.GetResponseStream()))
-                //{
-                //    var result = streamReader.ReadToEnd();
-
-                //    var details = JObject.Parse(result);
-                //    if (details["value"].Count() > 0)
-                //    {
-                //        RDoc.ReqCount = details["value"].Count();
-                //    }
-                //    else
-                //    {
-                //        RDoc.ReqCount = 0;
-                //    }
-                //}
-                //#endregion
-
+                    var details = JObject.Parse(result);
+                    if (details.Count > 0)
+                    {
+                        RDoc.ReqCount += 1;
+                    }
+                    else
+                    {
+                        RDoc.ReqCount = 0;
+                    }
+                }
+                #endregion
                 StudentReqDoc newDoc = new StudentReqDoc
                 {
                     Doc = RDoc,
@@ -1129,7 +1126,6 @@ namespace Latest_Staff_Portal.Controllers
                         ln.Lecture = (string)config["Lecture_Name"];
                         ln.Section = (string)config["Section"];
                         ln.Approved = (bool)config["Approved"];
-                        ln.Charge = (bool)config["Charge_Unit"];
                         ln.Semester = (string)config["Semester"];
                         ln.Semester_Unit_Done = (string)config["Semester_Unit_Done"];
                         ln.LnNo = (string)config["Line_No"];
@@ -1239,7 +1235,7 @@ namespace Latest_Staff_Portal.Controllers
             {
                 if (ChargeApp != null && ChargeApp != "")
                 {
-                    //Credentials.ObjNav.ChargeStudentRequest(DocNo, Convert.ToInt32(ChargeApp));
+                    // Credentials.ObjNav.ChargeStudentRequest(DocNo, Convert.ToInt32(ChargeApp));
                 }
 
                 foreach (var c in ReqUnits)
@@ -1528,11 +1524,11 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         [HttpPost]
-        public JsonResult SaveSpecialExamLec(string DocNo, string Unit, string Lec, string Sec, string Ln, string Sem)
+        public JsonResult SaveSpecialExamLec(string DocNo, string Unit, string Lec, string Ln, string Sem)
         {
             try
             {
-                //Credentials.ObjNav.AssignLecStudentRequisitionLines(DocNo, Unit, Convert.ToInt32(Ln), true, Lec, Sec);
+                 //Credentials.ObjNav.AssignLecStudentRequisitionLines(DocNo, Unit, Convert.ToInt32(Ln), true, Lec, Sec);
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

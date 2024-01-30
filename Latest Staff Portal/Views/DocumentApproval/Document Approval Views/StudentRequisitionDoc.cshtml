@@ -65,6 +65,15 @@
         @Html.TextBoxFor(m => m.Doc.Programme, new { @class = "form-control", @readonly = "readonly" })
     </div>
 </div>
+@if (Model.Doc.ReqCount > 0)
+{
+    <hr />
+    <hr style="border:1px solid black" />
+    <b>Student Requisition Lines</b>
+    <hr />
+    <div id="divRegList"></div>
+}
+
 @*//////////////////////Modal////////////////////////////*@
 <div id="myModal1" class="modal fade" tabindex="-1" role="dialog" ke aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
@@ -133,13 +142,8 @@
     };
     var SubmitAssignLec = function (DocNo,Unit, Sem, Ln) {
         var Lec = $("#ddlLecturer").children("option:selected").val();
-        var Sec = $("#ddlSection").children("option:selected").val();
         if (Lec == "") {
             Swal.fire('Warning', "Select Lecturer", 'warning');
-            return;
-        }
-        else if (Sec == "") {
-            Swal.fire('Warning', "Select Section", 'warning');
             return;
         }
         else {
@@ -149,7 +153,7 @@
                 type: "POST",
                 datatype: "json",
                 contentType: "application/json; charset = utf-8",
-                data: JSON.stringify({ DocNo: DocNo, Unit: Unit, Lec: Lec, Sec: Sec, Ln: Ln,Sem: Sem }),
+                data: JSON.stringify({ DocNo: DocNo, Unit: Unit, Lec: Lec, Ln: Ln,Sem: Sem }),
                 url: '/DocumentApproval/SaveSpecialExamLec',
                 success: function (data) {
                     if (data.success == true) {

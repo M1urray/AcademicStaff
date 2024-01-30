@@ -330,6 +330,7 @@
             <element minOccurs="1" maxOccurs="1" name="docType" type="int" />
             <element minOccurs="1" maxOccurs="1" name="campus" type="string" />
             <element minOccurs="1" maxOccurs="1" name="filenameFromApp" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="intakeFilter" type="string" />
           </sequence>
         </complexType>
       </element>

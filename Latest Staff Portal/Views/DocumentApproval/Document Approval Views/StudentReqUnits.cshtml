@@ -11,11 +11,11 @@
             @if (Model.RegT == "Special Exams")
             {
                 <th class="text-center">Lecturer</th>
-                <th class="text-center">Section</th>
+                @* <th class="text-center">Section</th> *@
                 <th class="text-center">Exam Missed On</th>
             }
             <th class="text-center">Approve</th>
-            <th class="text-center">Charge</th>
+            @* <th class="text-center">Charge</th> *@
             <th class="hide"></th>
             @if (Model.RegT == "Special Exams" || Model.RegT == "Exam Challenge")
             {
@@ -47,9 +47,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Lecture)
                         </td>
-                        <td>
+                        @*<td>
                             @Html.DisplayFor(modelItem => item.Section)
-                        </td>
+                        </td>*@
                         <td class="text-center">
                             @Html.DisplayFor(modelItem => item.Semester_Unit_Done)
                         </td>
@@ -57,9 +57,9 @@
                     <td align="center">
                         <input type="checkbox" class="checkboxClass" name="chkApp" checked="@item.Approved" />
                     </td>
-                    <td align="center">
-                        <input type="checkbox" class="checkboxClass" name="chkCharge" checked="@item.Charge" />
-                    </td>
+                    @* <td align="center"> *@
+                    @*     <input type="checkbox" class="checkboxClass" name="chkCharge" checked="@item.Charge" /> *@
+                    @* </td> *@
                     <td class="hide">
                         @Html.DisplayFor(modelItem => item.LnNo)
                     </td>

@@ -123,7 +123,7 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/lecturer/LoadClassAtteanceStudents',
+            url: '/lecturer/LoadClassAttendanceStudents',
             success: function (data) {
                 HideProgress();
                 $("#modalBody").html(data);               

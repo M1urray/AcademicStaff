@@ -1118,7 +1118,7 @@ namespace Latest_Staff_Portal.NAVWS {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateConsolidatedMarks", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateConsolidatedMarks_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GenerateConsolidatedMarks(string prog, string semesters, string stage, string studyMode, string progOptions, int docType, string campus, string filenameFromApp) {
+        public void GenerateConsolidatedMarks(string prog, string semesters, string stage, string studyMode, string progOptions, int docType, string campus, string filenameFromApp, string intakeFilter) {
             this.Invoke("GenerateConsolidatedMarks", new object[] {
                         prog,
                         semesters,
@@ -1127,16 +1127,17 @@ namespace Latest_Staff_Portal.NAVWS {
                         progOptions,
                         docType,
                         campus,
-                        filenameFromApp});
+                        filenameFromApp,
+                        intakeFilter});
         }
         
         /// <remarks/>
-        public void GenerateConsolidatedMarksAsync(string prog, string semesters, string stage, string studyMode, string progOptions, int docType, string campus, string filenameFromApp) {
-            this.GenerateConsolidatedMarksAsync(prog, semesters, stage, studyMode, progOptions, docType, campus, filenameFromApp, null);
+        public void GenerateConsolidatedMarksAsync(string prog, string semesters, string stage, string studyMode, string progOptions, int docType, string campus, string filenameFromApp, string intakeFilter) {
+            this.GenerateConsolidatedMarksAsync(prog, semesters, stage, studyMode, progOptions, docType, campus, filenameFromApp, intakeFilter, null);
         }
         
         /// <remarks/>
-        public void GenerateConsolidatedMarksAsync(string prog, string semesters, string stage, string studyMode, string progOptions, int docType, string campus, string filenameFromApp, object userState) {
+        public void GenerateConsolidatedMarksAsync(string prog, string semesters, string stage, string studyMode, string progOptions, int docType, string campus, string filenameFromApp, string intakeFilter, object userState) {
             if ((this.GenerateConsolidatedMarksOperationCompleted == null)) {
                 this.GenerateConsolidatedMarksOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenerateConsolidatedMarksOperationCompleted);
             }
@@ -1148,7 +1149,8 @@ namespace Latest_Staff_Portal.NAVWS {
                         progOptions,
                         docType,
                         campus,
-                        filenameFromApp}, this.GenerateConsolidatedMarksOperationCompleted, userState);
+                        filenameFromApp,
+                        intakeFilter}, this.GenerateConsolidatedMarksOperationCompleted, userState);
         }
         
         private void OnGenerateConsolidatedMarksOperationCompleted(object arg) {

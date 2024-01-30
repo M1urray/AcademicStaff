@@ -173,6 +173,7 @@ namespace Latest_Staff_Portal.Controllers
                         Lec.Unit_Name = (string)config["Unit_Name"];
                         Lec.Campus_Code = (string)config["Campus_Code"];
                         Lec.Student_Type = (string)config["Student_Type"];
+                        Lec.stdCount = (string)config["Students_Count"];
                         LectUnitAllocation.Add(Lec);
                     }
                 }
@@ -621,7 +622,7 @@ namespace Latest_Staff_Portal.Controllers
                 bool success = false;
                 if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null)
                 {
-                    //string Prog = Session["Prog"].ToString();
+                    string Prog = Session["Prog"].ToString();
                     //string Stage = Session["Stage"].ToString();
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
@@ -645,7 +646,7 @@ namespace Latest_Staff_Portal.Controllers
 
                     if (ReportType == "CLATT")
                     {
-                        Credentials.ObjNav.PrintClassList("", Unit, "", Sem, "", Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
+                        Credentials.ObjNav.PrintClassList(Prog ,Unit, "", Sem, "", Campus, Convert.ToInt32(RType), "CLASSLIST-" + _filename + extn);
                         filename = "CLASSLIST-" + _filename + extn;
                     }
                     if (ReportType == "EXAMATT")
@@ -1803,7 +1804,7 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView();
             }
         }
-        public PartialViewResult LoadClassAtteanceStudents(string DocNo)
+        public PartialViewResult LoadClassAttendanceStudents(string DocNo)
         {
             if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null || Session["ClassCode"] != null)
             {
@@ -1871,7 +1872,7 @@ namespace Latest_Staff_Portal.Controllers
                     }
                     #endregion
                     #region Weeks List
-                    string pageTmTSub = "Timetable?$select=DayofWeek&$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem +
+                    string pageTmTSub = "Timetable?$select=Day_of_Week&$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem +
                     "' and Campus_Code eq '" + Campus + "' and Lecturer eq '" + Lec + "'&$format=json";
 
                     HttpWebResponse httpResponseTmTSub = Credentials.GetOdataData(pageTmTSub);
@@ -1899,8 +1900,8 @@ namespace Latest_Staff_Portal.Controllers
                                     if (ClassAttendanceWeekTaken(Lec, Sem, Unit, Campus, (string)config["Code"], ""))
                                     {
                                         DropdownList ddl = new DropdownList();
-                                        ddl.Value = (string)config["Code"] + "~" + (string)config1["DayofWeek"];
-                                        ddl.Text = (string)config["Code"] + "-" + (string)config1["DayofWeek"] + "-" + ((DateTime)config["Start_Date"]).ToString("dd/MM/yyyy");
+                                        ddl.Value = (string)config["Code"] + "~" + (string)config1["Day_of_Week"];
+                                        ddl.Text = (string)config["Code"] + "-" + (string)config1["Day_of_Week"] + "-" + ((DateTime)config["Start_Date"]).ToString("dd/MM/yyyy");
                                         WeekList.Add(ddl);
                                     }
                                 }
@@ -1912,7 +1913,7 @@ namespace Latest_Staff_Portal.Controllers
                 else
                 {
                     #region Weeks List                
-                    string pageTmT = "Timetable?$select=DayofWeek&$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem +
+                    string pageTmT = "Timetable?$select=Day_of_Week&$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem +
                     "' and Campus_Code eq '" + Campus + "' and Lecturer eq '" + Lec + "'&$format=json";
 
                     HttpWebResponse httpResponseTmT = Credentials.GetOdataData(pageTmT);
@@ -1925,7 +1926,7 @@ namespace Latest_Staff_Portal.Controllers
                         foreach (JObject config1 in detailsTmT["value"])
                         {
                             string tday = DateTime.UtcNow.ToString("o");
-                            string pageWk = "WeeksList?$select=Code,Start_Date&$filter=Day eq '" + (string)config1["DayofWeek"] +
+                            string pageWk = "WeeksList?$select=Code,Start_Date&$filter=Day eq '" + (string)config1["Day_of_Week"] +
                                 "' and Inactive eq false and Start_Date le " + tday + " and Semester eq '" + Sem + "'&$format=json";
 
                             HttpWebResponse httpResponseWk = Credentials.GetOdataData(pageWk);
@@ -1940,8 +1941,8 @@ namespace Latest_Staff_Portal.Controllers
                                     if (!ClassAttendanceWeekTaken(Lec, Sem, Unit, Campus, (string)config["Code"], ""))
                                     {
                                         DropdownList ddl = new DropdownList();
-                                        ddl.Value = (string)config["Code"] + "~" + (string)config1["DayofWeek"];
-                                        ddl.Text = (string)config["Code"] + "-" + (string)config1["DayofWeek"] + "-" + ((DateTime)config["Start_Date"]).ToString("dd/MM/yyyy");
+                                        ddl.Value = (string)config["Code"] + "~" + (string)config1["Day_of_Week"];
+                                        ddl.Text = (string)config["Code"] + "-" + (string)config1["Day_of_Week"] + "-" + ((DateTime)config["Start_Date"]).ToString("dd/MM/yyyy");
                                         WeekList.Add(ddl);
                                     }
                                 }

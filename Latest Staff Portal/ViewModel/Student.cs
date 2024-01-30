@@ -38,6 +38,7 @@ namespace Latest_Staff_Portal.ViewModel
     public class StudentReqDoc
     {
         public StudentRequisition Doc { get; set; }
+        public List<StudentReqLines> DocLinesList { get; set; }
         public string Sequence { get; set; }
     }
     public class StudentReqLinesDoc

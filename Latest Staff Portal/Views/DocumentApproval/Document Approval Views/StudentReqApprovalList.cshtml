@@ -5,19 +5,21 @@
         color: white
     }
 </style>
+@if (Model.DocType == "Student Clearance Requests")
+{
 <hr />
 <div class="row">
-    @if (Model.DocType == "Student Clearance Requests")
-    {
+
         <div class="col-md-6">
             <button class="btn btn-primary" onclick="LoadData('1')">Pending Clearance Requests</button>
         </div>
         <div class="col-md-6">
             <button class="btn btn-danger" onclick="LoadData('2')">Rejected Clearance Requests</button>
         </div>
-    }
+
 </div>
 <hr />
+}
 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
     <thead style="background-color:black;color:white">
         <tr>
