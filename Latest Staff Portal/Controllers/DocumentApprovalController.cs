@@ -1437,7 +1437,7 @@ namespace Latest_Staff_Portal.Controllers
                     LecAssignUnit LecList = new LecAssignUnit();
                     #region Lec List
                     List<DimensionValues> ListLec = new List<DimensionValues>();
-                    string pageCampus = "Timetable?$filter=Unit eq '" + Unit + "' and Semester eq '" + Sem + "'&$format=json";
+                    string pageCampus = "EmployeeList?$filter=Lecturer eq true and Status eq 'Active'&$format=json";
 
                     HttpWebResponse httpResponseCampus = Credentials.GetOdataData(pageCampus);
                     using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
@@ -1445,13 +1445,11 @@ namespace Latest_Staff_Portal.Controllers
                         var result = streamReader.ReadToEnd();
 
                         var details = JObject.Parse(result);
-
-
                         foreach (JObject config in details["value"])
                         {
                             DimensionValues l = new DimensionValues();
-                            l.Code = (string)config["Lecturer"];
-                            l.Name = (string)config["Lecturer_Name"];
+                            l.Code = (string)config["No"];
+                            l.Name = (string)config["Full_Name"];
                             ListLec.Add(l);
                         }
                     }
@@ -1479,48 +1477,6 @@ namespace Latest_Staff_Portal.Controllers
                 Error erroMsg = new Error();
                 erroMsg.Message = ex.Message;
                 return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
-            }
-        }
-        [AcceptVerbs(HttpVerbs.Get)]
-        public JsonResult GetLecturerSections(string Lec, string Unit, string Sem)
-        {
-            try
-            {
-                #region Section
-                List<DropdownList> DropDList = new List<DropdownList>();
-                string page = "Timetable?$filter=Lecturer eq '" + Lec + "' and Unit eq '" + Unit + "' and Semester eq '" + Sem + "'&$format=json";
-
-                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        DropdownList d = new DropdownList();
-                        d.Value = (string)config["Unit_Class"];
-                        d.Text = (string)config["Unit_Class"];
-                        DropDList.Add(d);
-                    }
-                }
-                #endregion
-                DropdownListData newList = new DropdownListData
-                {
-                    ListOfddlData = DropDList.Select(x =>
-                                    new SelectListItem()
-                                    {
-                                        Text = x.Text,
-                                        Value = x.Value
-                                    }).ToList()
-                };
-                return Json(newList, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpPost]
