@@ -434,20 +434,59 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         [HttpGet]
+        // public virtual ActionResult Download(string fileName)
+        // {
+        //     try
+        //     {
+        //         string fullPath = "";//Credentials.fileDestinationPath + fileName;
+        //         return File(fullPath, "application/octet-stream", fileName);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Error erroMsg = new Error();
+        //         erroMsg.Message = ex.Message;
+        //         return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
+        //     }
+        // }
         public virtual ActionResult Download(string fileName)
         {
             try
             {
-                string fullPath = "";// Credentials.fileDestinationPath + fileName;
-                return File(fullPath, "application/octet-stream", fileName);
+                string fullPath = ""; // Set the actual path to the file
+
+                // Determine the file extension
+                string fileExtension = Path.GetExtension(fileName);
+
+                // Set the appropriate Content-Type based on the file extension
+                string contentType;
+                switch (fileExtension.ToLower())
+                {
+                    case ".pdf":
+                        contentType = "application/pdf";
+                        break;
+                    case ".xlsx":
+                        contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        break;
+                    case ".docx":
+                        contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                        break;
+                    default:
+                        // If the file type is unknown, use a generic binary stream
+                        contentType = "application/octet-stream";
+                        break;
+                }
+
+                // Return the file with the correct Content-Type
+                return File(fullPath, contentType, fileName);
             }
             catch (Exception ex)
             {
-                Error erroMsg = new Error();
-                erroMsg.Message = ex.Message;
-                return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
+                Error errorMsg = new Error();
+                errorMsg.Message = ex.Message;
+                return View("~/Views/Common/ErrorMessange.cshtml", errorMsg);
             }
         }
+
         public JsonResult GetUnitReports(string Prog, string Stage, string Unit, string ClassCode, string Campus, string ReportType)
         {
             try

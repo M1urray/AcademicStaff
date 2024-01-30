@@ -1272,11 +1272,13 @@ namespace Latest_Staff_Portal.NAVWS {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentAudit", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentAudit_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GenerateStudentAudit(string student_No, string prog, string filenameFromApp) {
-            this.Invoke("GenerateStudentAudit", new object[] {
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public string GenerateStudentAudit(string student_No, string prog, string filenameFromApp) {
+            object[] results = this.Invoke("GenerateStudentAudit", new object[] {
                         student_No,
                         prog,
                         filenameFromApp});
+            return ((string)(results[0]));
         }
         
         /// <remarks/>
@@ -1298,7 +1300,7 @@ namespace Latest_Staff_Portal.NAVWS {
         private void OnGenerateStudentAuditOperationCompleted(object arg) {
             if ((this.GenerateStudentAuditCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GenerateStudentAuditCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GenerateStudentAuditCompleted(this, new GenerateStudentAuditCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -1434,10 +1436,12 @@ namespace Latest_Staff_Portal.NAVWS {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:GenerateStudentReportCard", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="GenerateStudentReportCard_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void GenerateStudentReportCard(string student_No, string filenameFromApp) {
-            this.Invoke("GenerateStudentReportCard", new object[] {
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public string GenerateStudentReportCard(string student_No, string filenameFromApp) {
+            object[] results = this.Invoke("GenerateStudentReportCard", new object[] {
                         student_No,
                         filenameFromApp});
+            return ((string)(results[0]));
         }
         
         /// <remarks/>
@@ -1458,7 +1462,7 @@ namespace Latest_Staff_Portal.NAVWS {
         private void OnGenerateStudentReportCardOperationCompleted(object arg) {
             if ((this.GenerateStudentReportCardCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GenerateStudentReportCardCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GenerateStudentReportCardCompleted(this, new GenerateStudentReportCardCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -3146,7 +3150,29 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void GenerateStudentAuditCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void GenerateStudentAuditCompletedEventHandler(object sender, GenerateStudentAuditCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GenerateStudentAuditCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GenerateStudentAuditCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
@@ -3210,7 +3236,29 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void GenerateStudentReportCardCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void GenerateStudentReportCardCompletedEventHandler(object sender, GenerateStudentReportCardCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GenerateStudentReportCardCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GenerateStudentReportCardCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
