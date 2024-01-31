@@ -56,11 +56,19 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="form-group">
             @Html.Label("Purpose of the Trip", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
                 <textarea id="txtRemarks" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Attachment(Optional)", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                <input type="file" id="fileAttachment" class="form-control" />
             </div>
         </div>
     </div>

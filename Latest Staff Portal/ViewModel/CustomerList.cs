@@ -44,4 +44,8 @@ namespace Latest_Staff_Portal.ViewModel
         public string Code { get; set; }
         public List<SelectListItem> ListOfSettlements { get; set; }
     }
+    public class LessonList
+    {
+        public List<SelectListItem> ListOfLessons { get; set; }
+    }
 }

@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            @Html.Label("Leave Type", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.Label("Nature of Leave", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
                 @Html.DropDownListFor(model => model.Leave_Type, Model.ListOfLeaveTypes, "--select Leave Type--", new { @class = "form-control", @id = "ddlLeaveType", @onchange = "GetLeaveBalance()" })
                 @Html.ValidationMessageFor(model => model.Leave_Type, "", new { @class = "text-danger" })
@@ -12,15 +12,23 @@
     </div>
     <div class="col-md-6" align="center">
         <div class="form-group">
-            @Html.Label("", htmlAttributes: new { @class = "control-label col-md-12" })
-            <div class="col-md-12">
-                <span class="LeaveBal" style="display:none">
-                    @Html.DisplayFor(model => model.LeaveBal, new { htmlAttributes = new { @class = "form-control", @id = "lblLvBal" } })
-                </span>
-                @Html.ValidationMessageFor(model => model.LeaveBal, "", new { @class = "text-danger" })
-            </div>
+            <b>Annual Allocation :</b><label id="lblAllD">@Model.AllocatedDays</label><br />
+            <b>Reimbursed Days : </b><label id="lblReimbD">@Model.ReimbDays</label><br />
+            <b>Leave Taken : </b><label id="lblLvTaken">@Model.LeaveTaken</label><br />
+            <b>Leave Balance : </b><label id="lblBalance">@Model.LeaveBal</label>
         </div>
     </div>
+    @*<div class="col-md-6" align="center">
+            <div class="form-group">
+                @Html.Label("Available days", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    <span class="LeaveBal">
+                        @Html.DisplayFor(model => model.LeaveBal, new { htmlAttributes = new { @class = "form-control", @id = "lblLvBal" } })
+                    </span>
+                    @Html.ValidationMessageFor(model => model.LeaveBal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>*@
 </div>
 <div class="row">
     <div class="col-md-6">
@@ -39,6 +47,26 @@
             <div class="col-md-12">
                 @Html.DropDownListFor(model => model.Reliever, Model.ListOfRelievers, "--select Reliever--", new { @class = "form-control", @id = "ddlReliever" })
                 @Html.ValidationMessageFor(model => model.AppliedDays, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Address", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @id = "txtAddress" })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Phone Number", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.phoneNo, new { @class = "form-control", @id = "txtPhoneNo" })
+                @Html.ValidationMessageFor(model => model.phoneNo, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
@@ -73,9 +101,9 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            @Html.Label("Campus", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.Label("Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                @Html.DropDownListFor(model => model.RespC, Model.ListofCampus, "--select Campus--", new { @class = "form-control", @id = "ddlRespC" })
+                @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
                 @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -92,7 +120,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">
-            @Html.Label("Reason for your request", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.Label("Remarks", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
                 <textarea id="txtRemarks" class="form-control"></textarea>
             </div>
@@ -115,8 +143,7 @@
             autoclose: true,
             //yearRange: '-0:+2',
             showOtherMonths: true,
-            dateFormat: 'dd/mm/yy',
-            constrainInput: true
+            dateFormat: 'dd/mm/yy'
             //minDate: 0
         });
         $(window).resize(function () {
@@ -140,7 +167,7 @@
             }
             else {
                 ShowProgress();
-                $.getJSON("/Leave/End_ReturnDates", { startDate: StartDate, days: days, LvType: LvType },
+                $.getJSON('@Url.Action("End_ReturnDates", "Leave")', { startDate: StartDate, days: days, LvType: LvType },
                     function (data) {
                         if (data.success == true) {
                             $('#EndDate').html(data.ERDate.EndDate);
@@ -164,19 +191,23 @@
         if (LeaveType == "") {
             $("#ddlNoDays option").remove();
             $('#ddlNoDays').empty().append('<option selected="selected" value="0">--No of Days--</option>');
-            $(".LeaveBal").html("0");
-            $('#dtPicker').val("");
+            $("#lblAllD").text("0");
+            $("#lblReimbD").text("0");
+            $("#lblLvTaken").text("0");
+            $("#lblBalance").text("0");
+            $('#dtPicker').text("");
             $('#EndDate').html("dd/mm/yyyy");
             $('#ReturnDate').html("dd/mm/yyyy");
             return;
         }
         else {
             ShowProgress();
-            //$.getJSON("/Leave/GetLeaveBalance", { LvType: LeaveType },
-            $.getJSON("/Leave/GetLeaveBalance", { LvType: LeaveType },
+            $.getJSON('@Url.Action("GetLeaveBalance", "Leave")', { LvType: LeaveType },
                 function (data) {
-
-                    $(".LeaveBal").html(data.newBal.Balance);
+                    $("#lblAllD").text(data.newBal.AllocatedDays);
+                    $("#lblReimbD").text(data.newBal.ReimbDays);
+                    $("#lblLvTaken").text(data.newBal.LeaveTaken);
+                    $("#lblBalance").text(data.newBal.Balance);
                     $("#ddlNoDays").empty().append('<option selected="selected" value="0">--No of Days--</option>');
                     $.each(data.newBal.ListOfDays, function () {
                         $("#ddlNoDays").append($("<option></option>").val(this['Value']).html(this['Text']));

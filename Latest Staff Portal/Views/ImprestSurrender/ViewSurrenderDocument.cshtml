@@ -18,6 +18,11 @@
         font-size: 12px;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div style="background-color: black;">
     <a href="#" onclick="ImprestSurrenderRequisitionLink();" style="color:yellow"><<< Back To Imprest Surrender List</a>
 </div>
@@ -56,7 +61,7 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <b>Institute</b>
+                <b>Campus</b>
                 @Html.TextBoxFor(m => m.CampusName, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
             </div>
             <div class="col-md-6">
@@ -230,7 +235,7 @@
         });
     };
     var UpdateLineItem = function (DocNo, AccNo,Amnt) {
-        var ActaulAmount = $("#txtAmount").val();
+        var ActaulAmount = parseFloat($("#txtAmount").val());
         var Receipt = $("#ddlReceiptNo").children("option:selected").val();
 
         if ((ActaulAmount == "0.00" || ActaulAmount == "") && Receipt == "") {
@@ -282,27 +287,32 @@
             processData: false,
             data: JSON.stringify({ tblID: tbl, No: No, ID: Id, fileName: fName, ext: ext }),
             success: function (data) {
-                if (data.success == true) {
-                    if (data.view == true) {
-                        var viewer = $("#modalAttachmentBody");
-                        if (ext == "pdf") {
-                            PDFObject.embed("data:application/" + ext + ";base64," + data.message + "", viewer);
+                try {
+                    if (data.success == true) {
+                        if (data.view == true) {
+                            var viewer = $("#modalAttachmentBody");
+                            if (ext == "pdf") {
+                                PDFObject.embed("data:application/" + ext + ";base64," + data.message + "", viewer);
+                            }
+                            if (ext == "png" || ext == "jpg") {
+                                PDFObject.embed("data:image/" + ext + ";base64," + data.message + "", viewer);
+                            }
+                            $("#myModalAttachment").modal("show");
+                            HideProgress();
                         }
-                        if (ext == "png" || ext == "jpg") {
-                            PDFObject.embed("data:image/" + ext + ";base64," + data.message + "", viewer);
+                        else {
+                            window.location = '/Common/AttachmentDownload?fileName=' + data.message;
+                            Swal.fire('Success', 'Document Downloaded successfully', 'success');
+                            HideProgress();
                         }
-                        $("#myModalAttachment").modal("show");
-                        HideProgress();
                     }
                     else {
-                        window.location = '/Common/AttachmentDownload?fileName=' + data.message;
-                        Swal.fire('Success', 'Document Downloaded successfully', 'success');
                         HideProgress();
+                        Swal.fire('Warning', data.message, 'warning');
                     }
                 }
-                else {
-                    HideProgress();
-                    Swal.fire('Warning', data.message, 'warning');
+                catch (ex) {
+                    Swal.fire('Warning', ex, 'warning');
                 }
             },
             error: function (err) {
@@ -373,11 +383,10 @@
         });
     };
     var SaveAttachmentFile = function () {
-        //var DocNo = `@Model.No`;
-        var DocNo = "SUR-00064";
+        var DocNo = `@Model.No`;
         var filename; var base64String; var filetype;
-        var files = document.getElementById('fileAttachment').files;
-        if (files.length) {
+        var files = document.getElementById('ImprestSurrenderfileAttachment').files;
+        if (files.length) {            
             var file = files[0];
             var blob = file.slice();
             filetype = file.type;

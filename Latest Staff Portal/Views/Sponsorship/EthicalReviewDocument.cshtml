@@ -5,14 +5,14 @@
         @Html.TextBoxFor(m => m.No, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
     <div class="col-md-6">
-        Concept Title
+        Protocol Title
         @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
 </div>
 <div class="row" style="padding: 2px">
     <div class="col-md-6">
-        Objective
-        @Html.TextBoxFor(m => m.Objective, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        Application Level
+        @Html.TextBoxFor(m => m.ApplicationLevel, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
     <div class="col-md-6">
         Address
@@ -25,36 +25,89 @@
         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
     <div class="col-md-6">
-        Principal Investigator name
-        @Html.TextBoxFor(m => m.PInvest, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        School
+        @Html.TextBoxFor(m => m.School, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
 </div>
 <div class="row" style="padding: 2px">
     <div class="col-md-6">
-        Responsibility Center
-        @Html.TextBoxFor(m => m.RespC, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        Campus
+        @Html.TextBoxFor(m => m.Dim1, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
     <div class="col-md-6">
-        Date Created
-        @Html.TextBoxFor(m => m.DateCreated, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        Department
+        @Html.TextBoxFor(m => m.Dim2, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
 </div>
-<div class="row" style="padding: 2px">
-    <div class="col-md-6">
-        Status
-        @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
-    </div>
-    <div class="col-md-6">
-        Approval Status
-        @Html.TextBoxFor(m => m.ApprovalStatus, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
-    </div>
-</div>
+<hr />
 <div class="row">
     <div class="col-md-12">
-        Review Remarks
-        <textarea rows="3" id="txtRemarks" class="form-control"></textarea>
+        <b>Attachments</b>
+        <div id="divAttachDocs"></div>
     </div>
 </div>
+<hr />
+<div class="container" style="border:2px solid black">
+    <h4>CRITERIA OF REVIEW</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            1. The scientific validity of the research question
+            <textarea rows="3" id="txtCr1" class="form-control"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            2. The relevance of the proposed study to the health needs of the study community
+            <textarea rows="3" id="txtCr2" class="form-control"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            3. The risks to potential research participants and how they will be minimized
+            <textarea rows="3" id="txtCr3" class="form-control"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            4. Protection rights and welfare of vulnerable participants
+            <textarea rows="3" id="txtCr4" class="form-control"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            5. Obtaining informed consent/assent from research participants
+            <textarea rows="3" id="txtCr5" class="form-control"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            6. The use of identifiable or potentially identifiable information
+            <textarea rows="3" id="txtCr6" class="form-control"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            7. Plans for collection, storage and protection of research data and biological samples
+            <textarea rows="3" id="txtCr7" class="form-control"></textarea>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            8. Provisions for compensation of research participants for their time, transport costs or lost wages
+            <textarea rows="3" id="txtCr8" class="form-control"></textarea>
+        </div>
+    </div>
+    <hr />
+</div>
+<hr />
 <div class="row">
     <div class="col-md-6">
         Recommendations
@@ -62,11 +115,13 @@
             <option value="">----</option>
             <option value="1">Approved</option>
             <option value="2">Rejected</option>
+            <option value="3">Conditionally Approved</option>
         </select>
     </div>
     <div class="col-md-6"></div>
 </div>
+
 <hr />
 <div align="center">
-    <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Review" onclick="SubmitConceptReview('@Model.No');" />
+    <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Review" onclick="SubmitConceptReview('@Model.ProposalNo');" />
 </div>

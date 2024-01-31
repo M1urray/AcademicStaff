@@ -1,0 +1,164 @@
+﻿@model Latest_Staff_Portal.ViewModel.NewLecClaim
+<div class="col-md-12" style="background-color: white">
+    <div class="row">
+        <div class="col-md-6">
+            <span style="font-weight: bold">Semester</span>
+            @Html.DropDownListFor(model => model.Code, Model.ListOfSemesters, "--select Semester--", new { @class = "form-control", @id = "ddlSem", @onchange = "LoadDropdownListData()" })
+        </div>
+        <div class="col-md-6">
+            <span style="font-weight: bold">Campus</span>
+            <select class="form-control" id="ddlCampus" name="ddlCampus" onchange="OnCampusChange();">
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <span style="font-weight: bold">School</span>
+            <select class="form-control" id="ddlSchool" name="ddlSchool" onchange="OnSchoolChange();">
+            </select>
+        </div>
+        <div class="col-md-6">
+            <span style="font-weight: bold">Department</span>
+            <select class="form-control" id="ddlDepartment" name="ddlDepartment" onchange="ShowRequiredDiv();">
+            </select>
+        </div>
+    </div>
+    <div class="row" id="divAmount">
+        <div class="col-md-6">
+            <div>
+                <span style="font-weight: bold">Total Claim Amount</span>
+                <input type="text" class="form-control" id="txtAmount" onkeypress="return functionDecimal(event,this.value)" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <span style="font-weight: bold">Claim Remarks</span>
+            <textarea id="txtLecRemarks" class="form-control"></textarea>
+        </div>
+    </div>
+</div>
+<div><hr /></div>
+<div class="col-md-12" style="background-color: white;" id="divProUnits">
+    <div class="row">
+        <div class="col-md-12">
+            <span style="font-weight: bold">Allocated Units</span>
+            <div id="divAssignedUnits"></div>
+        </div>
+    </div>
+    <hr />
+    <div align="center">
+        <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Claim" onclick="SubmitClaim();" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ddlCampus').empty().append('<option selected="selected" value="">--Select Campus--</option>');
+        $('#ddlSchool').empty().append('<option selected="selected" value="">--Select School--</option>');
+        $('#ddlDepartment').empty().append('<option selected="selected" value="">--Select Department--</option>');
+        $("#divProUnits,#divAmount").hide();
+        $("#ddlSem").select2({
+            width: '100%'
+        });
+    });
+    var LoadDropdownListData = function () {
+        var Sem = $("#ddlSem").children("option:selected").val();
+        $('#ddlCampus').empty().append('<option selected="selected" value="">--Select Campus--</option>');
+        $('#ddlSchool').empty().append('<option selected="selected" value="">--Select School--</option>');
+        $('#ddlDepartment').empty().append('<option selected="selected" value="">--Select Department--</option>');
+        if (Sem != "") {
+            ShowProgress();
+            $('#ddlCampus').empty().append('<option selected="selected" value="">--Select Campus--</option>');
+            $('#ddlSchool').empty().append('<option selected="selected" value="">--Select School--</option>');
+            $('#ddlDepartment').empty().append('<option selected="selected" value="">--Select Department--</option>');
+            $.getJSON("/Lecturer/GetLecAllocationCampus", { Sem: Sem },
+                function (data) {
+                    $('#ddlCampus').empty().append('<option selected="selected" value="">--Select Campus--</option>');
+                    $('#ddlSchool').empty().append('<option selected="selected" value="">--Select School--</option>');
+                    $('#ddlDepartment').empty().append('<option selected="selected" value="">--Select Department--</option>');
+                    $.each(data.DropDownData.ListOfCampus, function () {
+                        $("#ddlCampus").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    $.each(data.DropDownData.ListOfSchools, function () {
+                        $("#ddlSchool").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    $.each(data.DropDownData.ListOfDepartments, function () {
+                        $("#ddlDepartment").append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                    HideProgress();
+                });
+        }
+        else {
+            $('#ddlCampus').val("");
+            $('#ddlSchool').val("");
+            $('#ddlDepartment').val("");
+            $("#divProUnits,#divAmount").hide();
+        }
+    };
+    var OnCampusChange = function () {
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        if (Campus == "") {
+            $('#ddlSchool').val("");
+            $('#ddlDepartment').val("");
+            $("#divProUnits,#divAmount").hide();
+        }
+    }
+    var OnSchoolChange = function () {
+        var School = $("#ddlSchool").children("option:selected").val();
+        if (School == "") {
+            $('#ddlDepartment').val("");
+            $("#divProUnits,#divAmount").hide();
+        }
+    }
+    var ShowRequiredDiv = function () {
+        var Sem = $("#ddlSem").children("option:selected").val();
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var School = $("#ddlSchool").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+        if (Department == "") {
+            $("#divProUnits,#divAmount").hide();
+        }
+        else {
+            $("#divProUnits,#divAmount").show();
+            ShowProgress();
+            $.ajax({
+                async: true,
+                type: "POST",
+                datatype: "json",
+                data: JSON.stringify({ Sem: Sem, Campus: Campus, School: School, Department: Department }),
+                contentType: "application/json; charset = utf-8",
+                processData: false,
+                url: "/Lecturer/NewPartTimeClaimAllocatedUnits",
+                success: function (data) {
+                    $("#divAssignedUnits").html(data);
+                    HideProgress();
+                },
+                error: function () {
+                    HideProgress();
+                    alert("There is some problem to process your request. Please try after some time");
+                }
+            });
+        }
+    }
+    function functionDecimal(evt, val) {
+        try {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+
+            if (charCode == 46) {
+                if (!(val.indexOf(".") > -1)) {
+                    return true;
+                }
+                else {
+                    Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                }
+            }
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                Swal.fire('Warning', 'Kindly ensure to specify decimals only', 'warning');
+                return false;
+            }
+            return true;
+        } catch (w) {
+            Swal.fire(w);
+        }
+    }
+</script>
+
+

@@ -3,6 +3,11 @@
     ViewBag.Title = "ViewDocuments";
     Layout = "~/Views/Shared/Sitemaster.cshtml";
 }
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div class="modal-content">
     <div class="modal-header" style="padding-top: 3px; padding-bottom: 3px">
         <h4 class="modal-title"><span class="spanClass"><label id="labelT"></label></span></h4>
@@ -51,7 +56,7 @@
     var PrintVoteBookBal = function () {
         ShowProgress();
         $.ajax({
-            url: '@Url.Action("VoteBook", "ViewDocuments")',
+            url: '/ViewDocuments/VoteBook',
             type: "POST",
             success: function (data) {
                 if (data.success == true) {

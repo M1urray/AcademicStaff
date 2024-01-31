@@ -1,7 +1,7 @@
 ﻿@model Latest_Staff_Portal.ViewModel.TransportReqList
 @{
     ViewBag.Title = "TransportDocumentDetails";
-    Layout = "~/Views/Shared/Sitemaster.cshtml";
+    //Layout = "~/Views/Shared/Sitemaster.cshtml";
 }
 <style>
     thead {
@@ -9,6 +9,11 @@
         color: white;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div class="card pre-scrollable">
     <div class="card-title">Transport Document Details</div>
     <div class="card-body">

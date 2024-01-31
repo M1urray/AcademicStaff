@@ -20,7 +20,9 @@
                     foreach (var item in Model)
                     {
                         <tr>
-                            <td><a href="#" onclick="SelectedRow('@item.No');">Select</a></td>
+                            <td>
+                                <input type="button" onclick="SelectedRow('@item.No','@item.Status');" class="btn btn-sm btn-danger" value="Select" />
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.No)
                             </td>

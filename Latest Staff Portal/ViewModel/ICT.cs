@@ -21,7 +21,12 @@ namespace Latest_Staff_Portal.ViewModel
         public string Status { get; set; }
         public string Resoltion_Remarks { get; set; }
     }
-    public class NewICTRequisition
+    public class ICTRequestLines
+    {
+        public string Description { get; set; }
+        public string Quantity { get; set; }
+    }
+        public class NewICTRequisition
     {
         public string Campus { get; set; }
         public string Department { get; set; }

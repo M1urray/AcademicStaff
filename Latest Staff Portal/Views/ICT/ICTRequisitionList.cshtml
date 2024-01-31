@@ -10,10 +10,15 @@
     }
 
     .BtnPadding {
-        padding: 4px;
+        padding: 1px;
         font-size: 12px;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div class="card pre-scrollable">
     <div class="card-title">ICT Requisition List</div>
     <hr />
@@ -52,14 +57,14 @@
             Swal.fire('Success', Successmsg, 'success',true);
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("NullibySessions", "Common")'
+                url: "/Common/NullibySessions"
             });
         }
         if (Errormsg != "") {
             Swal.fire('Warning', Errormsg, 'warning',true);
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("NullibySessions", "Common")'
+                url: "/Common/NullibySessions"
             });
         }
     });
@@ -71,7 +76,7 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: '@Url.Action("ICTListPartialView", "ICT")',
+            url: "/ICT/ICTListPartialView",
             success: function (data) {
                 $("#divRegList").html(data);
                 HideProgress();
@@ -91,7 +96,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("NewICTRequest", "ICT")',
+            url: '/ICT/NewICTRequest',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -108,7 +113,7 @@
         var Campus = $("#ddlCampus").children("option:selected").val();
         var Department = $("#ddlDepartment").children("option:selected").val();
         var Urgency = $("#ddlUrgency").children("option:selected").val();
-        var dateRequired = $('#dtPicker').val();
+        var dateRequired = $('#dtPicker').val();        
         var Remarks = $("#txtRemarks").val();
         if (Category == "") {
             Swal.fire('error', 'Select Category', 'error');
@@ -142,15 +147,27 @@
             ICTRequest.RequiredDate = dateRequired;
             ICTRequest.ReqCat = Category;
             ICTRequest.Description = Remarks;
+
+            //Loop through the Table rows and build a JSON array.
+            var ICTRequestLines = new Array();
+            $("#PRVLines TBODY TR").each(function () {
+                var row = $(this);
+                var ReqLine = {};
+                ReqLine.Description = row.find("TD").eq(0).html();
+                ReqLine.Quantity = row.find("TD").eq(1).html();
+                ICTRequestLines.push(ReqLine);
+            });
+
             ShowProgress();
             $.ajax({
                 type: "post",
-                url: '@Url.Action("SubmitICTRequest", "ICT")',
-                data: JSON.stringify({ NewReq: ICTRequest }),
+                url: "/ICT/SubmitICTRequest",
+                data: JSON.stringify({ NewReq: ICTRequest, ICTReqLines: ICTRequestLines }),
                 contentType: "application/json; charset = utf-8",
                 success: function (data) {
                     if (data.success == true) {
                         HideProgress();
+                        UploadAttachments();
                         LoadICTReqList();
                         $("#myModal").modal("hide");
                         Swal.fire('Success', data.message, 'success');
@@ -166,6 +183,55 @@
                 }
             });
         }
+    }
+    var UploadAttachments = function (DocNo) {
+        var s = false;
+        ShowProgress();
+        $("#tableAttachments").find("input[type=file]").each(function (index, field) {
+            for (var i = 0; i < field.files.length; i++) {
+                s = false;
+                var file = field.files[i];
+                setupReader(file, DocNo);
+                s = true
+            }
+        });
+        HideProgress();
+        return s;
+    }
+    function setupReader(file, DocNo) {
+        var filename; var base64String; var filetype;
+        var blob = file.slice();
+        filetype = file.type;
+        filename = file.name;
+
+        var reader = new FileReader();
+        var reader = new FileReader();
+
+        reader.onloadend = function (evt) {
+            if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+                var cont = evt.target.result
+                base64String = getB64Str(cont);
+            };
+            //ShowProgress();
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "post",
+                url: "/Sponsorship/SubmitUploadsAttachment",
+                data: JSON.stringify({ DocNo: DocNo, TableID: '54100', base64Upload: base64String, fileName: filename, Extn: filetype }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+
+                    }
+                    //HideProgress();
+                },
+                error: function () {
+                    //HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        };
+        reader.readAsArrayBuffer(blob);
     }
     var SelectedRow = function () {
         $('table tbody tr').click(function () {
@@ -204,7 +270,7 @@
         ShowProgress();
         var row = $('#datatable-buttons tr.selectedTableRow');
         var DocNo = row.find("td").eq(1).html().trim();
-        window.location = '@Url.Action("ImprestDocumentView", "Imprest")?DocNo=' + DocNo;
+        window.location = "/Imprest/ImprestDocumentView?DocNo=" + DocNo;
     }
     var DiableButtons = function () {
         $("#ViewDoc").addClass("disabled");

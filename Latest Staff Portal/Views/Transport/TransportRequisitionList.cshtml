@@ -10,10 +10,15 @@
     }
 
     .BtnPadding {
-        padding: 4px;
+        padding: 1px;
         font-size: 12px;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div class="card pre-scrollable">
     <div class="card-title">Transport Requisition List</div>
     <div class="card-body">
@@ -22,6 +27,7 @@
         <a href="#" onclick="SendDocForApproval();" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send Approval Request</a>
         <a href="#" onclick="CancelDocForApproval();" class="btn btn-danger BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
         <a href="#" onclick="ViewApprovalTrail();" class="btn btn-primary BtnPadding disabled" id="AppTrail">Document Approval Status</a>
+        <a href="#" onclick="ViewDocComments();" class="btn btn-danger BtnPadding disabled" id="AppComments">Document Comments</a>
         <hr />
         <div id="divTransportRegList"></div>
     </div>
@@ -31,7 +37,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content bg-white">
             <div class="modal-header">
-                <h4 class="modal-title">New Transport Requisition</h4>
+                <h4 class="modal-title"><label id="labelF"></label></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -57,7 +63,7 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: '@Url.Action("TransportRequisitionListPartialView", "Transport")',
+            url: "/Transport/TransportRequisitionListPartialView",
             success: function (data) {
                 $("#divTransportRegList").html(data);
                 HideProgress();
@@ -73,26 +79,25 @@
             $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
             var row = $('#datatable-buttons tr.selectedTableRow');
             var Status = row.find("td").eq(8).html().trim();
+            $("#ViewDoc").removeClass("disabled");
+            $("#AppComments").removeClass("disabled");
             if (Status == "Open") {
-                $("#ViewDoc").removeClass("disabled");
                 $("#SendDocAppr").removeClass("disabled");
                 $("#CancelDocAppr").addClass("disabled");
                 $("#AppTrail").addClass("disabled");
             }
             else if (Status == "Pending Approval") {
-                $("#ViewDoc").removeClass("disabled");
                 $("#SendDocAppr").addClass("disabled");
                 $("#CancelDocAppr").removeClass("disabled");
                 $("#AppTrail").removeClass("disabled");
             }
             else if (Status == "Approved") {
-                $("#ViewDoc").removeClass("disabled");
                 $("#SendDocAppr").addClass("disabled");
                 $("#CancelDocAppr").addClass("disabled");
                 $("#AppTrail").addClass("disabled");
             }
             else {
-                $("#ViewDoc").addClass("disabled");
+
                 $("#SendDocAppr").addClass("disabled");
                 $("#CancelDocAppr").addClass("disabled");
                 $("#AppTrail").addClass("disabled");
@@ -108,7 +113,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("NewTransportApplication", "Transport")',
+            url: '/Transport/NewTransportApplication',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -165,38 +170,120 @@
             NewTransportDocument.TimeTrip = TimeTrip;
             NewTransportDocument.NoOfDays = NoOfDays;
             NewTransportDocument.Purpose = Purpose;
-            ShowProgress();
-            $.ajax({
-                type: "post",
-                url: '@Url.Action("SubmitTransportDocument", "Transport")',
-                data: JSON.stringify({ NewApp: NewTransportDocument }),
-                contentType: "application/json; charset = utf-8",
-                success: function (data) {
-                    if (data.success == true) {
-                        //window.location = data.message;
-                        LoadTransportReqList();
-                        $("#myModal").modal("hide");
+
+            var filename; var base64String; var filetype;
+            var files = document.getElementById('fileAttachment').files;
+            if (files.length) {
+                var file = files[0];
+                var blob = file.slice();
+                filetype = file.type;
+                filename = file.name;
+                var reader = new FileReader();
+
+                reader.onloadend = function (evt) {
+                    if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+
+                        var cont = evt.target.result
+                        base64String = getB64Str(cont);
+
+                        ShowProgress();
+
+                        //Send the JSON array to Controller using AJAX.
+                        $.ajax({
+                            type: "post",
+                            url: "/Transport/SubmitTransportDocument",
+                            data: JSON.stringify({ NewApp: NewTransportDocument, base64Upload: base64String, fileName: filename, Extn: filetype }),
+                            contentType: "application/json; charset = utf-8",
+                            success: function (data) {
+                                if (data.success == true) {
+                                    HideProgress();
+                                    LoadTransportReqList();
+                                    $("#myModal").modal("hide");
+                                }
+                                else {
+                                    HideProgress();
+                                    LoadTransportReqList();
+                                    $("#myModal").modal("hide");
+                                    Swal.fire('error', data.message, 'error');
+                                }
+                            },
+                            error: function () {
+                                HideProgress();
+                                Swal.fire('error', data.message, 'error');
+                            }
+                        });
                     }
-                    else {
-                        LoadTransportReqList();
-                        $("#myModal").modal("hide");
+                };
+                reader.readAsArrayBuffer(blob);
+            }
+            else {
+                filename = "";
+                base64String = "";
+                filetype = "";
+                ShowProgress();
+                //Send the JSON array to Controller using AJAX.
+                $.ajax({
+                    type: "post",
+                    url: "/Transport/SubmitTransportDocument",
+                    data: JSON.stringify({ NewApp: NewTransportDocument, base64Upload: base64String, fileName: filename, Extn: filetype }),
+                    contentType: "application/json; charset = utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                            HideProgress();
+                            LoadTransportReqList();
+                            $("#myModal").modal("hide");
+                        }
+                        else {
+                            HideProgress();
+                            LoadTransportReqList();
+                            $("#myModal").modal("hide");
+                            Swal.fire('error', data.message, 'error');
+                        }
+                    },
+                    error: function () {
                         HideProgress();
                         Swal.fire('error', data.message, 'error');
                     }
-                },
-                error: function () {
-                    HideProgress();
-                    Swal.fire('error', data.message, 'error');
-                }
-            });
+                });
+            }
         }
     }
+    function getB64Str(buffer) {
+        var binary = '';
+        var bytes = new Uint8Array(buffer);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+    }
     var ViewTransporteDoc = function () {
-        //$("#labelF").text("Leave Details Document");
-        ShowProgress();
+        $("#labelF").text("Transport Requisition Document");
         var row = $('#datatable-buttons tr.selectedTableRow');
         var DocNo = row.find("td").eq(1).html().trim();
-        window.location = '@Url.Action("TransportDocumentDetails", "Transport")?AppDoc=' + DocNo;
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo }),
+            url: '/Transport/TransportDocumentDetails',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+        //$("#labelF").text("Leave Details Document");
+        //ShowProgress();
+
+        //window.location = "/Transport/TransportDocumentDetails?AppDoc=" + DocNo;
     }
     var SendDocForApproval = function () {
         $("#labelF").text("Leave Details Document");
@@ -210,8 +297,9 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("SendDocAppForApproval", "Transport")',
+            url: '/Transport/SendDocAppForApproval',
             success: function (data) {
+                HideProgress();
                 LoadLeaveReqList();
                 if (data.success == true) {
                     Swal.fire('Success', data.message, 'success');
@@ -225,7 +313,6 @@
             }
         });
         DiableButtons();
-        HideProgress();
     }
     var CancelDocForApproval = function () {
         $("#labelF").text("Leave Details Document");
@@ -239,19 +326,17 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("CancelLeaveAppForApproval", "Transport")',
+            url: '/Leave/CancelLeaveAppForApproval',
             success: function (data) {
+                HideProgress();
                 LoadLeaveReqList();
                 if (data.success == true) {
-                    DiableButtons();
-                    HideProgress();
                     Swal.fire('Success', data.message, 'success');
                 }
                 else {
-                    DiableButtons();
-                    HideProgress();
                     Swal.fire('Error', data.message, 'error');
                 }
+                DiableButtons();
             },
             error: function (err) {
                 HideProgress();
@@ -272,7 +357,7 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("LeaveDocumentApprovalTrail", "Common")',
+            url: '/Leave/LeaveDocumentApprovalTrail',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -290,6 +375,30 @@
         $("#CancelDocAppr").addClass("disabled");
         $("#AppTrail").addClass("disabled");
         $('table tbody tr').siblings().removeClass("selectedTableRow");
+    }
+    var ViewDocComments = function () {
+        $("#labelF").text("Document Comments");
+        ShowProgress();
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalComments',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
     }
 </script>
 

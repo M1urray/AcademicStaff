@@ -11,21 +11,33 @@ namespace Latest_Staff_Portal.ViewModel
         public string ApprisalCode { get; set; }
         public string StaffNo { get; set; }
         public string StaffName { get; set; }
+        public string Supervisor { get; set; }
+        public string SupervisorName { get; set; }
+        public string Peer { get; set; }
+        public string PeerName { get; set; }
+        public bool AppraiseeExlored { get; set; }
+        public bool SupervisorExplored { get; set; }
+        public bool PeerExplored { get; set; }
         public string ApprisalPeriod { get; set; }
         public string AppraisalType { get; set; }
         public string RespCenter { get; set; }
         public string Department { get; set; }
         public string UserID { get; set; }
         public string Status { get; set; }
+        public string OpenTo { get; set; }
+        public string No { get; set; }
+        public List<SelectListItem> ListOfEmployee { get; set; }
     }
     public class NewApprisalRequest
     {
         public string AppraisalPeriod { get; set; }
         public string AppraisalTypes { get; set; }
         public string RespC { get; set; }
+        public string No { get; set; }
         public List<SelectListItem> ListOfApprisalPeriods { get; set; }
         public List<SelectListItem> ListOfApprisalTypes { get; set; }
         public List<SelectListItem> ListOfResponsibility { get; set; }
+        public List<SelectListItem> ListOfEmployee { get; set; }
     }
     public class AppraisalTypes
     {
@@ -41,6 +53,7 @@ namespace Latest_Staff_Portal.ViewModel
         public string ApprisalPeriod { get; set; }
         public string ApprisalType { get; set; }
         public string Responsibility { get; set; }
+        public string Supervisor { get; set; }
     }
     public class ApprisalObjective
     {
@@ -63,17 +76,21 @@ namespace Latest_Staff_Portal.ViewModel
         public string Achievements { get; set; }
         public string Ratings { get; set; }
         public string SupervisorRating { get; set; }
+        public string PeerRating { get; set; }
         public string weight { get; set; }
+        public string Level { get; set; }
     }
     public class SectionDetails
     {
         public List<ScoreCardObjectives> ObjList { get; set; }
         public string AppraiseeComment { get; set; }
         public string SuporvisorComment { get; set; }
+        public string Level { get; set; }
     }
     public class GeneralComments
     {
         public string AppraiseeComment { get; set; }
         public string SuporvisorComment { get; set; }
+        public string Level { get; set; }
     }
 }

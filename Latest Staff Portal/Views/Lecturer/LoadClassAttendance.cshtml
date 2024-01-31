@@ -26,12 +26,9 @@
 </style>
 <div class="pre-scrollable">
     Weeks
-    @Html.DropDownListFor(model => model.Week, Model.ListOfWeeks, "--select Week--", new { @class = "form-control", @id = "ddlWeek", @onchange = "GetLessons()" })
+    @Html.DropDownListFor(model => model.Week, Model.ListOfWeeks, "--select Week--", new { @class = "form-control", @id = "ddlWeek" })
     @Html.ValidationMessageFor(model => model.Week, "", new { @class = "text-danger" })
     <hr />
-    Lesson
-    @Html.DropDownListFor(model => model.SectionWK, Model.ListOfSections, "--select Lesson--", new { @class = "form-control", @id = "ddlLesson" })
-    <hr />    
     <table id="TbAttendance" class="table table-bordered nowrap table-hover" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
         <thead>
             <tr>
@@ -142,11 +139,7 @@
         }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)");
         if ('@Model.Week' != "") {
             document.getElementById("ddlWeek").disabled = true;
-            document.getElementById("ddlLesson").disabled = true;
             $("#btnSubmit").val("Update Attendance");
-        }
-        if (`@Model.SectionWK` == "") {
-            $('#ddlLesson').empty().append('<option selected="selected" value="">--Select Lesson--</option>');
         }
     });
     var ChangeBackGroundColor = function (Selectval) {
@@ -157,35 +150,9 @@
             $(Selectval).css("background-color", "darkgray");
         }
     };
-    var GetLessons = function () {
-        var WeekCode = $("#ddlWeek").children("option:selected").val();
-        var SettmtT = $("#ddlSettlement").children("option:selected").val();
-        if (WeekCode == "") {
-            $("#ddlLesson option").remove();
-            $('#ddlLesson').empty().append('<option selected="selected" value="">--Select Lesson--</option>');
-        }
-        else {
-            ShowProgress();
-            $("#ddlLesson option").remove();
-            $('#ddlLesson').empty().append('<option selected="selected" value="">--Select Lesson--</option>');
-            $.getJSON('@Url.Action("LoadSections", "lecturer")', { WkCode: WeekCode, SettmtT: SettmtT },
-                function (data) {
-                    if (data.success == true) {
-                        $('#ddlLesson').empty().append('<option selected="selected" value="">--Select Lesson--</option>');
-                        $.each(data.Lessons.ListOfLessons, function () {
-                            $("#ddlLesson").append($("<option></option>").val(this['Value']).html(this['Text']));
-                        });
-                        HideProgress();
-                    }
-                    else {
-                        HideProgress();
-                        Swal.fire('Warning', data.message, 'warning');
-                        return;
-                    }
-                });
-        }
-    }
+   
 </script>
+
 
 
 

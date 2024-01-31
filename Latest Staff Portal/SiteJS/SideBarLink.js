@@ -54,9 +54,13 @@ var TransportRequisitiontLink = function () {
     ShowProgress();
     window.location = "/Transport/TransportRequisitionList";
 }
-var TrainingRequisitiontLink = function () {
+var SponsorshipRequisitionLink = function () {
     ShowProgress();
-    window.location = "/Training/TrainingRequisitionList";
+    window.location = "/Sponsorship/ConceptApplicationList";
+}
+var ProposalEthicalReviewlink = function () {
+    ShowProgress();
+    window.location = "/Sponsorship/ProposalEthicalReview";
 }
 var ICTRequisitionlink = function () {
     ShowProgress();
@@ -69,10 +73,6 @@ var PayslipViewLink = function () {
 var P9ViewLink = function () {
     ShowProgress();
     window.location = "/ViewDocument/DocumentViewp9";
-}
-var LeaveStatementLink = function () {
-    ShowProgress();
-    window.location = "/ViewDocument/GetLeaveStatementReport";
 }
 var DocumentApprovalSummeryLink = function () {
     ShowProgress();

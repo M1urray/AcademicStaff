@@ -15,9 +15,6 @@ namespace Latest_Staff_Portal.ViewModel
         public string Cellular_Phone_Number { get; set; }
         public string Gender { get; set; }
         public string Company_E_Mail { get; set; }
-        public string School { get; set; }
-        public string Department { get; set; }
-        public string JobTitle { get; set; }
     }
     public class LecturerAssignedUnits
     {
@@ -29,8 +26,6 @@ namespace Latest_Staff_Portal.ViewModel
         public string Campus_Code { get; set; }
         public string Name { get; set; }
         public string Student_Type { get; set; }
-        public string CourseClass { get; set; }
-        public string LnNo { get; set; }
     }
     public class LecCategory
     {
@@ -40,5 +35,16 @@ namespace Latest_Staff_Portal.ViewModel
     {
         public string Code { get; set; }
         public List<SelectListItem> ListOfLecCategories { get; set; }
+    }
+    public class NewLecClaim
+    {
+        public string Code { get; set; }
+        public List<SelectListItem> ListOfSemesters { get; set; }
+        //public string Campus { get; set; }
+        //public List<SelectListItem> ListOfCampus { get; set; }
+        //public string School { get; set; }
+        //public List<SelectListItem> ListOfSChools { get; set; }
+        //public string Department { get; set; }
+        //public List<SelectListItem> ListOfDepartment { get; set; }
     }
 }

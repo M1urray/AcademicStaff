@@ -21,10 +21,12 @@ namespace Latest_Staff_Portal.ViewModel
         public string Campus { get; set; }
         public string Department { get; set; }
         public string RespC { get; set; }
+        public string Proj { get; set; }
         public List<SelectListItem> ListOfSchool { get; set; }
         public List<SelectListItem> ListOfCampus { get; set; }
         public List<SelectListItem> ListOfDepartment { get; set; }
         public List<SelectListItem> ListOfResponsibility { get; set; }
+        public List<SelectListItem> ListOfProjects { get; set; }
     }
     public class ImprestTypes
     {
@@ -47,6 +49,8 @@ namespace Latest_Staff_Portal.ViewModel
         public string CampusName { get; set; }
         public string Department { get; set; }
         public string DepartmentName { get; set; }
+        public string Project { get; set; }
+        public string ProjectName { get; set; }
         public string RespC { get; set; }
         public string Status { get; set; }
         public string TotalAmount { get; set; }

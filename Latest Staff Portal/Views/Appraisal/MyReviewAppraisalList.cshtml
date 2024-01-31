@@ -1,4 +1,4 @@
-﻿
+﻿@model Latest_Staff_Portal.ViewModel.AppraisalCardList
 @{
     ViewBag.Title = "MyReviewAppraisalList";
     Layout = "~/Views/Shared/Sitemaster.cshtml";
@@ -29,6 +29,7 @@
     <div class="card-body">
         <a href="#" onclick="ViewAppraisalDoc();" class="btn btn-danger BtnPadding disabled" id="ViewDoc">View Document</a>
         <a href="#" onclick="SendDocTo('0');" class="btn btn-primary BtnPadding disabled" id="SendToAppraisee"><<< Send Back to Appraisee</a>
+        <a href="#" onclick="SendDocTo('2');" class="btn btn-danger BtnPadding disabled" id="SendToPeer">Send to Peer >>></a>
         <a href="#" onclick="SendDocTo('1');" class="btn btn-danger BtnPadding disabled" id="SendToSup">Send to Supervisor >>></a>
         <a href="#" onclick="SendDocTo('3');" class="btn btn-danger BtnPadding disabled" id="SendToHR">Send to HR >>></a>
         <hr />
@@ -56,16 +57,31 @@
 <script src="~/assets/js/ShowProgression.js"></script>
 <script src="~/assets/js/pdfobject.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {       
-        LoadAppraisalReviewList();
+    $(document).ready(function () {
+        var level = GetParameterValues('Level');
+        if (level == "S") {
+            $("#SendToSup").hide();
+        }
+        if (level == "P") {
+            $("#SendToAppraisee").hide();
+            $("#SendToPeer").hide();
+            $("#SendToHR").hide();
+        }
+        function GetParameterValues(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+        LoadAppraisalReviewList(level);
     });
-    var LoadAppraisalReviewList = function () {
+    var LoadAppraisalReviewList = function (level) {
         ShowProgress();
         $.ajax({
             async: true,
             type: "POST",
             datatype: "json",
-            //data: JSON.stringify({ Level: level }),
+            data: JSON.stringify({ Level: level }),
             contentType: "application/json; charset = utf-8",
             processData: false,
             url: "/Appraisal/AppraisalReviewListPartialView",
@@ -80,23 +96,32 @@
         });
     }
     var SelectedRow = function () {
-        $('table tbody tr').click(function () {
+        $('table tbody tr').click(function () { 
             $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
             $("#ViewDoc").removeClass("disabled");
             $("#SendToAppraisee").removeClass("disabled");
             $("#SendToPeer").removeClass("disabled");
-            $("#SendToSup").removeClass("disabled");
-            $("#SendToHR").removeClass("disabled");
+            $("#SendToSup").removeClass("disabled");   
+            $("#SendToHR").removeClass("disabled");   
         });
     }
-    var ViewAppraisalDoc = function () {        
+    var ViewAppraisalDoc = function () {
+        $("#labelF").text("Leave Details Document");
+        ShowProgress();
         var row = $('#tableScoreCard tr.selectedTableRow');
         var DocNo = row.find("td").eq(1).html().trim();
-        
-        window.location = "/Appraisal/AppraisalReviewScoreCard?AppDoc=" + DocNo;
-    }
-    var SendDocTo = function (SendTo) {
+
         var level = GetParameterValues('Level');
+        function GetParameterValues(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+        window.location = "/Appraisal/AppraisalReviewScoreCard?AppDoc=" + DocNo + "&Level=" + level;
+    }
+    var SendDocTo = function (SendTo) {   
+        var level = GetParameterValues('Level');        
         function GetParameterValues(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
             var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -140,5 +165,4 @@
         $('table tbody tr').siblings().removeClass("selectedTableRow");
     }
 </script>
-
 

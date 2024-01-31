@@ -7,6 +7,7 @@ namespace Latest_Staff_Portal.ViewModel
 {
     public class DocumentsForApproval
     {
+        public string Entry_No { get; set; }
         public string TabelID { get; set; }
         public string Document_No { get; set; }
         public string Document_Type { get; set; }
@@ -19,14 +20,12 @@ namespace Latest_Staff_Portal.ViewModel
         public string Approver { get; set; }
         public bool CommentFound { get; set; }
         public string Comment { get; set; }
-        public string Entry_No { get; set; }
     }
     public class DocumentsForApprovalList
     {
         public string TableID { get; set; }
         public string Title { get; set; }
         public string Status { get; set; }
-        public string EntryNo { get; set; }
     }
     public class DocumentCount
     {

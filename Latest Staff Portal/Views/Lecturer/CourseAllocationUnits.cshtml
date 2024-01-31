@@ -18,100 +18,76 @@
         padding: 1px;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<a href="#" onclick="StudentUnitList();" class="btn btn-primary BtnPadding disabled">Assign Marks</a>
+<a href="#" onclick="EnterClassAttendance();" class="btn btn-primary BtnPadding disabled">Class Attendance</a></a>
+<a href="#" onclick="PrintUnitReports('CLATT');" class="btn btn-danger BtnPadding disabled">Print Class List</a>
+<a href="#" onclick="PrintUnitReports('EXAMATT');" class="btn btn-primary BtnPadding disabled">Print Exam Attendance</a>
+
 <hr />
-<div class="pre-scrollable">
-    <table id="datatable-buttons" class="table table-responsive-sm table-bordered" style="border-collapse: collapse; border-spacing: 0; width: 100%; font-size:12px">
-        <thead>
-            <tr>
-                <th>Action</th>
-                <th>Code</th>
-                <th>Stage</th>
-                <th>Semester</th>
-                <th>Unit</th>
-                <th>Unit Name</th>
-                <th>Campus</th>
-                <th>Settlement Type</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                if (Model != null)
+<table id="datatable-buttons" class="table table-bordered nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%; font-size:12px">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Code</th>
+            <th>Stage</th>
+            <th>Semester</th>
+            <th>Unit</th>
+            <th>Unit Name</th>
+            <th>Campus</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model != null)
+            {
                 {
+                    if (Model.Count() > 0)
                     {
-                        if (Model.Count() > 0)
-                        {
-                            foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        <button onclick="SelectedRow('@item.Code','@item.Stage','@item.Semester', '@item.Unit', '@item.Unit_Name', '@item.Campus_Code','@item.Student_Type');" class="btn btn-sm btn-danger">Select</button>
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Code)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Stage)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Semester)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Unit)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Unit_Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Campus_Code)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Student_Type)
-                                    </td>
-                                </tr>
-                            }
-                        }
-                        else
+                        foreach (var item in Model)
                         {
                             <tr>
-                                <td colspan="7" style="color:red">
-                                    No lecturer Records Found
+                                <td>
+                                    <a href="#" onclick="SelectedRow('@item.Code');">Select</a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Code)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Stage)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Semester)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Unit)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Unit_Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Campus_Code)
                                 </td>
                             </tr>
                         }
                     }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" style="color:red">
+                                No lecturer Records Found
+                            </td>
+                        </tr>
+                    }
                 }
             }
-        </tbody>
-    </table>
-</div>
-@*//////////////////////Modal Links////////////////////////////*@
-<div class="modal fade" id="myModalLinks" data-toggle="modal" tabindex="-1" data-dismiss="modal" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content bg-white">
-            <div class="modal-header">
-                <h4 class="modal-title"><label id="labelLnks"></label></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="modalBodyLinks">
-                <div>
-                    <b>Unit =></b> <label id="lblUnit"></label>-<label id="lblUnitName"></label>
-                </div>
-                <hr />
-                <ol class="list-group">
-                    <li class="list-group-item"><a href="#" onclick="EnterClassAttendance();" class="btn btn-primary form-control" style="padding: .5rem .5rem">Class Attendance</a></li>
-                    <li class="list-group-item"><a href="#" onclick="StudentUnitList();" class="btn btn-primary form-control" style="padding: .5rem .5rem">Assign Marks</a></li>
-                    <li class="list-group-item"><a href="#" onclick="PrintUnitReports('CLATT');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Class List</a></li>
-                    <li class="list-group-item"><a href="#" onclick="PrintUnitReports('EXAMATT');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Exam Attendance</a></li>
-                </ol>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+        }
+    </tbody>
+</table>
 @*//////////////////////Modal////////////////////////////*@
 <div class="modal fade" id="myModalUnits" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
@@ -155,41 +131,16 @@
             ]
         }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)")
     });
-    var SelectedRow = function (Prog,Stage,Sem, Unit, UnitName, Campus,StudentType) {
-        var UnitStudentListFilters = {};
-        UnitStudentListFilters.Prog = Prog;
-        UnitStudentListFilters.Stage = Stage;
-        UnitStudentListFilters.Sem = Sem;
-        UnitStudentListFilters.Unit = Unit;
-        UnitStudentListFilters.UnitName = UnitName;
-        UnitStudentListFilters.Campus = Campus;
-        UnitStudentListFilters.SettlementT = StudentType;
-        ShowProgress();
-        $.ajax({
-            url: '@Url.Action("AssignAssignedUnitSessions", "lecturer")',
-            datatype: "json",
-            type: "POST",
-            data: JSON.stringify({ StudentUnitFilters: UnitStudentListFilters }),
-            contentType: "application/json; charset = utf-8",
-            success: function (data) {
-                if (data.success == true) {
-                    $("#lblUnit").text(Unit);
-                    $("#lblUnitName").text(UnitName);
-                    $("#labelLnks").text("Unit Links");
-                    HideProgress();
-                    $("#myModalLinks").modal("show");
-                }
-                else {
-                    HideProgress();
-                    Swal.fire('Warning', data.message, 'warning');
-                }
-            },
-            error: function (err) {
-                Swal.fire('Error', err, 'error');
-            }
+    var SelectedRow = function () {
+        $('table tbody tr').click(function () {
+            ShowProgress();
+            $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
+            $(".BtnPadding").removeClass("disabled");
+            AssignSessions();
+            HideProgress();
         });
     }
-    @*var AssignSessions = function () {
+    var AssignSessions = function () {
         var row = $('#datatable-buttons tr.selectedTableRow');
         var Prog = row.find("td").eq(1).html();
         var Stage = row.find("td").eq(2).html();
@@ -197,7 +148,6 @@
         var Unit = row.find("td").eq(4).html();
         var UnitName = row.find("td").eq(5).html();
         var Campus = row.find("td").eq(6).html();
-        var StudyMode = row.find("td").eq(7).html();
 
         var UnitStudentListFilters = {};
         UnitStudentListFilters.Prog = Prog;
@@ -206,9 +156,8 @@
         UnitStudentListFilters.Unit = Unit;
         UnitStudentListFilters.UnitName = UnitName;
         UnitStudentListFilters.Campus = Campus;
-        UnitStudentListFilters.SettlementT = StudyMode;
         $.ajax({
-            url: '@Url.Action("AssignAssignedUnitSessions", "lecturer")',
+            url: '@Url.Action("AssignAssignedUnitSessions", "Lecturer")',
             datatype: "json",
             type: "POST",
             data: JSON.stringify({ StudentUnitFilters: UnitStudentListFilters }),
@@ -224,25 +173,50 @@
             error: function (err) {
                 Swal.fire('Error', err, 'error');
 
-            Student_TypeStudent_Type
+            }
         });
-    }*@
-    var AssignMarks = function () {
-        ShowProgress();
-        window.location = '@Url.Action("StudentUnitList", "lecturer")?Prog=' + Prog + '&Descr=' + Descr;
     }
-    var StudentUnitList = function () {
-        ShowProgress();
-        window.location = '@Url.Action("StudentUnitList", "lecturer")';
-    }
+    //var AssignMarks = function () {
+    //    ShowProgress();
+    //    window.location = "/Lecturer/StudentUnitList?Prog=" + Prog + "&Descr=" + Descr + "";
+    //}
     var EnterClassAttendance = function () {
         ShowProgress();
         window.location ='@Url.Action("ClassAttendanceList", "lecturer")';
     }
-    var PrintUnitReports = function (ReportType) {
+    var StudentUnitList = function () {
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var prog = row.find("td").eq(1).html().trim();
+        var unit = row.find("td").eq(4).html().trim();
+        debugger
         ShowProgress();
         $.ajax({
-            url: '@Url.Action("GetUnitReports", "lecturer")',
+            type: "POST",
+            url: '@Url.Action("ProgrammeExamSetup", "Lecturer")',
+            data: JSON.stringify({ Prog: prog, Unit: unit }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.success == true) {
+                    window.location = '@Url.Action("StudentUnitList", "Lecturer")';
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('error', err.message, 'error');
+            }
+        });
+    }
+    var PrintUnitReports = function (ReportType) {
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var Unit = row.find("td").eq(1).html().trim();
+        ShowProgress();
+        $.ajax({
+            url: '@Url.Action("GetUnitReports", "Lecturer")',
             datatype: "json",
             type: "POST",
             data: JSON.stringify({ ReportType: ReportType }),

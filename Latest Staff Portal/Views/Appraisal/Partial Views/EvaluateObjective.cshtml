@@ -22,20 +22,33 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <span style="font-weight: bold">Supervisor Rating</span>
-            @Html.TextAreaFor(model => model.SupervisorRating, new { @class = "form-control", @id = "txtSupRating", @readonly = "readonly", @style = "background-color:#dedebd", @onkeypress = "return functionDecimal(event,this.value)" })
+            <span style="font-weight: bold"><label id="lblTitle"></label></span>
+            @Html.TextBoxFor(model => model.Ratings, new { @class = "form-control", @id = "txtRating", @onkeypress = "return functionDecimal(event,this.value)" })
         </div>
         <div class="col-md-6">
-            <span style="font-weight: bold">Self Rating</span>
-            @Html.TextAreaFor(model => model.Ratings, new { @class = "form-control", @id = "txtSelfRating", @onkeypress = "return functionDecimal(event,this.value)" })
         </div>
     </div>
     <hr />
     <div align="center">
-        <input type="button" class="btn btn-primary" value="Save Evaluation" onclick="SaveEvaluationLine('@Model.LineNo','@Model.DocumentNo');" />
+        <input type="button" class="btn btn-primary" value="Save Evaluation" onclick="SaveEvaluationLine('@Model.LineNo','@Model.DocumentNo','@Model.Level');" />
     </div>
 </div>
 <script type="text/javascript">
+    $(document).ready(function () {
+        if ('@Model.Level' == "A") {
+            $("#lblTitle").text("Self Rating");
+        }
+        else {
+            $("#txtAchvmnt").attr("readonly", true);
+            $("#txtAchvmnt").css("background-color", "#dedebd");
+        }
+        if ('@Model.Level' == "S") {
+            $("#lblTitle").text("Supervisor Rating");
+        }
+        if ('@Model.Level' == "P") {
+            $("#lblTitle").text("Peer Rating");
+        }
+    });
     function functionDecimal(evt, val) {
         try {
             var charCode = (evt.which) ? evt.which : event.keyCode;

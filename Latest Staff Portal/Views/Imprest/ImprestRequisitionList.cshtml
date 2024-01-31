@@ -10,10 +10,15 @@
     }
 
     .BtnPadding {
-        padding: 4px;
+        padding: 1px;
         font-size: 12px;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div class="card pre-scrollable">
     <div class="card-title">Imprest Requisition List</div>
     <hr />
@@ -23,6 +28,7 @@
         <a href="#" onclick="SendDocForApproval();" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send Approval Request</a>
         <a href="#" onclick="CancelDocForApproval();" class="btn btn-primary BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
         <a href="#" onclick="ViewApprovalTrail();" class="btn btn-danger BtnPadding disabled" id="AppTrail">Document Approval Trail</a>
+        <a href="#" onclick="ViewDocComments();" class="btn btn-primary BtnPadding disabled" id="AppComments">Document Comments</a>
         <hr />
         <div id="divRegList"></div>
     </div>
@@ -49,22 +55,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         LoadImprestReqList();
-        var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
-        var Errormsg = '@Request.RequestContext.HttpContext.Session["ErrorMsg"]';
-        if (Successmsg != "") {
-            Swal.fire('Success', Successmsg, 'success',true);
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("NullibySessions", "Common")'
-            });
-        }
-        if (Errormsg != "") {
-            Swal.fire('Warning', Errormsg, 'warning',true);
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("NullibySessions", "Common")'
-            });
-        }
     });
     var LoadImprestReqList = function () {
         ShowProgress();
@@ -95,6 +85,7 @@
             var row = $('#datatable-buttons tr.selectedTableRow');
             var Status = row.find("td").eq(6).html().trim();
             $("#ViewDoc").removeClass("disabled");
+            $("#AppComments").removeClass("disabled");
             if (Status == "Pending") {
                 $("#SendDocAppr").removeClass("disabled");
                 $("#CancelDocAppr").addClass("disabled");
@@ -138,17 +129,22 @@
             processData: false,
             url: '@Url.Action("SendImprestAppForApproval", "Imprest")',
             success: function (data) {
-                HideProgress();
-                LoadImprestReqList();
-                if (data.success == true) {
-                    DiableButtons();
-                    HideProgress();
-                    Swal.fire('Success', data.message, 'success');
+                if (data.LogOut == true) {
+                    window.location = '@Url.Action("ImprestRequisitionList", "Imprest")';
                 }
                 else {
-                    DiableButtons();
-                    HideProgress();
-                    Swal.fire('Error', data.message, 'error');
+                    if (data.success == true) {
+                        HideProgress();
+                        LoadImprestReqList();
+                        DiableButtons();
+                        HideProgress();
+                        Swal.fire('Success', data.message, 'success');
+                    }
+                    else {
+                        DiableButtons();
+                        HideProgress();
+                        Swal.fire('Error', data.message, 'error');
+                    }
                 }
             },
             error: function (err) {
@@ -171,16 +167,21 @@
             processData: false,
             url: '@Url.Action("CancelImprestAppForApproval", "Imprest")',
             success: function (data) {
-                HideProgress();
-                LoadImprestReqList();
-                if (data.success == true) {
-                    DiableButtons();
-                    Swal.fire('Success', data.message, 'success');
+                if (data.LogOut == false) {
+                    window.location = data.message;
                 }
                 else {
-                    DiableButtons();
-                    HideProgress();
-                    Swal.fire('Error', data.message, 'error');
+                    if (data.success == true) {
+                        HideProgress();
+                        LoadImprestReqList();
+                        DiableButtons();
+                        Swal.fire('Success', data.message, 'success');
+                    }
+                    else {
+                        DiableButtons();
+                        HideProgress();
+                        Swal.fire('Error', data.message, 'error');
+                    }
                 }
             },
             error: function (err) {
@@ -188,8 +189,7 @@
                 Swal.fire('Warning', err, 'warning');
             }
         });
-
-    }
+    };
     var ViewApprovalTrail = function () {
         $("#labelF").text("Document Approval Trail");
         ShowProgress();
@@ -202,7 +202,7 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("DocumentApprovalTrail", "Common")',
+            url:  '@Url.Action("DocumentApprovalTrail", "Common")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -223,6 +223,30 @@
     }
     var DisplayAlert = function (msg) {
         Swal.fire(msg);
+    }
+    var ViewDocComments = function () {
+        $("#labelF").text("Document Comments");
+        ShowProgress();
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("DocumentApprovalComments", "Common")',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
     }
 </script>
 

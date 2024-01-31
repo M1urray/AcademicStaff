@@ -9,9 +9,10 @@ namespace Latest_Staff_Portal.ViewModel
     {
         public string Line_No { get; set; }
         public string Proposal_No { get; set; }
+        public string Concept_No { get; set; }
         public string Description { get; set; }
         public string Principal_Investigator { get; set; }
-        public string Objective { get; set; }
+        public string ApplicationLevel { get; set; }
     }
     public class ProposalReview
     {

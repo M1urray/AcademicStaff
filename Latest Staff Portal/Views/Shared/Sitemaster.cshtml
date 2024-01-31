@@ -3,7 +3,6 @@
     Layout = null;
     string imgSrc = "", gender = "", Name = "";
     bool HOD = false, Dean = false, Lecturer = false;
-    int CountNotif = 0;
     if (Session["Username"] == null)
     {
         Html.Action("Login", "Login");
@@ -23,7 +22,7 @@
         {
             imgSrc = Session["ImgProfile"].ToString();
         }
-        CountNotif = CommonClass.GetDocumentCount();
+
         if (Session["StaffDetails"] == null)
         {
             string[] s = CommonClass.GetStaffDetails(Session["Username"].ToString());
@@ -92,9 +91,9 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>MIBs | Staff Portal</title>
+    <title>Imperial | Staff Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="MIBs Staff Portal" name="description" />
+    <meta content="Imperial Staff Portal" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="~/assets/images/favicon.ico">
@@ -119,7 +118,7 @@
     <link href="~/assets/css/Loader.css" rel="stylesheet" />
     <div class="loading" align="center" id="divLoader">
         <br />
-        <img src="~/assets/images/ajax-loader2.gif" alt="" width="150" height="150" />
+        <img src="~/assets/images/ajax-loader.gif" alt="" />
     </div>
     <!-- Begin page -->
     <div id="layout-wrapper">
@@ -149,17 +148,6 @@
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
                 </div>
-                @if (CountNotif > 0)
-                {
-                    <div class="dropdown d-inline-block" onclick="ShowNotifications();">
-                        <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="bx bx-bell bx-tada" ></i>
-                            <span class="badge badge-danger badge-pill">@CountNotif</span>
-                            <img src="~/assets/images/NEW2.gif" class="rounded" />
-                        </button>
-                    </div>
-                }
                 <div class="d-flex">
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
@@ -186,7 +174,7 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <!-- item-->
-                            <a class="dropdown-item" href="@Url.Action("Dashboard", "Dashboard")"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Dashboard</a>
+                            <a class="dropdown-item" href="@Url.Action("Dashboard", "CommonLinks")"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Dashboard</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="@Url.Action("Login", "Login")"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout</a>
                         </div>
@@ -209,13 +197,6 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-
-                        <li>
-                            <a href="#" onclick="NoticeBoardLink();">
-                                <i class="bx bx-alarm"></i>
-                                <span>Notice Board</span>
-                            </a>
-                        </li>
                         @if (HOD || Dean)
                         {
                             <li class="menu-title">Management</li>
@@ -225,7 +206,7 @@
                                     <span>HOD/DEAN Section</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-
+                                    <li><a href="#" onclick="ProgrammeListLink();">Programme List</a></li>
                                     <li><a href="#" onclick="LecturerListLink();">Lecturer List</a></li>
                                     @*<li><a href="#" onclick="PartTimeRequisitionLink();">Part-Time Requisition</a></li>*@
                                     @*<li><a href="#">Upload Lecturer List</a></li>*@
@@ -235,13 +216,6 @@
                                 </ul>
                             </li>
                         }
-                        <li class="menu-title">Programmes</li>
-                        <li>
-                            <a href="#" onclick="ProgrammeListLink();">
-                                <i class="bx bx-anchor"></i>
-                                <span>Programme List</span>
-                            </a>
-                        </li>
                         @if (Lecturer)
                         {
                             <li class="menu-title">Academics</li>
@@ -253,12 +227,6 @@
                             </li>
                         }
                         <li class="menu-title">Requisitions</li>
-                        @*<li>
-            <a href="#" onclick="SponsorshipRequisitionLink();" class=" waves-effect">
-                <i class="bx bx-calendar"></i>
-                <span>Sponsorship Application</span>
-            </a>
-        </li>*@
                         <li>
                             <a href="#" onclick="LeaveRequisitionLink();" class=" waves-effect">
                                 <i class="bx bx-calendar"></i>
@@ -291,22 +259,40 @@
                         </li>
                         <li>
                             <a href="#" onclick="StaffClaimRequisitiontLink();" class=" waves-effect">
-                                <i class="bx bx-receipt"></i>
+                                <i class="bx bx-calendar-check"></i>
                                 <span>Staff Claim Requisition</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#" onclick="AppraisalRequisitiontLink();" class=" waves-effect">
-                                <i class="bx bx-award"></i>
-                                <span>Appraisal Requisition</span>
-                            </a>
-                        </li>
                         @*<li>
-            <a href="#" onclick="TransportRequisitiontLink();" class=" waves-effect">
-                <i class="bx bx-car"></i>
-                <span>Transport Requisition</span>
-            </a>
-        </li>*@
+                                <a href="#" onclick="SponsorshipRequisitionLink();" class=" waves-effect">
+                                    <i class="bx bxl-apple"></i>
+                                    <span>Sponsorship Application</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="ProposalEthicalReviewlink();" class=" waves-effect">
+                                    <i class="bx bxl-reddit"></i>
+                                    <span>Proposal Ethical Review</span>
+                                </a>
+                            </li>*@
+                        @*<li>
+                                <a href="#" onclick="AppraisalRequisitiontLink();" class=" waves-effect">
+                                    <i class="bx bx-award"></i>
+                                    <span>Appraisal Requisition</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="TransportRequisitiontLink();" class=" waves-effect">
+                                    <i class="bx bx-car"></i>
+                                    <span>Transport Requisition</span>
+                                </a>
+                            </li>*@
+                        @*<li>
+                            <a href="#" onclick="ICTRequisitionlink();" class=" waves-effect">
+                                <i class="bx bxl-microsoft"></i>
+                                <span>ICT Requisition</span>
+                            </a>
+                        </li>*@
                         <li class="menu-title">Reports</li>
                         <li>
                             <a href="#" onclick="PayslipViewLink();" class=" waves-effect">
@@ -342,15 +328,6 @@
                                 <span>change password</span>
                             </a>
                         </li>
-                        @if (Session["UserID"].ToString() == @"DSL0\NGAITUNGU" || Session["UserID"].ToString() == @"DSL0\ECHEGE")
-                        {
-                            <li>
-                                <a href="#" onclick="ADUserSetLink();" class=" waves-effect">
-                                    <i class="dripicons-user-group"></i>
-                                    <span>AD User Setup</span>
-                                </a>
-                            </li>
-                        }
                     </ul>
                 </div>
                 <!-- Sidebar -->
@@ -362,38 +339,20 @@
                 <div class="container-fluid">
                     @RenderBody()
                     <!-- End Page-content -->
-                    <footer class="footer" style="color: #051936; background-color:#3d57fa">
+                    <footer class="footer" style="color: white;background-color: #1500ff">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    @DateTime.Now.Year © MIBs.
+                                    @DateTime.Now.Year © ICMHS.
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="text-sm-right d-none d-sm-block">
-                                        Design & Developed by <a href="https://dsl.ke/" target="_blank" class="text-success">DSL Solutions</a>
+                                        Design & Developed by DSL Solutions
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </footer>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/////////////////notification/////////////////////-->
-    <div class="modal fade" id="myModalViewNotification" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content bg-white">
-                <div class="modal-header">
-                    <h4 class="modal-title">Notifications | <img src="~/assets/images/NEW2.gif" /></h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="modalBodyViewNotification" style="font-size:12px">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -435,6 +394,7 @@
     <script src="~/assets/js/pages/app.js"></script>
 
     <script src="~/assets/js/ShowProgression.js"></script>
+    @*<script src="~/SiteJS/SideBarLink.js"></script>*@
     <script type="text/javascript">
         var ShowNotifications = function () {
             ShowProgress();
@@ -463,10 +423,6 @@
         var ProgrammeListLink = function () {
             ShowProgress();
             window.location = '@Url.Action("ProgrammeList", "Programme")';
-        }
-        var NoticeBoardLink = function() {
-            ShowProgress();
-            window.location = '@Url.Action("GetNotice", "Common")';
         }
         var LecturerListLink = function () {
             ShowProgress();

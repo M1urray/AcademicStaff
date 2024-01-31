@@ -12,7 +12,7 @@
                 <th>Action</th>
                 <th>No</th>
                 <th>Description</th>
-                <th>Objective</th>
+                <th>Approval Level</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
                     {
                         <tr>
                             <td>
-                                <button id="btnReview" class="btn btn-primary btnPadding" onclick="ReviewProposal('@item.Proposal_No');">Review</button>
+                                <button id="btnReview" class="btn btn-primary btnPadding" onclick="ReviewProposal('@item.Concept_No','@item.Proposal_No');">Review</button>
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Proposal_No)
@@ -32,7 +32,7 @@
                                 @Html.DisplayFor(modelItem => item.Description)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Objective)
+                                @Html.DisplayFor(modelItem => item.ApplicationLevel)
                             </td>
                         </tr>
                     }

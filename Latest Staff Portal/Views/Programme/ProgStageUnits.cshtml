@@ -17,12 +17,12 @@
         background-color: #74788d;
         color: white;
     }
-    .checkboxClass {
-        width: 20px;
-        height: 20px;
-        padding: 0px;
-    }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div style="background-color: black;">
     <a href="#" onclick="BackToProgStages('@Request.QueryString["Prog"]','@Request.QueryString["ProgDesc"]');" style="color:yellow"><<< Back To Programme Stages</a>
 </div>
@@ -44,7 +44,6 @@
                     <th>Action</th>
                     <th>Code</th>
                     <th>Description</th>
-                    <th>On Offer</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,7 +52,6 @@
                     {
                         if (Model.Count() > 0)
                         {
-                            int i = 1;
                             foreach (var item in Model)
                             {
                                 <tr>
@@ -65,9 +63,6 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Desription)
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" class="checkboxClass" checked="@item.OnOffer" id="@i.ToString()" onchange="onSelectOnOfferUnit('@Prog','@Stage','@item.Code',this);" />
                                     </td>
                                 </tr>
                             }
@@ -169,7 +164,7 @@
         var Unit = row.find("td").eq(1).html().trim();
         ShowProgress();
         $.ajax({
-            url: '@Url.Action("GetUnitReports", "Programme")',
+            url: '/Programme/GetUnitReports',
             datatype: "json",
             type: "POST",
             data: JSON.stringify({ Prog: Prog, Stage: Stage, Unit: Unit, ReportType: ReportType }),
@@ -203,14 +198,15 @@
             var Unit = row.find("td").eq(1).html().trim();
             ShowProgress();
             $.ajax({
-                url: '@Url.Action("GetScoreSheetReports", "Programme")',
+                url: '/Programme/GetScoreSheetReports',
                 datatype: "json",
                 type: "POST",
                 data: JSON.stringify({ Prog: Prog, Stage: Stage, Unit: Unit, Sem: sem }),
                 contentType: "application/json; charset = utf-8",
                 success: function (data) {
                     if (data.success == true) {
-
+                        var viewer = $("#modalBody");
+                        PDFObject.embed(data.message, viewer);
                         $("#myModalUnits").modal("show");
                         HideProgress();
                     }
@@ -228,7 +224,7 @@
     }
     var BackToProgStages = function (Prog, Descr) {
         ShowProgress();
-        window.location = '@Url.Action("ProgrammeStages", "Programme")?Prog=' + Prog + '&Descr=' + Descr;
+        window.location = "/Programme/ProgrammeStages?Prog=" + Prog + "&Descr=" + Descr + "";
     }
     var GetScoreSheetFilters = function () {
         ShowProgress();
@@ -238,7 +234,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("GetScoreSheetReportFilters", "Programme")',
+            url: '/Programme/GetScoreSheetReportFilters',
             success: function (data) {
                 $("#modalBodyFilters").html(data);
                 HideProgress();
@@ -250,31 +246,6 @@
             }
         });
     }
-    var onSelectOnOfferUnit = function (Prog, Stage, Unit, ID) {
-        var OnOffer = $(ID).prop('checked');
-        ShowProgress();
-        $.ajax({
-            url: '@Url.Action("SetProgrammeUnitOfOffer", "Programme")',
-            datatype: "json",
-            type: "POST",
-            data: JSON.stringify({ Prog: Prog, Stage: Stage, Unit: Unit, OnOffer: OnOffer }),
-            contentType: "application/json; charset = utf-8",
-            success: function (data) {
-                if (data.success == true) {
-                    HideProgress();
-                    Swal.fire('Success', data.message, 'success');
-                }
-                else {
-                    Swal.fire('Warning', data.message, 'warning');
-                    HideProgress();
-                }
-            },
-            error: function (err) {
-                Swal.fire('Warning', err, 'warning');
-                HideProgress();
-            }
-        });
-    };
 </script>
 
 

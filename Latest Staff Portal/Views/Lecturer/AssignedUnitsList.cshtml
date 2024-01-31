@@ -2,14 +2,13 @@
 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
     <thead>
         <tr>
+            <th>Action</th>
             <th>Code</th>
             <th>Stage</th>
             <th>Semester</th>
             <th>Unit</th>
             <th>Unit Name</th>
             <th>Campus</th>
-            <th>Settlement Type</th>
-            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +21,7 @@
                         foreach (var item in Model)
                         {
                             <tr>
+                                <td><a href="#" onclick="SelectedRow('@item.Code','@item.Stage','@item.Semester','@item.Unit','@item.Campus_Code');">Select</a></td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Code)
                                 </td>
@@ -39,12 +39,6 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Campus_Code)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Student_Type)
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-danger" onclick="DeleteAssignedUnit('@item.Code', '@item.Stage', '@item.Semester', '@item.Unit', '@item.Campus_Code', '@item.LnNo');">Delete</button>
                                 </td>
                             </tr>
                         }

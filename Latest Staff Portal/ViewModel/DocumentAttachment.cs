@@ -14,8 +14,6 @@ namespace Latest_Staff_Portal.ViewModel
         public int ID { get; set; }
         public string LineNo { get; set; }
         public string DocType { get; set; }
-        public string Remarks { get; set; }
-        public string Date { get; set; }
     }
     public class DocumentAttachmentList
     {

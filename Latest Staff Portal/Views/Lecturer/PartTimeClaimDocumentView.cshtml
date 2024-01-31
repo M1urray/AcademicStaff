@@ -1,0 +1,195 @@
+﻿@model Latest_Staff_Portal.ViewModel.StaffClaimHeader
+@{
+    ViewBag.Title = "PartTimeClaimDocumentView";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    hr {
+        margin: 4px;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<div style="background-color: black;">
+    <a href="#" onclick="StaffClaimRequisitionLink();" style="color:yellow"><<< Back To Staff Claim Requisition List</a>
+</div>
+<div class="card">
+    <div class="card-title">Claim Document Details(@Model.No)</div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <b>Document No</b>
+                @Html.TextBoxFor(m => m.No, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+            </div>
+            <div class="col-md-6">
+                <b>Date Requested</b>
+                @Html.TextBoxFor(m => m.DateRequested, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "dtPicker" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Status</b>
+                @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtStatus" })
+            </div>
+            <div class="col-md-6">
+                <b>Campus</b>
+                @Html.TextBoxFor(m => m.CampusName, new { @class = "form-control ", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtCampus" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Department</b>
+                @Html.TextBoxFor(m => m.DepartmentName, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtDepartment" })
+            </div>
+            <div class="col-md-6">
+                <b>Responsibility Center</b>
+                @Html.TextBoxFor(m => m.RespC, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtRespC" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Purpose</b>
+                @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @rows = 5, @id = "txtPurpose" })
+            </div>
+            <div class="col-md-6">
+                <b>Total Net Amount</b>
+                @Html.TextBoxFor(m => m.TotalAmount, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtNetAmount" })
+            </div>
+        </div>
+        <hr />
+        <div id="DivImpLines">
+            <hr style="border:1px solid black" />
+            <b>Staff Claim Lines</b>
+            <hr />
+            <div id="divPartTimeClaimLines"></div>
+            <div align="right" id="DivSendForApproval">
+                <hr style="border:1px solid black" />
+                <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval();" />
+            </div>
+            <hr />
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" ke aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">New Staff Claim Line</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*//////////////////////Modal View Doc////////////////////////////*@
+<div class="modal fade" id="myModalAttachment" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Attachment</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalAttachmentBody" style="width:100%;height:450px">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script src="~/assets/js/pdfobject.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadClaimDocumentLines(`@Model.No`,`@Model.Status`);
+        var status = `@Model.Status`;
+        if (status == "Pending") {
+            $("#DivSendForApproval").show();
+        }
+        var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
+        if (Successmsg != "") {
+            Swal.fire('Success', Successmsg, 'success',true);
+            $.ajax({
+                type: "POST",
+                url:'@Url.Action("NullibySessions", "Common")',
+            });
+        }
+    });
+    var LoadClaimDocumentLines = function (DocNo,Status) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo, Status: Status }),
+            url:'@Url.Action("ClaimDocumentLines", "Lecturer")',
+            success: function (data) {
+                $("#divPartTimeClaimLines").html(data);
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var StaffClaimRequisitionLink = function () {
+        ShowProgress();
+        window.location = '@Url.Action("PartTimeClaimRequisitionList", "Lecturer")',
+    }
+    var SendDocForApproval = function () {
+        var DocNo = `@Model.No`;
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("SendStaffClaimAppForApproval", "StaffClaim")',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    HideHeaderEditInput();
+                    LoadClaimDocumentLines('@Model.No', 'Pending Approval');
+                    $("#txtStatus").val("Pending Approval");
+                    $("#DivSendForApproval").hide();
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+</script>
+
+
+

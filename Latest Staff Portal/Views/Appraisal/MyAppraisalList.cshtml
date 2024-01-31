@@ -15,18 +15,23 @@
     }
 
     .BtnPadding {
-        padding: 4px;
+        padding: 1px;
         font-size: 12px;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div class="card pre-scrollable">
     <div class="card-title">My Appraisal List</div>
     <div class="card-body">
         <a href="#" onclick="NewAppraisalDoc();" class="btn btn-primary BtnPadding">Create Appraisal Document</a>
         <a href="#" onclick="ViewAppraisalDoc();" class="btn btn-danger BtnPadding disabled" id="ViewDoc">View Document</a>
-        <a href="#" onclick="SendDocForApproval();" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send Approval Request</a>
-        <a href="#" onclick="CancelDocForApproval();" class="btn btn-danger BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
-        <a href="#" onclick="ViewApprovalTrail();" class="btn btn-primary BtnPadding disabled" id="AppTrail">Document Approval Status</a>
+        <a href="#" onclick="SendDocTo('1');" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send to Supervisor</a>
+        <a href="#" onclick="SendDocTo('0');" class="btn btn-danger BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
+        @*<a href="#" onclick="ViewApprovalTrail();" class="btn btn-primary BtnPadding disabled" id="AppTrail">Document Approval Status</a>*@
         <a href="#" onclick="GenerateApprisalReport();" class="btn btn-danger BtnPadding disabled" id="IdReport">Print Report</a>
         <hr />
         <div id="divAppraisalList"></div>
@@ -82,7 +87,7 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: '@Url.Action("AppraisalRequisitionListPartialView", "Appraisal")',
+            url: "/Appraisal/AppraisalRequisitionListPartialView",
             success: function (data) {
                 HideProgress();
                 $("#divAppraisalList").html(data);
@@ -102,7 +107,7 @@
             datatype: "json",
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("NewApprisalRequisition", "Appraisal")',
+            url: '/Appraisal/NewApprisalRequisition',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -117,7 +122,7 @@
     var SubmitAppraisalRequisition = function () {
         var ApprisalPeriod = $("#ddlApprPeriod").children("option:selected").val();
         var ApprisalType = $("#ddlAppTypes").children("option:selected").val();
-        var ResponC = $("#ddlRespC").children("option:selected").val();
+        var Sup = $("#ddlSup").children("option:selected").val();
         if (ApprisalPeriod == "") {
             Swal.fire('error', 'Select Apprisal Period', 'error');
             return;
@@ -126,19 +131,19 @@
             Swal.fire('error', 'Select Appraisal Types', 'error');
             return;
         }
-        else if (ResponC == "") {
-            Swal.fire('error', 'Select Responsibility Center', 'error');
+        else if (Sup == "") {
+            Swal.fire('error', 'Select Your Supervisor', 'error');
             return;
         }
         else {
             var NewAppraisalDocument = {};
             NewAppraisalDocument.ApprisalPeriod = ApprisalPeriod;
             NewAppraisalDocument.ApprisalType = ApprisalType;
-            NewAppraisalDocument.Responsibility = ResponC;
+            NewAppraisalDocument.Supervisor = Sup;
             ShowProgress();
             $.ajax({
                 type: "post",
-                url:'@Url.Action("SubmitAppraisalDocument", "Appraisal")',
+                url: "/Appraisal/SubmitAppraisalDocument",
                 data: JSON.stringify({ NewApp: NewAppraisalDocument }),
                 contentType: "application/json; charset = utf-8",
                 success: function (data) {
@@ -163,28 +168,28 @@
         $('table tbody tr').click(function () {
             $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
             var row = $('#tableScoreCard tr.selectedTableRow');
-            var Status = row.find("td").eq(5).html().trim();
+            var Status = row.find("td").eq(4).html().trim();
             $("#ViewDoc").removeClass("disabled");
             $("#IdReport").removeClass("disabled");
-            if (Status == "New") {
+            if (Status == "Appraisee") {
                 $("#SendDocAppr").removeClass("disabled");
                 $("#CancelDocAppr").addClass("disabled");
-                $("#AppTrail").addClass("disabled");
+               // $("#AppTrail").addClass("disabled");
             }
-            else if (Status == "Pending Approval") {
+            else if (Status == "Supervisor") {
                 $("#SendDocAppr").addClass("disabled");
                 $("#CancelDocAppr").removeClass("disabled");
-                $("#AppTrail").removeClass("disabled");
+                //$("#AppTrail").removeClass("disabled");
             }
             else if (Status == "Approved") {
                 $("#SendDocAppr").addClass("disabled");
                 $("#CancelDocAppr").addClass("disabled");
-                $("#AppTrail").addClass("disabled");
+               // $("#AppTrail").addClass("disabled");
             }
             else {
                 $("#SendDocAppr").addClass("disabled");
                 $("#CancelDocAppr").addClass("disabled");
-                $("#AppTrail").addClass("disabled");
+                //$("#AppTrail").addClass("disabled");
             }
         });
     }
@@ -193,9 +198,9 @@
         ShowProgress();
         var row = $('#tableScoreCard tr.selectedTableRow');
         var DocNo = row.find("td").eq(1).html().trim();
-        window.location = '@Url.Action("AppraisalScoreCard", "Appraisal")?AppDoc=' + DocNo;
+        window.location = "/Appraisal/AppraisalScoreCard?AppDoc=" + DocNo;
     }
-    var SendDocForApproval = function () {
+    var SendDocTo = function (SendTo) {
         var row = $('#tableScoreCard tr.selectedTableRow');
         var DocNo = row.find("td").eq(1).html().trim();
         ShowProgress();
@@ -203,14 +208,15 @@
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo }),
+            data: JSON.stringify({ DocNo: DocNo, SendTo: SendTo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("SendAppraisalForApproval", "Appraisal")',
+            url: '/Appraisal/SendDocumentTo',
             success: function (data) {
                 if (data.success == true) {
                     HideProgress();
                     LoadAppraisalReqList();
+                    DiableButtons();
                     Swal.fire('Success', data.message, 'success');
                 }
                 else {
@@ -222,36 +228,6 @@
                 Swal.fire('Warning', err, 'warning');
             }
         });
-        DiableButtons();
-    }
-    var CancelDocForApproval = function () {
-        var row = $('#tableScoreCard tr.selectedTableRow');
-        var DocNo = row.find("td").eq(1).html().trim();
-        ShowProgress();
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo }),
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: '@Url.Action("CancelAppraisalForApproval", "Appraisal")',
-            success: function (data) {
-                if (data.success == true) {
-                    HideProgress();
-                    LoadAppraisalReqList();
-                    Swal.fire('Success', data.message, 'success');
-                }
-                else {
-                    HideProgress();
-                    Swal.fire('Error', data.message, 'error');
-                }
-            },
-            error: function (err) {
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
-        DiableButtons();
     }
     var ViewApprovalTrail = function () {
         $("#labelF").text("Document Approval Trail");
@@ -265,7 +241,7 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("DocumentApprovalTrail", "Common")',
+            url: '/Common/DocumentApprovalTrail',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -282,6 +258,7 @@
         $("#SendDocAppr").addClass("disabled");
         $("#CancelDocAppr").addClass("disabled");
         $("#AppTrail").addClass("disabled");
+        $("#IdReport").addClass("disabled");
         $('table tbody tr').siblings().removeClass("selectedTableRow");
     }
     var GenerateApprisalReport = function () {
@@ -290,7 +267,7 @@
         var DocNo = row.find("td").eq(1).html().trim();
         ShowProgress();
         $.ajax({
-            url: '@Url.Action("GenerateAppraisalReport", "ViewDocument")',
+            url: '/ViewDocument/GenerateAppraisalReport',
             datatype: "json",
             type: "POST",
             data: JSON.stringify({ DocNo: DocNo }),
@@ -306,6 +283,7 @@
                     HideProgress();
                     Swal.fire('Warning', data.message, 'warning');
                 }
+
             },
             error: function (err) {
                 HideProgress();

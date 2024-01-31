@@ -21,7 +21,7 @@
         {
             ProgC = Session["ProgCate"].ToString();
         }
-        string page = "ExamSetup?$filter=Category eq '" + ProgC + "'&format=json";
+        string page = "ExamSetup?$filter=Category eq '" + ProgC + "'&$format=json";
 
         HttpWebResponse httpResponse = Credentials.GetOdataData(page);
         using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -32,7 +32,7 @@
     }
     else
     {
-        Url.Action("CourseAllocationUnits", "lecturer");
+        Response.Redirect("/CourseAllocationUnits/Lecturer");
     }
 }
 <style>
@@ -107,8 +107,7 @@
                                         {
                                             string TextValue = "";
 
-                                            bool BlockMarkEntry = CommonClass.BlockExamMarkEntry((string)config["Category"], (string)config["Code"], Sem);
-                                            string page = "ExamResults?$filter=Student_No eq '" + item.No + "' and Semester eq '" + Sem + "' and ExamType eq '" + (string)config["Code"] + "' and Unit eq '" + Unit + "' and Cancelled eq false&format=json";
+                                            string page = "ExamResults?$filter=Student_No eq '" + item.No + "' and Semester eq '" + Sem + "' and ExamType eq '" + config["Code"].ToString() + "' and Unit eq '" + Unit + "'&$format=json";
 
                                             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                                             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -123,14 +122,7 @@
                                                     HasMarks = true;
                                                 }
                                                 <td>
-                                                    @if (BlockMarkEntry)
-                                                    {
-                                                        @Html.TextBox(config["Code"].ToString(), TextValue, new { maxlength = 2, @disabled = "disabled", Style = "text-align:center;background-color:#dedebd", @class = "form-control textboxWidth" })
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.TextBox(config["Code"].ToString(), TextValue, new { maxlength = 2, @class = "form-control textboxWidth" })
-                                                    }
+                                                    @Html.TextBox(config["Code"].ToString(), TextValue, new { maxlength = 2, Style = "text-align:center;", @class = "form-control textboxWidth" })
                                                 </td>
                                             }
                                         }
@@ -171,7 +163,7 @@
 <div class="row">
     <div class="col-md-12">
         <div align="center">
-            <input type="button" class="btn btn-primary" value="Print Scoresheet" onclick="PrintScoresheet('N');" />
+            <input type="button" class="btn btn-primary" value="Print Scoresheet" onclick="PrintScoresheet();" />
         </div>
     </div>
 </div>

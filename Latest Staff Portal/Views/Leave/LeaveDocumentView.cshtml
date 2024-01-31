@@ -1,88 +1,156 @@
-﻿@model Latest_Staff_Portal.ViewModel.LeaveReqList
-<table class="table table-bordered" style="width: 100%">
-    <tr>
-        <td>
-            <span style="font-size: small; font-weight: bold;">Document No</span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.No)
-        </td>
-        <td>
-            <span style="font-size: small; font-weight: bold;">Employee No</span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.EmpNo)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <span style="font-size: small; font-weight: bold;">Employee Names </span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.EmpName)
-        </td>
-        <td>
-            <span style="font-size: small; font-weight: bold;">Department </span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.Department)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <span style="font-size: small; font-weight: bold;">Application Date </span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.Date)
-        </td>
-        <td>
-            <span style="font-size: small; font-weight: bold;">Applied Days </span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.Applied_Days)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <span style="font-size: small; font-weight: bold;">Starting Date </span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.Starting_Date)
-        </td>
-        <td>
-            <span style="font-size: small; font-weight: bold;">End Date </span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.End_Date)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <span style="font-size: small; font-weight: bold;">Return Date </span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.Return_Date)
-        </td>
-        <td>
-            <span style="font-size: small; font-weight: bold;">Purpose </span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.Remarks)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <span style="font-size: small; font-weight: bold;">Leave Type </span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.Leave_Type)
-        </td>
-        <td>
-            <span style="font-size: small; font-weight: bold;">Reliever Name </span>
-        </td>
-        <td>
-            @Html.DisplayFor(m => m.Reliever)
-        </td>
-    </tr>
-</table>
+﻿@model Latest_Staff_Portal.ViewModel.LeaveDocumentDetails
+<div class="pre-scrollable">
+    <table class="table table-bordered" style="width: 100%;font-size:12px; background-color:darkgrey">
+        <tr>
+            <td>
+                <span style="font-size: small; font-weight: bold;">Document No</span>
+            </td>
+            <td>
+                @Html.DisplayFor(m => m.DocumentDetails.No)
+            </td>
+            <td>
+                <span style="font-size: small; font-weight: bold;">Employee No</span>
+            </td>
+            <td>
+                @Html.DisplayFor(m => m.DocumentDetails.EmpNo)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span style="font-size: small; font-weight: bold;">Employee Names </span>
+            </td>
+            <td>
+                @Html.DisplayFor(m => m.DocumentDetails.EmpName)
+            </td>
+            <td>
+                <span style="font-size: small; font-weight: bold;">Responsibility Center </span>
+            </td>
+            <td>
+                @Html.DropDownListFor(model => model.DocumentDetails.Responsibility, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span style="font-size: small; font-weight: bold;">Application Date </span>
+            </td>
+            <td>
+                @Html.DisplayFor(m => m.DocumentDetails.Date)
+            </td>
+            <td>
+                <span style="font-size: small; font-weight: bold;">Applied Days </span>
+            </td>
+            <td>
+                @Html.DropDownListFor(model => model.DocumentDetails.Applied_Days, Model.ListOfDays, "--No of Days--", new { @class = "form-control", @id = "ddlNoDays" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span style="font-size: small; font-weight: bold;">Starting Date </span>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.DocumentDetails.Starting_Date, new { @class = "form-control", @id = "txtstartDate" })
+            </td>
+            <td>
+                <span style="font-size: small; font-weight: bold;">End Date </span>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.DocumentDetails.End_Date, new { @class = "form-control", @id = "EndDate", @readonly = "readonly", @style = "background-color:#dedebd" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span style="font-size: small; font-weight: bold;">Return Date </span>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.DocumentDetails.Return_Date, new { @class = "form-control", @id = "ReturnDate", @readonly = "readonly", @style = "background-color:#dedebd" })
+            </td>
+            <td>
+                <span style="font-size: small; font-weight: bold;">Purpose </span>
+            </td>
+            <td>
+                @Html.TextAreaFor(m => m.DocumentDetails.Remarks, new { @class = "form-control", @id = "txtRemarks" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span style="font-size: small; font-weight: bold;">Leave Type </span>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.DocumentDetails.Leave_Type, new { @class = "form-control", @id = "txtLeaveType", @readonly = "readonly", @style = "background-color:#dedebd" })
+            </td>
+            <td>
+                <span style="font-size: small; font-weight: bold;">Reliever Name </span>
+            </td>
+            <td>
+                @Html.DropDownListFor(model => model.DocumentDetails.Reliever, Model.ListOfRelievers, "--select Reliever--", new { @class = "form-control", @id = "ddlReliever" })
+            </td>
+        </tr>
+    </table>
+</div>
+<div align="center" id="DivUpdateButton">
+    <input type="button" class="btn btn-primary waves-effect waves-light" value="Update Leave Document" onclick="UpdateLeaveDocument('@Model.DocumentDetails.No');" />
+</div>
+<script>
+    $(document).ready(function () {
+        var status = `@Model.DocumentDetails.Status`;
+        if (status == "Open") {
+            $("#txtDays,#txtstartDate,#txtRemarks,#ddlReliever").attr("readonly", false);
+            $("#DivUpdateButton").show();
+            $('#txtstartDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                autoclose: true,
+                yearRange: '-5:+5',
+                showOtherMonths: true,
+                dateFormat: 'dd/mm/yy'
+            });
+            $(window).resize(function () {
+                $('#txtstartDate').datepicker('hide');
+                $('#txtstartDate').blur();
+            });
+
+            $('#txtstartDate').change(function () {
+                var StartDate = $('#txtstartDate').val();
+                var days = $("#ddlNoDays").children("option:selected").val();
+                var LvType = `@Model.DocumentDetails.Leave_Type`;
+                if (LvType == "") {
+                    $("#ddlNoDays option").remove();
+                    $('#ddlNoDays').empty().append('<option selected="selected" value="0">--No of Days--</option>');
+                    Swal.fire('Warning', 'Leave Type cannot be empty', 'warning');
+                    return;
+                }
+                else if (days == "") {
+                    Swal.fire('Warning', 'Select Number of days', 'warning');
+                    return;
+                }
+                else {
+                    ShowProgress();
+                    $.getJSON('@Url.Action("End_ReturnDates", "Leave")', { startDate: StartDate, days: days, LvType: LvType },
+                        function (data) {
+                            if (data.success == true) {
+                                $('#EndDate').val(data.ERDate.EndDate);
+                                $('#ReturnDate').val(data.ERDate.ReturnDate);
+                                HideProgress();
+                            }
+                            else {
+                                Swal.fire('Error', data.message, 'error');
+                                HideProgress();
+                            }
+                        });
+                }
+            });
+
+            $("#ddlReliever,#ddlRespC").select2({
+                width: '100%'
+            });
+        }
+        else {
+            $("#txtDays,#txtstartDate,#txtRemarks,#ddlReliever").attr("readonly", true);
+            $("#DivUpdateButton").hide();
+            $("#ddlReliever,#ddlNoDays,#ddlRespC").attr("disabled", "disabled");
+            $("#txtReliever,#txtRemarks").css("background-color", "#dedebd");
+        }
+    });
+</script>
+
 

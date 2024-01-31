@@ -17,6 +17,7 @@ namespace Latest_Staff_Portal.ViewModel
     public class NewSponsorship
     {
         public string Campus { get; set; }
+        public string School { get; set; }
         public string Department { get; set; }
         public string Customer { get; set; }
         public string RespC { get; set; }
@@ -24,6 +25,7 @@ namespace Latest_Staff_Portal.ViewModel
         public List<SelectListItem> ListOfResponsibility { get; set; }
         public List<SelectListItem> ListOfCampus { get; set; }
         public List<SelectListItem> ListOfDepartment { get; set; }
+        public List<SelectListItem> ListOfSchools { get; set; }
     }
     public class ResourcesList
     {
@@ -33,6 +35,7 @@ namespace Latest_Staff_Portal.ViewModel
     public class NewSponsorshipDocument
     {
         public string No { get; set; }
+        public string ProposalNo { get; set; }
         public string Title { get; set; }
         public string Objective { get; set; }
         public string Address { get; set; }
@@ -44,5 +47,8 @@ namespace Latest_Staff_Portal.ViewModel
         public string ApprovalStatus { get; set; }
         public string Dim1 { get; set; }
         public string Dim2 { get; set; }
+        public string School { get; set; }
+        public string ApprovalType { get; set; }
+        public string ApplicationLevel { get; set; }
     }
 }

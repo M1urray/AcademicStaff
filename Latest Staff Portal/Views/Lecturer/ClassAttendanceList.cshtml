@@ -8,7 +8,7 @@
         //Prog = Session["Prog"].ToString();
         Unit = Session["Unit"].ToString();
         Sem = Session["Sem"].ToString();
-        UnitName = Session["UnitName"].ToString();
+        // UnitName = Session["UnitName"].ToString();
         string Lec = Session["Username"].ToString();
         string classCode = "";// Session["ClassCode"].ToString();
     }
@@ -34,7 +34,7 @@
 <link href="~/assets/css/Loader.css" rel="stylesheet" />
 <div class="loading" align="center" id="divLoader">
     <br />
-    <img src="~/assets/images/ajax-loader2.gif" alt="" />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
 </div>
 <div style="background-color: black;">
     <a href="#" onclick="BackToUnitsAllocation();" style="color:yellow"><<< Back To Units Allocation</a>
@@ -115,7 +115,6 @@
         });
     }
     var NewAttendance = function (DocNo) {
-        //var SettmentType = $("#ddlSettlement").children("option:selected").val();
         if (DocNo != "") {
             $("#labelF").text("Update Attendance Form");
         }
@@ -145,14 +144,9 @@
     }
     var SaveClassAttendance = function (DocNo) {
         var week = $("#ddlWeek").children("option:selected").val();
-        //var SettmnT = $("#ddlSettlement").children("option:selected").val();
-        var WkLesson = $("#ddlLesson").children("option:selected").val();
+
         if (week == "") {
             Swal.fire('Warning', "Select Week", 'warning');
-            return;
-        }
-        else if (WkLesson == "") {
-            Swal.fire('Warning', "Select Lesson", 'warning');
             return;
         }
         else {
@@ -182,7 +176,7 @@
             $.ajax({
                 type: "post",
                 url: '@Url.Action("SaveClassAttendance", "lecturer")',
-                data: { DocNo: DocNo, Wk: week, Lesson: WkLesson, Rows: myTableArray },
+                data: { DocNo: DocNo, Wk: week, Rows: myTableArray },
                 contenttype: "text/plain; charset=utf-8",
                 success: function (data) {
                     if (data.success == true) {

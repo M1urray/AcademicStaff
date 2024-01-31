@@ -45,7 +45,7 @@
                 @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtStatus" })
             </div>
             <div class="col-md-6">
-                <b>Institute</b>
+                <b>Campus</b>
                 @Html.TextBoxFor(m => m.CampusName, new { @class = "form-control ", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtCampus" })
                 <select class="form-control" id="ddlCampus" name="ddlCampus">
                 </select>
@@ -88,19 +88,19 @@
             <b>Staff Claim Lines</b>
             <hr />
             <div id="divClaimLines"></div>
-        </div>
-        <hr style="border:1px solid black" />
-        <div class="row">
-            <div class="col-md-12">
-                <b>Attachments</b>
-                <div id="divAttachDocs"></div>
+            <hr style="border:1px solid black" />
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Attachments</b>
+                    <div id="divAttachDocs"></div>
+                </div>
             </div>
-        </div>
-        <hr style="border:1px solid black" />
-        <div align="right" id="DivSendForApproval">
-            <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval();" />
-        </div>
-        <hr />
+            <hr style="border:1px solid black" />
+            <div align="right" id="DivSendForApproval">
+                <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval();" />
+            </div>
+            <hr />
+        </div>        
     </div>
 </div>
 @*//////////////////////Modal////////////////////////////*@
@@ -156,6 +156,14 @@
             $("#HideLineButton").hide();
             $("#DivSendForApproval").hide();
         }
+        var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
+        if (Successmsg != "") {
+            Swal.fire('Success', Successmsg, 'success',true);
+            $.ajax({
+                type: "POST",
+                url: "/Common/NullibySessions"
+            });
+        }
     });
     var LoadClaimDocumentLines = function (DocNo,Status) {
         ShowProgress();
@@ -166,7 +174,7 @@
             contentType: "application/json; charset = utf-8",
             processData: false,
             data: JSON.stringify({ DocNo: DocNo, Status: Status }),
-            url: '@Url.Action("ClaimDocumentLines", "StaffClaim")',
+            url: "/StaffClaim/ClaimDocumentLines",
             success: function (data) {
                 $("#divClaimLines").html(data);
                 HideProgress();
@@ -189,7 +197,7 @@
             contentType: "application/json; charset = utf-8",
             processData: false,
             data: JSON.stringify({ DocNo: DocNo, TableID: 70135454, Status: Status}),
-            url: '@Url.Action("DocumentAttachments", "Common")',
+            url: "/Common/DocumentAttachments",
             success: function (data) {
                 HideProgress();
                 $("#divAttachDocs").html(data);
@@ -202,7 +210,7 @@
     };
     var StaffClaimRequisitionLink = function () {
         ShowProgress();
-        window.location = '@Url.Action("StaffClaimRequisitionList", "StaffClaim")';
+        window.location = "/StaffClaim/StaffClaimRequisitionList";
     }
     var EditDocument = function () {
         if ($("#btnEdit").val() == "Edit Header") {
@@ -214,7 +222,7 @@
             $('#ddlDepartment').empty().append('<option selected="selected" value="">--Select Department--</option>');
             $('#ddlRespC').empty().append('<option selected="selected" value="">--Select Responsibility Center--</option>');
 
-            $.getJSON('@Url.Action("GetCommonDropdwnListData", "Common")', null,
+            $.getJSON("/Common/GetCommonDropdwnListData", null,
                 function (data) {
                     $('#ddlCampus').empty().append('<option selected="selected" value="">--Select Campus--</option>');
                     $('#ddlDepartment').empty().append('<option selected="selected" value="">--Select Department--</option>');
@@ -302,7 +310,7 @@
             ShowProgress();
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("UpdateStaffClaimHeader", "StaffClaim")',
+                url: "/StaffClaim/UpdateStaffClaimHeader",
                 data: JSON.stringify({ DocNo: DocNo, staffClaimHeader: StaffClaimHeader }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -336,7 +344,7 @@
             async: true,
             type: "GET",
             datatype: "html",
-            url: '@Url.Action("FileUploadForm", "StaffClaim")',
+            url: '/StaffClaim/FileUploadForm',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -366,7 +374,7 @@
                     //Send the JSON array to Controller using AJAX.
                     $.ajax({
                         type: "POST",
-                        url: '@Url.Action("SaveAttachedFile", "Common")',
+                        url: "/Common/SaveAttachedFile",
                         data: JSON.stringify({ DocNo: DocNo, base64Upload: base64String, fileName: filename, Extn: filetype, TableID: 70135454 }),
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
@@ -406,7 +414,7 @@
         ShowProgress();
         $.ajax({
             cache: false,
-            url: '@Url.Action("DocumentAttachmentview", "Common")',
+            url: '/Common/DocumentAttachmentview',
             type: "POST",
             datatype: "json",
             cache: false,
@@ -427,7 +435,7 @@
                         HideProgress();
                     }
                     else {
-                        window.location = '@Url.Action("AttachmentDownload", "Common")?fileName=' + data.message;
+                        window.location = '/Common/AttachmentDownload?fileName=' + data.message;
                         Swal.fire('Success', 'Document Downloaded successfully', 'success');
                         HideProgress();
                     }
@@ -458,7 +466,7 @@
                 ShowProgress();
                 $.ajax({
                     cache: false,
-                    url: '@Url.Action("DeleteAttachedDocument", "Common")',
+                    url: '/Common/DeleteAttachedDocument',
                     datatype: "json",
                     type: "POST",
                     data: JSON.stringify({ DocNo: No, tblID: tbl, DocID: Id }),
@@ -519,7 +527,7 @@
                 datatype: "json",
                 contentType: "application/json; charset = utf-8",
                 processData: false,
-                url: '@Url.Action("NewStaffClaimLine", "StaffClaim")',
+                url: '/StaffClaim/NewStaffClaimLine',
                 success: function (data) {
                     $("#modalBody").html(data);
                     HideProgress();
@@ -573,7 +581,7 @@
 
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("SubmitClaimLine", "StaffClaim")',
+                url: "/StaffClaim/SubmitClaimLine",
                 data: JSON.stringify({ DocNo: DocNo, staffClaimHeader: StaffClaimHeader, staffClaimLine: StaffClaimLine }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -613,7 +621,7 @@
                 ShowProgress();
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("RemoveClaimLine", "StaffClaim")',
+                    url: "/StaffClaim/RemoveClaimLine",
                     data: JSON.stringify({ DocNo: DocNo, LnNo: LnNo, ItemNo:itmNo}),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -651,7 +659,7 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("SendStaffClaimAppForApproval", "StaffClaim")',
+            url: '/StaffClaim/SendStaffClaimAppForApproval',
             success: function (data) {
                 if (data.success == true) {
                     HideProgress();

@@ -22,18 +22,38 @@ namespace Latest_Staff_Portal.ViewModel
         public string Remarks { get; set; }
         public string Department { get; set; }
         public string Responsibility { get; set; }
+        public string Address { get; set; }
+        public string phoneNo { get; set; }
+        public List<string> Comments { get; set; }
+    }
+    public class LeaveDocumentDetails
+    {
+        public LeaveReqList DocumentDetails { get; set; }
+        public string Reliever { get; set; }
+        public string RespC { get; set; }
+        public List<SelectListItem> ListOfLeaveTypes { get; set; }
+        public List<SelectListItem> ListOfRelievers { get; set; }
+        public List<SelectListItem> ListOfResponsibility { get; set; }
+        public string Balance { get; set; }
+        public List<SelectListItem> ListOfDays { get; set; }
+
     }
     public class NewLeaveApplication
     {
         public string Leave_Type { get; set; }
         public string Reliever { get; set; }
         public string LeaveBal { get; set; }
+        public string AllocatedDays { get; set; }
+        public string ReimbDays { get; set; }
+        public string EarnedLeaveDays { get; set; }
+        public string LeaveTaken { get; set; }
         public string AppliedDays { get; set; }
         public string RespC { get; set; }
+        public string Address { get; set; }
+        public string phoneNo { get; set; }
         public List<SelectListItem> ListOfLeaveTypes { get; set; }
         public List<SelectListItem> ListOfRelievers { get; set; }
         public List<SelectListItem> ListOfResponsibility { get; set; }
-        public List<SelectListItem> ListofCampus { get; set; }
     }
     public class LvTypes
     {
@@ -45,13 +65,13 @@ namespace Latest_Staff_Portal.ViewModel
         public string No { get; set; }
         public string Name { get; set; }
     }
-    public class Campus
-    {
-        public string Code { get; set; }
-        public string Description { get; set; }
-    }
     public class LeaveBalance
     {
+        public string AllocatedDays { get; set; }
+        public string ReimbDays { get; set; }
+        public string CarryForawrd { get; set; }
+        public string EarnedLeaveDays { get; set; }
+        public string LeaveTaken { get; set; }
         public string Balance { get; set; }
         public List<SelectListItem> ListOfDays { get; set; }
     }

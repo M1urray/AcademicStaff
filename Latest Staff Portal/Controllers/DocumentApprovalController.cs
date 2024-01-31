@@ -16,7 +16,7 @@ namespace Latest_Staff_Portal.Controllers
     public class DocumentApprovalController : Controller
     {
         [CustomeAuthentication]
-        [CustomAuthorization(Role = "ALLUSERS")]
+        [CustomAuthorization(Role = "FULLTIME")]
         // GET: DocumentApproval       
         public ActionResult DocumentForApprovalSummery(string rn)
         {
@@ -135,7 +135,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     string userID = Session["UserID"].ToString();
                     List<DocumentsForApproval> approvalDocList = new List<DocumentsForApproval>();
-                    string page = "ApprovalEntries?$select=Table_ID,Entry_No,Document_No,RecordIDText,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Comment&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "'&format=json";
+                    string page = "ApprovalEntries?$select=Entry_No,Table_ID,Document_No,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,SenderNames,Comment&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "'&format=json";
                     HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
@@ -148,6 +148,7 @@ namespace Latest_Staff_Portal.Controllers
                             {
                                 DocumentsForApproval DocList = new DocumentsForApproval();
                                 DocList.TabelID = (string)config["Table_ID"];
+                                DocList.Entry_No = (string)config["Entry_No"];
 
                                 if ((string)config["Document_No"] == "")
                                 {
@@ -159,8 +160,7 @@ namespace Latest_Staff_Portal.Controllers
                                 {
                                     DocList.Document_No = (string)config["Document_No"];
                                 }
-                                DocList.Entry_No = (string)config["Entry_No"];
-                                DocList.Sender_Name = (string)config["Sender_ID"];
+                                DocList.Sender_Name = (string)config["SenderNames"];
                                 DocList.DateSend = Convert.ToDateTime((string)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
                                 DocList.Status = (string)config["Status"];
                                 DocList.Sequence = (string)config["Sequence_No"];
@@ -241,7 +241,7 @@ namespace Latest_Staff_Portal.Controllers
                 #region Purchase Header
                 PRVHeader PurchaseDoc = new PRVHeader();
 
-                string page = "PurchaseRegDocument?$filter=No_ eq '" + DocNo + "'&format=json";
+                string page = "PurchaseRegDocument?$filter=No eq '" + DocNo + "'&format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -250,7 +250,7 @@ namespace Latest_Staff_Portal.Controllers
                     var details = JObject.Parse(result);
                     foreach (JObject config in details["value"])
                     {
-                        PurchaseDoc.No = (string)config["No_"];
+                        PurchaseDoc.No = (string)config["No"];
                         PurchaseDoc.Date = Convert.ToDateTime((string)config["Order_Date"]).ToString("dd/MM/yyyy");
                         PurchaseDoc.Remarks = (string)config["Posting_Description"];
                         PurchaseDoc.Campus = CommonClass.GetDimensionValue((string)config["Shortcut_Dimension_1_Code"]);
@@ -264,7 +264,7 @@ namespace Latest_Staff_Portal.Controllers
                 #endregion
                 #region Purchase Lines
                 List<PRVLines> PurchaseLines = new List<PRVLines>();
-                string pageLine = "PurchaseLines?$filter=Document_No_ eq '" + DocNo + "'&$format=json";
+                string pageLine = "PurchaseLines?$filter=Document_No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -282,7 +282,7 @@ namespace Latest_Staff_Portal.Controllers
                         {
                             PurchaseLine.LineType = (string)config["Type"];
                         }
-                        PurchaseLine.Item = (string)config["No_"];
+                        PurchaseLine.Item = (string)config["No"];
                         PurchaseLine.ItemDesc = (string)config["Description"];
                         PurchaseLine.Qnty = (string)config["Quantity"];
                         PurchaseLine.UnitM = (string)config["Unit_of_Measure"];
@@ -691,12 +691,12 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        public JsonResult ApproveDocument(string DocNo, string EntryNo)
+        public JsonResult ApproveDocument(string DocNo,string EntryNo)
         {
             try
             {
                 string userID = Session["UserID"].ToString();
-                Credentials.ObjNav.DocumentApprovals(Convert.ToInt32(EntryNo),DocNo, userID);
+                Credentials.ObjNav.DocumentApprovals(Convert.ToInt32(EntryNo), DocNo, userID);
                 Session["SuccessMsg"] = "Request approved Successfully";
                 return Json(new { message = "Request approved Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
@@ -705,7 +705,7 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult RejectDocument(string TBID, string DocNo, string Comments, string SeqNo)
+        public JsonResult RejectDocument(string TBID, string DocNo, string Comments, string SeqNo, string EntryNo)
         {
             try
             {
@@ -718,15 +718,16 @@ namespace Latest_Staff_Portal.Controllers
                 //table_ID: Convert.ToInt32(TBID),
                 //seqenceNo: Convert.ToInt32(SeqNo));
                 string msg = "";
-                //if (TBID == "70134894")
-                //{
-                //    msg = "Clearance Approval Request Rejected";
-                //}
-                //else
-                //{
-                //    Credentials.ObjNav.DocumentRejections(DocNo, userID);
-                //    msg = "Approval Request Rejected";
-                //}
+                if (TBID == "70134894")
+                {
+                    msg = "Clearance Approval Request Rejected";
+                }
+                else
+                {
+                    Credentials.ObjNav.DocumentRejections(Convert.ToInt32(EntryNo),DocNo, userID, Comments,
+                        Convert.ToInt32(TBID), Convert.ToInt32(SeqNo));
+                    msg = "Approval Request Rejected";
+                }
                 Session["SuccessMsg"] = msg;
                 return Json(new { message = msg, success = true }, JsonRequestBehavior.AllowGet);
             }

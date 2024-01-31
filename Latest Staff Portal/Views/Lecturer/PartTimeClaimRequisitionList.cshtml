@@ -1,0 +1,351 @@
+﻿
+@{
+    ViewBag.Title = "PartTimeClaimRequisitionList";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="card pre-scrollable">
+    <div class="card-title">Part-Time Claim Requisition List</div>
+    <hr />
+    <div class="card-body">
+        <a href="#" onclick="NewClaimRequisition();" class="btn btn-primary BtnPadding">New Claim</a>
+        <a href="#" onclick="ViewDoc();" class="btn btn-danger BtnPadding disabled" id="ViewDoc">View Document</a>
+        <a href="#" onclick="SendDocForApproval();" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send Approval Request</a>
+        <a href="#" onclick="CancelDocForApproval();" class="btn btn-primary BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
+        <a href="#" onclick="ViewApprovalTrail();" class="btn btn-danger BtnPadding disabled" id="AppTrail">Document Approval Trail</a>
+        <hr />
+        <div id="divRegList"></div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadPartTimeClaimReqList();
+    });
+    var LoadPartTimeClaimReqList = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: url: '@Url.Action("PartTimeClaimRequisitionListPartialView", "Lecturer")',
+            success: function (data) {
+                $("#divRegList").html(data);
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var NewClaimRequisition = function () {
+        $("#labelF").text("New Staff Claim");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            url:  '@Url.Action("NewPartTimeClaim", "Lecturer")',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var SubmitClaim = function () {
+        var Sem = $("#ddlSem").children("option:selected").val();
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var School = $("#ddlSchool").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+        var Amount = $("#txtAmount").val();
+        var Remarks = $("#txtLecRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+        if (Sem == "") {
+            $("#divProUnits,#divAmount").hide();
+            return;
+        }
+        else if (Campus == "") {
+            Swal.fire('Warning', 'Kindly select Campus', 'warning');
+            return;
+        }
+        else if (School == "") {
+            Swal.fire('Warning', 'Kindly select School', 'warning');
+            return;
+        }
+        else if (Department == "") {
+            Swal.fire('Warning', 'Kindly select Department', 'warning');
+            return;
+        }
+        else if (Amount == "") {
+            Swal.fire('Warning', 'Kindly enter the total amount you are claiming', 'warning');
+            return;
+        }
+        else if (Remarks == "") {
+            Swal.fire('Warning', 'Kindly enter some Remarks for the claim', 'warning');
+            return;
+        }
+        else if (Remarks.length > 150) {
+            Swal.fire('Warning', "Your Reason should have a maximum of 150 characters", 'warning');
+            return;
+        }
+        else {
+            var myTableArray = [];
+            var s = false;
+            $('#dtClaimUnits tbody tr').each(function () {
+                var arrayOfThisRow = [];
+                var tableData = $(this).find('td');
+                if (tableData.length > 0) {
+                    tableData.each(function () {
+                        if ($(this).find("input[type=text]").length) {
+                            var myText = $(this).find("input[type=text]").val();
+                            if (myText == "") {
+                                s = true;
+                                return false;
+                            }
+                            else {
+                                arrayOfThisRow.push(myText);
+                            }
+                        }
+                        else arrayOfThisRow.push($(this).text());
+                    });
+
+                    myTableArray.push(arrayOfThisRow);
+                }
+            });
+            if (s == true) {
+                Swal.fire('Warning', 'Enter Number of students for PSSP and GSSP for every line', 'warning');
+                return;
+            }
+            else if (myTableArray.length < 1) {
+                Swal.fire('Warning', 'You have not Added any Setup line(s)', 'warning');
+                return;
+            }
+            else {
+
+                ShowProgress();
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    datatype: "json",
+                    data: { pClaim: myTableArray, Sem: Sem, Campus: Campus, School: School, Department: Department, Amount: Amount, Remarks: Remarks },
+                    contenttype: "text/plain; charset=utf-8",
+                    url: '@Url.Action("NewPartTimeClaimRequisition", "Lecturer")',
+                    success: function (data) {
+                        HideProgress();
+                        LoadPartTimeClaimReqList();
+                        if (data.success == true) {
+                            DiableButtons();
+                            HideProgress();
+                            $("#myModal").modal("hide");
+                            $.ajaxSetup({ cache: false });
+                            Swal.fire({
+                                title: 'Success',
+                                text: data.message,
+                                icon: 'success',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, View!'
+                            }).then((result) => {
+                                if (result.value) {
+                                    window.location = "/Lecturer/PartTimeClaimDocumentView?DocNo=" + data.DocNo;
+                                }
+                                else {
+                                    Swal.fire('Cancelled', 'Viewing Document details Cancelled', 'error');
+                                }
+                            });
+                        }
+                        else {
+                            DiableButtons();
+                            HideProgress();
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    },
+                    error: function (err) {
+                        HideProgress();
+                        Swal.fire('Warning', err, 'warning');
+                    }
+                });
+            }
+        }
+    }
+    var SelectedRow = function () {
+        $('table tbody tr').click(function () {
+            $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
+            var row = $('#datatable-buttons tr.selectedTableRow');
+            var Status = row.find("td").eq(4).html().trim();
+            $("#ViewDoc").removeClass("disabled");
+            if (Status == "Pending") {
+                $("#SendDocAppr").removeClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
+            }
+            else if (Status == "Pending Approval") {
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").removeClass("disabled");
+                $("#AppTrail").removeClass("disabled");
+            }
+            else if (Status == "Approved") {
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
+            }
+            else {
+                $("#SendDocAppr").addClass("disabled");
+                $("#CancelDocAppr").addClass("disabled");
+                $("#AppTrail").addClass("disabled");
+            }
+        });
+    }
+    var ViewDoc = function () {
+        ShowProgress();
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        window.location = "/Lecturer/PartTimeClaimDocumentView?DocNo=" + DocNo;
+    }
+    var SendDocForApproval = function () {
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/StaffClaim/SendStaffClaimAppForApproval',
+            success: function (data) {
+                HideProgress();
+                LoadStaffClaimReqList();
+                if (data.success == true) {
+                    DiableButtons();
+                    HideProgress();
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    DiableButtons();
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var CancelDocForApproval = function () {
+        $("#labelF").text("Staff Claim Details Document");
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/StaffClaim/CancelStaffClaimAppForApproval',
+            success: function (data) {
+                HideProgress();
+                LoadStaffClaimReqList();
+                if (data.success == true) {
+                    DiableButtons();
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    DiableButtons();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+
+    }
+    var ViewApprovalTrail = function () {
+        $("#labelF").text("Document Approval Trail");
+        ShowProgress();
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalTrail',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var DiableButtons = function () {
+        $("#ViewDoc").addClass("disabled");
+        $("#SendDocAppr").addClass("disabled");
+        $("#CancelDocAppr").addClass("disabled");
+        $("#AppTrail").addClass("disabled");
+        $('table tbody tr').siblings().removeClass("selectedTableRow");
+    }
+    var DisplayAlert = function (msg) {
+        Swal.fire(msg);
+    }
+</script>
+

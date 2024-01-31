@@ -1,5 +1,4 @@
-﻿using Latest_Staff_Portal.CustomSecurity;
-using Latest_Staff_Portal.Models;
+﻿using Latest_Staff_Portal.Models;
 using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
@@ -13,8 +12,6 @@ using System.Web.Mvc;
 
 namespace Latest_Staff_Portal.Controllers
 {
-    [CustomeAuthentication]
-    [CustomAuthorization(Role = "ALLUSERS")]
     public class LeaveController : Controller
     {
         // GET: Leave
@@ -34,7 +31,7 @@ namespace Latest_Staff_Portal.Controllers
             string StaffNo = Session["Username"].ToString();
             List<LeaveReqList> LeaveList = new List<LeaveReqList>();
 
-            string page = "HRLeaveRequisition?$filter=Employee_No eq '" + StaffNo + "'&format=json";
+            string page = "HRLeaveRequisition?$filter=Employee_No eq '" + StaffNo + "'&$format=json";
 
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -54,20 +51,23 @@ namespace Latest_Staff_Portal.Controllers
                     LvList.Return_Date = Convert.ToDateTime((string)config["Return_Date"]).ToString("dd/MM/yyyy");
                     LvList.Reliever = (string)config["Reliever_Name"];
                     LvList.Status = (string)config["Status"];
+                    List<string> comment = null;// CommonClass.GetDocRejectionCommentList((string)config["No"]);
+                    if (comment != null)
+                    {
+                        LvList.Comments = comment;
+                    }
                     LeaveList.Add(LvList);
                 }
 
             }
             return PartialView("~/Views/Leave/LeaveReqListPartialView.cshtml", LeaveList.OrderByDescending(x => x.No));
         }
-        
         public PartialViewResult NewLeaveApplication()
         {
             string StaffNo = Session["Username"].ToString();
             NewLeaveApplication NewAppl = new NewLeaveApplication();
-            #region LeaveTypes
-            List<LvTypes> leaveTps = new List<LvTypes>();
 
+            List<LvTypes> leaveTps = new List<LvTypes>();
             string gender = CommonClass.GetEmployeeGender(StaffNo);
             if (string.IsNullOrEmpty(gender.Trim()))
             {
@@ -77,7 +77,8 @@ namespace Latest_Staff_Portal.Controllers
             }
             else
             {
-                string page = "LeaveTypes?$filter=(Gender eq 'Both' or Gender eq '" + gender + "')&format=json";
+                #region LeaveTypes
+                string page = "LeaveTypes?$filter=(Gender eq 'Both' or Gender eq '" + gender + "')&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -97,7 +98,7 @@ namespace Latest_Staff_Portal.Controllers
                 #region ReliverList
                 List<RelieverList> relieverList = new List<RelieverList>();
 
-                string pageReliever = "EmployeeList?&format=json";
+                string pageReliever = "EmployeeList?&$format=json";
 
                 HttpWebResponse httpResponseReliever = Credentials.GetOdataData(pageReliever);
                 using (var streamReader = new StreamReader(httpResponseReliever.GetResponseStream()))
@@ -139,30 +140,13 @@ namespace Latest_Staff_Portal.Controllers
                     }
                 }
                 #endregion
-                #region Campus List
-                List<Campus> Campuses = new List<Campus>();
-                string pageCampus = "DimValues?$select=Code,Name&$filter=Dimension_Code eq 'CAMPUS' and Blocked eq false&$format=json";
-
-                HttpWebResponse httpResponseCampus = Credentials.GetOdataData(pageCampus);
-                using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        Campus CmpList = new Campus();
-                        CmpList.Code = (string)config["Code"];
-                        CmpList.Description = (string)config["Name"];
-                        Campuses.Add(CmpList);
-                    }
-                }
-                #endregion
                 NewAppl = new NewLeaveApplication
                 {
                     LeaveBal = "0",
+                    AllocatedDays = "0",
+                    ReimbDays = "0",
+                    LeaveTaken = "0",
+                    EarnedLeaveDays = "0",
                     ListOfLeaveTypes = leaveTps.Select(x =>
                                          new SelectListItem()
                                          {
@@ -175,10 +159,10 @@ namespace Latest_Staff_Portal.Controllers
                                              Text = x.Name,
                                              Value = x.No
                                          }).ToList(),
-                    ListofCampus = Campuses.Select(x =>
+                    ListOfResponsibility = RespCList.Select(x =>
                                                new SelectListItem()
                                                {
-                                                   Text = x.Description,
+                                                   Text = x.Name,
                                                    Value = x.Code
                                                }).ToList()
                 };
@@ -190,30 +174,12 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
+                string StaffNo = Session["Username"].ToString();
+                decimal[] s = CommonClass.GetLeaveBal(StaffNo, LvType);
                 LeaveBalance newBal = new LeaveBalance();
 
-                #region LeaveBal
                 List<DropDownBalance> Lvbal = new List<DropDownBalance>();
-                string StaffNo = Session["Username"].ToString();
-                string page = "HRLeaveLedger?$filter=EmployeeNo eq '" + StaffNo + "' and LeaveType eq '" + LvType + "'&format=json";
-
-                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                int availableDays = 0;
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-
-                    foreach (JObject config in details["value"])
-                    {
-                        availableDays = availableDays + (int)config["NoofDays"];
-                    }
-                }
-                #endregion
-
-                for (int i = 1; i <= availableDays; i++)
+                for (int i = 1; i <= s[4]; i++)
                 {
                     DropDownBalance NewV = new DropDownBalance();
                     NewV.Code = i.ToString();
@@ -222,7 +188,11 @@ namespace Latest_Staff_Portal.Controllers
 
                 newBal = new LeaveBalance
                 {
-                    Balance = availableDays.ToString(),
+                    AllocatedDays = s[0].ToString(),
+                    CarryForawrd = s[1].ToString(),
+                    ReimbDays = s[2].ToString(),
+                    LeaveTaken = s[3].ToString(),
+                    Balance = s[4].ToString(),
                     ListOfDays = Lvbal.Select(x =>
                                      new SelectListItem()
                                      {
@@ -297,9 +267,55 @@ namespace Latest_Staff_Portal.Controllers
         public PartialViewResult LeaveDocumentViewView(string DocNo)
         {
             string StaffNo = Session["Username"].ToString();
+
+            #region ReliverList
+            List<RelieverList> relieverList = new List<RelieverList>();
+
+            string pageReliever = "EmployeeList?&$format=json";
+
+            HttpWebResponse httpResponseReliever = Credentials.GetOdataData(pageReliever);
+            using (var streamReader = new StreamReader(httpResponseReliever.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+                foreach (JObject config in details["value"])
+                {
+                    if ((string)config["First_Name"] != "")
+                    {
+                        RelieverList Rlist = new RelieverList();
+                        Rlist.No = (string)config["No"];
+                        Rlist.Name = (string)config["First_Name"] + " " + (string)config["Middle_Name"] + " " + (string)config["Last_Name"];
+                        relieverList.Add(Rlist);
+                    }
+                }
+
+            }
+            #endregion
+            #region Responsibility
+            List<RespCenter> RespCList = new List<RespCenter>();
+            string pageResC = "ResponsibilityCenters?$format=json";
+
+            HttpWebResponse httpResponseResC = Credentials.GetOdataData(pageResC);
+            using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
+                {
+                    RespCenter RCList = new RespCenter();
+                    RCList.Code = (string)config["Code"];
+                    RCList.Name = (string)config["Name"];
+                    RespCList.Add(RCList);
+                }
+            }
+            #endregion
             LeaveReqList LeaveDoc = new LeaveReqList();
 
-            string page = "HRLeaveRequisition?$filter=No eq '" + DocNo + "'&format=json";
+            string page = "HRLeaveRequisition?$filter=No eq '" + DocNo + "'&$format=json";
 
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -318,15 +334,66 @@ namespace Latest_Staff_Portal.Controllers
                     LeaveDoc.Starting_Date = Convert.ToDateTime((string)config["Starting_Date"]).ToString("dd/MM/yyyy");
                     LeaveDoc.End_Date = Convert.ToDateTime((string)config["End_Date"]).ToString("dd/MM/yyyy");
                     LeaveDoc.Return_Date = Convert.ToDateTime((string)config["Return_Date"]).ToString("dd/MM/yyyy");
-                    LeaveDoc.Reliever = (string)config["Reliever_Name"];
-                    LeaveDoc.Department = (string)config["Department_Code"];
+                    LeaveDoc.Reliever = (string)config["Reliever_No"];
+                    LeaveDoc.Responsibility = (string)config["Responsibility_Center"];
                     LeaveDoc.Remarks = (string)config["Purpose"];
                     LeaveDoc.Status = (string)config["Status"];
                 }
 
             }
-            return PartialView("~/Views/Leave/LeaveDocumentView.cshtml", LeaveDoc);
+
+            #region LeaveBal
+            List<DropDownBalance> Lvbal = new List<DropDownBalance>();
+            string pageLvBal = "HRLeaveLedger?$filter=EmployeeNo eq '" + StaffNo + "' and LeaveType eq '" + LeaveDoc.Leave_Type + "'&$format=json";
+
+            HttpWebResponse httpResponseLvBal = Credentials.GetOdataData(pageLvBal);
+            int availableDays = 0;
+            using (var streamReader = new StreamReader(httpResponseLvBal.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+
+                var details = JObject.Parse(result);
+
+
+                foreach (JObject config in details["value"])
+                {
+                    availableDays = availableDays + (int)config["NoofDays"];
+                }
+            }
+            #endregion
+
+            for (int i = 1; i <= availableDays; i++)
+            {
+                DropDownBalance NewV = new DropDownBalance();
+                NewV.Code = i.ToString();
+                Lvbal.Add(NewV);
+            }
+
+            LeaveDocumentDetails lvDoc = new LeaveDocumentDetails
+            {
+                DocumentDetails = LeaveDoc,
+                ListOfRelievers = relieverList.Select(x =>
+                                         new SelectListItem()
+                                         {
+                                             Text = x.Name,
+                                             Value = x.No
+                                         }).ToList(),
+                ListOfResponsibility = RespCList.Select(x =>
+                                           new SelectListItem()
+                                           {
+                                               Text = x.Name,
+                                               Value = x.Code
+                                           }).ToList(),
+                ListOfDays = Lvbal.Select(x =>
+                                     new SelectListItem()
+                                     {
+                                         Text = x.Code,
+                                         Value = x.Code
+                                     }).ToList()
+            };
+            return PartialView("~/Views/Leave/LeaveDocumentView.cshtml", lvDoc);
         }
+        [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult SendLeaveAppForApproval(string DocNo)
         {
             try
@@ -339,16 +406,43 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
         }
+        [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult CancelLeaveAppForApproval(string DocNo)
         {
             try
             {
-                Credentials.ObjNav.HRCancelLeaveApplication_735371815(DocNo);
+                //Credentials.ObjNav.HRCancelLeaveApplication_735371815(DocNo);
                 return Json(new { message = "Leave Application approval cancelled Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult UpdateLeaveApplication(LeaveReqList NewApp)
+        {
+            try
+            {
+                string Remarks = "";
+                if (NewApp.Remarks != null)
+                {
+                    Remarks = NewApp.Remarks;
+                }
+                DateTime startDate = DateTime.ParseExact(NewApp.Starting_Date.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                DateTime endDate = DateTime.ParseExact(NewApp.End_Date.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                DateTime returndate = DateTime.ParseExact(NewApp.Return_Date.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                string DocNo = Credentials.ObjNav.HRLeaveApplicationUpdate(NewApp.No, NewApp.Leave_Type, Convert.ToDecimal(NewApp.Applied_Days), startDate, endDate,
+                    returndate, Remarks, NewApp.Reliever, NewApp.Responsibility);
+
+
+                Credentials.ObjNav.HRLeaveApprovalRequest(DocNo);
+                return Json(new { message = "Leave Application Updated and send for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
     }

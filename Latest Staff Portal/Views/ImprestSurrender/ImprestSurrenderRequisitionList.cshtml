@@ -14,6 +14,11 @@
         font-size: 12px;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div class="card pre-scrollable">
     <div class="card-title">Imprest Surrender List</div>
     <hr />
@@ -23,6 +28,7 @@
         <a href="#" onclick="SendDocForApproval();" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send Approval Request</a>
         <a href="#" onclick="CancelDocForApproval();" class="btn btn-primary BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
         <a href="#" onclick="ViewApprovalTrail();" class="btn btn-danger BtnPadding disabled" id="AppTrail">Document Approval Trail</a>
+        <a href="#" onclick="ViewDocComments();" class="btn btn-primary BtnPadding disabled" id="AppComments">Document Comments</a>
         <hr />
         <div id="divRegList"></div>
     </div>
@@ -164,7 +170,8 @@
             var row = $('#datatable-buttons tr.selectedTableRow');
             var Status = row.find("td").eq(7).html().trim();
             $("#ViewDoc").removeClass("disabled");
-            if (Status == "Pending") {                
+            $("#AppComments").removeClass("disabled");
+            if (Status == "Pending") {
                 $("#SendDocAppr").removeClass("disabled");
                 $("#CancelDocAppr").addClass("disabled");
                 $("#AppTrail").addClass("disabled");
@@ -206,9 +213,9 @@
             processData: false,
             url: '/ImprestSurrender/SendImprestSurrenderForApproval',
             success: function (data) {
-                HideProgress();
-                LoadImprestReqList();
                 if (data.success == true) {
+                    HideProgress();
+                    LoadImprestReqList();
                     DiableButtons();
                     HideProgress();
                     Swal.fire('Success', data.message, 'success');
@@ -239,9 +246,9 @@
             processData: false,
             url: '/ImprestSurrender/CancelImprestSurrenderForApproval',
             success: function (data) {
-                HideProgress();
-                LoadImprestReqList();
                 if (data.success == true) {
+                    HideProgress();
+                    LoadImprestReqList();
                     DiableButtons();
                     Swal.fire('Success', data.message, 'success');
                 }
@@ -291,6 +298,30 @@
     }
     var DisplayAlert = function (msg) {
         Swal.fire(msg);
+    }
+    var ViewDocComments = function () {
+        $("#labelF").text("Document Comments");
+        ShowProgress();
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '/Common/DocumentApprovalComments',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
     }
 </script>
 

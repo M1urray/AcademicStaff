@@ -1,0 +1,52 @@
+﻿@model Latest_Staff_Portal.ViewModel.StaffClaimLinesList
+<div class="table-responsive">
+    <table class="table table-centered table-nowrap" id="StaffClaimLines">
+        <thead>
+            <tr>
+                <th>Advance Type</th>
+                <th>Account No</th>
+                <th>Account Name</th>
+                <th>Description</th>
+                <th style="text-align:center">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.ListOfStaffClaimLines != null && Model.ListOfStaffClaimLines.Count() > 0)
+                {
+                    foreach (var item in Model.ListOfStaffClaimLines)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AdvanceType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Item)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemDesc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemDesc2)
+                            </td>
+                            <td style="text-align:center">
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="color:red">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+

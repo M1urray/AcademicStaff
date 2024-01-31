@@ -16,7 +16,7 @@ using System.Web.Mvc;
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
-    [CustomAuthorization(Role = "ALLUSERS")]
+    [CustomAuthorization(Role = "FULLTIME")]
     public class ViewDocumentController : Controller
     {
         // GET: ViewDocument
@@ -26,8 +26,9 @@ namespace Latest_Staff_Portal.Controllers
             #region Years
             List<YearCodes> yearCodes = new List<YearCodes>();
 
-            string page = "PrPayrollPeriods?$select=PeriodYear&format=json";
             //string page = "PrPayrollPeriods?$select=PeriodYear&$filter=Closed eq true&format=json";
+            string page = "PrPayrollPeriods?$select=PeriodYear&$format=json";
+
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
@@ -62,8 +63,8 @@ namespace Latest_Staff_Portal.Controllers
                 #region Months
                 List<MonthCodes> Months = new List<MonthCodes>();
 
-                string page = "PrPayrollPeriods?$select=PeriodMonth&$filter=PeriodYear eq " + Year + "&format=json";// and Closed eq true&format=json";
-
+                string page = "PrPayrollPeriods?$select=PeriodMonth&$filter=PeriodYear eq " + Year + " and Closed eq true&format=json";
+                //string page = "PrPayrollPeriods?$select=PeriodMonth&$filter=PeriodYear eq " + Year + "&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -149,7 +150,9 @@ namespace Latest_Staff_Portal.Controllers
             #region YearList
             List<YearCodes> yearCodes = new List<YearCodes>();
 
-            string page = "prTransactionList?$select=Period_Year&format=json";
+            //string page = "prTransactionList?$select=Period_Year&format=json";
+            //string page = "PrPayrollPeriods?$select=PeriodYear&$filter=Closed eq true&format=json";
+            string page = "PrPayrollPeriods?$select=PeriodYear&$format=json";
 
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -160,7 +163,7 @@ namespace Latest_Staff_Portal.Controllers
                 foreach (JObject config in details["value"])
                 {
                     YearCodes Years = new YearCodes();
-                    Years.YList = (string)config["Period_Year"];
+                    Years.YList = (string)config["PeriodYear"];
                     yearCodes.Add(Years);
                 }
             }
@@ -196,36 +199,33 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     string _filename = (StaffNo).Replace(@"/", @"");
 
-                    int month = 0, year = 0;
-                    if (Month != null)
+                    string month = "";
+                    if (Month.Length == 1)
                     {
-                        month = Convert.ToInt32(Month);
+                        month = "0" + Month;
                     }
-                    if (Year != null)
+                    else
                     {
-                        year = Convert.ToInt32(Year);
+                        month = Month;
                     }
 
                     var period = month + "/01/" + Year;
                     //var period = "01/" + month + "/" + Year;
                     DateTime Periodfilter = DateTime.ParseExact(period, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    Credentials.ObjNav.GeneratePaySlipReport(StaffNo, month, year, "OLDPAYSLIP-" + _filename + ".pdf");
+                    Credentials.ObjNav.GeneratePaySlipReport(StaffNo, Convert.ToDateTime(period), "OLDPAYSLIP-" + _filename + ".pdf");
                     string OldPayslip = "OLDPAYSLIP-" + _filename + ".pdf";
                     filename = "PAYSLIP-" + _filename + ".pdf";
                     string FromPath = Credentials.fileSourcePath + OldPayslip;
                     string TPath = Credentials.fileSourcePath + filename;
                     addPassword(FromPath, TPath, StaffIDNo);
-
-                    string DestPath = Server.MapPath("~/Downloads/");
-                    CommonClass.MoveFile(filename, DestPath);
-                    string DestinationPath = Server.MapPath("~/Downloads/" + filename);
-                    CommonClass.MoveFile(filename, DestinationPath);
-
+                    string fileDestinationPath = Server.MapPath("~/Downloads/");
+                    CommonClass.MoveFile(filename, fileDestinationPath);
+                    string DestinationPath = fileDestinationPath + filename;
                     System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
                     if (file.Exists)
                     {
                         success = true;
-                        message = Credentials.fileDownLoads + filename;
+                        message = Credentials.fileDownloads + filename;
                     }
                     else
                     {
@@ -277,17 +277,14 @@ namespace Latest_Staff_Portal.Controllers
                 Credentials.ObjNav.GeneratePNineReport(StaffNo, period, "P9-" + _filename + ".pdf");
 
                 filename = "P9-" + _filename + ".pdf";
-
-                string DestPath = Server.MapPath("~/Downloads/");
-                CommonClass.MoveFile(filename, DestPath);
-                string DestinationPath = Server.MapPath("~/Downloads/" + filename);
-                CommonClass.MoveFile(filename, DestinationPath);
-
+                string fileDestinationPath = Server.MapPath("~/Downloads/");
+                CommonClass.MoveFile(filename, fileDestinationPath);
+                string DestinationPath = fileDestinationPath + filename;
                 System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
                 if (file.Exists)
                 {
                     success = true;
-                    message = Credentials.fileDownLoads + filename;
+                    message = Credentials.fileDownloads + filename;
                 }
                 else
                 {
@@ -295,38 +292,6 @@ namespace Latest_Staff_Portal.Controllers
                     message = "File Not Found";
                 }
                 return Json(new { message = message, success, view }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
-            }
-        }
-        [HttpPost]
-        public JsonResult GenerateAppraisalReport(string DocNo)
-        {
-            try
-            {
-                bool success = false;
-                string message = "";
-                Credentials.ObjNav.GenerateAppraisalPrintout(DocNo, "APPRAISAL-" + DocNo.Replace("/", "") + ".pdf");
-
-                string filename = "APPRAISAL-" + DocNo.Replace(" / ", "") + ".pdf";
-                CommonClass.MoveFileDev(filename);
-                string DestinationPath = Server.MapPath("~/Downloads/" + filename);
-                CommonClass.MoveFile(filename, DestinationPath);
-
-                System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
-                if (file.Exists)
-                {
-                    success = true;
-                    message = Credentials.fileDownLoads + filename;
-                }
-                else
-                {
-                    success = false;
-                    message = "File Not Found";
-                }
-                return Json(new { message = message, success }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

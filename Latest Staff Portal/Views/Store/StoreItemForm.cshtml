@@ -1,4 +1,4 @@
-﻿@model Latest_Staff_Portal.ViewModel.LocationList
+﻿@model Latest_Staff_Portal.ViewModel.NewStoreLine
 <style>
     .ui-front {
         z-index: 2000 !important;
@@ -16,8 +16,8 @@
 <div class="bg-soft-dark" style="color:black">
     <div class="row" id="DivService">
         <div class="col-md-6">
-            Search Item
-            <input type="text" class="form-control" id="IdItems" />
+            Store Item
+            @Html.DropDownListFor(model => model.Code, Model.ListOfItems, "----", new { @class = "form-control", @id = "ddlItems" })
         </div>
         <div class="col-md-6">
             Quantity
@@ -46,51 +46,10 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        GetItemList();
-        $("#ddlLocation").select2({
+        $("#ddlItems,#ddlLocation").select2({
             width: '100%'
         });
-    });
-    var GetItemList = function () {
-        ShowProgress();
-        var url;
-        url = '@Url.Action("GetItemList", "Common")',
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: url,
-            success: function (data) {
-                if (data.success == true) {
-                    HideProgress();
-                }
-                else {
-                    Swal.fire('Warning', data.message, 'warning');
-                    HideProgress();
-                }
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
-    }
-    $(function () {
-        $('#IdItems').autocomplete({
-            source: function (request, response) {
-                ShowProgress();
-                $.getJSON('@Url.Action("GetItem", "Common")', { Item: request.term },
-                    function (data) {
-                        response(data.ItemList);
-                        appendTo: "#IdItems"
-                    });
-                HideProgress();
-            },
-            minLength: 1,
-        });
-    });
+    });  
 
     function functionDecimal(evt, val) {
         try {

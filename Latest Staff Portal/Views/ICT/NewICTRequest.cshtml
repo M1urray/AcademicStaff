@@ -1,4 +1,10 @@
 ﻿@model Latest_Staff_Portal.ViewModel.NewICTRequisition
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+</style>
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
@@ -64,6 +70,60 @@
     </div>
 </div>
 <hr />
+<b>Requsition Line(s)</b>
+<div class="pre-scrollable">
+    <table id="tableReqLines" width="100%" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th style="width:85%">Item Description</th>
+                <th style="width:10%">Quantity</th>
+                <th style="width:5%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <textarea id="txtDesc" class="form-control"></textarea>
+                </td>
+                <td>
+                    <input type="text" id="txtQnty" class="form-control" />
+                </td>
+                <td style="vertical-align: middle" align="right">
+                    <input type="button" class="btn btn-danger BtnPadding" onclick="Remove(this);" value="Remove" />
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" style="text-align:right">
+                    <input type="button" class="btn btn-primary pull-right BtnPadding" value="Add Line" onclick="AddALineRow();" />
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<hr />
+<b>Attachment(s)</b>
+<table id="tableAttachments" width="100%" class="table table-bordered table-hover">
+    <tbody>
+        <tr>
+            <td>
+                <input type="file" id="fileAttachment" class="form-control" required="" />
+            </td>
+            <td style="vertical-align: middle" align="right">
+                <input type="button" class="btn btn-danger BtnPadding" onclick="AttachmentRemove(this);" value="Remove" />
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2" style="text-align:right">
+                <input type="button" class="btn btn-primary pull-right BtnPadding" value="Add Attachment" onclick="AddAttachmentRow();" />
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<hr />
 <div align="center">
     <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitRequisition();" />
 </div>
@@ -87,6 +147,82 @@
             width: '100%'
         });
     });
+    function Remove(button) {
+        var count = $('#tableReqLines > TBODY > tr').length;
+        if (count > 1) {
+            var row = $(button).closest("TR");
+
+            //Get the reference of the Table.
+            var table = $("#tableReqLines")[0];
+            //Delete the Table row using it's Index.
+            table.deleteRow(row[0].rowIndex);
+        }
+    };
+    var AddALineRow = function () {
+        var tBody = $("#tableReqLines > TBODY")[0];
+
+        var row = tBody.insertRow(-1);
+
+        //Add textarea cell.
+        cell = $(row.insertCell(-1));
+        var AddtextArea = $("<textarea />");
+        AddtextArea.uniqueId("txtDesc");
+        AddtextArea.addClass("form-control");
+        cell.append(AddtextArea);
+
+        //Add textbox cell.
+        cell = $(row.insertCell(-1));
+        var AddtextBox = $("<input />");
+        AddtextBox.attr("type", "text");
+        AddtextBox.uniqueId("txtQnty");
+        AddtextBox.addClass("form-control");
+        cell.append(AddtextBox);
+
+        //Add Button cell.
+        cell = $(row.insertCell(-1));
+        cell.attr("align", "right");
+        var btnRemove = $("<input />");
+        btnRemove.attr("type", "button");
+        btnRemove.addClass("btn btn-danger BtnPadding");
+        btnRemove.attr("onclick", "Remove(this);");
+        btnRemove.val("Remove");
+        cell.append(btnRemove);
+    };
+    function AttachmentRemove(button) {
+        var count = $('#tableAttachments > TBODY > tr').length;
+        if (count > 1) {
+            var row = $(button).closest("TR");
+
+            //Get the reference of the Table.
+            var table = $("#tableAttachments")[0];
+            //Delete the Table row using it's Index.
+            table.deleteRow(row[0].rowIndex);
+        }
+    };
+    var AddAttachmentRow = function () {
+        var tBody = $("#tableAttachments > TBODY")[0];
+
+        var row = tBody.insertRow(-1);
+
+        //Add file cell.
+        cell = $(row.insertCell(-1));
+        var Addfile = $("<input />");
+        Addfile.attr("type", "file");
+        Addfile.attr("required", "");
+        Addfile.uniqueId("fileAttachment");
+        Addfile.addClass("form-control");
+        cell.append(Addfile);
+
+        //Add Button cell.
+        cell = $(row.insertCell(-1));
+        cell.attr("align", "right");
+        var btnRemove = $("<input />");
+        btnRemove.attr("type", "button");
+        btnRemove.addClass("btn btn-danger BtnPadding");
+        btnRemove.attr("onclick", "AttachmentRemove(this);");
+        btnRemove.val("Remove");
+        cell.append(btnRemove);
+    };
 </script>
 
 

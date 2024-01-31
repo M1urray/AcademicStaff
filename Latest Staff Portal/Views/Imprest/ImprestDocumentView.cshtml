@@ -18,6 +18,11 @@
         font-size: 12px;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div style="background-color: black;">
     <a href="#" onclick="ImprestRequisitionLink();" style="color:yellow"><<< Back To Imprest Requisition List</a>
 </div>
@@ -45,7 +50,7 @@
                 @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtStatus" })
             </div>
             <div class="col-md-6">
-                <b>Institute</b>
+                <b>Campus</b>
                 @Html.TextBoxFor(m => m.CampusName, new { @class = "form-control ", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtCampus" })
                 <select class="form-control" id="ddlCampus" name="ddlCampus">
                 </select>
@@ -88,19 +93,19 @@
             <b>Imprest Lines</b>
             <hr />
             <div id="divImpLines"></div>
-        </div>
-        <hr style="border:1px solid black" />
-        <div class="row">
-            <div class="col-md-12">
-                <b>Attachments</b>
-                <div id="divAttachDocs"></div>
+            <hr style="border:1px solid black" />
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Attachments</b>
+                    <div id="divAttachDocs"></div>
+                </div>
             </div>
+            <hr style="border:1px solid black" />
+            <div align="right" id="DivSendForApproval">
+                <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval();" />
+            </div>
+            <hr />
         </div>
-        <hr style="border:1px solid black" />
-        <div align="right" id="DivSendForApproval">
-            <input type="button" class="btn btn-danger BtnPadding" value="Send For Approval >>>" onclick="SendDocForApproval();" />
-        </div>
-        <hr />
     </div>
 </div>
 @*//////////////////////Modal////////////////////////////*@
@@ -154,7 +159,15 @@
         else {
             $("#HideEditButton").hide();
             $("#HideLineButton").hide();
-            $("#DivSendForApproval").hide();
+            $("#DivSendForApproval").hide()
+        }
+        var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
+        if (Successmsg != "") {
+            Swal.fire('Success', Successmsg, 'success',true);
+            $.ajax({
+                type: "POST",
+                url: "/Common/NullibySessions"
+            });
         }
     });
     var LoadImprestDocumentLines = function (DocNo,Status) {
@@ -202,7 +215,7 @@
     };
     var ImprestRequisitionLink = function () {
         ShowProgress();
-        window.location = '@Url.Action("ImprestRequisitionList", "Imprest")';
+        window.location = '@Url.Action("ImprestRequisigtionList", "Imprest")';
     }
     var EditDocument = function () {
         if ($("#btnEdit").val() == "Edit Header") {
@@ -322,7 +335,7 @@
             ShowProgress();
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("UpdateImprestHeader", "Imprest")',
+                url:'@Url.Action("UpdateImprestHeader", "Imprest")',
                 data: JSON.stringify({ DocNo: DocNo, imprestHeader: ImprestHeader }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -370,58 +383,60 @@
     });
     };
     var SaveAttachmentFile = function () {
-    debugger
-    var DocNo = `@Model.No`;
-    var filename; var base64String; var filetype;
+        var DocNo = `@Model.No`;
+        var filename; var base64String; var filetype;
         var files = document.getElementById('ImprestfileAttachment').files;
-    if (files.length) {
-        var file = files[0];
-        var blob = file.slice();
-        filetype = file.type;
-        filename = file.name;
-        var reader = new FileReader();
-        reader.onloadend = function (evt) {
-            if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-                var cont = evt.target.result
-                base64String = getB64Str(cont);
-                ShowProgress();
-                //Send the JSON array to Controller using AJAX.
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("SaveAttachedFile", "Common")',
-                    data: JSON.stringify({ DocNo: DocNo, base64Upload: base64String, fileName: filename, Extn: filetype, TableID: 70135469 }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.success) {
+        if (files.length) {
+            ShowProgress();
+            var file = files[0];
+            var blob = file.slice();
+            filetype = file.type;
+            filename = file.name;
+            var reader = new FileReader();
+            reader.onloadend = function (evt) {
+                if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+                    var cont = evt.target.result
+                    base64String = getB64Str(cont);
+                    //Send the JSON array to Controller using AJAX.
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("SaveAttachedFile", "Common")',
+                        data: JSON.stringify({ DocNo: DocNo, base64Upload: base64String, fileName: filename, Extn: filetype, TableID: 70135469 }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        traditional: true,
+                        async: false,
+                        cache: false,
+                        success: function (data) {
+                            if (data.success) {
+                                HideProgress();
+                                GetDocumentAttachments();
+                                $("#myModal").modal("hide");
+                                Swal.fire('Success', data.message, 'success');
+                            }
+                            else {
+                                Swal.fire('Warning', data.message, 'warning');
+                                HideProgress();
+                            }
+                        },
+                        error: function (err) {
                             HideProgress();
-                            GetDocumentAttachments();
-                            $("#myModal").modal("hide");
-                            Swal.fire('Success', data.message, 'success');
+                            Swal.fire('Warning', err.Message, 'warning');
                         }
-                        else {
-                            Swal.fire('Warning', data.message, 'warning');
-                            HideProgress();
-                        }
-                    },
-                    error: function (err) {
-                        HideProgress();
-                        Swal.fire('Warning', err, 'warning');
-                    }
-                });
-            }
-        };
-        reader.readAsArrayBuffer(blob);
-    }
+                    });
+                }
+            };
+            reader.readAsArrayBuffer(blob);
+        }
     };
     function getB64Str(buffer) {
-    var binary = '';
-    var bytes = new Uint8Array(buffer);
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
+        var binary = '';
+        var bytes = new Uint8Array(buffer);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
     }
     var ViewAttachment = function (tbl, No, Id,fName, ext) {
         $.ajaxSetup({ cache: false });
@@ -436,6 +451,7 @@
             processData: false,
             data: JSON.stringify({ tblID: tbl, No: No, ID: Id, fileName: fName, ext: ext }),
             success: function (data) {
+                console.log(data.message);
                 if (data.success == true) {
                     if (data.view == true) {
                         var viewer = $("#modalAttachmentBody");
@@ -449,18 +465,20 @@
                         HideProgress();
                     }
                     else {
-                        window.location = '@Url.Action("AttachmentDownload", "Common")?fileName=' + data.message;
+                        window.location ='@Url.Action("AttachmentDownload", "Common")?fileName=' + data.message;
                         Swal.fire('Success', 'Document Downloaded successfully', 'success');
                         HideProgress();
                     }
                 }
                 else {
                     HideProgress();
+                    console.log(data.message);
                     Swal.fire('Warning', data.message, 'warning');
                 }
             },
             error: function (err) {
                 HideProgress();
+                console.log(err.responseText);
                 Swal.fire('Warning', err, 'warning');
             }
         });
@@ -546,7 +564,7 @@
                 datatype: "json",
                 contentType: "application/json; charset = utf-8",
                 processData: false,
-                url: '/Imprest/NewImprestLine',
+                url: '@Url.Action("NewImprestLine", "Imprest")',
                 success: function (data) {
                     $("#modalBody").html(data);
                     HideProgress();
@@ -599,7 +617,7 @@
             ShowProgress();
             $.ajax({
                 type: "POST",
-                url: "/Imprest/SubmitImprestLine",
+                url:'@Url.Action("SubmitImprestLine", "Imprest")',
                 data: JSON.stringify({ DocNo: DocNo, imprestHeader: ImprestHeader, imprestLine: ImpLine }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -640,7 +658,7 @@
                 ShowProgress();
                 $.ajax({
                     type: "POST",
-                    url: "/Imprest/RemoveImprestLine",
+                    url:'@Url.Action("RemoveImprestLine", "Imprest")',
                     data: JSON.stringify({ DocNo: DocNo, LnNo: LnNo }),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -682,17 +700,22 @@
             data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '/Imprest/SendImprestAppForApproval',
+            url:'@Url.Action("SendImprestAppForApproval", "Imprest")',  
             success: function (data) {
                 if (data.success == true) {
-                    HideProgress();
-                    HideHeaderEditInput();
-                    $("#txtStatus").val("Pending Approval");
-                    $("#HideEditButton").hide();
-                    $("#HideLineButton").hide();
-                    $("#DivSendForApproval").hide();
-                    LoadImprestDocumentLines(`@Model.No`,'Pending Approval');
-                    Swal.fire('Success', data.message, 'success');
+                    if (data.LogOut == true) {
+                        window.location = data.message;
+                    }
+                    else {
+                        HideProgress();
+                        HideHeaderEditInput();
+                        LoadImprestDocumentLines(`@Model.No`, 'Pending Approval');
+                        $("#txtStatus").val("Pending Approval");
+                        $("#HideEditButton").hide();
+                        $("#HideLineButton").hide();
+                        $("#DivSendForApproval").hide();
+                        Swal.fire('Success', data.message, 'success');
+                    }
                 }
                 else {
                     HideProgress();

@@ -26,50 +26,28 @@ namespace Latest_Staff_Portal.ViewModel
         public string CompanyEmail { get; set; }
         public string PersonalEmail { get; set; }
         public string DateOfJoin { get; set; }
-        public string ContractStartDate { get; set; }
-        public string ContractEndtDate { get; set; }
         public string ProbationDate { get; set; }
-        public string ProbationEndDate { get; set; }
         public string PenSchemeJoinDate { get; set; }
         public string JobTitle { get; set; }
         public string EmpStatus { get; set; }
         public string JobCat { get; set; }
         public string Department { get; set; }
         public string Campus { get; set; }
-        public string School { get; set; }
         public string Bank { get; set; }
         public string Branch { get; set; }
         public string AccountNo { get; set; }
         public string PinNo { get; set; }
         public string NSSFNo { get; set; }
         public string NHIFNo { get; set; }
-        public int NotfCount { get; set; }
-        public ListOfInternalMemos ListInternalMemos { get; set; }
+        public string AllocatedDays { get; set; }
+        public string CarryForawrd { get; set; }
+        public string ReimbDays { get; set; }
+        public string LeaveTaken { get; set; }
+        public string EarnedLeaveDays { get; set; }
+        public string LeaveBal { get; set; }
     }
     public class EmpInitial
     {
         public string Code { get; set; }
-    }
-    public class InternalMemos
-    {
-        public string description { get; set; }
-        public string Remarks { get; set; }
-        public string Date { get; set; }
-    }
-    public class ListOfInternalMemos
-    {
-        public List<InternalMemos> ListInternalMemos { get; set; }
-        public List<DocumentAttachment> ListOfIntMemos { get; set; }        
-        public bool hasFiles { get; set; }
-    }
-
-    public class EmpQualification
-    {
-        public string Qualification { get; set; }
-        public string FromDate { get; set; }
-        public string ToDate { get; set; }
-        public string Description { get; set; }
-        public string Institute { get; set; }
-        public string Specialization { get; set; }
     }
 }

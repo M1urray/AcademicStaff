@@ -1,0 +1,243 @@
+﻿
+@{
+    ViewBag.Title = "ProtocolEthicalReview";
+    Layout = "~/Views/Shared/Sitemaster.cshtml";
+}
+<style>
+    thead {
+        background-color: black;
+        color: white;
+    }
+
+    .selectedTableRow {
+        background-color: #74788d;
+        color: white;
+    }
+
+    .BtnPadding {
+        padding: 1px;
+        font-size: 12px;
+    }
+</style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
+<div class="card pre-scrollable">
+    <div class="card-title">Protocol Ethical Review List</div>
+    <div class="card-body">
+        <div id="divEthReview"></div>
+    </div>
+</div>
+@*//////////////////////Modal////////////////////////////*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title"><label id="labelF"></label></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/ShowProgression.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadEthicalReview();
+    });
+    var LoadEthicalReview = function () {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "GET",
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: "/Sponsorship/ProposalEthicalReviewList",
+            success: function (data) {
+                $("#divEthReview").html(data);
+                HideProgress();
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    }
+    var ReviewProposal = function (DocNo,ProNo) {
+        $("#labelF").text("Protocol Ethical Review Document");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo, PropNo:ProNo }),
+            url: '/Sponsorship/EthicalReviewDocument',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                GetImportantDownloads('50053', DocNo);
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var GetImportantDownloads = function (TableID, DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ DocNo: DocNo, TableID: TableID }),
+            url: "/Common/DocumentAttachmentsToApprove",
+            success: function (data) {
+                HideProgress();
+                $("#divAttachDocs").html(data);
+            },
+            error: function () {
+                HideProgress();
+                Swal.fire("There is some problem to process your request. Please try after some time");
+            }
+        });
+    };
+    var ViewAttachment = function (tbl, No, Id, fName, ext) {
+        $.ajaxSetup({ cache: false });
+        ShowProgress();
+        $.ajax({
+            cache: false,
+            url: '/Common/DocumentAttachmentview',
+            type: "POST",
+            datatype: "json",
+            cache: false,
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            data: JSON.stringify({ tblID: tbl, No: No, ID: Id, fileName: fName, ext: ext }),
+            success: function (data) {
+                if (data.success == true) {
+                    if (data.view == true) {
+                        var viewer = $("#modalAttachmentBody");
+                        if (ext == "pdf") {
+                            PDFObject.embed("data:application/" + ext + ";base64," + data.message + "", viewer);
+                        }
+                        if (ext == "png" || ext == "jpg") {
+                            PDFObject.embed("data:image/" + ext + ";base64," + data.message + "", viewer);
+                        }
+                        $("#myModalAttachment").modal("show");
+                        HideProgress();
+                    }
+                    else {
+                        window.location = '/Common/AttachmentDownload?fileName=' + data.message;
+                        Swal.fire('Success', 'Document Downloaded successfully', 'success');
+                        HideProgress();
+                    }
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Warning', data.message, 'warning');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    };
+    var SubmitConceptReview = function (DocNo) {
+        if (DocNo == "") {
+            Swal.fire('Warning', "Review Document No cannot be empty", 'warning');
+            return;
+        }
+        else {
+            var Cr1 = $("#txtCr1").val().replace(/(\r\n|\n|\r)/gm, " ");
+            var Cr2 = $("#txtCr2").val().replace(/(\r\n|\n|\r)/gm, " ");
+            var Cr3 = $("#txtCr3").val().replace(/(\r\n|\n|\r)/gm, " ");
+            var Cr4 = $("#txtCr4").val().replace(/(\r\n|\n|\r)/gm, " ");
+            var Cr5 = $("#txtCr5").val().replace(/(\r\n|\n|\r)/gm, " ");
+            var Cr6 = $("#txtCr6").val().replace(/(\r\n|\n|\r)/gm, " ");
+            var Cr7 = $("#txtCr7").val().replace(/(\r\n|\n|\r)/gm, " ");
+            var Cr8 = $("#txtCr8").val().replace(/(\r\n|\n|\r)/gm, " ");
+            var recomm = $("#Recomm").children("option:selected").val();
+            if (Cr1 == "") {
+                Swal.fire('Warning', "Give Your Remarks for First creteria", 'warning');
+                return;
+            }
+            else if (Cr2 == "") {
+                Swal.fire('Warning', "Give Your Remarks for second creteria", 'warning');
+                return;
+            }
+            else if (Cr3 == "") {
+                Swal.fire('Warning', "Give Your Remarks for third creteria", 'warning');
+                return;
+            }
+            else if (Cr4 == "") {
+                Swal.fire('Warning', "Give Your Remarks for fourth creteria", 'warning');
+                return;
+            }
+            else if (Cr5 == "") {
+                Swal.fire('Warning', "Give Your Remarks for fifth creteria", 'warning');
+                return;
+            }
+            else if (Cr6 == "") {
+                Swal.fire('Warning', "Give Your Remarks for sixth creteria", 'warning');
+                return;
+            }
+            else if (Cr7 == "") {
+                Swal.fire('Warning', "Give Your Remarks for seventh creteria", 'warning');
+                return;
+            }
+            else if (Cr8 == "") {
+                Swal.fire('Warning', "Give Your Remarks for eighth creteria", 'warning');
+                return;
+            }
+            else if (recomm == "") {
+                Swal.fire('Warning', "Select your Recommendation", 'warning');
+                return;
+            }
+            else {
+                ShowProgress();
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    datatype: "json",
+                    contentType: "application/json; charset = utf-8",
+                    processData: false,
+                    data: JSON.stringify({ DocNo: DocNo, Cr1: Cr1, Cr2: Cr2, Cr3: Cr3, Cr4: Cr4, Cr5: Cr5, Cr6: Cr6, Cr7: Cr7, Cr8: Cr8, Recommendation: recomm }),
+                    url: '/Sponsorship/SubmitProposalEthicalReview',
+                    success: function (data) {
+                        if (data.success == true) {
+                            $("#myModal").modal("hide");
+                            HideProgress();
+                            LoadEthicalReview();
+                            Swal.fire('Success', data.message, 'success');
+                        }
+                        else {
+                            HideProgress();
+                            Swal.fire('Warning', data.message, 'warning');
+                        }
+                    },
+                    error: function (err) {
+                        HideProgress();
+                        Swal.fire('Warning', err, 'warning');
+                    }
+                });
+            }
+        }
+    };
+</script>
+
+

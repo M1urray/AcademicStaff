@@ -10,10 +10,15 @@
     }
 
     .BtnPadding {
-        padding: 7px;
+        padding: 1px;
         font-size: 12px;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div class="card pre-scrollable">
     <div class="card-title">Leave Application List</div>
     <div class="card-body">
@@ -22,6 +27,7 @@
         <a href="#" onclick="SendLeaveDocForApproval();" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send Approval Request</a>
         <a href="#" onclick="CancelLeaveDocForApproval();" class="btn btn-danger BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
         <a href="#" onclick="ViewApprovalTrail();" class="btn btn-primary BtnPadding disabled" id="AppTrail">Document Approval Trail</a>
+        <a href="#" onclick="ViewDocComments();" class="btn btn-danger BtnPadding disabled" id="AppComments">Document Comments</a>
         <hr />
         <div id="divLeaveRegList"></div>
     </div>
@@ -49,27 +55,22 @@
     $(document).ready(function () {
         LoadLeaveReqList();
     });
-    function LoadLeaveReqList() {
+    var LoadLeaveReqList = function () {
         ShowProgress();
         $.ajax({
-            url: '@Url.Action("LeaveRequisitionListPartialView", "Leave")',
-            type: "POST",
-            datatype: "json",
-            cache: false,
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            async: false,
+            async: true,
             type: "GET",
             dataType: 'HTML',
             contentType: false,
             processData: false,
+            url: '@Url.Action("LeaveRequisitionListPartialView", "Leave")',
             success: function (data) {
                 $("#divLeaveRegList").html(data);
                 HideProgress();
             },
             error: function () {
+                Swal.fire("There is some problem to process your request. Please try after some time");
                 HideProgress();
-                Swal.fire('Warning', 'There is some problem to process your request. Please try after some time', 'warning');
             }
         });
     }
@@ -77,17 +78,12 @@
         $("#labelF").text("New Leave Application");
         ShowProgress();
         $.ajax({
-            url: '@Url.Action("NewLeaveApplication", "Leave")',
+            async: true,
             type: "POST",
             datatype: "json",
-            cache: false,
             contentType: "application/json; charset = utf-8",
             processData: false,
-            async: false,
-            type: "GET",
-            dataType: 'HTML',
-            contentType: false,
-            processData: false,
+            url: '@Url.Action("NewLeaveApplication", "Leave")',
             success: function (data) {
                 $("#modalBody").html(data);
                 $("#ddlRespC").select2({
@@ -109,6 +105,8 @@
         var days = $("#ddlNoDays").children("option:selected").val();
         var LvType = $("#ddlLeaveType").children("option:selected").val();
         var Reliever = $("#ddlReliever").children("option:selected").val();
+        var Address = $("#txtAddress").val();
+        var PhNo = $("#txtPhoneNo").val();
         var RespC = $("#ddlRespC").children("option:selected").val();
         var Remarks = $("#txtRemarks").val();
         if (LvType == "") {
@@ -121,6 +119,14 @@
         }
         else if (Reliever == "") {
             Swal.fire('error', 'Select Reliever', 'error');
+            return;
+        }
+        else if (Address == "") {
+            Swal.fire('error', 'Enter Address while on Leave', 'error');
+            return;
+        }
+        else if (PhNo == "") {
+            Swal.fire('error', 'Enter Phone Number while on leave', 'error');
             return;
         }
         else if (StartDate == "") {
@@ -136,7 +142,7 @@
             return;
         }
         else if (RespC == "") {
-            Swal.fire('error', 'Select Campus', 'error');
+            Swal.fire('error', 'Select Responsibility Center', 'error');
             return;
         }
         else {
@@ -147,6 +153,8 @@
             LeaveReqList.End_Date = EndDate;
             LeaveReqList.Return_Date = ReturntDate;
             LeaveReqList.Remarks = Remarks;
+            LeaveReqList.Address = Address;
+            LeaveReqList.phoneNo = PhNo;
             LeaveReqList.Reliever = Reliever;
             LeaveReqList.Responsibility = RespC;
             ShowProgress();
@@ -175,41 +183,29 @@
             });
         }
     }
-    function getB64Str(buffer) {
-        var binary = '';
-        var bytes = new Uint8Array(buffer);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return window.btoa(binary);
-    }
     var SelectedRow = function () {
         $('table tbody tr').click(function () {
             $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
             var row = $('#datatable-buttons tr.selectedTableRow');
             var Status = row.find("td").eq(9).html().trim();
-            //AssignSessions();
+            $("#ViewDoc").removeClass("disabled");
+            $("#AppComments").removeClass("disabled");
             if (Status == "Open") {
-                $("#ViewDoc").removeClass("disabled");
                 $("#SendDocAppr").removeClass("disabled");
                 $("#CancelDocAppr").addClass("disabled");
                 $("#AppTrail").addClass("disabled");
             }
             else if (Status == "Pending Approval") {
-                $("#ViewDoc").removeClass("disabled");
                 $("#SendDocAppr").addClass("disabled");
                 $("#CancelDocAppr").removeClass("disabled");
                 $("#AppTrail").removeClass("disabled");
             }
             else if (Status == "Approved") {
-                $("#ViewDoc").removeClass("disabled");
                 $("#SendDocAppr").addClass("disabled");
                 $("#CancelDocAppr").addClass("disabled");
                 $("#AppTrail").addClass("disabled");
             }
             else {
-                $("#ViewDoc").addClass("disabled");
                 $("#SendDocAppr").addClass("disabled");
                 $("#CancelDocAppr").addClass("disabled");
                 $("#AppTrail").addClass("disabled");
@@ -331,5 +327,103 @@
         $("#CancelDocAppr").addClass("disabled");
         $("#AppTrail").addClass("disabled");
         $('table tbody tr').siblings().removeClass("selectedTableRow");
+    }
+    var UpdateLeaveDocument = function (DocNo) {
+        var StartDate = $('#txtstartDate').val();
+        var EndDate = $('#EndDate').val();
+        var ReturntDate = $('#ReturnDate').val();
+        var days = $("#ddlNoDays").children("option:selected").val();
+        var LvType = $('#txtLeaveType').val();
+        var Reliever = $("#ddlReliever").children("option:selected").val();
+        var RespC = $("#ddlRespC").children("option:selected").val();
+        var Remarks = $("#txtRemarks").val();
+        if (LvType == "") {
+            Swal.fire('error', 'Select Leave Type', 'error');
+            return;
+        }
+        else if (days == "") {
+            Swal.fire('error', 'Select Number of days you want to apply for leave', 'error');
+            return;
+        }
+        else if (Reliever == "") {
+            Swal.fire('error', 'Select Reliever', 'error');
+            return;
+        }
+        else if (StartDate == "") {
+            Swal.fire('error', 'Select Start Date', 'error');
+            return;
+        }
+        else if (EndDate == "dd/mm/yyyy") {
+            Swal.fire('error', 'End Date cannot be empty', 'error');
+            return;
+        }
+        else if (ReturntDate == "dd/mm/yyyy") {
+            Swal.fire('error', 'Return Date cannot be empty', 'error');
+            return;
+        }
+        else if (RespC == "") {
+            Swal.fire('error', 'Select Responsibility Center', 'error');
+            return;
+        }
+        else {
+            var LeaveReqList = {};
+            LeaveReqList.No = DocNo;
+            LeaveReqList.Leave_Type = LvType;
+            LeaveReqList.Applied_Days = days;
+            LeaveReqList.Starting_Date = StartDate;
+            LeaveReqList.End_Date = EndDate;
+            LeaveReqList.Return_Date = ReturntDate;
+            LeaveReqList.Remarks = Remarks;
+            LeaveReqList.Reliever = Reliever;
+            LeaveReqList.Responsibility = RespC;
+            ShowProgress();
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("UpdateLeaveApplication", "Leave")',
+                data: JSON.stringify({ NewApp: LeaveReqList }),
+                contentType: "application/json; charset = utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        HideProgress();
+                        LoadLeaveReqList();
+                        Swal.fire('Success', data.message, 'success');
+                    }
+                    else {
+                        HideProgress();
+                        LoadLeaveReqList();
+                        Swal.fire('error', data.message, 'error');
+                    }
+                    $("#myModal").modal("hide");
+                },
+                error: function () {
+                    HideProgress();
+                    Swal.fire('error', data.message, 'error');
+                }
+            });
+        }
+    }
+    var ViewDocComments = function () {
+        $("#labelF").text("Document Comments");
+        ShowProgress();
+        var row = $('#datatable-buttons tr.selectedTableRow');
+        var DocNo = row.find("td").eq(1).html().trim();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("DocumentApprovalComments", "Common")',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
     }
 </script>

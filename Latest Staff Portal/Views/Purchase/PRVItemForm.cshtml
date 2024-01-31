@@ -131,7 +131,7 @@
                     url = '@Url.Action("GetItem", "Common")';
                 }
                 if (PRVType == "4") {
-                    url ='@Url.Action("GetFixedAsset", "Common")'; 
+                    url ='@Url.Action("GetFixedAsset", "Common")';
                 }
                 ShowProgress();
                 $.getJSON(url, { Item: request.term },

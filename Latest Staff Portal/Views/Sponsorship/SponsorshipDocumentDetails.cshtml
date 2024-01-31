@@ -5,14 +5,14 @@
         @Html.TextBoxFor(m => m.No, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
     <div class="col-md-6">
-        Concept Title
+        Protocol Title
         @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
 </div>
 <div class="row" style="padding: 2px">
     <div class="col-md-6">
-        Objective
-        @Html.TextBoxFor(m => m.Objective, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        Application Level
+        @Html.TextBoxFor(m => m.ApplicationLevel, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
     <div class="col-md-6">
         Address
@@ -25,28 +25,27 @@
         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
     <div class="col-md-6">
-        Principal Investigator name
-        @Html.TextBoxFor(m => m.PInvest, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        School
+        @Html.TextBoxFor(m => m.School, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
 </div>
 <div class="row" style="padding: 2px">
     <div class="col-md-6">
-        Responsibility Center
-        @Html.TextBoxFor(m => m.RespC, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        Campus
+        @Html.TextBoxFor(m => m.Dim1, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
     <div class="col-md-6">
-        Date Created
-        @Html.TextBoxFor(m => m.DateCreated, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+        Department
+        @Html.TextBoxFor(m => m.Dim2, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
     </div>
 </div>
-<div class="row" style="padding: 2px">
-    <div class="col-md-6">
-        Status
-        @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
-    </div>
-    <div class="col-md-6">
-        Approval Status
-        @Html.TextBoxFor(m => m.ApprovalStatus, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <b>Attachments</b>
+        <div id="divAttachDocs"></div>
     </div>
 </div>
+
+
 

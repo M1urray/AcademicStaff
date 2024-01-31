@@ -9,8 +9,8 @@
                 <th>Store</th>
                 <th class="text-center">Quantity</th>
                 <th>Unit Measure</th>
-                <th class="text-center">Unit Amount</th>
-                <th class="text-center">Amount</th>
+                <th class="text-left">Unit Amount</th>
+                <th class="text-left">Amount</th>
                 <th style="text-align:center" class="tdAction">Action</th>
             </tr>
         </thead>
@@ -39,10 +39,10 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.UnitM)
                             </td>
-                            <td class="text-center">
+                            <td class="text-left">
                                 @Html.DisplayFor(modelItem => item.Amount)
                             </td>
-                            <td class="text-center">
+                            <td class="text-left">
                                 @Html.DisplayFor(modelItem => item.LineAmount)
                             </td>
                             <td style="text-align:center" class="tdAction">
@@ -55,7 +55,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="8" style="color:red">
+                        <td colspan="9" style="color:red">
                             No Records Found
                         </td>
                     </tr>
@@ -64,7 +64,7 @@
         </tbody>
         <tfoot>
             <tr class="HideLineButton">
-                <td class="text-right" colspan="8">
+                <td class="text-right" colspan="9">
                     <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddPRVLines();" />
                 </td>
             </tr>

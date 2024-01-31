@@ -45,7 +45,7 @@
                 @Html.TextBoxFor(m => m.DateRequested, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd" })
             </div>
             <div class="col-md-6">
-                <b>Institute</b>
+                <b>Campus</b>
                 @Html.TextBoxFor(m => m.CampusName, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "txtCampus" })
                 <select class="form-control" id="ddlCampus" name="ddlCampus">
                 </select>
@@ -129,6 +129,22 @@
             $("#HideEditButton").hide();
             $("#HideLineButton").hide();
             $("#DivSendForApproval").hide();
+        }
+        var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
+        var Errormsg = '@Request.RequestContext.HttpContext.Session["ErrorMsg"]';
+        if (Successmsg != "") {
+            Swal.fire('Success', Successmsg, 'success',true);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("NullibySessions", "Common")'
+            });
+        }
+        if (Errormsg != "") {
+            Swal.fire('Warning', Errormsg, 'warning',true);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("NullibySessions", "Common")'
+            });
         }
     });
     var LoadStoreDocumentLines = function (DocNo, Status) {
@@ -380,17 +396,14 @@
         }
     };
     var AddLineItem = function () {
-        var Campus = `@Model.Campus`;
-        var Department = `@Model.Department`;
-        var RespC = `@Html.Raw(HttpUtility.HtmlDecode(Model.RespC).Replace("'", "\\'"))`;
-
-        var itemvalue = $("#IdItems").val();
+        var itemvalue = $("#ddlItems").children("option:selected").val();
+        var ItemDesc = $("#ddlItems").children("option:selected").text();
         var Qnty = $("#txtQuantity").val();
         var Location = $("#ddlLocation").children("option:selected").val();
         var ItemDescription = $("#txtDescription").val();
 
         if (itemvalue == "") {
-            Swal.fire('Warning', "Enter Item", 'warning');
+            Swal.fire('Warning', "Select Item", 'warning');
             return;
         }
         else if (Qnty == "") {
@@ -410,20 +423,10 @@
             return;
         }
         else {
-            if (itemvalue != "") {
-                var s = itemvalue.split('~');
-                Item = s[0];
-                ItemDesc = s[1];
-            }
             ShowProgress();
             var DocNo = `@Model.No`;
-            var StoretHeader = {};
-            StoretHeader.Campus = Campus;
-            StoretHeader.Department = Department;
-            StoretHeader.RespC = RespC;
-
             var StoreLines = {};
-            StoreLines.Item = Item;
+            StoreLines.Item = itemvalue;
             StoreLines.ItemDesc = ItemDesc;
             StoreLines.Description2 = ItemDescription;
             StoreLines.Qnty = Qnty;
@@ -439,7 +442,7 @@
                         $.ajax({
                             type: "POST",
                             url: '@Url.Action("SubmitStoreLine", "Store")',
-                            data: JSON.stringify({ DocNo: DocNo, storeHeader: StoretHeader, storeLine: StoreLines }),
+                            data: JSON.stringify({ DocNo: DocNo, storeLine: StoreLines }),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (data) {
@@ -591,7 +594,7 @@
                 async: true,
                 type: "POST",
                 datatype: "json",
-                data: JSON.stringify({ DocNo: DocNo }),
+                data: JSON.stringify({ DocNo: DocNo,Redirect: "Y"  }),
                 contentType: "application/json; charset = utf-8",
                 processData: false,
                 url: '@Url.Action("SendStoreAppForApproval", "Store")',

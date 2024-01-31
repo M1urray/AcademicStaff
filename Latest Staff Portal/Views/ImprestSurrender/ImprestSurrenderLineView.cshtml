@@ -22,7 +22,7 @@
                 {
                     foreach (var item in Model.ListOfImprestSurrenderLines)
                     {
-                        decimal Total = Convert.ToDecimal(item.ActaulSpend) + Convert.ToDecimal(item.ReceiptAmount);
+                        string Total = (Convert.ToDecimal(item.ActaulSpend) + Convert.ToDecimal(item.ReceiptAmount)).ToString("#,##0.00");
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.AccountNo)

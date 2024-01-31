@@ -14,6 +14,11 @@
         font-size: 12px;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div class="card pre-scrollable">
     <div class="card-title">Approved Document List</div>
     <hr />
@@ -172,7 +177,7 @@
                 HideProgress();
             },
             error: function () {
-                Swal.fire('Error',"There is some problem to process your request. Please try after some time",'error');
+                Swal.fire("There is some problem to process your request. Please try after some time");
                 HideProgress();
             }
         });
@@ -191,7 +196,7 @@
                 contentType: "application/json; charset = utf-8",
                 processData: false,
                 data: JSON.stringify({ TableID: TabelID, DocNo: DocNo}),
-                url: '@Url.Action("DocumentEntryDetails", "DocumentApproval")',
+                url:'@Url.Action("DocumentEntryDetails", "DocumentApproval")',
                 success: function (data) {
                     HideProgress();
                     LoadDocumentDetails(TabelID, DocNo);
@@ -208,16 +213,16 @@
     var LoadDocumentDetails = function (TableID, DocNo) {
         var url;
         if (TableID == "38") {
-            url = '@Url.Action("PurchaseReqDocApprovalDetails", "DocumentApproval")';
+            url ='@Url.Action("PurchaseReqDocApprovalDetails", "DocumentApproval")',
         }
         else if (TableID == "70135010") {
-            url = '@Url.Action("StoreReqDocApprovalDetails", "DocumentApproval")';
+            url ='@Url.Action("StoreReqDocApprovalDetails", "DocumentApproval")',
         }
         else if (TableID == "70135469") {
-            url = '@Url.Action("ImprestReqDocApprovalDetails", "DocumentApproval")';
+            url ='@Url.Action("ImprestReqDocApprovalDetails", "DocumentApproval")',
         }
         else if (TableID == "70135454") {
-            url = '@Url.Action("StaffClaimReqDocApprovalDetails", "DocumentApproval")';
+            url = '@Url.Action("StaffClaimReqDocApprovalDetails", "DocumentApproval")',
         }
         else {
             url = "";
@@ -254,7 +259,7 @@
             data: JSON.stringify({ TableID: TableID, DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("PreviousApprovalTrail", "DocumentApproval")',
+            url:'@Url.Action("PreviousApprovalTrail", "DocumentApproval")', 
             success: function (data) {
                 $("#divApprovalTrail").html(data);
                 //HideProgress();

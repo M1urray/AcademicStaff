@@ -13,7 +13,7 @@ using System.Web.Mvc;
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
-    [CustomAuthorization(Role = "ALLUSERS")]
+    [CustomAuthorization(Role = "FULLTIME")]
     public class ImprestSurrenderController : Controller
     {
         // GET: ImprestSurrender
@@ -44,7 +44,7 @@ namespace Latest_Staff_Portal.Controllers
                 string StaffNo = Session["Username"].ToString();
                 List<ImprestSurrenderList> SurrenderList = new List<ImprestSurrenderList>();
 
-                string page = "ImprestSurrenderList?$filter=Account_No eq '" + StaffNo + "'&format=json";
+                string page = "ImprestSurrenderList?$filter=Account_No eq '" + StaffNo + "'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -89,7 +89,7 @@ namespace Latest_Staff_Portal.Controllers
                 #region ImprestList
                 List<ImprestList> ImpList = new List<ImprestList>();
                 ImprestList Imp = null;
-                string page = "PostedImprest?$filter=AccountNo eq '" + StaffNo + "' and SurrenderStatus ne 'Full' &format=json";
+                string page = "PostedImprest?$filter=AccountNo eq '" + StaffNo + "' and SurrenderStatus ne 'Full' &$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -128,7 +128,7 @@ namespace Latest_Staff_Portal.Controllers
         protected bool isImprestSurrendered(string DocNo, decimal Amount)
         {
             bool ext = false;
-            string page = "ImprestSurrenderList?$select=Amount&$filter=Imprest_Issue_Doc_No eq '" + DocNo + "'&format=json";
+            string page = "ImprestSurrenderList?$select=Amount&$filter=Imprest_Issue_Doc_No eq '" + DocNo + "'&$format=json";
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
@@ -182,7 +182,7 @@ namespace Latest_Staff_Portal.Controllers
                     #region Imp Surrender Header
                     ImprestSurrenderHeader ImpDoc = new ImprestSurrenderHeader();
 
-                    string page = "ImprestSurrenderCard?$filter=No eq '" + DocNo + "'&format=json";
+                    string page = "ImprestSurrenderCard?$filter=No eq '" + DocNo + "'&$format=json";
                     HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
@@ -222,7 +222,7 @@ namespace Latest_Staff_Portal.Controllers
             {
                 #region Imp surrender Lines
                 List<ImprestSurrenderLines> ImpLines = new List<ImprestSurrenderLines>();
-                string pageLine = "ImpSurrenderLines?$filter=SurrenderDocNo eq '" + DocNo + "'&format=json";
+                string pageLine = "ImpSurrenderLines?$filter=SurrenderDocNo eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -236,7 +236,7 @@ namespace Latest_Staff_Portal.Controllers
                         ImSLine.AccountNo = (string)config["AccountNo"];
                         ImSLine.AccountName = (string)config["AccountName"];
                         ImSLine.Amount = Convert.ToDecimal((string)config["Amount"]).ToString("#,##0.00");
-                        ImSLine.ActaulSpend = (string)config["ActualSpent"];
+                        ImSLine.ActaulSpend = Convert.ToDecimal((string)config["ActualSpent"]).ToString("#,##0.00");
                         ImSLine.ReceiptNo = (string)config["CashReceiptNo"];
                         ImSLine.ReceiptAmount = Convert.ToDecimal((string)config["CashReceiptAmount"]).ToString("#,##0.00");
                         ImpLines.Add(ImSLine);
@@ -265,7 +265,7 @@ namespace Latest_Staff_Portal.Controllers
                 string StaffNo = Session["Username"].ToString();
                 #region Actaul Amount
                 String ActAmount = "";
-                string page = "ImpSurrenderLines?$select=ActualSpent&$filter=SurrenderDocNo eq '" + DocNo + "' and AccountNo eq '" + AccountNo + "'&format=json";
+                string page = "ImpSurrenderLines?$select=ActualSpent&$filter=SurrenderDocNo eq '" + DocNo + "' and AccountNo eq '" + AccountNo + "'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -280,7 +280,7 @@ namespace Latest_Staff_Portal.Controllers
                 #endregion
                 #region Posted Receipts
                 List<DropdownList> postedReciept = new List<DropdownList>();
-                string pageLine = "PostedReceipts?$select=No&$filter=Customer_No eq '" + StaffNo + "' and Surrender_No eq ''&format=json";
+                string pageLine = "PostedReceipts?$select=No&$filter=Customer_No eq '" + StaffNo + "' and Surrender_No eq ''&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
@@ -340,7 +340,7 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     RptNo = ReceiptNo;
                 }
-                Credentials.ObjNav.fnImprestSurrenderLineUpdate(SDocNo, AccountNo, Convert.ToDecimal(ActAmount), RptNo);
+                //Credentials.ObjNav.fnImprestSurrenderLineUpdate(SDocNo, AccountNo, Convert.ToDecimal(ActAmount), RptNo);
 
                 string msg = "Imprest surrender line updated Successfully";
 

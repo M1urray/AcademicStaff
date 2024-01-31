@@ -57,12 +57,12 @@ namespace Latest_Staff_Portal
 
                     HttpContext.Current.User = myUser;
                 }
-            }            
+            }
             catch (CryptographicException cex)
             {
                 FormsAuthentication.SignOut();
             }
-}
+        }
     }
     public sealed class CustomJsonValueProviderFactory : ValueProviderFactory
     {

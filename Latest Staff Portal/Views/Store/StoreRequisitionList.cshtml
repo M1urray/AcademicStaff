@@ -18,10 +18,6 @@
     <div class="card-title">Store Requisition List</div>
     <div class="card-body">
         <a href="#" onclick="NewStoreRequisition();" class="btn btn-primary BtnPadding">New Request</a>
-        <a href="#" onclick="ViewDoc();" class="btn btn-danger BtnPadding disabled" id="ViewDoc">View Document</a>
-        <a href="#" onclick="SendDocForApproval();" class="btn btn-primary BtnPadding disabled" id="SendDocAppr">Send Approval Request</a>
-        <a href="#" onclick="CancelDocForApproval();" class="btn btn-primary BtnPadding disabled" id="CancelDocAppr">Cancel Approval Request</a>
-        <a href="#" onclick="ViewApprovalTrail();" class="btn btn-danger BtnPadding disabled" id="AppTrail">Document Approval Trail</a>
         <hr />
         <div id="divRegList"></div>
     </div>
@@ -44,21 +40,31 @@
         </div>
     </div>
 </div>
+@*//////////////////////Modal Links////////////////////////////*@
+<div class="modal fade" id="myModalLinks" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header">
+                <h4 class="modal-title">Actions</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBodyLinks">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="~/assets/js/ShowProgression.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         LoadStoreReqList();
         var Successmsg = '@Request.RequestContext.HttpContext.Session["SuccessMsg"]';
-        var Errormsg = '@Request.RequestContext.HttpContext.Session["ErrorMsg"]';
         if (Successmsg != "") {
-            Swal.fire('Success', Successmsg, 'success',true);
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("NullibySessions", "Common")'
-            });
-        }
-        if (Errormsg != "") {
-            Swal.fire('Warning', Errormsg, 'warning',true);
+            Swal.fire('Success', Successmsg, 'success', true);
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("NullibySessions", "Common")'
@@ -86,120 +92,13 @@
     }
     var NewStoreRequisition = function () {
         ShowProgress();
-        window.location = '@Url.Action("NewStoreRequest", "Store")';
-    }
-    var SelectedRow = function () {
-        $('table tbody tr').click(function () {
-            $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
-            var row = $('#datatable-buttons tr.selectedTableRow');
-            var Status = row.find("td").eq(7).html().trim();
-            $("#ViewDoc").removeClass("disabled");
-            if (Status == "Open") {
-                $("#SendDocAppr").removeClass("disabled");
-                $("#CancelDocAppr").addClass("disabled");
-                $("#AppTrail").addClass("disabled");
-            }
-            else if (Status == "Pending Approval") {
-                $("#SendDocAppr").addClass("disabled");
-                $("#CancelDocAppr").removeClass("disabled");
-                $("#AppTrail").removeClass("disabled");
-            }
-            else if (Status == "Approved" || Status == "Released") {
-                $("#SendDocAppr").addClass("disabled");
-                $("#CancelDocAppr").addClass("disabled");
-                $("#AppTrail").addClass("disabled");
-            }
-            else {
-                $("#SendDocAppr").addClass("disabled");
-                $("#CancelDocAppr").addClass("disabled");
-                $("#AppTrail").addClass("disabled");
-            }
-        });
-    }
-    var ViewDoc = function () {
-        $("#labelF").text("Store Details Document");
-        ShowProgress();
-        var row = $('#datatable-buttons tr.selectedTableRow');
-        var DocNo = row.find("td").eq(1).html().trim();
-        window.location = '@Url.Action("StoreDocumentView", "Store")?DocNo=' + DocNo;
-    }
-    var SendDocForApproval = function () {
-        $("#labelF").text("Store Details Document");
-        var row = $('#datatable-buttons tr.selectedTableRow');
-        var DocNo = row.find("td").eq(1).html().trim();
-        ShowProgress();
         $.ajax({
             async: true,
             type: "POST",
             datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: '@Url.Action("SendStoreAppForApproval", "Store")',
-            success: function (data) {
-                HideProgress();
-                LoadStoreReqList();
-                if (data.success == true) {
-                    DiableButtons();
-                    HideProgress();
-                    Swal.fire('Success', data.message, 'success');
-                }
-                else {
-                    DiableButtons();
-                    HideProgress();
-                    Swal.fire('Error', data.message, 'error');
-                }
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
-    }
-    var CancelDocForApproval = function () {
-        $("#labelF").text("Store Details Document");
-        var row = $('#datatable-buttons tr.selectedTableRow');
-        var DocNo = row.find("td").eq(1).html().trim();
-        ShowProgress();
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo }),
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: '@Url.Action("CancelStoreAppForApproval", "Store")',
-            success: function (data) {
-                HideProgress();
-                LoadStoreReqList();
-                if (data.success == true) {
-                    Swal.fire('Success', data.message, 'success');
-                }
-                else {
-                    Swal.fire('Error', data.message, 'error');
-                }
-                DiableButtons();
-            },
-            error: function (err) {
-                HideProgress();
-                Swal.fire('Warning', err, 'warning');
-            }
-        });
-
-    }
-    var ViewApprovalTrail = function () {
-        $("#labelF").text("Document Approval Trail");
-        ShowProgress();
-        var row = $('#datatable-buttons tr.selectedTableRow');
-        var DocNo = row.find("td").eq(1).html().trim();
-        $.ajax({
-            async: true,
-            type: "POST",
-            datatype: "json",
-            data: JSON.stringify({ DocNo: DocNo }),
-            contentType: "application/json; charset = utf-8",
-            processData: false,
-            url: '@Url.Action("DocumentApprovalTrail", "Common")',
+            url: '@Url.Action("NewStoreRequest", "Store")',
             success: function (data) {
                 $("#modalBody").html(data);
                 HideProgress();
@@ -211,12 +110,197 @@
             }
         });
     }
-    var DiableButtons = function () {
-        $("#ViewDoc").addClass("disabled");
-        $("#SendDocAppr").addClass("disabled");
-        $("#CancelDocAppr").addClass("disabled");
-        $("#AppTrail").addClass("disabled");
-        $('table tbody tr').siblings().removeClass("selectedTableRow");
+    var SubmitStoreRequisition = function () {
+        var dateNeeded = $("#dtPicker").val();
+        var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var Campus = $("#ddlCampus").children("option:selected").val();
+        var Department = $("#ddlDepartment").children("option:selected").val();
+        var RespoC = $("#ddlRespC").children("option:selected").val();
+
+        if (dateNeeded == "") {
+            Swal.fire('Warning', "Select Date needed", 'warning');
+            return;
+        }
+        else if (Campus == "") {
+            Swal.fire('Warning', "Select Campus", 'warning');
+            return;
+        }
+        else if (Department == "") {
+            Swal.fire('Warning', "Select Department", 'warning');
+            return;
+        }
+        else if (RespoC == "") {
+            Swal.fire('Warning', "Select Responsibility center", 'warning');
+            return;
+        }
+        else if (Remarks == "") {
+            Swal.fire('Warning', "Enter Reason for the purchase", 'warning');
+            return;
+        }
+        else if (Remarks.length > 100) {
+            Swal.fire('Warning', "Your Reason should have a maximum of 150 characters", 'warning');
+            return;
+        }
+        else {
+            ShowProgress();
+            var StoretHeader = {};
+            StoretHeader.DateNeeded = dateNeeded;
+            StoretHeader.Remarks = Remarks;
+            StoretHeader.Campus = Campus;
+            StoretHeader.Department = Department;
+            StoretHeader.RespC = RespoC;
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SubmitStoreRequisition", "Store")',
+                data: JSON.stringify({ storeHeader: StoretHeader }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        window.location = '@Url.Action("StoreDocumentView", "Store")?DocNo='+data.message;
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
+            });
+        }
+    };
+    var SelectedRow = function (DocNo, Status) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, Status: Status, DocType: 'STR' }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("CommonActions", "Common")',
+            success: function (data) {
+                $("#modalBodyLinks").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewDoc = function (DocNo) {
+        ShowProgress();
+        window.location = '@Url.Action("StoreDocumentView", "Store")?DocNo=' + DocNo;
+    }
+    var SendDocForApproval = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo, Redirect: "N"}),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("SendStoreAppForApproval", "Store")',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadStoreReqList();
+                    $("#myModalLinks").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var CancelDocForApproval = function (DocNo) {
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("CancelStoreAppForApproval", "Store")',
+            success: function (data) {
+                if (data.success == true) {
+                    HideProgress();
+                    LoadStoreReqList();
+                    $("#myModalLinks").modal("hide");
+                    Swal.fire('Success', data.message, 'success');
+                }
+                else {
+                    HideProgress();
+                    Swal.fire('Error', data.message, 'error');
+                }
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+
+    }
+    var ViewApprovalTrail = function (DocNo) {
+        $("#labelF").text("Document Approval Trail");
+        ShowProgress();
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ DocNo: DocNo }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("DocumentApprovalTrail", "Common")',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
+    }
+    var ViewDocComments = function (DocNo) {
+        $("#labelF").text("Document Comments");
+        ShowProgress();
+        var RecordID = "Store Requistion Header: " + DocNo;
+        $.ajax({
+            async: true,
+            type: "POST",
+            datatype: "json",
+            data: JSON.stringify({ RecID: RecordID }),
+            contentType: "application/json; charset = utf-8",
+            processData: false,
+            url: '@Url.Action("DocumentApprovalComments", "Common")',
+            success: function (data) {
+                $("#modalBody").html(data);
+                HideProgress();
+                $("#myModalLinks").modal("hide");
+                $("#myModal").modal("show");
+            },
+            error: function (err) {
+                HideProgress();
+                Swal.fire('Warning', err, 'warning');
+            }
+        });
     }
 </script>
 

@@ -19,6 +19,11 @@
         height: 100%;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div style="background-color: black;">
     <a href="#" onclick="BackToProgList();" style="color:yellow"><<< Back To Programme List</a>
 </div>
@@ -187,7 +192,7 @@
             contentType: "application/json; charset = utf-8",
             processData: false,
             data: JSON.stringify({ Prog: Prog, Stage: Stage, ReportType: ReportT }),
-            url: '@Url.Action("GetReportFilters", "Programme")',
+            url: '/Programme/GetReportFilters',
             success: function (data) {
                 $("#modalBodyFilters").html(data);
                 HideProgress();
@@ -219,7 +224,7 @@
             DocFilters.ReportType = ReportType;
             ShowProgress();
             $.ajax({
-                url: '@Url.Action("GetProgrammeStageReport", "Programme")',
+                url: '/Programme/GetProgrammeStageReport',
                 datatype: "json",
                 type: "POST",
                 data: JSON.stringify({ Filters: DocFilters }),
@@ -232,7 +237,7 @@
                             $("#myModalUnits").modal("show");
                         }
                         else {
-                            window.location = '@Url.Action("Download", "Programme")?fileName=' + data.message;
+                            window.location = '/Programme/Download?fileName=' + data.message;
                             Swal.fire('Success', 'Document Downloaded successfully', 'success');
                         }
                     }
@@ -251,10 +256,10 @@
     }
     var BackToProgList = function () {
         ShowProgress();
-        window.location = '@Url.Action("ProgrammeList", "Programme")';
+        window.location = "/Programme/ProgrammeList";
     }
     var GetProgStageUnits = function (Prog, Stage, ProgDesc) {
         ShowProgress();
-        window.location = '@Url.Action("ProgStageUnits", "Programme")?Prog=' + Prog + '&Stage=' + Stage + '&ProgDesc=' + ProgDesc;
+        window.location = "/Programme/ProgStageUnits?Prog=" + Prog + "&Stage=" + Stage + "&ProgDesc=" + ProgDesc + "";
     }
 </script>

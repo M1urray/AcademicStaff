@@ -5105,8 +5105,8 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .card-header {
     padding: .75rem 1.25rem;
     margin-bottom: 0;
-    background-color: darkgrey;
-    border-bottom: 0 solid darkgrey
+    background-color: #BA6D1E;
+    border-bottom: 0 solid #BA6D1E
 }
 
     .card-header:first-child {
@@ -6495,7 +6495,7 @@ a.close.disabled {
     -ms-flex-pack: justify;
     justify-content: space-between;
     padding: 0.5rem 1rem;
-    background-color: #3d57fa;
+    background-color: #6B6A03;
     border-bottom: 1px solid #eff2f7;
     border-top-left-radius: calc(.3rem - 1px);
     border-top-right-radius: calc(.3rem - 1px)
@@ -7208,7 +7208,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .bg-light {
-    background-color: white !important
+    background-color: #1b4a3c !important
 }
 
 a.bg-light:focus, a.bg-light:hover, button.bg-light:focus, button.bg-light:hover {
@@ -10811,7 +10811,7 @@ a.bg-pink:focus, a.bg-pink:hover, button.bg-pink:focus, button.bg-pink:hover {
 }
 
 .text-primary {
-    color: #163269 !important
+    color: wheat !important
 }
 
 a.text-primary:focus, a.text-primary:hover {
@@ -11043,7 +11043,7 @@ label {
 }
 
 .bg-soft-primary {
-    background-color: white !important
+    background-color: #b7032a !important
 }
 
 .bg-soft-secondary {

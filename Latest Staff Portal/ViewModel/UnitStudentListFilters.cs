@@ -13,6 +13,5 @@ namespace Latest_Staff_Portal.ViewModel
         public string Unit { get; set; }
         public string UnitName { get; set; }        
         public string Campus { get; set; }
-        public string SettlementT { get; set; }
     }
 }

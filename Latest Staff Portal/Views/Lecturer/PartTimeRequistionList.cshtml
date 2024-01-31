@@ -18,6 +18,11 @@
         padding: 1px;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <a href="#" onclick="NewPartTimeRequisition();" class="btn btn-primary BtnPadding">New Requisition</a>
 <hr />
 <table id="tableUnitList" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -41,7 +46,7 @@
                     @Html.DisplayFor(modelItem => item.IDNo)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Surname)
+                    @Html.DisplayFor(modelItem => item.Firstname)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MiddelName)
@@ -55,9 +60,10 @@
 </table>
 <script src="~/assets/js/ShowProgression.js"></script>
 <script type="text/javascript">
+
     var NewPartTimeRequisition = function () {
         ShowProgress();
-        window.location = '@Url.Action("NewPartTimeRequistion", "lecturer")';
+        window.location = "/Lecturer/NewPartTimeRequistion";
     }
 </script>
 

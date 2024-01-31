@@ -14,7 +14,7 @@ using System.Web.Mvc;
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
-    [CustomAuthorization(Role = "ALLUSERS")]
+    [CustomAuthorization(Role = "FULLTIME")]
     public class ImprestController : Controller
     {
         // GET: Imprest
@@ -42,29 +42,37 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                string StaffNo = Session["Username"].ToString();
                 List<ImprestList> ImpList = new List<ImprestList>();
-
-                string page = "ImprestReq?$filter=Employee_No eq '" + StaffNo + "'&format=json";
-                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                if (Session["Username"] != null)
                 {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-                    foreach (JObject config in details["value"])
+                    string StaffNo = Session["Username"].ToString();
+                    string page = "ImprestReq?$filter=Employee_No eq '" + StaffNo + "'&$format=json";
+                    HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
-                        ImprestList ImList = new ImprestList();
-                        ImList.No = (string)config["No"];
-                        ImList.ReqDate = Convert.ToDateTime((string)config["Date"]).ToString("dd/MM/yyyy");
-                        ImList.Purpose = (string)config["Purpose"];
-                        ImList.Function = (string)config["FunctionName"];
-                        ImList.BudgetCeter = (string)config["Department_Name"];
-                        ImList.Status = (string)config["Status"];
-                        ImpList.Add(ImList);
+                        var result = streamReader.ReadToEnd();
+
+                        var details = JObject.Parse(result);
+                        foreach (JObject config in details["value"])
+                        {
+                            ImprestList ImList = new ImprestList();
+                            ImList.No = (string)config["No"];
+                            ImList.ReqDate = Convert.ToDateTime((string)config["Date"]).ToString("dd/MM/yyyy");
+                            ImList.Purpose = (string)config["Purpose"];
+                            ImList.Function = (string)config["FunctionName"];
+                            ImList.BudgetCeter = (string)config["Department_Name"];
+                            ImList.Status = (string)config["Status"];
+                            ImpList.Add(ImList);
+                        }
                     }
+                    return PartialView("~/Views/Imprest/ImprestReqListView.cshtml", ImpList.OrderByDescending(x => x.No));
                 }
-                return PartialView("~/Views/Imprest/ImprestReqListView.cshtml", ImpList.OrderByDescending(x => x.No));
+                else
+                {
+                    Error erroMsg = new Error();
+                    erroMsg.Message = "Your session has expired. Log out and login again";
+                    return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                }
             }
             catch (Exception ex)
             {
@@ -85,9 +93,9 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     string StaffNo = Session["Username"].ToString();
                     NewImprestRequisition NewImprest = new NewImprestRequisition();
-                    #region Institute List
+                    #region Campus List
                     List<DimensionValues> Campuses = new List<DimensionValues>();
-                    string pageCampus = "DimValues?$select=Code,Name&$filter=Dimension_Code eq 'CAMPUS' and Blocked eq false&$format=json";
+                    string pageCampus = "DimensionValues?$filter=Global_Dimension_No_ eq 1&$format=json";
 
                     HttpWebResponse httpResponseCampus = Credentials.GetOdataData(pageCampus);
                     using (var streamReader = new StreamReader(httpResponseCampus.GetResponseStream()))
@@ -109,7 +117,7 @@ namespace Latest_Staff_Portal.Controllers
 
                     #region School
                     List<DimensionValues> School = new List<DimensionValues>();
-                    string pageSchool = "DimValues?$select=Code,Name&$filter=Dimension_Code eq 'SCHOOL' and Blocked eq false&$format=json";
+                    string pageSchool = "DimensionValues?$filter=Global_Dimension_No_ eq 3&$format=json";
 
                     HttpWebResponse httpResponseSchool = Credentials.GetOdataData(pageSchool);
                     using (var streamReader = new StreamReader(httpResponseSchool.GetResponseStream()))
@@ -131,7 +139,7 @@ namespace Latest_Staff_Portal.Controllers
 
                     #region Department List
                     List<DimensionValues> Department = new List<DimensionValues>();
-                    string pageDepartment = "DimValues?$select=Code,Name&$filter=Dimension_Code eq 'DEPARTMENTS' and Blocked eq false&$format=json";
+                    string pageDepartment = "DimensionValues?$filter=Global_Dimension_No_ eq 2&$format=json";
 
                     HttpWebResponse httpResponseDepartment = Credentials.GetOdataData(pageDepartment);
                     using (var streamReader = new StreamReader(httpResponseDepartment.GetResponseStream()))
@@ -147,6 +155,27 @@ namespace Latest_Staff_Portal.Controllers
                             DepartmentList.Code = (string)config["Code"];
                             DepartmentList.Name = (string)config["Name"];
                             Department.Add(DepartmentList);
+                        }
+                    }
+                    #endregion
+                    #region Project List
+                    List<DimensionValues> ProjectList = new List<DimensionValues>();
+                    string pageProj = "DimensionValues?$filter=Global_Dimension_No_ eq 4&$format=json";
+
+                    HttpWebResponse httpResponseProj = Credentials.GetOdataData(pageProj);
+                    using (var streamReader = new StreamReader(httpResponseProj.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+
+                        var details = JObject.Parse(result);
+
+
+                        foreach (JObject config in details["value"])
+                        {
+                            DimensionValues project = new DimensionValues();
+                            project.Code = (string)config["Code"];
+                            project.Name = (string)config["Name"];
+                            ProjectList.Add(project);
                         }
                     }
                     #endregion
@@ -198,6 +227,12 @@ namespace Latest_Staff_Portal.Controllers
                                            {
                                                Text = x.Name,
                                                Value = x.Code
+                                           }).ToList(),
+                        ListOfProjects = ProjectList.Select(x =>
+                                           new SelectListItem()
+                                           {
+                                               Text = x.Name,
+                                               Value = x.Code
                                            }).ToList()
                     };
                     return View(NewImprest);
@@ -214,40 +249,49 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                ImprestTypesList imprestTypes = new ImprestTypesList();
-
-                #region Imprest Type List
-                List<ImprestTypes> ImprestTList = new List<ImprestTypes>();
-                string page = "ImprestTypes?$filter=Description ne ''&format=json";
-
-                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                if (Session["Username"] != null)
                 {
-                    var result = streamReader.ReadToEnd();
+                    ImprestTypesList imprestTypes = new ImprestTypesList();
 
-                    var details = JObject.Parse(result);
+                    #region Imprest Type List
+                    List<ImprestTypes> ImprestTList = new List<ImprestTypes>();
+                    string page = "ImprestTypes?$filter=Description ne ''&$format=json";
 
-                    foreach (JObject config in details["value"])
+                    HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
-                        ImprestTypes impList = new ImprestTypes();
-                        impList.Code = (string)config["Code"];
-                        impList.Description = (string)config["Description"];
-                        ImprestTList.Add(impList);
+                        var result = streamReader.ReadToEnd();
+
+                        var details = JObject.Parse(result);
+
+                        foreach (JObject config in details["value"])
+                        {
+                            ImprestTypes impList = new ImprestTypes();
+                            impList.Code = (string)config["Code"];
+                            impList.Description = (string)config["Description"];
+                            ImprestTList.Add(impList);
+                        }
                     }
+                    #endregion
+
+                    imprestTypes = new ImprestTypesList
+                    {
+                        ListOfImprestTypes = ImprestTList.Select(x =>
+                                              new SelectListItem()
+                                              {
+                                                  Text = x.Description,
+                                                  Value = x.Code
+                                              }).OrderBy(x => x.Text).ToList()
+                    };
+
+                    return PartialView("~/Views/Imprest/ImprestItemForm.cshtml", imprestTypes);
                 }
-                #endregion
-
-                imprestTypes = new ImprestTypesList
+                else
                 {
-                    ListOfImprestTypes = ImprestTList.Select(x =>
-                                          new SelectListItem()
-                                          {
-                                              Text = x.Description,
-                                              Value = x.Code
-                                          }).OrderBy(x => x.Text).ToList()
-                };
-
-                return PartialView("~/Views/Imprest/ImprestItemForm.cshtml", imprestTypes);
+                    Error erroMsg = new Error();
+                    erroMsg.Message = "Your session has expired. Log out and login again";
+                    return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                }
             }
             catch (Exception ex)
             {
@@ -257,59 +301,68 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult SubmitImprestRequisition(ImprestHeader imprestHeader, List<ImprestLines> imprestLines, string base64Upload, string fileName, string Extn)
+        public JsonResult SubmitImprestRequisition(ImprestHeader imprestHeader)
         {
-            bool successVal = false;
             try
             {
-                string School = "";
-                if (imprestHeader.school != null)
+                string Redirect = "";
+                if (Session["Username"] != null)
                 {
-                    School = imprestHeader.school;
-                }
-
-                string StaffNo = Session["Username"].ToString();
-                DateTime DateRequired = DateTime.ParseExact(imprestHeader.DateNeeded.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                string DocNo = Credentials.ObjNav.ImprestRequisitionCreate(StaffNo, School, DateRequired,
-                    imprestHeader.Campus, imprestHeader.Department, imprestHeader.Remarks, imprestHeader.RespC, "","");
-
-                foreach (var c in imprestLines)
-                {
-                    string item = c.Item.Trim();
-                    string itemDesc = c.ItemDesc.Trim();
-                    string amnt = c.Amount.Trim();
-                    Credentials.ObjNav.ImprestRequisitionLinesCreate(DocNo, item, Convert.ToDecimal(amnt), StaffNo, imprestHeader.Campus, imprestHeader.Department, itemDesc);
-                }
-                successVal = true;
-                Credentials.ObjNav.ImprestRequisitionApprovalRequest(DocNo);
-                Session["SuccessMsg"] = "Imprest Requisition, Document No: " + DocNo + ", Submitted Successfully";
-                if (base64Upload != "")
-                {
-                    string filePath = Server.MapPath("~/Uploads/" + fileName);
-                    CommonClass.MoveUploadedFile(filePath, fileName);
-                    string UploadFilePath = Credentials.fileUploadsPath + fileName;
-                    if (CommonClass.IfFileExists(UploadFilePath))
+                    string School = "", project = "";
+                    if (imprestHeader.school != null)
                     {
-                        string s = Credentials.UploadDocumentAttachment(DocNo, base64Upload, UploadFilePath, 70135469);
-                        if (s == "SUCCESS")
-                        {
-                            Session["SuccessMsg"] = "Imprest Requisition, Document No: " + DocNo + ", Submitted Successfully and attachment File Uploaded Successfully";
-                        }
-                        else
-                        {
-                            Session["SuccessMsg"] = "Imprest Requisition, Document No: " + DocNo + ", Submitted Successfully but error encountered while uploading attachment" +
-                                "Error encountered :" + s;
-                        }
+                        School = imprestHeader.school;
                     }
+                    if (imprestHeader.Project != null)
+                    {
+                        project = imprestHeader.Project;
+                    }
+
+                    string StaffNo = Session["Username"].ToString();
+                    DateTime DateRequired = DateTime.ParseExact(imprestHeader.DateNeeded.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    string DocNo = "";// Credentials.ObjNav.ImprestRequisitionCreate(StaffNo, School, DateRequired,
+                        //imprestHeader.Campus, imprestHeader.Department, imprestHeader.Remarks, imprestHeader.RespC, "", project);
+
+                    Redirect = "/Imprest/ImprestDocumentView?DocNo=" + DocNo;
+                    //foreach (var c in imprestLines)
+                    //{
+                    //    string item = c.Item.Trim();
+                    //    string itemDesc = c.ItemDesc.Trim();
+                    //    string amnt = c.Amount.Trim();
+                    //    Credentials.ObjNav.ImprestRequisitionLinesCreate(DocNo, item, Convert.ToDecimal(amnt), StaffNo, imprestHeader.Campus, imprestHeader.Department, itemDesc);
+                    //}
+                    //successVal = true;
+                    //Credentials.ObjNav.ImprestRequisitionApprovalRequest(DocNo);
+                    //Session["SuccessMsg"] = "Imprest Requisition, Document No: " + DocNo + ", Submitted Successfully";
+                    //if (base64Upload != "")
+                    //{
+                    //    string filePath = Server.MapPath("~/Uploads/" + fileName);
+                    //    CommonClass.MoveUploadedFile(base64Upload, filePath, fileName);
+                    //    string UploadFilePath = Credentials.fileUploadsPath + fileName;
+                    //    if (CommonClass.IfFileExists(UploadFilePath))
+                    //    {
+                    //        string s = Credentials.UploadDocumentAttachment(DocNo, base64Upload, UploadFilePath, 70135469);
+                    //        if (s == "SUCCESS")
+                    //        {
+                    //            Session["SuccessMsg"] = "Imprest Requisition, Document No: " + DocNo + ", Submitted Successfully and attachment File Uploaded Successfully";
+                    //        }
+                    //        else
+                    //        {
+                    //            Session["SuccessMsg"] = "Imprest Requisition, Document No: " + DocNo + ", Submitted Successfully but error encountered while uploading attachment" +
+                    //                "Error encountered :" + s;
+                    //        }
+                    //    }
+                    //}
+                    Session["SuccessMsg"] = "Imprest Requisition, Document No: " + DocNo + ", created Successfully. Add line(s) and attachment(s) then send for approval";
                 }
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                else
+                {
+                    Redirect = "/Loin/Login";
+                }
+                return Json(new { message = Redirect, success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                if (successVal)
-                {
-                    Session["ErrorMsg"] = ex.Message.Replace("'", "");
-                }
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -327,7 +380,7 @@ namespace Latest_Staff_Portal.Controllers
                     #region Imp Header
                     ImprestHeader ImpDoc = new ImprestHeader();
 
-                    string page = "ImprestReq?$filter=No eq '" + DocNo + "'&format=json";
+                    string page = "ImprestReq?$filter=No eq '" + DocNo + "'&$format=json";
                     HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
@@ -365,35 +418,44 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                #region Imp Lines
-                List<ImprestLines> ImpLines = new List<ImprestLines>();
-                string pageLine = "ImprestLines?$filter=No eq '" + DocNo + "'&format=json";
-                HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
-                using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
+                if (Session["Username"] != null)
                 {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-                    foreach (JObject config in details["value"])
+                    #region Imp Lines
+                    List<ImprestLines> ImpLines = new List<ImprestLines>();
+                    string pageLine = "ImprestLines?$filter=No eq '" + DocNo + "'&$format=json";
+                    HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
+                    using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                     {
-                        ImprestLines ImLine = new ImprestLines();
-                        ImLine.DocNo = (string)config["No"];
-                        ImLine.AdvanceType = (string)config["Advance_Type"];
-                        ImLine.Item = (string)config["Account_No"];
-                        ImLine.ItemDesc = (string)config["Account_Name"];
-                        ImLine.ItemDesc2 = (string)config["Purpose"];
-                        ImLine.LnNo = (string)config["Line_No"];
-                        ImLine.Amount = Convert.ToDecimal((string)config["Amount"]).ToString("#,##0.00");
-                        ImpLines.Add(ImLine);
+                        var result = streamReader.ReadToEnd();
+
+                        var details = JObject.Parse(result);
+                        foreach (JObject config in details["value"])
+                        {
+                            ImprestLines ImLine = new ImprestLines();
+                            ImLine.DocNo = (string)config["No"];
+                            ImLine.AdvanceType = (string)config["Advance_Type"];
+                            ImLine.Item = (string)config["Account_No"];
+                            ImLine.ItemDesc = (string)config["Account_Name"];
+                            ImLine.ItemDesc2 = (string)config["Purpose"];
+                            ImLine.LnNo = (string)config["Line_No"];
+                            ImLine.Amount = Convert.ToDecimal((string)config["Amount"]).ToString("#,##0.00");
+                            ImpLines.Add(ImLine);
+                        }
                     }
+                    #endregion
+                    ImprestLinesList Lines = new ImprestLinesList
+                    {
+                        Status = Status,
+                        ListOfImprestLines = ImpLines
+                    };
+                    return PartialView("~/Views/Imprest/ImprestDocumentLineView.cshtml", Lines);
                 }
-                #endregion
-                ImprestLinesList Lines = new ImprestLinesList
+                else
                 {
-                    Status = Status,
-                    ListOfImprestLines = ImpLines
-                };
-                return PartialView("~/Views/Imprest/ImprestDocumentLineView.cshtml", Lines);
+                    Error erroMsg = new Error();
+                    erroMsg.Message = "Your session has expired. Log out and login again";
+                    return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                }
             }
             catch (Exception ex)
             {
@@ -406,8 +468,20 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                Credentials.ObjNav.ImprestRequisitionApprovalRequest(DocNo);
-                return Json(new { message = "Imprest Requisition send for approval Successfully", success = true }, JsonRequestBehavior.AllowGet);
+                string Redirect = "";
+                bool LogOut = false;
+                if (Session["Username"] != null)
+                {
+                    Credentials.ObjNav.ImprestRequisitionApprovalRequest(DocNo);
+                    Redirect = "Imprest Requisition send for approval Successfully";
+                    LogOut = false;
+                }
+                else
+                {
+                    Redirect = "/Login/Login";
+                    LogOut = true;
+                }
+                return Json(new { message = Redirect, success = true, LogOut }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -418,8 +492,20 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                Credentials.ObjNav.HRCanceImprestRequisition(DocNo);
-                return Json(new { message = "Imprest Requisition approval cancelled Successfully", success = true }, JsonRequestBehavior.AllowGet);
+                string Redirect = "";
+                bool LogOut = false;
+                if (Session["Username"] != null)
+                {
+                    Credentials.ObjNav.HRCanceImprestRequisition(DocNo);
+                    Redirect = "Imprest Requisition approval cancelled Successfully";
+                    LogOut = false;
+                }
+                else
+                {
+                    Redirect = "/Login/Login";
+                    LogOut = true;
+                }
+                return Json(new { message = Redirect, success = true, LogOut }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -497,7 +583,7 @@ namespace Latest_Staff_Portal.Controllers
         protected string GetImpDocNetAmount(string DocNo)
         {
             string amount = "";
-            string page = "ImprestReq?$select=TotalNetAmount&$filter=No eq '" + DocNo + "'&format=json";
+            string page = "ImprestReq?$select=TotalNetAmount&$filter=No eq '" + DocNo + "'&$format=json";
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {

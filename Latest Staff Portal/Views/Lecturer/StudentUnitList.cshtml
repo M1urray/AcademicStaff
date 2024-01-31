@@ -17,6 +17,11 @@
         padding: 0.1rem;
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div style="background-color: black;">
     <a href="#" onclick="BackToUnitsAllocation();" style="color:yellow"><<< Back To Units Allocation</a>
 </div>
@@ -54,7 +59,7 @@
             dataType: 'HTML',
             contentType: false,
             processData: false,
-            url: '@Url.Action("LoadStudentUnitList", "lecturer")',
+            url: '@Url.Action("LoadStudentUnitList", "Lecturer")',
             success: function (data) {
                 $("#divStudentList").html(data);
                 if (message != "") {
@@ -100,11 +105,10 @@
                 myTableArray.push(arrayOfThisRow);
             }
         });
-
         ShowProgress();
         $.ajax({
             type: "post",
-            url: '@Url.Action("savestudentmarks", "lecturer")',
+            url:'@Url.Action("savestudentmarks", "Lecturer")',
             data: { headers: myTableHeaderArray, Rows: myTableArray },
             contenttype: "text/plain; charset=utf-8",
             success: function (data) {
@@ -115,59 +119,7 @@
                     }
                     else {
                         if (data.redirect == true) {
-                            window.location = '@Url.Action("CourseAllocationUnits", "lecturer")';
-                        }
-                        else {
-                            HideProgress();
-                            Swal.fire('Warning', data.message, 'warning');
-                        }
-                    }
-                }
-                else {
-                    HideProgress();
-                    Swal.fire('error', data.message, 'error');
-                }
-            },
-            error: function () {
-                if (data.success == false) {
-                    HideProgress();
-                    Swal.fire('error', data.message, 'error');
-                }
-            }
-        });
-    }
-    var SavePassFailtMarks = function () {
-        var myTableArray = [];
-        $('#dtPassFail tbody tr').each(function () {
-            var arrayOfThisRow = [];
-            var tableData = $(this).find('td');
-            if (tableData.length > 0) {
-                tableData.each(function () {
-                    if ($(this).find("select").length) {
-                        var myText = $(this).find("select").val();
-                        arrayOfThisRow.push(myText);
-                    }
-                    else arrayOfThisRow.push($(this).text());
-                });
-
-                myTableArray.push(arrayOfThisRow);
-            }
-        });
-        ShowProgress();
-        $.ajax({
-            type: "post",
-            url: '@Url.Action("SavePassFailStudentMarks", "lecturer")',
-            data: { Rows: myTableArray },
-            contenttype: "text/plain; charset=utf-8",
-            success: function (data) {
-                if (data.success == true) {
-                    if (data.failed == false) {
-                        HideProgress();
-                        LoadStudentList(data.message);
-                    }
-                    else {
-                        if (data.redirect == true) {
-                            window.location = '@Url.Action("CourseAllocationUnits", "lecturer")';
+                            window.location = '@Url.Action("CourseAllocationUnits", "Lecturer")';
                         }
                         else {
                             HideProgress();
@@ -190,7 +142,7 @@
     }
     var BackToUnitsAllocation = function () {
         ShowProgress();
-        window.location = '@Url.Action("CourseAllocationUnits", "lecturer")';
+        window.location = '@Url.Action("CourseAllocationUnits", "Lecturer")';
     }
     var UploadStudentMarks = function () {
         var filename; var base64String; var filetype;
@@ -210,7 +162,7 @@
                     base64String = getB64Str(cont);
                     ShowProgress();
                     $.ajax({
-                        url: '@Url.Action("UploadStudentMarks", "lecturer")',
+                        url: '@Url.Action("UploadStudentMarks", "Lecturer")',
                         datatype: "json",
                         type: "POST",
                         data: JSON.stringify({ base64Upload: base64String, fileName: filename, Extn: filetype }),
@@ -245,11 +197,10 @@
         }
         return window.btoa(binary);
     }
-    var PrintScoresheet = function (Type) {
+    var PrintScoresheet = function () {
         ShowProgress();
         $.ajax({
-            url: '@Url.Action("PrintScoreSheet", "lecturer")',
-            data: JSON.stringify({ Type: Type }),
+            url:'@Url.Action("PrintScoreSheet", "Lecturer")',
             datatype: "json",
             type: "POST",
             contentType: "application/json; charset = utf-8",

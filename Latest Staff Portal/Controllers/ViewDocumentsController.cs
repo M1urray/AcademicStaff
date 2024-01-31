@@ -9,7 +9,7 @@ using System.Web.Mvc;
 namespace Latest_Staff_Portal.Controllers
 {
     [CustomeAuthentication]
-    [CustomAuthorization(Role = "ALLUSERS")]
+    [CustomAuthorization(Role = "FULLTIME")]
     public class ViewDocumentsController : Controller
     {
         // GET: ViewDocuments
@@ -36,17 +36,14 @@ namespace Latest_Staff_Portal.Controllers
 
                     Credentials.ObjNav.PrintVoteBookBalance(Session["username"].ToString(), StaffDepartment, "VOTE BAL-" + filename + ".pdf");
                     filename = "VOTE BAL-" + filename + ".pdf";
-
-                    string DestPath = Server.MapPath("~/Downloads/");
-                    CommonClass.MoveFile(filename, DestPath);
-                    string DestinationPath = Server.MapPath("~/Downloads/" + filename);
-                    CommonClass.MoveFile(filename, DestinationPath);
-
+                    string fileDestinationPath = Server.MapPath("~/Downloads/");
+                    CommonClass.MoveFile(filename, fileDestinationPath);
+                    string DestinationPath = Credentials.fileDestinationPath + filename;
                     System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
                     if (file.Exists)
                     {
                         success = true;
-                        message = Credentials.fileDownLoads + filename;
+                        message = @"/Downloads/" + filename;
                     }
                     else
                     {

@@ -1,12 +1,10 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Latest_Staff_Portal.ViewModel;
-using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -89,13 +87,13 @@ namespace Latest_Staff_Portal.Models
             }
             return s;
         }
-        public static bool MoveFile(string FileName, string DestPath)
+        public static bool MoveFile(string FileName, string DestinationPath)
         {
             bool s = false;
             try
             {
                 string sourcefile = Credentials.fileSourcePath + FileName;
-                string destinationfile = DestPath + FileName;
+                string destinationfile = DestinationPath + FileName;
                 if (System.IO.File.Exists(destinationfile) == true)
                 {
                     System.IO.File.Delete(destinationfile);
@@ -113,23 +111,25 @@ namespace Latest_Staff_Portal.Models
             }
             return s;
         }
-        public static bool MoveFileDev(string FileName)
+        public static string StudentAttendance(string DocNo, string StdNo)
         {
-            bool s = false;
+            string s = "";
             try
             {
-                string sourcefile = Credentials.fileSourcePath + FileName;
-                string destinationfile = Credentials.fileDestinationPath + FileName;
-                if (System.IO.File.Exists(destinationfile) == true)
+                string page = "ClassAttendanceLines?$select=Attendance&$filter=Code eq '" + DocNo + "' and StudentNo eq '" + StdNo + "'&$format=json";
+
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
-                    System.IO.File.Delete(destinationfile);
-                    System.IO.File.Move(sourcefile, destinationfile);
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+                    foreach (JObject config in details["value"])
+                    {
+                        s = (string)config["Attendance"];
+                    }
                 }
-                if (System.IO.File.Exists(destinationfile) == false)
-                {
-                    System.IO.File.Move(sourcefile, destinationfile);
-                }
-                s = true;
             }
             catch (Exception ex)
             {
@@ -137,13 +137,15 @@ namespace Latest_Staff_Portal.Models
             }
             return s;
         }
-        public static bool MoveUploadedFile(string FilePath, string FileName)
+        public static bool MoveUploadedFile(string base64Upload, string FilePath, string FileName)
         {
             bool s = false;
             try
             {
+                CommonClass.SaveUploadedFile(base64Upload, FilePath);
+
                 string sourcefile = FilePath;
-                string destinationfile = Credentials.fileUploadsPath + FileName;
+                string destinationfile = "";// Credentials.fileUploadsPath + FileName;
                 if (System.IO.File.Exists(destinationfile) == true)
                 {
                     System.IO.File.Delete(destinationfile);
@@ -375,11 +377,11 @@ namespace Latest_Staff_Portal.Models
             }
             return Name;
         }
-        public static string GetEmployeeName2(string StaffNo)
+        public static string GetEmployeeGender(string StaffNo)
         {
-            string Name = "";
+            string gender = "";
 
-            string page = "EmployeeList?$select=First_Name,Middle_Name,Last_Name&$filter=User_ID eq '" + StaffNo + "'&$format=json";
+            string page = "EmployeeList?$select=Gender&$filter=No eq '" + StaffNo + "'&$format=json";
 
             HttpWebResponse httpResponse = Credentials.GetOdataData(page);
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -391,11 +393,11 @@ namespace Latest_Staff_Portal.Models
                 {
                     foreach (JObject config in details["value"])
                     {
-                        Name = (string)config["First_Name"] + " " + (string)config["Middle_Name"] + " " + (string)config["Last_Name"];
+                        gender = (string)config["Gender"];
                     }
                 }
             }
-            return Name;
+            return gender;
         }
         public static string GetEmployeeIDNo(string StaffNo)
         {
@@ -418,28 +420,6 @@ namespace Latest_Staff_Portal.Models
                 }
             }
             return IDNo;
-        }
-        public static string GetEmployeeGender(string StaffNo)
-        {
-            string gender = "";
-
-            string page = "EmployeeList?$select=Gender&$filter=No eq '" + StaffNo + "'&$format=json";
-
-            HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-
-                var details = JObject.Parse(result);
-                if (details["value"].Count() > 0)
-                {
-                    foreach (JObject config in details["value"])
-                    {
-                        gender = (string)config["Gender"];
-                    }
-                }
-            }
-            return gender;
         }
         public static bool SaveUploadedFile(string base64String, string filePath)
         {
@@ -560,16 +540,6 @@ namespace Latest_Staff_Portal.Models
                                                 }
                                             }
                                         }
-                                        else
-                                        {
-                                            Credentials.ObjNav.CancelMarkEntry(
-                                              studentNo: studentNo,
-                                              exam_Code: "",
-                                              unit: Unit,
-                                              semester: Sem,
-                                              entryType: (string)config["Code"]
-                                              );
-                                        }
                                     }
                                     j++;
                                 }
@@ -620,7 +590,7 @@ namespace Latest_Staff_Portal.Models
             bool Registered = false;
             try
             {
-                string page = "StudentUnits?$filter=Student_No eq '" + StdNo + "' and Semester eq '" + Sem + "' and Unit eq '" + Unit + "'&format=json";
+                string page = "StudentUnits?$filter=Student_No eq '" + StdNo + "' and Programme eq '" + Prog + "' and Semester eq '" + Sem + "' and Unit eq '" + Unit + "'&format=json";
 
                 HttpWebResponse httpResponseResC = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
@@ -658,7 +628,7 @@ namespace Latest_Staff_Portal.Models
             }
             return s;
         }
-        public static string StartMarkSheettReport(string Lec, string Prog, string Stage, string Sem, string Unit, string UnitName, string Campus, string ProgC, string classCode, string ImagePath, string rptpath)
+        public static string StartMarkSheettReport(string Lec, string Prog, string Stage, string Sem, string Unit, string UnitName, string Campus, string ProgC, string ImagePath, string rptpath)
         {
             string ScoresheetFile = "";
             try
@@ -807,13 +777,6 @@ namespace Latest_Staff_Portal.Models
                 PdfPCell cellRepaymentPeriodb = new PdfPCell(new Phrase(Unit + " - " + UnitName, fnttableHeader)) { Colspan = 3, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
                 tableHeader.AddCell(cellRepaymentPeriodb);
 
-                PdfPCell cellClassCode = new PdfPCell(new Phrase("Course Class :  ", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellClassCode);
-
-
-                PdfPCell cellClassCodedata = new PdfPCell(new Phrase(classCode, fnttableHeader)) { Colspan = 3, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellClassCodedata);
-
                 PdfPCell cellSem = new PdfPCell(new Phrase("Semester:  ", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
                 tableHeader.AddCell(cellSem);
 
@@ -831,6 +794,7 @@ namespace Latest_Staff_Portal.Models
 
 
                 #endregion
+
 
                 doc_LOAN_CALCULATOR_RPT.Add(tableHeader);
 
@@ -904,167 +868,138 @@ namespace Latest_Staff_Portal.Models
                 #endregion
 
                 //Sp get grades
-                int A = 0, A_ = 0, B__ = 0, B = 0, B_ = 0, C__ = 0, C = 0, C_ = 0, D__ = 0, D = 0, D_ = 0, F = 0, IncCount = 0, NGR = 0;
+                int A = 0, B = 0, C = 0, D = 0, F = 0, IncCount = 0;
 
                 #region Get Grades
                 int i = 1, No = 0;
 
-                decimal totalStudentMark = 0;
+                string pageStudentList = "StudentUnits?$filter=Programme eq '" + Prog + "' and Stage eq '" + Stage + "' and Semester eq '" + Sem + "' and Unit eq '" + Unit + "'&format=json";
 
-                DataTable datatable = StudentUnitList(Sem, Unit, classCode);
-                foreach (DataRow row in datatable.Rows)
+                HttpWebResponse httpResponseStudentList = Credentials.GetOdataData(pageStudentList);
+                using (var streamReader = new StreamReader(httpResponseStudentList.GetResponseStream()))
                 {
-                    string Name = row["Name"].ToString();
-                    string StudentNo = row["Student_No"].ToString();
-                    decimal Total = 0;
+                    var result = streamReader.ReadToEnd();
 
-                    PdfPCell col1 = new PdfPCell(new Phrase(i.ToString(), fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_LEFT };
-                    tableBody.AddCell(col1);
+                    var Studentdetails = JObject.Parse(result);
 
-                    PdfPCell col2 = new PdfPCell(new Phrase(StudentNo, fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_LEFT };
-                    tableBody.AddCell(col2);
-
-                    PdfPCell col3 = new PdfPCell(new Phrase(Name, fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_LEFT };
-                    tableBody.AddCell(col3);
-                    bool MarkExist = false, MarkDoesNotExist = true, ExistMark = false;
-                    decimal ExamMark = 0;
-
-                    if (details["value"].Count() > 0)
+                    if (Studentdetails["value"].Count() > 0)
                     {
-                        foreach (JObject config1 in details["value"])
+                        foreach (JObject config in Studentdetails["value"])
                         {
-                            string TextValue = "";
-                            string pageResults = "ExamResults?$top=1&$filter=Student_No eq '" + StudentNo + "' and Semester eq '" + Sem + "' and ExamType eq '" + config1["Code"].ToString() + "' and Unit eq '" + Unit + "' and Cancelled eq false&format=json";
-                            HttpWebResponse httpResponseResults = Credentials.GetOdataData(pageResults);
-                            using (var streamReaderResults = new StreamReader(httpResponseResults.GetResponseStream()))
+                            string Name = (string)config["Name"];
+                            string StudentNo = (string)config["Student_No"];
+                            decimal Total = 0;
+
+                            PdfPCell col1 = new PdfPCell(new Phrase(i.ToString(), fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_LEFT };
+                            tableBody.AddCell(col1);
+
+                            PdfPCell col2 = new PdfPCell(new Phrase(StudentNo, fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_LEFT };
+                            tableBody.AddCell(col2);
+
+                            PdfPCell col3 = new PdfPCell(new Phrase(Name, fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_LEFT };
+                            tableBody.AddCell(col3);
+                            bool MarkExist = false, MarkDoesNotExist = true;
+                            decimal ExamMark = 0;
+
+                            if (details["value"].Count() > 0)
                             {
-                                var result1 = streamReaderResults.ReadToEnd();
-                                var details1 = JObject.Parse(result1);
-                                if (details1["value"].Count() > 0)
+                                foreach (JObject config1 in details["value"])
                                 {
-                                    foreach (JObject config2 in details1["value"])
+                                    string TextValue = "";
+                                    string pageResults = "ExamResults?$filter=Student_No eq '" + StudentNo + "' and Semester eq '" + Sem + "' and ExamType eq '" + config1["Code"].ToString() + "' and Unit eq '" + Unit + "'&format=json";
+                                    HttpWebResponse httpResponseResults = Credentials.GetOdataData(pageResults);
+                                    using (var streamReaderResults = new StreamReader(httpResponseResults.GetResponseStream()))
                                     {
-                                        TextValue = "";
-                                        ExamMark = 0;
-                                        TextValue = config2["Score"].ToString();
-                                        PdfPCell col4 = new PdfPCell();
-                                        if (TextValue != "")
+                                        var result1 = streamReaderResults.ReadToEnd();
+                                        var details1 = JObject.Parse(result1);
+                                        if (details1["value"].Count() > 0)
                                         {
-                                            MarkExist = true;
-                                            ExistMark = true;
-                                            ExamMark = Convert.ToDecimal(TextValue);
-                                            Total = Total + ExamMark;
-                                            col4 = new PdfPCell(new Phrase(ExamMark.ToString(), fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
-                                            tableBody.AddCell(col4);
+                                            foreach (JObject config2 in details1["value"])
+                                            {
+                                                TextValue = "";
+                                                ExamMark = 0;
+                                                TextValue = config2["Score"].ToString();
+                                                PdfPCell col4 = new PdfPCell();
+                                                if (TextValue != "")
+                                                {
+                                                    MarkExist = true;
+                                                    ExamMark = Convert.ToDecimal(TextValue);
+                                                    Total = Total + ExamMark;
+                                                    col4 = new PdfPCell(new Phrase(ExamMark.ToString(), fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
+                                                    tableBody.AddCell(col4);
+                                                }
+                                                else
+                                                {
+                                                    MarkDoesNotExist = false;
+                                                    col4 = new PdfPCell(new Phrase("-", fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
+                                                    tableBody.AddCell(col4);
+                                                }
+                                            }
                                         }
                                         else
                                         {
+                                            PdfPCell col4 = new PdfPCell();
                                             MarkDoesNotExist = false;
-                                            ExistMark = true;
                                             col4 = new PdfPCell(new Phrase("-", fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
                                             tableBody.AddCell(col4);
                                         }
                                     }
                                 }
-                                else
+                            }
+
+                            string Grade = "";
+                            if (MarkExist && MarkDoesNotExist)
+                            {
+                                Grade = Credentials.ObjNav.GetGrade(Convert.ToDecimal(Total), Unit, Prog);
+                                if (Grade == "A")
                                 {
-                                    PdfPCell col4 = new PdfPCell();
-                                    MarkDoesNotExist = false;
-                                    col4 = new PdfPCell(new Phrase("-", fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
-                                    tableBody.AddCell(col4);
+                                    A++;
+                                }
+                                if (Grade == "B")
+                                {
+                                    B++;
+                                }
+                                if (Grade == "C")
+                                {
+                                    C++;
+                                }
+                                if (Grade == "D")
+                                {
+                                    D++;
+                                }
+                                if (Grade == "F")
+                                {
+                                    F++;
                                 }
                             }
-                        }
-                    }
+                            else
+                            {
+                                Grade = "Inc";
+                                IncCount++;
 
-                    string Grade = "";
-                    if (MarkExist && MarkDoesNotExist)
-                    {
-                        Grade = Credentials.ObjNav.GetGrade(Convert.ToDecimal(Total), Unit, Prog);
-                        if (Grade == "A")
-                        {
-                            A++;
-                        }
-                        else if (Grade == "A-")
-                        {
-                            A_++;
-                        }
-                        else if (Grade == "B+")
-                        {
-                            B__++;
-                        }
-                        else if (Grade == "B")
-                        {
-                            B++;
-                        }
-                        else if (Grade == "B-")
-                        {
-                            B_++;
-                        }
-                        else if (Grade == "C+")
-                        {
-                            C__++;
-                        }
-                        else if (Grade == "C")
-                        {
-                            C++;
-                        }
-                        else if (Grade == "C-")
-                        {
-                            C_++;
-                        }
-                        else if (Grade == "D+")
-                        {
-                            D__++;
-                        }
-                        else if (Grade == "D")
-                        {
-                            D++;
-                        }
-                        else if (Grade == "D-")
-                        {
-                            D_++;
-                        }
-                        else if (Grade == "F")
-                        {
-                            F++;
-                        }
-                        else { }
-                    }
-                    else
-                    {
-                        if (ExistMark)
-                        {
-                            Grade = "Inc";
-                            IncCount++;
-                        }
-                        else
-                        {
-                            Grade = "NGR";
-                            NGR++;
-                        }
-                    }
-                    PdfPCell col8 = new PdfPCell();
-                    if (MarkExist)
-                    {
-                        col8 = new PdfPCell(new Phrase(Total.ToString(), fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
-                        tableBody.AddCell(col8);
-                    }
-                    else
-                    {
-                        col8 = new PdfPCell(new Phrase("-", fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
-                        tableBody.AddCell(col8);
-                    }
+                            }
+                            PdfPCell col8 = new PdfPCell();
+                            if (MarkExist)
+                            {
+                                col8 = new PdfPCell(new Phrase(Total.ToString(), fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
+                                tableBody.AddCell(col8);
+                            }
+                            else
+                            {
+                                col8 = new PdfPCell(new Phrase("-", fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
+                                tableBody.AddCell(col8);
+                            }
 
-                    PdfPCell col9 = new PdfPCell(new Phrase(Grade, fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
-                    tableBody.AddCell(col9);
+                            PdfPCell col9 = new PdfPCell(new Phrase(Grade, fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
+                            tableBody.AddCell(col9);
 
-                    totalStudentMark = totalStudentMark + Total;
-                    i++;
-                    No++;
+                            #region Horizontal line
+                            i++;
+                            No++;
+                            #endregion
+                        }
+                    }
                 }
-
-                decimal ClassAverage = Math.Round((totalStudentMark / (No - (IncCount + NGR))), 2);
 
                 PdfPCell border3 = new PdfPCell(new Phrase("", fnttableHeader)) { Colspan = CellsNo, PaddingBottom = 20, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
                 tableBody.AddCell(border3);
@@ -1088,28 +1023,11 @@ namespace Latest_Staff_Portal.Models
 
 
                 #region GradeKeySummery
-                PdfPCell space1A = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(space1A);
-
-                PdfPCell GAGradeA = new PdfPCell(new Phrase("Class Average", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 1, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(GAGradeA);
-
-                PdfPCell GAA = new PdfPCell(new Phrase(ClassAverage.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 1, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GAA);
-
-                PdfPCell GKBGradeA = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GKBGradeA);
-
-                #region hr line
-                PdfPCell GKBGradeHR = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Colspan = 4, Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GKBGradeHR);
-                #endregion
-
 
                 PdfPCell HeaderSpace = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
                 tableGradeSummery.AddCell(HeaderSpace);
 
-                PdfPCell GradeHeader = new PdfPCell(new Phrase("GRADES SUMMARY", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Colspan = 2, Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
+                PdfPCell GradeHeader = new PdfPCell(new Phrase("GRADES SUMMERY", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Colspan = 2, Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
                 tableGradeSummery.AddCell(GradeHeader);
 
                 PdfPCell GKAGrade = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
@@ -1127,30 +1045,6 @@ namespace Latest_Staff_Portal.Models
                 PdfPCell GKBGrade = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
                 tableGradeSummery.AddCell(GKBGrade);
 
-                PdfPCell space11 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(space11);
-
-                PdfPCell GA_Grade = new PdfPCell(new Phrase("A-", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(GA_Grade);
-
-                PdfPCell GA_ = new PdfPCell(new Phrase(A_.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GA_);
-
-                PdfPCell GKBGrade_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GKBGrade_);
-
-                PdfPCell space21 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(space21);
-
-                PdfPCell GB__Grade = new PdfPCell(new Phrase("B+", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GB__Grade);
-
-                PdfPCell GB__ = new PdfPCell(new Phrase(B__.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GB__);
-
-                PdfPCell GKCGrade__ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GKCGrade__);
-
                 PdfPCell space2 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
                 tableGradeSummery.AddCell(space2);
 
@@ -1162,30 +1056,6 @@ namespace Latest_Staff_Portal.Models
 
                 PdfPCell GKCGrade = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
                 tableGradeSummery.AddCell(GKCGrade);
-
-                PdfPCell space2_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(space2_);
-
-                PdfPCell GB_Grade = new PdfPCell(new Phrase("B-", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GB_Grade);
-
-                PdfPCell GB_ = new PdfPCell(new Phrase(B_.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GB_);
-
-                PdfPCell GKCGrade_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GKCGrade_);
-
-                PdfPCell space31 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(space31);
-
-                PdfPCell GCGrade__ = new PdfPCell(new Phrase("C+", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GCGrade__);
-
-                PdfPCell GC__ = new PdfPCell(new Phrase(C__.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GC__);
-
-                PdfPCell GKGrade__ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GKGrade__);
 
                 PdfPCell space3 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
                 tableGradeSummery.AddCell(space3);
@@ -1199,30 +1069,6 @@ namespace Latest_Staff_Portal.Models
                 PdfPCell GKGrade = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
                 tableGradeSummery.AddCell(GKGrade);
 
-                PdfPCell space3_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(space3_);
-
-                PdfPCell GCGrade_ = new PdfPCell(new Phrase("C-", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GCGrade_);
-
-                PdfPCell GC_ = new PdfPCell(new Phrase(C_.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GC_);
-
-                PdfPCell GKGrade_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GKGrade_);
-
-                PdfPCell space41 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(space41);
-
-                PdfPCell GDGrade__ = new PdfPCell(new Phrase("D+", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GDGrade__);
-
-                PdfPCell GD__ = new PdfPCell(new Phrase(D__.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GD__);
-
-                PdfPCell GEKGrade__ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GEKGrade__);
-
                 PdfPCell space4 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
                 tableGradeSummery.AddCell(space4);
 
@@ -1234,18 +1080,6 @@ namespace Latest_Staff_Portal.Models
 
                 PdfPCell GEKGrade = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
                 tableGradeSummery.AddCell(GEKGrade);
-
-                PdfPCell space4_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(space4_);
-
-                PdfPCell GDGrade_ = new PdfPCell(new Phrase("D-", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GDGrade_);
-
-                PdfPCell GD_ = new PdfPCell(new Phrase(D_.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GD_);
-
-                PdfPCell GEKGrade_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GEKGrade_);
 
                 PdfPCell space5 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
                 tableGradeSummery.AddCell(space5);
@@ -1271,21 +1105,8 @@ namespace Latest_Staff_Portal.Models
                 PdfPCell space7 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
                 tableGradeSummery.AddCell(space7);
 
-                PdfPCell spaceNG = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(spaceNG);
-
-                PdfPCell GincNoGrade = new PdfPCell(new Phrase("NGR", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GincNoGrade);
-
-                PdfPCell GIncNoG = new PdfPCell(new Phrase(NGR.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableGradeSummery.AddCell(GIncNoG);
-
-                PdfPCell space7NoG = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(space7NoG);
-
-
-                PdfPCell space111 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                tableGradeSummery.AddCell(space111);
+                PdfPCell space11 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
+                tableGradeSummery.AddCell(space11);
 
                 PdfPCell GTotal = new PdfPCell(new Phrase("Total", FontFactory.GetFont("Arial", 12, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 1, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
                 tableGradeSummery.AddCell(GTotal);
@@ -1312,10 +1133,7 @@ namespace Latest_Staff_Portal.Models
 
                 PdfPCell CheckIn = new PdfPCell(new Phrase("Signed by: ......................................................................", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Colspan = 2, Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
                 tableFooter.AddCell(CheckIn);
-                #region Horizontal line
-                PdfPCell hrLine = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Colspan = 4, Border = 0, HorizontalAlignment = Element.ALIGN_CENTER };
-                tableHeader.AddCell(hrLine);
-                #endregion
+
                 PdfPCell Signature2 = new PdfPCell(new Phrase("Signed by: ....................................................................", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Colspan = 2, Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
                 tableFooter.AddCell(Signature2);
 
@@ -1380,594 +1198,6 @@ namespace Latest_Staff_Portal.Models
                 ex.Data.Clear();
             }
             return ScoresheetFile;
-        }
-        public static string StartPassFailMarkSheettReport(string Lec, string Prog, string Stage, string Sem, string Unit, string UnitName, string Campus, string ProgC, string classCode, string ImagePath, string rptpath)
-        {
-            string ScoresheetFile = "";
-            try
-            {
-                //string rptpath = Server.MapPath("~/MarkSheets/");
-                #region Variables
-
-                Font TitleReport = FontFactory.GetFont("Arial", 9, Font.BOLD, BaseColor.BLACK);
-                Font tableTh = FontFactory.GetFont("Arial", 9, Font.BOLD, BaseColor.BLACK);
-                Font tableTd = FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK);
-                Font fnttableHeader = FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLUE);
-
-                BaseColor RowTh = new BaseColor(191, 219, 255);
-                BaseColor EvenTd = new BaseColor(227, 234, 235);
-                BaseColor OddTd = new BaseColor(255, 255, 255);
-
-                #endregion
-
-                #region =============================== CREATE PDF  ===============================
-
-                string fileName = String.Format("Mark_Sheet_{0}.pdf", Lec.Replace("/", "_"));
-                string filenamePath = String.Format("{0}\\{1}", rptpath, Unit.Replace("/", "_") + "-" + fileName);
-                //string ImagePath = Server.MapPath("~/images");
-
-                #region Check If File exist
-                try
-                {
-                    if (File.Exists(filenamePath))
-                    {
-                        File.Delete(filenamePath);
-                    }
-                }
-                catch (Exception Ex)
-                {
-                    Ex.Data.Clear();
-                }
-                #endregion
-
-                Document doc_LOAN_CALCULATOR_RPT = new Document(PageSize.A4);
-                doc_LOAN_CALCULATOR_RPT.SetMargins(20f, 10f, 20f, 10f); // Left, Bottom,Top,Right
-                doc_LOAN_CALCULATOR_RPT.HtmlStyleClass = "background:red";
-
-
-                MemoryStream pdfStream = new MemoryStream();
-                PdfWriter pdfWriter = PdfWriter.GetInstance(doc_LOAN_CALCULATOR_RPT, new FileStream(filenamePath, FileMode.Create));
-
-                doc_LOAN_CALCULATOR_RPT.Open();
-
-                #endregion
-
-                #region ++++++++++++++++++ REPORT TABLE Logo++++++++++++++++++++++++++++++++++
-
-
-                string Logo_Path = String.Format("{0}/Logo.png", ImagePath);
-
-                PdfPTable tableFirstApplicationLogo = new PdfPTable(3) { TotalWidth = 560f, LockedWidth = true };
-                float[] widthsLogo = new float[] { 225f, 110f, 225f };
-                tableFirstApplicationLogo.SetWidths(widthsLogo);
-                tableFirstApplicationLogo.DefaultCell.Border = PdfPCell.NO_BORDER;
-
-
-                PdfPCell Logo_a6 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Border = 0 };
-                tableFirstApplicationLogo.AddCell(Logo_a6);
-
-                iTextSharp.text.Image Logo_jpg = iTextSharp.text.Image.GetInstance(Logo_Path);
-                Logo_jpg.ScaleToFit(80f, 60f);
-                Logo_jpg.Border = 0;
-                Logo_jpg.BorderWidth = 0;
-                Logo_jpg.UseVariableBorders = false;
-                Logo_jpg.Alignment = Element.ALIGN_CENTER;
-
-                tableFirstApplicationLogo.AddCell(Logo_jpg);
-
-                DateTime dt = DateTime.Now;
-                string daydatetome = String.Format("{0:f}", dt);
-
-                PdfPCell Logo_c = new PdfPCell(new Phrase("" + daydatetome, FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Border = 0, HorizontalAlignment = Element.ALIGN_RIGHT };
-                tableFirstApplicationLogo.AddCell(Logo_c);
-
-                PdfPCell Title2 = new PdfPCell(new Phrase("Individual Mark Sheet", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Colspan = 3, BorderWidthRight = 0f, BorderWidthLeft = 0f, BorderWidthTop = 0f, BorderWidthBottom = 0.6f, HorizontalAlignment = Element.ALIGN_CENTER };
-                tableFirstApplicationLogo.AddCell(Title2);
-
-
-                doc_LOAN_CALCULATOR_RPT.Add(tableFirstApplicationLogo);
-
-
-                #endregion
-
-                #region CREATE Header
-
-                PdfPTable tableHeader = new PdfPTable(4) { TotalWidth = 560f, LockedWidth = true, SpacingBefore = 5f, };
-                tableHeader.DefaultCell.Border = PdfPCell.NO_BORDER;
-
-                float[] widthsHeader = new float[] { 120f, 200f, 100f, 100f };
-                tableHeader.SetWidths(widthsHeader);
-
-
-                #region Header Details
-
-                PdfPCell cellLoanType = new PdfPCell(new Phrase("Lecturer Name :  ", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellLoanType);
-
-                PdfPCell cellLoanTypeb = new PdfPCell(new Phrase(CommonClass.GetEmployeeName(Lec), fnttableHeader)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellLoanTypeb);
-
-                PdfPCell cellLoanTypec = new PdfPCell(new Phrase("", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellLoanTypec);
-
-                PdfPCell AdmNo = new PdfPCell(new Phrase("", fnttableHeader)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(AdmNo);
-
-                PdfPCell cellLoanType1 = new PdfPCell(new Phrase("Lecturer Number :  ", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellLoanType1);
-
-                PdfPCell cellLoanTypeb1 = new PdfPCell(new Phrase(Lec, fnttableHeader)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellLoanTypeb1);
-
-                PdfPCell cellLoanTypec1 = new PdfPCell(new Phrase("", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellLoanTypec1);
-
-                PdfPCell AdmNo1 = new PdfPCell(new Phrase("", fnttableHeader)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(AdmNo1);
-
-                PdfPCell cellLoanType2 = new PdfPCell(new Phrase("Campus :  ", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellLoanType2);
-
-                PdfPCell cellLoanTypeb2 = new PdfPCell(new Phrase(Campus, fnttableHeader)) { Colspan = 2, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellLoanTypeb2);
-
-                PdfPCell cellLoanTypec2 = new PdfPCell(new Phrase("", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellLoanTypec2);
-
-
-                //String.Format("{0:0,0.00}", Monthly_Payment)
-
-                PdfPCell lblDept = new PdfPCell(new Phrase("Programme :  ", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(lblDept);
-
-                PdfPCell DeptName = new PdfPCell(new Phrase(Prog + "-" + CommonClass.GetProgrammeName(Prog), fnttableHeader)) { Colspan = 3, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(DeptName);
-
-                PdfPCell cellRepaymentPeriod = new PdfPCell(new Phrase("Unit :  ", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellRepaymentPeriod);
-
-
-                PdfPCell cellRepaymentPeriodb = new PdfPCell(new Phrase(Unit + " - " + UnitName, fnttableHeader)) { Colspan = 3, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellRepaymentPeriodb);
-
-                PdfPCell cellClassCode = new PdfPCell(new Phrase("Course Class :  ", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellClassCode);
-
-
-                PdfPCell cellClassCodedata = new PdfPCell(new Phrase(classCode, fnttableHeader)) { Colspan = 3, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellClassCodedata);
-
-                PdfPCell cellSem = new PdfPCell(new Phrase("Semester:  ", tableTd)) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellSem);
-
-
-                PdfPCell cellSemester = new PdfPCell(new Phrase(Sem, fnttableHeader)) { Colspan = 3, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableHeader.AddCell(cellSemester);
-
-
-                #endregion
-
-                #region Horizontal line
-
-                PdfPCell hrlive = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Colspan = 4, Border = 0, BorderWidthRight = 0f, BorderWidthLeft = 0f, BorderWidthTop = 0f, BorderWidthBottom = 0.5f, HorizontalAlignment = Element.ALIGN_CENTER };
-                tableHeader.AddCell(hrlive);
-
-
-                #endregion
-
-                doc_LOAN_CALCULATOR_RPT.Add(tableHeader);
-
-                #endregion
-
-                #region +++++++++++ REPORT BODY +++++++++++++++
-
-                PdfPTable tableBody = new PdfPTable(4) { TotalWidth = 560f, LockedWidth = true, SpacingBefore = 5f, SplitRows = false };
-                tableBody.DefaultCell.Border = PdfPCell.NO_BORDER;
-
-                float[] widthsBody = new float[] { 40f, 90f, 120f, 50f };
-
-                tableBody.SetWidths(widthsBody);
-
-                #region Items
-                PdfPCell ItemsHeader1 = new PdfPCell(new Phrase("#", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableBody.AddCell(ItemsHeader1);
-
-                PdfPCell ItemsHeader2 = new PdfPCell(new Phrase("Reg. No", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableBody.AddCell(ItemsHeader2);
-
-                PdfPCell ItemsHeader3 = new PdfPCell(new Phrase("Name of Candidate", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableBody.AddCell(ItemsHeader3);
-
-                PdfPCell ItemsHeader9 = new PdfPCell(new Phrase("Grade", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Border = 0, HorizontalAlignment = Element.ALIGN_CENTER };
-                tableBody.AddCell(ItemsHeader9);
-
-                #region Horizontal line
-
-                PdfPCell hrline = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Colspan = 4, Border = 0, BorderWidthRight = 0f, BorderWidthLeft = 0f, BorderWidthTop = 0f, BorderWidthBottom = 0.5f, HorizontalAlignment = Element.ALIGN_CENTER };
-                tableBody.AddCell(hrline);
-
-                //BorderWidthRight = 0f, BorderWidthLeft = 0f, BorderWidthTop = 0f,
-
-                #endregion
-
-                //Sp get grades
-                int A = 0, A_ = 0, B__ = 0, B = 0, B_ = 0, C__ = 0, C = 0, C_ = 0, D__ = 0, D = 0, D_ = 0, F = 0, IncCount = 0, NGR = 0;
-
-                #region Get Grades
-                int i = 1, No = 0;
-
-                decimal totalStudentMark = 0;
-
-                DataTable datatable = StudentUnitList(Sem, Unit, classCode);
-                foreach (DataRow row in datatable.Rows)
-                {
-                    string Name = row["Name"].ToString();
-                    string StudentNo = row["Student_No"].ToString();
-                    string Grade = row["Grade"].ToString();
-
-                    PdfPCell col1 = new PdfPCell(new Phrase(i.ToString(), fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_LEFT };
-                    tableBody.AddCell(col1);
-
-                    PdfPCell col2 = new PdfPCell(new Phrase(StudentNo, fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_LEFT };
-                    tableBody.AddCell(col2);
-
-                    PdfPCell col3 = new PdfPCell(new Phrase(Name, fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_LEFT };
-                    tableBody.AddCell(col3);
-
-
-                    PdfPCell col4 = new PdfPCell();
-                    if (Grade != "")
-                    {
-                        col4 = new PdfPCell(new Phrase(Grade, fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
-                        tableBody.AddCell(col4);
-                    }
-                    else
-                    {
-                        col4 = new PdfPCell(new Phrase("-", fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
-                        tableBody.AddCell(col4);
-                    }
-                    i++;
-                    No++;
-                }
-
-                PdfPCell border3 = new PdfPCell(new Phrase("", fnttableHeader)) { Colspan = 4, PaddingBottom = 20, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableBody.AddCell(border3);
-                #endregion
-
-
-                doc_LOAN_CALCULATOR_RPT.Add(tableBody);
-
-                #endregion
-
-                //#region GradeSummery
-                //PdfPTable tableGradeSummery = new PdfPTable(4) { TotalWidth = 560f, LockedWidth = true, SpacingBefore = 5f, };
-                //tableGradeSummery.DefaultCell.Border = PdfPCell.NO_BORDER;
-                //tableGradeSummery.KeepTogether = true;
-
-                //float[] widthsGradeSummery = new float[] { 40f, 60f, 60f, 40f };
-                //tableGradeSummery.SetWidths(widthsGradeSummery);
-
-                //PdfPCell SpaceGradeSum = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Colspan = 4, Border = 0, HorizontalAlignment = Element.ALIGN_CENTER };
-                //tableHeader.AddCell(SpaceGradeSum);
-
-                //#region GradeKeySummery
-                //PdfPCell HeaderSpace = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(HeaderSpace);
-
-                //PdfPCell GradeHeader = new PdfPCell(new Phrase("GRADES SUMMERY", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Colspan = 2, Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(GradeHeader);
-
-                //PdfPCell GKAGrade = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GKAGrade);
-
-                //PdfPCell space1 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space1);
-
-                //PdfPCell GAGrade = new PdfPCell(new Phrase("A", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(GAGrade);
-
-                //PdfPCell GA = new PdfPCell(new Phrase(A.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GA);
-
-                //PdfPCell GKBGrade = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GKBGrade);
-
-                //PdfPCell space11 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space11);
-
-                //PdfPCell GA_Grade = new PdfPCell(new Phrase("A-", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(GA_Grade);
-
-                //PdfPCell GA_ = new PdfPCell(new Phrase(A_.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GA_);
-
-                //PdfPCell GKBGrade_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GKBGrade_);
-
-                //PdfPCell space21 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space21);
-
-                //PdfPCell GB__Grade = new PdfPCell(new Phrase("B+", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GB__Grade);
-
-                //PdfPCell GB__ = new PdfPCell(new Phrase(B__.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GB__);
-
-                //PdfPCell GKCGrade__ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GKCGrade__);
-
-                //PdfPCell space2 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space2);
-
-                //PdfPCell GBGrade = new PdfPCell(new Phrase("B", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GBGrade);
-
-                //PdfPCell GB = new PdfPCell(new Phrase(B.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GB);
-
-                //PdfPCell GKCGrade = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GKCGrade);
-
-                //PdfPCell space2_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space2_);
-
-                //PdfPCell GB_Grade = new PdfPCell(new Phrase("B-", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GB_Grade);
-
-                //PdfPCell GB_ = new PdfPCell(new Phrase(B_.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GB_);
-
-                //PdfPCell GKCGrade_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GKCGrade_);
-
-                //PdfPCell space31 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space31);
-
-                //PdfPCell GCGrade__ = new PdfPCell(new Phrase("C+", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GCGrade__);
-
-                //PdfPCell GC__ = new PdfPCell(new Phrase(C__.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GC__);
-
-                //PdfPCell GKGrade__ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GKGrade__);
-
-                //PdfPCell space3 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space3);
-
-                //PdfPCell GCGrade = new PdfPCell(new Phrase("C", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GCGrade);
-
-                //PdfPCell GC = new PdfPCell(new Phrase(C.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GC);
-
-                //PdfPCell GKGrade = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GKGrade);
-
-                //PdfPCell space3_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space3_);
-
-                //PdfPCell GCGrade_ = new PdfPCell(new Phrase("C-", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GCGrade_);
-
-                //PdfPCell GC_ = new PdfPCell(new Phrase(C_.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GC_);
-
-                //PdfPCell GKGrade_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GKGrade_);
-
-                //PdfPCell space41 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space41);
-
-                //PdfPCell GDGrade__ = new PdfPCell(new Phrase("D+", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GDGrade__);
-
-                //PdfPCell GD__ = new PdfPCell(new Phrase(D__.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GD__);
-
-                //PdfPCell GEKGrade__ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GEKGrade__);
-
-                //PdfPCell space4 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space4);
-
-                //PdfPCell GDGrade = new PdfPCell(new Phrase("D", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GDGrade);
-
-                //PdfPCell GD = new PdfPCell(new Phrase(D.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GD);
-
-                //PdfPCell GEKGrade = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GEKGrade);
-
-                //PdfPCell space4_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space4_);
-
-                //PdfPCell GDGrade_ = new PdfPCell(new Phrase("D-", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GDGrade_);
-
-                //PdfPCell GD_ = new PdfPCell(new Phrase(D_.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GD_);
-
-                //PdfPCell GEKGrade_ = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GEKGrade_);
-
-                //PdfPCell space5 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space5);
-
-                //PdfPCell GEGrade = new PdfPCell(new Phrase("F", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GEGrade);
-
-                //PdfPCell GE = new PdfPCell(new Phrase(F.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GE);
-
-                //PdfPCell space6 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space6);
-
-                //PdfPCell space10 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space10);
-
-                //PdfPCell GincGrade = new PdfPCell(new Phrase("Incomplete", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GincGrade);
-
-                //PdfPCell GInc = new PdfPCell(new Phrase(IncCount.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GInc);
-
-                //PdfPCell space7 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space7);
-
-                //PdfPCell spaceNG = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(spaceNG);
-
-                //PdfPCell GincNoGrade = new PdfPCell(new Phrase("NGR", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GincNoGrade);
-
-                //PdfPCell GIncNoG = new PdfPCell(new Phrase(NGR.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GIncNoG);
-
-                //PdfPCell space7NoG = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space7NoG);
-
-
-                //PdfPCell space111 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space111);
-
-                //PdfPCell GTotal = new PdfPCell(new Phrase("Total", FontFactory.GetFont("Arial", 12, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 1, BorderWidthRight = 0, BorderWidthTop = 1, BorderWidthBottom = 1, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GTotal);
-
-                //PdfPCell GTotalCount = new PdfPCell(new Phrase(No.ToString(), FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { BorderWidthLeft = 0, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 1, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                //tableGradeSummery.AddCell(GTotalCount);
-
-                //PdfPCell space12 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_MIDDLE };
-                //tableGradeSummery.AddCell(space12);
-                //#endregion
-                //#endregion
-
-                //doc_LOAN_CALCULATOR_RPT.Add(tableGradeSummery);
-                #region Signature
-
-                PdfPTable tableFooter = new PdfPTable(4) { TotalWidth = 560f, LockedWidth = true, SpacingBefore = 5f, };
-                tableFooter.DefaultCell.Border = PdfPCell.NO_BORDER;
-
-                float[] widthsFooter = new float[] { 80f, 200f, 130f, 150f };
-                tableFooter.SetWidths(widthsFooter);
-
-                PdfPCell Space = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Colspan = 4, Border = 0, HorizontalAlignment = Element.ALIGN_CENTER };
-                tableHeader.AddCell(Space);
-
-                PdfPCell CheckIn = new PdfPCell(new Phrase("Signed by: ......................................................................", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Colspan = 2, Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableFooter.AddCell(CheckIn);
-                #region Horizontal line
-                PdfPCell hrLine = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK))) { Colspan = 4, Border = 0, HorizontalAlignment = Element.ALIGN_CENTER };
-                tableHeader.AddCell(hrLine);
-                #endregion
-                PdfPCell Signature2 = new PdfPCell(new Phrase("Signed by: ....................................................................", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Colspan = 2, Border = 0, PaddingTop = 10, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableFooter.AddCell(Signature2);
-
-                PdfPCell DateSignature = new PdfPCell(new Phrase("Internal Examiner                  /Date", FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK))) { Colspan = 2, Border = 0, HorizontalAlignment = Element.ALIGN_CENTER };
-                tableFooter.AddCell(DateSignature);
-
-                PdfPCell signature3 = new PdfPCell(new Phrase("External Examiner                  /Date", FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK))) { Colspan = 2, Border = 0, HorizontalAlignment = Element.ALIGN_CENTER };
-                tableFooter.AddCell(signature3);
-
-                PdfPCell emptycell5 = new PdfPCell(new Phrase("", FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK))) { Colspan = 4, PaddingBottom = 10, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableFooter.AddCell(emptycell5);
-
-                PdfPCell CheckIn2 = new PdfPCell(new Phrase("Signed by: ......................................................................", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Colspan = 2, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableFooter.AddCell(CheckIn2);
-
-                PdfPCell Signature4 = new PdfPCell(new Phrase("Signed by: ....................................................................", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK))) { Colspan = 2, Border = 0, HorizontalAlignment = Element.ALIGN_LEFT };
-                tableFooter.AddCell(Signature4);
-
-                PdfPCell DateSignature2 = new PdfPCell(new Phrase("Head of Department                  /Date", FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK))) { Colspan = 2, Border = 0, HorizontalAlignment = Element.ALIGN_CENTER };
-                tableFooter.AddCell(DateSignature2);
-
-                PdfPCell signature6 = new PdfPCell(new Phrase("Dean/Director                  /Date", FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK))) { Colspan = 2, Border = 0, HorizontalAlignment = Element.ALIGN_CENTER };
-                tableFooter.AddCell(signature6);
-
-                doc_LOAN_CALCULATOR_RPT.Add(tableFooter);
-                #endregion
-
-                #endregion
-
-                pdfWriter.CloseStream = true;
-                doc_LOAN_CALCULATOR_RPT.Close();
-
-                #region Download document
-
-
-                string filepath, file_download = "";
-                file_download = rptpath + "\\MarkSheets\\";
-                filepath = filenamePath;
-                string filename = Path.GetFileName(filepath);
-                try
-                {
-                    string Filepath = filenamePath;
-                    if (null != Filepath)
-                    {
-                        if (File.Exists(Filepath))
-                        {
-                            String FileName = Path.GetFileName(Filepath);
-                            ScoresheetFile = FileName;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ex.Data.Clear();
-                }
-
-                #endregion
-
-            }
-            catch (Exception ex)
-            {
-                ex.Data.Clear();
-            }
-            return ScoresheetFile;
-        }
-        protected static DataTable StudentUnitList(string Sem, string Unit, string classCode)
-        {
-            DataTable dtMenu = new DataTable();
-            try
-            {
-                DataColumn dcMenuDocNo = new DataColumn("Student_No", typeof(System.String));
-                dtMenu.Columns.Add(dcMenuDocNo);
-                DataColumn dcMenuName = new DataColumn("Name", typeof(System.String));
-                dtMenu.Columns.Add(dcMenuName);
-                DataColumn dcMenuGrade = new DataColumn("Grade", typeof(System.String));
-                dtMenu.Columns.Add(dcMenuGrade);
-
-                string pageStudentList = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Unit_Class_Code eq '" + classCode + "' and Unit_Class_Code ne ''&$format=json";
-                HttpWebResponse httpResponseStudentList = Credentials.GetOdataData(pageStudentList);
-                using (var streamReader = new StreamReader(httpResponseStudentList.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-                    if (details["value"].Count() > 0)
-                    {
-                        DataRow datatRow;
-                        foreach (JObject config in details["value"])
-                        {
-                            datatRow = dtMenu.NewRow();
-                            datatRow[0] = (string)config["Student_No"];
-                            datatRow[1] = (string)config["Name"];
-                            datatRow[2] = (string)config["Grade_Prefix"];
-                            dtMenu.Rows.Add(datatRow);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.Data.Clear();
-            }
-            DataView view = new DataView(dtMenu);
-            dtMenu = view.ToTable(true, "Student_No", "Name", "Grade");
-            dtMenu.DefaultView.Sort = "Student_No ASC";
-            return dtMenu;
         }
         protected static int ReturnNumberofExams(string ProgC)
         {
@@ -2044,59 +1274,16 @@ namespace Latest_Staff_Portal.Models
             }
             return s;
         }
-        public static string GetEmployeeJobCategory(string StaffNo)
+        public static decimal[] GetLeaveBal(string StaffNo, string LvType)
         {
-            string Category = "";
-
-            string page = "EmployeeList?$select=Salary_Category&$filter=No eq '" + StaffNo + "'&$format=json";
-
-            HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-
-                var details = JObject.Parse(result);
-                if (details["value"].Count() > 0)
-                {
-                    foreach (JObject config in details["value"])
-                    {
-                        Category = (string)config["Salary_Category"];
-                    }
-                }
-            }
-            return Category;
-        }
-        public static string[] GetAppraisalComments(string DocNo, string AppraiseeComment, string SupComment)
-        {
-            string[] comm = new string[2];
-
-            comm[0] = "";
-            comm[1] = "";
-            string page = "AppraisalCard?$select=" + AppraiseeComment + "," + SupComment + "&$filter=Appraisal_Code eq '" + DocNo + "'&format=json";
-
-            HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-
-                var details = JObject.Parse(result);
-                if (details["value"].Count() > 0)
-                {
-                    foreach (JObject config in details["value"])
-                    {
-                        comm[0] = (string)config["" + AppraiseeComment + ""];
-                        comm[1] = (string)config["" + SupComment + ""];
-                    }
-                }
-            }
-            return comm;
-        }
-        public static string StudentAttendance(string DocNo, string StdNo)
-        {
-            string s = "";
+            decimal[] LvDays = new decimal[5];
             try
             {
-                string page = "ClassAttendanceLines?$select=Attendance&$filter=Code eq '" + DocNo + "' and StudentNo eq '" + StdNo + "'&$format=json";
+                LeaveBalance newBal = new LeaveBalance();
+
+                #region LeaveBal
+                List<DropDownBalance> Lvbal = new List<DropDownBalance>();
+                string page = "HRLeaveLedger?$filter=EmployeeNo eq '" + StaffNo + "' and LeaveType eq '" + LvType + "' and Closed eq false&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -2105,88 +1292,40 @@ namespace Latest_Staff_Portal.Models
 
                     var details = JObject.Parse(result);
 
+
                     foreach (JObject config in details["value"])
                     {
-                        s = (string)config["Attendance"];
+                        if (((string)config["TransactionType"] == "Positive Adjustment" || (string)config["TransactionType"] == "Allocation") && (string)config["EntryType"] == "Allocation")
+                        {
+                            LvDays[0] = LvDays[0] + (decimal)config["NoofDays"];
+                        }
+                        if ((string)config["TransactionType"] == "Negative Adjustment" && (string)config["EntryType"] == "Allocation")
+                        {
+                            LvDays[0] = LvDays[0] - Math.Abs((decimal)config["NoofDays"]);
+                        }
+                        if ((string)config["TransactionType"] == "Carry Forward" && (string)config["EntryType"] == "Allocation")
+                        {
+                            LvDays[1] = LvDays[1] + (decimal)config["NoofDays"];
+                        }
+                        if ((string)config["TransactionType"] == "Positive Adjustment" && (string)config["EntryType"] == "Reimbursement")
+                        {
+                            LvDays[2] = LvDays[2] + (decimal)config["NoofDays"];
+
+                        }
+                        if ((string)config["TransactionType"] == "Negative Adjustment" && (string)config["EntryType"] == "Application")
+                        {
+                            LvDays[3] = LvDays[3] + Math.Abs((decimal)config["NoofDays"]);
+                        }
                     }
+                    LvDays[4] = (LvDays[0] + LvDays[1] + LvDays[2] - LvDays[3]);
                 }
+                #endregion
             }
             catch (Exception ex)
             {
                 ex.Data.Clear();
             }
-            return s;
-        }
-        public static int GetDocumentCount()
-        {
-            int count = 0;
-            string pageLine = "CompayInformation?$count=true&$filter=Category eq 'Staff'&format=json";
-            HttpWebResponse httpResponse = Credentials.GetOdataData(pageLine);
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-
-                var details = JObject.Parse(result);
-                if ((int)details["@odata.count"] > 0)
-                {
-                    count = (int)details["@odata.count"];
-                }
-            }
-            return count;
-        }
-        public static bool BlockExamMarkEntry(string Cat, string ExamType, string Semester)
-        {
-            bool block = false;
-            string pageLine = "BlockExamMarkEntry?$filter=Semester eq '" + Semester + "' and Exam_Type eq '" + ExamType + "'&$format=json";
-            HttpWebResponse httpResponse = Credentials.GetOdataData(pageLine);
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-
-                var details = JObject.Parse(result);
-                if (details["value"].Count() > 0)
-                {
-                    foreach (JObject config in details["value"])
-                    {
-                        string campus = (string)config["Campus"];
-                        string category = (string)config["Category"];
-                        string examType = (string)config["Exam_Type"];
-                        string semester = (string)config["Semester"];
-
-                        //if (Category == category && ExamType == examType && Semester == semester &&
-                        //    (bool)config["Block"])
-                        //{
-                        //    block = true;
-                        //}
-                        if ((category == Cat) && (bool)config["Block"])
-                        {
-                            block = true;
-                        }
-                        else if (category == "" && (bool)config["Block"])
-                        {
-                            block = true;
-                        }
-                        else
-                        {
-                            block = false;
-
-                            //if ((Camp == Campus) && (bool)config["Block"])
-                            //{
-                            //    block = true;
-                            //}
-                            //else if (Camp == "" && (bool)config["Block"])
-                            //{
-                            //    block = true;
-                            //}
-                            //else
-                            //{
-                            //    block = false;
-                            //}
-                        }
-                    }
-                }
-                return block;
-            }
+            return LvDays;
         }
     }
 }

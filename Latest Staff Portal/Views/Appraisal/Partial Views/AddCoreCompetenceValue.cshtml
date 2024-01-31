@@ -8,7 +8,8 @@
                         <th width="5%">#</th>
                         <th>Code</th>
                         <th>Core Competence and Values</th>
-                        <th width="20%">Self Ratings</th>
+                        <th width="20%">Max. Score(%)</th>
+                        <th width="20%">Self Ratings(%)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,6 +31,9 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Objective)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.weight)
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" style="text-align:center" />

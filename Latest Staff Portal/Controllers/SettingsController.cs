@@ -1,5 +1,5 @@
-﻿using Latest_Staff_Portal.CustomSecurity;
-using Latest_Staff_Portal.Models;
+﻿using Latest_Staff_Portal.Models;
+using Latest_Staff_Portal.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
@@ -10,20 +10,27 @@ using System.Web.Mvc;
 
 namespace Latest_Staff_Portal.Controllers
 {
-    [CustomeAuthentication]
-    [CustomAuthorization(Role = "ALLUSERS")]
     public class SettingsController : Controller
     {
         // GET: Settings
         public ActionResult ChangePassword()
         {
-            if (Session["Username"] == null)
+            try
             {
-                return RedirectToAction("Login", "Login");
+                if (Session["Username"] == null)
+                {
+                    return RedirectToAction("Login", "Login");
+                }
+                else
+                {
+                    return View();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return View();
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
             }
         }
         public JsonResult ChangePassord(string newpass)
@@ -34,9 +41,13 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     return Json(new { message = "/Login/Login", success = false, redirect = true }, JsonRequestBehavior.AllowGet);
                 }
+                //else if (Session["UserID"] == null)
+                //{
+                //    return Json(new { message = "/Login/Login", success = false, redirect = true }, JsonRequestBehavior.AllowGet);
+                //}
                 else
                 {
-                    string StaffNo = Session["UserID"].ToString();
+                    string StaffNo = Session["Username"].ToString();
 
                     string ok = Credentials.ResetPassword(StaffNo, newpass);
 

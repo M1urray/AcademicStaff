@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            @Html.Label("Concept Title", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.Label("Protocol Title", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
                 <textarea class="form-control" id="txtTitle"></textarea>
             </div>
@@ -10,9 +10,15 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            @Html.Label("Objective", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.Label("Application Level", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                <textarea class="form-control" id="txtObjective"></textarea>
+                <select class="form-control" id="ddlAppLevel">
+                    <option value="">--Select Application Level--</option>
+                    <option value="1">Master</option>
+                    <option value="2">PHD</option>
+                    <option value="3">Project</option>
+                    <option value="4">Consultancy</option>
+                </select>
             </div>
         </div>
     </div>
@@ -30,7 +36,7 @@
         <div class="form-group">
             @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                <input type="email" class="form-control" id="txtEmail" required="required" />
+                <input type="email" class="form-control" id="txtEmail" required />
             </div>
         </div>
     </div>
@@ -38,27 +44,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            @Html.Label("Principal Investigator", htmlAttributes: new { @class = "control-label col-md-12" })
-            <div class="col-md-12">
-                @Html.DropDownListFor(model => model.Customer, Model.ListOfCustomers, "--select Principal Investigator--", new { @class = "form-control", @id = "ddlPInvest" })
-                @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            @Html.Label("Responsibility Center", htmlAttributes: new { @class = "control-label col-md-12" })
-            <div class="col-md-12">
-                @Html.DropDownListFor(model => model.RespC, Model.ListOfResponsibility, "--select Responsibility Center--", new { @class = "form-control", @id = "ddlRespC" })
-                @Html.ValidationMessageFor(model => model.RespC, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            @Html.Label("Institute", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.Label("Campus", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
                 @Html.DropDownListFor(model => model.Campus, Model.ListOfCampus, "--select Campus--", new { @class = "form-control", @id = "ddlCampus" })
                 @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
@@ -67,10 +53,52 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.Label("School", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.DropDownListFor(model => model.School, Model.ListOfSchools, "--select School--", new { @class = "form-control", @id = "ddlSchool" })
+                @Html.ValidationMessageFor(model => model.School, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Department(Optional)", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
                 @Html.DropDownListFor(model => model.Department, Model.ListOfDepartment, "--select Department--", new { @class = "form-control", @id = "ddlDepartment" })
                 @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.Label("Attachments", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                <table id="tableAttachments" width="100%" class="table table-bordered table-hover">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="file" id="fileAttachment" class="form-control" required="" />
+                            </td>
+                            <td style="vertical-align: middle" align="right">
+                                <input type="button" class="btn btn-danger BtnPadding" onclick="Remove(this);" value="Remove" />
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" style="text-align:right">
+                                <input type="button" class="btn btn-primary pull-right BtnPadding" value="Add Attachment" onclick="AddAttachmentRow();" />
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
@@ -85,6 +113,41 @@
             width: '100%'
         });
     });
+    function Remove(button) {
+        var count = $('#tableAttachments > TBODY > tr').length;
+        if (count > 1) {
+            var row = $(button).closest("TR");
+
+            //Get the reference of the Table.
+            var table = $("#tableAttachments")[0];
+            //Delete the Table row using it's Index.
+            table.deleteRow(row[0].rowIndex);
+        }
+    };
+    var AddAttachmentRow = function () {
+        var tBody = $("#tableAttachments > TBODY")[0];
+
+        var row = tBody.insertRow(-1);
+
+        //Add file cell.
+        cell = $(row.insertCell(-1));
+        var Addfile = $("<input />");
+        Addfile.attr("type", "file");
+        Addfile.attr("required","");
+        Addfile.uniqueId("fileAttachment");
+        Addfile.addClass("form-control");
+        cell.append(Addfile);
+
+        //Add Button cell.
+        cell = $(row.insertCell(-1));
+        cell.attr("align", "right");
+        var btnRemove = $("<input />");
+        btnRemove.attr("type", "button");
+        btnRemove.addClass("btn btn-danger BtnPadding");
+        btnRemove.attr("onclick", "Remove(this);");
+        btnRemove.val("Remove");
+        cell.append(btnRemove);
+    };
 </script>
 
 

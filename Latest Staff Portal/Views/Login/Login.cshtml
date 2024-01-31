@@ -8,30 +8,52 @@
         text-align: right !important;
     }
 
+    .text-muted {
+        color: #051936 !important
+    }
+
+    .lblClass {
+        color: black;
+    }
+
     .textAnimation {
         animation: alternate;
     }
+
+    .card-body {
+        background-image: linear-gradient(to bottom,#BA6D1E,#BA9E1E);
+    }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div class="p-2">
     <div class="form-group">
         <label for="username" class="lblClass">Username</label>
         <input type="text" class="form-control" id="username" placeholder="Enter username" required>
     </div>
+
     <div class="form-group">
         <label for="userpassword" class="lblClass">Password</label>
         <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
     </div>
+
     <div class="custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" id="customControlInline">
         <label class="custom-control-label" for="customControlInline">Remember me</label>
     </div>
+
     <div class="mt-3">
         <button class="btn btn-primary btn-block waves-effect waves-light" id="btnLogin" type="submit">Log In</button>
     </div>
     <div class="mt-4 textl-center">
-        <a href="@Url.Action("ForgotPassword", "Login")" class="text-muted"><i class="mdi mdi-lock-open mr-1"></i> New User/Forgot your password?</a>
+        <a href="/Login/ForgotPassword" class="text-muted"><i class="mdi mdi-lock-open mr-1"></i> Forgot your password?</a>
     </div>
 </div>
+<script src="~/assets/js/ShowProgression.js"></script>
+@*<script src="~/SiteJS/LoginJS.js"></script>*@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#btnLogin").click(function () {
@@ -52,7 +74,6 @@
                 ShowProgress();
                 $.ajax({
                     url: '@Url.Action("LoginUser", "Login")',
-                    datatype: "json",
                     type: "POST",
                     data: JSON.stringify({ userlogin: UserCred }),
                     contentType: "application/json; charset = utf-8",
@@ -74,14 +95,6 @@
                 });
             }
         });
-        var Errormsg = '@Request.RequestContext.HttpContext.Session["ErrorMsg"]';
-        if (Errormsg != "") {
-            Swal.fire('Error', Errormsg, 'error', true);
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("NullibySessions", "Common")'
-            });
-        }
     });
     $("#username").keyup(function (event) {
         if (event.keyCode === 13) {

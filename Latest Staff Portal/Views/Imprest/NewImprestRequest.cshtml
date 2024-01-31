@@ -18,6 +18,11 @@
         background-color: #dedbdb
     }
 </style>
+<link href="~/assets/css/Loader.css" rel="stylesheet" />
+<div class="loading" align="center" id="divLoader">
+    <br />
+    <img src="~/assets/images/ajax-loader.gif" alt="" />
+</div>
 <div style="background-color: black;">
     <a href="#" onclick="ImprestRequisitionLink();" style="color:yellow"><<< Back To Imprest Requisition List</a>
 </div>
@@ -87,46 +92,53 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    @Html.Label("Attachment(Optioal)", htmlAttributes: new { @class = "control-label col-md-12" })
+                    @Html.Label("Project(Optional)", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
-                        <input type="file" class="form-control" id="fileAttachment" />
+                        @Html.DropDownListFor(model => model.Proj, Model.ListOfProjects, "--select Project--", new { @class = "form-control", @id = "ddlProject" })
+                        @Html.ValidationMessageFor(model => model.Proj, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
+                @*<div class="form-group">
+                        @Html.Label("Attachment(Optional)", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            <input type="file" class="form-control" id="fileAttachment" />
+                        </div>
+                    </div>*@
             </div>
         </div>
         <hr style="border:1px solid black" />
-        <b>Imprest Lines</b>
-        <hr />
-        <div class="pre-scrollable">
-            <table class="table table-hover" id="ImpLines">
-                <thead>
-                    <tr>
-                        <th>Code</th>
-                        <th>Description</th>
-                        <th>Description 2</th>
-                        <th style="text-align:center">Amount</th>
-                        <th style="text-align:right">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot>
-                    <tr class="NoRecords">
-                        <td colspan="4">
-                            <span style="color:red" id="NoRecords">No Lines Added</span>
-                        </td>
-                        <td class="text-right">
-                            <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddImprestLines();" />
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        <hr />
+        @*<b>Imprest Lines</b>
+            <hr />
+            <div class="pre-scrollable">
+                <table class="table table-hover" id="ImpLines">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>Description 2</th>
+                            <th style="text-align:center">Amount</th>
+                            <th style="text-align:right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr class="NoRecords">
+                            <td colspan="4">
+                                <span style="color:red" id="NoRecords">No Lines Added</span>
+                            </td>
+                            <td class="text-right">
+                                <input type="button" value="Add Item Line" class="btn btn-danger BtnPadding" onclick="AddImprestLines();" />
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <hr />*@
         <div align="center">
-            <input type="button" class="btn btn-primary waves-effect waves-light" value="Submit Request" onclick="SubmitImprestRequisition();" />
+            <input type="button" class="btn btn-primary waves-effect waves-light" value="Create Document" onclick="SubmitImprestRequisition();" />
         </div>
     </div>
 </div>
@@ -164,154 +176,154 @@
             $('#dtPicker').datepicker('hide');
             $('#dtPicker').blur();
         });
-        $("#ddlDepartment,#ddlRespC").select2({
+        $("#ddlDepartment,#ddlRespC,#ddlProject").select2({
             width: '100%'
         });
     });
-    var AddImprestLines = function () {
-        var dateNeeded = $("#dtPicker").val();
-        var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
-        var Campus = $("#ddlCampus").children("option:selected").val();
-        var School = $("#ddlSchool").children("option:selected").val();
-        var Department = $("#ddlDepartment").children("option:selected").val();
-        var RespoC = $("#ddlRespC").children("option:selected").val();
+    //var AddImprestLines = function () {
+    //    var dateNeeded = $("#dtPicker").val();
+    //    var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
+    //    var Campus = $("#ddlCampus").children("option:selected").val();
+    //    var School = $("#ddlSchool").children("option:selected").val();
+    //    var Department = $("#ddlDepartment").children("option:selected").val();
+    //    var RespoC = $("#ddlRespC").children("option:selected").val();
 
-        if (dateNeeded == "") {
-            Swal.fire('Warning', "Select Date needed", 'warning');
-            return;
-        }
-        else if (Remarks == "") {
-            Swal.fire('Warning', "Enter Purpose for the purchase", 'warning');
-            return;
-        }
-        else if (Remarks.length > 150) {
-            Swal.fire('Warning', "Your Purpose should have a maximum of 200 characters", 'warning');
-            return;
-        }
-        else if (Campus == "") {
-            Swal.fire('Warning', "Select Campus", 'warning');
-            return;
-        }
-        else if (Department == "") {
-            Swal.fire('Warning', "Select Department", 'warning');
-            return;
-        }
-        else if (RespoC == "") {
-            Swal.fire('Warning', "Select Responsibility center", 'warning');
-            return;
-        }
-        else {
-            ShowProgress();
-            $.ajax({
-                async: true,
-                type: "POST",
-                datatype: "json",
-                contentType: "application/json; charset = utf-8",
-                processData: false,
-                url: '@Url.Action("NewImprestLine", "Imprest")',
-                success: function (data) {
-                    $("#modalBody").html(data);
-                    HideProgress();
-                    $("#myModal").modal("show");
-                },
-                error: function (err) {
-                    HideProgress();
-                    Swal.fire('Warning', err, 'warning');
-                }
-            });
-        }
-    };
+    //    if (dateNeeded == "") {
+    //        Swal.fire('Warning', "Select Date needed", 'warning');
+    //        return;
+    //    }
+    //    else if (Remarks == "") {
+    //        Swal.fire('Warning', "Enter Purpose for the purchase", 'warning');
+    //        return;
+    //    }
+    //    else if (Remarks.length > 150) {
+    //        Swal.fire('Warning', "Your Purpose should have a maximum of 200 characters", 'warning');
+    //        return;
+    //    }
+    //    else if (Campus == "") {
+    //        Swal.fire('Warning', "Select Campus", 'warning');
+    //        return;
+    //    }
+    //    else if (Department == "") {
+    //        Swal.fire('Warning', "Select Department", 'warning');
+    //        return;
+    //    }
+    //    else if (RespoC == "") {
+    //        Swal.fire('Warning', "Select Responsibility center", 'warning');
+    //        return;
+    //    }
+    //    else {
+    //        ShowProgress();
+    //        $.ajax({
+    //            async: true,
+    //            type: "POST",
+    //            datatype: "json",
+    //            contentType: "application/json; charset = utf-8",
+    //            processData: false,
+    //            url: '/Imprest/NewImprestLine',
+    //            success: function (data) {
+    //                $("#modalBody").html(data);
+    //                HideProgress();
+    //                $("#myModal").modal("show");
+    //            },
+    //            error: function (err) {
+    //                HideProgress();
+    //                Swal.fire('Warning', err, 'warning');
+    //            }
+    //        });
+    //    }
+    //};
     var ImprestRequisitionLink = function () {
         ShowProgress();
-        window.location = '@Url.Action("ImprestRequisitionList", "Imprest")';
+        window.location = "/Imprest/ImprestRequisitionList";
     }
-    var AddLineItem = function () {
-        var ImpType = $("#ddlImpType").children("option:selected").val();
-        var ImpTypeDesc = $("#ddlImpType").children("option:selected").text();
-        var Amount = $("#txtAmount").val();
-        var ItemDescription = $("#txtDescription").val();
+    //var AddLineItem = function () {
+    //    var ImpType = $("#ddlImpType").children("option:selected").val();
+    //    var ImpTypeDesc = $("#ddlImpType").children("option:selected").text();
+    //    var Amount = $("#txtAmount").val();
+    //    var ItemDescription = $("#txtDescription").val();
 
-        if (ImpType == "") {
-            Swal.fire('Warning', "Select Imprest Type", 'warning');
-            return;
-        }
-        else if (Amount == "") {
-            Swal.fire('Warning', "Enter Amount", 'warning');
-            return;
-        }
-        else if (ItemDescription == "") {
-            Swal.fire('Warning', "Give brief description of the item", 'warning');
-            return;
-        }
-        else if (ItemDescription.length > 150) {
-            Swal.fire('Warning', "Your Item Description should have a maximum of 200 characters", 'warning');
-            return;
-        }
-        else {
-            //Get the reference of the Table's TBODY element.
-            var tBody = $("#ImpLines > TBODY")[0];
+    //    if (ImpType == "") {
+    //        Swal.fire('Warning', "Select Imprest Type", 'warning');
+    //        return;
+    //    }
+    //    else if (Amount == "") {
+    //        Swal.fire('Warning', "Enter Amount", 'warning');
+    //        return;
+    //    }
+    //    else if (ItemDescription == "") {
+    //        Swal.fire('Warning', "Give brief description of the item", 'warning');
+    //        return;
+    //    }
+    //    else if (ItemDescription.length > 150) {
+    //        Swal.fire('Warning', "Your Item Description should have a maximum of 200 characters", 'warning');
+    //        return;
+    //    }
+    //    else {
+    //        //Get the reference of the Table's TBODY element.
+    //        var tBody = $("#ImpLines > TBODY")[0];
 
-            //Add Row.
-            var row = tBody.insertRow(-1);
+    //        //Add Row.
+    //        var row = tBody.insertRow(-1);
 
-            //Add Item.
-            var cell = $(row.insertCell(-1));
-            cell.html(ImpType);
+    //        //Add Item.
+    //        var cell = $(row.insertCell(-1));
+    //        cell.html(ImpType);
 
-            //Add Description.
-            cell = $(row.insertCell(-1));
-            cell.html(ImpTypeDesc);
+    //        //Add Description.
+    //        cell = $(row.insertCell(-1));
+    //        cell.html(ImpTypeDesc);
 
-            //Add Description 2.
-            cell = $(row.insertCell(-1));
-            cell.html(ItemDescription);
+    //        //Add Description 2.
+    //        cell = $(row.insertCell(-1));
+    //        cell.html(ItemDescription);
 
-            //Add Amount.
-            var cell = $(row.insertCell(-1));
-            cell.attr("align", "center");
-            cell.html(Amount);
+    //        //Add Amount.
+    //        var cell = $(row.insertCell(-1));
+    //        cell.attr("align", "center");
+    //        cell.html(Amount);
 
-            //Add Button cell.
-            cell = $(row.insertCell(-1));
-            cell.attr("align", "right");
-            var btnRemove = $("<input />");
-            btnRemove.attr("type", "button");
-            btnRemove.addClass("btn btn-primary BtnPadding");
-            btnRemove.attr("onclick", "Remove(this);");
-            btnRemove.val("Remove");
-            cell.append(btnRemove);
+    //        //Add Button cell.
+    //        cell = $(row.insertCell(-1));
+    //        cell.attr("align", "right");
+    //        var btnRemove = $("<input />");
+    //        btnRemove.attr("type", "button");
+    //        btnRemove.addClass("btn btn-primary BtnPadding");
+    //        btnRemove.attr("onclick", "Remove(this);");
+    //        btnRemove.val("Remove");
+    //        cell.append(btnRemove);
 
-            DetermineNoOfRows();
-            $("#myModal").modal("hide");
-            Swal.fire('Success', "Imprest line added successfully", 'success');
-            //Clear the TextBoxes.
-            //txtName.val("");
-            //txtCountry.val("");
-        }
-    }
-    var DetermineNoOfRows = function () {
-        var totalRowCount = $("#ImpLines TBODY tr").length;
-        if (totalRowCount > 0) {
-            $("#NoRecords").hide();
-        }
-        else {
-            $("#NoRecords").show();
-        }
-    }
-    function Remove(button) {
-        //Determine the reference of the Row using the Button.
-        var row = $(button).closest("TR");
-        var Item = $("TD", row).eq(0).html();
-        var ItemDesc = $("TD", row).eq(0).html();
-        if (confirm("Do you want to remove: " + Item + "~" + ItemDesc)) {
-            //Get the reference of the Table.
-            var table = $("#ImpLines")[0];
+    //        DetermineNoOfRows();
+    //        $("#myModal").modal("hide");
+    //        Swal.fire('Success', "Imprest line added successfully", 'success');
+    //        //Clear the TextBoxes.
+    //        //txtName.val("");
+    //        //txtCountry.val("");
+    //    }
+    //}
+    //var DetermineNoOfRows = function () {
+    //    var totalRowCount = $("#ImpLines TBODY tr").length;
+    //    if (totalRowCount > 0) {
+    //        $("#NoRecords").hide();
+    //    }
+    //    else {
+    //        $("#NoRecords").show();
+    //    }
+    //}
+    //function Remove(button) {
+    //    //Determine the reference of the Row using the Button.
+    //    var row = $(button).closest("TR");
+    //    var Item = $("TD", row).eq(0).html();
+    //    var ItemDesc = $("TD", row).eq(1).html();
+    //    if (confirm("Do you want to remove: " + Item + "~" + ItemDesc)) {
+    //        //Get the reference of the Table.
+    //        var table = $("#ImpLines")[0];
 
-            //Delete the Table row using it's Index.
-            table.deleteRow(row[0].rowIndex);
-        }
-        DetermineNoOfRows();
-    };
+    //        //Delete the Table row using it's Index.
+    //        table.deleteRow(row[0].rowIndex);
+    //    }
+    //    DetermineNoOfRows();
+    //};
     var SubmitImprestRequisition = function () {
         var dateNeeded = $("#dtPicker").val();
         var Remarks = $("#txtRemarks").val().replace(/(\r\n|\n|\r)/gm, " ");
@@ -319,6 +331,7 @@
         var School = $("#ddlSchool").children("option:selected").val();
         var Department = $("#ddlDepartment").children("option:selected").val();
         var RespoC = $("#ddlRespC").children("option:selected").val();
+        var Project = $("#ddlProject").children("option:selected").val();
 
         if (dateNeeded == "") {
             Swal.fire('Warning', "Select Date needed", 'warning');
@@ -355,102 +368,125 @@
             ImprestHeader.Campus = Campus;
             ImprestHeader.Department = Department;
             ImprestHeader.RespC = RespoC;
+            ImprestHeader.Project = Project;
 
-            //Loop through the Table rows and build a JSON array.
-            var ImprestLines = new Array();
-            $("#ImpLines TBODY TR").each(function () {
-                var row = $(this);
-                var ImpLine = {};
-                ImpLine.Item = row.find("TD").eq(0).html();
-                ImpLine.ItemDesc = row.find("TD").eq(2).html();
-                ImpLine.Amount = row.find("TD").eq(3).html();
-                ImprestLines.push(ImpLine);
+            ShowProgress();
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/Imprest/SubmitImprestRequisition",
+                data: JSON.stringify({ imprestHeader: ImprestHeader }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        window.location = data.message;
+                    }
+                    else {
+                        Swal.fire('Warning', data.message, 'warning');
+                        HideProgress();
+                    }
+                },
+                error: function (err) {
+                    HideProgress();
+                    Swal.fire('Warning', err, 'warning');
+                }
             });
-            if (ImprestLines.length < 1) {
-                Swal.fire('Warning', 'You have not Added any Imprest Requisition line(s)', 'warning');
-                return;
-            }
-            else {
-                var filename; var base64String; var filetype;
-                var files = document.getElementById('fileAttachment').files;
+            //Loop through the Table rows and build a JSON array.
+            //var ImprestLines = new Array();
+            //$("#ImpLines TBODY TR").each(function () {
+            //    var row = $(this);
+            //    var ImpLine = {};
+            //    ImpLine.Item = row.find("TD").eq(0).html();
+            //    ImpLine.ItemDesc = row.find("TD").eq(2).html();
+            //    ImpLine.Amount = row.find("TD").eq(3).html();
+            //    ImprestLines.push(ImpLine);
+            //});
+            //if (ImprestLines.length < 1) {
+            //    Swal.fire('Warning', 'You have not Added any Imprest Requisition line(s)', 'warning');
+            //    return;
+            //}
+            //else {
+            //    var filename; var base64String; var filetype;
+            //    var files = document.getElementById('fileAttachment').files;
 
-                if (files.length) {
-                    var file = files[0];
-                    var blob = file.slice();
-                    filetype = file.type;
-                    filename = file.name;
-                    var reader = new FileReader();
+            //    if (files.length) {
+            //        var file = files[0];
+            //        var blob = file.slice();
+            //        filetype = file.type;
+            //        filename = file.name;
+            //        var reader = new FileReader();
 
-                    reader.onloadend = function (evt) {
-                        if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+            //        reader.onloadend = function (evt) {
+            //            if (evt.target.readyState == FileReader.DONE) { // DONE == 2
 
-                            var cont = evt.target.result
-                            base64String = getB64Str(cont);
+            //                var cont = evt.target.result
+            //                base64String = getB64Str(cont);
 
-                            ShowProgress();
-                            //Send the JSON array to Controller using AJAX.
-                            $.ajax({
-                                type: "POST",
-                                url: '@Url.Action("SubmitImprestRequisition", "Imprest")',
-                                data: JSON.stringify({ imprestHeader: ImprestHeader, imprestLines: ImprestLines, base64Upload: base64String, fileName: filename, Extn: filetype }),
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.success) {
-                                        window.location = "/Imprest/ImprestRequisitionList";
-                                    }
-                                    else {
-                                        Swal.fire('Warning', data.message, 'warning');
-                                        HideProgress();
-                                    }
-                                },
-                                error: function (err) {
-                                    HideProgress();
-                                    Swal.fire('Warning', err, 'warning');
-                                }
-                            });
-                        }
-                    };
-                    reader.readAsArrayBuffer(blob);
-                }
-                else {
-                    filename = "";
-                    base64String = "";
-                    filetype = "";
-                    ShowProgress();
-                    //Send the JSON array to Controller using AJAX.
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("SubmitImprestRequisition", "Imprest")',
-                        data: JSON.stringify({ imprestHeader: ImprestHeader, imprestLines: ImprestLines, base64Upload: base64String, fileName: filename, Extn: filetype }),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.success) {
-                                window.location = '@Url.Action("ImprestRequisitionList", "Imprest")';
-                            }
-                            else {
-                                Swal.fire('Warning', data.message, 'warning');
-                                HideProgress();
-                            }
-                        },
-                        error: function (err) {
-                            HideProgress();
-                            Swal.fire('Warning', err, 'warning');
-                        }
-                    });
-                }
-            }
+            //                ShowProgress();
+            //                //Send the JSON array to Controller using AJAX.
+            //                $.ajax({
+            //                    type: "POST",
+            //                    url: "/Imprest/SubmitImprestRequisition",
+            //                    data: JSON.stringify({ imprestHeader: ImprestHeader, imprestLines: ImprestLines, base64Upload: base64String, fileName: filename, Extn: filetype }),
+            //                    contentType: "application/json; charset=utf-8",
+            //                    dataType: "json",
+            //                    success: function (data) {
+            //                        if (data.success) {
+            //                            window.location = "/Imprest/ImprestRequisitionList";
+            //                        }
+            //                        else {
+            //                            Swal.fire('Warning', data.message, 'warning');
+            //                            HideProgress();
+            //                        }
+            //                    },
+            //                    error: function (err) {
+            //                        HideProgress();
+            //                        Swal.fire('Warning', err, 'warning');
+            //                    }
+            //                });
+            //            }
+            //        };
+            //        reader.readAsArrayBuffer(blob);
+            //    }
+            //    else {
+            //        filename = "";
+            //        base64String = "";
+            //        filetype = "";
+            //        ShowProgress();
+            //        //Send the JSON array to Controller using AJAX.
+            //        $.ajax({
+            //            type: "POST",
+            //            url: "/Imprest/SubmitImprestRequisition",
+            //            data: JSON.stringify({ imprestHeader: ImprestHeader, imprestLines: ImprestLines, base64Upload: base64String, fileName: filename, Extn: filetype }),
+            //            contentType: "application/json; charset=utf-8",
+            //            dataType: "json",
+            //            success: function (data) {
+            //                if (data.success) {
+            //                    window.location = "/Imprest/ImprestRequisitionList";
+            //                }
+            //                else {
+            //                    Swal.fire('Warning', data.message, 'warning');
+            //                    HideProgress();
+            //                }
+            //            },
+            //            error: function (err) {
+            //                HideProgress();
+            //                Swal.fire('Warning', err, 'warning');
+            //            }
+            //        });
+            //    }
+            //}
         }
     };
-    function getB64Str(buffer) {
-        var binary = '';
-        var bytes = new Uint8Array(buffer);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return window.btoa(binary);
-    }
+    //function getB64Str(buffer) {
+    //    var binary = '';
+    //    var bytes = new Uint8Array(buffer);
+    //    var len = bytes.byteLength;
+    //    for (var i = 0; i < len; i++) {
+    //        binary += String.fromCharCode(bytes[i]);
+    //    }
+    //    return window.btoa(binary);
+    //}
 </script>
 

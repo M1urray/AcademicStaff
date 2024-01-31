@@ -13,7 +13,10 @@
                 <th>Objective</th>
                 <th>KPI</th>
                 <th>Targets</th>
-                <th style="text-align:right" width="10%">Action</th>
+                @if (Model.Level == "A")
+                {
+                    <th style="text-align:right" width="10%">Action</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -40,9 +43,12 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Targets)
                                     </td>
-                                    <td style="text-align:right">
-                                        <a href="javascript:void(0);" class="text-danger" onclick="RemoveObjectiveItem('@item.LineNo','@item.DocumentNo');">Remove</a>
-                                    </td>
+                                    @if (Model.Level == "A")
+                                    {
+                                        <td style="text-align:right">
+                                            <a href="javascript:void(0);" class="text-danger" onclick="RemoveObjectiveItem('@item.LineNo','@item.DocumentNo');">Remove</a>
+                                        </td>
+                                    }
                                 </tr>
                                 i++;
                             }
@@ -59,31 +65,50 @@
                 }
             }
         </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="5" class="text-right">
-                    <hr style="border-color:black" />
-                    <input type="button" value="Add Objective" class="btn btn-danger BtnPadding" onclick="NewObjectiveLine();" />
-                </td>
-            </tr>
-        </tfoot>
+        @if (Model.Level == "A")
+        {
+            <tfoot>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <hr style="border-color:black" />
+                        <input type="button" value="Add Objective" class="btn btn-danger BtnPadding" onclick="NewObjectiveLine();" />
+                    </td>
+                </tr>
+            </tfoot>
+        }
     </table>
 </div>
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <b>Apprisee Comments</b>
+        <b>Appraisee Comments</b>
         @Html.TextAreaFor(m => m.AppraiseeComment, new { @class = "form-control", @id = "ObjAppraiseeComments" })
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
         <b>Supervisor Comments</b>
-        @Html.TextAreaFor(m => m.SuporvisorComment, new { @class = "form-control", @readonly = "readonly", @style = "background-color:#dedebd", @id = "ObjAppraisorComments" })
+        @Html.TextAreaFor(m => m.SuporvisorComment, new { @class = "form-control", @id = "ObjAppraisorComments" })
     </div>
 </div>
 <hr />
 <div align="center">
-    <input type="button" value="Save Comments" class="btn btn-primary" onclick="SaveComments('1');" />
+    <input type="button" value="Save Comments" class="btn btn-primary" onclick="SaveComments('1','@Model.Level');" />
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@Model.Level' == "A") {
+            $("#ObjAppraisorComments").attr("readonly", true);
+            $("#ObjAppraisorComments").css("background-color", "#dedebd");
+        }
+        else if ('@Model.Level' == "S") {
+            $("#ObjAppraiseeComments").attr("readonly", true);
+            $("#ObjAppraiseeComments").css("background-color", "#dedebd");
+        }
+        else {
+            $("#ObjAppraiseeComments,#ObjAppraisorComments").attr("readonly", true);
+            $("#ObjAppraiseeComments,#ObjAppraisorComments").css("background-color", "#dedebd");
+        }
+    });
+</script>
 
