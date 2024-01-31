@@ -159,6 +159,7 @@
                     if (data.success == true) {
                         LoadStudentReqList('@Model.Doc.Code', '@Model.Doc.RegType');
                         HideProgress();
+                        $('#myModal1').modal("hide");
                         Swal.fire('Success', "Lecturer Assigned successfully", 'success');
                     }
                     else {
