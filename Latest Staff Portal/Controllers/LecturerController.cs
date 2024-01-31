@@ -390,10 +390,10 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-       
+
         public PartialViewResult LoadClassAttendanceList()
         {
-            if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null)
+            if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null && Session["SettlementType"] != null)
             {
                 string Lec = Session["username"].ToString();
                 string Prog = Session["Prog"].ToString();
@@ -401,10 +401,11 @@ namespace Latest_Staff_Portal.Controllers
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
                 string Campus = Session["Campus"].ToString();
+                string SettlementType = Session["SettlementType"].ToString();
 
                 List<ClassAttendanceEntries> AttendanceList = new List<ClassAttendanceEntries>();
                 string page = "ClassAttendanceHeader?$filter=LecturerCode eq '" + Lec + "' and UnitCode eq '" + Unit + "' and SemesterCode eq '"
-                    + Sem + "' and CampusCode eq '" + Campus + "'&$format=json";
+                    + Sem + "' and CampusCode eq '" + Campus + "' and Settlement_Types eq '" + SettlementType + "'&$format=json";
 
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -431,23 +432,12 @@ namespace Latest_Staff_Portal.Controllers
             }
             else
             {
-                Error erroMsg = new Error();
-                erroMsg.Message = "Loading error";
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                return PartialView();
             }
         }
-        public ActionResult ClassAttendanceList()
-        {
-            if (Session["Username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            return View();
-        }
-
         public ActionResult LoadClassAtteanceStudents(string DocNo)
         {
-            if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null)
+            if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null && Session["SettlementType"] != null)
             {
                 string StaffNo = Session["Username"].ToString();
                 string Lec = Session["username"].ToString();
@@ -456,6 +446,7 @@ namespace Latest_Staff_Portal.Controllers
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
                 string Campus = Session["Campus"].ToString();
+                string SettlementType = Session["SettlementType"].ToString();
 
                 List<CustomerList> studentlist = new List<CustomerList>();
                 string page = "";
@@ -465,7 +456,7 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 else
                 {
-                    page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Global_Dimension_1_Code eq '" + Campus + "'&$format=json";
+                    page = "StudentUnits?$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "' and Global_Dimension_1_Code eq '" + Campus + "' and Settlement_Type eq '" + SettlementType + "'&$format=json";
                 }
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -541,6 +532,15 @@ namespace Latest_Staff_Portal.Controllers
                         }
                     }
                     #endregion
+                    #region Lessons
+                    for (int i = 1; i < 6; i++)
+                    {
+                        DropdownList ddl = new DropdownList();
+                        ddl.Value = i.ToString();
+                        ddl.Text = "Lesson " + i.ToString();
+                        dropdownList.Add(ddl);
+                    }
+                    #endregion
                 }
                 else
                 {
@@ -557,13 +557,13 @@ namespace Latest_Staff_Portal.Controllers
 
                         foreach (JObject config in details["value"])
                         {
-                            if (!ClassAttendanceWeekTaken(StaffNo, Sem, Unit, Campus, (string)config["Code"]))
-                            {
-                                DropdownList ddl = new DropdownList();
-                                ddl.Value = (string)config["Code"];
-                                ddl.Text = (string)config["Code"];
-                                WeekList.Add(ddl);
-                            }
+                            //if (!ClassAttendanceWeekTaken(StaffNo, Sem, Unit, Campus, (string)config["Code"]))
+                            //{
+                            DropdownList ddl = new DropdownList();
+                            ddl.Value = (string)config["Code"];
+                            ddl.Text = (string)config["Code"];
+                            WeekList.Add(ddl);
+                            //}
                         }
                     }
                     #endregion
@@ -572,6 +572,13 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     Week = wk,
                     DocNo = DocNo,
+                    SectionWK = lesson,
+                    ListOfSections = dropdownList.Select(x =>
+                                        new SelectListItem()
+                                        {
+                                            Text = x.Text,
+                                            Value = x.Value
+                                        }).ToList(),
                     StudentList = studentlist.DistinctBy(x => x.No).OrderBy(x => x.No).ToList(),
                     ListOfWeeks = WeekList.Select(x =>
                                           new SelectListItem()
@@ -587,12 +594,84 @@ namespace Latest_Staff_Portal.Controllers
                 return RedirectToAction("Login", "Login");
             }
         }
-        protected bool ClassAttendanceWeekTaken(string StaffNo, string Semester, string Unit, string Campus, string Wk)
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult LoadSections(string WkCode)
+        {
+            try
+            {
+                LessonList Lessons = new LessonList();
+                if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null || Session["ClassCode"] != null)
+                {
+                    string StaffNo = Session["Username"].ToString();
+                    string Lec = Session["username"].ToString();
+                    string Prog = Session["Prog"].ToString();
+                    string Stage = Session["Stage"].ToString();
+                    string Sem = Session["Sem"].ToString();
+                    string Unit = Session["Unit"].ToString();
+                    string Campus = Session["Campus"].ToString();
+                    string SettmtT = Session["SettlementType"].ToString();
+
+                    List<DropdownList> dropdownList = new List<DropdownList>();
+                    for (int i = 1; i < 6; i++)
+                    {
+                        if (!ClassAttendanceLessonTaken(StaffNo, Sem, Unit, Campus, WkCode, i, SettmtT))
+                        {
+                            DropdownList ddl = new DropdownList();
+                            ddl.Value = i.ToString();
+                            ddl.Text = "Lesson " + i.ToString();
+                            dropdownList.Add(ddl);
+                        }
+                    }
+                    Lessons = new LessonList
+                    {
+                        ListOfLessons = dropdownList.Select(x =>
+                                        new SelectListItem()
+                                        {
+                                            Text = x.Text,
+                                            Value = x.Value
+                                        }).ToList()
+                    };
+                }
+                return Json(new { Lessons, success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        protected bool ClassAttendanceWeekTaken(string StaffNo, string Semester, string Unit, string Campus, string Wk, string SettT)
         {
             bool taken = false;
             try
             {
-                string pageAtt = "ClassAttendanceHeader?$select=WeekCode&$filter=LecturerCode eq '" + StaffNo + "' and SemesterCode eq '" + Semester + "' and UnitCode eq '" + Unit + "' and CampusCode eq '" + Campus + "' and WeekCode eq '" + Wk + "'&$format=json";
+                string pageAtt = "ClassAttendanceHeader?$select=WeekCode&$filter=LecturerCode eq '" + StaffNo + "' and SemesterCode eq '" + Semester + "' and UnitCode eq '" + Unit + "' and CampusCode eq '" + Campus + "' and WeekCode eq '" + Wk + "' and Settlement_Types eq '" + SettT + "'&$format=json";
+
+                HttpWebResponse httpResponseAtt = Credentials.GetOdataData(pageAtt);
+                using (var streamReader = new StreamReader(httpResponseAtt.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+
+                    if (details["value"].Count() > 0)
+                    {
+                        taken = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Clear();
+            }
+            return taken;
+        }
+        protected bool ClassAttendanceLessonTaken(string StaffNo, string Semester, string Unit, string Campus, string Wk, int Lesson, string SettT)
+        {
+            bool taken = false;
+            try
+            {
+                string pageAtt = "ClassAttendanceHeader?$select=Lesson&$filter=LecturerCode eq '" + StaffNo + "' and SemesterCode eq '" + Semester + "' and UnitCode eq '"
+                    + Unit + "' and CampusCode eq '" + Campus + "' and WeekCode eq '" + Wk + "' and Lesson eq " + Lesson + " and Settlement_Types eq '" + SettT + "'&$format=json";
 
                 HttpWebResponse httpResponseAtt = Credentials.GetOdataData(pageAtt);
                 using (var streamReader = new StreamReader(httpResponseAtt.GetResponseStream()))
@@ -614,7 +693,7 @@ namespace Latest_Staff_Portal.Controllers
             return taken;
         }
         [HttpPost]
-        public JsonResult SaveClassAttendance(string DocNo, string Wk, List<Array> Rows)
+        public JsonResult SaveClassAttendance(string DocNo, string Wk, string Lesson, List<Array> Rows)
         {
             try
             {
@@ -626,18 +705,23 @@ namespace Latest_Staff_Portal.Controllers
                     string Sem = Session["Sem"].ToString();
                     string Unit = Session["Unit"].ToString();
                     string Campus = Session["Campus"].ToString();
-                    
+                    string SettlMnt = Session["SettlementType"].ToString();
 
                     //string[] s = Wk.Split('~');
                     //Wk = s[0].Trim();
-                    string Code = "";
+                    string Code = "", SmT = "";
+
+                    if (SettlMnt != null && SettlMnt != "")
+                    {
+                        SmT = SettlMnt;
+                    }
                     if (DocNo != null && DocNo != "")
                     {
                         Code = DocNo;
                     }
                     else
                     {
-                         Code = Credentials.ObjNav.InserClassAtteHeader(Prog, Unit, Sem, Wk, Lec, Campus);
+                        Code = Credentials.ObjNav.InserClassAtteHeader("", Unit, Sem, Wk, Lec, Campus);
                     }
                     int RowCount = Rows.Count();
 
@@ -648,7 +732,7 @@ namespace Latest_Staff_Portal.Controllers
                         string studentNo = RowText[1].Trim();
                         string Attendance = RowText[3].Trim();
 
-                         Credentials.ObjNav.InsertClassListAttendance(Code, studentNo, Convert.ToInt32(Attendance), Prog, Unit, Sem, Wk, Lec, Campus);
+                        Credentials.ObjNav.InsertClassListAttendance(Code, studentNo, Convert.ToInt32(Attendance), "", Unit, Sem, Wk, Lec, Campus);
                     }
                     return Json(new { message = "Class Attendance for week " + Wk + " saved Successfully", success = true, failed = false }, JsonRequestBehavior.AllowGet);
                 }
@@ -681,6 +765,20 @@ namespace Latest_Staff_Portal.Controllers
                     string Redirect = "/Lecturer/ClassAttendanceList";
                     return Json(new { message = Redirect, success = true, failed = true, redirect = true }, JsonRequestBehavior.AllowGet);
                 }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult DeleteAttendance(string DocNo)
+        {
+            try
+            {
+                string Lec = Session["username"].ToString();
+                // Credentials.ObjNav.DeleteAttendance(DocNo, Lec);
+                return Json(new { message = "Attendance deleted successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
