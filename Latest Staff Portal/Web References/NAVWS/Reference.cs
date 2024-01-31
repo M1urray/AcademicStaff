@@ -33,6 +33,8 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback ApproveStudentRequisitionLinesOperationCompleted;
         
+        private System.Threading.SendOrPostCallback AssignLecStudentRequisitionLinesOperationCompleted;
+        
         private System.Threading.SendOrPostCallback AssignLecturerUnitOperationCompleted;
         
         private System.Threading.SendOrPostCallback AuthenticateStudentEmailOperationCompleted;
@@ -210,6 +212,9 @@ namespace Latest_Staff_Portal.NAVWS {
         
         /// <remarks/>
         public event ApproveStudentRequisitionLinesCompletedEventHandler ApproveStudentRequisitionLinesCompleted;
+        
+        /// <remarks/>
+        public event AssignLecStudentRequisitionLinesCompletedEventHandler AssignLecStudentRequisitionLinesCompleted;
         
         /// <remarks/>
         public event AssignLecturerUnitCompletedEventHandler AssignLecturerUnitCompleted;
@@ -479,6 +484,43 @@ namespace Latest_Staff_Portal.NAVWS {
             if ((this.ApproveStudentRequisitionLinesCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.ApproveStudentRequisitionLinesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/Webportal:AssignLecStudentRequisitionLine" +
+            "s", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", ResponseElementName="AssignLecStudentRequisitionLines_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/Webportal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void AssignLecStudentRequisitionLines(string requisition_No, string unit_Code, int lineNo, bool appvd, string lecNo) {
+            this.Invoke("AssignLecStudentRequisitionLines", new object[] {
+                        requisition_No,
+                        unit_Code,
+                        lineNo,
+                        appvd,
+                        lecNo});
+        }
+        
+        /// <remarks/>
+        public void AssignLecStudentRequisitionLinesAsync(string requisition_No, string unit_Code, int lineNo, bool appvd, string lecNo) {
+            this.AssignLecStudentRequisitionLinesAsync(requisition_No, unit_Code, lineNo, appvd, lecNo, null);
+        }
+        
+        /// <remarks/>
+        public void AssignLecStudentRequisitionLinesAsync(string requisition_No, string unit_Code, int lineNo, bool appvd, string lecNo, object userState) {
+            if ((this.AssignLecStudentRequisitionLinesOperationCompleted == null)) {
+                this.AssignLecStudentRequisitionLinesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAssignLecStudentRequisitionLinesOperationCompleted);
+            }
+            this.InvokeAsync("AssignLecStudentRequisitionLines", new object[] {
+                        requisition_No,
+                        unit_Code,
+                        lineNo,
+                        appvd,
+                        lecNo}, this.AssignLecStudentRequisitionLinesOperationCompleted, userState);
+        }
+        
+        private void OnAssignLecStudentRequisitionLinesOperationCompleted(object arg) {
+            if ((this.AssignLecStudentRequisitionLinesCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.AssignLecStudentRequisitionLinesCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -2975,6 +3017,10 @@ namespace Latest_Staff_Portal.NAVWS {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void ApproveStudentRequisitionLinesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void AssignLecStudentRequisitionLinesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
