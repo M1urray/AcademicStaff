@@ -1480,11 +1480,11 @@ namespace Latest_Staff_Portal.Controllers
             }
         }
         [HttpPost]
-        public JsonResult SaveSpecialExamLec(string DocNo, string Unit, string Lec, string Ln, string Sem)
+        public JsonResult SaveSpecialExamLec(string DocNo, string Unit, string Lec, string Ln)
         {
             try
             {
-                 //Credentials.ObjNav.AssignLecStudentRequisitionLines(DocNo, Unit, Convert.ToInt32(Ln), true, Lec, Sec);
+                 Credentials.ObjNav.AssignLecStudentRequisitionLines(DocNo, Unit, Convert.ToInt32(Ln), true, Lec);
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

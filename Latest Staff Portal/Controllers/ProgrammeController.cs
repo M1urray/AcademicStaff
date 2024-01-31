@@ -433,26 +433,12 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        [HttpGet]
-        // public virtual ActionResult Download(string fileName)
-        // {
-        //     try
-        //     {
-        //         string fullPath = "";//Credentials.fileDestinationPath + fileName;
-        //         return File(fullPath, "application/octet-stream", fileName);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Error erroMsg = new Error();
-        //         erroMsg.Message = ex.Message;
-        //         return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
-        //     }
-        // }
+        [HttpGet] 
         public virtual ActionResult Download(string fileName)
         {
             try
             {
-                string fullPath = @"/Downloads/" + fileName; ; // Set the actual path to the file
+                string fullPath = @"/Downloads/" + fileName; // Set the actual path to the file
 
                 // Determine the file extension
                 string fileExtension = Path.GetExtension(fileName);

@@ -34,6 +34,22 @@
           <sequence />
         </complexType>
       </element>
+      <element name="AssignLecStudentRequisitionLines">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="requisition_No" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="unit_Code" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="lineNo" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="appvd" type="boolean" />
+            <element minOccurs="1" maxOccurs="1" name="lecNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="AssignLecStudentRequisitionLines_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
       <element name="AssignLecturerUnit">
         <complexType>
           <sequence>
@@ -1156,6 +1172,12 @@
   <message name="ApproveStudentRequisitionLines_Result">
     <part name="parameters" element="tns:ApproveStudentRequisitionLines_Result" />
   </message>
+  <message name="AssignLecStudentRequisitionLines">
+    <part name="parameters" element="tns:AssignLecStudentRequisitionLines" />
+  </message>
+  <message name="AssignLecStudentRequisitionLines_Result">
+    <part name="parameters" element="tns:AssignLecStudentRequisitionLines_Result" />
+  </message>
   <message name="AssignLecturerUnit">
     <part name="parameters" element="tns:AssignLecturerUnit" />
   </message>
@@ -1567,6 +1589,10 @@
       <input name="ApproveStudentRequisitionLines" message="tns:ApproveStudentRequisitionLines" />
       <output name="ApproveStudentRequisitionLines_Result" message="tns:ApproveStudentRequisitionLines_Result" />
     </operation>
+    <operation name="AssignLecStudentRequisitionLines">
+      <input name="AssignLecStudentRequisitionLines" message="tns:AssignLecStudentRequisitionLines" />
+      <output name="AssignLecStudentRequisitionLines_Result" message="tns:AssignLecStudentRequisitionLines_Result" />
+    </operation>
     <operation name="AssignLecturerUnit">
       <input name="AssignLecturerUnit" message="tns:AssignLecturerUnit" />
       <output name="AssignLecturerUnit_Result" message="tns:AssignLecturerUnit_Result" />
@@ -1853,6 +1879,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="ApproveStudentRequisitionLines_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="AssignLecStudentRequisitionLines">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/Webportal:AssignLecStudentRequisitionLines" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="AssignLecStudentRequisitionLines">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="AssignLecStudentRequisitionLines_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
