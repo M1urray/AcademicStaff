@@ -221,7 +221,7 @@
 
             $.getJSON("/Lecturer/GetProgrammeStageUnits", { Prog: Prog, Stage: "" },
                 function (data) {
-                    $('#ddlUnit').empty().append('<option selected="selected" value="0">--Select Stage--</option>');
+                    $('#ddlUnit').empty().append('<option selected="selected" value="0">--Select Unit--</option>');
                     $.each(data.ListOfProgrammesStageUnits, function () {
                         $("#ddlUnit").append($("<option></option>").val(this['Value']).html(this['Text']));
                     });

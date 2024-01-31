@@ -901,7 +901,7 @@ namespace Latest_Staff_Portal.Controllers
                     {
                         StageUnits SUnitList = new StageUnits();
                         SUnitList.Code = (string)config["Code"];
-                        SUnitList.Desription = (string)config["Code"] + "-" + (string)config["Description"];
+                        SUnitList.Desription = (string)config["Code"] + "-" + (string)config["Desription"];
                         StageUnitList.Add(SUnitList);
                     }
                 }
