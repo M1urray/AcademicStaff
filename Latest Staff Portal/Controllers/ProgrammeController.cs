@@ -452,7 +452,7 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                string fullPath = ""; // Set the actual path to the file
+                string fullPath = @"/Downloads/" + fileName; ; // Set the actual path to the file
 
                 // Determine the file extension
                 string fileExtension = Path.GetExtension(fileName);
