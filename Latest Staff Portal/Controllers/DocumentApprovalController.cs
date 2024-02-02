@@ -325,10 +325,8 @@ namespace Latest_Staff_Portal.Controllers
                     }
                     return Json(new { data = approvalDocList, draw = Request["draw"], recordsTotal = TotalRows, recordsFiltered = TotalRows }, JsonRequestBehavior.AllowGet);
                 }
-                else
-                {
-                    return Json(new { data = approvalDocList }, JsonRequestBehavior.AllowGet);
-                }
+
+                return Json(new { data = approvalDocList }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
