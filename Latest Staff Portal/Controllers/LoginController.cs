@@ -247,7 +247,7 @@ namespace Latest_Staff_Portal.Controllers
                                             "<br />Remember to change your password after you login";
                                         if (CommonClass.SendEmailAlert(emailmsg, email, subject))
                                         {
-                                            msg = "A New password has been send to your Email<b>(" + email + ")</b>. Use it to login. Remember to change your password after you login";
+                                            msg = "A New password has been sent to your Email<b>(" + email + ")</b>. Use it to login. Remember to change your password after you login";
                                             success = true;
                                         }
                                         else

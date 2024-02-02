@@ -1,15 +1,10 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
-using Latest_Staff_Portal.ViewModel;
-using Newtonsoft.Json;
+﻿using Latest_Staff_Portal.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Script.Serialization;
 
 namespace Latest_Staff_Portal.Models
 {
@@ -215,22 +210,6 @@ namespace Latest_Staff_Portal.Models
             try
             {
                 x = Credentials.ObjNav.SendEmail(ref recepient, subject, body);
-                //string SMTPHost = "smtp.gmail.com";
-                //string fromAddress = "testjooust@gmail.com";
-                //string toAddress = recepient;
-                //System.Net.Mail.MailMessage mail_ = new System.Net.Mail.MailMessage();
-                //mail_.To.Add(toAddress);
-                //mail_.Subject = subject;
-                //mail_.From = new System.Net.Mail.MailAddress(fromAddress);
-                //mail_.Body = body;
-                //mail_.IsBodyHtml = true;
-
-                //var smtp = new SmtpClient(SMTPHost, 587)
-                //{
-                //    Credentials = new NetworkCredential("testjooust@gmail.com", "123@Team"),
-                //    EnableSsl = true
-                //};
-                //smtp.Send(mail_);
             }
             catch (Exception ex2)
             {
