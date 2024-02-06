@@ -319,8 +319,8 @@ namespace Latest_Staff_Portal.Controllers
 
                 DateTime DateRequired = DateTime.ParseExact(imprestHeader.DateNeeded.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 string DocNo = "";
-                    // Credentials.ObjNav.ImprestRequisitionCreate(StaffNo, imprestHeader.Campus, DateRequired, imprestHeader.Department, School,
-                    // imprestHeader.Remarks, imprestHeader.RespC, UserID, "", "");
+                    Credentials.ObjNav.ImprestRequisitionCreate(StaffNo, imprestHeader.Campus, DateRequired, imprestHeader.Department, School,
+                    imprestHeader.Remarks, imprestHeader.RespC, UserID, "", "",0);
                 if (DocNo != "")
                 {
                     string Redirect = "/Imprest/ImprestDocumentView?DocNo=" + DocNo;

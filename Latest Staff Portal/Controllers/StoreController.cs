@@ -340,19 +340,19 @@ namespace Latest_Staff_Portal.Controllers
             try
             {
                 string item = storeLine.Item.Trim();
-                string qnty = storeLine.Qnty.Trim();
+                int qnty = Convert.ToInt32(storeLine.Qnty.Trim());
                 string location = storeLine.Location.Trim();
-                // decimal s = Credentials.ObjNav.StockLevel(item, location);
-                // if (s < Convert.ToDecimal(qnty))
-                // {
-                //     successVal = false;
-                //     // msg = storeLine.ItemDesc.Trim() + " will lead to negative stock." + s + " Remaining items";
-                //
-                // }
-                // else
-                // {
-                //     successVal = true;
-                // }
+                decimal s = Credentials.ObjNav.StockLevel(item,qnty, location);
+                if (s < Convert.ToDecimal(qnty))
+                {
+                    successVal = false;
+                    msg = storeLine.ItemDesc.Trim() + " will lead to negative stock." + s + " Remaining items";
+
+                }
+                else
+                {
+                    successVal = true;
+                }
                 return Json(new { message = msg, success = successVal }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
