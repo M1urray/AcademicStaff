@@ -60,7 +60,7 @@ namespace Latest_Staff_Portal.Controllers
 
                             var Redirect = "/Dashboard/Dashboard";
                             var page = "EmployeeList?$filter=User_ID eq '" + userID +
-                                       "' and Status eq 'Active' &$format=json";
+                                       "' and (Status eq 'Active' or Status eq 'Uniformed')&$format=json";
 
                             var httpResponse = Credentials.GetOdataData(page);
                             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
