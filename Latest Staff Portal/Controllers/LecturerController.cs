@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using System.Web.UI;
 
 namespace Latest_Staff_Portal.Controllers
 {
@@ -941,7 +940,7 @@ namespace Latest_Staff_Portal.Controllers
             try
             {
                 Credentials.ObjNav.DeleteLecturerUnit(UnitDetails.Lect, UnitDetails.Prog,"", UnitDetails.Sem, UnitDetails.Unit, "", "", Convert.ToInt32(UnitDetails.LineNo));
-                return Json(new { message = "Unit Assigned Successfully", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = "Unit Deleted Successfully", success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
