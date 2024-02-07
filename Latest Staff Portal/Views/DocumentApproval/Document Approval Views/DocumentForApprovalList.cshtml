@@ -35,6 +35,7 @@
             "columns": [
                 {
                     render: function (data, type, row, meta) {
+                        //return '<a href="#" onclick=ViewDoc("' + row.TabelID + '","' + row.Document_No + '","' + row.Sequence + '","' + row.Entry_No + '")>View Document</a>'
                         return '<a href="#" onclick="ViewDoc(\'' + row.TabelID + '\',\'' + row.Document_No + '\',\'' + row.Sequence + '\',\'' + row.Entry_No + '\')">View Document</a>';
                     }
                 },
