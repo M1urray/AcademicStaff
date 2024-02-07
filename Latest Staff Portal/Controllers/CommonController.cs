@@ -119,7 +119,7 @@ namespace Latest_Staff_Portal.Controllers
                     foreach (JObject config in details["value"])
                     {
                         DropdownList dll = new DropdownList();
-                        dll.Value = (string)config["Code"];
+                        dll.Value = (string)config["No"];
                         dll.Text = (string)config["Description"];
                         ddlList.Add(dll);
                     }
