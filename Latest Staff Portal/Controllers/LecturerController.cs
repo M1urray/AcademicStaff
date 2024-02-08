@@ -152,9 +152,8 @@ namespace Latest_Staff_Portal.Controllers
                 string StaffNo = Session["Username"].ToString();
                 List<LecturerAssignedUnits> LectUnitAllocation = new List<LecturerAssignedUnits>();
                 List<LecturerAssignedUnits> LectAssociateUnits = new List<LecturerAssignedUnits>();
-                string Sem = CommonClass.CurrentSemester();
+                 string Sem = CommonClass.CurrentSemester();
                 string page = "Lecturers_Units?$filter=Lecturer eq '" + StaffNo + "' and Semester eq '" + Sem + "'&$format=json";
-
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -185,66 +184,117 @@ namespace Latest_Staff_Portal.Controllers
                 return View(LecUnits);
             }
         }
+        // public ActionResult MarkEntryAllocationUnits()
+        // {
+        //     if (Session["Username"] == null)
+        //     {
+        //         return RedirectToAction("Login", "Login");
+        //     }
+        //     else
+        //     {
+        //         string StaffNo = Session["Username"].ToString();
+        //         List<LecturerAssignedUnits> LectUnitAllocation = new List<LecturerAssignedUnits>();
+        //         List<LecturerAssignedUnits> LectAssociateUnits = new List<LecturerAssignedUnits>();
+        //         //string Sem = CommonClass.ExamSemester();
+        //
+        //         string page = "SemesterList?$filter=ExamSemester eq true&$format=json";
+        //
+        //         HttpWebResponse httpResponseResC = Credentials.GetOdataData(page);
+        //         using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
+        //         {
+        //             var result = streamReader.ReadToEnd();
+        //
+        //             var details = JObject.Parse(result);
+        //
+        //             if (details["value"].Count() > 0)
+        //             {
+        //                 foreach (JObject s in details["value"])
+        //                 {
+        //                     string pageU = "LectAllocatedUnits?$filter=Lecturer eq '" + StaffNo + "' and Semester eq '" + (string)s["Code"] + "'&$format=json";
+        //
+        //                     HttpWebResponse httpResponse = Credentials.GetOdataData(pageU);
+        //                     using (var streamReaderU = new StreamReader(httpResponse.GetResponseStream()))
+        //                     {
+        //                         var resultU = streamReaderU.ReadToEnd();
+        //
+        //                         var detailsU = JObject.Parse(resultU);
+        //
+        //                         foreach (JObject config in detailsU["value"])
+        //                         {
+        //                             LecturerAssignedUnits Lec = new LecturerAssignedUnits();
+        //                             Lec.Code = (string)config["Code"];
+        //                             Lec.Stage = (string)config["Stage"];
+        //                             Lec.Semester = (string)config["Semester"];
+        //                             Lec.Unit = (string)config["Unit"];
+        //                             Lec.Unit_Name = (string)config["Unit_Description"];
+        //                             Lec.Campus_Code = (string)config["Campus_Code"];
+        //                             Lec.Student_Type = (string)config["Student_Type"];
+        //                             LectUnitAllocation.Add(Lec);
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }               
+        //
+        //         LecAssignedUnits LecUnits = new LecAssignedUnits
+        //         {
+        //             Code = "",
+        //             ListOfAssignedUnits = LectUnitAllocation.DistinctBy(x => new { x.Unit, x.Semester, x.Campus_Code }).ToList(),
+        //         };
+        //         return View(LecUnits);
+        //     }
+        // }
         public ActionResult MarkEntryAllocationUnits()
         {
-            if (Session["Username"] == null)
+            if (base.Session["Username"] == null)
             {
-                return RedirectToAction("Login", "Login");
+                return base.RedirectToAction("Login", "Login");
             }
-            else
+            string str = base.Session["Username"].ToString();
+            List<LecturerAssignedUnits> source = new List<LecturerAssignedUnits>();
+            List<LecturerAssignedUnits> list2 = new List<LecturerAssignedUnits>();
+            string page = "SemesterList?$filter=ExamSemester eq true&$format=json";
+            using (StreamReader reader = new StreamReader(Credentials.GetOdataData(page).GetResponseStream()))
             {
-                string StaffNo = Session["Username"].ToString();
-                List<LecturerAssignedUnits> LectUnitAllocation = new List<LecturerAssignedUnits>();
-                List<LecturerAssignedUnits> LectAssociateUnits = new List<LecturerAssignedUnits>();
-                //string Sem = CommonClass.ExamSemester();
-
-                string page = "SemesterList?$filter=ExamSemester eq true&$format=json";
-
-                HttpWebResponse httpResponseResC = Credentials.GetOdataData(page);
-                using (var streamReader = new StreamReader(httpResponseResC.GetResponseStream()))
+                JObject obj2 = JObject.Parse(reader.ReadToEnd());
+                if (obj2["value"].Count<JToken>() > 0)
                 {
-                    var result = streamReader.ReadToEnd();
-
-                    var details = JObject.Parse(result);
-
-                    if (details["value"].Count() > 0)
+                    foreach (JObject obj3 in (IEnumerable<JToken>)obj2["value"])
                     {
-                        foreach (JObject s in details["value"])
+                        string[] textArray1 = new string[] { "LectAllocatedUnits?$filter=Lecturer eq '", str, "' and Semester eq '", (string)obj3["Code"], "'&$format=json" };
+                        using (StreamReader reader2 = new StreamReader(Credentials.GetOdataData(string.Concat(textArray1)).GetResponseStream()))
                         {
-                            string pageU = "LectAllocatedUnits?$filter=Lecturer eq '" + StaffNo + "' and Semester eq '" + (string)s["Code"] + "'&$format=json";
-
-                            HttpWebResponse httpResponse = Credentials.GetOdataData(pageU);
-                            using (var streamReaderU = new StreamReader(httpResponse.GetResponseStream()))
+                            foreach (JObject obj5 in (IEnumerable<JToken>)JObject.Parse(reader2.ReadToEnd())["value"])
                             {
-                                var resultU = streamReaderU.ReadToEnd();
-
-                                var detailsU = JObject.Parse(resultU);
-
-                                foreach (JObject config in detailsU["value"])
+                                LecturerAssignedUnits item = new LecturerAssignedUnits
                                 {
-                                    LecturerAssignedUnits Lec = new LecturerAssignedUnits();
-                                    Lec.Code = (string)config["Code"];
-                                    Lec.Stage = (string)config["Stage"];
-                                    Lec.Semester = (string)config["Semester"];
-                                    Lec.Unit = (string)config["Unit"];
-                                    Lec.Unit_Name = (string)config["Unit_Description"];
-                                    Lec.Campus_Code = (string)config["Campus_Code"];
-                                    Lec.Student_Type = (string)config["Student_Type"];
-                                    LectUnitAllocation.Add(Lec);
-                                }
+                                    Code = (string)obj5["Code"],
+                                    Stage = (string)obj5["Stage"],
+                                    Semester = (string)obj5["Semester"],
+                                    Unit = (string)obj5["Unit"],
+                                    Unit_Name = (string)obj5["Unit_Description"],
+                                    Campus_Code = (string)obj5["Campus_Code"],
+                                    Student_Type = (string)obj5["Student_Type"]
+                                };
+                                source.Add(item);
                             }
                         }
                     }
-                }               
-
-                LecAssignedUnits LecUnits = new LecAssignedUnits
-                {
-                    Code = "",
-                    ListOfAssignedUnits = LectUnitAllocation.DistinctBy(x => new { x.Unit, x.Semester, x.Campus_Code }).ToList(),
-                };
-                return View(LecUnits);
+                }
             }
+            LecAssignedUnits model = new LecAssignedUnits
+            {
+                Code = "",
+                ListOfAssignedUnits = source.DistinctBy(x => new {
+                    Code = x.Code,
+                    Unit = x.Unit,
+                    Semester = x.Semester,
+                    Campus_Code = x.Campus_Code
+                }).ToList<LecturerAssignedUnits>()
+            };
+            return base.View(model);
         }
+
         public ActionResult CourseAllocationLinks()
         {
             if (Session["Username"] == null)
@@ -364,11 +414,11 @@ namespace Latest_Staff_Portal.Controllers
         {
             if (Session["Sem"] != null && Session["Unit"] != null && Session["Campus"] != null)
             {
-                 string Prog = Session["Prog"].ToString();
+                string Prog = Session["Prog"].ToString();
                 //string Stage = Session["Stage"].ToString();
                 string Sem = Session["Sem"].ToString();
                 string Unit = Session["Unit"].ToString();
-                string Campus = Session["Campus"].ToString();                
+                string Campus = Session["Campus"].ToString();
                 //string classCode = Session["ClassCode"].ToString();
                 bool IsAss = (bool)Session["IsLecAss"];
 
@@ -395,10 +445,8 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 return PartialView("~/Views/Lecturer/LoadStudentList.cshtml", studentlist.OrderBy(x => x.No).DistinctBy(x => x.No).ToList());
             }
-            else
-            {
-                return PartialView();
-            }
+
+            return PartialView();
         }
         public ActionResult SpecialExamList()
         {
