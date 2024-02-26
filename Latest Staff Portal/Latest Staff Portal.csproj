@@ -482,6 +482,9 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Purchase\PurchaseQuoteList.cshtml" />
+    <Content Include="Views\Purchase\QuoteReqListView.cshtml" />
+    <Content Include="Views\Purchase\PurchaseQuoteDocDetails.cshtml" />
     <None Include="Web References\NAVWS\WebPortal.wsdl" />
   </ItemGroup>
   <ItemGroup>

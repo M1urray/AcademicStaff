@@ -621,5 +621,156 @@ namespace Latest_Staff_Portal.Controllers
         {
             return PartialView("~/Views/Purchase/FileAttachmentForm.cshtml");
         }
+
+        //Purchase Quote
+        public ActionResult PurchaseQuoteList()
+        {
+            try
+            {
+                if (Session["Username"] == null)
+                {
+                    return RedirectToAction("Login", "Login");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return View("~/Views/Common/ErrorMessange.cshtml", erroMsg);
+            }
+        }
+        public PartialViewResult PurchaseReQuoteListPartialView()
+        {
+            try
+            {
+                string StaffNo = Session["Username"].ToString();
+                List<PurchaseQuote> PurchaseList = new List<PurchaseQuote>();
+
+                string page = "PurchaseQuotes?$filter=Employee_No eq '" + StaffNo + "'&format=json";
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    foreach (var JToken in details["value"])
+                    {
+                        var config = (JObject)JToken;
+                        PurchaseQuote PrvList = new PurchaseQuote();
+                        PrvList.No = (string)config["No"];
+                        PrvList.OrderDate = Convert.ToDateTime((string)config["Order_Date"]).ToString("dd/MM/yyyy");
+                        PrvList.Status = (string)config["Status"];
+                        PurchaseList.Add(PrvList);
+                    }
+                }
+                return PartialView("~/Views/Purchase/QuoteReqListView.cshtml", PurchaseList.OrderByDescending(x => x.No));
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+            }
+        }
+        public PartialViewResult PurchaseQuoteDocDetails(string DocNo, string Sequence)
+        {
+            try
+            {
+                decimal TotalAmount = 0;
+                #region Purchase Header
+
+                PurchaseQuote purchaseQuote = new PurchaseQuote();
+                string page = "PurchaseQuotes?$filter=No eq '" + DocNo + "'&$format=json";
+                HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    foreach (JObject config in details["value"])
+                    {
+                        purchaseQuote.No = (string)config["No"];
+
+                        purchaseQuote.Status = (string)config["Status"];
+                        // if ((string)config["Employee_No"] != "")
+                        // {
+                        //     purchaseQuote.RequestorNo = (string)config["Employee_No"];
+                        //     purchaseQuote.RequestorName = CommonClass.GetEmployeeName((string)config["Employee_No"]);
+                        // }
+                        // else
+                        // {
+                        //     if ((string)config["User_ID"] != "")
+                        //     {
+                        //         string[] s = CommonClass.GetEmployeeByUserID((string)config["User_ID"]);
+                        //         if (s[0] != null && s[1] != null)
+                        //         {
+                        //             purchaseQuote.RequestorNo = s[0];
+                        //             purchaseQuote.RequestorName = s[1];
+                        //         }
+                        //     }
+                        // }
+                    }
+                }
+                #endregion
+                #region Purchase Lines
+                List<PRVLines> PurchaseLines = new List<PRVLines>();
+                string pageLine = "PurchaseLines?$filter=Document_No eq '" + DocNo + "'&$format=json";
+                HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
+                using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    var details = JObject.Parse(result);
+                    foreach (var JToken in details["value"])
+                    {
+                        var config = (JObject)JToken;
+                        PRVLines PurchaseLine = new PRVLines();
+                        if ((string)config["Type"] == "G/L Account")
+                        {
+                            PurchaseLine.LineType = "Service";
+                        }
+                        else
+                        {
+                            PurchaseLine.LineType = (string)config["Type"];
+                        }
+                        PurchaseLine.Item = (string)config["No"];
+                        PurchaseLine.ItemDesc = (string)config["Description"];
+                        if ((string)config["Remarks"] != "")
+                        {
+                            PurchaseLine.Description2 = (string)config["Remarks"];
+                        }
+                        else
+                        {
+                            PurchaseLine.Description2 = (string)config["Description_2"];
+                        }
+                        PurchaseLine.Qnty = (string)config["Quantity"];
+                        PurchaseLine.UnitM = (string)config["Unit_of_Measure"];
+                        PurchaseLine.Amount = Convert.ToDecimal((string)config["Direct_Unit_Cost"]).ToString("#,##0.00");
+                        PurchaseLine.LineAmount = Convert.ToDecimal((string)config["Line_Amount"]).ToString("#,##0.00");
+                        PurchaseLine.Location = (string)config["Location_Code"];
+                        PurchaseLines.Add(PurchaseLine);
+                        TotalAmount += (decimal)config["Line_Amount"];
+                    }
+                }
+                #endregion
+                Session["Location"] = "2";
+                string amountInWords = Credentials.ObjNav.ReturnAmountInWords(TotalAmount);
+                PurchaseQuote docDetails = new PurchaseQuote
+                {
+                    // DocHeader = PurchaseDoc,
+                    // ListOfPurchaseLines = PurchaseLines,
+                    // TotalAmount = TotalAmount.ToString("#,##0.00"),
+                    // AmountInWords = amountInWords
+                };
+                return PartialView("~/Views/Purchase/PurchaseQuoteDocDetails.cshtml", docDetails);
+            }
+            catch (Exception ex)
+            {
+                Error erroMsg = new Error();
+                erroMsg.Message = ex.Message;
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+            }
+        }
     }
 }

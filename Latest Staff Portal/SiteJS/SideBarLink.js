@@ -50,6 +50,10 @@ var PurchaseRequisitionLink = function () {
     ShowProgress();
     window.location = "/Purchase/PurchaseRequisitionList";
 }
+var PurchaseQuoteLink = function () {
+    ShowProgress();
+    window.location = "/Purchase/PurchaseQuoteList";
+}
 var StoreRequisitiontLink = function () {
     ShowProgress();
     window.location = "/Store/StoreRequisitionList";

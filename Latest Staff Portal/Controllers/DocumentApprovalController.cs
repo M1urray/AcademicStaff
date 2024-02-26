@@ -40,9 +40,9 @@ namespace Latest_Staff_Portal.Controllers
                         DocumentCount DocCount = new DocumentCount();
 
                         DocCount.LeaveCount = 0;
-                        DocCount.PRNCount = 0;
-                        DocCount.LPOCount = 0;
-                        DocCount.SRNCount = 0;
+                        DocCount.PrnCount = 0;
+                        DocCount.LpoCount = 0;
+                        DocCount.SrnCount = 0;
                         DocCount.ImpCount = 0;
                         DocCount.SurrCount = 0;
                         DocCount.ClaimCount = 0;
@@ -50,7 +50,8 @@ namespace Latest_Staff_Portal.Controllers
                         DocCount.Clearance = 0;
                         DocCount.TransferOrder = 0;
                         DocCount.CafCount = 0;
-                        DocCount.PVCount = 0;
+                        DocCount.PvCount = 0;
+                        DocCount.Pq = 0;
 
                         string page = "ApprovalEntries?$filter=Approver_ID eq '" + userID + "' and Status eq '" + rn + "'&$format=json";
                         HttpWebResponse httpResponse = Credentials.GetOdataData(page);
@@ -63,51 +64,51 @@ namespace Latest_Staff_Portal.Controllers
                             {
                                 if ((string)config["Table_ID"] == "70135114")
                                 {
-                                    DocCount.LeaveCount = DocCount.LeaveCount + 1;
+                                    DocCount.LeaveCount += 1;
                                 }
                                 if ((string)config["Table_ID"] == "38" && (string)config["Document_Type"] == "Quote")
                                 {
-                                    DocCount.PRNCount = DocCount.PRNCount + 1;
+                                    DocCount.PrnCount += 1;
                                 }
                                 if ((string)config["Table_ID"] == "38" && (string)config["Document_Type"] == "Order")
                                 {
-                                    DocCount.LPOCount = DocCount.LPOCount + 1;
+                                    DocCount.LpoCount += 1;
                                 }
                                 if ((string)config["Table_ID"] == "70135010")
                                 {
-                                    DocCount.SRNCount = DocCount.SRNCount + 1;
+                                    DocCount.SrnCount += 1;
                                 }
                                 if ((string)config["Table_ID"] == "70135469")
                                 {
-                                    DocCount.ImpCount = DocCount.ImpCount + 1;
+                                    DocCount.ImpCount += 1;
                                 }
                                 if ((string)config["Table_ID"] == "70135450")
                                 {
-                                    DocCount.SurrCount = DocCount.SurrCount + 1;
+                                    DocCount.SurrCount += 1;
                                 }
                                 if ((string)config["Table_ID"] == "70135454")
                                 {
-                                    DocCount.ClaimCount = DocCount.ClaimCount + 1;
+                                    DocCount.ClaimCount += 1;
                                 }
                                 if ((string)config["Table_ID"] == "70135362")
                                 {
-                                    DocCount.TransportCount = DocCount.TransportCount + 1;
+                                    DocCount.TransportCount += 1;
                                 }
                                 if ((string)config["Table_ID"] == "70134894")
                                 {
-                                    DocCount.Clearance = DocCount.Clearance + 1;
+                                    DocCount.Clearance += 1;
                                 }
                                 if ((string)config["Table_ID"] == "5740")
                                 {
-                                    DocCount.TransferOrder = DocCount.TransferOrder + 1;
+                                    DocCount.TransferOrder += 1;
                                 }
                                 if ((string)config["Table_ID"] == "70135460")
                                 {
-                                    DocCount.PVCount = DocCount.PVCount + 1;
+                                    DocCount.PvCount += 1;
                                 }
                                 if ((string)config["Table_ID"] == "70134904")
                                 {
-                                    DocCount.CafCount = DocCount.CafCount + 1;
+                                    DocCount.CafCount += 1;
                                 }
                             }
                             DocCount.Status = rn;
@@ -139,43 +140,43 @@ namespace Latest_Staff_Portal.Controllers
                             {
                                 if ((string)config["Requisition_Type"] == "Campus Transfer")
                                 {
-                                    StdCount.CampusTraCount = StdCount.CampusTraCount + 1;
+                                    StdCount.CampusTraCount += 1;
                                 }
                                 if ((string)config["Requisition_Type"] == "Clearance")
                                 {
-                                    StdCount.ClearanceCount = StdCount.ClearanceCount + 1;
+                                    StdCount.ClearanceCount += 1;
                                 }
                                 if ((string)config["Requisition_Type"] == "Double Concentration")
                                 {
-                                    StdCount.DoubleConcCount = StdCount.DoubleConcCount + 1;
+                                    StdCount.DoubleConcCount += 1;
                                 }
                                 if ((string)config["Requisition_Type"] == "Drop Courses")
                                 {
-                                    StdCount.DropCorsesCount = StdCount.DropCorsesCount + 1;
+                                    StdCount.DropCorsesCount += 1;
                                 }
                                 if ((string)config["Requisition_Type"] == "Double Major")
                                 {
-                                    StdCount.MajorCount = StdCount.MajorCount + 1;
+                                    StdCount.MajorCount += 1;
                                 }
                                 if ((string)config["Requisition_Type"] == "Programme Minor")
                                 {
-                                    StdCount.MinorCount = StdCount.MinorCount + 1;
+                                    StdCount.MinorCount += 1;
                                 }
                                 if ((string)config["Requisition_Type"] == "Programme Transfer")
                                 {
-                                    StdCount.ProgTransCount = StdCount.ProgTransCount + 1;
+                                    StdCount.ProgTransCount += 1;
                                 }
                                 if ((string)config["Requisition_Type"] == "Special Exams")
                                 {
-                                    StdCount.SExamCount = StdCount.SExamCount + 1;
+                                    StdCount.SExamCount += 1;
                                 }
                                 if ((string)config["Requisition_Type"] == "Exam Challenge")
                                 {
-                                    StdCount.ExamChlngConcCount = StdCount.ExamChlngConcCount + 1;
+                                    StdCount.ExamChlngConcCount += 1;
                                 }
                                 if ((string)config["Requisition_Type"] == "Exemption")
                                 {
-                                    StdCount.ExemptionConcCount = StdCount.ExemptionConcCount + 1;
+                                    StdCount.ExemptionConcCount += 1;
                                 }
                             }
                             StdCount.Status = rn;
@@ -649,7 +650,7 @@ namespace Latest_Staff_Portal.Controllers
                         PurchaseLine.LineAmount = Convert.ToDecimal((string)config["Line_Amount"]).ToString("#,##0.00");
                         PurchaseLine.Location = (string)config["Location_Code"];
                         PurchaseLines.Add(PurchaseLine);
-                        TotalAmount = TotalAmount + (decimal)config["Line_Amount"];
+                        TotalAmount += (decimal)config["Line_Amount"];
                     }
                 }
                 #endregion

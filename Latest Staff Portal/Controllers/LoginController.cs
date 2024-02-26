@@ -103,7 +103,7 @@ namespace Latest_Staff_Portal.Controllers
                     {
                         string Redirect2 = "/Dashboard/Dashboard";
                         string page2 = "EmployeeList?$filter=User_ID eq '" + UserID +
-                                       "' and Status eq 'Active' &$format=json";
+                                       "' and (Status eq 'Active' or Status eq 'Uniformed')&$format=json";
 
                         HttpWebResponse httpResponse2 = Credentials.GetOdataData(page2);
                         using (var streamReader = new StreamReader(httpResponse2.GetResponseStream()))

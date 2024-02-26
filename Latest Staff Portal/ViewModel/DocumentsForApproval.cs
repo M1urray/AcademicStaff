@@ -33,9 +33,9 @@ namespace Latest_Staff_Portal.ViewModel
     {
         public string Status { get; set; }
         public int LeaveCount { get; set; }
-        public int PRNCount { get; set; }
-        public int LPOCount { get; set; }
-        public int SRNCount { get; set; }
+        public int PrnCount { get; set; }
+        public int LpoCount { get; set; }
+        public int SrnCount { get; set; }
         public int ImpCount { get; set; }
         public int SurrCount { get; set; }
         public int ClaimCount { get; set; }
@@ -43,7 +43,8 @@ namespace Latest_Staff_Portal.ViewModel
         public int Clearance { get; set; }
         public int TransferOrder { get; set; }
         public int CafCount { get; set; }
-        public int PVCount { get; set; }
+        public int PvCount { get; set; }
+        public int Pq { get; set; }
     }
     public class StdDocumentCount
     {
