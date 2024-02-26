@@ -267,16 +267,16 @@ namespace Latest_Staff_Portal.Controllers
                 if (TbID != "")
                 {
                     string userID = Session["UserID"].ToString();
-                    string EscapedApproverId = Uri.EscapeDataString(userID);
+                    // string EscapedApproverId = Uri.EscapeDataString(userID);
                     string page = "";
                     TotalRows = GetTotalsApprovalEntries(TbID, Status, DocType);
                     if (DocType != "N")
                     {
-                        page = "ApprovalEntries?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Document_Type,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Comment,Record_ID_to_Approve,SenderNames&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + EscapedApproverId + "' and Status eq '" + Status + "' and Document_Type eq '" + DocType + "'&$format=json";
+                        page = "ApprovalEntries?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Document_Type,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Comment,Record_ID_to_Approve,SenderNames&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "' and Document_Type eq '" + DocType + "'&$format=json";
                     }
                     else
                     {
-                        page = "ApprovalEntries?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Document_Type,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Comment,Record_ID_to_Approve,SenderNames&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + EscapedApproverId + "' and Status eq '" + Status + "'&$format=json";
+                        page = "ApprovalEntries?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,Document_Type,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Comment,Record_ID_to_Approve,SenderNames&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "'&$format=json";
                     }
                     //page = "ApprovalEntries?$top=" + length + "&$skip=" + start + "&$select=Entry_No,Table_ID,Document_No,RecordIDText,Sender_ID,Date_Time_Sent_for_Approval,Status,Sequence_No,Comment&$filter=Table_ID eq " + Convert.ToInt32(TbID) + " and Approver_ID eq '" + userID + "' and Status eq '" + Status + "'&$format=json";
 
