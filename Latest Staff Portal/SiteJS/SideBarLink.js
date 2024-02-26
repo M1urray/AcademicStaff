@@ -94,6 +94,14 @@ var ICTRequisitionlink = function () {
     ShowProgress();
     window.location = "/ICT/ICTRequisitionList";
 }
+var ICTAssetRequisitionlink = function () {
+    ShowProgress();
+    window.location = "/ICT/ICTAssetTransferList";
+}
+var ICTAssetServicing_Maintancelink = function () {
+    ShowProgress();
+    window.location = "/ICT/ICTServMntList";
+}
 var ExitInterviewlink = function () {
     ShowProgress();
     window.location = "/StaffClearance/ExitInterview";
