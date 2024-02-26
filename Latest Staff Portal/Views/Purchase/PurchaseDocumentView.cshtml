@@ -603,6 +603,7 @@
         var Qnty = $("#txtQuantity").val();
         var Location = $("#ddlLocation").children("option:selected").val();
         var ItemDescription = $("#txtDescription").val().replace(/(\r\n|\n|\r)/gm, " ");
+        var generalPosting = $("#ddlPosting").children("option:selected").val();
         if (itemvalue == "") {
             Swal.fire('Warning', "Select Item", 'warning');
             return;
@@ -637,7 +638,7 @@
             PRVLine.Qnty = Qnty;
             PRVLine.Amount = Amount;
             PRVLine.Location = Location;
-
+            PRVLine.PostingGroup = generalPosting;
             $.ajax({
                 type: "POST",
                 url: "/Purchase/SubmitPurchaseLine",

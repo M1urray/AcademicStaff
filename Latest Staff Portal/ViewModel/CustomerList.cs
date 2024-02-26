@@ -15,6 +15,7 @@ namespace Latest_Staff_Portal.ViewModel
         public string Marks { get; set; }
         public string Unit { get; set; }
         public string Semester { get; set; }
+        public string Grade { get; set; }
     }
     public class StudentRedUnit
     {

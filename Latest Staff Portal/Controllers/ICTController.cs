@@ -572,6 +572,25 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
+        public PartialViewResult ConfirmICTRequestForm(string DocNo)
+        {
+            ICTCancel c = new ICTCancel();
+            c.DocNo = DocNo;
+            return PartialView("~/Views/ICT/ConfirmRemarks.cshtml", c);
+        }
+        public JsonResult ConfirmICTRequest(string DocNo, string Resolved, string ConfirmR)
+        {
+            try
+            {
+                Credentials.ObjNav.ConfirmClosureOfICTRequisition(DocNo, ConfirmR);
+
+                return Json(new { message = "Confirmation Submitted Successfully", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
         #endregion
     }
 }

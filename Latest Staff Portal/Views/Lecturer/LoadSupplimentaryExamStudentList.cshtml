@@ -14,7 +14,26 @@
             UnitName = Session["UnitName"].ToString();
         }
         string Lec = Session["Username"].ToString();
-        string classCode = Session["ClassCode"].ToString();       
+        string classCode = Session["ClassCode"].ToString();
+
+        string ProgC = "";
+        if (Session["ProgCate"] == null)
+        {
+            ProgC = Credentials.ObjNav.GetExamCategory(Unit, Prog);
+            Session["ProgCate"] = ProgC;
+        }
+        else
+        {
+            ProgC = Session["ProgCate"].ToString();
+        }
+        string page = "ExamSetup?$filter=Category eq '" + ProgC + "' and Type eq 'Supplementary'&format=json";
+
+        HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+        {
+            var result = streamReader.ReadToEnd();
+            details = JObject.Parse(result);
+        }
     }
     else
     {
@@ -34,13 +53,20 @@
         text-align: center;
     }
 </style>
-<div class="pre-scrollable">   
+<div class="pre-scrollable">
+    @{
+        string s = " | ";
+        foreach (JObject config in details["value"])
+        {
+            s = s + config["Code"].ToString() + " = " + config["Max_Score"].ToString() + " | ";
+        }
+    }
     <div>
         Programme => @Html.Label(Prog, new { @id = "lblProg" }) | Unit => @Html.Label(Unit, new { @id = "lblUnit" }) (@Html.Label(UnitName))
     </div>
     <hr style="margin:2px" />
     <div style="color:red">
-        Max Score => 70
+        Max Score => @s
     </div>
     <hr />
     <table id="datatable-buttons" class="table table-bordered nowrap table-hover" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -49,7 +75,14 @@
                 <th width="5%">#</th>
                 <th>Student No</th>
                 <th>Name</th>
-                <th>Exam Mark</th>
+                @{
+                    foreach (JObject config in details["value"])
+                    {
+                        <th width="10%" style="text-align:center">@config["Code"].ToString()</th>
+                    }
+                }
+                <th width="5%" style="text-align:center">Grade</th>
+                <th hidden></th>
             </tr>
         </thead>
         <tbody>
@@ -73,8 +106,39 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
-                                <td align="center" valign="middle">
-                                    @Html.TextBox("EXAM", item.Marks, new { maxlength = 2, Style = "text-align:center;", @class = "form-control textboxWidth" })
+                                @{
+                                    decimal Total = 0;
+                                    bool HasMarks = false;
+                                    foreach (JObject config in details["value"])
+                                    {
+                                        string TextValue = "";
+
+                                        string page = "ExamResults?$filter=Student_No eq '" + item.No + "' and Semester eq '" + Sem + "' and ExamType eq '" + config["Code"].ToString() + "' and Unit eq '" + Unit + "' and Cancelled eq false&$format=json";
+
+                                        HttpWebResponse httpResponse = Credentials.GetOdataData(page);
+                                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                                        {
+                                            var result1 = streamReader.ReadToEnd();
+                                            var details1 = JObject.Parse(result1);
+                                            foreach (JObject config1 in details1["value"])
+                                            {
+                                                TextValue = "";
+                                                TextValue = config1["Score"].ToString();
+                                                HasMarks = true;
+                                            }
+                                            <td align="center" valign="middle">
+                                                @Html.TextBox(config["Code"].ToString(), TextValue, new { maxlength = 2, Style = "text-align:center;", @class = "form-control textboxWidth" })@*<span style="vertical-align:middle;color:red;font-size:10px">@Contribution</span>*@
+                                            </td>
+                                        }
+                                    }
+                                    if (HasMarks)
+                                    {
+                                        TotalMark = Math.Round(Total, 2).ToString();
+                                    }
+                                }
+                                <td style="text-align:center;vertical-align:middle">@item.Grade</td>
+                                <td hidden>
+                                    @Html.DisplayFor(modelItem => item.ApplicationNo)
                                 </td>
                             </tr>
                             i++;
@@ -137,5 +201,4 @@
         }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-12:eq(0)")
     });
 </script>
-
 

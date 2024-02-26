@@ -11,6 +11,7 @@ namespace Latest_Staff_Portal.ViewModel
         public string No { get; set; }
         public string OrderDate { get; set; }
         public string Description { get; set; }
+        public string GeneralPosting { get; set; }
         public string Status { get; set; }
     }
     public class NewPurchaseRequisition
@@ -60,10 +61,12 @@ namespace Latest_Staff_Portal.ViewModel
         public string UnitM { get; set; }
         public string LineType { get; set; }
         public string LnNo { get; set; }
+        public string  PostingGroup { get; set; }
     }
     public class PurchaseLinesList
     {
         public string Status { get; set; }
+
         public List<PRVLines> ListOfPurchaseLines { get; set; }
         public string TotalAmount { get; set; }
     }

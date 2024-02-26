@@ -291,6 +291,8 @@
     <Content Include="SiteJS\ForgetPasswordJS.js" />
     <Content Include="SiteJS\LoginJS.js" />
     <Content Include="SiteJS\SideBarLink.js" />
+    <Content Include="Views\Lecturer\LoadSpecialExamStudentList.cshtml" />
+    <Content Include="Views\Lecturer\LoadSupplimentaryExamStudentList.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -369,7 +371,6 @@
     <Content Include="Views\Lecturer\LecturerUnitAllocations.cshtml" />
     <Content Include="Views\Lecturer\LoadAtendanceEntries.cshtml" />
     <Content Include="Views\Lecturer\LoadClassAttendance.cshtml" />
-    <Content Include="Views\Lecturer\LoadSpecialExamStudentList.cshtml" />
     <Content Include="Views\Lecturer\LoadStudentList.cshtml" />
     <Content Include="Views\Lecturer\NewPartTimeLecUnit.cshtml" />
     <Content Include="Views\Lecturer\NewPartTimeRequistion.cshtml" />
@@ -517,7 +518,7 @@
     <Content Include="Views\ItemCashSurrender\ItemCashSurrenderLineView.cshtml" />
     <Content Include="Views\ItemCashSurrender\ItemCashSurrenderListView.cshtml" />
     <Content Include="Views\ItemCashSurrender\SurrenderItemEditForm.cshtml" />
-    <Content Include="Views\Lecturer\LoadSupplimentaryExamStudentList.cshtml" />
+    <Content Include="Views\ICT\ConfirmRemarks.cshtml" />
     <None Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

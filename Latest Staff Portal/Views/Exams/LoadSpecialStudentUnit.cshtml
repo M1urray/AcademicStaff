@@ -6,15 +6,16 @@
     int NoOfexamPapers = 0;
 
     string ProgC = "";
-    if (Session["ProgCate"] == null)
-    {
-        ProgC = Credentials.ObjNav.GetExamCategory(Model.Unit, Model.Prog);
-        Session["ProgCate"] = ProgC;
-    }
-    else
-    {
-        ProgC = Session["ProgCate"].ToString();
-    }
+    //if (Session["ProgCate"] == null)
+    //{
+    //    ProgC = Credentials.ObjNav.GetExamCategory(Model.Unit, Model.Prog);
+    //    Session["ProgCate"] = ProgC;
+    //}
+    //else
+    //{
+    //    ProgC = Session["ProgCate"].ToString();
+    //}
+    ProgC = Credentials.ObjNav.GetExamCategory(Model.Unit, Model.Prog);
     string page = "ExamSetup?$filter=Category eq '" + ProgC + "' and Type ne 'Supplementary'&format=json";
     NoOfexamPapers = CommonClass.ReturnNumberofExamPapers(ProgC);
     HttpWebResponse httpResponse = Credentials.GetOdataData(page);

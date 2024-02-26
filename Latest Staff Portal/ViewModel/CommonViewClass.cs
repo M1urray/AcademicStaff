@@ -49,6 +49,7 @@ namespace Latest_Staff_Portal.ViewModel
     {
         public string Code { get; set; }
         public List<SelectListItem> ListOfLocations { get; set; }
+        public List<SelectListItem> ListOfGeneral { get; set; }
     }
     public class NewStoreLine
     {

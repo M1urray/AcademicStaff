@@ -6,15 +6,7 @@
     int NoOfexamPapers = 0;
 
     string ProgC = "";
-    if (Session["ProgCate"] == null)
-    {
-        ProgC = Credentials.ObjNav.GetExamCategory(Model.Unit, Model.Prog);
-        Session["ProgCate"] = ProgC;
-    }
-    else
-    {
-        ProgC = Session["ProgCate"].ToString();
-    }
+    ProgC = Credentials.ObjNav.GetExamCategory(Model.Unit, Model.Prog);
     string page = "ExamSetup?$filter=Category eq '" + ProgC + "' and Type eq 'Supplementary'&format=json";
     NoOfexamPapers = CommonClass.ReturnNumberofExamPapers(ProgC);
     HttpWebResponse httpResponse = Credentials.GetOdataData(page);
@@ -66,7 +58,7 @@
                         <th width="5%" style="text-align:center">Avg.</th>
                     }
                 }
-                <th width="5%" style="text-align:center">Total</th>
+                <th width="5%" style="text-align:center">Grade</th>
             </tr>
         </thead>
         <tbody>
@@ -126,23 +118,20 @@
                                                     HasMarks = true;
                                                 }
                                                 <td align="center" valign="middle">
-                                                    @Html.TextBox(config["Code"].ToString(), TextValue, new { maxlength = 2, Style = "text-align:center;", @class = "form-control textboxWidth" })
+                                                    @Html.TextBox(config["Code"].ToString(), TextValue, new { maxlength = 2, Style = "text-align:center;", @class = "form-control textboxWidth" })@*<span style="vertical-align:middle;color:red;font-size:10px">@Contribution</span>*@
                                                 </td>
                                             }
                                         }
                                         if (NoOfexamPapers > 1)
                                         {
-                                            decimal avg = 0;
-                                            avg = Math.Round((TotalExamM / NoOfexamPapers), 0);
-                                            Total = Total + avg;
-                                            <td style="text-align:center;vertical-align:middle">@avg.ToString()</td>
+                                            <td style="text-align:center;vertical-align:middle">@item.Marks</td>
                                         }
                                         if (HasMarks)
                                         {
                                             TotalMark = Math.Round(Total, 0).ToString();
                                         }
                                     }
-                                    <td style="text-align:center;vertical-align:middle">@TotalMark</td>
+                                    <td style="text-align:center;vertical-align:middle">@item.Grade</td>
                                 </tr>
                                 i++;
                             }
@@ -161,4 +150,5 @@
         </div>
     </div>
 </div>
+
 

@@ -9,6 +9,7 @@
                 <th>Description 2</th>
                 <th>Store</th>
                 <th class="text-center">Quantity</th>
+                <th>General Posting Groups</th>
                 <th>Unit Measure</th>
                 <th class="text-left">Unit Amount</th>
                 <th class="text-left">Amount</th>
@@ -39,6 +40,9 @@
                             </td>
                             <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.Qnty)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.PostingGroup)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.UnitM)

@@ -175,6 +175,8 @@ namespace Latest_Staff_Portal.Controllers
                     Cust.Name = (string)config["Name"];
                     Cust.Unit = (string)config["Unit"];
                     Cust.Semester = (string)config["Semester"];
+                    Cust.Marks = (string)config["Final_Score"];
+                    Cust.Grade = (string)config["Grade"];
                     Prog = (string)config["Programme"];
                     studentlist.Add(Cust);
                 }
@@ -197,15 +199,8 @@ namespace Latest_Staff_Portal.Controllers
 
                 bool Assigned = false;
                 string ProgC = "";
-                if (Session["ProgCate"] == null)
-                {
-                    ProgC = Credentials.ObjNav.GetExamCategory(Unit, Prog);
-                    Session["ProgCate"] = ProgC;
-                }
-                else
-                {
-                    ProgC = Session["ProgCate"].ToString();
-                }
+
+                ProgC = Credentials.ObjNav.GetExamCategory(Unit, Prog);
                 string[] HeaderText = (string[])headers[0];
                 int ColumnCount = HeaderText.Count();
 
@@ -216,7 +211,7 @@ namespace Latest_Staff_Portal.Controllers
                     string[] RowText = (string[])Rows[i];
 
                     string studentNo = RowText[1].Trim();
-                    for (int j = 3; j < ColumnCount; j++)
+                    for (int j = 3; j < ColumnCount - 1; j++)
                     {
                         string marks = "", examType = "";
 
@@ -275,7 +270,7 @@ namespace Latest_Staff_Portal.Controllers
                 }
                 if (Assigned)
                 {
-                    return Json(new { message = "Unit Assigned Successfully", success = true, failed = false }, JsonRequestBehavior.AllowGet);
+                    return Json(new { message = "Special Exam Marks Assigned Successfully", success = true, failed = false }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -316,7 +311,6 @@ namespace Latest_Staff_Portal.Controllers
                     string[] RowText = (string[])Rows[i];
 
                     string studentNo = RowText[1].Trim();
-                    decimal TotalContribution = 0;
                     for (int j = 3; j < ColumnCount; j++)
                     {
                         string marks = "";
@@ -341,112 +335,32 @@ namespace Latest_Staff_Portal.Controllers
                                     {
                                         return Json(new { message = HeaderText[j].Trim() + " assined score can not be greater than " + mxmScore + ", maximum allowed score", success = true, failed = true }, JsonRequestBehavior.AllowGet);
                                     }
-                                    TotalContribution = TotalContribution + ((AssinedScore / mxmScore) * Contribution);
-                                }
-                            }
-                        }
-                    }
-                    if (TotalContribution > 50)
-                    {
-                        TotalContribution = 50;
-                    }
-                    int count = 1;
-                    decimal RemainingAmunt = 0;
-                    for (int j = 3; j < ColumnCount; j++)
-                    {
-                        string marks = "", examType = "";
-
-                        marks = RowText[j];
-                        if (marks != "")
-                        {
-                            examType = HeaderText[j].Trim();
-                            decimal mxmScore = 0, AssinedScore = 0, Contribution = 0;
-
-                            string page = "ExamSetup?$filter=Category eq '" + ProgC + "' and Code eq '" + HeaderText[j].Trim() + "' and Type ne 'Special' and Type ne 'Supplementary'&$format=json";
-
-                            HttpWebResponse httpResponse = Credentials.GetOdataData(page);
-                            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                            {
-                                var result = streamReader.ReadToEnd();
-                                var details = JObject.Parse(result);
-                                foreach (JObject config in details["value"])
-                                {
-                                    mxmScore = Convert.ToDecimal(config["Max_Score"].ToString());
-                                    Contribution = Convert.ToDecimal(config["Contrib_Final_Score"].ToString());
-                                    AssinedScore = Convert.ToDecimal(marks);
-                                    if (AssinedScore > mxmScore)
+                                    Contribution = ((AssinedScore / mxmScore) * Contribution) * 100;
+                                    if (AssinedScore > 0)
                                     {
-                                        return Json(new { message = HeaderText[j].Trim() + " assined score for <b>" + studentNo + "</b> can not be greater than " + mxmScore + ", maximum allowed score", success = true, failed = true }, JsonRequestBehavior.AllowGet);
-                                    }
-                                    else
-                                    {
-                                        if (examType.Contains("EXAM"))
-                                        {
-                                            examType = "EXAM";
-                                        }
-                                        else
-                                        {
-                                            examType = "CAT";
-                                        }
-                                        if (noOfPapers > 1)
-                                        {
-                                            Contribution = Math.Round((TotalContribution / noOfPapers), 0);
-                                        }
-                                        else
-                                        {
-                                            Contribution = TotalContribution;
-                                        }
-
-                                        if (noOfPapers == 2)
-                                        {
-                                            if (count == 1)
-                                            {
-                                                RemainingAmunt = TotalContribution - Contribution;
-                                            }
-                                            else
-                                            {
-                                                Contribution = RemainingAmunt;
-                                            }
-                                        }
-                                        if (noOfPapers == 3)
-                                        {
-                                            if (count == 1)
-                                            {
-                                                RemainingAmunt = TotalContribution - Contribution;
-                                            }
-                                            else if (count == 2)
-                                            {
-                                                RemainingAmunt = RemainingAmunt - Contribution;
-                                            }
-                                            else
-                                            {
-                                                Contribution = RemainingAmunt;
-                                            }
-                                        }
                                         Credentials.ObjNav.EnterSupplimentaryExamMarks(
-                                        prog: "",
-                                        stage: "",
-                                        unit: Unit,
-                                        sem: Sem,
-                                        score: AssinedScore,
-                                        contrib: Math.Round(Contribution, 0),
-                                        stdNo: studentNo,
-                                        examType: examType,
-                                        user: Session["username"].ToString(),
-                                        entryType: HeaderText[j].Trim(),
-                                        academicY: ""
-                                        );
+                                                       prog: "",
+                                                       stage: "",
+                                                       unit: Unit,
+                                                       sem: Sem,
+                                                       score: AssinedScore,
+                                                       contrib: AssinedScore,
+                                                       stdNo: studentNo,
+                                                       examType: "EXAM",
+                                                       user: Session["username"].ToString(),
+                                                       entryType: HeaderText[j].Trim(),
+                                                       academicY: ""
+                                                       );
                                         Assigned = true;
                                     }
                                 }
                             }
-                            count = count + 1;
                         }
                     }
                 }
                 if (Assigned)
                 {
-                    return Json(new { message = "Unit Assigned Successfully", success = true, failed = false }, JsonRequestBehavior.AllowGet);
+                    return Json(new { message = "Supplimentary Exam marks Assigned Successfully", success = true, failed = false }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

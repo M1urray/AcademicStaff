@@ -25,6 +25,7 @@
             <thead>
                 <tr>
                     <th>Action</th>
+                    <th>Programme</th>
                     <th>Unit</th>
                     <th>Section</th>
                     <th>Unit Name</th>
@@ -47,6 +48,9 @@
                                     <tr>
                                         <td>
                                             <button onclick="SelectedRow('@item.Semester', '@item.Unit', '@item.Unit_Name', '@item.Campus_Code','@item.CourseClass');" class="btn btn-sm btn-danger">Select</button>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Code)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Unit)
@@ -111,7 +115,7 @@
                     <li class="list-group-item"><a href="#" onclick="StudentUnitList();" class="btn btn-primary form-control" style="padding: .5rem .5rem">Assign Marks</a></li>
                     @*<li class="list-group-item"><a href="#" onclick="GetSpecialExamList();" class="btn btn-primary form-control" style="padding: .5rem .5rem">Special Exam Marks</a></li>*@
                     @*<li class="list-group-item"><a href="#" onclick="PrintUnitReports('CLATT');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Class List</a></li>*@
-                    <li class="list-group-item"><a href="#" onclick="PrintUnitReports('EXAMATT');" class="btn btn-primary form-control" style="padding: .5rem .5rem">Exam Attendance</a></li>
+                    <li class="list-group-item"><a href="#" onclick="PrintUnitReports('EXAMATT');" class="btn btn-primary form-control" style="padding: .5rem .5rem">CAT Attendance</a></li>
                 </ol>
             </div>
             <div class="modal-footer">

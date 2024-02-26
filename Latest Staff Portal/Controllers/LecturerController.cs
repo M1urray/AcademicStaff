@@ -532,7 +532,8 @@ namespace Latest_Staff_Portal.Controllers
                         CustomerList Cust = new CustomerList();
                         Cust.No = (string)config["Student_No"];
                         Cust.Name = (string)config["Name"];
-                        Cust.Marks = GetMark((string)config["Student_No"], Sem, Unit);
+                        Cust.Grade = (string)config["Grade"];
+                        //Cust.Marks = GetMark((string)config["Student_No"], Sem, Unit);
                         studentlist.Add(Cust);
                     }
                 }
@@ -543,7 +544,7 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView();
             }
         }
-        private string GetMark(string StdNo,string Sem,string Unit)
+        private string GetMark(string StdNo, string Sem, string Unit)
         {
             string mark = "";
             try
@@ -859,13 +860,15 @@ namespace Latest_Staff_Portal.Controllers
 
                         string studentNo = RowText[1].Trim();
 
-                        for (int j = 3; j < ColumnCount; j++)
+                        for (int j = 3; j < ColumnCount - 2; j++)
                         {
                             string Marks = "", examType = "";
                             Marks = RowText[j].Trim();
                             //string AppNo = RowText[4].Trim();
                             if (Marks != "")
                             {
+                                examType = HeaderText[j].Trim();
+
                                 if (Convert.ToDecimal(Marks) > 100)
                                 {
                                     msg = "Assigned score for <b>" + studentNo + "</b> can not be greater than 100%, maximum allowed score";
@@ -875,25 +878,27 @@ namespace Latest_Staff_Portal.Controllers
                                 else
                                 {
                                     decimal AssinedScore = Convert.ToDecimal(Marks);
-                                    Credentials.ObjNav.EnterSupplimentaryExamMarks(
-                                                prog: "",
-                                                stage: "",
-                                                unit: Unit,
-                                                sem: Sem,
-                                                score: AssinedScore,
-                                                contrib: AssinedScore,
-                                                stdNo: studentNo,
-                                                examType: "EXAM",
-                                                user: Session["username"].ToString(),
-                                                entryType: "EXAM",
-                                                academicY: ""
-                                                );
-                                    SuccV = true;
-                                    count = count + 1;
-
+                                    if (AssinedScore > 0)
+                                    {
+                                        Credentials.ObjNav.EnterSupplimentaryExamMarks(
+                                                    prog: "",
+                                                    stage: "",
+                                                    unit: Unit,
+                                                    sem: Sem,
+                                                    score: AssinedScore,
+                                                    contrib: AssinedScore,
+                                                    stdNo: studentNo,
+                                                    examType: "EXAM",
+                                                    user: Session["username"].ToString(),
+                                                    entryType: HeaderText[j].Trim(),
+                                                    academicY: ""
+                                                    );
+                                        SuccV = true;
+                                    }
                                 }
                             }
                         }
+                        count = count + 1;
                     }
                     if (SuccV == true)
                     {
@@ -938,7 +943,7 @@ namespace Latest_Staff_Portal.Controllers
                     }
                     if (ReportType == "EXAMATT")
                     {
-                        Credentials.ObjNav.GenerateExamAttendanceList("", Unit, "", Sem, ClassCode, Campus, 1, "EXAMATTENDANCE-" + _filename + ".pdf");
+                        Credentials.ObjNav.GenerateCATAttendanceList("", Unit, "", Sem, ClassCode, Campus, 1, "EXAMATTENDANCE-" + _filename + ".pdf");
                         filename = "EXAMATTENDANCE-" + _filename + ".pdf";
                     }
 

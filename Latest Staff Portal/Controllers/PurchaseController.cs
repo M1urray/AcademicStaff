@@ -59,6 +59,7 @@ namespace Latest_Staff_Portal.Controllers
                         PRVList.No = (string)config["No"];
                         PRVList.OrderDate = Convert.ToDateTime((string)config["Order_Date"]).ToString("dd/MM/yyyy");
                         PRVList.Description = (string)config["Posting_Description"];
+                        
                         PRVList.Status = (string)config["Status"];
                         PurchaseList.Add(PRVList);
                     }
@@ -238,7 +239,24 @@ namespace Latest_Staff_Portal.Controllers
                     }
                 }
                 #endregion
+                #region General List
+                List<DropdownList> generalList = new List<DropdownList>();
+                string pageGeneral = "GeneralProductPostingGroups?$format=json";
+                HttpWebResponse httpResponseDriver = Credentials.GetOdataData(pageGeneral);
+                using (var streamReader = new StreamReader(httpResponseDriver.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
 
+                    var details = JObject.Parse(result);
+                    foreach (JObject config in details["value"])
+                    {
+                        DropdownList d = new DropdownList();
+                        d.Value = (string)config["Code"];
+                        d.Text = (string)config["Description"];
+                        generalList.Add(d);
+                    }
+                }
+                #endregion
                 locationList = new LocationList
                 {
                     ListOfLocations = Locations.Select(x =>
@@ -246,6 +264,12 @@ namespace Latest_Staff_Portal.Controllers
                                           {
                                               Text = x.Name,
                                               Value = x.Code
+                                          }).ToList(),
+                    ListOfGeneral = generalList.Select(x =>
+                                          new SelectListItem()
+                                          {
+                                              Text = x.Text,
+                                              Value = x.Value
                                           }).ToList()
                 };
                 return PartialView("~/Views/Purchase/PRVItemForm.cshtml", locationList);
@@ -328,7 +352,7 @@ namespace Latest_Staff_Portal.Controllers
             try
             {
                 decimal TotalAmount = 0;
-                #region Purchase Lines
+               #region Purchase Lines
                 List<PRVLines> PurchaseLines = new List<PRVLines>();
                 string pageLine = "PurchaseLines?$filter=Document_No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
@@ -358,6 +382,7 @@ namespace Latest_Staff_Portal.Controllers
                         PurchaseLine.LineAmount = Convert.ToDecimal((string)config["Line_Amount"]).ToString("#,##0.00");
                         PurchaseLine.Location = (string)config["Location_Code"];
                         PurchaseLine.LnNo = (string)config["Line_No"];
+                        PurchaseLine.PostingGroup = (string)config["genProdPostingGroup"];
                         PurchaseLines.Add(PurchaseLine);
                         TotalAmount = TotalAmount + (decimal)config["Direct_Unit_Cost"];
                     }
@@ -543,7 +568,7 @@ namespace Latest_Staff_Portal.Controllers
                 string amnt = prvLine.Amount.Trim();
                 string location = prvLine.Location.Trim();
 
-                Credentials.ObjNav.PurchaseRequisitionLines(DocNo, item, Convert.ToDecimal(qnty), itemDesc, Type, location, Convert.ToDecimal(amnt));
+                Credentials.ObjNav.PurchaseRequisitionLines(DocNo, item, Convert.ToDecimal(qnty), itemDesc, Type, location, prvLine.PostingGroup,Convert.ToDecimal(amnt));
 
                 return Json(new { message = "Purchase Line Added successfully", success = true }, JsonRequestBehavior.AllowGet);
             }

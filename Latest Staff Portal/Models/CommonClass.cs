@@ -1526,7 +1526,8 @@ namespace Latest_Staff_Portal.Models
                         {
                             string Name = c.Name;
                             string StudentNo = c.No;
-                            decimal Total = 0;
+                            string Grade = c.Grade;
+                            decimal Total = Convert.ToDecimal(c.Marks);
 
                             PdfPCell col1 = new PdfPCell(new Phrase(i.ToString(), fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_LEFT };
                             tableBody.AddCell(col1);
@@ -1623,8 +1624,8 @@ namespace Latest_Staff_Portal.Models
                                 if (MarkDoesExist)
                                 {
                                     decimal avg = 0;
-                                    avg = Math.Round((TotalExamM / NoOfexamPapers), 0);
-                                    Total = Total + avg;
+                                    avg = Total;// Math.Round((TotalExamM / NoOfexamPapers), 0);
+                                    //Total = Total + avg;
                                     col13 = new PdfPCell(new Phrase(avg.ToString(), fnttableHeader)) { BorderWidthRight = 0f, BorderWidthLeft = 0f, HorizontalAlignment = Element.ALIGN_CENTER };
                                     tableBody.AddCell(col13);
                                 }
@@ -1634,10 +1635,9 @@ namespace Latest_Staff_Portal.Models
                                     tableBody.AddCell(col13);
                                 }
                             }
-                            string Grade = "";
                             if (MarkExist && MarkDoesExist)
                             {
-                                Grade = Credentials.ObjNav.GetGrade(Math.Round(Total, 0), Unit, Prog);
+                                //Grade = Credentials.ObjNav.GetGrade(Math.Round(Total, 0), Unit, Prog);
                                 if (Grade == "A")
                                 {
                                     A++;
@@ -1873,7 +1873,7 @@ namespace Latest_Staff_Portal.Models
             List<CustomerList> studentlist = new List<CustomerList>();
             try
             {
-                string pageStudentList = "StudentUnits?$select=Name,Student_No&$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "'&$format=json";
+                string pageStudentList = "StudentUnits?$select=Name,Student_No,Grade,Final_Score&$filter=Semester eq '" + Sem + "' and Unit eq '" + Unit + "'&$format=json";
                 HttpWebResponse httpResponseStudentList = Credentials.GetOdataData(pageStudentList);
                 using (var streamReader = new StreamReader(httpResponseStudentList.GetResponseStream()))
                 {
@@ -1888,6 +1888,8 @@ namespace Latest_Staff_Portal.Models
                             CustomerList Cust = new CustomerList();
                             Cust.No = (string)config["Student_No"];
                             Cust.Name = (string)config["Name"];
+                            Cust.Marks = (string)config["Final_Score"];
+                            Cust.Grade = (string)config["Grade"];
                             studentlist.Add(Cust);
                         }
                     }
@@ -1904,7 +1906,7 @@ namespace Latest_Staff_Portal.Models
             int i = 0;
             try
             {
-                string page = "ExamSetup?$filter=Category eq '" + ProgC + "' and Type ne 'Special' and Type ne 'Supplementary'&format=json";
+                string page = "ExamSetup?$filter=Category eq '" + ProgC + "' and Type ne 'Special' and Type ne 'Supplementary'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {

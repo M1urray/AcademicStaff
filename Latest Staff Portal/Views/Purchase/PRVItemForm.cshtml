@@ -57,7 +57,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
+                General Product Posting Group
+                @Html.DropDownListFor(model => model.Code, Model.ListOfGeneral, "--select Posting Group--", new { @class = "form-control", @id = "ddlPosting" })
+            </div>
+            <div class="col-md-6">
                 Description(50 Characters)
                 <textarea id="txtDescription" class="form-control" maxlength="50"></textarea>
             </div>
