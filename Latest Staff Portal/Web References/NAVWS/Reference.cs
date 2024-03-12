@@ -29,6 +29,8 @@ namespace Latest_Staff_Portal.NAVWS {
     [System.Web.Services.WebServiceBindingAttribute(Name="WebPortal_Binding", Namespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal")]
     public partial class WebPortal : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
+        private System.Threading.SendOrPostCallback UpdatePasswordTokenOperationCompleted;
+        
         private System.Threading.SendOrPostCallback UpdatePurchaseRequisitionOperationCompleted;
         
         private System.Threading.SendOrPostCallback UpdateRatingsOperationCompleted;
@@ -116,6 +118,8 @@ namespace Latest_Staff_Portal.NAVWS {
         private System.Threading.SendOrPostCallback ProfessionalBodyReqcancelRequestOperationCompleted;
         
         private System.Threading.SendOrPostCallback ProgrammeUnitOnOfferOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PurchaseQuoteUserConfirmationOperationCompleted;
         
         private System.Threading.SendOrPostCallback PurchaseRequisitionApprovalRequestOperationCompleted;
         
@@ -356,8 +360,6 @@ namespace Latest_Staff_Portal.NAVWS {
         private System.Threading.SendOrPostCallback UpdateKuccpsPasswordOperationCompleted;
         
         private System.Threading.SendOrPostCallback UpdateLecturerUnitOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback UpdatePasswordTokenOperationCompleted;
         
         private System.Threading.SendOrPostCallback InsertActualImprestLineAmountOperationCompleted;
         
@@ -1140,6 +1142,9 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
+        public event UpdatePasswordTokenCompletedEventHandler UpdatePasswordTokenCompleted;
+        
+        /// <remarks/>
         public event UpdatePurchaseRequisitionCompletedEventHandler UpdatePurchaseRequisitionCompleted;
         
         /// <remarks/>
@@ -1270,6 +1275,9 @@ namespace Latest_Staff_Portal.NAVWS {
         
         /// <remarks/>
         public event ProgrammeUnitOnOfferCompletedEventHandler ProgrammeUnitOnOfferCompleted;
+        
+        /// <remarks/>
+        public event PurchaseQuoteUserConfirmationCompletedEventHandler PurchaseQuoteUserConfirmationCompleted;
         
         /// <remarks/>
         public event PurchaseRequisitionApprovalRequestCompletedEventHandler PurchaseRequisitionApprovalRequestCompleted;
@@ -1630,9 +1638,6 @@ namespace Latest_Staff_Portal.NAVWS {
         
         /// <remarks/>
         public event UpdateLecturerUnitCompletedEventHandler UpdateLecturerUnitCompleted;
-        
-        /// <remarks/>
-        public event UpdatePasswordTokenCompletedEventHandler UpdatePasswordTokenCompleted;
         
         /// <remarks/>
         public event InsertActualImprestLineAmountCompletedEventHandler InsertActualImprestLineAmountCompleted;
@@ -2746,6 +2751,40 @@ namespace Latest_Staff_Portal.NAVWS {
         
         /// <remarks/>
         public event FeesStructureCompletedEventHandler FeesStructureCompleted;
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdatePasswordToken", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="UpdatePasswordToken_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public bool UpdatePasswordToken(string user_type, int password_token, string app_no) {
+            object[] results = this.Invoke("UpdatePasswordToken", new object[] {
+                        user_type,
+                        password_token,
+                        app_no});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UpdatePasswordTokenAsync(string user_type, int password_token, string app_no) {
+            this.UpdatePasswordTokenAsync(user_type, password_token, app_no, null);
+        }
+        
+        /// <remarks/>
+        public void UpdatePasswordTokenAsync(string user_type, int password_token, string app_no, object userState) {
+            if ((this.UpdatePasswordTokenOperationCompleted == null)) {
+                this.UpdatePasswordTokenOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdatePasswordTokenOperationCompleted);
+            }
+            this.InvokeAsync("UpdatePasswordToken", new object[] {
+                        user_type,
+                        password_token,
+                        app_no}, this.UpdatePasswordTokenOperationCompleted, userState);
+        }
+        
+        private void OnUpdatePasswordTokenOperationCompleted(object arg) {
+            if ((this.UpdatePasswordTokenCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpdatePasswordTokenCompleted(this, new UpdatePasswordTokenCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdatePurchaseRequisition", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="UpdatePurchaseRequisition_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -4265,6 +4304,34 @@ namespace Latest_Staff_Portal.NAVWS {
             if ((this.ProgrammeUnitOnOfferCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.ProgrammeUnitOnOfferCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:PurchaseQuoteUserConfirmation", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="PurchaseQuoteUserConfirmation_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PurchaseQuoteUserConfirmation(string noa46) {
+            this.Invoke("PurchaseQuoteUserConfirmation", new object[] {
+                        noa46});
+        }
+        
+        /// <remarks/>
+        public void PurchaseQuoteUserConfirmationAsync(string noa46) {
+            this.PurchaseQuoteUserConfirmationAsync(noa46, null);
+        }
+        
+        /// <remarks/>
+        public void PurchaseQuoteUserConfirmationAsync(string noa46, object userState) {
+            if ((this.PurchaseQuoteUserConfirmationOperationCompleted == null)) {
+                this.PurchaseQuoteUserConfirmationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPurchaseQuoteUserConfirmationOperationCompleted);
+            }
+            this.InvokeAsync("PurchaseQuoteUserConfirmation", new object[] {
+                        noa46}, this.PurchaseQuoteUserConfirmationOperationCompleted, userState);
+        }
+        
+        private void OnPurchaseQuoteUserConfirmationOperationCompleted(object arg) {
+            if ((this.PurchaseQuoteUserConfirmationCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PurchaseQuoteUserConfirmationCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -8522,40 +8589,6 @@ namespace Latest_Staff_Portal.NAVWS {
             if ((this.UpdateLecturerUnitCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.UpdateLecturerUnitCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdatePasswordToken", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="UpdatePasswordToken_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public bool UpdatePasswordToken(string user_type, int password_token, string app_no) {
-            object[] results = this.Invoke("UpdatePasswordToken", new object[] {
-                        user_type,
-                        password_token,
-                        app_no});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void UpdatePasswordTokenAsync(string user_type, int password_token, string app_no) {
-            this.UpdatePasswordTokenAsync(user_type, password_token, app_no, null);
-        }
-        
-        /// <remarks/>
-        public void UpdatePasswordTokenAsync(string user_type, int password_token, string app_no, object userState) {
-            if ((this.UpdatePasswordTokenOperationCompleted == null)) {
-                this.UpdatePasswordTokenOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdatePasswordTokenOperationCompleted);
-            }
-            this.InvokeAsync("UpdatePasswordToken", new object[] {
-                        user_type,
-                        password_token,
-                        app_no}, this.UpdatePasswordTokenOperationCompleted, userState);
-        }
-        
-        private void OnUpdatePasswordTokenOperationCompleted(object arg) {
-            if ((this.UpdatePasswordTokenCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdatePasswordTokenCompleted(this, new UpdatePasswordTokenCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -22404,6 +22437,32 @@ namespace Latest_Staff_Portal.NAVWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void UpdatePasswordTokenCompletedEventHandler(object sender, UpdatePasswordTokenCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UpdatePasswordTokenCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UpdatePasswordTokenCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void UpdatePurchaseRequisitionCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
@@ -22907,6 +22966,10 @@ namespace Latest_Staff_Portal.NAVWS {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void ProgrammeUnitOnOfferCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void PurchaseQuoteUserConfirmationCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
@@ -24349,32 +24412,6 @@ namespace Latest_Staff_Portal.NAVWS {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void UpdateLecturerUnitCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void UpdatePasswordTokenCompletedEventHandler(object sender, UpdatePasswordTokenCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class UpdatePasswordTokenCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal UpdatePasswordTokenCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]

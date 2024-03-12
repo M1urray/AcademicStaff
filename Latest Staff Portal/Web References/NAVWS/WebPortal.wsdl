@@ -2,6 +2,22 @@
 <definitions xmlns:tns="urn:microsoft-dynamics-schemas/codeunit/WebPortal" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal" xmlns="http://schemas.xmlsoap.org/wsdl/">
   <types>
     <schema elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="UpdatePasswordToken">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="user_type" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="password_token" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="app_no" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="UpdatePasswordToken_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="boolean" />
+          </sequence>
+        </complexType>
+      </element>
       <element name="UpdatePurchaseRequisition">
         <complexType>
           <sequence>
@@ -684,6 +700,18 @@
         </complexType>
       </element>
       <element name="ProgrammeUnitOnOffer_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="PurchaseQuoteUserConfirmation">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="noa46" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="PurchaseQuoteUserConfirmation_Result">
         <complexType>
           <sequence />
         </complexType>
@@ -2585,22 +2613,6 @@
       <element name="UpdateLecturerUnit_Result">
         <complexType>
           <sequence />
-        </complexType>
-      </element>
-      <element name="UpdatePasswordToken">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="user_type" type="string" />
-            <element minOccurs="1" maxOccurs="1" name="password_token" type="int" />
-            <element minOccurs="1" maxOccurs="1" name="app_no" type="string" />
-          </sequence>
-        </complexType>
-      </element>
-      <element name="UpdatePasswordToken_Result">
-        <complexType>
-          <sequence>
-            <element minOccurs="1" maxOccurs="1" name="return_value" type="boolean" />
-          </sequence>
         </complexType>
       </element>
       <element name="InsertActualImprestLineAmount">
@@ -8501,6 +8513,12 @@
       </element>
     </schema>
   </types>
+  <message name="UpdatePasswordToken">
+    <part name="parameters" element="tns:UpdatePasswordToken" />
+  </message>
+  <message name="UpdatePasswordToken_Result">
+    <part name="parameters" element="tns:UpdatePasswordToken_Result" />
+  </message>
   <message name="UpdatePurchaseRequisition">
     <part name="parameters" element="tns:UpdatePurchaseRequisition" />
   </message>
@@ -8764,6 +8782,12 @@
   </message>
   <message name="ProgrammeUnitOnOffer_Result">
     <part name="parameters" element="tns:ProgrammeUnitOnOffer_Result" />
+  </message>
+  <message name="PurchaseQuoteUserConfirmation">
+    <part name="parameters" element="tns:PurchaseQuoteUserConfirmation" />
+  </message>
+  <message name="PurchaseQuoteUserConfirmation_Result">
+    <part name="parameters" element="tns:PurchaseQuoteUserConfirmation_Result" />
   </message>
   <message name="PurchaseRequisitionApprovalRequest">
     <part name="parameters" element="tns:PurchaseRequisitionApprovalRequest" />
@@ -9484,12 +9508,6 @@
   </message>
   <message name="UpdateLecturerUnit_Result">
     <part name="parameters" element="tns:UpdateLecturerUnit_Result" />
-  </message>
-  <message name="UpdatePasswordToken">
-    <part name="parameters" element="tns:UpdatePasswordToken" />
-  </message>
-  <message name="UpdatePasswordToken_Result">
-    <part name="parameters" element="tns:UpdatePasswordToken_Result" />
   </message>
   <message name="InsertActualImprestLineAmount">
     <part name="parameters" element="tns:InsertActualImprestLineAmount" />
@@ -11718,6 +11736,10 @@
     <part name="parameters" element="tns:FeesStructure_Result" />
   </message>
   <portType name="WebPortal_Port">
+    <operation name="UpdatePasswordToken">
+      <input name="UpdatePasswordToken" message="tns:UpdatePasswordToken" />
+      <output name="UpdatePasswordToken_Result" message="tns:UpdatePasswordToken_Result" />
+    </operation>
     <operation name="UpdatePurchaseRequisition">
       <input name="UpdatePurchaseRequisition" message="tns:UpdatePurchaseRequisition" />
       <output name="UpdatePurchaseRequisition_Result" message="tns:UpdatePurchaseRequisition_Result" />
@@ -11893,6 +11915,10 @@
     <operation name="ProgrammeUnitOnOffer">
       <input name="ProgrammeUnitOnOffer" message="tns:ProgrammeUnitOnOffer" />
       <output name="ProgrammeUnitOnOffer_Result" message="tns:ProgrammeUnitOnOffer_Result" />
+    </operation>
+    <operation name="PurchaseQuoteUserConfirmation">
+      <input name="PurchaseQuoteUserConfirmation" message="tns:PurchaseQuoteUserConfirmation" />
+      <output name="PurchaseQuoteUserConfirmation_Result" message="tns:PurchaseQuoteUserConfirmation_Result" />
     </operation>
     <operation name="PurchaseRequisitionApprovalRequest">
       <input name="PurchaseRequisitionApprovalRequest" message="tns:PurchaseRequisitionApprovalRequest" />
@@ -12373,10 +12399,6 @@
     <operation name="UpdateLecturerUnit">
       <input name="UpdateLecturerUnit" message="tns:UpdateLecturerUnit" />
       <output name="UpdateLecturerUnit_Result" message="tns:UpdateLecturerUnit_Result" />
-    </operation>
-    <operation name="UpdatePasswordToken">
-      <input name="UpdatePasswordToken" message="tns:UpdatePasswordToken" />
-      <output name="UpdatePasswordToken_Result" message="tns:UpdatePasswordToken_Result" />
     </operation>
     <operation name="InsertActualImprestLineAmount">
       <input name="InsertActualImprestLineAmount" message="tns:InsertActualImprestLineAmount" />
@@ -13865,6 +13887,15 @@
   </portType>
   <binding name="WebPortal_Binding" type="tns:WebPortal_Port">
     <binding transport="http://schemas.xmlsoap.org/soap/http" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    <operation name="UpdatePasswordToken">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdatePasswordToken" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="UpdatePasswordToken">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="UpdatePasswordToken_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
     <operation name="UpdatePurchaseRequisition">
       <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdatePurchaseRequisition" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       <input name="UpdatePurchaseRequisition">
@@ -14258,6 +14289,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="ProgrammeUnitOnOffer_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="PurchaseQuoteUserConfirmation">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:PurchaseQuoteUserConfirmation" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="PurchaseQuoteUserConfirmation">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="PurchaseQuoteUserConfirmation_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -15338,15 +15378,6 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="UpdateLecturerUnit_Result">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </output>
-    </operation>
-    <operation name="UpdatePasswordToken">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:UpdatePasswordToken" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="UpdatePasswordToken">
-        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      </input>
-      <output name="UpdatePasswordToken_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>

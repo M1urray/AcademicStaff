@@ -644,10 +644,11 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                string StaffNo = Session["Username"].ToString();
+                string staffUserId = Session["UserID"].ToString();
+
                 List<PurchaseQuote> PurchaseList = new List<PurchaseQuote>();
 
-                string page = "PurchaseQuotes?$filter=Employee_No eq '" + StaffNo + "'&format=json";
+                string page = "PurchaseQuotes?$filter=PRFUserID eq '" + staffUserId + "'&format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -657,10 +658,12 @@ namespace Latest_Staff_Portal.Controllers
                     foreach (var JToken in details["value"])
                     {
                         var config = (JObject)JToken;
-                        PurchaseQuote PrvList = new PurchaseQuote();
-                        PrvList.No = (string)config["No"];
-                        PrvList.OrderDate = Convert.ToDateTime((string)config["Order_Date"]).ToString("dd/MM/yyyy");
-                        PrvList.Status = (string)config["Status"];
+                        PurchaseQuote PrvList = new PurchaseQuote
+                        {
+                            No = (string)config["No"],
+                            OrderDate = Convert.ToDateTime((string)config["Order_Date"]).ToString("dd/MM/yyyy"),
+                            Status = (string)config["Status"]
+                        };
                         PurchaseList.Add(PrvList);
                     }
                 }
@@ -673,14 +676,14 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        public PartialViewResult PurchaseQuoteDocDetails(string DocNo, string Sequence)
+        public PartialViewResult PurchaseQuoteDocDetails(string DocNo)
         {
             try
             {
                 decimal TotalAmount = 0;
-                #region Purchase Header
-
+                #region Purchase Quote Header
                 PurchaseQuote purchaseQuote = new PurchaseQuote();
+
                 string page = "PurchaseQuotes?$filter=No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponse = Credentials.GetOdataData(page);
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -688,44 +691,32 @@ namespace Latest_Staff_Portal.Controllers
                     var result = streamReader.ReadToEnd();
 
                     var details = JObject.Parse(result);
-                    foreach (JObject config in details["value"])
+                    foreach (var jToken in details["value"])
                     {
+                        var config = (JObject)jToken;
                         purchaseQuote.No = (string)config["No"];
-
+                        purchaseQuote.DocumentDate = Convert.ToDateTime((string)config["Document_Date"]).ToString("dd/MM/yyyy");
+                        purchaseQuote.PostingDescription= (string)config["Posting_Description"];
+                        purchaseQuote.BuyFromVendorName = (string)config["Buy_from_Vendor_Name"];
+                        purchaseQuote.RfqNo = (string)config["RFQ_No"];
+                        purchaseQuote.PrfNo = (string)config["PRF_No"];
                         purchaseQuote.Status = (string)config["Status"];
-                        // if ((string)config["Employee_No"] != "")
-                        // {
-                        //     purchaseQuote.RequestorNo = (string)config["Employee_No"];
-                        //     purchaseQuote.RequestorName = CommonClass.GetEmployeeName((string)config["Employee_No"]);
-                        // }
-                        // else
-                        // {
-                        //     if ((string)config["User_ID"] != "")
-                        //     {
-                        //         string[] s = CommonClass.GetEmployeeByUserID((string)config["User_ID"]);
-                        //         if (s[0] != null && s[1] != null)
-                        //         {
-                        //             purchaseQuote.RequestorNo = s[0];
-                        //             purchaseQuote.RequestorName = s[1];
-                        //         }
-                        //     }
-                        // }
                     }
                 }
                 #endregion
-                #region Purchase Lines
-                List<PRVLines> PurchaseLines = new List<PRVLines>();
-                string pageLine = "PurchaseLines?$filter=Document_No eq '" + DocNo + "'&$format=json";
+                #region Purchase Quote Lines
+                List<PurchaseQuoteLines> PurchaseLines = new List<PurchaseQuoteLines>();
+                string pageLine = "PurchaseQuoteLines?$filter=Document_No eq '" + DocNo + "'&$format=json";
                 HttpWebResponse httpResponseLine = Credentials.GetOdataData(pageLine);
                 using (var streamReader = new StreamReader(httpResponseLine.GetResponseStream()))
                 {
                     var result = streamReader.ReadToEnd();
 
                     var details = JObject.Parse(result);
-                    foreach (var JToken in details["value"])
+                    foreach (var jToken in details["value"])
                     {
-                        var config = (JObject)JToken;
-                        PRVLines PurchaseLine = new PRVLines();
+                        var config = (JObject)jToken;
+                        PurchaseQuoteLines PurchaseLine = new PurchaseQuoteLines();
                         if ((string)config["Type"] == "G/L Account")
                         {
                             PurchaseLine.LineType = "Service";
@@ -756,20 +747,33 @@ namespace Latest_Staff_Portal.Controllers
                 #endregion
                 Session["Location"] = "2";
                 string amountInWords = Credentials.ObjNav.ReturnAmountInWords(TotalAmount);
-                PurchaseQuote docDetails = new PurchaseQuote
-                {
-                    // DocHeader = PurchaseDoc,
-                    // ListOfPurchaseLines = PurchaseLines,
-                    // TotalAmount = TotalAmount.ToString("#,##0.00"),
-                    // AmountInWords = amountInWords
-                };
-                return PartialView("~/Views/Purchase/PurchaseQuoteDocDetails.cshtml", docDetails);
+
+                purchaseQuote.ListOfPurchaseLines = PurchaseLines;
+                purchaseQuote.TotalAmount = TotalAmount.ToString("#,##0.00");
+                purchaseQuote.AmountInWords = amountInWords;
+                purchaseQuote.No = DocNo;
+                return PartialView("PurchaseQuoteDocDetails", purchaseQuote);
             }
             catch (Exception ex)
             {
-                Error erroMsg = new Error();
-                erroMsg.Message = ex.Message;
-                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
+                Error errorMsg = new Error
+                {
+                    Message = ex.Message
+                };
+                return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", errorMsg);
+            }
+        }
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult PurchaseQuoteUserConfirmation( string docNo)
+        {
+            try
+            {
+                Credentials.ObjNav.PurchaseQuoteUserConfirmation(docNo);
+                return Json(new { message = "User Confirmation Received successfully", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
         }
     }

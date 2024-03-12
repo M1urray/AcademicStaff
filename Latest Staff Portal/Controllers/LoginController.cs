@@ -69,10 +69,11 @@ namespace Latest_Staff_Portal.Controllers
 
                                 var details = JObject.Parse(result);
 
-                                if (details["value"].Count() > 0)
+                                if (details["value"].Any())
                                 {
-                                    foreach (JObject config in details["value"])
+                                    foreach (var jToken in details["value"])
                                     {
+                                        var config = (JObject)jToken;
                                         Session["Username"] = (string)config["No"];
                                         Session["UserID"] = userID;
                                         var IDno = (string)config["ID_Number"];

@@ -478,10 +478,10 @@
     <Content Include="Views\Lecturer\Exam Entry Setup\NewExamEntrySetupForm.cshtml" />
     <Content Include="Views\Lecturer\MarkEntryAllocationUnits.cshtml" />
     <Content Include="Views\DocumentApproval\Document Approval Views\PVDocument.cshtml" />
-    <Content Include="Web References\NAVWS\Reference.map">
+    <None Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Views\Purchase\PurchaseQuoteList.cshtml" />
     <Content Include="Views\Purchase\QuoteReqListView.cshtml" />
     <Content Include="Views\Purchase\PurchaseQuoteDocDetails.cshtml" />
