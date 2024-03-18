@@ -2877,13 +2877,13 @@ a.btn.disabled, fieldset:disabled a.btn {
 
     .btn-primary:hover {
         color: #fff;
-        background-color: #ed1c24;
+        background-color: #e5c14d;
         border-color: #2948df
     }
 
     .btn-primary.focus, .btn-primary:focus {
         color: #fff;
-        background-color: #3452e1;
+        background-color: #e5c14d;
         border-color: #2948df;
         -webkit-box-shadow: 0 0 0 .15rem rgba(111,132,234,.5);
         box-shadow: 0 0 0 .15rem rgba(111,132,234,.5)
@@ -5105,7 +5105,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .card-header {
     padding: .75rem 1.25rem;
     margin-bottom: 0;
-    background-color: #ee242b;
+    background-color: #e5c14d;
     border-bottom: 0 solid #A3DDF0
 }
 
@@ -6496,7 +6496,7 @@ a.close.disabled {
     -ms-flex-pack: justify;
     justify-content: space-between;
     padding: 0.5rem 1rem;
-    background-color: #a7001a;
+    background-color: #e5c14d;
     border-bottom: 1px solid #eff2f7;
     border-top-left-radius: calc(.3rem - 1px);
     border-top-right-radius: calc(.3rem - 1px)

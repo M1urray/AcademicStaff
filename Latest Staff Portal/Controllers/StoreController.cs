@@ -332,34 +332,34 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult CheckstockLevel(StoreLines storeLine)
-        {
-            bool successVal = false;
-            string msg = "";
-            try
-            {
-                string item = storeLine.Item.Trim();
-                string qnty = storeLine.Qnty.Trim();
-                string location = storeLine.Location.Trim();
-                decimal s = Credentials.ObjNav.StockLevel(item, Convert.ToInt32(qnty), location);
-                if (s < Convert.ToDecimal(qnty))
-                {
-                    successVal = false;
-                    msg = storeLine.ItemDesc.Trim() + " will lead to negative stock." + s + " Remaining items";
-
-                }
-                else
-                {
-                    successVal = true;
-                }
-                return Json(new { message = msg, success = successVal }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { message = ex.Message.Replace("'", ""), success = successVal }, JsonRequestBehavior.AllowGet);
-            }
-        }
+        // [AcceptVerbs(HttpVerbs.Post)]
+        // public JsonResult CheckstockLevel(StoreLines storeLine)
+        // {
+        //     bool successVal = false;
+        //     string msg = "";
+        //     try
+        //     {
+        //         string item = storeLine.Item.Trim();
+        //         string qnty = storeLine.Qnty.Trim();
+        //         string location = storeLine.Location.Trim();
+        //         decimal s = Credentials.ObjNav.StockLevel(item, Convert.ToInt32(qnty), location);
+        //         if (s < Convert.ToDecimal(qnty))
+        //         {
+        //             successVal = false;
+        //             msg = storeLine.ItemDesc.Trim() + " will lead to negative stock." + s + " Remaining items";
+        //
+        //         }
+        //         else
+        //         {
+        //             successVal = true;
+        //         }
+        //         return Json(new { message = msg, success = successVal }, JsonRequestBehavior.AllowGet);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return Json(new { message = ex.Message.Replace("'", ""), success = successVal }, JsonRequestBehavior.AllowGet);
+        //     }
+        // }
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult SubmitStoreRequisition(StoretHeader storeHeader)
         {

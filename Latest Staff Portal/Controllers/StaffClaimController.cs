@@ -301,42 +301,42 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult SubmitStaffClaimRequisition(StaffClaimHeader staffClaimHeader)
-        {
-            bool successVal = false;
-            try
-            {
-                string School = "";
-                if (staffClaimHeader.school != null)
-                {
-                    School = staffClaimHeader.school;
-                }
-                string StaffNo = Session["Username"].ToString();
-                string DocNo = Credentials.ObjNav.InsertStaffClaims(StaffNo, staffClaimHeader.Campus, staffClaimHeader.Department
-                                  , staffClaimHeader.RespC, staffClaimHeader.Remarks, School,"",0);
-
-                if (DocNo != "")
-                {
-                    string Redirect = "/StaffClaim/StaffClaimDocumentView?DocNo=" + DocNo;
-
-                    Session["SuccessMsg"] = "Staff Claim Requisition, Document No: " + DocNo + ", created Successfully. Add line(s) and attachment(s) then send for approval";
-                    return Json(new { message = Redirect, success = true }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json(new { message = "Document not created. Please try again later...", success = false }, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                if (successVal)
-                {
-                    Session["ErrorMsg"] = ex.Message.Replace("'", "");
-                }
-                return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
-            }
-        }
+        // [AcceptVerbs(HttpVerbs.Post)]
+        // public JsonResult SubmitStaffClaimRequisition(StaffClaimHeader staffClaimHeader)
+        // {
+        //     bool successVal = false;
+        //     try
+        //     {
+        //         string School = "";
+        //         if (staffClaimHeader.school != null)
+        //         {
+        //             School = staffClaimHeader.school;
+        //         }
+        //         string StaffNo = Session["Username"].ToString();
+        //         string DocNo = Credentials.ObjNav.InsertStaffClaims(StaffNo, staffClaimHeader.Campus, staffClaimHeader.Department
+        //                           , staffClaimHeader.RespC, staffClaimHeader.Remarks, School,"",0);
+        //
+        //         if (DocNo != "")
+        //         {
+        //             string Redirect = "/StaffClaim/StaffClaimDocumentView?DocNo=" + DocNo;
+        //
+        //             Session["SuccessMsg"] = "Staff Claim Requisition, Document No: " + DocNo + ", created Successfully. Add line(s) and attachment(s) then send for approval";
+        //             return Json(new { message = Redirect, success = true }, JsonRequestBehavior.AllowGet);
+        //         }
+        //         else
+        //         {
+        //             return Json(new { message = "Document not created. Please try again later...", success = false }, JsonRequestBehavior.AllowGet);
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         if (successVal)
+        //         {
+        //             Session["ErrorMsg"] = ex.Message.Replace("'", "");
+        //         }
+        //         return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
+        //     }
+        // }
         public ActionResult StaffClaimDocumentView(string DocNo)
         {
             try

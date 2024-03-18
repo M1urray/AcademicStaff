@@ -329,42 +329,42 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult SubmitPaymentRequestRequisition(PaymentRequestHeader PaymentRequestHeader)
-        {
-            bool successVal = false;
-            try
-            {
-                string School = "";
-                if (PaymentRequestHeader.school != null)
-                {
-                    School = PaymentRequestHeader.school;
-                }
-                string StaffNo = Session["Username"].ToString();
-                string DocNo = Credentials.ObjNav.InsertStaffClaims(StaffNo, PaymentRequestHeader.Campus, PaymentRequestHeader.Department
-                                  , PaymentRequestHeader.RespC, PaymentRequestHeader.Remarks, "", "", 1);
-
-                if (DocNo != "")
-                {
-                    string Redirect = "/PaymentRequest/PaymentRequestDocumentView?DocNo=" + DocNo;
-
-                    Session["SuccessMsg"] = "Payment Request Requisition, Document No: " + DocNo + ", created Successfully. Add line(s) and attachment(s) then send for approval";
-                    return Json(new { message = Redirect, success = true }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json(new { message = "Document not created. Please try again later...", success = false }, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                if (successVal)
-                {
-                    Session["ErrorMsg"] = ex.Message.Replace("'", "");
-                }
-                return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
-            }
-        }
+        // [AcceptVerbs(HttpVerbs.Post)]
+        // public JsonResult SubmitPaymentRequestRequisition(PaymentRequestHeader PaymentRequestHeader)
+        // {
+        //     bool successVal = false;
+        //     try
+        //     {
+        //         string School = "";
+        //         if (PaymentRequestHeader.school != null)
+        //         {
+        //             School = PaymentRequestHeader.school;
+        //         }
+        //         string StaffNo = Session["Username"].ToString();
+        //         string DocNo = Credentials.ObjNav.InsertStaffClaims(StaffNo, PaymentRequestHeader.Campus, PaymentRequestHeader.Department
+        //                           , PaymentRequestHeader.RespC, PaymentRequestHeader.Remarks, "", "", 1);
+        //
+        //         if (DocNo != "")
+        //         {
+        //             string Redirect = "/PaymentRequest/PaymentRequestDocumentView?DocNo=" + DocNo;
+        //
+        //             Session["SuccessMsg"] = "Payment Request Requisition, Document No: " + DocNo + ", created Successfully. Add line(s) and attachment(s) then send for approval";
+        //             return Json(new { message = Redirect, success = true }, JsonRequestBehavior.AllowGet);
+        //         }
+        //         else
+        //         {
+        //             return Json(new { message = "Document not created. Please try again later...", success = false }, JsonRequestBehavior.AllowGet);
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         if (successVal)
+        //         {
+        //             Session["ErrorMsg"] = ex.Message.Replace("'", "");
+        //         }
+        //         return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
+        //     }
+        // }
         public ActionResult PaymentRequestDocumentView(string DocNo)
         {
             try
@@ -552,23 +552,23 @@ namespace Latest_Staff_Portal.Controllers
                 return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult UpdatePaymentRequestLine(string DocNo, string LnNo, PaymentRequestLines paymentRequestLines)
-        {
-            try
-            {
-                string StaffNo = Session["Username"].ToString();
-                string itemDesc = paymentRequestLines.ItemDesc.Trim();
-                string amnt = paymentRequestLines.Amount.Trim();
-                Credentials.ObjNav.PaymentRequestLineUpdate(DocNo, Convert.ToInt32(LnNo), Convert.ToDecimal(amnt), itemDesc);
-                string DocNetAmount = GetDocNetAmount(DocNo);
-                return Json(new { NetAmount = DocNetAmount, message = "Payment Request Line updated successfully", success = true }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
-            }
-        }
+        // [AcceptVerbs(HttpVerbs.Post)]
+        // public JsonResult UpdatePaymentRequestLine(string DocNo, string LnNo, PaymentRequestLines paymentRequestLines)
+        // {
+        //     try
+        //     {
+        //         string StaffNo = Session["Username"].ToString();
+        //         string itemDesc = paymentRequestLines.ItemDesc.Trim();
+        //         string amnt = paymentRequestLines.Amount.Trim();
+        //         Credentials.ObjNav.PaymentRequestLineUpdate(DocNo, Convert.ToInt32(LnNo), Convert.ToDecimal(amnt), itemDesc);
+        //         string DocNetAmount = GetDocNetAmount(DocNo);
+        //         return Json(new { NetAmount = DocNetAmount, message = "Payment Request Line updated successfully", success = true }, JsonRequestBehavior.AllowGet);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
+        //     }
+        // }
            protected string GetDocNetAmount(string DocNo)
         {
             string amount = "";

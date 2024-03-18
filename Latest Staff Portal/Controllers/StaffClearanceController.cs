@@ -129,36 +129,36 @@ namespace Latest_Staff_Portal.Controllers
             return PartialView("~/Views/StaffClearance/NewStaffClearanceRequest.cshtml", clearanceList);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult SubmitClearanceRequest(StaffClearance staffClearance)
-        {
-            try
-            {
-                string StaffNo = Session["Username"].ToString();
-
-                DateTime LastDayOfService = DateTime.ParseExact(staffClearance.LastDateOfService.Replace("-", "/"),
-                    "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                string DocNo = Credentials.ObjNav.StaffClearanceRequest(staffClearance.StaffNo,
-                    staffClearance.PhoneNumber, staffClearance.Email, staffClearance.Address,
-                    staffClearance.ReasonForClearing, LastDayOfService);
-                if (DocNo != "")
-                {
-                    return Json(
-                        new
-                        {
-                            message = "Clearance Requisition, Document No: " + DocNo + ", created Successfully.",
-                            success = true
-                        }, JsonRequestBehavior.AllowGet);
-                }
-
-                return Json(new { message = "Document not created. Please try again later...", success = false },
-                    JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
-            }
-        }
+        // [AcceptVerbs(HttpVerbs.Post)]
+        // public JsonResult SubmitClearanceRequest(StaffClearance staffClearance)
+        // {
+        //     try
+        //     {
+        //         string StaffNo = Session["Username"].ToString();
+        //
+        //         DateTime LastDayOfService = DateTime.ParseExact(staffClearance.LastDateOfService.Replace("-", "/"),
+        //             "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        //         string DocNo = Credentials.ObjNav.StaffClearanceRequest(staffClearance.StaffNo,
+        //             staffClearance.PhoneNumber, staffClearance.Email, staffClearance.Address,
+        //             staffClearance.ReasonForClearing, LastDayOfService);
+        //         if (DocNo != "")
+        //         {
+        //             return Json(
+        //                 new
+        //                 {
+        //                     message = "Clearance Requisition, Document No: " + DocNo + ", created Successfully.",
+        //                     success = true
+        //                 }, JsonRequestBehavior.AllowGet);
+        //         }
+        //
+        //         return Json(new { message = "Document not created. Please try again later...", success = false },
+        //             JsonRequestBehavior.AllowGet);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return Json(new { message = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+        //     }
+        // }
 
         public PartialViewResult StaffClearanceDocumentView(string DocNo)
         {

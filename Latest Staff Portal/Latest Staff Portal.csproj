@@ -246,15 +246,10 @@
     <Content Include="assets\fonts\fa-solid-900.svg" />
     <Content Include="assets\fonts\materialdesignicons-webfont2f9b.html" />
     <Content Include="assets\images\ajax-loader.gif" />
-    <Content Include="assets\images\ajax-loader2.gif" />
-    <Content Include="assets\images\login-bg2.jpg" />
-    <Content Include="assets\images\logo2.png" />
-    <Content Include="assets\images\favicon.ico" />
-    <Content Include="assets\images\login-bg.gif" />
+    <Content Include="assets\images\logo.png" />
     <Content Include="assets\images\profile-img.png" />
     <Content Include="assets\images\profile_f.png" />
     <Content Include="assets\images\profile_m.png" />
-    <Content Include="assets\images\retina_logo3.png" />
     <Content Include="assets\js\app.js" />
     <Content Include="assets\js\buttons.bootstrap4.min.js" />
     <Content Include="assets\js\buttons.colVis.min.js" />
@@ -511,10 +506,10 @@
     <Content Include="Views\PaymentRequest\PaymentRequestReqListView.cshtml" />
     <Content Include="Views\PaymentRequest\PaymentRequestRequisitionList.cshtml" />
     <Content Include="Views\PaymentRequest\PaymentReqEditItemForm.cshtml" />
-    <None Include="Web References\NAVWS\Reference.map">
+    <Content Include="Web References\NAVWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    </Content>
     <None Include="Web References\NAVWS\WebPortal.wsdl" />
   </ItemGroup>
   <ItemGroup>
@@ -524,10 +519,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://maachah.negst.net:7047/AIU/WS/AIU%2520LIVE/Codeunit/WebPortal">
+    <WebReferenceUrl Include="http://74.124.24.233:5112/IPSTC/WS/IPSTC/Codeunit/WebPortal">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\NAVWS\</RelPath>
-      <UpdateFromURL>http://maachah.negst.net:7047/AIU/WS/AIU%2520LIVE/Codeunit/WebPortal</UpdateFromURL>
+      <UpdateFromURL>http://74.124.24.233:5112/IPSTC/WS/IPSTC/Codeunit/WebPortal</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

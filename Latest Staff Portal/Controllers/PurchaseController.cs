@@ -303,24 +303,24 @@ namespace Latest_Staff_Portal.Controllers
                 return PartialView("~/Views/Shared/Partial Views/ErroMessangeView.cshtml", erroMsg);
             }
         }
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult SubmitPurchaseRequisition(PRVHeader prvHeader)
-        {
-            try
-            {
-                string StaffNo = Session["Username"].ToString();
-                string DocNo = Credentials.ObjNav.PurchaseRequisitionCreate(StaffNo, prvHeader.Campus, prvHeader.Department, prvHeader.Remarks, prvHeader.RespC, "");
+        //[AcceptVerbs(HttpVerbs.Post)]
+        //public JsonResult SubmitPurchaseRequisition(PRVHeader prvHeader)
+        //{
+        //    try
+        //    {
+        //        string StaffNo = Session["Username"].ToString();
+        //        string DocNo = Credentials.ObjNav.PurchaseRequisitionCreate(StaffNo, prvHeader.Campus, prvHeader.Department, prvHeader.Remarks, prvHeader.RespC, "");
 
-                string Redirect = "/Purchase/PurchaseDocumentView?DocNo=" + DocNo;               
+        //        string Redirect = "/Purchase/PurchaseDocumentView?DocNo=" + DocNo;               
 
-                Session["SuccessMsg"] = "Purchase Requisition, Document No: " + DocNo + ", created Successfully. Add line(s) and attachment(s) then send for approval";
-                return Json(new { message = Redirect, success = true }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
-            }
-        }
+        //        Session["SuccessMsg"] = "Purchase Requisition, Document No: " + DocNo + ", created Successfully. Add line(s) and attachment(s) then send for approval";
+        //        return Json(new { message = Redirect, success = true }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { message = ex.Message.Replace("'", ""), success = false }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
         public ActionResult PurchaseDocumentView(string DocNo)
         {
             try
