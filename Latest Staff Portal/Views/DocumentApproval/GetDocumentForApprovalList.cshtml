@@ -121,8 +121,7 @@
             data: JSON.stringify({ TbID: TableID, Status: Status, DocType: DocType }),
             contentType: "application/json; charset = utf-8",
             processData: false,
-            url: @Url.Action("LoadDocumentForApprovalList", "DocumentApproval"),
-//            url: "/DocumentApproval/LoadDocumentForApprovalList",
+            url: '@Url.Action("LoadDocumentForApprovalList", "DocumentApproval")',
             success: function (data) {
                 $("#divApprovalDocList").html(data);
                 HideProgress();

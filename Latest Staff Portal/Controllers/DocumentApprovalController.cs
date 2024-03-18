@@ -306,7 +306,7 @@ namespace Latest_Staff_Portal.Controllers
                                     DocList.Document_No = (string)config["Document_No"];
                                 }
                                 DocList.Sender_Name = (string)config["SenderNames"];
-                                DocList.DateSend = Convert.ToDateTime((string)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
+                                DocList.DateSend = ((DateTime)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
                                 DocList.Status = (string)config["Status"];
                                 DocList.Sequence = (string)config["Sequence_No"];
                                 if ((string)config["Table_ID"] == "70134894")
@@ -334,7 +334,7 @@ namespace Latest_Staff_Portal.Controllers
             {
                 Error erroMsg = new Error();
                 erroMsg.Message = ex.Message;
-                return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
+                return Json(new { data = erroMsg }, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpPost]
