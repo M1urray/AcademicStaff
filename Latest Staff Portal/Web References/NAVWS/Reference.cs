@@ -679,7 +679,7 @@ namespace Latest_Staff_Portal.NAVWS {
         
         private System.Threading.SendOrPostCallback GeneratePaySlipReportKabuOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GeneratePayslipReportOperationCompleted;
+        private System.Threading.SendOrPostCallback GeneratePaySlipReportOperationCompleted;
         
         private System.Threading.SendOrPostCallback GeneratePhysioPrintoutOperationCompleted;
         
@@ -2117,7 +2117,7 @@ namespace Latest_Staff_Portal.NAVWS {
         public event GeneratePaySlipReportKabuCompletedEventHandler GeneratePaySlipReportKabuCompleted;
         
         /// <remarks/>
-        public event GeneratePayslipReportCompletedEventHandler GeneratePayslipReportCompleted;
+        public event GeneratePaySlipReportCompletedEventHandler GeneratePaySlipReportCompleted;
         
         /// <remarks/>
         public event GeneratePhysioPrintoutCompletedEventHandler GeneratePhysioPrintoutCompleted;
@@ -15074,34 +15074,36 @@ namespace Latest_Staff_Portal.NAVWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:GeneratePayslipReport", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="GeneratePayslipReport_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/WebPortal:GeneratePaySlipReport", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", ResponseElementName="GeneratePaySlipReport_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/WebPortal", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string GeneratePayslipReport(string employeeNo, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime period) {
-            object[] results = this.Invoke("GeneratePayslipReport", new object[] {
+        public string GeneratePaySlipReport(string employeeNo, int pMonth, int pYear) {
+            object[] results = this.Invoke("GeneratePaySlipReport", new object[] {
                         employeeNo,
-                        period});
+                        pMonth,
+                        pYear});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void GeneratePayslipReportAsync(string employeeNo, System.DateTime period) {
-            this.GeneratePayslipReportAsync(employeeNo, period, null);
+        public void GeneratePaySlipReportAsync(string employeeNo, int pMonth, int pYear) {
+            this.GeneratePaySlipReportAsync(employeeNo, pMonth, pYear, null);
         }
         
         /// <remarks/>
-        public void GeneratePayslipReportAsync(string employeeNo, System.DateTime period, object userState) {
-            if ((this.GeneratePayslipReportOperationCompleted == null)) {
-                this.GeneratePayslipReportOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGeneratePayslipReportOperationCompleted);
+        public void GeneratePaySlipReportAsync(string employeeNo, int pMonth, int pYear, object userState) {
+            if ((this.GeneratePaySlipReportOperationCompleted == null)) {
+                this.GeneratePaySlipReportOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGeneratePaySlipReportOperationCompleted);
             }
-            this.InvokeAsync("GeneratePayslipReport", new object[] {
+            this.InvokeAsync("GeneratePaySlipReport", new object[] {
                         employeeNo,
-                        period}, this.GeneratePayslipReportOperationCompleted, userState);
+                        pMonth,
+                        pYear}, this.GeneratePaySlipReportOperationCompleted, userState);
         }
         
-        private void OnGeneratePayslipReportOperationCompleted(object arg) {
-            if ((this.GeneratePayslipReportCompleted != null)) {
+        private void OnGeneratePaySlipReportOperationCompleted(object arg) {
+            if ((this.GeneratePaySlipReportCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GeneratePayslipReportCompleted(this, new GeneratePayslipReportCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GeneratePaySlipReportCompleted(this, new GeneratePaySlipReportCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -25736,18 +25738,18 @@ namespace Latest_Staff_Portal.NAVWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
-    public delegate void GeneratePayslipReportCompletedEventHandler(object sender, GeneratePayslipReportCompletedEventArgs e);
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void GeneratePaySlipReportCompletedEventHandler(object sender, GeneratePaySlipReportCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3761.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GeneratePayslipReportCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GeneratePaySlipReportCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal GeneratePayslipReportCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal GeneratePaySlipReportCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

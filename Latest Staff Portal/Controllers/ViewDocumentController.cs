@@ -186,18 +186,17 @@ namespace Latest_Staff_Portal.Controllers
                 string StaffNo = Session["Username"].ToString();
 
                 string message = "";
-                string filename = "";
                 bool success = false, view = false;
 
-                string StaffIDNo = CommonClass.GetEmployeeIDNo(StaffNo);
-                if (StaffIDNo == "")
+                string staffIdNo = CommonClass.GetEmployeeIDNo(StaffNo);
+                if (staffIdNo == "")
                 {
                     success = false;
                     message = "Employee ID Number is not set. Contact HR";
                 }
                 else
                 {
-                    string _filename = (StaffNo).Replace(@"/", @"");
+                    string filename = (StaffNo).Replace(@"/", @"");
 
                     int Pmonth = 0, PYear = 0;
                     if (!string.IsNullOrEmpty(Month))
@@ -208,16 +207,17 @@ namespace Latest_Staff_Portal.Controllers
                     {
                         PYear = Convert.ToInt32(Year);
                     }
-                    var period = "01/" + Month + "/" + Year;
-                    DateTime periodFilter = DateTime.ParseExact(period, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    message = Credentials.ObjNav.GeneratePayslipReport(StaffNo, periodFilter);
+                    message = Credentials.ObjNav.GeneratePaySlipReport(StaffNo, Pmonth, PYear);
                     string filePath = Server.MapPath("~/Downloads/");
-                    string OldPayslip = "OLDPAYSLIP-" + _filename + ".pdf";
+                    string OldPayslip = "OLDPAYSLIP-" + filename + ".pdf";
+
                     Credentials.SaveBase64DocumentAttachment(message, filePath + OldPayslip);
-                    filename = "PAYSLIP-" + _filename + ".pdf";
+
+                    filename = "PAYSLIP-" + filename + ".pdf";
+
                     string FromPath = filePath + OldPayslip;
-                    string TPath = filePath + filename;
-                    addPassword(FromPath, TPath, StaffIDNo);
+                    string path = filePath + filename;
+                    addPassword(FromPath, path, staffIdNo);
                     string DestinationPath = filePath + filename;
                     FileInfo file = new FileInfo(DestinationPath);
                     if (file.Exists)
