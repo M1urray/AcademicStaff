@@ -214,7 +214,7 @@ namespace Latest_Staff_Portal.Controllers
                         AppTra.UserID = (string)config["Approver_ID"];
                     }
 
-                    AppTra.DateSendForApproval = Convert.ToDateTime((string)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
+                    AppTra.DateSendForApproval = ((DateTime)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
                     AppTra.DueDate = Convert.ToDateTime((string)config["Due_Date"]).ToString("dd/MM/yyyy");
                     AppTra.Status = (string)config["Status"];
                     AppTra.Sequence = Convert.ToInt32((string)config["Sequence_No"]);
