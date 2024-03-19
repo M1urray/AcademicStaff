@@ -189,5 +189,20 @@ namespace Latest_Staff_Portal.Models
         {
             File.WriteAllBytes(path, bytes);
         }
+        public static string SaveBase64DocumentAttachment(string base64String, string filePath)
+        {
+            string Uploaded = "";
+            try
+            {
+                File.WriteAllBytes(filePath, Convert.FromBase64String(base64String));
+
+                Uploaded = "SUCCESS";
+            }
+            catch (Exception ex)
+            {
+                Uploaded = ex.Message;
+            }
+            return Uploaded;
+        }
     }
 }
