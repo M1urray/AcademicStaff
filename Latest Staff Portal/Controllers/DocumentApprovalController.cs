@@ -415,7 +415,7 @@ namespace Latest_Staff_Portal.Controllers
                                 DocList.Document_No = (string)config["Document_No"];
                                 DocList.Sender = (string)config["Sender_Code"];
                                 DocList.Sender_Name = (string)config["SenderNames"];
-                                DocList.DateSend = Convert.ToDateTime((string)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
+                                DocList.DateSend = ((DateTime)config["Date_Time_Sent_for_Approval"]).ToString("dd/MM/yyyy");
                                 DocList.Status = (string)config["Sender_Status"];
                                 DocList.Sequence = (string)config["Sequence_No"];
                                 DocList.CommentFound = (bool)config["Commented_On"];
