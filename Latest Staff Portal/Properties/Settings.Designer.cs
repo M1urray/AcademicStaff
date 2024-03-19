@@ -26,7 +26,7 @@ namespace Latest_Staff_Portal.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://74.124.24.233:5112/IPSTC/WS/IPSTC/Codeunit/WebPortal")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://108.181.199.151:7201/PACU/WS/PACU%20UNIVERSITY/Codeunit/WebPortal")]
         public string Latest_Staff_Portal_NAVWS_WebPortal {
             get {
                 return ((string)(this["Latest_Staff_Portal_NAVWS_WebPortal"]));
