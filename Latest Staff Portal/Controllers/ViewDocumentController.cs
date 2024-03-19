@@ -189,7 +189,7 @@ namespace Latest_Staff_Portal.Controllers
                 string filename = "";
                 bool success = false, view = false;
 
-                string StaffIDNo =  CommonClass.GetEmployeeIDNo(StaffNo);
+                string StaffIDNo = CommonClass.GetEmployeeIDNo(StaffNo);
                 if (StaffIDNo == "")
                 {
                     success = false;
@@ -199,36 +199,33 @@ namespace Latest_Staff_Portal.Controllers
                 {
                     string _filename = (StaffNo).Replace(@"/", @"");
 
-                    string month = "";
-                    if (Month.Length == 1)
+                    int Pmonth = 0, PYear = 0;
+                    if (!string.IsNullOrEmpty(Month))
                     {
-                        month = "0" + Month;
+                        Pmonth = Convert.ToInt32(Month);
                     }
-                    else
+                    if (!string.IsNullOrEmpty(Year))
                     {
-                        month = Month;
+                        PYear = Convert.ToInt32(Year);
                     }
-
-                    //var period = month + "/01/" + Year;
-                    var period = "01/" + month + "/" + Year;
-                    DateTime Periodfilter = DateTime.ParseExact(period, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    Credentials.ObjNav.GeneratePaySlipReport(StaffNo, Convert.ToDateTime(period), "OLDPAYSLIP-" + _filename + ".pdf");
+                    var period = "01/" + Month + "/" + Year;
+                    DateTime periodFilter = DateTime.ParseExact(period, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    message = Credentials.ObjNav.GeneratePayslipReport(StaffNo, periodFilter);
+                    string filePath = Server.MapPath("~/Downloads/");
                     string OldPayslip = "OLDPAYSLIP-" + _filename + ".pdf";
+                    Credentials.SaveBase64DocumentAttachment(message, filePath + OldPayslip);
                     filename = "PAYSLIP-" + _filename + ".pdf";
-                    string FromPath = Credentials.fileSourcePath + OldPayslip;
-                    string TPath = Credentials.fileSourcePath + filename;
+                    string FromPath = filePath + OldPayslip;
+                    string TPath = filePath + filename;
                     addPassword(FromPath, TPath, StaffIDNo);
-                    string fileDestinationPath = Server.MapPath("~/Downloads/");
-                    CommonClass.MoveFile(filename, fileDestinationPath);
-                    string DestinationPath = fileDestinationPath + filename;
-                    System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
+                    string DestinationPath = filePath + filename;
+                    FileInfo file = new FileInfo(DestinationPath);
                     if (file.Exists)
                     {
                         success = true;
                     }
                     else
                     {
-                        success = false;
                         message = "File Not Found";
                     }
                     if (success)
@@ -236,7 +233,7 @@ namespace Latest_Staff_Portal.Controllers
                         message = @"/Downloads/" + filename;
                     }
                 }
-                return Json(new { message = message, success, view }, JsonRequestBehavior.AllowGet);
+                return Json(new { message, success, view }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -269,35 +266,21 @@ namespace Latest_Staff_Portal.Controllers
         {
             try
             {
-                //bool s = Request.Browser.mob;
                 string StaffNo = Session["Username"].ToString();
-                string _filename = (StaffNo).Replace(@"/", @"");
                 string message = "";
-                string filename = "";
                 bool success = false, view = false;
 
                 int period = Convert.ToInt32(Year);
-                Credentials.ObjNav.GeneratePNineReport(StaffNo, period, "P9-" + _filename + ".pdf");
-
-                filename = "P9-" + _filename + ".pdf";
-                string fileDestinationPath = Server.MapPath("~/Downloads/");
-                CommonClass.MoveFile(filename, fileDestinationPath);
-                string DestinationPath = fileDestinationPath + filename;
-                System.IO.FileInfo file = new System.IO.FileInfo(DestinationPath);
-                if (file.Exists)
+                message = Credentials.ObjNav.GeneratePNineReport(StaffNo, period);
+                if (message == "")
                 {
-                    success = true;
+                    message = "File Not Found";
                 }
                 else
                 {
-                    success = false;
-                    message = "File Not Found";
+                    success = true;
                 }
-                if (success)
-                {
-                    message = @"/Downloads/" + filename;
-                }
-                return Json(new { message = message, success, view }, JsonRequestBehavior.AllowGet);
+                return Json(new { message, success, view }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

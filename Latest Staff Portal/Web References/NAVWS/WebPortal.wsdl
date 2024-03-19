@@ -5259,7 +5259,6 @@
           <sequence>
             <element minOccurs="1" maxOccurs="1" name="employeeNo" type="string" />
             <element minOccurs="1" maxOccurs="1" name="period" type="int" />
-            <element minOccurs="1" maxOccurs="1" name="filenameFromApp" type="string" />
           </sequence>
         </complexType>
       </element>
@@ -5322,16 +5321,15 @@
           </sequence>
         </complexType>
       </element>
-      <element name="GeneratePaySlipReport">
+      <element name="GeneratePayslipReport">
         <complexType>
           <sequence>
             <element minOccurs="1" maxOccurs="1" name="employeeNo" type="string" />
             <element minOccurs="1" maxOccurs="1" name="period" type="date" />
-            <element minOccurs="1" maxOccurs="1" name="filenameFromApp" type="string" />
           </sequence>
         </complexType>
       </element>
-      <element name="GeneratePaySlipReport_Result">
+      <element name="GeneratePayslipReport_Result">
         <complexType>
           <sequence>
             <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
@@ -10463,11 +10461,11 @@
   <message name="GeneratePaySlipReportKabu_Result">
     <part name="parameters" element="tns:GeneratePaySlipReportKabu_Result" />
   </message>
-  <message name="GeneratePaySlipReport">
-    <part name="parameters" element="tns:GeneratePaySlipReport" />
+  <message name="GeneratePayslipReport">
+    <part name="parameters" element="tns:GeneratePayslipReport" />
   </message>
-  <message name="GeneratePaySlipReport_Result">
-    <part name="parameters" element="tns:GeneratePaySlipReport_Result" />
+  <message name="GeneratePayslipReport_Result">
+    <part name="parameters" element="tns:GeneratePayslipReport_Result" />
   </message>
   <message name="GeneratePhysioPrintout">
     <part name="parameters" element="tns:GeneratePhysioPrintout" />
@@ -13036,9 +13034,9 @@
       <input name="GeneratePaySlipReportKabu" message="tns:GeneratePaySlipReportKabu" />
       <output name="GeneratePaySlipReportKabu_Result" message="tns:GeneratePaySlipReportKabu_Result" />
     </operation>
-    <operation name="GeneratePaySlipReport">
-      <input name="GeneratePaySlipReport" message="tns:GeneratePaySlipReport" />
-      <output name="GeneratePaySlipReport_Result" message="tns:GeneratePaySlipReport_Result" />
+    <operation name="GeneratePayslipReport">
+      <input name="GeneratePayslipReport" message="tns:GeneratePayslipReport" />
+      <output name="GeneratePayslipReport_Result" message="tns:GeneratePayslipReport_Result" />
     </operation>
     <operation name="GeneratePhysioPrintout">
       <input name="GeneratePhysioPrintout" message="tns:GeneratePhysioPrintout" />
@@ -16812,12 +16810,12 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
-    <operation name="GeneratePaySlipReport">
-      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:GeneratePaySlipReport" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
-      <input name="GeneratePaySlipReport">
+    <operation name="GeneratePayslipReport">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/WebPortal:GeneratePayslipReport" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GeneratePayslipReport">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
-      <output name="GeneratePaySlipReport_Result">
+      <output name="GeneratePayslipReport_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>

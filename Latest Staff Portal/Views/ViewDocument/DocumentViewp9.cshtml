@@ -43,7 +43,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="modalBody" style="width:100%;height:450px">
+            <div class="modal-body" id="modalBody">
+                <iframe id="iframe" style="width:100%;height:450px"></iframe>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">Close</button>
@@ -55,8 +56,8 @@
 <script src="~/assets/js/pdfobject.min.js"></script>
 <script type="text/javascript">
     var GetP9Report = function () {
-        var Year = $("#ddlYears").children("option:selected").val();
-        if (Year == "") {
+        var year = $("#ddlYears").children("option:selected").val();
+        if (year == "") {
             Swal.fire('Warning', 'Select Year', 'warning');
             return;
         }
@@ -66,12 +67,11 @@
                 url: '/ViewDocument/GetP9Report',
                 datatype: "json",
                 type: "POST",
-                data: JSON.stringify({ Year: Year }),
+                data: JSON.stringify({ Year: year }),
                 contentType: "application/json; charset = utf-8",
                 success: function (data) {
                     if (data.success == true) {
-                        var viewer = $("#modalBody");
-                        PDFObject.embed(data.message, viewer);
+                        $('iframe').attr('src', "data:application/pdf;base64," + data.message);
                         $("#myModalUnits").modal("show");
                         HideProgress();
                     }
@@ -79,7 +79,6 @@
                         HideProgress();
                         Swal.fire('Warning', data.message, 'warning');
                     }
-
                 },
                 error: function (err) {
                     HideProgress();
